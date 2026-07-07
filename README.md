@@ -70,7 +70,13 @@ soporte actual de **Copilot**.
 │   │   ├── security/
 │   │   └── ui-design/
 │   └── agents/          # -> ~/.copilot/agents/
-│       └── *.agent.md
+│       ├── architecture.agent.md
+│       ├── code-quality.agent.md
+│       ├── data-api.agent.md
+│       ├── git-release-manager.agent.md
+│       ├── sdd.agent.md
+│       ├── security.agent.md
+│       └── ui-design.agent.md
 ├── install.sh           # Restaurar en macOS / Linux
 ├── install.ps1          # Restaurar en Windows (PowerShell)
 ├── backup.sh            # Actualizar este repo desde tu entorno actual
@@ -86,16 +92,16 @@ soporte actual de **Copilot**.
 **macOS / Linux:**
 
 ```bash
-git clone <URL-DE-TU-REPOSITORIO>
-cd <TU-REPO>
+git clone https://github.com/furthurr/ai-agents-kit.git
+cd ai-agents-kit
 ./install.sh
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
-git clone <URL-DE-TU-REPOSITORIO>
-cd <TU-REPO>
+git clone https://github.com/furthurr/ai-agents-kit.git
+cd ai-agents-kit
 # Si PowerShell bloquea el script:
 #   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\install.ps1
@@ -118,7 +124,7 @@ Al terminar, **reinicia VS Code** para que detecte los nuevos skills y agentes.
 
 En VS Code, abre Copilot Chat y escribe algo como:
 
-> Clona el repositorio `<URL-DE-TU-REPOSITORIO>` y ejecuta su `install.sh` para restaurar mis skills y agentes de Copilot.
+> Clona el repositorio `https://github.com/furthurr/ai-agents-kit.git` y ejecuta su `install.sh` para restaurar mis skills y agentes de Copilot.
 
 ---
 
@@ -153,3 +159,16 @@ git push
 - La carpeta `~/.copilot/ide/` (archivos `.lock` temporales) **no** forma parte del respaldo.
 - El agente **Explore** es integrado de VS Code, no requiere respaldo.
 - Revisa que ningún skill/agente contenga datos sensibles antes de hacer público el repositorio.
+
+---
+
+## Autor
+
+Pedro G. V. `@furthurr`
+
+- GitHub: https://github.com/furthurr
+- Email: pedrogvas@gmail.com
+
+## Licencia
+
+Apache-2.0
