@@ -1,0 +1,164 @@
+<#
+.SYNOPSIS
+    Instala las skills y agentes de este repo en opencode (Windows).
+
+.DESCRIPTION
+    Equivalente en PowerShell de install-opencode.sh. A diferencia de install.ps1
+    (que apunta a GitHub Copilot en %USERPROFILE%\.copilot\), este script instala
+    en las rutas globales de opencode:
+        copilot\skills\   ->  <config>\opencode\skills\   (skills base, compatibles)
+        opencode\skills\  ->  <config>\opencode\skills\   (overrides opencode, p. ej. sdd-spec)
+        opencode\agents\  ->  <config>\opencode\agent\    (agentes adaptados a opencode)
+
+    <config> es $env:XDG_CONFIG_HOME si esta definida, o %USERPROFILE%\.config en
+    caso contrario (misma logica que install-opencode.sh). opencode nativo en
+    Windows resuelve ~/.config/opencode a esa ruta.
+
+    Las skills de copilot\ son compatibles con opencode sin cambios (frontmatter
+    name + description). Los agentes de copilot\ NO lo son (usan tools:[...] y
+    argument-hint de Copilot), por eso opencode\agents\ contiene versiones
+    adaptadas: mode, temperature y permission en vez de tools.
+
+    Antes de sobrescribir, respalda lo existente (salvo -Force).
+
+    Nota: si usas opencode dentro de WSL, la configuracion vive en el sistema de
+    archivos de Linux; en ese caso ejecuta install-opencode.sh dentro de WSL, no
+    este script.
+
+.PARAMETER Force
+    Sobrescribe sin crear backup previo.
+
+.PARAMETER DryRun
+    Muestra lo que haria, sin copiar nada.
+
+.EXAMPLE
+    .\install-opencode.ps1
+    .\install-opencode.ps1 -Force
+    .\install-opencode.ps1 -DryRun
+#>
+[CmdletBinding()]
+param(
+    [switch]$Force,
+    [switch]$DryRun
+)
+
+$ErrorActionPreference = "Stop"
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$Timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+
+# --- Rutas destino (respeta XDG_CONFIG_HOME, como el .sh) ---
+if ($env:XDG_CONFIG_HOME) {
+    $OpencodeHome = Join-Path $env:XDG_CONFIG_HOME "opencode"
+} else {
+    $OpencodeHome = Join-Path $env:USERPROFILE ".config\opencode"
+}
+$SkillsDest = Join-Path $OpencodeHome "skills"
+$AgentsDest = Join-Path $OpencodeHome "agent"          # opencode tambien acepta 'agents'
+$BackupRoot = Join-Path $env:USERPROFILE ".opencode-kit-backup\$Timestamp"
+
+# --- Rutas origen ---
+$SkillsSrc        = Join-Path $ScriptDir "copilot\skills"    # base compatible con opencode
+$SkillsSrcOverlay = Join-Path $ScriptDir "opencode\skills"   # overrides opencode (p. ej. sdd-spec)
+$AgentsSrc        = Join-Path $ScriptDir "opencode\agents"
+
+function Write-Info { param($m) Write-Host "-> $m" -ForegroundColor Blue }
+function Write-Ok   { param($m) Write-Host "OK $m" -ForegroundColor Green }
+function Write-Warn { param($m) Write-Host "!  $m" -ForegroundColor Yellow }
+
+# --- Copia el contenido de un arbol excluyendo basura de macOS (.DS_Store) ---
+# Fusiona sin borrar lo previo (equivalente a rsync sin --delete / cp -R).
+function Copy-Tree {
+    param([string]$Src, [string]$Dest)
+    $srcFull = (Resolve-Path -LiteralPath $Src).Path
+    Get-ChildItem -LiteralPath $srcFull -Recurse -Force -File |
+        Where-Object { $_.Name -ne ".DS_Store" } |
+        ForEach-Object {
+            $rel = $_.FullName.Substring($srcFull.Length).TrimStart('\', '/')
+            $target = Join-Path $Dest $rel
+            $targetDir = Split-Path -Parent $target
+            if (-not (Test-Path -LiteralPath $targetDir)) {
+                New-Item -ItemType Directory -Force -Path $targetDir | Out-Null
+            }
+            Copy-Item -LiteralPath $_.FullName -Destination $target -Force
+        }
+}
+
+# --- Respalda una ruta existente antes de sobrescribir ---
+function Backup-Item {
+    param([string]$Path, [string]$Label)
+    if ($Force) { return }
+    if (-not (Test-Path -LiteralPath $Path)) { return }
+    $backupPath = Join-Path $BackupRoot $Label
+    New-Item -ItemType Directory -Force -Path $backupPath | Out-Null
+    Copy-Item -LiteralPath $Path -Destination $backupPath -Recurse -Force
+    Write-Warn "backup: $(Split-Path $Path -Leaf) -> $backupPath"
+}
+
+# --- Instala las skills (una subcarpeta por skill) de un directorio origen ---
+function Install-SkillsFrom {
+    param([string]$Base)
+    if (-not (Test-Path -LiteralPath $Base)) { return }
+    Get-ChildItem -LiteralPath $Base -Directory | ForEach-Object {
+        $name = $_.Name
+        $dest = Join-Path $SkillsDest $name
+        if ($DryRun) {
+            Write-Host "    (dry-run) skill $name -> $dest"
+            return
+        }
+        Backup-Item -Path $dest -Label "skills"
+        Copy-Tree -Src $_.FullName -Dest $dest
+        Write-Ok "skill: $name"
+    }
+}
+
+# --- Instala skills: base copilot\ + overrides opencode\ ---
+function Install-Skills {
+    if (-not (Test-Path -LiteralPath $SkillsSrc) -and -not (Test-Path -LiteralPath $SkillsSrcOverlay)) {
+        Write-Warn "No hay skills que instalar."
+        return
+    }
+    Write-Info "Instalando skills -> $SkillsDest"
+    if (-not $DryRun) { New-Item -ItemType Directory -Force -Path $SkillsDest | Out-Null }
+    Install-SkillsFrom -Base $SkillsSrc          # base compatible (copilot\skills)
+    Install-SkillsFrom -Base $SkillsSrcOverlay   # overrides opencode (sobrescriben)
+}
+
+# --- Instala los agentes (uno por archivo .md) ---
+function Install-Agents {
+    if (-not (Test-Path -LiteralPath $AgentsSrc)) {
+        Write-Warn "No existe $AgentsSrc - se omiten agentes."
+        return
+    }
+    Write-Info "Instalando agentes -> $AgentsDest"
+    if (-not $DryRun) { New-Item -ItemType Directory -Force -Path $AgentsDest | Out-Null }
+    Get-ChildItem -LiteralPath $AgentsSrc -Filter "*.md" -File | ForEach-Object {
+        $name = $_.Name
+        $dest = Join-Path $AgentsDest $name
+        if ($DryRun) {
+            Write-Host "    (dry-run) agente $name -> $dest"
+            return
+        }
+        Backup-Item -Path $dest -Label "agents"
+        Copy-Item -LiteralPath $_.FullName -Destination $dest -Force
+        Write-Ok "agente: $name"
+    }
+}
+
+Write-Host ""
+Write-Host "== Instalacion de Skills y Agentes en opencode ==" -ForegroundColor White
+Write-Host ""
+
+if ($DryRun) { Write-Warn "Modo -DryRun: no se copiara nada." }
+if ($Force)  { Write-Warn "Modo -Force: no se crearan backups." }
+
+Install-Skills
+Write-Host ""
+Install-Agents
+
+Write-Host ""
+Write-Ok "Instalacion completada."
+if (-not $DryRun -and -not $Force -and (Test-Path -LiteralPath $BackupRoot)) {
+    Write-Info "Backups del contenido previo en: $BackupRoot"
+}
+Write-Host ""
+Write-Info "Reinicia opencode para que detecte las nuevas skills y agentes."
