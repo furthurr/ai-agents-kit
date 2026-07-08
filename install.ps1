@@ -89,4 +89,4 @@ if (-not $DryRun -and (Test-Path $BackupRoot)) {
     Write-Info "Copias de seguridad guardadas en: $BackupRoot"
 }
 Write-Host ""
-Write-Info "Reinicia VS Code para que detecte los cambios."
+Write-Info "Reinicia tu cliente de Copilot para que detecte los cambios."

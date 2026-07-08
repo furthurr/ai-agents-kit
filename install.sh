@@ -99,4 +99,4 @@ if [ "$DRY_RUN" -eq 0 ] && [ -d "$BACKUP_ROOT" ]; then
   info "Copias de seguridad guardadas en: $BACKUP_ROOT"
 fi
 echo
-info "Reinicia VS Code para que detecte los cambios."
+info "Reinicia tu cliente de Copilot para que detecte los cambios."
