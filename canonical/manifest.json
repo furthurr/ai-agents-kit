@@ -1,0 +1,25 @@
+{
+  "skills": [
+    "architecture",
+    "code-quality",
+    "data-api",
+    "git-commit",
+    "release-management",
+    "sdd-spec",
+    "security",
+    "ui-design"
+  ],
+  "agents": [
+    "architecture",
+    "code-quality",
+    "data-api",
+    "git-release-manager",
+    "sdd",
+    "security",
+    "ui-design"
+  ],
+  "platforms": [
+    "copilot",
+    "opencode"
+  ]
+}

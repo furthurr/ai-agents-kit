@@ -6,18 +6,15 @@
     Equivalente en PowerShell de install-opencode.sh. A diferencia de install.ps1
     (que apunta a GitHub Copilot en %USERPROFILE%\.copilot\), este script instala
     en las rutas globales de opencode:
-        copilot\skills\   ->  <config>\opencode\skills\   (skills base, compatibles)
-        opencode\skills\  ->  <config>\opencode\skills\   (overrides opencode, p. ej. sdd-spec)
-        opencode\agents\  ->  <config>\opencode\agent\    (agentes adaptados a opencode)
+        generated\opencode\skills\  ->  <config>\opencode\skills\
+        generated\opencode\agents\  ->  <config>\opencode\agent\
 
     <config> es $env:XDG_CONFIG_HOME si esta definida, o %USERPROFILE%\.config en
     caso contrario (misma logica que install-opencode.sh). opencode nativo en
     Windows resuelve ~/.config/opencode a esa ruta.
 
-    Las skills de copilot\ son compatibles con opencode sin cambios (frontmatter
-    name + description). Los agentes de copilot\ NO lo son (usan tools:[...] y
-    argument-hint de Copilot), por eso opencode\agents\ contiene versiones
-    adaptadas: mode, temperature y permission en vez de tools.
+    Los artefactos se generan desde canonical\ y adapters\opencode\ mediante
+    tools\render.py. No se instalan fuentes editables ni overlays.
 
     Antes de sobrescribir, respalda lo existente (salvo -Force).
 
@@ -57,9 +54,8 @@ $AgentsDest = Join-Path $OpencodeHome "agent"          # opencode tambien acepta
 $BackupRoot = Join-Path $env:USERPROFILE ".opencode-kit-backup\$Timestamp"
 
 # --- Rutas origen ---
-$SkillsSrc        = Join-Path $ScriptDir "copilot\skills"    # base compatible con opencode
-$SkillsSrcOverlay = Join-Path $ScriptDir "opencode\skills"   # overrides opencode (p. ej. sdd-spec)
-$AgentsSrc        = Join-Path $ScriptDir "opencode\agents"
+$SkillsSrc = Join-Path $ScriptDir "generated\opencode\skills"
+$AgentsSrc = Join-Path $ScriptDir "generated\opencode\agents"
 
 function Write-Info { param($m) Write-Host "-> $m" -ForegroundColor Blue }
 function Write-Ok   { param($m) Write-Host "OK $m" -ForegroundColor Green }
@@ -111,16 +107,15 @@ function Install-SkillsFrom {
     }
 }
 
-# --- Instala skills: base copilot\ + overrides opencode\ ---
+# --- Instala skills generadas ---
 function Install-Skills {
-    if (-not (Test-Path -LiteralPath $SkillsSrc) -and -not (Test-Path -LiteralPath $SkillsSrcOverlay)) {
+    if (-not (Test-Path -LiteralPath $SkillsSrc)) {
         Write-Warn "No hay skills que instalar."
         return
     }
     Write-Info "Instalando skills -> $SkillsDest"
     if (-not $DryRun) { New-Item -ItemType Directory -Force -Path $SkillsDest | Out-Null }
-    Install-SkillsFrom -Base $SkillsSrc          # base compatible (copilot\skills)
-    Install-SkillsFrom -Base $SkillsSrcOverlay   # overrides opencode (sobrescriben)
+    Install-SkillsFrom -Base $SkillsSrc
 }
 
 # --- Instala los agentes (uno por archivo .md) ---

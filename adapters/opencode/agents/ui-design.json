@@ -1,0 +1,23 @@
+{
+  "filename": "ui-design.md",
+  "frontmatter": {
+    "description": "Agente de UI. Documenta y estandariza todo lo visual del proyecto en `.design/`, se sincroniza con el historial de git y lleva la deuda técnica de UI. Puede apoyar el desarrollo de UI, pero tiene PROHIBIDO tocar lógica de negocio, APIs o cualquier cosa que no sea UI.",
+    "mode": "all",
+    "temperature": 0.2,
+    "permission": {
+      "edit": "ask",
+      "webfetch": "allow",
+      "bash": {
+        "*": "ask",
+        "rm *": "ask",
+        "rm -rf *": "ask",
+        "git push*": "ask",
+        "git reset --hard*": "ask",
+        "git checkout -f*": "ask",
+        "git checkout --force*": "ask",
+        "git branch -D*": "ask",
+        "git clean*": "ask"
+      }
+    }
+  }
+}

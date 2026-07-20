@@ -1,0 +1,9 @@
+{
+  "substitutions": {
+    "{{platform_name}}": "opencode",
+    "{{sdd_agent}}": "@sdd",
+    "{{sdd_start_instruction}}": "Selecciona el agente `@sdd` (o deja que opencode cargue\n    esta skill por relevancia)",
+    "{{gate_instruction}}": "El gate se\n> implementa de forma natural:",
+    "{{steering_paths}}": "`AGENTS.md`"
+  }
+}

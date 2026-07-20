@@ -3,14 +3,14 @@
 # install.sh — Restaura las skills y agentes de GitHub Copilot en esta máquina.
 #
 # Copia el contenido de este repositorio a las rutas globales:
-#   - copilot/skills/  ->  ~/.copilot/skills/
-#   - copilot/agents/  ->  ~/.copilot/agents/
+#   - generated/copilot/skills/  ->  ~/.copilot/skills/
+#   - generated/copilot/agents/  ->  ~/.copilot/agents/
 #
 # Antes de sobrescribir, hace una copia de seguridad de lo existente.
 #
 # Uso:
 #   ./install.sh                 # instalación normal (con backup automático)
-#   ./install.sh --force         # sobrescribe sin preguntar
+#   ./install.sh --force         # sobrescribe sin crear backup
 #   ./install.sh --dry-run       # muestra lo que haría, sin copiar nada
 #
 set -euo pipefail
@@ -69,8 +69,8 @@ copy_dir() {
     return 0
   fi
 
-  # Backup de lo existente
-  if [ -d "$dest" ] && [ -n "$(ls -A "$dest" 2>/dev/null || true)" ]; then
+  # Backup de lo existente, salvo que --force lo haya desactivado explícitamente.
+  if [ "$FORCE" -eq 0 ] && [ -d "$dest" ] && [ -n "$(ls -A "$dest" 2>/dev/null || true)" ]; then
     mkdir -p "$BACKUP_ROOT/$label"
     cp -R "$dest/." "$BACKUP_ROOT/$label/"
     warn "Backup del contenido previo en: $BACKUP_ROOT/$label"
@@ -88,10 +88,11 @@ echo
 if [ "$DRY_RUN" -eq 1 ]; then
   warn "Modo --dry-run: no se copiará nada."
 fi
+[ "$FORCE" -eq 1 ] && warn "Modo --force: no se crearán backups."
 
 # --- Ejecutar copias ---
-copy_dir "$SCRIPT_DIR/copilot/skills"  "$SKILLS_DEST"  "skills (~/.copilot/skills)"
-copy_dir "$SCRIPT_DIR/copilot/agents"  "$AGENTS_DEST"  "agents (~/.copilot/agents)"
+copy_dir "$SCRIPT_DIR/generated/copilot/skills"  "$SKILLS_DEST"  "skills (~/.copilot/skills)"
+copy_dir "$SCRIPT_DIR/generated/copilot/agents"  "$AGENTS_DEST"  "agents (~/.copilot/agents)"
 
 echo
 ok "Restauración completada."

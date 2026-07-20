@@ -1,0 +1,9 @@
+{
+  "substitutions": {
+    "{{platform_name}}": "GitHub Copilot",
+    "{{sdd_agent}}": "SDD (Spec-Driven Development)",
+    "{{sdd_start_instruction}}": "Selecciona el agente `SDD` o escribe `/sdd-spec`",
+    "{{gate_instruction}}": "Como Copilot no\n> tiene una herramienta de \"pregunta\" dedicada, el gate se implementa de forma\n> natural:",
+    "{{steering_paths}}": "`.github/copilot-instructions.md`, `AGENTS.md`"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "filename": "data-api.agent.md",
+  "frontmatter": {
+    "name": "Data & API Agent",
+    "description": "Agente de datos y APIs. Documenta, audita y ayuda a desarrollar la capa de datos/APIs del proyecto en `.data/` (catálogo de endpoints, DTOs/modelos, contratos OpenAPI/JSON Schema, ER en Mermaid si hay BD, PII/seguridad), con modos lite/full, sincronización con git y deuda técnica priorizada. PROHIBIDO tocar UI o negocio ajeno a datos.",
+    "argument-hint": "Describe el endpoint, modelo, contrato o integración a documentar o desarrollar.",
+    "tools": [
+      "read",
+      "edit",
+      "search",
+      "execute",
+      "web"
+    ]
+  }
+}

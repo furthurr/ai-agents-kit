@@ -1,0 +1,26 @@
+{
+  "filename": "git-release-manager.md",
+  "frontmatter": {
+    "description": "Administra Git y ejecuta releases en español. Orquesta ÚNICAMENTE las skills git-commit (commits Conventional Commits y push) y release-management (versionado SemVer, tags y CHANGELOG; Android, iOS y Flutter de fábrica y otras tecnologías vía auto-extensión web). Realiza commit, push y tag solo tras confirmación explícita; nunca acciones destructivas sin doble confirmación. PROHIBIDO modificar UI, lógica de negocio, base de datos o cualquier otro código.",
+    "mode": "all",
+    "temperature": 0.2,
+    "permission": {
+      "edit": "ask",
+      "webfetch": "allow",
+      "bash": {
+        "*": "ask",
+        "rm *": "ask",
+        "rm -rf *": "ask",
+        "git push*": "ask",
+        "git commit*": "ask",
+        "git tag*": "ask",
+        "git reset*": "ask",
+        "git rebase*": "ask",
+        "git clean*": "ask",
+        "git checkout -f*": "ask",
+        "git checkout --force*": "ask",
+        "git branch -D*": "ask"
+      }
+    }
+  }
+}

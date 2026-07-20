@@ -4,13 +4,13 @@
 
 .DESCRIPTION
     Copia el contenido de este repositorio a las rutas globales:
-        copilot\skills\  ->  %USERPROFILE%\.copilot\skills\
-        copilot\agents\  ->  %USERPROFILE%\.copilot\agents\
+        generated\copilot\skills\  ->  %USERPROFILE%\.copilot\skills\
+        generated\copilot\agents\  ->  %USERPROFILE%\.copilot\agents\
 
     Antes de sobrescribir, hace una copia de seguridad de lo existente.
 
 .PARAMETER Force
-    Sobrescribe sin pedir confirmación.
+    Sobrescribe sin crear backup previo.
 
 .PARAMETER DryRun
     Muestra lo que haría, sin copiar nada.
@@ -62,7 +62,7 @@ function Copy-Section {
     }
 
     # Backup de lo existente
-    if ((Test-Path $Dest) -and (Get-ChildItem -Path $Dest -Force -ErrorAction SilentlyContinue)) {
+    if (-not $Force -and (Test-Path $Dest) -and (Get-ChildItem -Path $Dest -Force -ErrorAction SilentlyContinue)) {
         $backupPath = Join-Path $BackupRoot $Label
         New-Item -ItemType Directory -Force -Path $backupPath | Out-Null
         Copy-Item -Path (Join-Path $Dest "*") -Destination $backupPath -Recurse -Force
@@ -79,9 +79,10 @@ Write-Host "== Restauracion de Skills y Agentes de GitHub Copilot ==" -Foregroun
 Write-Host ""
 
 if ($DryRun) { Write-Warn "Modo -DryRun: no se copiara nada." }
+if ($Force) { Write-Warn "Modo -Force: no se crearan backups." }
 
-Copy-Section -Src (Join-Path $ScriptDir "copilot\skills") -Dest $SkillsDest  -Label "skills"
-Copy-Section -Src (Join-Path $ScriptDir "copilot\agents") -Dest $AgentsDest  -Label "agents"
+Copy-Section -Src (Join-Path $ScriptDir "generated\copilot\skills") -Dest $SkillsDest  -Label "skills"
+Copy-Section -Src (Join-Path $ScriptDir "generated\copilot\agents") -Dest $AgentsDest  -Label "agents"
 
 Write-Host ""
 Write-Ok "Restauracion completada."

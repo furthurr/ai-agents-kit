@@ -4,14 +4,11 @@
 #
 # A diferencia de install.sh (que apunta a GitHub Copilot en ~/.copilot/), este
 # script instala en las rutas globales de opencode:
-#   copilot/skills/   ->  ~/.config/opencode/skills/   (skills base, compatibles)
-#   opencode/skills/  ->  ~/.config/opencode/skills/   (overrides opencode, p. ej. sdd-spec)
-#   opencode/agents/  ->  ~/.config/opencode/agent/     (agentes adaptados a opencode)
+#   generated/opencode/skills/  ->  ~/.config/opencode/skills/
+#   generated/opencode/agents/  ->  ~/.config/opencode/agent/
 #
-# Las skills de copilot/ son compatibles con opencode sin cambios (frontmatter
-# name + description). Los agentes de copilot/ NO lo son (usan tools:[...] y
-# argument-hint de Copilot), por eso opencode/agents/ contiene versiones
-# adaptadas: mode: all, temperature y permission en vez de tools.
+# Los artefactos se generan desde canonical/ y adapters/opencode/ mediante
+# tools/render.py. No se instalan fuentes editables ni overlays.
 #
 # Antes de sobrescribir, respalda lo existente (salvo --force).
 #
@@ -56,9 +53,8 @@ SKILLS_DEST="$OPENCODE_HOME/skills"
 AGENTS_DEST="$OPENCODE_HOME/agent"          # opencode también acepta 'agents/'
 BACKUP_ROOT="$HOME/.opencode-kit-backup/$TIMESTAMP"
 
-SKILLS_SRC="$SCRIPT_DIR/copilot/skills"          # skills base (compatibles con opencode)
-SKILLS_SRC_OVERLAY="$SCRIPT_DIR/opencode/skills" # overrides opencode (p. ej. sdd-spec)
-AGENTS_SRC="$SCRIPT_DIR/opencode/agents"
+SKILLS_SRC="$SCRIPT_DIR/generated/opencode/skills"
+AGENTS_SRC="$SCRIPT_DIR/generated/opencode/agents"
 
 # --- Copia con exclusión de basura ---
 copy_tree() {  # $1=origen $2=destino
@@ -98,15 +94,14 @@ install_skills_from() {  # $1=dir origen
   done
 }
 
-# --- Instalar skills: base copilot/ + overrides opencode/ ---
+# --- Instalar skills generadas ---
 install_skills() {
-  if [ ! -d "$SKILLS_SRC" ] && [ ! -d "$SKILLS_SRC_OVERLAY" ]; then
+  if [ ! -d "$SKILLS_SRC" ]; then
     warn "No hay skills que instalar."; return 0
   fi
   info "Instalando ${BOLD}skills${RESET} -> $SKILLS_DEST"
   mkdir -p "$SKILLS_DEST"
-  install_skills_from "$SKILLS_SRC"          # base compatible (copilot/skills)
-  install_skills_from "$SKILLS_SRC_OVERLAY"  # overrides opencode (sobrescriben)
+  install_skills_from "$SKILLS_SRC"
 }
 
 # --- Instalar agentes (uno por uno) ---
