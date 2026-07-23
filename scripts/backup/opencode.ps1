@@ -10,6 +10,7 @@ param([switch]$DryRun)
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RepoRoot  = Split-Path -Parent (Split-Path -Parent $ScriptDir)
 if ($env:XDG_CONFIG_HOME) {
     $OpencodeHome = Join-Path $env:XDG_CONFIG_HOME "opencode"
 } else {
@@ -17,6 +18,6 @@ if ($env:XDG_CONFIG_HOME) {
 }
 $AgentsDir = Join-Path $OpencodeHome "agent"
 if (-not (Test-Path -LiteralPath $AgentsDir)) { $AgentsDir = Join-Path $OpencodeHome "agents" }
-$args = @("$ScriptDir\tools\import_installed.py", "opencode", "--skills-dir", (Join-Path $OpencodeHome "skills"), "--agents-dir", $AgentsDir)
+$args = @("$RepoRoot\tools\import_installed.py", "opencode", "--skills-dir", (Join-Path $OpencodeHome "skills"), "--agents-dir", $AgentsDir)
 if ($DryRun) { $args += "--dry-run" }
 & python @args

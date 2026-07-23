@@ -28,6 +28,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RepoRoot  = Split-Path -Parent (Split-Path -Parent $ScriptDir)
 $Timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
 
 # --- Rutas destino ---
@@ -81,8 +82,8 @@ Write-Host ""
 if ($DryRun) { Write-Warn "Modo -DryRun: no se copiara nada." }
 if ($Force) { Write-Warn "Modo -Force: no se crearan backups." }
 
-Copy-Section -Src (Join-Path $ScriptDir "generated\copilot\skills") -Dest $SkillsDest  -Label "skills"
-Copy-Section -Src (Join-Path $ScriptDir "generated\copilot\agents") -Dest $AgentsDest  -Label "agents"
+Copy-Section -Src (Join-Path $RepoRoot "generated\copilot\skills") -Dest $SkillsDest  -Label "skills"
+Copy-Section -Src (Join-Path $RepoRoot "generated\copilot\agents") -Dest $AgentsDest  -Label "agents"
 
 Write-Host ""
 Write-Ok "Restauracion completada."

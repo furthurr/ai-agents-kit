@@ -14,14 +14,15 @@
 # Antes de sobrescribir, respalda lo existente (salvo --force).
 #
 # Uso:
-#   ./install-kiro.sh              # instala con backup de lo previo
-#   ./install-kiro.sh --force      # instala sin crear backup
-#   ./install-kiro.sh --dry-run    # muestra lo que haría, sin copiar nada
+#   ./scripts/install/kiro.sh              # instala con backup de lo previo
+#   ./scripts/install/kiro.sh --force      # instala sin crear backup
+#   ./scripts/install/kiro.sh --dry-run    # muestra lo que haría, sin copiar nada
 #
 set -euo pipefail
 
 # --- Configuración ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 FORCE=0
 DRY_RUN=0
@@ -54,8 +55,8 @@ SKILLS_DEST="$KIRO_HOME/skills"
 AGENTS_DEST="$KIRO_HOME/agents"
 BACKUP_ROOT="$HOME/.kiro-kit-backup/$TIMESTAMP"
 
-SKILLS_SRC="$SCRIPT_DIR/generated/kiro/skills"
-AGENTS_SRC="$SCRIPT_DIR/generated/kiro/agents"
+SKILLS_SRC="$REPO_ROOT/generated/kiro/skills"
+AGENTS_SRC="$REPO_ROOT/generated/kiro/agents"
 
 # --- Copia con exclusión de basura ---
 copy_tree() {  # $1=origen $2=destino

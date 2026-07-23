@@ -10,6 +10,7 @@ param([switch]$DryRun)
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$args = @("$ScriptDir\tools\import_installed.py", "copilot", "--skills-dir", "$env:USERPROFILE\.copilot\skills", "--agents-dir", "$env:USERPROFILE\.copilot\agents")
+$RepoRoot  = Split-Path -Parent (Split-Path -Parent $ScriptDir)
+$args = @("$RepoRoot\tools\import_installed.py", "copilot", "--skills-dir", "$env:USERPROFILE\.copilot\skills", "--agents-dir", "$env:USERPROFILE\.copilot\agents")
 if ($DryRun) { $args += "--dry-run" }
 & python @args

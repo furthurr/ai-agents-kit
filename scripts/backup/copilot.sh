@@ -3,6 +3,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 DRY_RUN="${1:-}"
 case "$DRY_RUN" in
   "") ;;
@@ -13,4 +14,4 @@ esac
 
 args=(copilot --skills-dir "$HOME/.copilot/skills" --agents-dir "$HOME/.copilot/agents")
 [ "$DRY_RUN" = "--dry-run" ] && args+=(--dry-run)
-python3 "$SCRIPT_DIR/tools/import_installed.py" "${args[@]}"
+python3 "$REPO_ROOT/tools/import_installed.py" "${args[@]}"

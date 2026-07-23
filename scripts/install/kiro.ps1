@@ -33,6 +33,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RepoRoot  = Split-Path -Parent (Split-Path -Parent $ScriptDir)
 $Timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
 
 # --- Rutas destino ---
@@ -42,8 +43,8 @@ $AgentsDest = Join-Path $KiroHome "agents"
 $BackupRoot = Join-Path $env:USERPROFILE ".kiro-kit-backup\$Timestamp"
 
 # --- Rutas origen ---
-$SkillsSrc = Join-Path $ScriptDir "generated\kiro\skills"
-$AgentsSrc = Join-Path $ScriptDir "generated\kiro\agents"
+$SkillsSrc = Join-Path $RepoRoot "generated\kiro\skills"
+$AgentsSrc = Join-Path $RepoRoot "generated\kiro\agents"
 
 function Write-Info { param($m) Write-Host "-> $m" -ForegroundColor Blue }
 function Write-Ok   { param($m) Write-Host "OK $m" -ForegroundColor Green }

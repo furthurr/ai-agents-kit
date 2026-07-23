@@ -10,7 +10,8 @@ param([switch]$DryRun)
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RepoRoot  = Split-Path -Parent (Split-Path -Parent $ScriptDir)
 $KiroHome = Join-Path $env:USERPROFILE ".kiro"
-$args = @("$ScriptDir\tools\import_installed.py", "kiro", "--skills-dir", (Join-Path $KiroHome "skills"), "--agents-dir", (Join-Path $KiroHome "agents"))
+$args = @("$RepoRoot\tools\import_installed.py", "kiro", "--skills-dir", (Join-Path $KiroHome "skills"), "--agents-dir", (Join-Path $KiroHome "agents"))
 if ($DryRun) { $args += "--dry-run" }
 & python @args

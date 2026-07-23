@@ -9,14 +9,15 @@
 # Antes de sobrescribir, hace una copia de seguridad de lo existente.
 #
 # Uso:
-#   ./install.sh                 # instalación normal (con backup automático)
-#   ./install.sh --force         # sobrescribe sin crear backup
-#   ./install.sh --dry-run       # muestra lo que haría, sin copiar nada
+#   ./scripts/install/copilot.sh                 # instalación normal (con backup automático)
+#   ./scripts/install/copilot.sh --force         # sobrescribe sin crear backup
+#   ./scripts/install/copilot.sh --dry-run       # muestra lo que haría, sin copiar nada
 #
 set -euo pipefail
 
 # --- Configuración ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 FORCE=0
 DRY_RUN=0
@@ -91,8 +92,8 @@ fi
 [ "$FORCE" -eq 1 ] && warn "Modo --force: no se crearán backups."
 
 # --- Ejecutar copias ---
-copy_dir "$SCRIPT_DIR/generated/copilot/skills"  "$SKILLS_DEST"  "skills (~/.copilot/skills)"
-copy_dir "$SCRIPT_DIR/generated/copilot/agents"  "$AGENTS_DEST"  "agents (~/.copilot/agents)"
+copy_dir "$REPO_ROOT/generated/copilot/skills"  "$SKILLS_DEST"  "skills (~/.copilot/skills)"
+copy_dir "$REPO_ROOT/generated/copilot/agents"  "$AGENTS_DEST"  "agents (~/.copilot/agents)"
 
 echo
 ok "Restauración completada."

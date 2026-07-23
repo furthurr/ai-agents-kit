@@ -41,6 +41,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RepoRoot  = Split-Path -Parent (Split-Path -Parent $ScriptDir)
 $Timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
 
 # --- Rutas destino (respeta XDG_CONFIG_HOME, como el .sh) ---
@@ -54,8 +55,8 @@ $AgentsDest = Join-Path $OpencodeHome "agent"          # opencode tambien acepta
 $BackupRoot = Join-Path $env:USERPROFILE ".opencode-kit-backup\$Timestamp"
 
 # --- Rutas origen ---
-$SkillsSrc = Join-Path $ScriptDir "generated\opencode\skills"
-$AgentsSrc = Join-Path $ScriptDir "generated\opencode\agents"
+$SkillsSrc = Join-Path $RepoRoot "generated\opencode\skills"
+$AgentsSrc = Join-Path $RepoRoot "generated\opencode\agents"
 
 function Write-Info { param($m) Write-Host "-> $m" -ForegroundColor Blue }
 function Write-Ok   { param($m) Write-Host "OK $m" -ForegroundColor Green }

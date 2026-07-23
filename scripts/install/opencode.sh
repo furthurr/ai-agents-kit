@@ -13,14 +13,15 @@
 # Antes de sobrescribir, respalda lo existente (salvo --force).
 #
 # Uso:
-#   ./install-opencode.sh              # instala con backup de lo previo
-#   ./install-opencode.sh --force      # instala sin crear backup
-#   ./install-opencode.sh --dry-run    # muestra lo que haría, sin copiar nada
+#   ./scripts/install/opencode.sh              # instala con backup de lo previo
+#   ./scripts/install/opencode.sh --force      # instala sin crear backup
+#   ./scripts/install/opencode.sh --dry-run    # muestra lo que haría, sin copiar nada
 #
 set -euo pipefail
 
 # --- Configuración ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 FORCE=0
 DRY_RUN=0
@@ -53,8 +54,8 @@ SKILLS_DEST="$OPENCODE_HOME/skills"
 AGENTS_DEST="$OPENCODE_HOME/agent"          # opencode también acepta 'agents/'
 BACKUP_ROOT="$HOME/.opencode-kit-backup/$TIMESTAMP"
 
-SKILLS_SRC="$SCRIPT_DIR/generated/opencode/skills"
-AGENTS_SRC="$SCRIPT_DIR/generated/opencode/agents"
+SKILLS_SRC="$REPO_ROOT/generated/opencode/skills"
+AGENTS_SRC="$REPO_ROOT/generated/opencode/agents"
 
 # --- Copia con exclusión de basura ---
 copy_tree() {  # $1=origen $2=destino

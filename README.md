@@ -3,7 +3,48 @@
 Fuente versionada de skills y agentes para GitHub Copilot, OpenCode y Kiro. La
 lógica común se mantiene una sola vez y se renderiza para cada herramienta.
 
-## Flujo de trabajo
+## Estructura del Proyecto
+
+```text
+canonical/
+  manifest.json                       # Inventario estable de skills, agentes y plataformas
+  skills/<id>/                        # Lógica común de cada skill
+    SKILL.md                          # Prompt principal
+    references/                       # Archivos de apoyo cargados bajo demanda
+  agents/<id>.md                      # Prompt común de cada agente, sin frontmatter
+
+adapters/
+  copilot/                            # Frontmatter, nombres y sustituciones de Copilot
+  opencode/                           # Frontmatter, permisos y sustituciones de OpenCode
+  kiro/                               # Frontmatter, tools, permisos y sustituciones de Kiro
+
+generated/                            # Artefactos instalables (NO editar a mano)
+  copilot/
+  opencode/
+  kiro/
+
+tools/                                # Herramientas de desarrollo (Python 3)
+  render.py                           # Generador determinista
+  validate.py                         # Paridad y reproducibilidad
+  measure_context.py                  # Métrica de contexto cargado y bajo demanda
+  import_installed.py                 # Importación segura para revisar cambios locales
+
+scripts/                              # Scripts de instalación e importación
+  install/                            # Instalan artefactos generados en cada plataforma
+    copilot.sh / copilot.ps1
+    opencode.sh / opencode.ps1
+    kiro.sh / kiro.ps1
+  backup/                             # Importan artefactos instalados a imports/ para revisión
+    copilot.sh / copilot.ps1
+    opencode.sh / opencode.ps1
+    kiro.sh / kiro.ps1
+```
+
+El kit incluye **8 skills** (`architecture`, `code-quality`, `data-api`,
+`git-commit`, `release-management`, `sdd-spec`, `security`, `ui-design`) y **7
+agentes**. `Git & Release Manager` orquesta las skills de commit y release.
+
+## Flujo de Trabajo
 
 1. Edita la lógica, comportamiento y contenido común en `canonical/`.
 2. Edita exclusivamente las diferencias de plataforma en `adapters/`.
@@ -14,95 +55,92 @@ lógica común se mantiene una sola vez y se renderiza para cada herramienta.
 
 No edites `generated/` a mano: se reemplaza por completo en cada render.
 
-## Estructura
-
-```text
-canonical/
-  manifest.json                    # Inventario estable de skills, agentes y plataformas
-  skills/<id>/                     # Lógica común de cada skill
-  agents/<id>.md                   # Prompt común de cada agente, sin frontmatter
-adapters/
-  copilot/                         # Frontmatter, nombres y sustituciones de Copilot
-  opencode/                        # Frontmatter, permisos y sustituciones de OpenCode
-  kiro/                            # Frontmatter, tools, permisos y sustituciones de Kiro
-generated/
-  copilot/                         # Artefactos instalables, generados y versionados
-  opencode/                        # Artefactos instalables, generados y versionados
-  kiro/                            # Artefactos instalables, generados y versionados
-tools/
-  render.py                        # Generador determinista
-  validate.py                      # Paridad y reproducibilidad
-  measure_context.py                # Métrica de contexto cargado y bajo demanda
-  import_installed.py              # Importación segura para revisar cambios locales
-```
-
-El kit incluye 8 skills (`architecture`, `code-quality`, `data-api`,
-`git-commit`, `release-management`, `sdd-spec`, `security`, `ui-design`) y 7
-agentes. `Git & Release Manager` orquesta las skills de commit y release.
-
-## Adaptadores
-
-Los adaptadores solo pueden declarar datos propios de la herramienta:
-
-- Copilot: nombre visible, `argument-hint`, herramientas y extensión
-  `.agent.md`.
-- OpenCode: `mode`, `temperature`, permisos, aliases y extensión `.md`.
-- Kiro: `tools` por etiquetas (`read`, `write`, `shell`, `web`), `permissions.rules`
-  y extensión `.md`. El nombre del agente proviene del nombre de archivo (sin campo
-  `name`).
-
-OpenCode queda con confirmación por defecto para comandos de shell. Sus prompts
-siguen imponiendo restricciones de alcance, y las operaciones sensibles requieren
-confirmación explícita.
-
-Kiro usa `ask` como efecto por defecto (cualquier acción sin regla que coincida
-pide confirmación) y añade reglas `deny` para comandos de shell irreversibles
-(`rm *`, `rm -rf *`, `git reset --hard*`, `git checkout -f*`, `git checkout
---force*`, `git branch -D*`, `git clean*`). Sus prompts imponen las mismas
-restricciones de alcance que en el resto de plataformas.
-
 ## Instalar
 
 Ejecuta siempre renderización y validación antes de instalar.
+
+### macOS / Linux
 
 ```bash
 python3 tools/render.py
 python3 tools/validate.py
 python3 tools/measure_context.py
-./install.sh                 # GitHub Copilot en macOS/Linux
-./install-opencode.sh        # OpenCode en macOS/Linux
-./install-kiro.sh            # Kiro en macOS/Linux
+
+# Elige la plataforma:
+./scripts/install/copilot.sh         # GitHub Copilot
+./scripts/install/opencode.sh        # OpenCode
+./scripts/install/kiro.sh            # Kiro
 ```
 
-En Windows:
+### Windows (PowerShell)
 
 ```powershell
 python tools/render.py
 python tools/validate.py
-.\install.ps1
-.\install-opencode.ps1
-.\install-kiro.ps1
+python tools/measure_context.py
+
+# Elige la plataforma:
+.\scripts\install\copilot.ps1
+.\scripts\install\opencode.ps1
+.\scripts\install\kiro.ps1
 ```
 
+### Opciones
+
 Los instaladores aceptan `--dry-run` / `-DryRun` y `--force` / `-Force`.
-`--force` omite el backup previo. OpenCode respeta `XDG_CONFIG_HOME`. Kiro instala
-en `~/.kiro/skills/` y `~/.kiro/agents/`. Reinicia Copilot, OpenCode o Kiro
-después de instalar para cargar los cambios.
+
+- `--dry-run`: muestra lo que haría sin copiar nada.
+- `--force`: omite el backup previo.
+
+### Destinos de instalación
+
+| Plataforma | Destino                                     |
+|------------|---------------------------------------------|
+| Copilot    | `~/.copilot/skills/` y `~/.copilot/agents/` |
+| OpenCode   | `~/.config/opencode/skills/` y `~/.config/opencode/agent/` |
+| Kiro       | `~/.kiro/skills/` y `~/.kiro/agents/`       |
+
+Reinicia Copilot, OpenCode o Kiro después de instalar para cargar los cambios.
 
 ## Importar Cambios Locales
 
-Los backups no sobrescriben la fuente canónica. Importan solo elementos declarados
-por el manifest a `imports/<plataforma>/<fecha>/`, donde puedes revisar y promover
-manualmente los cambios apropiados a `canonical/` o `adapters/`.
+Los scripts de backup no sobrescriben la fuente canónica. Importan solo elementos
+declarados por el manifest a `imports/<plataforma>/<fecha>/`, donde puedes revisar
+y promover manualmente los cambios apropiados a `canonical/` o `adapters/`.
 
 ```bash
-./backup.sh --dry-run
-./backup-opencode.sh --dry-run
-./backup-kiro.sh --dry-run
+./scripts/backup/copilot.sh --dry-run
+./scripts/backup/opencode.sh --dry-run
+./scripts/backup/kiro.sh --dry-run
 ```
 
-En Windows usa `backup.ps1`, `backup-opencode.ps1` y `backup-kiro.ps1`. Skills o
-agentes que no pertenecen al kit se muestran como aviso y nunca se copian.
+En Windows usa `scripts\backup\copilot.ps1`, `scripts\backup\opencode.ps1` y
+`scripts\backup\kiro.ps1`. Skills o agentes que no pertenecen al kit se muestran
+como aviso y nunca se copian.
+
+## Adaptadores
+
+Los adaptadores solo pueden declarar datos propios de la herramienta:
+
+- **Copilot**: nombre visible, `argument-hint`, herramientas y extensión
+  `.agent.md`.
+- **OpenCode**: `mode`, `temperature`, permisos, aliases y extensión `.md`.
+- **Kiro**: `tools` por etiquetas (`read`, `write`, `shell`, `web`),
+  `permissions.rules` y extensión `.md`. El nombre del agente proviene del nombre
+  de archivo (sin campo `name`).
+
+### Permisos en Kiro
+
+Kiro usa `ask` como efecto por defecto (cualquier acción sin regla que coincida
+pide confirmación) y añade reglas `deny` para comandos de shell irreversibles
+(`rm *`, `rm -rf *`, `git reset --hard*`, `git checkout -f*`, `git checkout
+--force*`, `git branch -D*`, `git clean*`).
+
+### Permisos en OpenCode
+
+OpenCode queda con confirmación por defecto para comandos de shell. Sus prompts
+imponen restricciones de alcance y las operaciones sensibles requieren
+confirmación explícita.
 
 ## Añadir Una Plataforma
 
@@ -111,7 +149,7 @@ agentes que no pertenecen al kit se muestran como aviso y nunca se copian.
 3. Crea un adaptador por agente con el frontmatter y nombre de salida requeridos.
 4. Amplía `tools/render.py` solo si la nueva plataforma exige una estructura de
    salida distinta.
-5. Renderiza, valida y añade su instalador.
+5. Renderiza, valida y añade su instalador en `scripts/install/`.
 
 ## Requisitos
 
