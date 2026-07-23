@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("platform", choices=("copilot", "opencode"))
+    parser.add_argument("platform", choices=("copilot", "opencode", "kiro"))
     parser.add_argument("--skills-dir", required=True, type=Path)
     parser.add_argument("--agents-dir", required=True, type=Path)
     parser.add_argument("--dry-run", action="store_true")

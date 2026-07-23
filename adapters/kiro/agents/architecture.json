@@ -1,0 +1,23 @@
+{
+  "filename": "architecture.md",
+  "frontmatter": {
+    "description": "Agente de arquitectura. Documenta y mantiene la arquitectura del proyecto en `.architecture/` (arc42 + C4 en Mermaid + ADRs), con modos lite/full, sincronización con git y deuda técnica priorizada. Expone un \"Contexto para IA\" que otros agentes leen al iniciar. Solo documenta, audita y recomienda: tiene PROHIBIDO modificar código de negocio o ejecutar refactors.",
+    "tools": [
+      "read",
+      "write",
+      "shell",
+      "web"
+    ],
+    "permissions": {
+      "rules": [
+        { "capability": "shell", "match": "rm *", "effect": "deny" },
+        { "capability": "shell", "match": "rm -rf *", "effect": "deny" },
+        { "capability": "shell", "match": "git reset --hard*", "effect": "deny" },
+        { "capability": "shell", "match": "git checkout -f*", "effect": "deny" },
+        { "capability": "shell", "match": "git checkout --force*", "effect": "deny" },
+        { "capability": "shell", "match": "git branch -D*", "effect": "deny" },
+        { "capability": "shell", "match": "git clean*", "effect": "deny" }
+      ]
+    }
+  }
+}

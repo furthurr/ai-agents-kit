@@ -1,0 +1,9 @@
+{
+  "substitutions": {
+    "{{platform_name}}": "Kiro",
+    "{{sdd_agent}}": "sdd",
+    "{{sdd_start_instruction}}": "Selecciona el agente `sdd` en el selector de agentes o escribe `/sdd-spec` en el chat",
+    "{{gate_instruction}}": "El gate se\n> implementa de forma natural:",
+    "{{steering_paths}}": "`.kiro/steering/*.md`, `AGENTS.md`"
+  }
+}

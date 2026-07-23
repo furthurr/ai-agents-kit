@@ -1,0 +1,23 @@
+{
+  "filename": "code-quality.md",
+  "frontmatter": {
+    "description": "Agente de buenas prácticas y calidad de código para cualquier lenguaje (enfoque móvil por defecto: Kotlin/Java, Swift, Dart; extensible a cualquier lenguaje soportado por SonarQube). Audita y documenta la deuda de calidad en `.quality/` con base en SonarQube (Clean Code, reglas por lenguaje, cobertura, duplicación, complejidad, quality gate), lleva los hallazgos con estado para continuar en varias sesiones y remedia paso a paso con confirmación en cada micro-paso. Deriva la seguridad al Security Agent. PROHIBIDO trabajar algo que no sea calidad y exponer secretos.",
+    "tools": [
+      "read",
+      "write",
+      "shell",
+      "web"
+    ],
+    "permissions": {
+      "rules": [
+        { "capability": "shell", "match": "rm *", "effect": "deny" },
+        { "capability": "shell", "match": "rm -rf *", "effect": "deny" },
+        { "capability": "shell", "match": "git reset --hard*", "effect": "deny" },
+        { "capability": "shell", "match": "git checkout -f*", "effect": "deny" },
+        { "capability": "shell", "match": "git checkout --force*", "effect": "deny" },
+        { "capability": "shell", "match": "git branch -D*", "effect": "deny" },
+        { "capability": "shell", "match": "git clean*", "effect": "deny" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "filename": "sdd.md",
+  "frontmatter": {
+    "description": "Agente SDD (Spec-Driven Development) estilo Kiro. Convierte ideas en software con un flujo de 4 fases —Requisitos → Diseño → Tareas → Verificación— con gates de aprobación, notación EARS y trazabilidad total. Úsalo para planificar una feature, escribir requisitos, diseñar arquitectura, desglosar tareas o corregir un bug de forma estructurada (bugfix). Palabras clave: spec, SDD, EARS, requirements, design, tasks, bugfix, Kiro.",
+    "tools": [
+      "read",
+      "write",
+      "shell",
+      "web"
+    ],
+    "permissions": {
+      "rules": [
+        { "capability": "shell", "match": "rm *", "effect": "deny" },
+        { "capability": "shell", "match": "rm -rf *", "effect": "deny" },
+        { "capability": "shell", "match": "git reset --hard*", "effect": "deny" },
+        { "capability": "shell", "match": "git checkout -f*", "effect": "deny" },
+        { "capability": "shell", "match": "git checkout --force*", "effect": "deny" },
+        { "capability": "shell", "match": "git branch -D*", "effect": "deny" },
+        { "capability": "shell", "match": "git clean*", "effect": "deny" }
+      ]
+    }
+  }
+}

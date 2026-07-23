@@ -1,7 +1,7 @@
 # AI Agents Kit
 
-Fuente versionada de skills y agentes para GitHub Copilot y OpenCode. La lógica
-común se mantiene una sola vez y se renderiza para cada herramienta.
+Fuente versionada de skills y agentes para GitHub Copilot, OpenCode y Kiro. La
+lógica común se mantiene una sola vez y se renderiza para cada herramienta.
 
 ## Flujo de trabajo
 
@@ -24,9 +24,11 @@ canonical/
 adapters/
   copilot/                         # Frontmatter, nombres y sustituciones de Copilot
   opencode/                        # Frontmatter, permisos y sustituciones de OpenCode
+  kiro/                            # Frontmatter, tools, permisos y sustituciones de Kiro
 generated/
   copilot/                         # Artefactos instalables, generados y versionados
   opencode/                        # Artefactos instalables, generados y versionados
+  kiro/                            # Artefactos instalables, generados y versionados
 tools/
   render.py                        # Generador determinista
   validate.py                      # Paridad y reproducibilidad
@@ -45,10 +47,19 @@ Los adaptadores solo pueden declarar datos propios de la herramienta:
 - Copilot: nombre visible, `argument-hint`, herramientas y extensión
   `.agent.md`.
 - OpenCode: `mode`, `temperature`, permisos, aliases y extensión `.md`.
+- Kiro: `tools` por etiquetas (`read`, `write`, `shell`, `web`), `permissions.rules`
+  y extensión `.md`. El nombre del agente proviene del nombre de archivo (sin campo
+  `name`).
 
 OpenCode queda con confirmación por defecto para comandos de shell. Sus prompts
 siguen imponiendo restricciones de alcance, y las operaciones sensibles requieren
 confirmación explícita.
+
+Kiro usa `ask` como efecto por defecto (cualquier acción sin regla que coincida
+pide confirmación) y añade reglas `deny` para comandos de shell irreversibles
+(`rm *`, `rm -rf *`, `git reset --hard*`, `git checkout -f*`, `git checkout
+--force*`, `git branch -D*`, `git clean*`). Sus prompts imponen las mismas
+restricciones de alcance que en el resto de plataformas.
 
 ## Instalar
 
@@ -60,6 +71,7 @@ python3 tools/validate.py
 python3 tools/measure_context.py
 ./install.sh                 # GitHub Copilot en macOS/Linux
 ./install-opencode.sh        # OpenCode en macOS/Linux
+./install-kiro.sh            # Kiro en macOS/Linux
 ```
 
 En Windows:
@@ -69,11 +81,13 @@ python tools/render.py
 python tools/validate.py
 .\install.ps1
 .\install-opencode.ps1
+.\install-kiro.ps1
 ```
 
 Los instaladores aceptan `--dry-run` / `-DryRun` y `--force` / `-Force`.
-`--force` omite el backup previo. OpenCode respeta `XDG_CONFIG_HOME`.
-Reinicia Copilot u OpenCode después de instalar para cargar los cambios.
+`--force` omite el backup previo. OpenCode respeta `XDG_CONFIG_HOME`. Kiro instala
+en `~/.kiro/skills/` y `~/.kiro/agents/`. Reinicia Copilot, OpenCode o Kiro
+después de instalar para cargar los cambios.
 
 ## Importar Cambios Locales
 
@@ -84,10 +98,11 @@ manualmente los cambios apropiados a `canonical/` o `adapters/`.
 ```bash
 ./backup.sh --dry-run
 ./backup-opencode.sh --dry-run
+./backup-kiro.sh --dry-run
 ```
 
-En Windows usa `backup.ps1` y `backup-opencode.ps1`. Skills o agentes que no
-pertenecen al kit se muestran como aviso y nunca se copian.
+En Windows usa `backup.ps1`, `backup-opencode.ps1` y `backup-kiro.ps1`. Skills o
+agentes que no pertenecen al kit se muestran como aviso y nunca se copian.
 
 ## Añadir Una Plataforma
 
