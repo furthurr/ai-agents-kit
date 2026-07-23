@@ -9,31 +9,38 @@ permissions:
   rules:
     -
       capability: "shell"
-      match: "rm *"
+      match:
+        - "rm *"
       effect: "deny"
     -
       capability: "shell"
-      match: "rm -rf *"
+      match:
+        - "rm -rf *"
       effect: "deny"
     -
       capability: "shell"
-      match: "git reset --hard*"
+      match:
+        - "git reset --hard*"
       effect: "deny"
     -
       capability: "shell"
-      match: "git checkout -f*"
+      match:
+        - "git checkout -f*"
       effect: "deny"
     -
       capability: "shell"
-      match: "git checkout --force*"
+      match:
+        - "git checkout --force*"
       effect: "deny"
     -
       capability: "shell"
-      match: "git branch -D*"
+      match:
+        - "git branch -D*"
       effect: "deny"
     -
       capability: "shell"
-      match: "git clean*"
+      match:
+        - "git clean*"
       effect: "deny"
 ---
 

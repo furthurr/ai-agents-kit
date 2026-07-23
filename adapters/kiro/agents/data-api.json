@@ -10,13 +10,13 @@
     ],
     "permissions": {
       "rules": [
-        { "capability": "shell", "match": "rm *", "effect": "deny" },
-        { "capability": "shell", "match": "rm -rf *", "effect": "deny" },
-        { "capability": "shell", "match": "git reset --hard*", "effect": "deny" },
-        { "capability": "shell", "match": "git checkout -f*", "effect": "deny" },
-        { "capability": "shell", "match": "git checkout --force*", "effect": "deny" },
-        { "capability": "shell", "match": "git branch -D*", "effect": "deny" },
-        { "capability": "shell", "match": "git clean*", "effect": "deny" }
+        { "capability": "shell", "match": ["rm *"], "effect": "deny" },
+        { "capability": "shell", "match": ["rm -rf *"], "effect": "deny" },
+        { "capability": "shell", "match": ["git reset --hard*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git checkout -f*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git checkout --force*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git branch -D*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git clean*"], "effect": "deny" }
       ]
     }
   }
