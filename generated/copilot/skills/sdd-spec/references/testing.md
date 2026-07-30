@@ -14,9 +14,17 @@ siempre que exista. Si no lo especifica, aplica estos valores por defecto:
 | Go | testing | rapid | — |
 | Rust | #[test] | proptest | — |
 
-## Reglas de PBT
+## PBT condicional (no default-heavy)
 
-- Deriva propiedades desde los requisitos EARS (una por comportamiento invariante).
-- Si el proyecto no tiene soporte PBT, propón la dependencia como primera tarea.
-- Prioriza propiedades sobre tests de ejemplo cuando el comportamiento es
-  algebraico o tiene invariantes claros.
+- **Standard:** propiedades narrativas opcionales, **máx. 5** invariantes críticos en `design.md`. Tests de ejemplo obligatorios para comportamientos testables del dominio.
+- **Deep** o invariante claro (ordenación, round-trip, unicidad, partición de estados): 1–3 PBT reales.
+- Añadir dependencia PBT **solo** cuando se vaya a escribir al menos un test PBT en la misma wave.
+- Nunca marcar tarea PBT como `[x]` sin archivo de test que importe la lib PBT.
+- Priorizar propiedades sobre tests de ejemplo **solo** cuando el comportamiento sea algebraico — no como relleno de spec.
+
+## Anti-patrones (prohibidos)
+
+- Declarar 13–21 “Correctness Properties” en modo standard.
+- Añadir libs PBT “por si acaso” sin tests que las usen.
+- Tags tipo `// Feature: … Property N` en tests de ejemplo haciéndolos pasar por PBT.
+- Tests tautológicos (`assert true` sin sujeto).

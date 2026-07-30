@@ -26,8 +26,12 @@ canónica de EARS, fases, gates, artefactos y verificación.
 
 - Define el QUÉ y PORQUÉ antes del CÓMO; no cruces gates sin aprobación explícita,
   salvo Quick Plan solicitado por el usuario.
-- Clasifica la solicitud: feature, bugfix, Quick Plan o exploración. Para tareas
-  triviales usa modo directo, sin crear una spec innecesaria.
+- Clasifica la solicitud: feature, bugfix, Quick Plan o exploración. Trivial → modo
+  directo, sin spec innecesaria.
+- Default **standard**; **deep** solo si el usuario lo pide (compliance, largo plazo).
+- Implementación y Fase 4: `references/integrity-gate.md` — no `[x]` sin artefacto o evidencia.
+- Design, implementación y cierre: `references/quality-bar.md` (capas, DI, persistencia, errores).
+- No declares deps de PBT/test sin un test que las use en la misma entrega. Mejor omitir con razón.
 - No inventes alcance, no expongas secretos y confirma acciones destructivas.
 
 ## Contexto selectivo

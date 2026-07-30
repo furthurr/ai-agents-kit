@@ -15,6 +15,16 @@ Flujo SDD de 4 fases con gates, EARS y trazabilidad. Funciona con cualquier agen
 
 > **Precedencia:** si el agente `SDD (Spec-Driven Development)` y esta skill divergen, manda esta skill.
 
+## Modos de profundidad
+
+| Modo | Cuándo | Qué produce | Coste |
+|------|--------|-------------|-------|
+| `direct` | Trivial | Sin spec 4 fases | Mínimo |
+| `standard` | **Default** | 4 fases, design corto, 0–5 invariantes, tests ejemplo | Baseline +~10 % |
+| `deep` | Usuario lo pide | + glosario, más diagramas, PBT real si aplica | +40–80 % |
+
+Default = `standard`. No actives `deep` solo. Caps standard: design ~≤250 líneas; máx. 5 invariantes; 1 flowchart + 1 sequence; glosario solo en `deep` o si el usuario lo pide.
+
 ## Artefactos
 
 Destino: `.sdd/specs/<nombre-feature>/`
@@ -24,7 +34,7 @@ Destino: `.sdd/specs/<nombre-feature>/`
 | `requirements.md` (o `bugfix.md`) | 1 | Historias + criterios EARS |
 | `design.md` | 2 | Arquitectura, modelos, diagramas, pruebas |
 | `tasks.md` | 3 | Tareas discretas, trazadas y secuenciadas |
-| `verification.md` | 4 | Matriz de trazabilidad + cierre |
+| `verification.md` | 4 | Matriz + evidencia + cierre |
 
 ## Flujo con gates
 
@@ -50,11 +60,10 @@ Destino: `.sdd/specs/<nombre-feature>/`
 
 ### Fase 2 — Design
 
-1. Lee código existente y steering. Reutiliza documentación de `.architecture/`,
-   `.design/`, `.data/` cuando el requisito toque ese dominio.
-2. Arquitectura, componentes, modelos de datos, interfaces/endpoints.
-3. Diagramas Mermaid (flowchart + sequence), manejo de errores, estrategia de pruebas.
-4. Deriva propiedades (PBT) desde los requisitos EARS.
+1. Lee código existente y steering. Reutiliza `.architecture/`, `.design/`, `.data/` si aplica.
+2. Carga `references/quality-bar.md`; el design debe satisfacerla (cita excepciones).
+3. Arquitectura, componentes, modelos, errores, pruebas. Diagramas según caps del modo.
+4. PBT condicional (`references/testing.md`): en standard, 0–5 invariantes narrativos opcionales.
 5. **GATE 2**: "¿Apruebas el diseño o quieres ajustarlo?"
 
 ### Fase 3 — Tasks
@@ -66,23 +75,19 @@ Destino: `.sdd/specs/<nombre-feature>/`
 
 ### Implementación
 
-- Una tarea a la vez o en waves. Actualiza estados: `[ ]` → 🔵 → `[x]`.
-- Escribe tests (incl. PBT). Consulta `references/testing.md` para stack por tecnología.
-- Si la carpeta canónica del dominio existe y creas algo reutilizable, documéntalo
-  ahí cargando la skill del especialista.
+- Una tarea a la vez o en waves. Estados: `[ ]` → 🔵 → `[x]`.
+- Antes de `[x]`: `references/integrity-gate.md`.
+- Al escribir tests: `references/testing.md` (PBT condicional).
+- Waves UI/datos: revisar `references/quality-bar.md`.
+- Si existe carpeta canónica del dominio y creas algo reutilizable, documéntalo con la skill del especialista.
 
 ### Fase 4 — Verificación y cierre
 
-Prerrequisito: todas las tareas en `[x]`.
-1. Ejecuta suite completa de tests.
-2. Construye `verification.md` con matriz:
-
-   | Requisito | Tarea(s) | Test(s) | Estado |
-   |-----------|----------|---------|--------|
-   | Req 1     | 1.1, 1.2 | `Test`  | ✅     |
-
-3. Marca huecos y propón acción.
-4. **GATE 4**: "¿Cierro la spec o cubrimos los huecos?" No cierres sin cobertura completa.
+Prerrequisito: `[x]` con artefacto real (o `[omitido: razón]`).
+1. `references/integrity-gate.md`: validar cada `[x]` ↔ disco/evidencia.
+2. Suite de tests + spot-check `quality-bar` y 3–5 RNF del spec.
+3. `verification.md` con columna Evidencia (`templates.md`). No cerrar con huérfanos.
+4. **GATE 4**: "¿Cierro la spec o cubrimos los huecos?"
 
 ## Variante Bugfix
 
@@ -91,20 +96,19 @@ Prerrequisito: todas las tareas en `[x]`.
 - Esperado: `CUANDO <...> EL SISTEMA DEBERÁ <correcto>`
 - Inalterado: `EL SISTEMA DEBERÁ SEGUIR <...>`
 
-Diseño con causa raíz + propiedades. Tareas con tests de regresión.
+Diseño con causa raíz + invariantes si aplican. Tareas con tests de regresión.
 
 ## Variante Quick Plan
 
 Genera requirements, design y tasks en una pasada **sin gates**, con preguntas
 aclaratorias por adelantado. Omite Fase 4. Solo para features bien entendidas.
+Al implementar, aplica integrity-gate y caps `standard`.
 
 ## Reglas de calidad
 
-- **Proporcionalidad:** tareas triviales → modo directo, sin spec.
+- **Proporcionalidad:** trivial → `direct`, sin spec.
 - Un requisito = un comportamiento testable. Sin adjetivos vagos.
 - Sujeto siempre "EL SISTEMA".
 - Implementación → `design.md`, no `requirements.md`.
-- Cada requisito debe tener ≥1 tarea que lo cubra.
-- Respeta el steering del proyecto.
-- No cierres la spec sin cobertura total.
-- Consulta `references/ears-reference.md` para la tabla completa de patrones EARS.
+- Cada requisito ≥1 tarea. Respeta steering. Sin cumplimiento inventado.
+- Consulta `references/ears-reference.md` para patrones EARS.
