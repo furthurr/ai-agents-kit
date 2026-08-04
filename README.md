@@ -1,165 +1,102 @@
 # AI Agents Kit
 
-Fuente versionada de skills y agentes para GitHub Copilot, OpenCode y Kiro. La
-lógica común se mantiene una sola vez y se renderiza para cada herramienta.
+Fuente versionada de **skills** y **agentes** para [GitHub Copilot](https://github.com/features/copilot),
+[OpenCode](https://opencode.ai) y [Kiro](https://kiro.dev).
 
-## Estructura del Proyecto
+La lógica se mantiene **una sola vez** en `canonical/` y se renderiza por
+plataforma con adaptadores declarativos. Así obtienes el mismo comportamiento
+especializado en las tres herramientas, sin triplicar prompts.
 
-```text
-canonical/
-  manifest.json                       # Inventario estable de skills, agentes y plataformas
-  skills/<id>/                        # Lógica común de cada skill
-    SKILL.md                          # Prompt principal
-    references/                       # Archivos de apoyo cargados bajo demanda
-  agents/<id>.md                      # Prompt común de cada agente, sin frontmatter
+## Por qué existe
 
-adapters/
-  copilot/                            # Frontmatter, nombres y sustituciones de Copilot
-  opencode/                           # Frontmatter, permisos y sustituciones de OpenCode
-  kiro/                               # Frontmatter, tools, permisos y sustituciones de Kiro
+Un agente genérico reexplora el repo, mezcla dominios y pierde contexto entre
+sesiones. Este kit aporta:
 
-generated/                            # Artefactos instalables (NO editar a mano)
-  copilot/
-  opencode/
-  kiro/
+- **Especialistas con alcance fijo** (arquitectura, calidad, datos, seguridad, UI, SDD, git/release).
+- **Procedimientos canónicos** (skills) reutilizables y versionados.
+- **Carpetas de contexto en tu proyecto** (`.architecture/`, `.quality/`, `.data/`, …) que la IA y el equipo comparten.
 
-tools/                                # Herramientas de desarrollo (Python 3)
-  render.py                           # Generador determinista
-  validate.py                         # Paridad y reproducibilidad
-  measure_context.py                  # Métrica de contexto cargado y bajo demanda
-  import_installed.py                 # Importación segura para revisar cambios locales
+Más detalle: [docs/vision.md](docs/vision.md).
 
-scripts/                              # Scripts de instalación e importación
-  install/                            # Instalan artefactos generados en cada plataforma
-    copilot.sh / copilot.ps1
-    opencode.sh / opencode.ps1
-    kiro.sh / kiro.ps1
-  backup/                             # Importan artefactos instalados a imports/ para revisión
-    copilot.sh / copilot.ps1
-    opencode.sh / opencode.ps1
-    kiro.sh / kiro.ps1
-```
+## Qué incluye
 
-El kit incluye **8 skills** (`architecture`, `code-quality`, `data-api`,
-`git-commit`, `release-management`, `sdd-spec`, `security`, `ui-design`) y **7
-agentes**. `Git & Release Manager` orquesta las skills de commit y release.
+| | Cantidad | Detalle |
+|---|----------|---------|
+| Skills | 8 | architecture, code-quality, data-api, security, ui-design, sdd-spec, git-commit, release-management |
+| Agentes | 7 | uno por dominio; **Git & Release Manager** orquesta commit + release |
+| Plataformas | 3 | copilot, opencode, kiro |
 
-## Flujo de Trabajo
+Catálogo completo (roles, carpetas, cuándo usar cada uno):
+[docs/catalogo.md](docs/catalogo.md).
 
-1. Edita la lógica, comportamiento y contenido común en `canonical/`.
-2. Edita exclusivamente las diferencias de plataforma en `adapters/`.
-3. Ejecuta `python3 tools/render.py`.
-4. Ejecuta `python3 tools/validate.py`.
-5. Ejecuta `python3 tools/measure_context.py` para revisar el coste de contexto.
-6. Revisa los cambios en `generated/` e instala la plataforma necesaria.
+## Inicio rápido
 
-No edites `generated/` a mano: se reemplaza por completo en cada render.
-
-## Instalar
-
-Ejecuta siempre renderización y validación antes de instalar.
-
-### macOS / Linux
+Requisitos: **Python 3** y Bash o PowerShell.
 
 ```bash
+# 1. Generar y validar artefactos
 python3 tools/render.py
 python3 tools/validate.py
-python3 tools/measure_context.py
 
-# Elige la plataforma:
-./scripts/install/copilot.sh         # GitHub Copilot
-./scripts/install/opencode.sh        # OpenCode
-./scripts/install/kiro.sh            # Kiro
+# 2. Instalar la plataforma que uses
+./scripts/install/copilot.sh      # → ~/.copilot/
+./scripts/install/opencode.sh     # → ~/.config/opencode/
+./scripts/install/kiro.sh         # → ~/.kiro/
+
+# 3. Reinicia Copilot, OpenCode o Kiro
 ```
 
-### Windows (PowerShell)
+Windows (PowerShell):
 
 ```powershell
 python tools/render.py
 python tools/validate.py
-python tools/measure_context.py
-
-# Elige la plataforma:
 .\scripts\install\copilot.ps1
 .\scripts\install\opencode.ps1
 .\scripts\install\kiro.ps1
 ```
 
-### Opciones
+Opciones: `--dry-run` / `-DryRun`, `--force` / `-Force`.
 
-Los instaladores aceptan `--dry-run` / `-DryRun` y `--force` / `-Force`.
+Guía completa: [docs/instalacion.md](docs/instalacion.md) ·  
+Uso diario: [docs/uso.md](docs/uso.md).
 
-- `--dry-run`: muestra lo que haría sin copiar nada.
-- `--force`: omite el backup previo.
+## Modelo del repositorio
 
-### Destinos de instalación
-
-| Plataforma | Destino                                     |
-|------------|---------------------------------------------|
-| Copilot    | `~/.copilot/skills/` y `~/.copilot/agents/` |
-| OpenCode   | `~/.config/opencode/skills/` y `~/.config/opencode/agent/` |
-| Kiro       | `~/.kiro/skills/` y `~/.kiro/agents/`       |
-
-Reinicia Copilot, OpenCode o Kiro después de instalar para cargar los cambios.
-
-## Importar Cambios Locales
-
-Los scripts de backup no sobrescriben la fuente canónica. Importan solo elementos
-declarados por el manifest a `imports/<plataforma>/<fecha>/`, donde puedes revisar
-y promover manualmente los cambios apropiados a `canonical/` o `adapters/`.
-
-```bash
-./scripts/backup/copilot.sh --dry-run
-./scripts/backup/opencode.sh --dry-run
-./scripts/backup/kiro.sh --dry-run
+```text
+canonical/     ← edita aquí la lógica común (skills + agentes)
+adapters/      ← solo diferencias por herramienta (frontmatter, permisos, tokens)
+generated/     ← salida del render (NO editar a mano)
+tools/         ← render.py, validate.py, measure_context.py, …
+scripts/       ← install/ y backup/ (bash + PowerShell)
+docs/          ← documentación ampliada
 ```
 
-En Windows usa `scripts\backup\copilot.ps1`, `scripts\backup\opencode.ps1` y
-`scripts\backup\kiro.ps1`. Skills o agentes que no pertenecen al kit se muestran
-como aviso y nunca se copian.
+```text
+canonical + adapters  →  render  →  generated  →  install  →  tu herramienta
+```
 
-## Adaptadores
+## Documentación
 
-Los adaptadores solo pueden declarar datos propios de la herramienta:
+| Documento | Contenido |
+|-----------|-----------|
+| [docs/README.md](docs/README.md) | Índice |
+| [docs/vision.md](docs/vision.md) | Problema, principios, skill vs agente |
+| [docs/catalogo.md](docs/catalogo.md) | Skills, agentes y carpetas canónicas |
+| [docs/instalacion.md](docs/instalacion.md) | Install, destinos, backup/import |
+| [docs/uso.md](docs/uso.md) | Cómo invocar y flujos recomendados |
+| [docs/desarrollo.md](docs/desarrollo.md) | Contribuir y extender el kit |
+| [docs/arquitectura-del-kit.md](docs/arquitectura-del-kit.md) | Pipeline técnico |
+| [PROJECT-NAVIGATOR-FRAMEWORK.md](PROJECT-NAVIGATOR-FRAMEWORK.md) | Roadmap (planificación) |
 
-- **Copilot**: nombre visible, `argument-hint`, herramientas y extensión
-  `.agent.md`.
-- **OpenCode**: `mode`, `temperature`, permisos, aliases y extensión `.md`.
-- **Kiro**: `tools` por etiquetas (`read`, `write`, `shell`, `web`),
-  `permissions.rules` y extensión `.md`. El nombre del agente proviene del nombre
-  de archivo (sin campo `name`).
+## Contribuir (resumen)
 
-### Permisos en Kiro
+1. Edita `canonical/` y/o `adapters/`.
+2. Ejecuta `python3 tools/render.py` y `python3 tools/validate.py`.
+3. Revisa `generated/` e instala en dry-run antes de probar en serio.
 
-Kiro usa `ask` como efecto por defecto (cualquier acción sin regla que coincida
-pide confirmación) y añade reglas `deny` para comandos de shell irreversibles
-(`rm *`, `rm -rf *`, `git reset --hard*`, `git checkout -f*`, `git checkout
---force*`, `git branch -D*`, `git clean*`).
-
-### Permisos en OpenCode
-
-OpenCode queda con confirmación por defecto para comandos de shell. Sus prompts
-imponen restricciones de alcance y las operaciones sensibles requieren
-confirmación explícita.
-
-## Añadir Una Plataforma
-
-1. Añade el identificador a `canonical/manifest.json`.
-2. Crea `adapters/<plataforma>/platform.json`.
-3. Crea un adaptador por agente con el frontmatter y nombre de salida requeridos.
-4. Amplía `tools/render.py` solo si la nueva plataforma exige una estructura de
-   salida distinta.
-5. Renderiza, valida y añade su instalador en `scripts/install/`.
-
-## Requisitos
-
-- Python 3 para renderización, validación e importación.
-- Bash o PowerShell para los scripts de instalación según el sistema.
-- Git para versionar los cambios.
-
-No incluyas secretos, tokens ni credenciales en ninguna fuente, adaptador,
-artefacto generado o importación.
+Nunca commits de secretos. Detalle: [docs/desarrollo.md](docs/desarrollo.md).
 
 ## Licencia
 
-Apache-2.0
+[Apache-2.0](LICENSE)
