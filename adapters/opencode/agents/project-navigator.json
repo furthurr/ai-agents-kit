@@ -1,0 +1,23 @@
+{
+  "filename": "project-navigator.md",
+  "frontmatter": {
+    "description": "Navegacion e investigacion del proyecto con minimo de tokens (.navigator/). Solo lectura por defecto; bootstrap/update de indices bajo peticion. PROHIBIDO modificar codigo de negocio ni seleccionar el modelo del host.",
+    "mode": "all",
+    "temperature": 0.2,
+    "permission": {
+      "edit": "ask",
+      "webfetch": "allow",
+      "bash": {
+        "*": "ask",
+        "rm *": "ask",
+        "rm -rf *": "ask",
+        "git push*": "ask",
+        "git reset --hard*": "ask",
+        "git checkout -f*": "ask",
+        "git checkout --force*": "ask",
+        "git branch -D*": "ask",
+        "git clean*": "ask"
+      }
+    }
+  }
+}

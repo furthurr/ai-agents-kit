@@ -3,11 +3,12 @@
 > Framework agnostico para crear una skill y un agente que permitan a una IA
 > comprender y navegar cualquier proyecto con el minimo consumo de tokens.
 >
-> Estado: definicion MVP lista para implementar
+> Estado: MVP implementado en el kit
 > Ultima actualizacion: 2026-08-04
-> Implementacion: pendiente — siguiente paso: crear skill/agente en el kit (§18–21)
-> Documentacion del kit actual: [README.md](README.md) · [docs/](docs/README.md)
-> (este archivo es roadmap; aun no forma parte del manifest instalable).
+> Implementacion: `canonical/skills/project-navigator/` + `canonical/agents/project-navigator.md`
+> + adapters OpenCode/Copilot/Kiro + `manifest.json` (§18–21)
+> Documentacion del kit: [README.md](README.md) · [docs/catalogo.md](docs/catalogo.md)
+> (este archivo sigue siendo la spec de referencia del comportamiento).
 
 ## 1. Objetivo
 
@@ -793,7 +794,7 @@ Post-MVP: hooks git, CI, watcher — configurables en `update.strategy`.
 - Estrategia AST por lenguaje para Capa 2 (generacion determinista post-MVP).
 - Politica fina de que partes del grafo se versionan en monorepos grandes.
 - Ejemplos por tipo de proyecto (mobile/backend/frontend) — doc opcional.
-- Implementacion en el kit (`canonical/`, adapters, `manifest.json`).
+- ~~Implementacion en el kit (`canonical/`, adapters, `manifest.json`).~~ **Hecho**
 
 ### 15.2 Resuelto en esta ronda
 
@@ -817,10 +818,9 @@ Post-MVP: hooks git, CI, watcher — configurables en `update.strategy`.
 
 ## 16. Proximos Pasos
 
-1. Implementar en el kit: `canonical/skills/project-navigator/` y
-   `canonical/agents/project-navigator.md` segun §18–21.
-2. Anadir adapters (OpenCode, Copilot, Kiro) y entrada en `manifest.json`.
-3. Render + validate + install de prueba.
+1. ~~Implementar en el kit: skill/agente segun §18–21.~~ **Hecho**
+2. ~~Adapters (OpenCode, Copilot, Kiro) + `manifest.json`.~~ **Hecho**
+3. ~~Render + validate.~~ **Hecho** — install de prueba en host del usuario.
 4. Probar bootstrap asistido en un repo real sin `.navigator/`.
 5. (Opcional doc) ejemplos mobile/backend/frontend.
 6. (Post-MVP) AST multi-lenguaje, scripts deterministas y adapter graphify.
@@ -848,7 +848,7 @@ Post-MVP: hooks git, CI, watcher — configurables en `update.strategy`.
 | Tras el proceso navigator | **Aviso manual a modelo de la tarea siguiente** |
 | Modelo para construir el framework | Fuerte (diseno) + coding (implementacion); eleccion del usuario |
 | Proveedores LLM | **Decidido: agnostico por diseno; sin matriz ni pruebas multi-vendor** (§6.5) |
-| Contratos SKILL.md / agente | **Definidos en §18; implementacion en kit pendiente** |
+| Contratos SKILL.md / agente | **Definidos en §18; implementados en el kit** |
 | Plantilla `ai-context.md` (Capa 0) | **Definida en §19.1** |
 | Schema `module-map.json` (Capa 1) | **Definido en §19.2** |
 | Monorepo / ubicacion `.navigator/` | **Definido en §19.3** |
@@ -863,8 +863,8 @@ Post-MVP: hooks git, CI, watcher — configurables en `update.strategy`.
 
 ## 18. Contratos de Comportamiento (especificacion MVP)
 
-> Especificacion en documento. Aun **no** existen archivos en `canonical/`.
-> Cuando se implementen, este apartado es la fuente de verdad del comportamiento.
+> Especificacion de comportamiento. Implementacion en
+> `canonical/skills/project-navigator/` y `canonical/agents/project-navigator.md`.
 > Si el agente y la skill divergen, **manda la skill**.
 
 ### 18.1 Skill `project-navigator`

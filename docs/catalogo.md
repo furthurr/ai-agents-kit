@@ -3,7 +3,7 @@
 Resumen de lo que incluye el kit. El detalle operativo vive en
 `canonical/skills/<id>/SKILL.md` y `canonical/agents/<id>.md`.
 
-Inventario oficial: `canonical/manifest.json` (8 skills, 7 agentes, 3 plataformas).
+Inventario oficial: `canonical/manifest.json` (9 skills, 8 agentes, 3 plataformas).
 
 ## Skills
 
@@ -17,6 +17,7 @@ Inventario oficial: `canonical/manifest.json` (8 skills, 7 agentes, 3 plataforma
 | `sdd-spec` | Spec-Driven Development en 4 fases con gates | `.sdd/specs/<feature>/` | EARS, trazabilidad; modos direct/standard/deep |
 | `git-commit` | Commits Conventional Commits en español y push con confirmación | — | No versiona ni crea tags |
 | `release-management` | SemVer, tags anotados, CHANGELOG; perfiles por tecnología | `.release/` | Android/iOS/Flutter de fábrica; resto auto-extensible |
+| `project-navigator` | Navega el repo con mínimo de tokens (capas 0–4) | `.navigator/` | Bootstrap/update asistido; solo lectura fuera de `.navigator/` |
 
 ## Agentes
 
@@ -29,10 +30,12 @@ Inventario oficial: `canonical/manifest.json` (8 skills, 7 agentes, 3 plataforma
 | `ui-design` | UI Design Agent | `ui-design` | Solo lo visual; no toca negocio ni APIs |
 | `sdd` | Agente SDD | `sdd-spec` | Specs, gates de aprobación e implementación trazable |
 | `git-release-manager` | Git & Release Manager | `git-commit` + `release-management` | Commits, push, versiones, tags, CHANGELOG |
+| `project-navigator` | Project Navigator | `project-navigator` | Investigación/navegación; bootstrap de índices en `.navigator/` |
 
 ## Mapa skill ↔ agente ↔ carpeta
 
 ```text
+project-navigator ──────► Project Navigator       → .navigator/
 architecture  ──────────► Architecture Agent      → .architecture/
 code-quality  ──────────► Code Quality Agent      → .quality/
 data-api      ──────────► Data & API Agent        → .data/
@@ -48,6 +51,7 @@ release-mgmt  ──┘                                 → .release/ (releases)
 
 | Necesitas… | Usa |
 |------------|-----|
+| Onboarding, localizar módulos/símbolos sin reexplorar el repo | Project Navigator |
 | Entender o documentar módulos, capas, ADRs | Architecture |
 | Limpiar smells, complejidad, cobertura, convenciones | Code Quality |
 | Endpoints, DTOs, OpenAPI, repositorios, ER | Data & API |

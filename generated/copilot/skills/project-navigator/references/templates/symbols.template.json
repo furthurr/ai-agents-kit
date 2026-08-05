@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "generated_at": "2026-08-04T12:00:00Z",
+  "root": ".",
+  "symbols": [
+    {
+      "id": "app/src/main/AuthService.kt#AuthService",
+      "name": "AuthService",
+      "kind": "class",
+      "file": "app/src/main/AuthService.kt",
+      "line": 12,
+      "signature": "class AuthService(private val client: ApiClient)",
+      "module_id": "app",
+      "summary": "Autenticacion y sesion de usuario",
+      "exported": true,
+      "tags": ["auth"]
+    },
+    {
+      "id": "app/src/main/AuthService.kt#login",
+      "name": "login",
+      "kind": "method",
+      "file": "app/src/main/AuthService.kt",
+      "line": 28,
+      "signature": "suspend fun login(user: String, pass: String): Result<Session>",
+      "module_id": "app",
+      "summary": "Login contra API",
+      "exported": true
+    },
+    {
+      "id": "core/src/Session.kt#Session",
+      "name": "Session",
+      "kind": "class",
+      "file": "core/src/Session.kt",
+      "line": 4,
+      "signature": "data class Session(val token: String, val userId: String)",
+      "module_id": "core",
+      "summary": "Sesion autenticada",
+      "exported": true
+    }
+  ]
+}

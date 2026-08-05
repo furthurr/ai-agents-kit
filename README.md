@@ -12,9 +12,9 @@ especializado en las tres herramientas, sin triplicar prompts.
 Un agente genérico reexplora el repo, mezcla dominios y pierde contexto entre
 sesiones. Este kit aporta:
 
-- **Especialistas con alcance fijo** (arquitectura, calidad, datos, seguridad, UI, SDD, git/release).
+- **Especialistas con alcance fijo** (navegación, arquitectura, calidad, datos, seguridad, UI, SDD, git/release).
 - **Procedimientos canónicos** (skills) reutilizables y versionados.
-- **Carpetas de contexto en tu proyecto** (`.architecture/`, `.quality/`, `.data/`, …) que la IA y el equipo comparten.
+- **Carpetas de contexto en tu proyecto** (`.navigator/`, `.architecture/`, `.quality/`, `.data/`, …) que la IA y el equipo comparten.
 
 Más detalle: [docs/vision.md](docs/vision.md).
 
@@ -22,8 +22,8 @@ Más detalle: [docs/vision.md](docs/vision.md).
 
 | | Cantidad | Detalle |
 |---|----------|---------|
-| Skills | 8 | architecture, code-quality, data-api, security, ui-design, sdd-spec, git-commit, release-management |
-| Agentes | 7 | uno por dominio; **Git & Release Manager** orquesta commit + release |
+| Skills | 9 | architecture, code-quality, data-api, git-commit, project-navigator, release-management, sdd-spec, security, ui-design |
+| Agentes | 8 | uno por dominio; **Git & Release Manager** orquesta commit + release; **Project Navigator** navega con `.navigator/` |
 | Plataformas | 3 | copilot, opencode, kiro |
 
 Catálogo completo (roles, carpetas, cuándo usar cada uno):
@@ -87,7 +87,7 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 | [docs/uso.md](docs/uso.md) | Cómo invocar y flujos recomendados |
 | [docs/desarrollo.md](docs/desarrollo.md) | Contribuir y extender el kit |
 | [docs/arquitectura-del-kit.md](docs/arquitectura-del-kit.md) | Pipeline técnico |
-| [PROJECT-NAVIGATOR-FRAMEWORK.md](PROJECT-NAVIGATOR-FRAMEWORK.md) | Roadmap (planificación) |
+| [PROJECT-NAVIGATOR-FRAMEWORK.md](PROJECT-NAVIGATOR-FRAMEWORK.md) | Spec de referencia del navigator (MVP instalable en el kit) |
 
 ## Contribuir (resumen)
 

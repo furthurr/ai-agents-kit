@@ -21,6 +21,7 @@ IDs estables del kit:
 
 | ID | Nombre visible típico |
 |----|------------------------|
+| `project-navigator` | Project Navigator |
 | `architecture` | Architecture Agent |
 | `code-quality` | Code Quality Agent |
 | `data-api` | Data & API Agent |
@@ -56,6 +57,7 @@ ruta de destino en [instalacion.md](instalacion.md).
 
 | Dices algo como… | Agente |
 |------------------|--------|
+| “¿Qué es este repo?”, “¿dónde está X?”, “bootstrap del navigator” | Project Navigator |
 | “Documenta la arquitectura”, “añade un ADR”, “¿qué módulos hay?” | Architecture |
 | “Revisa code smells”, “baja complejidad”, “mejora este archivo” | Code Quality |
 | “Catálogo de endpoints”, “DTO de login”, “diagrama ER” | Data & API |
@@ -69,8 +71,9 @@ Catálogo completo: [catalogo.md](catalogo.md).
 ## Buenas prácticas
 
 1. **Un dominio por sesión de agente** — no pidas al de UI que arregle la API.
-2. **Primera vez en un repo** — deja que el especialista inicialice su carpeta
-   (`.architecture/`, `.design/`, etc.); las siguientes sesiones serán más baratas.
+2. **Primera vez en un repo** — usa Project Navigator para bootstrap de
+   `.navigator/` (mapa barato); luego deja que cada especialista inicialice su
+   carpeta (`.architecture/`, `.design/`, etc.).
 3. **SDD antes de features grandes** — requisitos y diseño con gates; implementación
    solo tras aprobación (salvo Quick Plan / trivial que el usuario pida en directo).
 4. **Git y releases** — el agente propondrá el plan; **tú confirmas** commit, push,
@@ -84,6 +87,7 @@ Catálogo completo: [catalogo.md](catalogo.md).
 
 | Agente | Artefactos típicos |
 |--------|-------------------|
+| Project Navigator | `.navigator/` (ai-context, module-map, config; symbols/graph opt-in) |
 | Architecture | `.architecture/` (contexto, diagramas, ADRs, deuda) |
 | Code Quality | `.quality/` (hallazgos, estándares cacheados) |
 | Data & API | `.data/` (catálogo, modelos, contratos, ER) |
@@ -98,6 +102,8 @@ mismo contexto.
 
 ## Límites que debes esperar
 
+- Project Navigator **no** implementa features ni escribe fuera de `.navigator/`
+  (salvo export opt-in a `AGENTS.md` con confirmación); no selecciona el modelo.
 - Architecture **no** refactoriza código de negocio.
 - Code Quality **deriva** vulnerabilidades al Security Agent.
 - Data & API **no** implementa pantallas.
@@ -109,6 +115,7 @@ mismo contexto.
 ## Ejemplo de flujo completo
 
 ```text
+0. @project-navigator → “Bootstrap de .navigator/” / “¿qué es este repo?”
 1. @architecture  → “Inicializa la documentación de arquitectura”
 2. @data-api      → “Documenta los endpoints de autenticación”
 3. @sdd           → “Spec standard para refresh token offline”

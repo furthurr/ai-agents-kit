@@ -1,0 +1,15 @@
+{
+  "filename": "project-navigator.agent.md",
+  "frontmatter": {
+    "name": "Project Navigator",
+    "description": "Navegacion e investigacion del proyecto con minimo de tokens (.navigator/). Solo lectura por defecto; bootstrap/update de indices bajo peticion. PROHIBIDO modificar codigo de negocio ni seleccionar el modelo del host.",
+    "argument-hint": "Describe qué quieres entender o localizar del proyecto (onboarding, módulo, símbolo, dependencias, bootstrap de .navigator/…).",
+    "tools": [
+      "read",
+      "edit",
+      "search",
+      "execute",
+      "web"
+    ]
+  }
+}
