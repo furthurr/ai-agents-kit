@@ -296,6 +296,23 @@ def test_readme_references() -> None:
 
 
 # ---------------------------------------------------------------------------
+# 12. Negative test suite passes (tools/test_validate.py)
+# ---------------------------------------------------------------------------
+def test_negative_suite_passes() -> None:
+    print("\n\033[1m[12] tools/test_validate.py (pruebas negativas) pasa\033[0m")
+
+    suite = ROOT / "tools" / "test_validate.py"
+    check(suite.is_file(), "tools/test_validate.py existe")
+    result = subprocess.run(
+        [sys.executable, str(suite)],
+        capture_output=True, text=True, cwd=str(ROOT)
+    )
+    check(result.returncode == 0, "test_validate.py exit code 0")
+    if result.returncode != 0:
+        print(f"      stderr: {result.stderr.strip()}")
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 def main() -> int:
@@ -315,6 +332,7 @@ def main() -> int:
     test_kiro_frontmatter_match_is_array()
     test_validate_passes()
     test_readme_references()
+    test_negative_suite_passes()
 
     print(f"\n\033[1m{'='*60}\033[0m")
     total = PASSED + FAILED

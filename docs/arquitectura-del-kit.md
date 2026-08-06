@@ -113,10 +113,14 @@ Salida **determinista**: mismo canonical + adapters ⇒ mismo generated.
 
 Comprueba, entre otras cosas:
 
-- Coherencia del manifest con archivos presentes.
-- Adapters requeridos.
-- Que un re-render reproduce `generated/` (reproducibilidad).
-- Paridad esperada entre plataformas donde aplica.
+- Coherencia del manifest con archivos presentes (tipos, campos, IDs únicos).
+- Adapters requeridos, `filename` seguro y `frontmatter` válido.
+- Que un re-render en un directorio temporal reproduce `generated/` sin
+  modificarlo (validación **no destructiva**): una interrupción no altera
+  `generated/`.
+- Ausencia de duplicados, colisiones de salida y artefactos huérfanos.
+
+`tools/render.py` acepta `--output <dir>` para renderizar fuera de `generated/`.
 
 Ejecutar siempre antes de instalar o de commitear cambios de prompts.
 
@@ -127,6 +131,7 @@ Ejecutar siempre antes de instalar o de commitear cambios de prompts.
 | `tools/measure_context.py` | Palabras en agentes, skills y references (coste de contexto) |
 | `tools/import_installed.py` | Apoyo a importar lo instalado hacia `imports/` |
 | `tools/test_integrity.py` | Tests de integridad del repo/pipeline |
+| `tools/test_validate.py` | Pruebas negativas de `validate.py` y `render.py` |
 
 ## Scripts de instalación y backup
 

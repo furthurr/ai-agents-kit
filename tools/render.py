@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import shutil
 import sys
@@ -18,6 +19,20 @@ GENERATED = ROOT / "generated"
 
 def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def safe_relative_name(filename: str, context: str) -> Path:
+    """Ensure filename is a safe relative path that stays under its destination.
+
+    Rejects absolute paths, parent traversal (``..``) and empty names so that a
+    malicious or malformed adapter cannot write outside ``agents/``.
+    """
+    if not filename or not isinstance(filename, str):
+        raise ValueError(f"filename vacío o no válido en {context}")
+    candidate = Path(filename)
+    if candidate.is_absolute() or ".." in candidate.parts or filename.startswith(("/", "\\")):
+        raise ValueError(f"filename inseguro (path traversal) en {context}: {filename!r}")
+    return candidate
 
 
 def yaml_value(value: Any, indent: int = 0) -> list[str]:
@@ -56,10 +71,10 @@ def substitute(text: str, substitutions: dict[str, str], context: str) -> str:
     return text
 
 
-def render_platform(manifest: dict[str, Any], platform: str) -> None:
+def render_platform(manifest: dict[str, Any], platform: str, generated_root: Path) -> None:
     platform_dir = ADAPTERS / platform
     config = load_json(platform_dir / "platform.json")
-    output = GENERATED / platform
+    output = generated_root / platform
     if output.exists():
         shutil.rmtree(output)
 
@@ -81,16 +96,35 @@ def render_platform(manifest: dict[str, Any], platform: str) -> None:
         adapter = load_json(adapter_path)
         substitutions = {**global_substitutions, **adapter.get("substitutions", {})}
         body = substitute(agent.read_text(encoding="utf-8"), substitutions, f"{platform} agent {agent_id}")
-        destination = output / "agents" / f"{adapter['filename']}"
+        relative = safe_relative_name(adapter["filename"], f"{platform} agent {agent_id}")
+        agents_root = (output / "agents").resolve()
+        destination = (agents_root / relative).resolve()
+        if agents_root not in destination.parents:
+            raise ValueError(
+                f"filename escapa del destino en {platform} agent {agent_id}: {adapter['filename']!r}"
+            )
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(frontmatter(adapter["frontmatter"]) + body, encoding="utf-8")
 
 
-def main() -> int:
+def render(generated_root: Path | None = None) -> int:
     manifest = load_json(CANONICAL / "manifest.json")
+    target = generated_root if generated_root is not None else GENERATED
     for platform in manifest["platforms"]:
-        render_platform(manifest, platform)
+        render_platform(manifest, platform, target)
     return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="Directorio de salida (por defecto: generated/). Útil para render no destructivo.",
+    )
+    args = parser.parse_args(argv)
+    return render(args.output)
 
 
 if __name__ == "__main__":

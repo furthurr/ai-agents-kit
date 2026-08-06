@@ -45,11 +45,11 @@ Meta: llevar el producto instalable a una base defendible de **~7/10**.
 
 ### P0.1 — Estado de entrega coherente
 
-- [ ] **Versionar `project-navigator` como una unidad atómica**: fuente canónica,
+- [x] **Versionar `project-navigator` como una unidad atómica**: fuente canónica,
   adapters, artefactos generados, manifest y documentación deben entrar juntos.
 - [x] **Resolver contradicciones documentales**: README, visión y arquitectura
   deben coincidir sobre si Navigator está planificado, en MVP o estable.
-- [ ] **Dejar el árbol generado reproducible desde un clon limpio**, sin depender
+- [x] **Dejar el árbol generado reproducible desde un clon limpio**, sin depender
   de archivos locales o no rastreados.
 
 Definición de hecho:
@@ -60,13 +60,13 @@ Definición de hecho:
 
 ### P0.2 — Validación segura y completa
 
-- [ ] **Hacer `tools/validate.py` no destructivo**: renderizar en un directorio
+- [x] **Hacer `tools/validate.py` no destructivo**: renderizar en un directorio
   temporal configurable y comparar hashes sin renombrar ni borrar `generated/`.
-- [ ] **Validar schemas y valores** de `manifest.json`, `platform.json` y adapters:
+- [x] **Validar schemas y valores** de `manifest.json`, `platform.json` y adapters:
   tipos, campos obligatorios, IDs, extensiones y frontmatter esperado.
-- [ ] **Impedir path traversal y escrituras fuera de destino**: `filename` debe
+- [x] **Impedir path traversal y escrituras fuera de destino**: `filename` debe
   ser un nombre relativo seguro y permanecer bajo `generated/<platform>/agents/`.
-- [ ] **Detectar IDs y filenames duplicados**, colisiones de salida y entradas
+- [x] **Detectar IDs y filenames duplicados**, colisiones de salida y entradas
   canónicas o generadas huérfanas.
 - [x] **Dejar `tools/test_integrity.py` completamente verde**, incluida la
   referencia README ↔ `scripts/backup/`.
@@ -249,6 +249,15 @@ pero no inventa desde cero toda la estructura.
 - [x] Smoke MVP aprobado en Copilot, OpenCode 1.18.3 y Kiro sobre Genera CRM;
   modelos MiniMax-M3 y Claude 4.6, incluida regresión de instancia raíz y estados
   de capas (2026-08-05).
+- [x] P0.1 cerrado como unidad Git atómica (commit `1730348`) y verificado desde
+  clon limpio: render, validate e integrity en exit `0` y `git diff --exit-code`
+  limpio.
+- [x] P0.2: `validate.py` no destructivo (render en tmp, `generated/` intacto),
+  validación de manifest/adapters (tipos, campos, IDs, frontmatter), protección
+  contra path traversal en `render.py` y `validate.py`, detección de filenames
+  duplicados, colisiones y artefactos huérfanos. `render.py` acepta `--output`.
+  Pruebas negativas en `tools/test_validate.py` (12/12) e integradas en
+  `test_integrity.py` (232/232).
 
 Estos elementos describen implementación existente, no certifican por sí solos
 que el estado actual esté listo para release. Los gates de P0 determinan eso.
