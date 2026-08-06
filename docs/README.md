@@ -9,6 +9,7 @@ de entrada; aquí está el detalle por tema.
 | [catalogo.md](catalogo.md) | Usuarios | Skills, agentes y carpetas canónicas |
 | [instalacion.md](instalacion.md) | Usuarios | Render, validación e instalación por plataforma |
 | [uso.md](uso.md) | Usuarios | Cómo invocar especialistas y cuándo usar cada uno |
+| [navigator-smoke.md](navigator-smoke.md) | Usuarios y contribuidores | Smoke test reproducible del Project Navigator |
 | [desarrollo.md](desarrollo.md) | Contribuidores | Editar `canonical/`, `adapters/` y flujo de trabajo |
 | [arquitectura-del-kit.md](arquitectura-del-kit.md) | Contribuidores | Pipeline de render y herramientas |
 | [mejoras.md](mejoras.md) | Contribuidores | Backlog priorizado (impacto → esfuerzo) para subir calidad del kit |
@@ -17,5 +18,5 @@ de entrada; aquí está el detalle por tema.
 
 | Documento | Estado |
 |-----------|--------|
-| [PROJECT-NAVIGATOR-FRAMEWORK.md](../PROJECT-NAVIGATOR-FRAMEWORK.md) | Spec de referencia — MVP instalable (`project-navigator` en el kit) |
+| [PROJECT-NAVIGATOR-FRAMEWORK.md](../PROJECT-NAVIGATOR-FRAMEWORK.md) | Redirección temporal desde la antigua especificación |
 | [LICENSE](../LICENSE) | Apache-2.0 |

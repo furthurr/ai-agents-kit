@@ -38,8 +38,9 @@ No lo cambio por ti.
 7. Generar `module-map.json` desde `templates/module-map.template.json`.
 8. No bloquear si faltan `symbols` o grafo.
 9. Respetar `exclude` y no indexar secretos (`config.md`).
-10. Informar: artefactos creados, fuentes externas detectadas, gaps, cómo consultar.
-11. Aviso final de modelo.
+10. Ejecutar el gate post-bootstrap descrito abajo; corregir fallos antes de cerrar.
+11. Informar: artefactos creados, fuentes externas detectadas, gaps, presupuesto y cómo consultar.
+12. Aviso final de modelo.
 
 ### Lectura para Capa 0 (presupuesto)
 
@@ -58,7 +59,7 @@ No lo cambio por ti.
 3. Referenciar paths de docs largas; no incrustarlas
 4. Mapa rápido = resumen; dependencias viven en `module-map.json`
 5. Listar fuentes externas detectadas; no sobrescribirlas
-6. Si supera ~700 tokens: recortar convenciones y riesgos primero
+6. Si supera ~700 tokens: ejecutar una pasada de compactación antes de cerrar
 
 **module-map.json:**
 
@@ -68,6 +69,37 @@ No lo cambio por ti.
 4. No listar `node_modules`, build outputs ni paths excluidos
 5. Si no hay dependencias claras: `depends_on: []` (no inventar)
 6. `root` coincide con el subárbol de esta instancia `.navigator/`
+
+### Gate post-bootstrap
+
+No declarar el bootstrap terminado hasta verificar:
+
+1. Existen `config.yaml`, `ai-context.md` y `module-map.json` bajo la instancia
+   `.navigator/` correcta.
+2. `module-map.json` es JSON válido y cumple `schemas.md`: IDs únicos,
+   `depends_on` resolubles, `root` alineado y paths relativos.
+3. Las capas 2–3 no se generaron sin opt-in.
+4. Ningún artefacto contiene secretos, PII ni paths absolutos de la máquina.
+5. El estado de capas coincide con `config.yaml` y el filesystem.
+6. Se estimó el tamaño con `caracteres / 4` y se registró el resultado.
+
+Presupuesto de `ai-context.md`:
+
+- Objetivo: ~500 tokens; tope blando: ~700.
+- Si supera 700, compactar al menos una vez antes de informar el resultado.
+- Recortar primero dependencias exhaustivas, convenciones de implementación y
+  detalles duplicados en `module-map.json` o documentación externa.
+- Preservar propósito, stack principal, mapa rápido, fuentes y restricciones.
+- No cerrar por encima de 700 sin explicar la causa y obtener aceptación
+  explícita del usuario para conservar la excepción.
+
+Presupuesto de `module-map.json`:
+
+- Objetivo: ~1–2k tokens; tope blando: ~4k.
+- Si supera 4k, reducir granularidad o acotar `project.root`; no truncar JSON.
+
+Si el gate falla, corregir solo los artefactos de `.navigator/`, repetir las
+comprobaciones y después emitir el aviso final de modelo.
 
 ### Symbols (opt-in en bootstrap)
 
@@ -102,6 +134,10 @@ Reglas:
 2. Cada `.navigator/` indexa solo su subárbol (`config.project.root`)
 3. En multi-navigator, cada uno tiene su `ai-context.md` y `module-map.json`
 4. Consultas: usar el `.navigator/` del subproyecto en contexto; si hay varios y no está claro, preguntar
+5. Los índices siempre se resuelven junto al `config.yaml` seleccionado;
+   `project.root` delimita código, no cambia la ubicación física de los índices
+6. Ignorar backups como `.navigatorBack/`; solo `.navigator/config.yaml` define
+   una instancia válida
 
 ## Update on_request
 

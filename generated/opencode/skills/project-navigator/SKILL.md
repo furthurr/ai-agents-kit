@@ -37,12 +37,17 @@ Objetivo: responder con la capa más barata suficiente y citar fuentes.
 2. Si es bootstrap, update pesado o navegación reiterada de varias capas:
    **aviso de modelo** antes (`references/bootstrap.md`); esperar confirmación
    o "sigo con el actual".
-3. Comprobar `.navigator/` y capas habilitadas en `config.yaml`.
+3. Ejecutar el **gate de disponibilidad** en cada petición: leer el `config.yaml`
+   aplicable y comprobar en filesystem los artefactos de las capas candidatas
+   (`references/config.md`). No inferir su estado desde mensajes anteriores.
+   Resolver índices junto al `config.yaml` seleccionado, nunca desde el path del
+   archivo consultado ni desde `project.root`.
 4. Si no hay navigator y la consulta lo necesita → **ofrecer bootstrap**; si el
    usuario no quiere → modo degradado (`references/config.md`).
 5. Elegir la **capa mínima** (tabla abajo); subir de capa solo si no basta.
 6. Responder de forma concisa citando **fuente** (path de capa o `archivo:linea`).
-7. Si hubo degradado: declarar `capas_ausentes` y límite de confianza.
+7. Si hubo degradado: distinguir `capas_ausentes` de
+   `capas_deshabilitadas` y declarar el límite de confianza.
 8. Si el proceso fue pesado: **aviso de modelo** final.
 
 ### Clasificador pregunta → capa
@@ -56,13 +61,16 @@ Objetivo: responder con la capa más barata suficiente y citar fuentes.
 | Detalle de implementación | 4 código puntual (rango) | — |
 | Bootstrap / indexar / actualizar | Escritura en `.navigator/` | — |
 
-Detalle de capas, schemas y presupuestos: `references/layers.md`.
+Detalle de capas y presupuestos: `references/layers.md`. Contratos normativos de
+`module-map.json` y `symbols.json`: `references/schemas.md`.
 
 ### Reglas de consulta
 
 - Preferir archivo + rango de líneas sobre leer directorios enteros
 - No volcar grafo ni `symbols.json` / `module-map.json` completos al contexto
 - No inventar entradas de índices; si faltan, degradar o proponer update
+- Antes de afirmar que una capa está disponible o ausente, verificar su path
+- Reportar solo capas relevantes para la consulta; no listar todas por rutina
 - Máx. 2–3 capas distintas y 1–3 archivos de código por pregunta
 - Nunca “leer el repo entero” para compensar
 
@@ -77,10 +85,10 @@ Resumen bootstrap:
 2. Ubicación `.navigator/` (preguntar si ambiguo)
 3. `config.yaml` + `ai-context.md` (~500 tokens) + `module-map.json`
 4. No bloquear si faltan symbols/grafo
-5. Respetar exclude/secretos → informar artefactos, gaps, cómo consultar
-6. Aviso final de modelo
+5. Respetar exclude/secretos y ejecutar el gate post-bootstrap de integridad y presupuesto
+6. Informar artefactos, gaps y presupuesto → aviso final de modelo
 
-Plantillas: `references/templates/`.
+Schemas: `references/schemas.md`. Plantillas: `references/templates/`.
 
 Update: solo on_request; capas afectadas; no regenerar todo por defecto;
 preguntar si `ai-context.md` tiene edición manual evidente.
@@ -106,14 +114,15 @@ Referenciar; no sobrescribir. Detalle: `references/sources.md`.
 
 - Conciso, orientado a la pregunta
 - Indicar **fuentes** (p. ej. `.navigator/ai-context.md`, `src/foo.ts:42`)
-- En degradado: `capas_ausentes` + confianza limitada
+- En degradado: `fuentes`, `capas_ausentes`, `capas_deshabilitadas` y confianza.
+  `ausente` significa habilitada pero sin artefacto; `deshabilitada`, config en false
 - No rellenar con especulación presentada como hecho indexado
 
 ## Presupuesto de tokens (MVP, tope blando)
 
 | Artefacto / acción | Objetivo | Si se pasa |
 | --- | --- | --- |
-| `ai-context.md` | ~500 (tope ~700) | Recortar convenciones y riesgos |
+| `ai-context.md` | ~500 (tope ~700) | Compactar antes de cerrar; excepción explícita |
 | `module-map.json` | ~1–2k (tope ~4k) | Menos módulos o responsibilities más cortas |
 | Respuesta típica | ~200–600 (tope ~1k) | Solo lo pedido + fuentes |
 | Hits symbols | top 5–15 (máx. 25) | Filtrar; no dump |

@@ -100,10 +100,14 @@ generated/     artefactos listos para instalar (no editar)
 
 Detalle técnico: [arquitectura-del-kit.md](arquitectura-del-kit.md).
 
-## Evolución prevista
+## Project Navigator
 
-El documento
-[PROJECT-NAVIGATOR-FRAMEWORK.md](../PROJECT-NAVIGATOR-FRAMEWORK.md) describe un
-framework futuro de navegación de proyectos (contexto en capas, mapa de módulos,
-índice de símbolos, grafo). Está en **planificación** y aún no forma parte del
-kit instalable.
+Project Navigator forma parte del kit como **MVP instalable**. Materializa
+contexto selectivo en `.navigator/` mediante capas: contexto raíz y mapa de
+módulos obligatorios; símbolos y grafo opt-in; código puntual como último nivel.
+
+La fuente operativa es
+[`canonical/skills/project-navigator/SKILL.md`](../canonical/skills/project-navigator/SKILL.md)
+y sus referencias. El uso diario se documenta en [uso.md](uso.md), la validación
+manual en [navigator-smoke.md](navigator-smoke.md) y la evolución pendiente en
+[mejoras.md](mejoras.md).

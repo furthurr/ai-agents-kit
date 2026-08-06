@@ -47,7 +47,7 @@ Meta: llevar el producto instalable a una base defendible de **~7/10**.
 
 - [ ] **Versionar `project-navigator` como una unidad atómica**: fuente canónica,
   adapters, artefactos generados, manifest y documentación deben entrar juntos.
-- [ ] **Resolver contradicciones documentales**: README, visión y arquitectura
+- [x] **Resolver contradicciones documentales**: README, visión y arquitectura
   deben coincidir sobre si Navigator está planificado, en MVP o estable.
 - [ ] **Dejar el árbol generado reproducible desde un clon limpio**, sin depender
   de archivos locales o no rastreados.
@@ -68,7 +68,7 @@ Definición de hecho:
   ser un nombre relativo seguro y permanecer bajo `generated/<platform>/agents/`.
 - [ ] **Detectar IDs y filenames duplicados**, colisiones de salida y entradas
   canónicas o generadas huérfanas.
-- [ ] **Dejar `tools/test_integrity.py` completamente verde**, incluida la
+- [x] **Dejar `tools/test_integrity.py` completamente verde**, incluida la
   referencia README ↔ `scripts/backup/`.
 
 Definición de hecho:
@@ -148,12 +148,12 @@ arquitectura interna del kit.
 
 ### P1.2 — Smoke tests multiplataforma
 
-- [ ] Crear `docs/navigator-smoke.md` con un checklist post-install de cinco
+- [x] Crear `docs/navigator-smoke.md` con un checklist post-install de cinco
   minutos: instalación, bootstrap y tres consultas de prueba.
-- [ ] Ejecutar y registrar el smoke test en Copilot, OpenCode y Kiro.
-- [ ] Verificar carga del agente, activación de la skill, escritura permitida,
+- [x] Ejecutar y registrar el smoke test en Copilot, OpenCode y Kiro.
+- [x] Verificar carga del agente, activación de la skill, escritura permitida,
   rechazo de trabajo fuera de alcance y formato de respuesta degradada.
-- [ ] Cerrar §18.4 de [PROJECT-NAVIGATOR-FRAMEWORK.md](../PROJECT-NAVIGATOR-FRAMEWORK.md)
+- [x] Completar los criterios de [navigator-smoke.md](navigator-smoke.md)
   únicamente con evidencia enlazada.
 
 Definición de hecho: existe una tabla fechada de resultados por plataforma y
@@ -173,7 +173,8 @@ tendencia similar. No se publica un porcentaje de ahorro sin esos datos.
 
 ### P1.4 — Confiabilidad del Navigator
 
-- [ ] Fijar el formato degradado: `fuentes`, `capas_ausentes` y `confianza`.
+- [x] Fijar el formato degradado: `fuentes`, `capas_ausentes`,
+  `capas_deshabilitadas` y `confianza`; validado en Copilot, OpenCode y Kiro.
 - [ ] Añadir una regla de frescura: antigüedad de `generated_at`, commit indexado
   y desfase evidente antes de confiar en los índices.
 - [ ] Documentar actualización parcial y resolución de ediciones manuales.
@@ -198,8 +199,9 @@ documental.
   incluidas plantillas y datos anidados, y avisar al superar los topes.
 - [ ] **Symbols best-effort** con heurísticas probadas en uno o dos lenguajes;
   declarar cobertura y falsos positivos.
-- [ ] **Versionar schemas** de `config`, `module-map` y `symbols`, con validación y
-  notas de migración.
+- [ ] **Formalizar schemas ejecutables** de `config`, `module-map` y `symbols`,
+  con validación automática y notas de migración. Los contratos Markdown v1 ya
+  están documentados en canonical.
 - [ ] **Integrar Navigator ↔ Architecture**: Navigator sugiere Architecture si
   falta contexto arquitectónico; Architecture consume `.navigator/ai-context.md`
   de forma selectiva cuando existe.
@@ -238,14 +240,48 @@ pero no inventa desde cero toda la estructura.
 
 ## Hecho
 
-- [x] Spec MVP en [PROJECT-NAVIGATOR-FRAMEWORK.md](../PROJECT-NAVIGATOR-FRAMEWORK.md) (§18–21).
+- [x] Contrato MVP migrado a `canonical/skills/project-navigator/` y criterios
+  manuales extraídos a [navigator-smoke.md](navigator-smoke.md).
 - [x] Skill y agente `project-navigator` creados en `canonical/`.
 - [x] Adapters de OpenCode, Copilot y Kiro añadidos al árbol de trabajo junto al manifest.
 - [x] Pipeline base de render y validación para 9 skills, 8 agentes y 3 plataformas.
 - [x] Catálogo, uso y README actualizados inicialmente con Navigator.
+- [x] Smoke MVP aprobado en Copilot, OpenCode 1.18.3 y Kiro sobre Genera CRM;
+  modelos MiniMax-M3 y Claude 4.6, incluida regresión de instancia raíz y estados
+  de capas (2026-08-05).
 
 Estos elementos describen implementación existente, no certifican por sí solos
 que el estado actual esté listo para release. Los gates de P0 determinan eso.
+
+---
+
+## Checkpoint de continuidad — 2026-08-05
+
+Estado comprobado al cerrar la sesión:
+
+- Canonical de Project Navigator actualizado con schemas, gate de disponibilidad,
+  compactación post-bootstrap y resolución determinista de instancia.
+- Artefactos regenerados para Copilot, OpenCode y Kiro.
+- Instalaciones globales de las tres plataformas comparadas byte a byte con
+  `generated/`: 9 skills y 8 agentes por plataforma.
+- Smoke MVP aprobado en las tres plataformas; evidencia en
+  [navigator-smoke.md](navigator-smoke.md).
+- `tools/validate.py` correcto y `tools/test_integrity.py` en 230/230.
+- El antiguo framework quedó como redirección temporal; su contrato vive en
+  canonical y el runbook temporal de smoke fue eliminado.
+
+Siguiente gate, en este orden:
+
+1. Revisar el worktree y preservar todos los cambios intencionales existentes.
+2. Cerrar P0.1 con una unidad Git atómica y verificarla desde un clon limpio. El
+   commit requiere confirmación explícita del usuario.
+3. Implementar P0.2 empezando por `validate.py` no destructivo y un output
+   temporal configurable en `render.py`.
+4. Añadir validación de schemas, IDs, filenames, colisiones, path traversal y
+   artefactos huérfanos, con pruebas negativas.
+5. Solo después crear CI (P0.3).
+
+No iniciar P2, Graphify ni nuevas skills mientras estos gates P0 sigan abiertos.
 
 ---
 
@@ -269,7 +305,8 @@ que el estado actual esté listo para release. Los gates de P0 determinan eso.
 
 ## Referencias
 
-- Spec Navigator: [PROJECT-NAVIGATOR-FRAMEWORK.md](../PROJECT-NAVIGATOR-FRAMEWORK.md)
+- Contrato Navigator: [`canonical/skills/project-navigator/SKILL.md`](../canonical/skills/project-navigator/SKILL.md)
+- Smoke test Navigator: [navigator-smoke.md](navigator-smoke.md)
 - Catálogo: [catalogo.md](catalogo.md)
 - Uso: [uso.md](uso.md)
 - Arquitectura del kit: [arquitectura-del-kit.md](arquitectura-del-kit.md)

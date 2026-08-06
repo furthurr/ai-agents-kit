@@ -33,6 +33,7 @@ Nunca volcar índices completos al contexto del modelo.
 - MVP: unidades de primer nivel / features detectables; no explotar archivo-a-archivo
 - Objetivo serializado: ~1–2k tokens; tope blando ~4k
 - Plantilla: `templates/module-map.template.json`
+- Contrato normativo completo: `schemas.md`
 
 ## Capa 2 — Símbolos (opt-in)
 
@@ -46,6 +47,7 @@ Nunca volcar índices completos al contexto del modelo.
 - Tras localizar → Capa 4 en `file:line` si hace falta detalle
 - Si deshabilitada o ausente → degradar a búsqueda en código y declarar límite
 - Plantilla: `templates/symbols.template.json`
+- Contrato normativo completo: `schemas.md`
 
 ## Capa 3 — Knowledge graph (opt-in)
 
@@ -69,6 +71,10 @@ Nunca volcar índices completos al contexto del modelo.
 3. Máx. 2–3 capas distintas por pregunta (salvo que el usuario pida profundidad)
 4. Dump de `module-map` / `symbols` / grafo completo: **prohibido**
 5. Tokens de artefactos: ~4 chars ≈ 1 token (aproximado; no hace falta contador exacto)
+6. En cada consulta, derivar disponibilidad desde `config.yaml` + filesystem
+   mediante el gate de `config.md`; nunca desde memoria conversacional
+7. Resolver artefactos desde el directorio del config seleccionado; nunca crear
+   o buscar `.navigator/` junto al archivo de código consultado
 
 ## Relación entre capas
 

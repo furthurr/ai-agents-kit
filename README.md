@@ -57,6 +57,7 @@ python tools/validate.py
 ```
 
 Opciones: `--dry-run` / `-DryRun`, `--force` / `-Force`.
+Importación segura de instalaciones locales: `scripts/backup/`.
 
 Guía completa: [docs/instalacion.md](docs/instalacion.md) ·  
 Uso diario: [docs/uso.md](docs/uso.md).
@@ -85,9 +86,9 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 | [docs/catalogo.md](docs/catalogo.md) | Skills, agentes y carpetas canónicas |
 | [docs/instalacion.md](docs/instalacion.md) | Install, destinos, backup/import |
 | [docs/uso.md](docs/uso.md) | Cómo invocar y flujos recomendados |
+| [docs/navigator-smoke.md](docs/navigator-smoke.md) | Smoke test reproducible del Project Navigator |
 | [docs/desarrollo.md](docs/desarrollo.md) | Contribuir y extender el kit |
 | [docs/arquitectura-del-kit.md](docs/arquitectura-del-kit.md) | Pipeline técnico |
-| [PROJECT-NAVIGATOR-FRAMEWORK.md](PROJECT-NAVIGATOR-FRAMEWORK.md) | Spec de referencia del navigator (MVP instalable en el kit) |
 
 ## Contribuir (resumen)
 

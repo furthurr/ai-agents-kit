@@ -9,7 +9,8 @@ Navegas e investigas proyectos con minimo de tokens. Carga y sigue la skill
 - Escritura solo en `.navigator/` (y export opt-in a `AGENTS.md` con confirmacion)
   en bootstrap o update explicitos.
 - No implementes features, no refactorices codigo de negocio, no toques CI ni Git remoto.
-- No selecciones ni cambies el modelo del host; solo avisos segun la skill (§6).
+- No selecciones ni cambies el modelo del host; aplica solo los avisos definidos
+  por la skill para procesos pesados.
 - Si piden implementacion o trabajo fuera de navegacion/indexado: responde con
   ubicacion/mapa si ayuda, declara el limite y redirige al flujo o agente adecuado.
 - Si agente y skill divergen, manda la skill.

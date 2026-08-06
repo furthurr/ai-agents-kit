@@ -98,7 +98,75 @@ Principio: **degradar, no fallar**.
 | Tool externa ausente | Continuar skill-only; no instalar deps sin permiso |
 | Secreto o path excluido | Nunca indexar ni citar contenido sensible |
 
-Toda respuesta en modo degradado declara: **fuente usada**, **capas_ausentes** y **límite de confianza**.
+## Gate de disponibilidad por consulta
+
+Ejecutar antes de elegir una capa en **cada petición**, incluso después de un
+bootstrap realizado en la misma conversación. El filesystem y `config.yaml` son
+la fuente de verdad; el historial conversacional no lo es.
+
+| Configuración | Artefacto | Estado |
+| --- | --- | --- |
+| Capa en `true` | Existe y es legible | `disponible` |
+| Capa en `true` | No existe o no es legible | `ausente` |
+| Capa en `false` | Exista o no | `deshabilitada` |
+| Capa no requerida por la pregunta | Cualquiera | `no_aplica` |
+
+### Resolución determinista de instancia
+
+Definiciones:
+
+- `repo_root`: raíz del worktree Git; si no hay Git, raíz del workspace abierto.
+- `config_path`: `.navigator/config.yaml` de la instancia seleccionada.
+- `navigator_dir`: directorio que contiene `config_path`.
+- `project.root`: alcance de código indexado, relativo a `repo_root`.
+
+`project.root` **no es** la base donde buscar los índices. Todos los artefactos
+de capas son relativos a `navigator_dir`. Por ejemplo, si el config elegido es
+`<repo_root>/.navigator/config.yaml`, Capa 1 se comprueba exclusivamente en
+`<repo_root>/.navigator/module-map.json`, aunque el entrypoint consultado esté en
+`Codigo/genera/lib/main.dart`.
+
+Selección:
+
+1. Localizar candidatos con nombre exacto `.navigator/config.yaml` desde
+   `repo_root` y subproyectos conocidos. Ignorar `.navigatorBack`, backups,
+   caches y cualquier carpeta cuyo nombre no sea exactamente `.navigator`.
+2. Si hay un único candidato, seleccionarlo.
+3. Si hay varios, resolver el `project.root` de cada config contra `repo_root` y
+   seleccionar el alcance más específico que contenga el path consultado.
+4. Si existe un config raíz que cubre `.` y ningún config más específico aplica,
+   seleccionar el config raíz.
+5. Si cero candidatos existen, no hay Navigator. Si varios empatan, preguntar al
+   usuario; nunca adivinar ni fabricar un path junto al archivo consultado.
+
+Gate:
+
+1. Seleccionar `config_path` con las reglas anteriores.
+2. Leerlo de filesystem; no reutilizar valores recordados de otra ejecución.
+3. Fijar `navigator_dir = dirname(config_path)`.
+4. Para las capas candidatas, resolver y comprobar el artefacto desde
+   `navigator_dir`.
+5. Elegir la capa mínima entre las que estén `disponible`.
+6. Reportar solo estados no disponibles que afecten a la pregunta.
+
+Paths por capa:
+
+| Capa | Flag | Artefacto relativo a `navigator_dir` |
+| --- | --- | --- |
+| 0 | `layers.context` | `ai-context.md` |
+| 1 | `layers.module_map` | `module-map.json` |
+| 2 | `layers.symbols` | `symbols.json` |
+| 3 | `layers.graph` | Path de `graph.path` |
+
+Una respuesta degradada declara:
+
+- `fuentes`: paths realmente consultados
+- `capas_ausentes`: capas habilitadas cuyo artefacto no existe
+- `capas_deshabilitadas`: capas relevantes configuradas en `false`
+- `confianza`: `alta`, `media` o `baja`, con una razón breve
+
+No declarar una capa como ausente sin haber comprobado su path resuelto desde
+`navigator_dir`. No incluir capas `no_aplica` en la respuesta.
 
 ## Alcance de escritura
 

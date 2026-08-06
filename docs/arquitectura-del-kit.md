@@ -165,9 +165,28 @@ Añadir skill, agente o plataforma: pasos en [desarrollo.md](desarrollo.md).
 Principio de diseño: **ampliar adapters y, solo si hace falta, el renderer**;
 no ramificar copias del texto canónico por herramienta.
 
-## Relación con el “Project Navigator”
+## Project Navigator en el kit
 
-[PROJECT-NAVIGATOR-FRAMEWORK.md](../PROJECT-NAVIGATOR-FRAMEWORK.md) propone un
-sistema futuro de capas de contexto (`.navigator/`) para navegar cualquier repo
-con menos tokens. Es independiente del pipeline de render actual y aún no está
-implementado como skill/agente del manifest.
+Project Navigator está implementado como skill y agente del manifest. Usa capas
+de contexto en `.navigator/` para responder con la fuente más barata suficiente:
+contexto raíz, mapa de módulos, símbolos opt-in, grafo opt-in y código puntual.
+
+### Autoridad documental
+
+La única autoridad de comportamiento runtime es
+[`canonical/skills/project-navigator/SKILL.md`](../canonical/skills/project-navigator/SKILL.md).
+Sus contratos y procedimientos bajo `references/` se copian a las tres
+plataformas mediante el pipeline normal. Las plantillas son ejemplos; los
+contratos normativos de índices viven en `references/schemas.md`.
+
+### Decisiones de diseño
+
+- Navigator no sustituye a Architecture: localiza y resume; Architecture
+  documenta decisiones, límites y deuda estructural.
+- El comportamiento es agnóstico al proveedor y al modelo. El agente puede
+  recomendar un cambio manual para procesos pesados, pero nunca seleccionarlo.
+- Capas 0–1 forman el MVP; símbolos y grafo son opt-in y no bloquean bootstrap.
+- Los límites declarados por prompts no equivalen a un sandbox. Los adapters
+  reducen o solicitan permisos según las capacidades reales de cada host.
+- Métricas de ahorro son hipótesis hasta disponer de la evidencia definida en
+  [mejoras.md](mejoras.md) y [navigator-smoke.md](navigator-smoke.md).
