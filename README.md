@@ -98,6 +98,13 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 
 Nunca commits de secretos. Detalle: [docs/desarrollo.md](docs/desarrollo.md).
 
+## Autor
+
+Pedro G. V. [@furthurr](https://github.com/furthurr)
+
+- GitHub: https://github.com/furthurr
+- Email: pedrogvas@gmail.com
+
 ## Licencia
 
 [Apache-2.0](LICENSE)
