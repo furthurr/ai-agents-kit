@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Render generated artifacts
+        run: python tools/render.py
+      - name: Validate repository
+        run: python tools/validate.py
+      - name: Check Markdown links
+        run: python tools/check_links.py
+      - name: Run negative validation tests
+        run: python tools/test_validate.py
+      - name: Run link checker tests
+        run: python tools/test_links.py
+      - name: Run integrity tests
+        run: python tools/test_integrity.py
+      - name: Verify generated artifacts are committed
+        run: git diff --exit-code -- generated/

@@ -85,12 +85,15 @@ altera `generated/`.
 
 ### P0.3 — Integración continua
 
-- [ ] **Añadir CI en GitHub Actions** para Python soportado y, cuando aplique,
-  Linux, macOS y Windows.
+- [x] **Añadir CI base en GitHub Actions** para Linux con Python 3.10: render,
+  validación, integridad, enlaces y paridad de `generated/`.
+- [ ] Ampliar la matriz a Python soportado y, cuando aplique, Linux, macOS y
+  Windows.
 - [ ] Ejecutar parseo JSON/YAML, render reproducible, validación e integridad.
 - [ ] Comprobar sintaxis de scripts Bash y PowerShell.
 - [ ] Añadir pruebas negativas: token sin resolver, adapter incompleto, filename
   inseguro, colisión y artefacto generado desactualizado.
+- [x] Validar enlaces Markdown internos y referencias bajo `references/`.
 - [ ] Proteger el merge cuando el pipeline no esté verde.
 
 Definición de hecho: el workflow se ejecuta en pull requests, detecta al menos un
@@ -179,7 +182,7 @@ tendencia similar. No se publica un porcentaje de ahorro sin esos datos.
   y desfase evidente antes de confiar en los índices.
 - [ ] Documentar actualización parcial y resolución de ediciones manuales.
 - [ ] Unificar el aviso de modelo para evitar divergencias entre documentos.
-- [ ] Añadir el snippet recomendado de `.gitignore` para `.navigator/cache/`.
+- [x] Añadir el snippet recomendado de `.gitignore` para `.navigator/cache/`.
 
 Definición de hecho: las pruebas cubren índice ausente, desactualizado, parcial y
 editado manualmente; el agente no presenta datos obsoletos como actuales.
@@ -258,15 +261,19 @@ pero no inventa desde cero toda la estructura.
   duplicados, colisiones y artefactos huérfanos. `render.py` acepta `--output`.
   Pruebas negativas en `tools/test_validate.py` (12/12) e integradas en
   `test_integrity.py` (232/232).
+- [x] CI base en GitHub Actions y validación de enlaces Markdown locales mediante
+  `tools/check_links.py` y `tools/test_links.py`.
+- [x] P1.4: snippet de `.navigator/cache/` publicado en [uso.md](uso.md).
 
 Estos elementos describen implementación existente, no certifican por sí solos
 que el estado actual esté listo para release. Los gates de P0 determinan eso.
 
 ---
 
-## Checkpoint de continuidad — 2026-08-05
+## Registro histórico — 2026-08-05
 
-Estado comprobado al cerrar la sesión:
+Estado comprobado antes del cierre de P0.1 y P0.2. Se conserva como evidencia
+histórica; no define el siguiente trabajo vigente.
 
 - Canonical de Project Navigator actualizado con schemas, gate de disponibilidad,
   compactación post-bootstrap y resolución determinista de instancia.
@@ -279,16 +286,8 @@ Estado comprobado al cerrar la sesión:
 - El antiguo framework quedó como redirección temporal; su contrato vive en
   canonical y el runbook temporal de smoke fue eliminado.
 
-Siguiente gate, en este orden:
-
-1. Revisar el worktree y preservar todos los cambios intencionales existentes.
-2. Cerrar P0.1 con una unidad Git atómica y verificarla desde un clon limpio. El
-   commit requiere confirmación explícita del usuario.
-3. Implementar P0.2 empezando por `validate.py` no destructivo y un output
-   temporal configurable en `render.py`.
-4. Añadir validación de schemas, IDs, filenames, colisiones, path traversal y
-   artefactos huérfanos, con pruebas negativas.
-5. Solo después crear CI (P0.3).
+Los gates P0.1 y P0.2 de este registro quedaron cerrados posteriormente, con la
+evidencia indicada bajo **Hecho**. El siguiente trabajo vigente es P0.3.
 
 No iniciar P2, Graphify ni nuevas skills mientras estos gates P0 sigan abiertos.
 
@@ -296,12 +295,11 @@ No iniciar P2, Graphify ni nuevas skills mientras estos gates P0 sigan abiertos.
 
 ## Orden de ejecución
 
-1. Completar P0.1 y preparar un estado coherente desde clon limpio.
-2. Completar P0.2 y P0.3 para convertir la reproducibilidad en un gate automático.
-3. Endurecer instalación y seguridad con P0.4 y P0.5.
-4. Ejecutar los smoke tests y la demo de P1 antes de afirmar utilidad o ahorro.
-5. Implementar P2 solo donde los resultados de P1 muestren una limitación real.
-6. Mantener P3 diferido hasta que exista evidencia de retorno.
+1. Completar P0.3 para convertir la reproducibilidad en un gate automático.
+2. Endurecer instalación y seguridad con P0.4 y P0.5.
+3. Ejecutar los smoke tests y la demo de P1 antes de afirmar utilidad o ahorro.
+4. Implementar P2 solo donde los resultados de P1 muestren una limitación real.
+5. Mantener P3 diferido hasta que exista evidencia de retorno.
 
 ## Cómo actualizar este backlog
 

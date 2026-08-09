@@ -76,6 +76,8 @@ def test_project_structure() -> None:
         "tools/validate.py",
         "tools/measure_context.py",
         "tools/import_installed.py",
+        "tools/check_links.py",
+        "tools/test_links.py",
         "README.md",
         ".gitignore",
     ]
@@ -313,6 +315,22 @@ def test_negative_suite_passes() -> None:
 
 
 # ---------------------------------------------------------------------------
+# 13. Markdown link checks pass
+# ---------------------------------------------------------------------------
+def test_link_checker_passes() -> None:
+    print("\n\033[1m[13] Enlaces Markdown\033[0m")
+
+    for tool in ("check_links.py", "test_links.py"):
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "tools" / tool)],
+            capture_output=True, text=True, cwd=str(ROOT)
+        )
+        check(result.returncode == 0, f"tools/{tool} exit code 0")
+        if result.returncode != 0:
+            print(f"      stderr: {result.stderr.strip()}")
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 def main() -> int:
@@ -333,6 +351,7 @@ def main() -> int:
     test_validate_passes()
     test_readme_references()
     test_negative_suite_passes()
+    test_link_checker_passes()
 
     print(f"\n\033[1m{'='*60}\033[0m")
     total = PASSED + FAILED

@@ -100,6 +100,16 @@ Estas carpetas son **del proyecto en el que trabajas**, no del repo del kit.
 Conviene versionarlas con el código para que el equipo y la IA compartan el
 mismo contexto.
 
+Project Navigator no versiona su caché local. Añade este bloque al `.gitignore`
+del proyecto que indexas:
+
+```gitignore
+# project-navigator
+.navigator/cache/
+```
+
+Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
+
 ## Límites que debes esperar
 
 - Project Navigator **no** implementa features ni escribe fuera de `.navigator/`

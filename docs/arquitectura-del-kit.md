@@ -130,6 +130,7 @@ Ejecutar siempre antes de instalar o de commitear cambios de prompts.
 |--------|---------|
 | `tools/measure_context.py` | Palabras en agentes, skills y references (coste de contexto) |
 | `tools/import_installed.py` | Apoyo a importar lo instalado hacia `imports/` |
+| `tools/check_links.py` | Enlaces Markdown internos de docs y fuentes canónicas |
 | `tools/test_integrity.py` | Tests de integridad del repo/pipeline |
 | `tools/test_validate.py` | Pruebas negativas de `validate.py` y `render.py` |
 

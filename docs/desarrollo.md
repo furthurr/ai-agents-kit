@@ -24,6 +24,7 @@ camino oficial es `canonical` → `adapters` → `generated` → `scripts/instal
 python3 tools/render.py
 python3 tools/validate.py
 python3 tools/measure_context.py   # opcional: coste de contexto
+python3 tools/check_links.py       # enlaces Markdown internos
 
 # 3. Revisa el diff en generated/
 git diff generated/
@@ -97,10 +98,11 @@ en el render. Si queda un `{{...}}` sin definir, `render.py` falla.
 
 ```bash
 python3 tools/test_integrity.py
+python3 tools/test_links.py
 ```
 
 Cubre integridad del pipeline y convenciones del repo. Ejecútalo junto a
-`validate.py` cuando toques tools o la forma de los adapters.
+`validate.py` y `check_links.py` cuando toques tools o la forma de los adapters.
 
 ## Importar mejoras hechas “en caliente”
 
