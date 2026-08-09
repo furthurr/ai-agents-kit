@@ -13,10 +13,3 @@ de entrada; aquí está el detalle por tema.
 | [desarrollo.md](desarrollo.md) | Contribuidores | Editar `canonical/`, `adapters/` y flujo de trabajo |
 | [arquitectura-del-kit.md](arquitectura-del-kit.md) | Contribuidores | Pipeline de render y herramientas |
 | [mejoras.md](mejoras.md) | Contribuidores | Backlog priorizado (impacto → esfuerzo) para subir calidad del kit |
-
-## Documentos relacionados (raíz del repo)
-
-| Documento | Estado |
-|-----------|--------|
-| [PROJECT-NAVIGATOR-FRAMEWORK.md](../PROJECT-NAVIGATOR-FRAMEWORK.md) | Redirección temporal desde la antigua especificación |
-| [LICENSE](../LICENSE) | Apache-2.0 |
