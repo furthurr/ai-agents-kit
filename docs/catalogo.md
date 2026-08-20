@@ -3,7 +3,7 @@
 Resumen de lo que incluye el kit. El detalle operativo vive en
 `canonical/skills/<id>/SKILL.md` y `canonical/agents/<id>.md`.
 
-Inventario oficial: `canonical/manifest.json` (9 skills, 8 agentes, 3 plataformas).
+Inventario oficial: `canonical/manifest.json` (10 skills, 9 agentes, 3 plataformas).
 
 ## Skills
 
@@ -12,6 +12,7 @@ Inventario oficial: `canonical/manifest.json` (9 skills, 8 agentes, 3 plataforma
 | `architecture` | Documenta y audita arquitectura; no modifica código de negocio | `.architecture/` | arc42, C4 (Mermaid), ADRs; modos lite/full |
 | `code-quality` | Audita y remedia calidad de código paso a paso | `.quality/` | SonarQube (reglas públicas), Clean Code; foco móvil |
 | `data-api` | Datos, APIs, DTOs, contratos e integraciones | `.data/` | OpenAPI/JSON Schema (+ GraphQL/AsyncAPI/gRPC si aplica); ER Mermaid |
+| `documentation-orchestrator` | Comprueba, inicializa y sincroniza documentación mediante especialistas | — | Gate 0 de modelo; no crea una fuente documental propia |
 | `security` | Auditoría y remediación de seguridad guiada | `.security/` | OWASP MASVS/MASWE/MASTG, Mobile Top 10, CWE |
 | `ui-design` | Sistema visual: tokens, componentes, deuda de UI | `.design/` | Agnóstica a tecnología |
 | `sdd-spec` | Spec-Driven Development en 4 fases con gates | `.sdd/specs/<feature>/` | EARS, trazabilidad; modos direct/standard/deep |
@@ -26,6 +27,7 @@ Inventario oficial: `canonical/manifest.json` (9 skills, 8 agentes, 3 plataforma
 | `architecture` | Architecture Agent | `architecture` | Solo documenta/audita/recomienda en `.architecture/` |
 | `code-quality` | Code Quality Agent | `code-quality` | Calidad, mantenibilidad, pruebas; deriva seguridad |
 | `data-api` | Data & API Agent | `data-api` | Capa de datos y contratos; identifica PII |
+| `documentation-orchestrator` | Documentation Orchestrator | `documentation-orchestrator` + especialistas seleccionadas | Coordina estado, bootstrap, sincronización y release-check documental |
 | `security` | Security Agent | `security` | Solo seguridad; micro-pasos con confirmación |
 | `ui-design` | UI Design Agent | `ui-design` | Solo lo visual; no toca negocio ni APIs |
 | `sdd` | Agente SDD | `sdd-spec` | Specs, gates de aprobación e implementación trazable |
@@ -36,6 +38,8 @@ Inventario oficial: `canonical/manifest.json` (9 skills, 8 agentes, 3 plataforma
 
 ```text
 project-navigator ──────► Project Navigator       → .navigator/
+documentation-orch. ────► Documentation Orchestrator
+                          └─ coordina las carpetas existentes; no crea una propia
 architecture  ──────────► Architecture Agent      → .architecture/
 code-quality  ──────────► Code Quality Agent      → .quality/
 data-api      ──────────► Data & API Agent        → .data/
@@ -52,6 +56,7 @@ release-mgmt  ──┘                                 → .release/ (releases)
 | Necesitas… | Usa |
 |------------|-----|
 | Onboarding, localizar módulos/símbolos sin reexplorar el repo | Project Navigator |
+| Comprobar o sincronizar varias carpetas documentales | Documentation Orchestrator |
 | Entender o documentar módulos, capas, ADRs | Architecture |
 | Limpiar smells, complejidad, cobertura, convenciones | Code Quality |
 | Endpoints, DTOs, OpenAPI, repositorios, ER | Data & API |

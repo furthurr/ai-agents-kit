@@ -29,5 +29,6 @@
 
 ## Meta
 - Actualizado: <YYYY-MM-DD>
+- Source commit: <git rev-parse HEAD; omitir si no hay commit verificable>
 - Navigator root: <`.` o subpath del monorepo>
 - Generado por: project-navigator bootstrap|update|manual

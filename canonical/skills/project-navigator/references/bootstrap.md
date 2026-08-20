@@ -17,6 +17,11 @@ con el actual), confirmalo y sigo.
 
 Esperar confirmación o "sigo con el actual". Nunca seleccionar ni forzar el modelo.
 
+**Invocación orquestada:** si un orquestador canónico ya mostró explícitamente la
+recomendación de modelo para la fase Project Navigator y el usuario la confirmó,
+considera satisfecho este aviso y no lo repitas. Esto no omite ningún gate de
+alcance, ubicación, escritura ni integridad del bootstrap/update.
+
 **Después:**
 
 ```text
@@ -35,7 +40,9 @@ No lo cambio por ti.
 4. Crear `.navigator/` si no existe.
 5. Escribir `config.yaml` mínimo desde `templates/config.template.yaml`.
 6. Generar `ai-context.md` (~500 tokens) desde `templates/ai-context.template.md`.
-7. Generar `module-map.json` desde `templates/module-map.template.json`.
+7. Generar `module-map.json` desde `templates/module-map.template.json`; si Git y
+   el working tree permiten un baseline verificable, registrar `source_commit`
+   tambien en `ai-context.md` y los indices generados.
 8. No bloquear si faltan `symbols` o grafo.
 9. Respetar `exclude` y no indexar secretos (`config.md`).
 10. Ejecutar el gate post-bootstrap descrito abajo; corregir fallos antes de cerrar.
@@ -147,6 +154,8 @@ Reglas:
 - Mantener `exclude` y política de secretos
 - Avisos de modelo antes/después si el update es pesado
 - Preferir regenerar solo capas/módulos afectados
+- Actualizar `source_commit` en cada artefacto tocado solo cuando represente un
+  baseline Git verificable; no ocultar cambios locales bajo el hash de `HEAD`
 - Si el update sería más caro que un bootstrap acotado, proponer bootstrap parcial del `root` y pedir confirmación
 
 ## Export opt-in a `AGENTS.md`

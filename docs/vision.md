@@ -45,6 +45,7 @@ Varios especialistas dejan documentación estructurada en el repo donde trabajan
 
 | Carpeta | Dominio |
 |---------|---------|
+| `.navigator/` | Contexto, módulos e índices de navegación |
 | `.architecture/` | Arquitectura (arc42, C4, ADRs) |
 | `.design/` | Sistema visual y tokens |
 | `.data/` | APIs, DTOs, contratos, ER |
@@ -81,8 +82,10 @@ Usuario pide algo
    p. ej. .architecture/, .sdd/specs/...
 ```
 
-Algunos agentes cargan **una** skill (`architecture` → `architecture`).  
-`Git & Release Manager` orquesta **dos**: `git-commit` y `release-management`.
+Algunos agentes cargan **una** skill (`architecture` → `architecture`).
+`Git & Release Manager` orquesta `git-commit` y `release-management`.
+`Documentation Orchestrator` selecciona las skills documentales aplicables, pero
+no sustituye su autoridad ni crea una carpeta propia.
 
 ## Multiplataforma
 
@@ -111,3 +114,15 @@ La fuente operativa es
 y sus referencias. El uso diario se documenta en [uso.md](uso.md), la validación
 manual en [navigator-smoke.md](navigator-smoke.md) y la evolución pendiente en
 [mejoras.md](mejoras.md).
+
+## Documentation Orchestrator
+
+El orquestador ofrece una entrada única para comprobar, inicializar y sincronizar
+las carpetas documentales. Su core de bootstrap es `.navigator/` más
+`.architecture/`; Data y Design son condicionales, mientras Quality y Security
+son assurance recomendado y se sincronizan cuando existen o se solicitan.
+
+Antes de operar ejecuta un preflight barato, recomienda manualmente un nivel de
+modelo y se detiene. El coste alto queda reservado para barridos iniciales,
+monorepos complejos y auditorías profundas. El detalle operativo vive en
+[`canonical/skills/documentation-orchestrator/SKILL.md`](../canonical/skills/documentation-orchestrator/SKILL.md).

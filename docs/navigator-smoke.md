@@ -100,6 +100,8 @@ Comprobar además:
 
 - No hay secretos, PII ni paths absolutos dentro de `.navigator/`.
 - `module-map.json` respeta el contrato de la skill.
+- Con Git y working tree limpio, `ai-context.md`, `module-map.json` y los índices
+  habilitados registran el `source_commit` verificable usado como baseline.
 - Los IDs referenciados por `depends_on` existen.
 - El agente emitió el aviso final tras un proceso pesado.
 

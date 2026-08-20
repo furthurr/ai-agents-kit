@@ -1,0 +1,24 @@
+{
+  "filename": "documentation-orchestrator.md",
+  "frontmatter": {
+    "description": "Coordina el estado, bootstrap y sincronizacion de .navigator/, .architecture/, .data/, .design/, .quality/ y .security/. Recomienda un modelo bajo, medio o alto y SIEMPRE espera confirmacion antes de operar. No modifica codigo de producto ni administra SDD, releases o Graphify.",
+    "mode": "all",
+    "temperature": 0.2,
+    "permission": {
+      "edit": "ask",
+      "webfetch": "allow",
+      "bash": {
+        "*": "ask",
+        "git *": "deny",
+        "git status*": "allow",
+        "git log*": "allow",
+        "git diff*": "allow",
+        "git show*": "allow",
+        "git rev-parse*": "allow",
+        "rm *": "deny",
+        "rm -rf *": "deny",
+        "git clean*": "deny"
+      }
+    }
+  }
+}

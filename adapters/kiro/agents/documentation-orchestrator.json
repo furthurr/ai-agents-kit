@@ -1,0 +1,26 @@
+{
+  "filename": "documentation-orchestrator.md",
+  "frontmatter": {
+    "description": "Coordina el estado, bootstrap y sincronizacion de .navigator/, .architecture/, .data/, .design/, .quality/ y .security/. Recomienda un modelo bajo, medio o alto y SIEMPRE espera confirmacion antes de operar. No modifica codigo de producto ni administra SDD, releases o Graphify.",
+    "tools": [
+      "read",
+      "write",
+      "shell",
+      "web"
+    ],
+    "permissions": {
+      "rules": [
+        { "capability": "shell", "match": ["rm *"], "effect": "deny" },
+        { "capability": "shell", "match": ["rm -rf *"], "effect": "deny" },
+        { "capability": "shell", "match": ["git push*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git commit*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git tag*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git reset --hard*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git checkout -f*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git checkout --force*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git branch -D*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git clean*"], "effect": "deny" }
+      ]
+    }
+  }
+}

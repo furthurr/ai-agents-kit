@@ -8,6 +8,8 @@ divergen, manda este documento.
 
 - `version` identifica la versión del schema; el MVP usa `1`.
 - `generated_at` usa ISO-8601 en UTC.
+- `source_commit`, si hay Git, usa el object ID completo devuelto por
+  `git rev-parse HEAD`; se omite si no hay un commit verificable.
 - `root` es relativo al repositorio y coincide con `config.project.root`.
 - Todos los paths almacenados son relativos a `root`, nunca absolutos.
 - No incluir archivos excluidos, dependencias descargadas ni outputs de build.
@@ -22,6 +24,7 @@ divergen, manda este documento.
 | --- | --- | --- | --- |
 | `version` | number | Sí | Versión del schema; MVP = `1` |
 | `generated_at` | string ISO-8601 | Sí | Fecha y hora de generación o actualización |
+| `source_commit` | string | No | Commit Git usado como baseline verificable |
 | `root` | string | Sí | Subárbol indexado, relativo al repositorio |
 | `modules` | array | Sí | Unidades navegables detectadas |
 
@@ -63,6 +66,7 @@ Su cobertura es best-effort; no representa un AST completo.
 | --- | --- | --- | --- |
 | `version` | number | Sí | Versión del schema; MVP = `1` |
 | `generated_at` | string ISO-8601 | Sí | Fecha y hora de generación o actualización |
+| `source_commit` | string | No | Commit Git usado como baseline verificable |
 | `root` | string | Sí | Subárbol indexado, alineado con config y module-map |
 | `symbols` | array | Sí | Símbolos localizados con confianza suficiente |
 
@@ -102,6 +106,9 @@ Ejemplo: `templates/symbols.template.json`.
 - Tras localizar un símbolo, usar código puntual en `file:line` para el detalle.
 - Si falta una capa, degradar según `config.md` y declarar la limitación.
 - En updates, regenerar las capas o módulos afectados y conservar IDs estables.
+- Al completar un bootstrap/update con working tree limpio, actualizar
+  `source_commit` en cada artefacto tocado. Con cambios locales relevantes, no
+  presentar ese hash como si incluyera contenido sin commit.
 
 ## Evolución
 

@@ -1,6 +1,7 @@
 {
   "version": 1,
   "generated_at": "2026-08-04T12:00:00Z",
+  "source_commit": "0123456789abcdef0123456789abcdef01234567",
   "root": ".",
   "symbols": [
     {

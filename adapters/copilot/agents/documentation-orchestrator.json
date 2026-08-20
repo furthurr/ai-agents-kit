@@ -1,0 +1,15 @@
+{
+  "filename": "documentation-orchestrator.agent.md",
+  "frontmatter": {
+    "name": "Documentation Orchestrator",
+    "description": "Coordina el estado, bootstrap y sincronizacion de .navigator/, .architecture/, .data/, .design/, .quality/ y .security/. Recomienda un modelo bajo, medio o alto y SIEMPRE espera confirmacion antes de operar. No modifica codigo de producto ni administra SDD, releases o Graphify.",
+    "argument-hint": "Describe si quieres comprobar estado, inicializar core, sincronizar documentacion existente o ejecutar un release-check.",
+    "tools": [
+      "read",
+      "edit",
+      "search",
+      "execute",
+      "web"
+    ]
+  }
+}

@@ -25,6 +25,7 @@ IDs estables del kit:
 | `architecture` | Architecture Agent |
 | `code-quality` | Code Quality Agent |
 | `data-api` | Data & API Agent |
+| `documentation-orchestrator` | Documentation Orchestrator |
 | `security` | Security Agent |
 | `ui-design` | UI Design Agent |
 | `sdd` | Agente SDD / SDD |
@@ -58,6 +59,7 @@ ruta de destino en [instalacion.md](instalacion.md).
 | Dices algo como… | Agente |
 |------------------|--------|
 | “¿Qué es este repo?”, “¿dónde está X?”, “bootstrap del navigator” | Project Navigator |
+| “¿Está actualizada la documentación?”, “actualiza lo que tenemos”, “release-check” | Documentation Orchestrator |
 | “Documenta la arquitectura”, “añade un ADR”, “¿qué módulos hay?” | Architecture |
 | “Revisa code smells”, “baja complejidad”, “mejora este archivo” | Code Quality |
 | “Catálogo de endpoints”, “DTO de login”, “diagrama ER” | Data & API |
@@ -83,6 +85,25 @@ Catálogo completo: [catalogo.md](catalogo.md).
 6. **Contexto del proyecto** — si existe `AGENTS.md` o steering de Kiro, los
    agentes de SDD lo leen de forma selectiva.
 
+## Orquestación documental
+
+Elige `documentation-orchestrator` cuando la petición cruza varias carpetas. No
+crea `.documentation/`: carga las skills especialistas y cada una conserva la
+autoridad sobre su dominio.
+
+| Intención | Modo detectado |
+|-----------|----------------|
+| “Estado de la documentación” / `sync-check` | `status` |
+| “Inicializa el core” | `bootstrap-core` (`.navigator/` + `.architecture/`) |
+| “Actualiza el core existente” | `sync-core` |
+| “Actualiza las carpetas que ya tenemos” | `sync-existing` |
+| “Actualiza solo datos y seguridad” | `sync-domain` |
+| “¿Está listo para release?” | `release-check` |
+
+Antes de cualquier modo, el agente hace un preflight mínimo, recomienda un nivel
+de modelo (`bajo`, `medio` o `alto`) y espera respuesta. El usuario cambia el
+modelo manualmente o responde “continúa con el actual”; el agente nunca lo cambia.
+
 ## Qué deja cada especialista en tu repo
 
 | Agente | Artefactos típicos |
@@ -91,6 +112,7 @@ Catálogo completo: [catalogo.md](catalogo.md).
 | Architecture | `.architecture/` (contexto, diagramas, ADRs, deuda) |
 | Code Quality | `.quality/` (hallazgos, estándares cacheados) |
 | Data & API | `.data/` (catálogo, modelos, contratos, ER) |
+| Documentation Orchestrator | No deja carpeta propia; coordina las anteriores |
 | Security | `.security/` (hallazgos, checklist, evidencia) |
 | UI Design | `.design/` (tokens, componentes, deuda visual) |
 | SDD | `.sdd/specs/<nombre>/` (requirements, design, tasks, verification) |
@@ -114,6 +136,8 @@ Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
 
 - Project Navigator **no** implementa features ni escribe fuera de `.navigator/`
   (salvo export opt-in a `AGENTS.md` con confirmación); no selecciona el modelo.
+- Documentation Orchestrator no modifica producto, no selecciona el modelo y no
+  administra `.sdd/`, `.release/` ni `graphify-out/`.
 - Architecture **no** refactoriza código de negocio.
 - Code Quality **deriva** vulnerabilidades al Security Agent.
 - Data & API **no** implementa pantallas.
@@ -125,14 +149,15 @@ Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
 ## Ejemplo de flujo completo
 
 ```text
-0. @project-navigator → “Bootstrap de .navigator/” / “¿qué es este repo?”
-1. @architecture  → “Inicializa la documentación de arquitectura”
-2. @data-api      → “Documenta los endpoints de autenticación”
-3. @sdd           → “Spec standard para refresh token offline”
-4. (implementación con el agente/skill que corresponda a las tasks)
-5. @code-quality  → “Revisa los archivos tocados”
-6. @security      → “Revisa almacenamiento del token”
-7. @git-release-manager → “Prepara el commit” / “Release patch”
+0. @documentation-orchestrator → “Inicializa la documentación core”
+1. @data-api      → “Documenta los endpoints de autenticación”
+2. @sdd           → “Spec standard para refresh token offline”
+3. (implementación con el agente/skill que corresponda a las tasks)
+4. @git-release-manager → “Prepara el commit del producto”
+5. @documentation-orchestrator → “Actualiza la documentación existente”
+6. @git-release-manager → “Prepara el commit documental”
+7. @documentation-orchestrator → “Ejecuta release-check”
+8. @git-release-manager → “Prepara la release patch”
 ```
 
 No es obligatorio seguir este orden en cada cambio; sirve como mapa cuando el

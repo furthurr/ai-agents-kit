@@ -10,6 +10,7 @@ de entrada; aquí está el detalle por tema.
 | [instalacion.md](instalacion.md) | Usuarios | Render, validación e instalación por plataforma |
 | [uso.md](uso.md) | Usuarios | Cómo invocar especialistas y cuándo usar cada uno |
 | [navigator-smoke.md](navigator-smoke.md) | Usuarios y contribuidores | Smoke test reproducible del Project Navigator |
+| [documentation-orchestrator-smoke.md](documentation-orchestrator-smoke.md) | Usuarios y contribuidores | Smoke test de modos, modelo recomendado y límites del orquestador |
 | [desarrollo.md](desarrollo.md) | Contribuidores | Editar `canonical/`, `adapters/` y flujo de trabajo |
 | [arquitectura-del-kit.md](arquitectura-del-kit.md) | Contribuidores | Pipeline de render y herramientas |
 | [mejoras.md](mejoras.md) | Contribuidores | Backlog priorizado (impacto → esfuerzo) para subir calidad del kit |

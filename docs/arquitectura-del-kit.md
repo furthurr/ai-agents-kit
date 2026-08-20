@@ -196,3 +196,25 @@ contratos normativos de índices viven en `references/schemas.md`.
   reducen o solicitan permisos según las capacidades reales de cada host.
 - Métricas de ahorro son hipótesis hasta disponer de la evidencia definida en
   [mejoras.md](mejoras.md) y [navigator-smoke.md](navigator-smoke.md).
+
+## Documentation Orchestrator en el kit
+
+Documentation Orchestrator sigue el mismo patrón canónico de skill + agente, pero
+coordina procedimientos de varios dominios. No depende de APIs de subagentes de
+una plataforma: carga secuencialmente las skills aplicables, lo que conserva la
+misma semántica en Copilot, OpenCode y Kiro.
+
+### Límites y autoridad
+
+- `documentation-orchestrator` gobierna clasificación, orden, Gate 0 de modelo y
+  cierre global.
+- Cada skill especialista sigue siendo autoridad dentro de su propia carpeta y
+  conserva sus gates.
+- El agente no crea `.documentation/`; el estado permanece en los READMEs y
+  artefactos ya definidos por cada especialista.
+- SDD, Release Management y Graphify son workflows externos de solo lectura para
+  este agente.
+- La recomendación de modelo es genérica (`bajo`/`medio`/`alto`) y manual; ningún
+  adapter permite que el agente seleccione el modelo del host.
+
+Smoke test: [documentation-orchestrator-smoke.md](documentation-orchestrator-smoke.md).
