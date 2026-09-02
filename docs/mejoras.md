@@ -89,15 +89,19 @@ altera `generated/`.
   validación, integridad, enlaces y paridad de `generated/`.
 - [ ] Ampliar la matriz a Python soportado y, cuando aplique, Linux, macOS y
   Windows.
-- [ ] Ejecutar parseo JSON/YAML, render reproducible, validación e integridad.
-- [ ] Comprobar sintaxis de scripts Bash y PowerShell.
-- [ ] Añadir pruebas negativas: token sin resolver, adapter incompleto, filename
+- [ ] Ejecutar parseo explícito de JSON/YAML en la matriz de CI.
+- [x] Ejecutar render reproducible, validación e integridad en CI.
+- [x] Comprobar sintaxis de scripts Bash.
+- [ ] Comprobar sintaxis de scripts PowerShell en un runner Windows.
+- [x] Añadir pruebas negativas: token sin resolver, adapter incompleto, filename
   inseguro, colisión y artefacto generado desactualizado.
 - [x] Validar enlaces Markdown internos y referencias bajo `references/`.
 - [ ] Proteger el merge cuando el pipeline no esté verde.
 
 Definición de hecho: el workflow se ejecuta en pull requests, detecta al menos un
-fixture inválido por cada clase crítica y pasa desde un clon limpio.
+fixture inválido por cada clase crítica y pasa desde un clon limpio. La ejecución
+de scripts PowerShell y el parseo explícito JSON/YAML siguen pendientes hasta
+ampliar la matriz de CI.
 
 ### P0.4 — Instalación estricta y reversible
 
@@ -168,6 +172,7 @@ Definición de hecho:
 ```bash
 python3 tools/render.py
 python3 tools/validate.py
+python3 tools/test_sdd_contract.py
 grep -rn "sdd_start_instruction" canonical/ adapters/   # sin config muerta
 grep -n "GATE 3" canonical/skills/sdd-spec/SKILL.md     # segunda persona
 git diff --exit-code -- generated/
@@ -237,8 +242,9 @@ editado manualmente; el agente no presenta datos obsoletos como actuales.
 ### P1.5 — Coherencia del agente SDD
 
 SDD es la skill más compleja del kit (4 fases, 3 variantes, 5 referencias) y la
-única que escribe código de producto. Hasta ahora no tenía ítems en este backlog
-ni smoke test propio. Requiere P0.6 cerrado antes de empezar.
+única que escribe código de producto. P0.6 ya está cerrado y el contrato TDD junto
+con el smoke test base ya están implementados; quedan pendientes de estado,
+reanudación y evidencia manual.
 
 - [ ] **Añadir lectura de estado al iniciar**, como ya hacen `security` y
   `code-quality`: qué gates se aprobaron, en qué fase está la spec y qué tareas
@@ -258,28 +264,32 @@ ni smoke test propio. Requiere P0.6 cerrado antes de empezar.
   aprobadas, y nada más.
 - [ ] **Definir dueño y formato de `.sdd/steering/`**: lo leen el agente, la skill
   y `project-navigator`, pero ninguna skill lo crea ni especifica su contenido.
-- [ ] **Deduplicar la regla de PBT**, hoy repetida en `agents/sdd.md`,
-  `references/integrity-gate.md` y `references/testing.md`.
-- [ ] **Dar criterio verificable al modo `direct`**: «trivial → `direct`» es
-  circular. Fijar umbrales como el clasificador de `documentation-orchestrator`
-  (número de archivos, capas cruzadas, riesgo).
-- [ ] **Completar las variantes**: Bugfix no declara si pasa por los cuatro gates
-  ni cómo verifica; Quick Plan omite la Fase 4 pero mantiene el integrity gate sin
-  definir contra qué artefacto cierra.
+- [ ] **Consolidar las reglas de PBT**: `agents/sdd.md` ya delega la estrategia en
+  `references/testing.md`, pero aún conviene separar o justificar las reglas
+  complementarias de `references/integrity-gate.md` y `references/testing.md`.
+- [x] **Dar criterio verificable al modo `direct`**: alcance claro, localizado y
+  reversible; sin contrato público, migración, decisión arquitectónica, cruce de
+  capas ni riesgo relevante. Evidencia: `SKILL.md` y `tools/test_sdd_contract.py`.
+- [x] **Completar las variantes**: Bugfix declara gates normales salvo el caso
+  trivial, regresión antes del fix y manejo honesto de un defecto no reproducible;
+  Quick Plan declara qué evidencia queda en tareas/resumen al omitir Fase 4.
 - [ ] **Definir la reconciliación de contexto de dominio**: cuando falta
   `.architecture/`, la skill documenta el dominio dentro de `design.md` y nadie lo
   promueve después, porque `documentation-orchestrator` tiene prohibido tocar
   `.sdd/`. El conocimiento queda enterrado en specs cerradas.
-- [ ] **Crear `docs/sdd-smoke.md`** con el mismo rigor que
-  [navigator-smoke.md](navigator-smoke.md): gates respetados, integrity gate
-  rechazando un `[x]` sin artefacto y trabajo fuera de alcance rechazado.
+- [x] **Crear el documento base `docs/sdd-smoke.md`** con escenarios de gates,
+  proporcionalidad y testing adaptativo, siguiendo el formato de
+  [navigator-smoke.md](navigator-smoke.md).
+- [ ] **Completar y ejecutar el smoke SDD multiplataforma**: añadir casos
+  explícitos de rechazo del integrity gate ante un `[x]` sin artefacto y de trabajo
+  fuera de alcance, y registrar evidencia para Copilot, OpenCode y Kiro.
 - [x] **Retirar las cifras de coste sin medición** (`Baseline +~10 %`, `+40–80 %`)
   y sustituirlas por carga documental cualitativa; cualquier porcentaje futuro
   exige una comparación reproducible.
 
-Definición de hecho: una spec se puede abandonar y reanudar en otra sesión sin
-perder el estado de los gates, los IDs de requisito sobreviven a un reordenado de
-historias y existe una tabla fechada de smoke por plataforma y versión.
+Definición de hecho del bloque restante: una spec se puede abandonar y reanudar en
+otra sesión sin perder el estado de los gates, los IDs de requisito sobreviven a un
+reordenado de historias y existe una tabla fechada de smoke por plataforma y versión.
 
 #### Extensión implementada: testing adaptativo
 
@@ -290,8 +300,9 @@ historias y existe una tabla fechada de smoke por plataforma y versión.
   verificable cuando no cambia comportamiento observable o falta un harness viable.
 - [x] Evitar test-after en plantillas y exigir evidencia RED/GREEN en el integrity gate.
 - [x] Añadir contrato automatizado (`tools/test_sdd_contract.py`) y el documento
-  [sdd-smoke.md](sdd-smoke.md). Su ejecución multiplataforma sigue pendiente, por
-  lo que el ítem general de smoke permanece abierto.
+  base [sdd-smoke.md](sdd-smoke.md).
+- [ ] Ejecutar el smoke manual en las tres plataformas y completar sus casos de
+  integrity gate y alcance; sin esa evidencia no se marca la matriz como aprobada.
 
 ---
 
@@ -358,7 +369,7 @@ pero no inventa desde cero toda la estructura.
   manuales extraídos a [navigator-smoke.md](navigator-smoke.md).
 - [x] Skill y agente `project-navigator` creados en `canonical/`.
 - [x] Adapters de OpenCode, Copilot y Kiro añadidos al árbol de trabajo junto al manifest.
-- [x] Pipeline base de render y validación para 9 skills, 8 agentes y 3 plataformas.
+- [x] Pipeline base de render y validación para 10 skills, 9 agentes y 3 plataformas.
 - [x] Catálogo, uso y README actualizados inicialmente con Navigator.
 - [x] Smoke MVP aprobado en Copilot, OpenCode 1.18.3 y Kiro sobre Genera CRM;
   modelos MiniMax-M3 y Claude 4.6, incluida regresión de instancia raíz y estados
@@ -370,8 +381,8 @@ pero no inventa desde cero toda la estructura.
   validación de manifest/adapters (tipos, campos, IDs, frontmatter), protección
   contra path traversal en `render.py` y `validate.py`, detección de filenames
   duplicados, colisiones y artefactos huérfanos. `render.py` acepta `--output`.
-  Pruebas negativas en `tools/test_validate.py` (12/12) e integradas en
-  `test_integrity.py` (232/232).
+  Pruebas negativas en `tools/test_validate.py` (14/14) e integradas en
+  `test_integrity.py` (252/252).
 - [x] CI base en GitHub Actions y validación de enlaces Markdown locales mediante
   `tools/check_links.py` y `tools/test_links.py`.
 - [x] P1.4: snippet de `.navigator/cache/` publicado en [uso.md](uso.md).
@@ -406,6 +417,14 @@ pero no inventa desde cero toda la estructura.
   verde. Coste medido: **0 tokens por turno** (`SKILL.md` varía entre −2 y +1
   caracteres) y **+56 tokens netos** en referencias bajo demanda, concentrados en
   `templates.md`.
+- [x] Commit `67b76fc` (2026-09-01): testing adaptativo integrado en SDD. Una
+  feature normal usa TDD focalizado; TDD estricto queda bajo petición explícita;
+  bugfix usa regresión y legado usa caracterización. Evidencia: contrato SDD
+  `tools/test_sdd_contract.py` en 46/46, `tools/test_validate.py` en 14/14,
+  `tools/test_integrity.py` en 252/252 y `tools/test_install.py` en 72/72.
+  Medición de contexto posterior: 1.417 palabras de agentes, 13.756 de skills y
+  9.038 de referencias bajo demanda. Son métricas de contexto, no un porcentaje
+  de coste por feature.
 
 Estos elementos describen implementación existente, no certifican por sí solos
 que el estado actual esté listo para release. Los gates de P0 determinan eso.
@@ -429,7 +448,8 @@ histórica; no define el siguiente trabajo vigente.
   canonical y el runbook temporal de smoke fue eliminado.
 
 Los gates P0.1 y P0.2 de este registro quedaron cerrados posteriormente, con la
-evidencia indicada bajo **Hecho**. El siguiente trabajo vigente es P0.3.
+evidencia indicada bajo **Hecho**. En ese momento, el siguiente trabajo vigente era
+P0.3; el estado actual se describe en las secciones superiores.
 
 No iniciar P2, Graphify ni nuevas skills mientras estos gates P0 sigan abiertos.
 
@@ -442,10 +462,10 @@ No iniciar P2, Graphify ni nuevas skills mientras estos gates P0 sigan abiertos.
    forma estática, y desbloquea el último ítem abierto de P0.4.
 2. Endurecer la seguridad con P0.5.
 3. Ejecutar los smoke tests y la demo de P1 antes de afirmar utilidad o ahorro.
-4. Abordar P1.5, ya desbloqueado por P0.6. A diferencia de P0.6, sus ítems sí
-   añaden texto al prompt: medir el coste de cada uno antes de escribirlo.
-6. Implementar P2 solo donde los resultados de P1 muestren una limitación real.
-7. Mantener P3 diferido hasta que exista evidencia de retorno.
+4. Completar los pendientes restantes de P1.5; medir el coste de cualquier texto
+   nuevo antes de incorporarlo al prompt.
+5. Implementar P2 solo donde los resultados de P1 muestren una limitación real.
+6. Mantener P3 diferido hasta que exista evidencia de retorno.
 
 ## Cómo actualizar este backlog
 
