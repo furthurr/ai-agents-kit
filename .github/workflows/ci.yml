@@ -23,9 +23,18 @@ jobs:
         run: python tools/check_links.py
       - name: Run negative validation tests
         run: python tools/test_validate.py
+      - name: Run SDD contract tests
+        run: python tools/test_sdd_contract.py
       - name: Run link checker tests
         run: python tools/test_links.py
       - name: Run integrity tests
         run: python tools/test_integrity.py
+      - name: Check shell script syntax
+        run: |
+          for script in scripts/install/*.sh scripts/backup/*.sh; do
+            bash -n "$script"
+          done
+      - name: Run installer tests
+        run: python tools/test_install.py
       - name: Verify generated artifacts are committed
         run: git diff --exit-code -- generated/

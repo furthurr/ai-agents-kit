@@ -49,6 +49,26 @@ $AgentsSrc = Join-Path $RepoRoot "generated\kiro\agents"
 function Write-Info { param($m) Write-Host "-> $m" -ForegroundColor Blue }
 function Write-Ok   { param($m) Write-Host "OK $m" -ForegroundColor Green }
 function Write-Warn { param($m) Write-Host "!  $m" -ForegroundColor Yellow }
+function Write-Err  { param($m) Write-Host "X  $m" -ForegroundColor Red }
+
+# --- Preflight compartido ---
+# tools\install_preflight.py define que significa "instalacion completa" para los
+# seis instaladores, tomando canonical\manifest.json como fuente de verdad.
+$Python = $null
+foreach ($candidate in @("python", "python3")) {
+    if (Get-Command $candidate -ErrorAction SilentlyContinue) { $Python = $candidate; break }
+}
+
+function Invoke-Preflight {
+    param([string[]]$Arguments)
+    if (-not $Python) {
+        Write-Err "Se requiere Python 3 para verificar la instalacion."
+        return $false
+    }
+    $preflight = Join-Path $RepoRoot "tools\install_preflight.py"
+    & $Python $preflight --platform kiro @Arguments
+    return ($LASTEXITCODE -eq 0)
+}
 
 # --- Copia el contenido de un arbol excluyendo basura de macOS (.DS_Store) ---
 # Fusiona sin borrar lo previo (equivalente a rsync sin --delete / cp -R).
@@ -99,8 +119,8 @@ function Install-SkillsFrom {
 # --- Instala skills generadas ---
 function Install-Skills {
     if (-not (Test-Path -LiteralPath $SkillsSrc)) {
-        Write-Warn "No hay skills que instalar."
-        return
+        Write-Err "No existe $SkillsSrc"
+        exit 1
     }
     Write-Info "Instalando skills -> $SkillsDest"
     if (-not $DryRun) { New-Item -ItemType Directory -Force -Path $SkillsDest | Out-Null }
@@ -110,8 +130,8 @@ function Install-Skills {
 # --- Instala los agentes (uno por archivo .md) ---
 function Install-Agents {
     if (-not (Test-Path -LiteralPath $AgentsSrc)) {
-        Write-Warn "No existe $AgentsSrc - se omiten agentes."
-        return
+        Write-Err "No existe $AgentsSrc"
+        exit 1
     }
     Write-Info "Instalando agentes -> $AgentsDest"
     if (-not $DryRun) { New-Item -ItemType Directory -Force -Path $AgentsDest | Out-Null }
@@ -135,14 +155,32 @@ Write-Host ""
 if ($DryRun) { Write-Warn "Modo -DryRun: no se copiara nada." }
 if ($Force)  { Write-Warn "Modo -Force: no se crearan backups." }
 
+# Verificar el origen antes de tocar el destino: una instalacion incompleta es
+# peor que ninguna, porque se manifiesta como un agente que ignora su alcance.
+if (-not (Invoke-Preflight @("--check-source"))) {
+    Write-Err "Instalacion abortada. Regenera los artefactos: python tools\render.py"
+    exit 1
+}
+
 Install-Skills
 Write-Host ""
 Install-Agents
-
 Write-Host ""
+
+if ($DryRun) {
+    Write-Ok "Dry-run finalizado: no se escribio nada."
+    exit 0
+}
+
+if (-not (Invoke-Preflight @("--check-installed", "--skills-dest", $SkillsDest, "--agents-dest", $AgentsDest))) {
+    Write-Err "La instalacion quedo incompleta; no se declara completada."
+    exit 1
+}
+
 Write-Ok "Instalacion completada."
-if (-not $DryRun -and -not $Force -and (Test-Path -LiteralPath $BackupRoot)) {
+if (-not $Force -and (Test-Path -LiteralPath $BackupRoot)) {
     Write-Info "Backups del contenido previo en: $BackupRoot"
+    Write-Info "Para restaurar: Copy-Item -Path '$BackupRoot\skills\*' -Destination '$SkillsDest' -Recurse -Force"
 }
 Write-Host ""
 Write-Info "Reinicia Kiro para que detecte las nuevas skills y agentes."

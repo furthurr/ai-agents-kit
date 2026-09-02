@@ -62,17 +62,23 @@ declarada, la validación o el render fallarán según el caso.
 ### `platform.json`
 
 Define sustituciones de texto aplicadas a skills (y al combinar con el adapter
-del agente). Ejemplos de tokens:
+del agente). Tokens declarados hoy:
 
 | Token | Uso típico |
 |-------|------------|
-| `{{platform_name}}` | Nombre legible de la herramienta |
 | `{{sdd_agent}}` | Cómo referenciar al agente SDD (`@sdd`, `sdd`, …) |
-| `{{sdd_start_instruction}}` | Texto de “cómo arrancar SDD” en esa UI |
-| `{{gate_instruction}}` | Cómo se explica un gate de aprobación |
+| `{{gate_instruction}}` | Matiz de plataforma sobre el gate; vacío si no hace falta |
 | `{{steering_paths}}` | Rutas de steering / AGENTS.md |
 
-Cualquier `{{token}}` sin resolver aborta el render.
+Reglas:
+
+- Cualquier `{{token}}` sin resolver aborta el render.
+- Un token usado en canonical debe estar declarado en **todas** las plataformas
+  del manifest, aunque el valor sea la cadena vacía.
+- Una sustitución declarada y **no** usada en canonical también falla la
+  validación: la config muerta se desincroniza de los prompts que dice adaptar.
+- `render.py` solo sustituye en `SKILL.md`. Un token dentro de `references/`
+  llegaría literal al modelo, así que la validación lo rechaza.
 
 ### Adapter de agente (`agents/<id>.json`)
 

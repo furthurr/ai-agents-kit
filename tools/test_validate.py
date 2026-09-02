@@ -245,6 +245,35 @@ def test_validate_non_destructive() -> None:
         check(before == after, "generated/ intacto tras validación")
 
 
+def test_unused_substitution() -> None:
+    """Dead adapter config must fail: it drifts from the prompts it claims to adapt."""
+    print("\n\033[1m[11] Sustitución declarada y no usada\033[0m")
+    with tempfile.TemporaryDirectory() as tmp:
+        root = build_fixture(Path(tmp))
+        with_kit(root)
+        render_module.render()
+        restore_modules()
+        platform = root / "adapters" / "acme" / "platform.json"
+        data = json.loads(platform.read_text(encoding="utf-8"))
+        data["substitutions"]["{{token_muerto}}"] = "nunca usado"
+        platform.write_text(json.dumps(data), encoding="utf-8")
+        check(run_validate(root) == 1, "rechaza una sustitución que ningún canonical usa")
+
+
+def test_token_in_reference() -> None:
+    """render.py only substitutes SKILL.md, so tokens under references/ leak."""
+    print("\n\033[1m[12] Token sin sustituir en references/\033[0m")
+    with tempfile.TemporaryDirectory() as tmp:
+        root = build_fixture(Path(tmp))
+        with_kit(root)
+        render_module.render()
+        restore_modules()
+        reference = root / "canonical" / "skills" / "demo" / "references"
+        reference.mkdir(parents=True, exist_ok=True)
+        (reference / "notes.md").write_text("Ver {{platform_name}}\n", encoding="utf-8")
+        check(run_validate(root) == 1, "rechaza un token fuera de SKILL.md")
+
+
 def main() -> int:
     print(f"\033[1m{'='*60}\033[0m")
     print("\033[1m  Pruebas negativas — validate.py / render.py\033[0m")
@@ -260,6 +289,8 @@ def main() -> int:
     test_orphan_canonical_skill()
     test_stale_generated()
     test_validate_non_destructive()
+    test_unused_substitution()
+    test_token_in_reference()
 
     print(f"\n\033[1m{'='*60}\033[0m")
     total = PASSED + FAILED

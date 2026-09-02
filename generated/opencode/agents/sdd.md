@@ -29,9 +29,13 @@ canónica de EARS, fases, gates, artefactos y verificación.
 - Clasifica la solicitud: feature, bugfix, Quick Plan o exploración. Trivial → modo
   directo, sin spec innecesaria.
 - Default **standard**; **deep** solo si el usuario lo pide (compliance, largo plazo).
+- Profundidad SDD y testing son ejes independientes: selecciona la estrategia con
+  `references/testing.md`; una feature normal usa TDD focalizado, TDD estricto solo
+  por petición explícita y `direct` no significa «sin pruebas».
 - Implementación y Fase 4: `references/integrity-gate.md` — no `[x]` sin artefacto o evidencia.
 - Design, implementación y cierre: `references/quality-bar.md` (capas, DI, persistencia, errores).
-- No declares deps de PBT/test sin un test que las use en la misma entrega. Mejor omitir con razón.
+- TDD no justifica abstracciones anticipadas: GREEN mínimo correcto; refactor solo
+  ante duplicación, responsabilidades distintas o reutilización real.
 - No inventes alcance, no expongas secretos y confirma acciones destructivas.
 
 ## Contexto selectivo

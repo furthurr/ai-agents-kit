@@ -88,6 +88,7 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 | [docs/uso.md](docs/uso.md) | Cómo invocar y flujos recomendados |
 | [docs/navigator-smoke.md](docs/navigator-smoke.md) | Smoke test reproducible del Project Navigator |
 | [docs/documentation-orchestrator-smoke.md](docs/documentation-orchestrator-smoke.md) | Smoke test del orquestador documental y su Gate 0 |
+| [docs/sdd-smoke.md](docs/sdd-smoke.md) | Smoke test de SDD proporcional y testing adaptativo |
 | [docs/desarrollo.md](docs/desarrollo.md) | Contribuir y extender el kit |
 | [docs/arquitectura-del-kit.md](docs/arquitectura-del-kit.md) | Pipeline técnico |
 

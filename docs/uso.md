@@ -84,6 +84,9 @@ Catálogo completo: [catalogo.md](catalogo.md).
    no esperes un “arregla todo el repo” de un golpe.
 6. **Contexto del proyecto** — si existe `AGENTS.md` o steering de Kiro, los
    agentes de SDD lo leen de forma selectiva.
+7. **Testing adaptativo en SDD** — una feature normal usa TDD focalizado; TDD
+   estricto solo se activa si lo pides. Es independiente de la profundidad:
+   `direct` puede incluir un microciclo TDD y `deep` no implica TDD estricto.
 
 ## Orquestación documental
 

@@ -40,13 +40,14 @@ done
 
 # --- Colores ---
 if [ -t 1 ]; then
-  BOLD="\033[1m"; GREEN="\033[32m"; YELLOW="\033[33m"; BLUE="\033[34m"; RESET="\033[0m"
+  BOLD="\033[1m"; GREEN="\033[32m"; YELLOW="\033[33m"; BLUE="\033[34m"; RED="\033[31m"; RESET="\033[0m"
 else
-  BOLD=""; GREEN=""; YELLOW=""; BLUE=""; RESET=""
+  BOLD=""; GREEN=""; YELLOW=""; BLUE=""; RED=""; RESET=""
 fi
 info()  { printf "${BLUE}➜${RESET} %b\n" "$1"; }
 ok()    { printf "${GREEN}✓${RESET} %b\n" "$1"; }
 warn()  { printf "${YELLOW}⚠${RESET} %b\n" "$1"; }
+err()   { printf "${RED}✗${RESET} %b\n" "$1" >&2; }
 
 # --- Rutas ---
 OPENCODE_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/opencode"
@@ -56,6 +57,22 @@ BACKUP_ROOT="$HOME/.opencode-kit-backup/$TIMESTAMP"
 
 SKILLS_SRC="$REPO_ROOT/generated/opencode/skills"
 AGENTS_SRC="$REPO_ROOT/generated/opencode/agents"
+
+# --- Preflight compartido ---
+# tools/install_preflight.py define qué significa "instalación completa" para
+# los seis instaladores, tomando canonical/manifest.json como fuente de verdad.
+PYTHON=""
+for candidate in python3 python; do
+  if command -v "$candidate" >/dev/null 2>&1; then PYTHON="$candidate"; break; fi
+done
+
+preflight() {
+  if [ -z "$PYTHON" ]; then
+    err "Se requiere Python 3 para verificar la instalación."
+    return 1
+  fi
+  "$PYTHON" "$REPO_ROOT/tools/install_preflight.py" --platform opencode "$@"
+}
 
 # --- Copia con exclusión de basura ---
 copy_tree() {  # $1=origen $2=destino
@@ -98,18 +115,20 @@ install_skills_from() {  # $1=dir origen
 # --- Instalar skills generadas ---
 install_skills() {
   if [ ! -d "$SKILLS_SRC" ]; then
-    warn "No hay skills que instalar."; return 0
+    err "No existe $SKILLS_SRC"; exit 1
   fi
   info "Instalando ${BOLD}skills${RESET} -> $SKILLS_DEST"
-  mkdir -p "$SKILLS_DEST"
+  if [ "$DRY_RUN" -eq 0 ]; then mkdir -p "$SKILLS_DEST"; fi
   install_skills_from "$SKILLS_SRC"
 }
 
 # --- Instalar agentes (uno por uno) ---
 install_agents() {
-  [ -d "$AGENTS_SRC" ] || { warn "No existe $AGENTS_SRC — se omiten agentes."; return 0; }
+  if [ ! -d "$AGENTS_SRC" ]; then
+    err "No existe $AGENTS_SRC"; exit 1
+  fi
   info "Instalando ${BOLD}agentes${RESET} -> $AGENTS_DEST"
-  mkdir -p "$AGENTS_DEST"
+  if [ "$DRY_RUN" -eq 0 ]; then mkdir -p "$AGENTS_DEST"; fi
   local src name dest
   for src in "$AGENTS_SRC"/*.md; do
     [ -f "$src" ] || continue
@@ -131,14 +150,32 @@ echo
 [ "$DRY_RUN" -eq 1 ] && warn "Modo --dry-run: no se copiará nada."
 [ "$FORCE" -eq 1 ]   && warn "Modo --force: no se crearán backups."
 
+# Verificar el origen antes de tocar el destino: una instalación incompleta es
+# peor que ninguna, porque se manifiesta como un agente que ignora su alcance.
+if ! preflight --check-source; then
+  err "Instalación abortada. Regenera los artefactos: python3 tools/render.py"
+  exit 1
+fi
+
 install_skills
 echo
 install_agents
-
 echo
+
+if [ "$DRY_RUN" -eq 1 ]; then
+  ok "Dry-run finalizado: no se escribió nada."
+  exit 0
+fi
+
+if ! preflight --check-installed --skills-dest "$SKILLS_DEST" --agents-dest "$AGENTS_DEST"; then
+  err "La instalación quedó incompleta; no se declara completada."
+  exit 1
+fi
+
 ok "Instalación completada."
-if [ "$DRY_RUN" -eq 0 ] && [ "$FORCE" -eq 0 ] && [ -d "$BACKUP_ROOT" ]; then
+if [ "$FORCE" -eq 0 ] && [ -d "$BACKUP_ROOT" ]; then
   info "Backups del contenido previo en: $BACKUP_ROOT"
+  info "Para restaurar: cp -R \"$BACKUP_ROOT\"/skills/. \"$SKILLS_DEST\"/"
 fi
 echo
 info "Reinicia opencode para que detecte las nuevas skills y agentes."

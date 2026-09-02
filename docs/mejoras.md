@@ -101,17 +101,27 @@ fixture inválido por cada clase crítica y pasa desde un clon limpio.
 
 ### P0.4 — Instalación estricta y reversible
 
-- [ ] **Fallar con código distinto de cero** si faltan skills, agentes o fuentes
+- [x] **Fallar con código distinto de cero** si faltan skills, agentes o fuentes
   generadas; no declarar instalación completada tras omitir contenido requerido.
-- [ ] Garantizar que `--dry-run` / `-DryRun` no cree ni modifique directorios.
-- [ ] Añadir un preflight que compruebe render validado, destinos y herramientas.
-- [ ] Definir cómo retirar artefactos obsoletos sin borrar contenido ajeno al kit.
-- [ ] Documentar restauración de backup y desinstalación.
-- [ ] Probar install, actualización, dry-run y rollback en directorios HOME
+- [x] Garantizar que `--dry-run` / `-DryRun` no cree ni modifique directorios.
+- [x] Añadir un preflight que compruebe render validado, destinos y herramientas.
+- [x] Definir cómo retirar artefactos obsoletos sin borrar contenido ajeno al kit.
+- [x] Documentar restauración de backup y desinstalación.
+- [x] Probar install, actualización, dry-run y rollback en directorios HOME
   temporales para las tres plataformas.
+- [ ] **Ejecutar los instaladores PowerShell en un runner Windows.** Su contrato
+  hoy solo está garantizado de forma estática (test `[7]` de `test_install.py`);
+  no se han ejecutado nunca. Bloqueo: se necesita la matriz de SO de P0.3.
 
-Definición de hecho: los tests demuestran instalación completa, fallo temprano,
-dry-run sin efectos y restauración del estado anterior.
+Definición de hecho:
+
+```bash
+python3 tools/test_install.py     # instalación, fallo temprano, dry-run, rollback
+for s in scripts/install/*.sh scripts/backup/*.sh; do bash -n "$s"; done
+```
+
+Ambos terminan en `0`. `test_install.py` ejecuta los instaladores contra un `HOME`
+temporal, de modo que la instalación real del desarrollador nunca se toca.
 
 ### P0.5 — Seguridad mínima exigible
 
@@ -128,6 +138,43 @@ dry-run sin efectos y restauración del estado anterior.
 
 Definición de hecho: un fixture con secreto bloquea CI, la documentación no
 promete aislamiento inexistente y la matriz de permisos justifica cada tool.
+
+### P0.6 — Defectos verificados de la skill SDD
+
+Hallazgos reproducibles en `canonical/skills/sdd-spec/` y `canonical/agents/sdd.md`.
+Cada uno se comprueba por lectura directa o `grep`; ninguno depende de criterio.
+
+- [x] **Corregir el enunciado de GATE 3** en `SKILL.md`: decía
+  `"¿Apruebo el plan y empiezo a implementar?"` mientras los otros tres gates usan
+  segunda persona. Tal como estaba, el agente se preguntaba a sí mismo.
+- [x] **Reparar el render de `{{gate_instruction}}`**: el token solo contenía una
+  frase completa para Copilot; Kiro y OpenCode heredaban el fragmento descabezado
+  `"El gate se / implementa de forma natural:"`. Mover la parte común al canonical
+  y dejar en el token únicamente lo específico de cada plataforma.
+- [x] **Eliminar o usar `{{sdd_start_instruction}}`**: estaba definido en los tres
+  `platform.json` y no aparecía en ningún archivo de `canonical/`.
+- [x] **Detectar sustituciones no usadas en `tools/validate.py`**: validaba
+  tokens → sustituciones y nunca al revés, así que la config muerta pasaba el CI.
+- [x] **Añadir sección de RNF a la plantilla de `design.md`**: `quality-bar.md` §7,
+  `integrity-gate.md` paso 3 y la matriz de `verification.md` exigen auditar
+  «3–5 RNF críticos del propio spec», pero ninguna plantilla los capturaba. El
+  agente debía inventarlos retroactivamente en Fase 4, que es exactamente el
+  cumplimiento inventado que la skill prohíbe.
+- [x] **Alinear el techo de `design.md`**: `SKILL.md` decía `~≤250 líneas` y
+  `quality-bar.md` §10 decía `~200–250`.
+
+Definición de hecho:
+
+```bash
+python3 tools/render.py
+python3 tools/validate.py
+grep -rn "sdd_start_instruction" canonical/ adapters/   # sin config muerta
+grep -n "GATE 3" canonical/skills/sdd-spec/SKILL.md     # segunda persona
+git diff --exit-code -- generated/
+```
+
+Los comandos son coherentes entre sí, `generated/` queda en paridad y la plantilla
+de `design.md` produce los RNF que la Fase 4 audita.
 
 ---
 
@@ -187,13 +234,72 @@ tendencia similar. No se publica un porcentaje de ahorro sin esos datos.
 Definición de hecho: las pruebas cubren índice ausente, desactualizado, parcial y
 editado manualmente; el agente no presenta datos obsoletos como actuales.
 
+### P1.5 — Coherencia del agente SDD
+
+SDD es la skill más compleja del kit (4 fases, 3 variantes, 5 referencias) y la
+única que escribe código de producto. Hasta ahora no tenía ítems en este backlog
+ni smoke test propio. Requiere P0.6 cerrado antes de empezar.
+
+- [ ] **Añadir lectura de estado al iniciar**, como ya hacen `security` y
+  `code-quality`: qué gates se aprobaron, en qué fase está la spec y qué tareas
+  quedan abiertas. Hoy no existe ningún paso 0 ni registro de gates aprobados, así
+  que una sesión interrumpida tras GATE 2 no puede reconstruir el estado.
+- [ ] **Resolver la promesa de reanudación**: el adapter de Copilot ofrece
+  «deja vacío para continuar una spec existente» y la skill no define ningún
+  procedimiento de reanudación. Manda la fuente canónica: o se implementa el flujo
+  o se retira la promesa del adapter.
+- [ ] **Usar IDs de requisito estables** (`REQ-001`) en lugar de posicionales
+  (`Req 1.1`). Reordenar o borrar una historia rompe en silencio las referencias de
+  `tasks.md` y `verification.md`. El resto del kit ya usa IDs no posicionales
+  (`SEC-0001`, `QLT-0001`, ADRs numerados).
+- [ ] **Declarar el alcance de escritura del agente**: es el único sin frontera
+  documentada y el de mayor blast radius (`read/write/shell/web`). Debe decir
+  explícitamente que escribe en `.sdd/` más el código que exigen las tareas
+  aprobadas, y nada más.
+- [ ] **Definir dueño y formato de `.sdd/steering/`**: lo leen el agente, la skill
+  y `project-navigator`, pero ninguna skill lo crea ni especifica su contenido.
+- [ ] **Deduplicar la regla de PBT**, hoy repetida en `agents/sdd.md`,
+  `references/integrity-gate.md` y `references/testing.md`.
+- [ ] **Dar criterio verificable al modo `direct`**: «trivial → `direct`» es
+  circular. Fijar umbrales como el clasificador de `documentation-orchestrator`
+  (número de archivos, capas cruzadas, riesgo).
+- [ ] **Completar las variantes**: Bugfix no declara si pasa por los cuatro gates
+  ni cómo verifica; Quick Plan omite la Fase 4 pero mantiene el integrity gate sin
+  definir contra qué artefacto cierra.
+- [ ] **Definir la reconciliación de contexto de dominio**: cuando falta
+  `.architecture/`, la skill documenta el dominio dentro de `design.md` y nadie lo
+  promueve después, porque `documentation-orchestrator` tiene prohibido tocar
+  `.sdd/`. El conocimiento queda enterrado en specs cerradas.
+- [ ] **Crear `docs/sdd-smoke.md`** con el mismo rigor que
+  [navigator-smoke.md](navigator-smoke.md): gates respetados, integrity gate
+  rechazando un `[x]` sin artefacto y trabajo fuera de alcance rechazado.
+- [x] **Retirar las cifras de coste sin medición** (`Baseline +~10 %`, `+40–80 %`)
+  y sustituirlas por carga documental cualitativa; cualquier porcentaje futuro
+  exige una comparación reproducible.
+
+Definición de hecho: una spec se puede abandonar y reanudar en otra sesión sin
+perder el estado de los gates, los IDs de requisito sobreviven a un reordenado de
+historias y existe una tabla fechada de smoke por plataforma y versión.
+
+#### Extensión implementada: testing adaptativo
+
+- [x] Separar profundidad SDD de estrategia de pruebas.
+- [x] Aplicar TDD focalizado por defecto a comportamiento nuevo/modificado y
+  reservar TDD estricto para petición explícita.
+- [x] Definir regresión para bugfix, caracterización para legado y excepción
+  verificable cuando no cambia comportamiento observable o falta un harness viable.
+- [x] Evitar test-after en plantillas y exigir evidencia RED/GREEN en el integrity gate.
+- [x] Añadir contrato automatizado (`tools/test_sdd_contract.py`) y el documento
+  [sdd-smoke.md](sdd-smoke.md). Su ejecución multiplataforma sigue pendiente, por
+  lo que el ítem general de smoke permanece abierto.
+
 ---
 
 ## P2 — Automatización de contexto
 
 Realizar solo después de completar P0 y la evidencia esencial de P1. Estas tareas
-reducen dependencia del modelo y hacen que Navigator sea más que una convención
-documental.
+reducen dependencia del modelo y hacen que Navigator y el integrity gate de SDD
+sean más que una convención documental.
 
 - [ ] **Bootstrap semideterminista** (`tools/navigator_bootstrap.py`): detectar
   stack y módulos evidentes, validar exclusiones y generar stubs de `config.yaml`,
@@ -208,6 +314,11 @@ documental.
 - [ ] **Integrar Navigator ↔ Architecture**: Navigator sugiere Architecture si
   falta contexto arquitectónico; Architecture consume `.navigator/ai-context.md`
   de forma selectiva cuando existe.
+- [ ] **Integrity gate ejecutable de SDD** (`tools/sdd_integrity.py`): parsear
+  `tasks.md`, resolver los paths citados por cada `[x]` y salir con código distinto
+  de cero ante tareas marcadas sin artefacto ni evidencia. Hoy el control central
+  de SDD depende por completo del prompt y lo verifica el mismo actor que produjo
+  el trabajo, en contra del principio 2 de este backlog.
 - [ ] Añadir i18n opcional de descripciones visibles, manteniendo español por
   defecto y evitando duplicar la lógica canónica.
 
@@ -264,6 +375,37 @@ pero no inventa desde cero toda la estructura.
 - [x] CI base en GitHub Actions y validación de enlaces Markdown locales mediante
   `tools/check_links.py` y `tools/test_links.py`.
 - [x] P1.4: snippet de `.navigator/cache/` publicado en [uso.md](uso.md).
+- [x] P0.4 cerrado salvo la ejecución en Windows. Estado previo reproducido y
+  corregido: los tres instaladores bash declaraban «Instalación completada» con
+  exit `0` sin haber copiado nada cuando faltaba `generated/`, y `--dry-run`
+  creaba 3 directorios en Kiro y 4 en OpenCode. Nuevo `tools/install_preflight.py`
+  centraliza la definición de «instalación completa» a partir del manifest y lo
+  comparten los seis instaladores (`--check-source` antes de escribir,
+  `--check-installed` antes de declarar éxito). Artefactos no declarados se
+  informan y **nunca** se borran, por no poder distinguirlos de skills propias.
+  Corregido además `find -printf` (extensión GNU ausente en macOS) y las rutas de
+  backup de Copilot, que usaban etiquetas con espacios, paréntesis y `~`.
+  Evidencia: `tools/test_install.py` pasa 72/72 (antes 28/42 con los mismos
+  tests), `bash -n` limpio en los 6 scripts, y ambos pasos añadidos al CI.
+  Restauración y desinstalación documentadas en
+  [instalacion.md](instalacion.md).
+- [x] Mitad Bash de la comprobación de sintaxis de P0.3: `bash -n` sobre
+  `scripts/install/*.sh` y `scripts/backup/*.sh` en CI. La mitad PowerShell sigue
+  abierta porque requiere un runner Windows.
+- [x] P0.6 cerrado. El bloque del gate se reescribió en dos oraciones: el token
+  lleva solo el matiz de plataforma (o cadena vacía) y la frase común vive en
+  canonical, de modo que las tres plataformas rinden prosa gramatical. La
+  validación de sustituciones destapó un **segundo** token muerto que el análisis
+  inicial no vio, `{{platform_name}}`, también declarado en las tres plataformas y
+  sin usar; se retiró junto a `{{sdd_start_instruction}}` y la tabla de tokens de
+  [arquitectura-del-kit.md](arquitectura-del-kit.md) se corrigió para reflejar los
+  tres que quedan. `validate.py` gana dos comprobaciones: sustitución declarada y
+  no usada, y token fuera de `SKILL.md` (que `render.py` no sustituiría y llegaría
+  literal al modelo). Evidencia: `test_validate.py` 14/14 (antes 12/12) con dos
+  pruebas negativas nuevas, `test_integrity.py` 252/252 y el resto del pipeline en
+  verde. Coste medido: **0 tokens por turno** (`SKILL.md` varía entre −2 y +1
+  caracteres) y **+56 tokens netos** en referencias bajo demanda, concentrados en
+  `templates.md`.
 
 Estos elementos describen implementación existente, no certifican por sí solos
 que el estado actual esté listo para release. Los gates de P0 determinan eso.
@@ -295,11 +437,15 @@ No iniciar P2, Graphify ni nuevas skills mientras estos gates P0 sigan abiertos.
 
 ## Orden de ejecución
 
-1. Completar P0.3 para convertir la reproducibilidad en un gate automático.
-2. Endurecer instalación y seguridad con P0.4 y P0.5.
+1. Completar P0.3, empezando por la matriz de SO. Es lo único que puede validar
+   los tres instaladores PowerShell, cuyo contrato hoy solo está garantizado de
+   forma estática, y desbloquea el último ítem abierto de P0.4.
+2. Endurecer la seguridad con P0.5.
 3. Ejecutar los smoke tests y la demo de P1 antes de afirmar utilidad o ahorro.
-4. Implementar P2 solo donde los resultados de P1 muestren una limitación real.
-5. Mantener P3 diferido hasta que exista evidencia de retorno.
+4. Abordar P1.5, ya desbloqueado por P0.6. A diferencia de P0.6, sus ítems sí
+   añaden texto al prompt: medir el coste de cada uno antes de escribirlo.
+6. Implementar P2 solo donde los resultados de P1 muestren una limitación real.
+7. Mantener P3 diferido hasta que exista evidencia de retorno.
 
 ## Cómo actualizar este backlog
 
@@ -314,6 +460,8 @@ No iniciar P2, Graphify ni nuevas skills mientras estos gates P0 sigan abiertos.
 
 - Contrato Navigator: [`canonical/skills/project-navigator/SKILL.md`](../canonical/skills/project-navigator/SKILL.md)
 - Smoke test Navigator: [navigator-smoke.md](navigator-smoke.md)
+- Contrato SDD: [`canonical/skills/sdd-spec/SKILL.md`](../canonical/skills/sdd-spec/SKILL.md)
+- Agente SDD: [`canonical/agents/sdd.md`](../canonical/agents/sdd.md)
 - Catálogo: [catalogo.md](catalogo.md)
 - Uso: [uso.md](uso.md)
 - Arquitectura del kit: [arquitectura-del-kit.md](arquitectura-del-kit.md)

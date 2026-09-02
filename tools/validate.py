@@ -141,12 +141,14 @@ def validate_markers(manifest: dict, platform_substitutions: dict[str, set[str]]
         list((ROOT / "canonical" / "agents").glob("*.md"))
         + list((ROOT / "canonical" / "skills").glob("*/SKILL.md"))
     )
+    used_tokens: set[str] = set()
     for path in canonical_files:
         content = path.read_text(encoding="utf-8")
         for marker in PLATFORM_MARKERS:
             if marker.lower() in content.lower():
                 errors.append(f"Referencia específica de plataforma en {path.relative_to(ROOT)}: {marker}")
         tokens = set(re.findall(r"\{\{[^{}]+\}\}", content))
+        used_tokens |= tokens
         for platform, substitutions in platform_substitutions.items():
             missing = tokens - substitutions
             if missing:
@@ -154,6 +156,33 @@ def validate_markers(manifest: dict, platform_substitutions: dict[str, set[str]]
                     f"Tokens sin adaptador para {platform} en {path.relative_to(ROOT)}: "
                     f"{', '.join(sorted(missing))}"
                 )
+
+    # Substitutions declared but never used anywhere in canonical. Without this
+    # check dead configuration passes CI and drifts from the prompts it claims to
+    # adapt.
+    for platform, substitutions in platform_substitutions.items():
+        unused = substitutions - used_tokens
+        if unused:
+            errors.append(
+                f"Sustituciones declaradas y no usadas en adapters/{platform}/platform.json: "
+                f"{', '.join(sorted(unused))}"
+            )
+
+    # render.py only substitutes SKILL.md, so a token inside references/ would be
+    # copied verbatim and reach the model unresolved.
+    for path in sorted((ROOT / "canonical" / "skills").rglob("*")):
+        if not path.is_file() or path.name == "SKILL.md":
+            continue
+        try:
+            content = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        stray = set(re.findall(r"\{\{[^{}]+\}\}", content))
+        if stray:
+            errors.append(
+                f"Token sin sustituir fuera de SKILL.md en {path.relative_to(ROOT)}: "
+                f"{', '.join(sorted(stray))} (render.py no sustituye en references/)"
+            )
 
 
 def validate_reproducibility(manifest: dict, errors: list[str]) -> None:

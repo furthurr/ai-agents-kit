@@ -99,6 +99,7 @@ en el render. Si queda un `{{...}}` sin definir, `render.py` falla.
 ```bash
 python3 tools/test_integrity.py
 python3 tools/test_links.py
+python3 tools/test_sdd_contract.py
 ```
 
 Cubre integridad del pipeline y convenciones del repo. Ejecútalo junto a

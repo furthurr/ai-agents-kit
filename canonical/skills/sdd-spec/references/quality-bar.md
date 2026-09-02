@@ -12,10 +12,11 @@ Redactar y aplicar **sin** nombres de framework en el núcleo del checklist; el 
 5. **Errores:** tipados o `Result`; no `catch` vacío; log en fallos de infraestructura.
 6. **Persistencia encapsulada:** un solo módulo/adaptador toca storage/BD; UI y domain no llaman APIs crudas de persistencia.
 7. **RNF auto-audit:** antes de cerrar, verificar 3–5 RNF críticos del propio spec (búsqueda en código).
-8. **Tests mínimos:** lógica pura obligatoria; ≥1 camino de error con fake/mock si hay puertos/protocols.
+8. **Testing adaptativo:** comportamiento nuevo/modificado usa TDD focalizado y bugfix usa regresión; caracterización protege refactors. «Sin test nuevo» solo sin cambio observable o con excepción explícita y verificación alternativa. TDD estricto solo por petición.
 9. **PBT:** solo si hay invariante algebraico y el modo lo permite (ver `testing.md`).
-10. **Proporcionalidad design (`standard`):** techo orientativo ~200–250 líneas; 1 flowchart + 1 sequence; C4/ER solo en `deep` o si hay BD interna real.
+10. **Proporcionalidad design (`standard`):** techo orientativo ~250 líneas; 1 flowchart + 1 sequence; C4/ER solo en `deep` o si hay BD interna real.
 11. **Tipos:** sin `any` / tipos opacos cuando el lenguaje lo permita (steering).
+12. **Código mínimo:** GREEN mínimo correcto; no crear abstracciones, mocks o capas anticipadas solo para satisfacer tests.
 
 ## Integración
 
