@@ -84,6 +84,7 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 | [docs/README.md](docs/README.md) | Índice |
 | [docs/vision.md](docs/vision.md) | Problema, principios, skill vs agente |
 | [docs/catalogo.md](docs/catalogo.md) | Skills, agentes y carpetas canónicas |
+| [docs/agentes/README.md](docs/agentes/README.md) | Guía interna: qué hace cada agente y cómo utilizarlo |
 | [docs/instalacion.md](docs/instalacion.md) | Install, destinos, backup/import |
 | [docs/uso.md](docs/uso.md) | Cómo invocar y flujos recomendados |
 | [docs/navigator-smoke.md](docs/navigator-smoke.md) | Smoke test reproducible del Project Navigator |
@@ -91,6 +92,7 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 | [docs/sdd-smoke.md](docs/sdd-smoke.md) | Smoke test de SDD proporcional y testing adaptativo |
 | [docs/desarrollo.md](docs/desarrollo.md) | Contribuir y extender el kit |
 | [docs/arquitectura-del-kit.md](docs/arquitectura-del-kit.md) | Pipeline técnico |
+| [docs/mejoras.md](docs/mejoras.md) | Backlog priorizado y estado de madurez |
 
 ## Contribuir (resumen)
 

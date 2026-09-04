@@ -5,6 +5,9 @@ Resumen de lo que incluye el kit. El detalle operativo vive en
 
 Inventario oficial: `canonical/manifest.json` (10 skills, 9 agentes, 3 plataformas).
 
+Para una explicación orientada a usuarios, consulta la [guía interna de agentes y
+skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de uso.
+
 ## Skills
 
 | ID | Descripción breve | Carpeta en el proyecto | Estándares / notas |
@@ -24,15 +27,15 @@ Inventario oficial: `canonical/manifest.json` (10 skills, 9 agentes, 3 plataform
 
 | ID | Nombre | Skills que usa | Rol |
 |----|--------|----------------|-----|
-| `architecture` | Architecture Agent | `architecture` | Solo documenta/audita/recomienda en `.architecture/` |
-| `code-quality` | Code Quality Agent | `code-quality` | Calidad, mantenibilidad, pruebas; deriva seguridad |
-| `data-api` | Data & API Agent | `data-api` | Capa de datos y contratos; identifica PII |
-| `documentation-orchestrator` | Documentation Orchestrator | `documentation-orchestrator` + especialistas seleccionadas | Coordina estado, bootstrap, sincronización y release-check documental |
-| `security` | Security Agent | `security` | Solo seguridad; micro-pasos con confirmación |
-| `ui-design` | UI Design Agent | `ui-design` | Solo lo visual; no toca negocio ni APIs |
-| `sdd` | Agente SDD | `sdd-spec` | Specs, gates de aprobación e implementación trazable |
-| `git-release-manager` | Git & Release Manager | `git-commit` + `release-management` | Commits, push, versiones, tags, CHANGELOG |
-| `project-navigator` | Project Navigator | `project-navigator` | Investigación/navegación; bootstrap de índices en `.navigator/` |
+| [`architecture`](agentes/architecture.md) | Architecture Agent | `architecture` | Solo documenta/audita/recomienda en `.architecture/` |
+| [`code-quality`](agentes/code-quality.md) | Code Quality Agent | `code-quality` | Calidad, mantenibilidad, pruebas; deriva seguridad |
+| [`data-api`](agentes/data-api.md) | Data & API Agent | `data-api` | Capa de datos y contratos; identifica PII |
+| [`documentation-orchestrator`](agentes/documentation-orchestrator.md) | Documentation Orchestrator | `documentation-orchestrator` + especialistas seleccionadas | Coordina estado, bootstrap, sincronización y release-check documental |
+| [`security`](agentes/security.md) | Security Agent | `security` | Solo seguridad; micro-pasos con confirmación |
+| [`ui-design`](agentes/ui-design.md) | UI Design Agent | `ui-design` | Solo lo visual; no toca negocio ni APIs |
+| [`sdd`](agentes/sdd.md) | Agente SDD | `sdd-spec` | Specs, gates de aprobación e implementación trazable |
+| [`git-release-manager`](agentes/git-release-manager.md) | Git & Release Manager | `git-commit` + `release-management` | Commits, push, versiones, tags, CHANGELOG |
+| [`project-navigator`](agentes/project-navigator.md) | Project Navigator | `project-navigator` | Investigación/navegación; bootstrap de índices en `.navigator/` |
 
 ## Mapa skill ↔ agente ↔ carpeta
 

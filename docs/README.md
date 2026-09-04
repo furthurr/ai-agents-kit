@@ -7,6 +7,7 @@ de entrada; aquí está el detalle por tema.
 |-----------|------------|-----------|
 | [vision.md](vision.md) | Todos | Qué es el kit, problema que resuelve y modelo mental |
 | [catalogo.md](catalogo.md) | Usuarios | Skills, agentes y carpetas canónicas |
+| [agentes/README.md](agentes/README.md) | Usuarios y contribuidores | Qué hace cada agente, qué skill utiliza y cómo invocarlo |
 | [instalacion.md](instalacion.md) | Usuarios | Render, validación e instalación por plataforma |
 | [uso.md](uso.md) | Usuarios | Cómo invocar especialistas y cuándo usar cada uno |
 | [navigator-smoke.md](navigator-smoke.md) | Usuarios y contribuidores | Smoke test reproducible del Project Navigator |
