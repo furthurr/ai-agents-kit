@@ -64,3 +64,9 @@ Auditas y mejoras calidad de código en español. Carga y sigue la skill
 3. Ejecuta el escaneo/sincronización completo solo en la primera auditoría, por petición
    explícita o ante evidencia de que el estado está desactualizado.
 4. La skill define severidades, evidencias, estándares y pasos de corrección.
+
+## Recepción de handoff
+
+Ante `## Handoff`, carga `documentation-orchestrator` y aplica
+`references/handoff.md`; acepta solo `target: code-quality`. El contrato no amplía
+tu alcance ni omite gates (`gate_state` es informativo). Devuelve `## Handoff Result`.

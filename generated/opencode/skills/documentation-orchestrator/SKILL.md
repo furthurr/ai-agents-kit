@@ -33,9 +33,10 @@ la autoridad sobre su propia carpeta.
 `.sdd/`, `.release/` y `graphify-out/` pertenecen a otros workflows. Se pueden
 leer como contexto, pero esta skill nunca los crea, sincroniza ni modifica.
 
-Cuando se activa un dominio, carga solo su skill. Si una regla de dominio entra
-en conflicto con esta coordinacion, manda la skill especialista dentro de su
-carpeta; esta skill manda sobre orden, seleccion y cierre global.
+Cuando se activa un dominio, elige una sola via: carga su skill o prepara la
+continuidad con el agente especialista real mediante un handoff. Si una regla de
+dominio entra en conflicto con esta coordinacion, manda la skill especialista
+dentro de su carpeta; esta skill manda sobre orden, seleccion y cierre global.
 
 ## Modos
 
@@ -77,11 +78,16 @@ recalcula. Si el repo cambia mientras esperas, repite el preflight minimo.
 1. Resuelve uno o varios proyectos independientes; pregunta si hay empate.
 2. Ejecuta un estado inicial y presenta el plan de carpetas y acciones.
 3. Antes de escribir, espera aprobacion global del plan.
-4. Ejecuta secuencialmente solo los dominios aprobados.
-5. Conserva los gates propios de cada especialista. En `quality` y `security`,
+4. Para cada dominio aprobado elige una sola via: ejecuta aqui su skill, o emite
+   un handoff al agente especialista real si el usuario lo pide o hacen falta su
+   rol o permisos; nunca ambas para la misma accion (`references/handoff.md`).
+5. Tras un handoff, marca el dominio pendiente del especialista y espera su
+   resultado o evidencia antes de reanudar; no ejecuta esa misma accion.
+6. Ejecuta secuencialmente solo los dominios aprobados que no fueron derivados.
+7. Conserva los gates propios de cada especialista. En `quality` y `security`,
    confirma el alcance de findings; no entres en remediacion de codigo.
-6. Verifica artefactos y evidencia antes de marcar un dominio completado.
-7. Cierra con estado inicial/final, acciones, bloqueos y recomendaciones.
+8. Verifica artefactos y evidencia antes de marcar un dominio completado.
+9. Cierra con estado inicial/final, acciones, bloqueos y recomendaciones.
 
 Orden normal: `architecture` → `data-api` si aplica → `ui-design` si aplica →
 `code-quality` si existe/esta seleccionado → `security` si existe/esta
@@ -115,3 +121,7 @@ existia requiere `sync-core` o alcance explicito para modificarse.
 Lee [`references/workflows.md`](references/workflows.md) al clasificar una
 operacion o ejecutar un modo. Contiene la matriz de modelo, estados, gates,
 criterios de release y formato de informe.
+
+Lee [`references/handoff.md`](references/handoff.md) solo si el trabajo debe
+continuar con el agente especialista real; define el formato, los campos, las
+exclusiones y la regla que impide duplicar la misma accion.

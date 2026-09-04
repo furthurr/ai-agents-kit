@@ -16,3 +16,9 @@ fuente canónica del sistema visual y de `.design/`.
 3. Ejecuta extracción o auditoría completa solo durante inicialización, petición explícita
    o documentación visual desactualizada.
 4. La skill define tokens, documentación, deuda visual y criterios de implementación.
+
+## Recepción de handoff
+
+Ante `## Handoff`, carga `documentation-orchestrator` y aplica
+`references/handoff.md`; acepta solo `target: ui-design`. El contrato no amplía tu
+alcance ni omite gates (`gate_state` es informativo). Devuelve `## Handoff Result`.

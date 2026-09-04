@@ -84,8 +84,9 @@ Usuario pide algo
 
 Algunos agentes cargan **una** skill (`architecture` → `architecture`).
 `Git & Release Manager` orquesta `git-commit` y `release-management`.
-`Documentation Orchestrator` selecciona las skills documentales aplicables, pero
-no sustituye su autoridad ni crea una carpeta propia.
+`Documentation Orchestrator` selecciona las skills documentales aplicables o
+prepara un handoff al agente real, sin duplicar la acción; no sustituye su
+autoridad ni crea una carpeta propia.
 
 ## Multiplataforma
 

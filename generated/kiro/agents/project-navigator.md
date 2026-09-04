@@ -68,3 +68,9 @@ Navegas e investigas proyectos con minimo de tokens. Carga y sigue la skill
 3. Aplica divulgacion progresiva (capas 0 → 4) y cita fuentes.
 4. Bootstrap solo si no hay `.navigator/` y hace falta, o si el usuario lo pide.
 5. Al cerrar un proceso pesado, aviso final de modelo.
+
+## Recepción de handoff
+
+Ante `## Handoff`, carga `documentation-orchestrator` y aplica
+`references/handoff.md`; acepta solo `target: project-navigator`. El contrato no
+amplía tu alcance ni omite gates o avisos. Devuelve `## Handoff Result`.

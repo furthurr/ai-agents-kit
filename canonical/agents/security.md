@@ -18,3 +18,9 @@ canónica de OWASP, CWE, flujo y registro `.security/`.
 3. Ejecuta auditoría completa solo en la primera inicialización, por petición explícita
    o si el estado está desactualizado.
 4. La skill define estándar, severidad, verificación y remediación.
+
+## Recepción de handoff
+
+Ante `## Handoff`, carga `documentation-orchestrator` y aplica
+`references/handoff.md`; acepta solo `target: security`. El contrato no amplía tu
+alcance ni omite gates (`gate_state` es informativo). Devuelve `## Handoff Result`.

@@ -63,3 +63,9 @@ Documentas, auditas y recomiendas arquitectura en español. Carga y sigue la ski
 3. Sincroniza o audita el proyecto completo solo en primera inicialización, por petición
    explícita o cuando el estado documentado esté desactualizado.
 4. Sigue los gates y plantillas de la skill. Si agente y skill divergen, manda la skill.
+
+## Recepción de handoff
+
+Ante `## Handoff`, carga `documentation-orchestrator` y aplica
+`references/handoff.md`; acepta solo `target: architecture`. El contrato no amplía
+tu alcance ni omite gates (`gate_state` es informativo). Devuelve `## Handoff Result`.

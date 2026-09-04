@@ -105,8 +105,33 @@ Solicita una feature, un bugfix, una release y Graphify. El agente debe redirigi
 respectivamente a SDD, Git & Release Manager o Graphify sin modificar `.sdd/`,
 `.release/`, `graphify-out/` ni código de producto.
 
+## 7. Handoff productor–receptor
+
+Después del Gate 0 y del plan, solicita explícitamente continuar con el agente
+Security real para una inspección documental.
+
+Esperado en el orquestador:
+
+- Emite `## Handoff` con `target: security`, `action: inspect`,
+  `write_scope: none`, `requires_confirmation: false` y `status: pending`.
+- Incluye `handoff_id`, `project_root` y referencias existentes relativas.
+- No ejecuta la inspección localmente y marca el dominio pendiente.
+
+Copia el bloque al Security Agent. Esperado en el receptor:
+
+- Rechaza un bloque con target distinto, ruta absoluta/`..`, acción desconocida o
+  escritura incoherente.
+- No interpreta `gate_state` como aprobación de sus gates.
+- Para un bloque válido, ejecuta solo su alcance y devuelve `## Handoff Result`
+  con el mismo `handoff_id`, `status`, `evidence` y `result_summary`.
+
+Devuelve el resultado al orquestador. Esperado: verifica la evidencia antes de
+marcar el dominio completado. Repite al menos una vez con `action: sync` y
+confirma que pide aprobación de escritura y no duplica la acción.
+
 ## Criterio de cierre
 
 La prueba pasa si todos los modos aplican Gate 0, ninguna operación comienza sin
 confirmación explícita, las skills especialistas conservan autoridad y no aparece
-una carpeta `.documentation/`.
+una carpeta `.documentation/`. El handoff pasa solo si productor y receptor
+cumplen el contrato, no duplican la acción y preservan los gates.

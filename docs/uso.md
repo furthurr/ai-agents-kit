@@ -3,6 +3,9 @@
 Tras [instalar](instalacion.md), eliges el **agente** (o dejas que la herramienta
 active la **skill** por relevancia) y describes la tarea en lenguaje natural.
 
+Consulta la [guía interna de agentes y skills](agentes/README.md) para conocer el
+alcance, el flujo, los artefactos y ejemplos de cada agente.
+
 ## Skill vs agente (en la práctica)
 
 | | Skill | Agente |
@@ -91,8 +94,9 @@ Catálogo completo: [catalogo.md](catalogo.md).
 ## Orquestación documental
 
 Elige `documentation-orchestrator` cuando la petición cruza varias carpetas. No
-crea `.documentation/`: carga las skills especialistas y cada una conserva la
-autoridad sobre su dominio.
+crea `.documentation/`: por cada acción carga la skill especialista o emite un
+handoff portable para continuar con el agente real; nunca hace ambas cosas. Cada
+especialista conserva la autoridad sobre su dominio.
 
 | Intención | Modo detectado |
 |-----------|----------------|
@@ -106,6 +110,12 @@ autoridad sobre su dominio.
 Antes de cualquier modo, el agente hace un preflight mínimo, recomienda un nivel
 de modelo (`bajo`, `medio` o `alto`) y espera respuesta. El usuario cambia el
 modelo manualmente o responde “continúa con el actual”; el agente nunca lo cambia.
+
+Si necesitas continuar con el agente especialista real, pídelo explícitamente.
+El orquestador entrega un bloque `## Handoff`; cópialo al agente indicado y
+devuelve después su bloque `## Handoff Result` al orquestador. Para una misma
+acción se usa la skill local o el handoff, nunca ambos. `write_scope` es una
+restricción lógica: no sustituye los permisos efectivos de la plataforma.
 
 ## Qué deja cada especialista en tu repo
 

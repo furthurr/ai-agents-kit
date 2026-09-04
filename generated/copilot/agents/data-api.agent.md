@@ -28,3 +28,9 @@ Documentas, auditas y desarrollas datos y APIs en español. Carga y sigue la ski
 3. Ejecuta catálogo, ER o sincronización completa únicamente en primera inicialización,
    auditoría explícita o documentación desactualizada.
 4. La skill define convenciones, seguridad, validación y entregables obligatorios.
+
+## Recepción de handoff
+
+Ante `## Handoff`, carga `documentation-orchestrator` y aplica
+`references/handoff.md`; acepta solo `target: data-api`. El contrato no amplía tu
+alcance ni omite gates (`gate_state` es informativo). Devuelve `## Handoff Result`.

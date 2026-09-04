@@ -77,8 +77,10 @@ Reglas:
   del manifest, aunque el valor sea la cadena vacía.
 - Una sustitución declarada y **no** usada en canonical también falla la
   validación: la config muerta se desincroniza de los prompts que dice adaptar.
-- `render.py` solo sustituye en `SKILL.md`. Un token dentro de `references/`
-  llegaría literal al modelo, así que la validación lo rechaza.
+- Para las skills, `render.py` sustituye tokens en `SKILL.md`, pero no dentro de
+  `references/`; allí llegarían literales al modelo y la validación los rechaza.
+  En los cuerpos de los agentes canónicos sí aplica sustituciones antes de
+  anteponer el frontmatter de cada plataforma.
 
 ### Adapter de agente (`agents/<id>.json`)
 
@@ -207,8 +209,9 @@ contratos normativos de índices viven en `references/schemas.md`.
 
 Documentation Orchestrator sigue el mismo patrón canónico de skill + agente, pero
 coordina procedimientos de varios dominios. No depende de APIs de subagentes de
-una plataforma: carga secuencialmente las skills aplicables, lo que conserva la
-misma semántica en Copilot, OpenCode y Kiro.
+una plataforma: para cada acción carga la skill aplicable o emite un handoff
+Markdown para continuar con el agente especialista real, nunca ambas. El handoff
+conserva la misma semántica en Copilot, OpenCode y Kiro.
 
 ### Límites y autoridad
 
@@ -216,6 +219,8 @@ misma semántica en Copilot, OpenCode y Kiro.
   cierre global.
 - Cada skill especialista sigue siendo autoridad dentro de su propia carpeta y
   conserva sus gates.
+- Un handoff se usa solo cuando el usuario solicita continuar con el agente real
+  o hacen falta su rol o permisos; el orquestador espera resultado o evidencia.
 - El agente no crea `.documentation/`; el estado permanece en los READMEs y
   artefactos ya definidos por cada especialista.
 - SDD, Release Management y Graphify son workflows externos de solo lectura para
