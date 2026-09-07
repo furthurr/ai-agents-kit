@@ -1,0 +1,21 @@
+{
+  "filename": "security.md",
+  "frontmatter": {
+    "name": "security",
+    "description": "Audita y documenta riesgos de seguridad en `.security/` con estándares OWASP y CWE; no trabaja fuera de seguridad ni expone secretos.",
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Skill"
+    ],
+    "skills": [
+      "security"
+    ]
+  }
+}

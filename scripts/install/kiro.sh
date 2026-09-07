@@ -61,7 +61,7 @@ AGENTS_SRC="$REPO_ROOT/generated/kiro/agents"
 
 # --- Preflight compartido ---
 # tools/install_preflight.py define qué significa "instalación completa" para
-# los seis instaladores, tomando canonical/manifest.json como fuente de verdad.
+# todos los instaladores, tomando canonical/manifest.json como fuente de verdad.
 PYTHON=""
 for candidate in python3 python; do
   if command -v "$candidate" >/dev/null 2>&1; then PYTHON="$candidate"; break; fi

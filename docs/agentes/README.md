@@ -30,13 +30,14 @@ skill canónicos en `canonical/`; estas páginas sirven como orientación rápid
 
 ## Uso por plataforma
 
-Los IDs estables son los mismos en las tres plataformas:
+Los IDs estables son los mismos en las cuatro plataformas:
 
 | Plataforma | Forma habitual de invocación |
 |---|---|
 | OpenCode | Selecciona el agente o menciónalo, por ejemplo `@architecture`, `@sdd` o `@security`. |
 | GitHub Copilot | Selecciona el agente personalizado instalado; los nombres salen del catálogo. |
 | Kiro | Selecciona el agente de `~/.kiro/agents/`; para una skill también puede usarse su comando, según la UI. |
+| Claude Code | Delega al subagente o menciónalo, por ejemplo `@architecture`, `@sdd` o `@security`; las skills se invocan con `/nombre`. |
 
 Una petición útil indica el resultado, el alcance y el nivel de autonomía esperado:
 

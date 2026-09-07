@@ -1,0 +1,21 @@
+{
+  "filename": "sdd.md",
+  "frontmatter": {
+    "name": "sdd",
+    "description": "Convierte ideas y bugs en software mediante el flujo SDD de requisitos, diseño, tareas y verificación, con gates y trazabilidad.",
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Skill"
+    ],
+    "skills": [
+      "sdd-spec"
+    ]
+  }
+}

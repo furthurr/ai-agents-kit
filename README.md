@@ -1,11 +1,12 @@
 # AI Agents Kit
 
 Fuente versionada de **skills** y **agentes** para [GitHub Copilot](https://github.com/features/copilot),
-[OpenCode](https://opencode.ai) y [Kiro](https://kiro.dev).
+[OpenCode](https://opencode.ai), [Kiro](https://kiro.dev) y
+[Claude Code](https://code.claude.com/).
 
 La lógica se mantiene **una sola vez** en `canonical/` y se renderiza por
 plataforma con adaptadores declarativos. Así obtienes el mismo comportamiento
-especializado en las tres herramientas, sin triplicar prompts.
+especializado en las cuatro herramientas, sin cuadruplicar prompts.
 
 ## Por qué existe
 
@@ -24,7 +25,7 @@ Más detalle: [docs/vision.md](docs/vision.md).
 |---|----------|---------|
 | Skills | 10 | architecture, code-quality, data-api, documentation-orchestrator, git-commit, project-navigator, release-management, sdd-spec, security, ui-design |
 | Agentes | 9 | especialistas por dominio; **Documentation Orchestrator** coordina documentación y **Git & Release Manager** coordina Git/release |
-| Plataformas | 3 | copilot, opencode, kiro |
+| Plataformas | 4 | copilot, opencode, kiro, claude |
 
 Catálogo completo (roles, carpetas, cuándo usar cada uno):
 [docs/catalogo.md](docs/catalogo.md).
@@ -42,8 +43,9 @@ python3 tools/validate.py
 ./scripts/install/copilot.sh      # → ~/.copilot/
 ./scripts/install/opencode.sh     # → ~/.config/opencode/
 ./scripts/install/kiro.sh         # → ~/.kiro/
+./scripts/install/claude.sh       # → ~/.claude/
 
-# 3. Reinicia Copilot, OpenCode o Kiro
+# 3. Reinicia la herramienta que uses
 ```
 
 Windows (PowerShell):
@@ -54,6 +56,7 @@ python tools/validate.py
 .\scripts\install\copilot.ps1
 .\scripts\install\opencode.ps1
 .\scripts\install\kiro.ps1
+.\scripts\install\claude.ps1
 ```
 
 Opciones: `--dry-run` / `-DryRun`, `--force` / `-Force`.

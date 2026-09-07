@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 
@@ -66,9 +67,10 @@ def test_variants_and_evidence() -> None:
 
 def test_generated_references_match_canonical() -> None:
     references = (SDD / "references").glob("*.md")
+    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
     for canonical in sorted(references):
         expected = canonical.read_bytes()
-        for platform in ("copilot", "opencode", "kiro"):
+        for platform in manifest["platforms"]:
             generated = ROOT / "generated" / platform / "skills" / "sdd-spec" / "references" / canonical.name
             check(generated.is_file(), f"{platform} genera {canonical.name}")
             if generated.is_file():

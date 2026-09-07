@@ -51,8 +51,9 @@ git diff generated/
 - Frontmatter / nombre de archivo del agente: `adapters/<plataforma>/agents/<id>.json`
 - Overrides de skill (si existen): `adapters/<plataforma>/skills/<id>.json`
 
-Tokens de sustitución (`{{platform_name}}`, `{{sdd_agent}}`, etc.) se resuelven
-en el render. Si queda un `{{...}}` sin definir, `render.py` falla.
+Tokens de sustitución (`{{sdd_agent}}`, `{{gate_instruction}}`,
+`{{steering_paths}}`) se resuelven en el render. Si queda un `{{...}}` sin
+definir, `render.py` falla.
 
 ## Añadir una skill
 

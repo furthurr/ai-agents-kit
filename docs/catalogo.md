@@ -3,7 +3,7 @@
 Resumen de lo que incluye el kit. El detalle operativo vive en
 `canonical/skills/<id>/SKILL.md` y `canonical/agents/<id>.md`.
 
-Inventario oficial: `canonical/manifest.json` (10 skills, 9 agentes, 3 plataformas).
+Inventario oficial: `canonical/manifest.json` (10 skills, 9 agentes, 4 plataformas).
 
 Para una explicación orientada a usuarios, consulta la [guía interna de agentes y
 skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de uso.
@@ -88,6 +88,7 @@ cuando el procedimiento lo pide. Eso reduce tokens en tareas simples.
 | `copilot` | `~/.copilot/skills/` y `~/.copilot/agents/` |
 | `opencode` | `~/.config/opencode/skills/` y `~/.config/opencode/agent/` |
 | `kiro` | `~/.kiro/skills/` y `~/.kiro/agents/` |
+| `claude` | `~/.claude/skills/` y `~/.claude/agents/` (o `$CLAUDE_CONFIG_DIR`) |
 
 Guía de instalación: [instalacion.md](instalacion.md).  
 Cómo invocarlos: [uso.md](uso.md).

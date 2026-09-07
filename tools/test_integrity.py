@@ -58,10 +58,12 @@ def test_project_structure() -> None:
         "adapters/copilot",
         "adapters/opencode",
         "adapters/kiro",
+        "adapters/claude",
         "generated",
         "generated/copilot",
         "generated/opencode",
         "generated/kiro",
+        "generated/claude",
         "tools",
         "scripts",
         "scripts/install",
@@ -95,9 +97,11 @@ def test_no_root_scripts() -> None:
         "install.sh", "install.ps1",
         "install-opencode.sh", "install-opencode.ps1",
         "install-kiro.sh", "install-kiro.ps1",
+        "install-claude.sh", "install-claude.ps1",
         "backup.sh", "backup.ps1",
         "backup-opencode.sh", "backup-opencode.ps1",
         "backup-kiro.sh", "backup-kiro.ps1",
+        "backup-claude.sh", "backup-claude.ps1",
     ]
     for name in orphans:
         check(not (ROOT / name).exists(), f"No existe en raíz: {name}")
@@ -109,7 +113,7 @@ def test_no_root_scripts() -> None:
 def test_scripts_exist() -> None:
     print("\n\033[1m[3] Scripts en nueva ubicación\033[0m")
 
-    platforms = ["copilot", "opencode", "kiro"]
+    platforms = ["copilot", "opencode", "kiro", "claude"]
     for platform in platforms:
         for ext in ("sh", "ps1"):
             install = ROOT / "scripts" / "install" / f"{platform}.{ext}"
@@ -289,6 +293,7 @@ def test_readme_references() -> None:
     check("scripts/install/copilot.sh" in readme, "README referencia scripts/install/copilot.sh")
     check("scripts/install/opencode.sh" in readme, "README referencia scripts/install/opencode.sh")
     check("scripts/install/kiro.sh" in readme, "README referencia scripts/install/kiro.sh")
+    check("scripts/install/claude.sh" in readme, "README referencia scripts/install/claude.sh")
     check("scripts/backup/" in readme, "README referencia scripts/backup/")
 
     # Should NOT reference old root scripts

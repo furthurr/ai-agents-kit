@@ -156,7 +156,11 @@ def report(problems: list[str], notices: list[str], success: str) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--platform", required=True, help="copilot | opencode | kiro")
+    parser.add_argument(
+        "--platform",
+        required=True,
+        help="Identificador declarado en canonical/manifest.json",
+    )
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--check-source", action="store_true", help="Valida generated/<platform>/")
     mode.add_argument("--check-installed", action="store_true", help="Valida el destino instalado")

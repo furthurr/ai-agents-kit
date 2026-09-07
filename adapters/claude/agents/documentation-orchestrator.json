@@ -1,0 +1,22 @@
+{
+  "filename": "documentation-orchestrator.md",
+  "frontmatter": {
+    "name": "documentation-orchestrator",
+    "description": "Coordina el estado, bootstrap y sincronización de la documentación canónica; siempre recomienda un nivel de modelo y espera confirmación antes de operar.",
+    "tools": [
+      "Agent",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Skill"
+    ],
+    "skills": [
+      "documentation-orchestrator"
+    ]
+  }
+}

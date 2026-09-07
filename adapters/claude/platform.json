@@ -1,0 +1,7 @@
+{
+  "substitutions": {
+    "{{sdd_agent}}": "@sdd",
+    "{{gate_instruction}}": "",
+    "{{steering_paths}}": "`CLAUDE.md`, `.claude/CLAUDE.md`, `.claude/rules/*.md`"
+  }
+}

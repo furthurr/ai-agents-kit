@@ -1,0 +1,21 @@
+{
+  "filename": "ui-design.md",
+  "frontmatter": {
+    "name": "ui-design",
+    "description": "Documenta y estandariza lo visual del proyecto en `.design/`; no toca lógica de negocio, APIs ni otras áreas.",
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Skill"
+    ],
+    "skills": [
+      "ui-design"
+    ]
+  }
+}

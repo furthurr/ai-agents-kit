@@ -14,13 +14,13 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def main() -> int:
+    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
     parser = argparse.ArgumentParser()
-    parser.add_argument("platform", choices=("copilot", "opencode", "kiro"))
+    parser.add_argument("platform", choices=tuple(manifest["platforms"]))
     parser.add_argument("--skills-dir", required=True, type=Path)
     parser.add_argument("--agents-dir", required=True, type=Path)
     parser.add_argument("--dry-run", action="store_true")
     arguments = parser.parse_args()
-    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
     expected_skills = set(manifest["skills"])
     expected_agents = {
         json.loads((ROOT / "adapters" / arguments.platform / "agents" / f"{agent_id}.json").read_text(encoding="utf-8"))["filename"]

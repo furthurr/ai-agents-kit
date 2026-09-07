@@ -25,6 +25,7 @@
   "platforms": [
     "copilot",
     "opencode",
-    "kiro"
+    "kiro",
+    "claude"
   ]
 }

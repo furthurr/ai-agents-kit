@@ -16,9 +16,11 @@ Desktop.ini
 # Logs y temporales
 *.log
 *.tmp
+test-results/
 
 # Instantáneas locales para revisión; pueden contener configuración sensible.
 imports/
 __pycache__/
+.agent-lab/
 SDDIA.png
 SDDIA_BASE.png

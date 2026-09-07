@@ -1,0 +1,21 @@
+{
+  "filename": "data-api.md",
+  "frontmatter": {
+    "name": "data-api",
+    "description": "Documenta, audita y desarrolla datos y APIs en `.data/`; no toca UI ni negocio ajeno a datos.",
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Skill"
+    ],
+    "skills": [
+      "data-api"
+    ]
+  }
+}

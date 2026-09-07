@@ -28,7 +28,7 @@ repositorio**.
 └────────────────────────────┬────────────────────────────────┘
                              │  scripts/install/*
                              ▼
-              ~/.copilot  ·  ~/.config/opencode  ·  ~/.kiro
+      ~/.copilot  ·  ~/.config/opencode  ·  ~/.kiro  ·  ~/.claude
 ```
 
 ## Capas y responsabilidades
@@ -50,7 +50,7 @@ Fuente de verdad del inventario:
 {
   "skills": [ "architecture", "code-quality", "..." ],
   "agents": [ "architecture", "code-quality", "..." ],
-  "platforms": [ "copilot", "opencode", "kiro" ]
+  "platforms": [ "copilot", "opencode", "kiro", "claude" ]
 }
 ```
 
@@ -68,7 +68,7 @@ del agente). Tokens declarados hoy:
 |-------|------------|
 | `{{sdd_agent}}` | Cómo referenciar al agente SDD (`@sdd`, `sdd`, …) |
 | `{{gate_instruction}}` | Matiz de plataforma sobre el gate; vacío si no hace falta |
-| `{{steering_paths}}` | Rutas de steering / AGENTS.md |
+| `{{steering_paths}}` | Rutas de steering (`AGENTS.md`, `CLAUDE.md`, `.claude/rules/`, …) |
 
 Reglas:
 
@@ -93,12 +93,12 @@ Campos habituales:
 
 Diferencias notables entre plataformas:
 
-| Aspecto | Copilot | OpenCode | Kiro |
-|---------|---------|----------|------|
-| Extensión agente | `.agent.md` | `.md` | `.md` |
-| Nombre del agente | campo `name` en frontmatter | vía archivo / config | nombre de archivo (sin `name`) |
-| Permisos | lista `tools` | `permission` (edit, bash, …) | `tools` + `permissions.rules` |
-| Default shell sensible | según tool | confirmación (`ask`) | `ask` por defecto; `deny` en destructivos |
+| Aspecto | Copilot | OpenCode | Kiro | Claude Code |
+|---------|---------|----------|------|-------------|
+| Extensión agente | `.agent.md` | `.md` | `.md` | `.md` |
+| Nombre del agente | campo `name` en frontmatter | vía archivo / config | nombre de archivo (sin `name`) | `name` en minúsculas y con guiones |
+| Permisos | lista `tools` | `permission` (edit, bash, …) | `tools` + `permissions.rules` | `tools`, `disallowedTools` y settings |
+| Default shell sensible | según tool | confirmación (`ask`) | `ask` por defecto; `deny` en destructivos | flujo de permisos de Claude Code |
 
 ### Adapter de skill
 
@@ -146,8 +146,8 @@ Ejecutar siempre antes de instalar o de commitear cambios de prompts.
 
 ```text
 scripts/
-  install/   copilot|opencode|kiro  .sh / .ps1
-  backup/    copilot|opencode|kiro  .sh / .ps1
+  install/   copilot|opencode|kiro|claude  .sh / .ps1
+  backup/    copilot|opencode|kiro|claude  .sh / .ps1
 ```
 
 - **install:** `generated/<p>/` → rutas globales de la tool; backup timestamped
@@ -167,7 +167,9 @@ El kit declara límites en dos niveles:
 
 OpenCode tiende a pedir confirmación en shell por defecto. Kiro usa `ask` como
 efecto por defecto y niega patrones destructivos explícitos. Copilot expone el
-conjunto de tools declarado en el adapter.
+conjunto de tools declarado en el adapter. Claude Code combina las tools del
+subagente con sus permisos de sesión, settings y hooks; el kit no modifica esos
+settings.
 
 Ninguna de estas capas sustituye el criterio humano en máquinas compartidas o
 CI.
@@ -189,7 +191,7 @@ contexto raíz, mapa de módulos, símbolos opt-in, grafo opt-in y código puntu
 
 La única autoridad de comportamiento runtime es
 [`canonical/skills/project-navigator/SKILL.md`](../canonical/skills/project-navigator/SKILL.md).
-Sus contratos y procedimientos bajo `references/` se copian a las tres
+Sus contratos y procedimientos bajo `references/` se copian a todas las
 plataformas mediante el pipeline normal. Las plantillas son ejemplos; los
 contratos normativos de índices viven en `references/schemas.md`.
 
@@ -211,7 +213,7 @@ Documentation Orchestrator sigue el mismo patrón canónico de skill + agente, p
 coordina procedimientos de varios dominios. No depende de APIs de subagentes de
 una plataforma: para cada acción carga la skill aplicable o emite un handoff
 Markdown para continuar con el agente especialista real, nunca ambas. El handoff
-conserva la misma semántica en Copilot, OpenCode y Kiro.
+conserva la misma semántica en Copilot, OpenCode, Kiro y Claude Code.
 
 ### Límites y autoridad
 

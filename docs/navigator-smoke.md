@@ -114,6 +114,7 @@ No marcar una plataforma como aprobada sin ejecutar todos los pasos.
 | Copilot | No disponible | Claude 4.6 | 2026-08-05 | No registrado (working tree) | Aprobado | Genera CRM `2e319a4`; cinco casos conformes, `project.root` en subdirectorio y cero escrituras externas |
 | OpenCode | 1.18.3 | MiniMax-M3 | 2026-08-05 | No registrado (working tree) | Aprobado | Genera CRM `2e319a4`; smoke completo + regresión `root-gate`, sin escrituras fuera de `.navigator/` |
 | Kiro | No disponible | Claude 4.6 | 2026-08-05 | No registrado (working tree) | Aprobado | Genera CRM `2e319a4`; cinco casos conformes, 21 módulos válidos y cero escrituras externas |
+| Claude Code | Pendiente | Pendiente | Pendiente | Working tree | Pendiente | Adaptador generado; falta ejecutar el smoke manual con Claude Code |
 
 ### Evidencia OpenCode 2026-08-05
 
@@ -196,9 +197,9 @@ El smoke se considera aprobado en una plataforma cuando:
 - La petición fuera de alcance no modifica código de producto.
 - Los resultados, versiones y fallos conocidos quedan registrados arriba.
 
-La compatibilidad multiplataforma solo se declara cuando las tres filas están
-aprobadas con evidencia.
+La compatibilidad multiplataforma solo se declara cuando todas las plataformas
+incluidas en el manifest están aprobadas con evidencia.
 
 **Resultado actual:** contrato MVP aprobado con evidencia en Copilot, OpenCode y
-Kiro. Esto valida las combinaciones de host y modelo registradas, no todos los
-modelos disponibles en cada plataforma.
+Kiro. Claude Code queda pendiente de smoke manual; esto valida las combinaciones
+de host y modelo registradas, no todos los modelos disponibles en cada plataforma.

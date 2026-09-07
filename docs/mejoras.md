@@ -112,7 +112,7 @@ ampliar la matriz de CI.
 - [x] Definir cómo retirar artefactos obsoletos sin borrar contenido ajeno al kit.
 - [x] Documentar restauración de backup y desinstalación.
 - [x] Probar install, actualización, dry-run y rollback en directorios HOME
-  temporales para las tres plataformas.
+  temporales para las cuatro plataformas.
 - [ ] **Ejecutar los instaladores PowerShell en un runner Windows.** Su contrato
   hoy solo está garantizado de forma estática (test `[7]` de `test_install.py`);
   no se han ejecutado nunca. Bloqueo: se necesita la matriz de SO de P0.3.
@@ -282,7 +282,7 @@ reanudación y evidencia manual.
   [navigator-smoke.md](navigator-smoke.md).
 - [ ] **Completar y ejecutar el smoke SDD multiplataforma**: añadir casos
   explícitos de rechazo del integrity gate ante un `[x]` sin artefacto y de trabajo
-  fuera de alcance, y registrar evidencia para Copilot, OpenCode y Kiro.
+  fuera de alcance, y registrar evidencia para Copilot, OpenCode, Kiro y Claude Code.
 - [x] **Retirar las cifras de coste sin medición** (`Baseline +~10 %`, `+40–80 %`)
   y sustituirlas por carga documental cualitativa; cualquier porcentaje futuro
   exige una comparación reproducible.
@@ -301,8 +301,9 @@ reordenado de historias y existe una tabla fechada de smoke por plataforma y ver
 - [x] Evitar test-after en plantillas y exigir evidencia RED/GREEN en el integrity gate.
 - [x] Añadir contrato automatizado (`tools/test_sdd_contract.py`) y el documento
   base [sdd-smoke.md](sdd-smoke.md).
-- [ ] Ejecutar el smoke manual en las tres plataformas y completar sus casos de
-  integrity gate y alcance; sin esa evidencia no se marca la matriz como aprobada.
+- [ ] Ejecutar el smoke manual en las cuatro plataformas y completar sus casos de
+  integrity gate y alcance; Claude Code sigue pendiente y sin esa evidencia no se
+  marca la matriz como aprobada.
 
 ---
 
@@ -368,8 +369,8 @@ pero no inventa desde cero toda la estructura.
 - [x] Contrato MVP migrado a `canonical/skills/project-navigator/` y criterios
   manuales extraídos a [navigator-smoke.md](navigator-smoke.md).
 - [x] Skill y agente `project-navigator` creados en `canonical/`.
-- [x] Adapters de OpenCode, Copilot y Kiro añadidos al árbol de trabajo junto al manifest.
-- [x] Pipeline base de render y validación para 10 skills, 9 agentes y 3 plataformas.
+- [x] Adapters de OpenCode, Copilot, Kiro y Claude añadidos al árbol de trabajo junto al manifest.
+- [x] Pipeline base de render y validación para 10 skills, 9 agentes y 4 plataformas.
 - [x] Catálogo, uso y README actualizados inicialmente con Navigator.
 - [x] Smoke MVP aprobado en Copilot, OpenCode 1.18.3 y Kiro sobre Genera CRM;
   modelos MiniMax-M3 y Claude 4.6, incluida regresión de instancia raíz y estados

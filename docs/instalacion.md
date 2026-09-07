@@ -9,7 +9,7 @@ completo en cada render.
 - **Python 3** — render, validación, métricas e importación
 - **Bash** (macOS/Linux) o **PowerShell** (Windows) — scripts de install/backup
 - **Git** — versionar cambios del kit (recomendado)
-- La herramienta destino instalada (Copilot CLI/IDE, OpenCode o Kiro)
+- La herramienta destino instalada (Copilot CLI/IDE, OpenCode, Kiro o Claude Code)
 
 ## Flujo recomendado
 
@@ -19,7 +19,7 @@ Siempre en este orden:
 2. Validar paridad y reproducibilidad  
 3. (Opcional) Medir coste de contexto  
 4. Instalar la plataforma deseada  
-5. Reiniciar Copilot, OpenCode o Kiro  
+5. Reiniciar la herramienta destino
 
 ### macOS / Linux
 
@@ -31,6 +31,7 @@ python3 tools/measure_context.py   # opcional
 ./scripts/install/copilot.sh       # GitHub Copilot
 ./scripts/install/opencode.sh      # OpenCode
 ./scripts/install/kiro.sh          # Kiro
+./scripts/install/claude.sh        # Claude Code
 ```
 
 ### Windows (PowerShell)
@@ -43,6 +44,7 @@ python tools/measure_context.py    # opcional
 .\scripts\install\copilot.ps1
 .\scripts\install\opencode.ps1
 .\scripts\install\kiro.ps1
+.\scripts\install\claude.ps1
 ```
 
 Puedes instalar **varias plataformas** en la misma máquina; cada script es
@@ -70,6 +72,7 @@ Ejemplos:
 | Copilot | `~/.copilot/skills/` | `~/.copilot/agents/` |
 | OpenCode | `~/.config/opencode/skills/` (o `$XDG_CONFIG_HOME/opencode/skills/`) | `~/.config/opencode/agent/` |
 | Kiro | `~/.kiro/skills/` | `~/.kiro/agents/` |
+| Claude Code | `~/.claude/skills/` (o `$CLAUDE_CONFIG_DIR/skills/`) | `~/.claude/agents/` (o `$CLAUDE_CONFIG_DIR/agents/`) |
 
 Antes de sobrescribir, los instaladores (salvo `--force`) crean un backup local
 timestamped. Rutas por plataforma:
@@ -79,6 +82,7 @@ timestamped. Rutas por plataforma:
 | Copilot | `~/.copilot-backup/<AAAAMMDD-HHMMSS>/` |
 | OpenCode | `~/.opencode-kit-backup/<AAAAMMDD-HHMMSS>/` |
 | Kiro | `~/.kiro-kit-backup/<AAAAMMDD-HHMMSS>/` |
+| Claude Code | `~/.claude-kit-backup/<AAAAMMDD-HHMMSS>/` |
 
 Dentro de cada backup, el contenido previo queda en `skills/` y `agents/`.
 
@@ -129,6 +133,7 @@ sin pisar la fuente del repo:
 ./scripts/backup/copilot.sh --dry-run
 ./scripts/backup/opencode.sh --dry-run
 ./scripts/backup/kiro.sh --dry-run
+./scripts/backup/claude.sh --dry-run
 ```
 
 En Windows: `scripts\backup\*.ps1`.
@@ -161,6 +166,7 @@ Para las otras plataformas cambia la raíz de backup y el destino:
 | Copilot | `~/.copilot-backup/<fecha>/` | `~/.copilot/skills/` | `~/.copilot/agents/` |
 | OpenCode | `~/.opencode-kit-backup/<fecha>/` | `~/.config/opencode/skills/` | `~/.config/opencode/agent/` |
 | Kiro | `~/.kiro-kit-backup/<fecha>/` | `~/.kiro/skills/` | `~/.kiro/agents/` |
+| Claude Code | `~/.claude-kit-backup/<fecha>/` | `~/.claude/skills/` | `~/.claude/agents/` |
 
 En Windows (PowerShell):
 

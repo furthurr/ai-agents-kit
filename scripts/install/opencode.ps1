@@ -65,7 +65,7 @@ function Write-Err  { param($m) Write-Host "X  $m" -ForegroundColor Red }
 
 # --- Preflight compartido ---
 # tools\install_preflight.py define que significa "instalacion completa" para los
-# seis instaladores, tomando canonical\manifest.json como fuente de verdad.
+# todos los instaladores, tomando canonical\manifest.json como fuente de verdad.
 $Python = $null
 foreach ($candidate in @("python", "python3")) {
     if (Get-Command $candidate -ErrorAction SilentlyContinue) { $Python = $candidate; break }

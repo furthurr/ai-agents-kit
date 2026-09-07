@@ -34,6 +34,7 @@ PLATFORMS = {
     "copilot": (".copilot/skills", ".copilot/agents", ".copilot-backup"),
     "opencode": (".config/opencode/skills", ".config/opencode/agent", ".opencode-kit-backup"),
     "kiro": (".kiro/skills", ".kiro/agents", ".kiro-kit-backup"),
+    "claude": (".claude/skills", ".claude/agents", ".claude-kit-backup"),
 }
 
 # Directories the kit needs in order to render, validate and install.
@@ -87,12 +88,21 @@ def build_repo(base: Path) -> Path:
     return repo
 
 
-def run_installer(repo: Path, home: Path, platform: str, *args: str):
+def run_installer(
+    repo: Path,
+    home: Path,
+    platform: str,
+    *args: str,
+    config_dir: Path | None = None,
+):
     """Run an installer with an isolated HOME and a deterministic XDG path."""
     env = dict(os.environ)
     env["HOME"] = str(home)
     # opencode falls back to $HOME/.config only when XDG_CONFIG_HOME is unset.
     env.pop("XDG_CONFIG_HOME", None)
+    env.pop("CLAUDE_CONFIG_DIR", None)
+    if config_dir is not None:
+        env["CLAUDE_CONFIG_DIR"] = str(config_dir)
     return subprocess.run(
         ["bash", str(repo / "scripts" / "install" / f"{platform}.sh"), *args],
         capture_output=True,
@@ -290,7 +300,32 @@ def test_rollback_desde_backup() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 7. bash and PowerShell installers stay in parity (static check)
+# 7. Claude Code respects CLAUDE_CONFIG_DIR
+# ---------------------------------------------------------------------------
+def test_claude_config_dir() -> None:
+    print("\n\033[1m[7] Claude Code respeta CLAUDE_CONFIG_DIR\033[0m")
+    data = manifest()
+    with tempfile.TemporaryDirectory() as temporary:
+        base = Path(temporary)
+        repo = build_repo(base)
+        home = base / "home"
+        home.mkdir()
+        config_dir = base / "custom-claude"
+        result = run_installer(repo, home, "claude", config_dir=config_dir)
+        check(result.returncode == 0, "claude: exit 0 con CLAUDE_CONFIG_DIR", result.stderr)
+        check(
+            all((config_dir / "skills" / skill / "SKILL.md").is_file() for skill in data["skills"]),
+            "claude: instala skills en CLAUDE_CONFIG_DIR",
+        )
+        check(
+            all((config_dir / "agents" / name).is_file() for name in agent_filenames("claude", data["agents"])),
+            "claude: instala agentes en CLAUDE_CONFIG_DIR",
+        )
+        check(not (home / ".claude").exists(), "claude: no crea ~/.claude cuando se define CLAUDE_CONFIG_DIR")
+
+
+# ---------------------------------------------------------------------------
+# 8. bash and PowerShell installers stay in parity (static check)
 # ---------------------------------------------------------------------------
 def test_paridad_bash_powershell() -> None:
     """The PowerShell installers cannot be executed on every machine.
@@ -298,7 +333,7 @@ def test_paridad_bash_powershell() -> None:
     Their contract is therefore enforced statically, so a fix applied to the bash
     side cannot silently skip its PowerShell counterpart.
     """
-    print("\n\033[1m[7] Paridad bash / PowerShell (estático)\033[0m")
+    print("\n\033[1m[8] Paridad bash / PowerShell (estático)\033[0m")
     for platform in PLATFORMS:
         for ext in ("sh", "ps1"):
             path = ROOT / "scripts" / "install" / f"{platform}.{ext}"
@@ -323,9 +358,8 @@ def test_paridad_bash_powershell() -> None:
 
 def main() -> int:
     print("\033[1mTests de instalación (HOME temporal)\033[0m")
-    test_paridad_bash_powershell()
     if sys.platform == "win32":
-        print("\nLos instaladores bash no se ejecutan en Windows; se omiten [1]-[6].")
+        print("\nLos instaladores bash no se ejecutan en Windows; se omiten [1]-[7].")
     else:
         test_install_completo()
         test_falla_si_falta_generated()
@@ -333,6 +367,8 @@ def main() -> int:
         test_dry_run_sin_efectos()
         test_actualizacion_idempotente()
         test_rollback_desde_backup()
+        test_claude_config_dir()
+    test_paridad_bash_powershell()
     total = PASSED + FAILED
     print(f"\n{PASSED}/{total} pruebas correctas")
     return 0 if FAILED == 0 else 1

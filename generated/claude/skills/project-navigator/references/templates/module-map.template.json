@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "generated_at": "2026-08-04T12:00:00Z",
+  "source_commit": "0123456789abcdef0123456789abcdef01234567",
+  "root": ".",
+  "modules": [
+    {
+      "id": "app",
+      "name": "App",
+      "path": "app",
+      "responsibility": "Aplicacion principal y composition root",
+      "kind": "app",
+      "tech": ["kotlin", "gradle"],
+      "entrypoints": ["app/src/main"],
+      "depends_on": ["core"],
+      "tags": ["mobile"]
+    },
+    {
+      "id": "core",
+      "name": "Core",
+      "path": "core",
+      "responsibility": "Dominio compartido y utilidades",
+      "kind": "lib",
+      "tech": ["kotlin"],
+      "entrypoints": [],
+      "depends_on": []
+    }
+  ]
+}

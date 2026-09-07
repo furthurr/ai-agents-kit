@@ -1,0 +1,22 @@
+{
+  "filename": "git-release-manager.md",
+  "frontmatter": {
+    "name": "git-release-manager",
+    "description": "Administra Git y releases en español; commit, push y tag requieren confirmación explícita y nunca modifica código fuera de Git/release.",
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Skill"
+    ],
+    "skills": [
+      "git-commit",
+      "release-management"
+    ]
+  }
+}

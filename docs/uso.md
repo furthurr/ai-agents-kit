@@ -54,6 +54,15 @@ IDs estables del kit:
   (p. ej. `/sdd-spec` según la UI de Kiro).
 - Steering del proyecto: `.kiro/steering/*.md` y/o `AGENTS.md` si existen.
 
+### Claude Code
+
+- Agentes en `~/.claude/agents/` o `$CLAUDE_CONFIG_DIR/agents/`; se invocan con
+  una petición de delegación o mención `@architecture`, `@sdd`, etc.
+- Skills en `~/.claude/skills/` o `$CLAUDE_CONFIG_DIR/skills/`; también puedes
+  invocarlas con `/sdd-spec`, `/security`, etc.
+- Steering del proyecto: `CLAUDE.md`, `.claude/CLAUDE.md` y `.claude/rules/*.md`.
+- El instalador no crea ni modifica `CLAUDE.md` ni `.claude/settings.json`.
+
 Si no ves un agente tras instalar, **reinicia** la herramienta y verifica la
 ruta de destino en [instalacion.md](instalacion.md).
 
@@ -85,8 +94,8 @@ Catálogo completo: [catalogo.md](catalogo.md).
    tag o changelog aplicado.
 5. **Seguridad y calidad** — la remediación va en micro-pasos con confirmación;
    no esperes un “arregla todo el repo” de un golpe.
-6. **Contexto del proyecto** — si existe `AGENTS.md` o steering de Kiro, los
-   agentes de SDD lo leen de forma selectiva.
+6. **Contexto del proyecto** — si existe `CLAUDE.md`, `AGENTS.md` o steering de
+   Kiro, los agentes de SDD lo leen de forma selectiva según la plataforma.
 7. **Testing adaptativo en SDD** — una feature normal usa TDD focalizado; TDD
    estricto solo se activa si lo pides. Es independiente de la profundidad:
    `direct` puede incluir un microciclo TDD y `deep` no implica TDD estricto.

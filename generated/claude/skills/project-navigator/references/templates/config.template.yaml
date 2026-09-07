@@ -1,0 +1,25 @@
+version: 1
+project:
+  name: ""                      # opcional; si vacio se infiere del repo
+  root: .                       # relativo al repo; monorepo puede apuntar a subcarpeta
+layers:
+  context: true                 # Capa 0
+  module_map: true              # Capa 1
+  symbols: false                # Capa 2 (opt-in MVP)
+  graph: false                  # Capa 3 (opt-in MVP)
+sources:
+  detect_external: true         # AGENTS.md, CLAUDE.md, Contexto para IA, etc.
+  export_agents_md: false       # opt-in
+graph:
+  provider: none                # none | graphify | custom
+  path: graph/graph.json
+exclude:
+  - node_modules/**
+  - .git/**
+  - dist/**
+  - build/**
+  - "**/.env"
+  - "**/.env.*"
+  - "**/secrets/**"
+update:
+  strategy: manual              # manual | on_request | hook | ci  (MVP: manual/on_request)

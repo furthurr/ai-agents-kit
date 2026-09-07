@@ -1,0 +1,21 @@
+{
+  "filename": "project-navigator.md",
+  "frontmatter": {
+    "name": "project-navigator",
+    "description": "Investiga el proyecto con mínimo de tokens usando `.navigator/`; es de solo lectura por defecto y no selecciona el modelo del host.",
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Skill"
+    ],
+    "skills": [
+      "project-navigator"
+    ]
+  }
+}

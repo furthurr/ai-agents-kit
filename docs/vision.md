@@ -8,9 +8,10 @@ asistentes de código con IA:
 - [GitHub Copilot](https://github.com/features/copilot)
 - [OpenCode](https://opencode.ai)
 - [Kiro](https://kiro.dev)
+- [Claude Code](https://code.claude.com/)
 
 La lógica común se escribe **una sola vez** en `canonical/` y se renderiza para
-cada herramienta mediante adaptadores declarativos. Así se evita mantener tres
+cada herramienta mediante adaptadores declarativos. Así se evita mantener cuatro
 copias del mismo prompt.
 
 ## Problema que resuelve
@@ -99,7 +100,7 @@ adapters/      frontmatter, nombres, permisos y sustituciones por herramienta
 generated/     artefactos listos para instalar (no editar)
     │
     ▼  scripts/install/*
-~/.copilot/  ·  ~/.config/opencode/  ·  ~/.kiro/
+~/.copilot/  ·  ~/.config/opencode/  ·  ~/.kiro/  ·  ~/.claude/
 ```
 
 Detalle técnico: [arquitectura-del-kit.md](arquitectura-del-kit.md).
