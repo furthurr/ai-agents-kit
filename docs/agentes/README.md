@@ -56,6 +56,9 @@ Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
   de un estudio y una propuesta.
 - **Quality y Security:** primero auditan en solo lectura; después requieren
   confirmación de alcance y remediación en micro-pasos.
+- **Escalado a SDD:** Architecture, Data & API, UI Design, Quality y Security
+  recomiendan SDD si la mejora requiere más requisitos, diseño o coordinación;
+  explican el motivo y esperan que el usuario decida si cambia de agente.
 - **SDD:** no avanza de fase sin aprobación explícita, salvo Quick Plan solicitado.
 - **Git y releases:** commit, push, cambios de versión, tags y CHANGELOG requieren
   confirmación explícita; las acciones destructivas requieren doble confirmación.

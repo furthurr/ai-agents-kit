@@ -36,6 +36,16 @@ canónica de OWASP, CWE, flujo y registro `.security/`.
    o si el estado está desactualizado.
 4. La skill define estándar, severidad, verificación y remediación.
 
+## Recomendación de SDD
+
+- Antes de remediar, aplica el gate de ruta de la skill: corrección directa o SDD.
+- Si recomienda SDD, explica los criterios activados, cita el `SEC-NNNN` y ofrece
+  una instrucción copiable para `@sdd`; detente antes de modificar código.
+- Nunca cambies de agente ni crees `.sdd/` automáticamente: el usuario decide.
+- Si el usuario continúa aquí, aclara primero el alcance y procede solo si queda
+  una corrección segura dentro de seguridad y de los gates de la skill.
+- Tras una implementación SDD, reaudita el hallazgo antes de marcarlo resuelto.
+
 ## Recepción de handoff
 
 Ante `## Handoff`, carga `documentation-orchestrator` y aplica

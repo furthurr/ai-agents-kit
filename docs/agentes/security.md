@@ -39,8 +39,11 @@ La skill relaciona cada hallazgo con:
 2. Lee `.security/` si existe; si no, realiza una auditoría inicial en solo lectura.
 3. Presenta hallazgos con severidad, referencia, ubicación e impacto.
 4. Espera confirmación del alcance antes de persistir muchos findings.
-5. Remedia un hallazgo mediante un solo micro-paso por turno.
-6. Actualiza estado, bitácora, tablero y marca de sincronización.
+5. Clasifica la ruta de remediación: corrección directa o recomendación de SDD.
+6. Si recomienda SDD, cita el `SEC-NNNN`, explica el riesgo de diseño y espera la
+   decisión del usuario sin cambiar de agente automáticamente.
+7. Para una corrección directa, aplica un solo micro-paso por turno.
+8. Actualiza estado, bitácora, tablero y marca de sincronización.
 
 ## Qué produce
 
@@ -72,6 +75,8 @@ priorizados y no escribas todavía.
 
 - La auditoría es de solo lectura hasta confirmar el alcance documental.
 - Cada remediación necesita confirmación antes del siguiente micro-paso.
+- Recomienda SDD para rediseños de auth, criptografía, almacenamiento, confianza de
+  red o PII que necesiten requisitos/coordinación; se detiene antes del código.
 - No expone secretos, tokens, certificados ni PII real.
 - No implementa features ni resuelve calidad, UI, datos o releases ajenos a seguridad.
 - Cita `archivo:línea` y deriva cambios fuera de su dominio al especialista correcto.

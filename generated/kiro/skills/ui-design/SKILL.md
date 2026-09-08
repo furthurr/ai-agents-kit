@@ -139,6 +139,26 @@ plantilla). Del más delicado al menos importante.
 Escribe en `.design/README.md` el hash de `HEAD` y la fecha actual como último
 commit documentado.
 
+## Gate de ruta antes de implementar: cambio directo o recomendación de SDD
+
+La **severidad por sí sola no decide** la ruta. Un cambio puede implementarse
+directamente cuando el objetivo visual está claro, es localizado y reversible,
+queda por completo en UI, no introduce comportamiento de producto ni exige una
+decisión compartida y puede verificarse de forma focalizada.
+
+Recomienda continuar con `sdd` ante requisitos o criterios de aceptación
+ambiguos, rediseños de múltiples pantallas o flujos, nuevos estados o
+comportamientos, cambios reutilizables con impacto amplio, accesibilidad transversal
+o coordinación con negocio, datos, seguridad u otros módulos. SDD no amplía el
+alcance de esta skill: no implementes aquí las partes ajenas a UI.
+
+Al recomendar SDD, explica los criterios activados, cita el hallazgo/componente y
+las ubicaciones disponibles, ofrece una instrucción copiable para `sdd`
+y **detente antes de modificar código**. Nunca cambies de agente ni crees `.sdd/`
+automáticamente: el usuario decide. Si prefiere continuar aquí, aclara el alcance
+y procede solo si queda exclusivamente en UI y cumple estas reglas. Tras una
+implementación SDD, verifica UI, accesibilidad y documentación visual.
+
 ## Qué documentar (checklist visual)
 
 - **Colores:** paleta base, colores semánticos (primario, error, éxito, etc.),

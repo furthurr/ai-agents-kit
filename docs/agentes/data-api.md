@@ -41,8 +41,11 @@ La skill `data-api` reconoce:
 3. En la primera ejecución detecta tecnología, contratos, persistencia y tamaño, y
    propone modo `lite` o `full`.
 4. Presenta el estudio antes de generar documentación masiva.
-5. Actualiza endpoints, modelos, mapeos, esquema, convenciones y deuda.
-6. Registra la marca de sincronización y cita las fuentes reales.
+5. Antes de implementar una mejora, clasifica la ruta directa o SDD; recomienda
+   SDD para contratos, migraciones, compatibilidad o coordinación compleja.
+6. El usuario decide si cambia de agente; nunca se crea `.sdd/` automáticamente.
+7. Actualiza endpoints, modelos, mapeos, esquema, convenciones y deuda.
+8. Registra la marca de sincronización y cita las fuentes reales.
 
 ## Qué produce
 
@@ -83,4 +86,5 @@ existencia y ubicación, nunca el valor real.
 - No inventa respuestas, payloads ni endpoints que no existan.
 - Usa placeholders para dominios, tokens, credenciales y valores productivos.
 - Identifica PII y deriva los riesgos de seguridad al Security Agent.
+- Si recomienda SDD, cita el hallazgo/contrato y se detiene antes de modificar código.
 - La primera documentación masiva requiere estudio, propuesta y confirmación.

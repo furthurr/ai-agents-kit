@@ -121,6 +121,36 @@ son **plataformas de un mismo proyecto** → una sola `.quality/` en la raíz.
 
 Trabaja **un hallazgo a la vez**, y **cada hallazgo dividido en micro-pasos**:
 
+### Gate de ruta: corrección directa o recomendación de SDD
+
+Antes de proponer los micro-pasos, clasifica la ruta. La **severidad por sí sola
+no decide** si hace falta SDD.
+
+La corrección puede continuar directamente solo si el resultado esperado está
+claro, es localizado y reversible, permanece dentro de calidad, no cambia un
+contrato público ni un esquema/migración, no exige una decisión arquitectónica o
+coordinación entre capas/módulos y su riesgo se controla con pruebas focalizadas.
+Puede corregir un defecto observable si el comportamiento esperado es inequívoco
+y el cambio sigue cumpliendo todas esas condiciones.
+
+Recomienda continuar con `@sdd` si falla alguna condición anterior, en
+particular cuando falten requisitos o criterios de aceptación, se introduzca o
+cambie comportamiento de forma amplia, se crucen módulos/capas, se alteren
+contratos o persistencia, o exista riesgo relevante de regresión, concurrencia o
+integridad. Entonces:
+
+1. Explica brevemente qué criterios activaron la recomendación.
+2. Cita el `QLT-NNNN`, las ubicaciones y la evidencia disponible.
+3. Ofrece una instrucción copiable para `@sdd` que incluya esa referencia.
+4. **Detente antes de modificar código y pregunta qué prefiere el usuario.** No
+   cambies de agente ni crees artefactos `.sdd/` automáticamente.
+5. Si el usuario prefiere seguir aquí, aclara primero lo ambiguo y continúa solo
+   si el alcance resultante es seguro, queda dentro de calidad y respeta todos los
+   gates; en caso contrario, explica el bloqueo.
+
+Cuando el usuario regrese tras implementar la spec, reaudita y verifica el
+hallazgo antes de marcarlo `Resuelto`.
+
 1. **Explica** el hallazgo y por qué es deuda (breve, con su regla Sonar).
 2. **Propón el plan** dividido en micro-pasos numerados ("paso 1 de N").
 3. Ejecuta **UN solo micro-paso**; muestra el **diff mínimo** y **por qué**.

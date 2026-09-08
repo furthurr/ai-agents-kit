@@ -42,7 +42,9 @@ La skill `architecture` aplica:
    `lite` o `full` antes de crear documentación masiva.
 4. Lee el estado de sincronización y revisa el historial de Git de forma incremental.
 5. Actualiza los documentos afectados, diagramas, ADRs y deuda técnica.
-6. Registra el commit documentado en `.architecture/README.md`.
+6. Si una deuda requiere implementación compleja, recomienda SDD con la referencia
+   y espera que el usuario decida; nunca cambia de agente automáticamente.
+7. Registra el commit documentado en `.architecture/README.md`.
 
 ## Qué produce
 
@@ -82,6 +84,8 @@ Propón un ADR y no modifiques código.
 
 - Solo documenta, audita y recomienda arquitectura.
 - No refactoriza ni modifica código de negocio, UI, datos, CI o Git remoto.
+- Puede recomendar SDD para implementar deuda que requiera requisitos, diseño,
+  migraciones o coordinación, pero mantiene su prohibición de modificar código.
 - En la primera ejecución presenta estudio y propuesta antes de escribir en masa.
 - Solo usa Git en lectura y mantiene la documentación dentro de `.architecture/`.
 - Nunca incluye secretos, tokens o credenciales.

@@ -38,7 +38,10 @@ La skill `ui-design` cubre:
 2. Lee `.design/README.md` y los componentes afectados en tareas puntuales.
 3. En una primera ejecución presenta un estudio de lo estandarizado y lo pendiente.
 4. Espera confirmación antes de generar documentación visual masiva.
-5. Actualiza tokens, componentes, deuda y marca de sincronización.
+5. Antes de implementar, clasifica la ruta directa o SDD; recomienda SDD para
+   rediseños con múltiples pantallas/flujos, nuevos comportamientos o cruce de dominios.
+6. El usuario decide si cambia de agente; nunca se crea `.sdd/` automáticamente.
+7. Actualiza tokens, componentes, deuda y marca de sincronización.
 
 ## Qué produce
 
@@ -71,6 +74,8 @@ no modifiques la lógica de negocio.
 
 - Solo trabaja sobre lo visual: UI, tokens, componentes, temas y UX visual.
 - No documenta ni modifica lógica de negocio, APIs, datos, red, seguridad o infraestructura.
+- Si recomienda SDD, cita el hallazgo/componente y se detiene antes del código;
+  SDD no amplía el alcance visual de este agente.
 - Conserva la identidad existente y no inventa decisiones de diseño.
 - Cita la fuente (`archivo:línea`) y no expone secretos, tokens de autenticación ni certificados.
 - La extracción inicial requiere estudio, propuesta y confirmación.

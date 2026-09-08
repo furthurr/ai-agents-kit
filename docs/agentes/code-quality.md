@@ -42,8 +42,11 @@ La skill `code-quality` usa:
    solo lectura.
 3. Presenta hallazgos con severidad, regla, ubicación, impacto y esfuerzo.
 4. Espera confirmación del alcance antes de persistir una auditoría masiva.
-5. Para remediar, trabaja un hallazgo y un micro-paso cada vez.
-6. Actualiza el finding y el tablero, dejando una bitácora para reanudarlo.
+5. Antes de remediar, clasifica la ruta: corrección directa o recomendación de SDD.
+6. Si recomienda SDD, cita el `QLT-NNNN`, explica el motivo y espera la decisión
+   del usuario sin cambiar de agente automáticamente.
+7. Para una corrección directa, trabaja un hallazgo y un micro-paso cada vez.
+8. Actualiza el finding y el tablero, dejando una bitácora para reanudarlo.
 
 ## Qué produce
 
@@ -75,6 +78,8 @@ hallazgos priorizados. No hagas cambios todavía.
 - La auditoría inicial es de solo lectura.
 - Requiere confirmación del alcance antes de crear muchos findings.
 - La remediación se hace un micro-paso a la vez y espera confirmación.
+- Recomienda SDD cuando falten requisitos/diseño o haya contratos, varias capas o
+  riesgo relevante; se detiene antes de modificar código y el usuario decide.
 - No corrige seguridad; deriva al Security Agent.
 - No implementa features ni trabaja UI, datos, releases o Git remoto.
 - Nunca expone secretos ni tokens; usa placeholders y citas `archivo:línea`.

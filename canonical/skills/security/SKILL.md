@@ -119,6 +119,34 @@ son **plataformas de un mismo proyecto** → una sola `.security/` en la raíz.
 
 Trabaja **un hallazgo a la vez**, y **cada hallazgo dividido en micro-pasos**:
 
+### Gate de ruta: corrección directa o recomendación de SDD
+
+Antes de proponer los micro-pasos, clasifica la ruta. La **severidad por sí sola
+no decide** si hace falta SDD.
+
+La corrección puede continuar directamente si el resultado seguro esperado está
+claro, es localizado y reversible, permanece dentro de seguridad, no rediseña
+flujos de autenticación/autorización ni protocolos, no requiere migrar datos o
+credenciales, no cruza módulos/capas y puede verificarse con pruebas focalizadas.
+
+Recomienda continuar con `{{sdd_agent}}` si falla alguna condición anterior,
+especialmente ante requisitos o compatibilidad ambiguos, rediseño de
+auth/sesión/autorización, migraciones de almacenamiento o criptografía, cambios de
+confianza de red/pinning, ciclo de vida de PII, coordinación multiplataforma o
+riesgos relevantes de regresión, disponibilidad o integridad. Entonces:
+
+1. Explica brevemente qué criterios activaron la recomendación.
+2. Cita el `SEC-NNNN`, referencias OWASP/CWE, ubicaciones y evidencia disponible.
+3. Ofrece una instrucción copiable para `{{sdd_agent}}` que incluya esa referencia.
+4. **Detente antes de modificar código y pregunta qué prefiere el usuario.** No
+   cambies de agente ni crees artefactos `.sdd/` automáticamente.
+5. Si el usuario prefiere seguir aquí, aclara primero lo ambiguo y continúa solo
+   si el alcance resultante es seguro, queda dentro de seguridad y respeta todos
+   los gates; en caso contrario, explica el bloqueo.
+
+Cuando el usuario regrese tras implementar la spec, reaudita y verifica el
+hallazgo antes de marcarlo `Resuelto`.
+
 1. **Explica** el hallazgo y por qué es riesgo (breve, con su ref MASVS/CWE).
 2. **Propón el plan** dividido en micro-pasos numerados (ej. "paso 1 de 4").
 3. Ejecuta **UN solo micro-paso**; muestra el **diff mínimo** y **por qué**.

@@ -163,6 +163,24 @@ modo lite) con hallazgos priorizados por severidad.
 ### 6. Actualizar la marca de sincronización
 Escribe el hash de `HEAD` (o la fecha) y la tecnología/modo en `README.md`.
 
+## Gate de recomendación a SDD
+
+La **severidad por sí sola no decide** la ruta. Continúa directamente con este
+agente si el trabajo es solo análisis, documentación, diagramas o ADRs dentro de
+`.architecture/`.
+
+Si una deuda o decisión requiere implementar/refactorizar código y además faltan
+requisitos o criterios de aceptación, involucra migraciones, contratos, varios
+módulos/capas, una decisión arquitectónica pendiente o riesgo relevante de
+regresión/integridad, recomienda continuar con `SDD (Spec-Driven Development)`. Explica los
+criterios, cita la deuda, ADR y ubicaciones disponibles, y ofrece una instrucción
+copiable.
+
+Nunca cambies de agente ni crees `.sdd/` automáticamente: el usuario decide.
+Independientemente de su decisión, esta skill **no implementa código**; se limita
+a documentar, auditar y recomendar. Tras una implementación SDD, puede reauditar
+la arquitectura y sincronizar su documentación con la evidencia real.
+
 ## Índice de contexto para otros agentes
 
 `.architecture/README.md` incluye una sección **"Contexto para IA"**: un resumen

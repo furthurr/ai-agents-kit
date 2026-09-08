@@ -90,13 +90,17 @@ Catálogo completo: [catalogo.md](catalogo.md).
    carpeta (`.architecture/`, `.design/`, etc.).
 3. **SDD antes de features grandes** — requisitos y diseño con gates; implementación
    solo tras aprobación (salvo Quick Plan / trivial que el usuario pida en directo).
-4. **Git y releases** — el agente propondrá el plan; **tú confirmas** commit, push,
+4. **Escalado recomendado, no automático** — Architecture, Code Quality, Data & API,
+   Security y UI Design evalúan si una mejora necesita más requisitos o diseño. Si
+   recomiendan SDD, explican el motivo, citan el hallazgo y se detienen antes del
+   código; tú decides si cambias de agente. SDD no amplía el alcance del especialista.
+5. **Git y releases** — el agente propondrá el plan; **tú confirmas** commit, push,
    tag o changelog aplicado.
-5. **Seguridad y calidad** — la remediación va en micro-pasos con confirmación;
+6. **Seguridad y calidad** — la remediación va en micro-pasos con confirmación;
    no esperes un “arregla todo el repo” de un golpe.
-6. **Contexto del proyecto** — si existe `CLAUDE.md`, `AGENTS.md` o steering de
+7. **Contexto del proyecto** — si existe `CLAUDE.md`, `AGENTS.md` o steering de
    Kiro, los agentes de SDD lo leen de forma selectiva según la plataforma.
-7. **Testing adaptativo en SDD** — una feature normal usa TDD focalizado; TDD
+8. **Testing adaptativo en SDD** — una feature normal usa TDD focalizado; TDD
    estricto solo se activa si lo pides. Es independiente de la profundidad:
    `direct` puede incluir un microciclo TDD y `deep` no implica TDD estricto.
 

@@ -63,6 +63,17 @@ Documentas, auditas y desarrollas datos y APIs en español. Carga y sigue la ski
    auditoría explícita o documentación desactualizada.
 4. La skill define convenciones, seguridad, validación y entregables obligatorios.
 
+## Recomendación de SDD
+
+- Antes de implementar deuda o cambios de datos/API, aplica el gate de ruta de la
+  skill: cambio directo o SDD.
+- Recomienda `sdd` cuando falten requisitos/diseño o se afecten contratos,
+  esquemas, migraciones, compatibilidad, varias fuentes, módulos o capas.
+- Explica el motivo y cita el hallazgo, contrato y `archivo:línea` disponibles;
+  detente antes de código. Nunca cambies de agente ni crees `.sdd/` automáticamente.
+- Si el usuario continúa aquí, procede solo con un alcance aclarado y contenido por
+  completo en datos/APIs. Después de SDD, verifica contratos y documentación.
+
 ## Recepción de handoff
 
 Ante `## Handoff`, carga `documentation-orchestrator` y aplica

@@ -171,6 +171,27 @@ modo lite) con hallazgos priorizados por severidad.
 ### 6. Actualizar la marca de sincronización
 Escribe el hash de `HEAD` (o fecha), tecnología, modo y flag de BD en `README.md`.
 
+## Gate de ruta antes de implementar: cambio directo o recomendación de SDD
+
+La **severidad por sí sola no decide** la ruta. Un cambio puede implementarse
+directamente cuando el resultado está claro, es localizado y reversible, queda
+por completo en datos/APIs, preserva contratos y esquemas, no requiere migración
+ni decisión arquitectónica y puede verificarse con pruebas focalizadas.
+
+Recomienda continuar con `@sdd` cuando falten requisitos o criterios de
+aceptación, o el cambio afecte contratos públicos, compatibilidad,
+esquemas/migraciones, estrategias de caché/sincronización, varias fuentes de datos,
+módulos/capas o tenga riesgo relevante de pérdida, duplicación o inconsistencia.
+Si el hallazgo es de seguridad, deriva primero al Security Agent; no uses SDD para
+saltar esa frontera.
+
+Al recomendar SDD, explica los criterios activados, cita el hallazgo o contrato y
+las ubicaciones disponibles, ofrece una instrucción copiable para `@sdd`
+y **detente antes de modificar código**. Nunca cambies de agente ni crees `.sdd/`
+automáticamente: el usuario decide. Si prefiere continuar aquí, aclara el alcance
+y procede solo si queda completamente dentro de esta skill y cumple sus reglas.
+Tras una implementación SDD, verifica los contratos, datos y documentación afectados.
+
 ## Índice de contexto para otros agentes
 
 `.data/README.md` incluye una sección **"Contexto para IA"**: resumen denso de

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Contract tests for adaptive testing in the canonical SDD prompts."""
+"""Contract tests for SDD and its integration with specialist agents."""
 
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SDD = ROOT / "canonical" / "skills" / "sdd-spec"
+SPECIALISTS = ("architecture", "code-quality", "data-api", "security", "ui-design")
 
 PASSED = 0
 FAILED = 0
@@ -26,6 +27,10 @@ def check(condition: bool, message: str) -> None:
 
 def read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def normalized(text: str) -> str:
+    return " ".join(text.split())
 
 
 def test_modes_remain_proportional() -> None:
@@ -65,6 +70,27 @@ def test_variants_and_evidence() -> None:
     check("evidencia del RED esperado y del GREEN" in integrity, "integrity gate exige evidencia TDD")
 
 
+def test_specialists_recommend_sdd_without_switching() -> None:
+    for specialist in SPECIALISTS:
+        agent = read(ROOT / "canonical" / "agents" / f"{specialist}.md")
+        skill = read(ROOT / "canonical" / "skills" / specialist / "SKILL.md")
+        normalized_agent = normalized(agent)
+        normalized_skill = normalized(skill)
+        check("{{sdd_agent}}" in agent, f"{specialist}: agente puede recomendar SDD")
+        check("{{sdd_agent}}" in skill, f"{specialist}: skill define criterio SDD")
+        check("cambies de agente" in normalized_agent and "automáticamente" in normalized_agent,
+              f"{specialist}: agente no cambia automáticamente")
+        check("cambies de agente" in normalized_skill and "automáticamente" in normalized_skill,
+              f"{specialist}: skill conserva decisión del usuario")
+
+    quality = read(ROOT / "canonical" / "skills" / "code-quality" / "SKILL.md")
+    security = read(ROOT / "canonical" / "skills" / "security" / "SKILL.md")
+    check("QLT-NNNN" in quality and "Detente antes de modificar código" in quality,
+          "quality entrega referencia y se detiene antes del código")
+    check("SEC-NNNN" in security and "Detente antes de modificar código" in security,
+          "security entrega referencia y se detiene antes del código")
+
+
 def test_generated_references_match_canonical() -> None:
     references = (SDD / "references").glob("*.md")
     manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
@@ -78,10 +104,11 @@ def test_generated_references_match_canonical() -> None:
 
 
 def main() -> int:
-    print("Contrato SDD — testing adaptativo")
+    print("Contrato SDD — testing adaptativo e integración")
     test_modes_remain_proportional()
     test_adaptive_testing_selection()
     test_variants_and_evidence()
+    test_specialists_recommend_sdd_without_switching()
     test_generated_references_match_canonical()
     total = PASSED + FAILED
     print(f"{PASSED}/{total} comprobaciones correctas")

@@ -38,6 +38,16 @@ Auditas y mejoras calidad de código en español. Carga y sigue la skill
    explícita o ante evidencia de que el estado está desactualizado.
 4. La skill define severidades, evidencias, estándares y pasos de corrección.
 
+## Recomendación de SDD
+
+- Antes de remediar, aplica el gate de ruta de la skill: corrección directa o SDD.
+- Si recomienda SDD, explica los criterios activados, cita el `QLT-NNNN` y ofrece
+  una instrucción copiable para `@sdd`; detente antes de modificar código.
+- Nunca cambies de agente ni crees `.sdd/` automáticamente: el usuario decide.
+- Si el usuario continúa aquí, aclara primero el alcance y procede solo si queda
+  una corrección segura dentro de calidad y de los gates de la skill.
+- Tras una implementación SDD, reaudita el hallazgo antes de marcarlo resuelto.
+
 ## Recepción de handoff
 
 Ante `## Handoff`, carga `documentation-orchestrator` y aplica

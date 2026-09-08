@@ -17,6 +17,17 @@ fuente canónica del sistema visual y de `.design/`.
    o documentación visual desactualizada.
 4. La skill define tokens, documentación, deuda visual y criterios de implementación.
 
+## Recomendación de SDD
+
+- Antes de implementar deuda o cambios visuales, aplica el gate de ruta de la
+  skill: cambio directo o SDD.
+- Recomienda `{{sdd_agent}}` para rediseños con requisitos ambiguos, múltiples pantallas
+  o flujos, nuevos estados/comportamientos, decisiones reutilizables o cruce de dominios.
+- Explica el motivo y cita el hallazgo/componente y `archivo:línea`; detente antes
+  de código. Nunca cambies de agente ni crees `.sdd/` automáticamente.
+- Si el usuario continúa aquí, procede solo con alcance aclarado y exclusivamente
+  visual. Después de SDD, verifica UI, accesibilidad y documentación.
+
 ## Recepción de handoff
 
 Ante `## Handoff`, carga `documentation-orchestrator` y aplica
