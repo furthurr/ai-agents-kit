@@ -41,6 +41,36 @@ def test_modes_remain_proportional() -> None:
     check("sin contrato público" in skill and "cruce de capas" in skill, "direct declara límites de riesgo")
 
 
+def test_spec_paths_support_grouping() -> None:
+    skill = read(SDD / "SKILL.md")
+    normalized_skill = normalized(skill)
+
+    check("Destino: `.sdd/specs/<ruta-spec>/`" in skill, "la spec usa una ruta relativa extensible")
+    check("`<nombre-feature>/`" in skill, "las rutas planas siguen siendo válidas")
+    check("`modo-invitado/android-contactos/`" in skill, "el contrato ejemplifica agrupación por módulo")
+    check("ruta relativa completa identifica la spec" in normalized_skill,
+          "la identidad no depende solo del nombre final")
+    check("requirements.md` o `bugfix.md`" in normalized_skill,
+          "los marcadores distinguen una spec de un agrupador")
+    check("Al crear sin ruta explícita" in skill and "No muevas specs existentes" in normalized_skill,
+          "la creación reutiliza módulos sin migrar specs previas")
+    check("evita repetir su prefijo" in normalized_skill,
+          "las specs agrupadas no duplican el nombre del módulo")
+    check("busca recursivamente" in normalized_skill, "la reanudación descubre specs anidadas")
+    check("varias candidatas plausibles" in normalized_skill and "pregunta" in normalized_skill,
+          "la reanudación ambigua requiere elección del usuario")
+    check("no contiene `..`" in normalized_skill and "permanece bajo `.sdd/specs/`" in normalized_skill,
+          "las rutas no pueden escapar de .sdd/specs")
+
+    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
+    for platform in manifest["platforms"]:
+        generated = read(ROOT / "generated" / platform / "skills" / "sdd-spec" / "SKILL.md")
+        check("Destino: `.sdd/specs/<ruta-spec>/`" in generated,
+              f"{platform}: propaga soporte de rutas agrupadas")
+        check("`modo-invitado/android-contactos/`" in generated,
+              f"{platform}: propaga el ejemplo agrupado")
+
+
 def test_adaptive_testing_selection() -> None:
     testing = read(SDD / "references" / "testing.md")
     for strategy in (
@@ -104,8 +134,9 @@ def test_generated_references_match_canonical() -> None:
 
 
 def main() -> int:
-    print("Contrato SDD — testing adaptativo e integración")
+    print("Contrato SDD — rutas, testing adaptativo e integración")
     test_modes_remain_proportional()
+    test_spec_paths_support_grouping()
     test_adaptive_testing_selection()
     test_variants_and_evidence()
     test_specialists_recommend_sdd_without_switching()

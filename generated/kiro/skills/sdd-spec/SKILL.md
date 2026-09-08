@@ -36,7 +36,27 @@ microciclo TDD y `deep` no activa TDD estricto. Detalle en `references/testing.m
 
 ## Artefactos
 
-Destino: `.sdd/specs/<nombre-feature>/`
+Destino: `.sdd/specs/<ruta-spec>/`
+
+`<ruta-spec>` admite uno o más segmentos. Conserva la ruta plana
+`<nombre-feature>/` y permite agrupar por módulo, por ejemplo
+`modo-invitado/android-contactos/`. La ruta relativa completa identifica la spec;
+el nombre de la carpeta final por sí solo no es suficiente.
+
+- La carpeta final es la raíz de la spec y contiene `requirements.md` o
+  `bugfix.md`. Las carpetas intermedias solo agrupan y no son specs.
+- Al crear sin ruta explícita, revisa las rutas de specs existentes. Si varias
+  pertenecen claramente al mismo módulo, reutiliza `<módulo>/<nombre-feature>`;
+  para specs aisladas conserva una ruta plana. No muevas specs existentes
+  automáticamente ni añadas profundidad extra sin una necesidad real.
+- Dentro de un módulo evita repetir su prefijo: usa
+  `modo-invitado/android-contactos/`, no
+  `modo-invitado/modo-invitado-android-contactos/`.
+- Si el usuario proporciona una ruta, úsala exactamente tras comprobar que es
+  relativa, no contiene `..` y permanece bajo `.sdd/specs/`.
+- Para continuar sin ruta explícita, busca recursivamente `requirements.md` y
+  `bugfix.md`. Si hay varias candidatas plausibles, muestra sus rutas relativas y
+  pregunta; nunca elijas solo por el nombre de la carpeta final.
 
 | Archivo | Fase | Contenido |
 |---------|------|-----------|

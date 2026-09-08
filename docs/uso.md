@@ -141,7 +141,7 @@ restricción lógica: no sustituye los permisos efectivos de la plataforma.
 | Documentation Orchestrator | No deja carpeta propia; coordina las anteriores |
 | Security | `.security/` (hallazgos, checklist, evidencia) |
 | UI Design | `.design/` (tokens, componentes, deuda visual) |
-| SDD | `.sdd/specs/<nombre>/` (requirements, design, tasks, verification) |
+| SDD | `.sdd/specs/<ruta-spec>/` plana o agrupada por módulo (requirements, design, tasks, verification) |
 | Git & Release | Commits/tags/CHANGELOG; perfil en `.release/` si aplica |
 
 Estas carpetas son **del proyecto en el que trabajas**, no del repo del kit.

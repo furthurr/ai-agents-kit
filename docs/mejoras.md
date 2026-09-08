@@ -252,8 +252,9 @@ reanudación y evidencia manual.
   que una sesión interrumpida tras GATE 2 no puede reconstruir el estado.
 - [ ] **Resolver la promesa de reanudación**: el adapter de Copilot ofrece
   «deja vacío para continuar una spec existente» y la skill no define ningún
-  procedimiento de reanudación. Manda la fuente canónica: o se implementa el flujo
-  o se retira la promesa del adapter.
+  procedimiento completo para reconstruir gates y tareas. La skill ya descubre
+  specs planas o agrupadas mediante marcadores recursivos y resuelve ambigüedades
+  por ruta; falta reconstruir y persistir el estado para cerrar esta promesa.
 - [ ] **Usar IDs de requisito estables** (`REQ-001`) en lugar de posicionales
   (`Req 1.1`). Reordenar o borrar una historia rompe en silencio las referencias de
   `tasks.md` y `verification.md`. El resto del kit ya usa IDs no posicionales

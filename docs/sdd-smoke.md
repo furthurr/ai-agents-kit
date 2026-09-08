@@ -115,15 +115,78 @@ Usa un proyecto trivial sin infraestructura de tests. Esperado:
 - Si sí cambia comportamiento, registra la limitación y verificación alternativa;
   escala a `standard` cuando el riesgo deje de ser trivial.
 
+## 11. Creación agrupada por módulo
+
+Prompt:
+
+```text
+Crea una spec standard en .sdd/specs/modo-invitado/android-contactos/.
+```
+
+Esperado:
+
+- Usa exactamente la ruta indicada y conserva los gates de `standard`.
+- Crea los artefactos en la carpeta final, no directamente en `modo-invitado/`.
+- No crea una segunda spec plana en `.sdd/specs/android-contactos/`.
+
+## 12. Compatibilidad con ruta plana
+
+Prompt:
+
+```text
+Crea una spec standard en .sdd/specs/perfil-edicion/.
+```
+
+Esperado: acepta la ruta plana sin exigir un módulo ni añadir niveles artificiales.
+
+## 13. Reanudación recursiva
+
+Prepara una única spec incompleta en
+`.sdd/specs/modo-invitado/android-contactos/`, con `requirements.md` y
+`design.md`. Solicita continuar la spec sin indicar su ruta.
+
+Esperado:
+
+- Encuentra la spec mediante búsqueda recursiva del archivo marcador.
+- Trata `modo-invitado/` como agrupador, no como una spec incompleta.
+- Reanuda en la carpeta hoja y no crea una copia plana.
+
+## 14. Reanudación ambigua
+
+Prepara estas specs incompletas:
+
+```text
+.sdd/specs/modo-invitado/android-contactos/requirements.md
+.sdd/specs/modo-registrado/android-contactos/requirements.md
+```
+
+Solicita continuar `android-contactos` sin indicar la ruta completa. Esperado:
+
+- No selecciona por el nombre final compartido.
+- Muestra ambas rutas relativas y pregunta cuál debe continuar.
+
+## 15. Rechazo de ruta insegura
+
+Prompt:
+
+```text
+Crea la spec en .sdd/specs/../../src/.
+```
+
+Esperado: rechaza la ruta porque escapa de `.sdd/specs/` y solicita una ruta
+relativa segura; no escribe fuera de `.sdd/specs/`.
+
 ## Criterio de cierre
 
-La prueba pasa si los diez escenarios conservan proporcionalidad, respetan gates,
+La prueba pasa si los quince escenarios conservan proporcionalidad, respetan gates,
 distinguen TDD de caracterización/cobertura retroactiva y aportan evidencia real sin
-inflar código, documentación o dependencias. No marques una plataforma aprobada sin
-ejecutar todos los escenarios.
+inflar código, documentación o dependencias. Las rutas planas y agrupadas deben
+coexistir sin ambigüedad ni escape de `.sdd/specs/`. No marques una plataforma
+aprobada sin ejecutar todos los escenarios.
 
 | Plataforma | Versión | Modelo | Fecha | Commit kit | Resultado | Evidencia / fallos |
 | --- | --- | --- | --- | --- | --- | --- |
 | Copilot | Pendiente | Pendiente | Pendiente | Pendiente | No ejecutado | — |
 | OpenCode | Pendiente | Pendiente | Pendiente | Pendiente | No ejecutado | — |
 | Kiro | Pendiente | Pendiente | Pendiente | Pendiente | No ejecutado | — |
+| Claude Code | Pendiente | Pendiente | Pendiente | Pendiente | No ejecutado | — |

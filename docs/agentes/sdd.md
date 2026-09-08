@@ -7,7 +7,7 @@
 | ID | `sdd` |
 | Skill | [`sdd-spec`](../../canonical/skills/sdd-spec/SKILL.md) |
 | Propósito | Convertir features y bugfixes en trabajo trazable antes de implementarlos |
-| Artefactos | `.sdd/specs/<nombre>/` |
+| Artefactos | `.sdd/specs/<ruta-spec>/`, plana o agrupada por módulo |
 | Particularidad | Es el agente del kit que puede implementar código de producto, tras los gates |
 
 SDD separa el **qué y porqué** del **cómo**. La conversación deja requisitos,
@@ -53,12 +53,23 @@ Quick Plan genera requirements, design y tasks en una pasada sin gates y omite
 ## Qué produce
 
 ```text
-.sdd/specs/<nombre-feature>/
-├── requirements.md   # o bugfix.md
-├── design.md
-├── tasks.md
-└── verification.md
+.sdd/specs/
+├── <nombre-feature>/              # ruta plana, continúa siendo válida
+│   ├── requirements.md            # o bugfix.md
+│   ├── design.md
+│   ├── tasks.md
+│   └── verification.md
+└── <modulo>/<nombre-feature>/     # agrupación recomendada si hay varias specs
+    ├── requirements.md            # o bugfix.md
+    ├── design.md
+    ├── tasks.md
+    └── verification.md
 ```
+
+La ruta relativa completa identifica la spec. Una carpeta intermedia es solo un
+agrupador: la raíz de una spec es la carpeta que contiene `requirements.md` o
+`bugfix.md`. Al reanudar sin ruta explícita, SDD busca esos marcadores de forma
+recursiva y pregunta si encuentra varias candidatas plausibles.
 
 No marca una tarea `[x]` sin artefacto real o evidencia. El design debe registrar
 la estrategia de pruebas y respetar la barra de calidad de la skill.
