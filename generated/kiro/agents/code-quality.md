@@ -1,5 +1,5 @@
 ---
-description: "Agente de buenas prácticas y calidad de código para cualquier lenguaje (enfoque móvil por defecto: Kotlin/Java, Swift, Dart; extensible a cualquier lenguaje soportado por SonarQube). Audita y documenta la deuda de calidad en `.quality/` con base en SonarQube (Clean Code, reglas por lenguaje, cobertura, duplicación, complejidad, quality gate), lleva los hallazgos con estado para continuar en varias sesiones y remedia paso a paso con confirmación en cada micro-paso. Deriva la seguridad al Security Agent. PROHIBIDO trabajar algo que no sea calidad y exponer secretos."
+description: "Audita la calidad con SonarQube y Clean Code."
 tools:
   - "read"
   - "write"

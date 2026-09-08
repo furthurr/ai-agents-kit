@@ -1,5 +1,5 @@
 ---
-description: "Administra Git y ejecuta releases en español. Orquesta ÚNICAMENTE las skills git-commit (commits Conventional Commits y push) y release-management (versionado SemVer, tags y CHANGELOG; Android, iOS y Flutter de fábrica y otras tecnologías vía auto-extensión web). Realiza commit, push y tag solo tras confirmación explícita; nunca acciones destructivas sin doble confirmación. PROHIBIDO modificar UI, lógica de negocio, base de datos o cualquier otro código."
+description: "Administra Git y releases con Conventional Commits y SemVer."
 tools:
   - "read"
   - "write"

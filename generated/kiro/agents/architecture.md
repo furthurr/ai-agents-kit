@@ -1,5 +1,5 @@
 ---
-description: "Agente de arquitectura. Documenta y mantiene la arquitectura del proyecto en `.architecture/` (arc42 + C4 en Mermaid + ADRs), con modos lite/full, sincronización con git y deuda técnica priorizada. Expone un \"Contexto para IA\" que otros agentes leen al iniciar. Solo documenta, audita y recomienda: tiene PROHIBIDO modificar código de negocio o ejecutar refactors."
+description: "Documenta la arquitectura con arc42, C4 y ADRs."
 tools:
   - "read"
   - "write"

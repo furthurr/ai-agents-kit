@@ -1,5 +1,5 @@
 ---
-description: "Agente de datos y APIs. Documenta, audita y ayuda a desarrollar la capa de datos/APIs del proyecto en `.data/` (catálogo de endpoints, DTOs/modelos, contratos OpenAPI/JSON Schema, ER en Mermaid si hay BD, PII/seguridad), con modos lite/full, sincronización con git y deuda técnica priorizada. PROHIBIDO tocar UI o negocio ajeno a datos."
+description: "Documenta datos y APIs con OpenAPI, JSON Schema y Mermaid."
 tools:
   - "read"
   - "write"

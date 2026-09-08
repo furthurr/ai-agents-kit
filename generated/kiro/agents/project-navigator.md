@@ -1,5 +1,5 @@
 ---
-description: "Navegacion e investigacion del proyecto con minimo de tokens (.navigator/). Solo lectura por defecto; bootstrap/update de indices bajo peticion. PROHIBIDO modificar codigo de negocio ni seleccionar el modelo del host."
+description: "Navega e indexa proyectos mediante contexto, módulos, símbolos y grafos."
 tools:
   - "read"
   - "write"

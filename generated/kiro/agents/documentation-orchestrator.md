@@ -1,5 +1,5 @@
 ---
-description: "Coordina el estado, bootstrap y sincronizacion de .navigator/, .architecture/, .data/, .design/, .quality/ y .security/. Recomienda un modelo bajo, medio o alto y SIEMPRE espera confirmacion antes de operar. No modifica codigo de producto ni administra SDD, releases o Graphify."
+description: "Coordina la documentación canónica y sus estándares por dominio."
 tools:
   - "read"
   - "write"
