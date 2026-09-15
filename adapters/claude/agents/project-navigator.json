@@ -3,6 +3,7 @@
   "frontmatter": {
     "name": "project-navigator",
     "description": "Investiga el proyecto con mínimo de tokens usando `.navigator/`; es de solo lectura por defecto y no selecciona el modelo del host.",
+    "user-invocable": false,
     "tools": [
       "Read",
       "Edit",

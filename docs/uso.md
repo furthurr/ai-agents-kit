@@ -6,6 +6,10 @@ active la **skill** por relevancia) y describes la tarea en lenguaje natural.
 Consulta la [guía interna de agentes y skills](agentes/README.md) para conocer el
 alcance, el flujo, los artefactos y ejemplos de cada agente.
 
+El sistema se denomina **MAS** (*Multi-Agent System*). Usa `MAS:` para una
+instrucción dirigida al sistema completo y `@<agente>` para un especialista.
+Consulta la [guía de MAS](mas.md) para la terminología completa.
+
 ## Skill vs agente (en la práctica)
 
 | | Skill | Agente |
@@ -88,8 +92,19 @@ Catálogo completo: [catalogo.md](catalogo.md).
 2. **Primera vez en un repo** — usa Project Navigator para bootstrap de
    `.navigator/` (mapa barato); luego deja que cada especialista inicialice su
    carpeta (`.architecture/`, `.design/`, etc.).
-3. **SDD antes de features grandes** — requisitos y diseño con gates; implementación
-   solo tras aprobación (salvo Quick Plan / trivial que el usuario pida en directo).
+   Architecture, Data & API, UI Design, Quality y Security recomiendan nivel antes
+   de operar: el aviso puntual no bloquea y las operaciones pesadas esperan
+   confirmación. Si el Orchestrator ya mostró y confirmó ese nivel para el mismo
+   alcance, el especialista no lo repite.
+3. **SDD antes de features grandes** — requisitos y diseño con gates de fase;
+   implementación solo tras aprobación (salvo Quick Plan / trivial que el usuario
+   pida en directo). El Gate 0 de modelo aplicable se conserva.
+   Antes del trabajo no trivial recomienda una vez un nivel `BAJO`, `MEDIO` o
+   `ALTO`; el usuario puede cambiarlo manualmente o continuar con el actual.
+   Si hay `.navigator/`, SDD comprueba primero su disponibilidad y frescura para
+   orientar la exploración. Un índice desfasado solo aporta rutas candidatas: la
+   documentación aplicable y el código real confirman las decisiones. Su ausencia
+   no bloquea el flujo ni provoca bootstrap/update automático.
 4. **Escalado recomendado, no automático** — Architecture, Code Quality, Data & API,
    Security y UI Design evalúan si una mejora necesita más requisitos o diseño. Si
    recomiendan SDD, explican el motivo, citan el hallazgo y se detienen antes del
@@ -137,7 +152,7 @@ restricción lógica: no sustituye los permisos efectivos de la plataforma.
 | Project Navigator | `.navigator/` (ai-context, module-map, config; symbols/graph opt-in) |
 | Architecture | `.architecture/` (contexto, diagramas, ADRs, deuda) |
 | Code Quality | `.quality/` (hallazgos, estándares cacheados) |
-| Data & API | `.data/` (catálogo, modelos, contratos, ER) |
+| Data & API | `.data/` (catálogo, modelos, contratos, ER) + lanzador Scalar si aplica |
 | Documentation Orchestrator | No deja carpeta propia; coordina las anteriores |
 | Security | `.security/` (hallazgos, checklist, evidencia) |
 | UI Design | `.design/` (tokens, componentes, deuda visual) |
@@ -170,7 +185,8 @@ Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
 - Security / Quality **no** exponen secretos reales en la documentación.
 - Git & Release **no** hace commit/push/tag sin confirmación explícita;
   acciones destructivas piden doble confirmación.
-- SDD **no** marca tareas hechas sin evidencia (integrity gate).
+- SDD **no** cambia el modelo del host ni marca tareas hechas sin evidencia
+  (integrity gate).
 
 ## Ejemplo de flujo completo
 

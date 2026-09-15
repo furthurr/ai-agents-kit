@@ -33,6 +33,12 @@ La skill relaciona cada hallazgo con:
 - Debilidades MASWE y pruebas MASTG.
 - Mobile Top 10 y un identificador CWE.
 
+## Recomendación de modelo
+
+Las consultas y revisiones localizadas no críticas reciben un aviso `BAJO` o
+`MEDIO` sin bloqueo. Auditorías completas y trabajo crítico de autenticación,
+criptografía, PII o red recomiendan `ALTO` y esperan confirmación.
+
 ## Cómo trabaja
 
 1. Clasifica plataforma, tecnología y superficie de riesgo.

@@ -10,6 +10,10 @@ asistentes de código con IA:
 - [Kiro](https://kiro.dev)
 - [Claude Code](https://code.claude.com/)
 
+El sistema multiagente se denomina **MAS** (*Multi-Agent System*). En este
+documento, `MAS` se refiere al conjunto coordinado de agentes, skills,
+orquestación y handoffs del kit. La convención completa está en [mas.md](mas.md).
+
 La lógica común se escribe **una sola vez** en `canonical/` y se renderiza para
 cada herramienta mediante adaptadores declarativos. Así se evita mantener cuatro
 copias del mismo prompt.

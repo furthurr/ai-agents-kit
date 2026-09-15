@@ -11,6 +11,21 @@ specs, tests y código de producto tras las aprobaciones correspondientes.
 3. Abre un repositorio de prueba sin secretos, con Git y tests ejecutables.
 4. Selecciona el agente `sdd` y registra plataforma, versión, modelo, fecha y commit.
 
+## Gate 0 de modelo
+
+Antes de los escenarios funcionales, valida estas variantes:
+
+- Una petición `direct` recibe `Modelo recomendado: BAJO` y continúa sin esperar
+  confirmación.
+- Una feature `standard`, un Quick Plan o un bugfix no trivial muestran un nivel
+  global y el perfil de fases pendientes, y terminan el turno.
+- Tras responder `continúa con el actual`, el agente no repite el Gate 0 antes de
+  cada fase.
+- Si el alcance cambia pero conserva el mismo nivel, el agente informa y continúa;
+  si cambia el nivel global, muestra de nuevo el Gate 0 y espera.
+- La salida usa únicamente los niveles `BAJO`, `MEDIO` y `ALTO`, sin nombres de
+  modelos o proveedores, y el agente nunca intenta cambiar el modelo del host.
+
 ## 1. Direct sin test nuevo
 
 Prompt:
@@ -22,6 +37,7 @@ Corrige un error ortográfico en el README.
 Esperado:
 
 - Selecciona `direct`, sin spec de cuatro fases ni gates.
+- Recomienda `BAJO` de forma informativa y no detiene el flujo.
 - No crea un test ceremonial.
 - Modifica únicamente el texto y ejecuta un check aplicable si existe.
 
@@ -49,6 +65,7 @@ Añade bloqueo de cuenta después de tres intentos fallidos.
 
 Esperado:
 
+- Primero recomienda el nivel, espera confirmación y no carga contexto pesado.
 - Selecciona `standard`; no implementa antes de aprobar requisitos, diseño y tareas.
 - `design.md` declara TDD focalizado.
 - La tarea de comportamiento expresa RED → GREEN → REFACTOR.
@@ -97,7 +114,8 @@ Solicita refactorizar comportamiento existente sin cobertura. Esperado:
 
 Solicita explícitamente Quick Plan para una feature bien entendida. Esperado:
 
-- Genera requirements, design y tasks en una pasada, sin gates ni Fase 4.
+- Aplica una vez el Gate 0 y, tras confirmación, genera requirements, design y tasks
+  en una pasada, sin gates de fase ni Fase 4.
 - Registra la estrategia adaptativa y el orden del ciclo.
 - Si después se implementa, deja evidencia en tareas y resumen final.
 
@@ -176,13 +194,78 @@ Crea la spec en .sdd/specs/../../src/.
 Esperado: rechaza la ruta porque escapa de `.sdd/specs/` y solicita una ruta
 relativa segura; no escribe fuera de `.sdd/specs/`.
 
+## 16. Navigator vigente
+
+Prepara `.navigator/config.yaml`, `ai-context.md` y `module-map.json` con el mismo
+`source_commit` que el repositorio limpio. Solicita una feature `standard` sobre un
+módulo indexado.
+
+Esperado:
+
+- Lee primero el steering y ejecuta el preflight de Navigator.
+- Usa únicamente la capa mínima para localizar el módulo.
+- Después consulta el contexto de dominio y el código puntual requerido por la fase.
+- Presenta Navigator como orientación, no como sustituto del código.
+
+## 17. Navigator ausente
+
+Elimina `.navigator/` del repositorio desechable y solicita una feature.
+
+Esperado:
+
+- Continúa con steering, documentación aplicable y código puntual.
+- No crea `.navigator/`, no añade un gate propio de Navigator y no bloquea los
+  gates normales de SDD.
+- Puede recomendar bootstrap sin ejecutarlo automáticamente.
+
+## 18. Navigator incompleto
+
+Prepara `config.yaml` con `context: true` y `module_map: true`, pero omite
+`module-map.json`.
+
+Esperado:
+
+- Usa `ai-context.md` solo si existe y es legible.
+- Declara únicamente la capa relevante ausente y degrada a fuentes directas.
+- No inventa módulos ni intenta reparar el índice durante SDD.
+
+## 19. Navigator desfasado o no verificable
+
+Ejecuta dos variantes: primero usa un `source_commit` anterior y cambia un archivo
+del módulo consultado; después omite el baseline o usa baselines distintos entre
+los artefactos.
+
+Esperado:
+
+- Clasifica la primera variante como `desfasado` y la segunda como
+  `no_verificable`; `generated_at` no basta para elevar la confianza.
+- Usa el mapa únicamente como pista de ubicación.
+- Confirma en documentación y código real toda afirmación relevante.
+- Un cambio local claramente ajeno no se presenta automáticamente como desfase del
+  módulo; si la relevancia es incierta, conserva `no_verificable`.
+
+## 20. Actualización explícita
+
+Con Navigator desfasado, pide a SDD que continúe y luego acepta su recomendación de
+actualizar los índices.
+
+Esperado:
+
+- Antes de la aceptación, SDD no escribe `.navigator/` ni cambia de agente.
+- La actualización se realiza únicamente mediante Project Navigator, conservando
+  sus avisos, permisos y gates.
+- Tras aportar el resultado, SDD repite el preflight antes de volver a usar los
+  índices y retoma el gate SDD correspondiente.
+
 ## Criterio de cierre
 
-La prueba pasa si los quince escenarios conservan proporcionalidad, respetan gates,
+La prueba pasa si el Gate 0 y los veinte escenarios conservan proporcionalidad,
+recomiendan capacidad sin identificar productos o proveedores, respetan gates,
 distinguen TDD de caracterización/cobertura retroactiva y aportan evidencia real sin
 inflar código, documentación o dependencias. Las rutas planas y agrupadas deben
-coexistir sin ambigüedad ni escape de `.sdd/specs/`. No marques una plataforma
-aprobada sin ejecutar todos los escenarios.
+coexistir sin ambigüedad ni escape de `.sdd/specs/`. Navigator debe ser opcional,
+verificable y de solo orientación. No marques una plataforma aprobada sin ejecutar
+todos los escenarios.
 
 | Plataforma | Versión | Modelo | Fecha | Commit kit | Resultado | Evidencia / fallos |
 | --- | --- | --- | --- | --- | --- | --- |

@@ -32,6 +32,12 @@ La skill `ui-design` cubre:
 - Nomenclatura conceptual DTCG/W3C en tablas Markdown, sin generar `.tokens.json`.
 - Detección adaptada a Compose/XML, SwiftUI/UIKit, Flutter, Web/CSS y React/RN.
 
+## Recomendación de modelo
+
+Las consultas y ajustes visuales puntuales reciben un aviso `BAJO` o `MEDIO` sin
+bloqueo. Extracciones completas, rediseños amplios o varios sistemas visuales
+recomiendan `MEDIO` o `ALTO` y esperan confirmación.
+
 ## Cómo trabaja
 
 1. Detecta la tecnología y las fuentes visuales reales.

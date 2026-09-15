@@ -100,6 +100,7 @@ definir, `render.py` falla.
 ```bash
 python3 tools/test_integrity.py
 python3 tools/test_links.py
+python3 tools/test_model_recommendations.py
 python3 tools/test_sdd_contract.py
 ```
 

@@ -31,8 +31,16 @@ La skill `data-api` reconoce:
 - **JSON Schema** para la forma y validación de DTOs.
 - **ER en Mermaid** solo cuando hay base de datos interna.
 - **GraphQL, AsyncAPI y gRPC/Protobuf** si aparecen en el proyecto.
+- **Scalar** como vista interactiva opcional de contratos OpenAPI; no sustituye el
+  contrato y no se ejecuta automáticamente.
 - Convenciones de autenticación, errores, paginación, timeouts, reintentos y
   entornos.
+
+## Recomendación de modelo
+
+Las consultas o cambios localizados reciben un aviso `BAJO` o `MEDIO` sin
+bloqueo. Inicializaciones, catálogos completos, migraciones y contratos o riesgos
+amplios recomiendan `MEDIO` o `ALTO` y esperan confirmación.
 
 ## Cómo trabaja
 
@@ -67,6 +75,37 @@ En modo `full` puede organizarse así:
 └── data-tech-debt.md
 ```
 
+Cuando se documenta una API REST con OpenAPI, el agente también prepara un
+lanzador manual para la referencia interactiva, por ejemplo:
+
+```text
+scripts/api-docs.<extensión>
+```
+
+El lanzador comprueba el contrato y Scalar, instala la CLI localmente solo si el
+usuario lo solicita y sirve la referencia para pruebas en local o staging. El
+agente no lo ejecuta durante la documentación. El backend debe estar arrancado
+para que las pruebas funcionen.
+
+## Documentación interactiva
+
+El flujo esperado es:
+
+1. Data & API actualiza `.data/` y el contrato OpenAPI.
+2. Data & API crea o conserva `scripts/api-docs.<extensión>`.
+3. El usuario ejecuta el lanzador manualmente, por ejemplo:
+
+   ```text
+   api-docs --install --serve
+   ```
+
+4. Scalar sirve la interfaz y muestra la URL local.
+5. El usuario selecciona las operaciones que quiere probar.
+
+Si no existe un contrato OpenAPI válido, el agente informa que Scalar no aplica y
+no inventa endpoints. Nunca se incluyen credenciales, tokens, PII ni dominios
+productivos en el script o la página.
+
 ## Ejemplos de uso
 
 ```text
@@ -85,6 +124,8 @@ existencia y ubicación, nunca el valor real.
 - No modifica UI ni lógica de presentación.
 - No inventa respuestas, payloads ni endpoints que no existan.
 - Usa placeholders para dominios, tokens, credenciales y valores productivos.
+- No instala dependencias ni inicia el servidor Scalar automáticamente; prepara el
+  lanzador para que el usuario lo ejecute.
 - Identifica PII y deriva los riesgos de seguridad al Security Agent.
 - Si recomienda SDD, cita el hallazgo/contrato y se detiene antes de modificar código.
 - La primera documentación masiva requiere estudio, propuesta y confirmación.

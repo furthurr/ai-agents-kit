@@ -3,6 +3,7 @@
   "frontmatter": {
     "name": "security",
     "description": "Audita y documenta riesgos de seguridad en `.security/` con estándares OWASP y CWE; no trabaja fuera de seguridad ni expone secretos.",
+    "user-invocable": false,
     "tools": [
       "Read",
       "Edit",

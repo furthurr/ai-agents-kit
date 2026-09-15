@@ -4,6 +4,10 @@ Fuente versionada de **skills** y **agentes** para [GitHub Copilot](https://gith
 [OpenCode](https://opencode.ai), [Kiro](https://kiro.dev) y
 [Claude Code](https://code.claude.com/).
 
+El sistema multiagente de este kit se denomina **MAS** (*Multi-Agent System*).
+Consulta la [guía de identidad y terminología](docs/mas.md) para dirigir
+comentarios al sistema completo o a un agente concreto.
+
 La lógica se mantiene **una sola vez** en `canonical/` y se renderiza por
 plataforma con adaptadores declarativos. Así obtienes el mismo comportamiento
 especializado en las cuatro herramientas, sin cuadruplicar prompts.
@@ -86,6 +90,7 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 |-----------|-----------|
 | [docs/README.md](docs/README.md) | Índice |
 | [docs/vision.md](docs/vision.md) | Problema, principios, skill vs agente |
+| [docs/mas.md](docs/mas.md) | Identidad de MAS y convención de mensajes |
 | [docs/catalogo.md](docs/catalogo.md) | Skills, agentes y carpetas canónicas |
 | [docs/agentes/README.md](docs/agentes/README.md) | Guía interna: qué hace cada agente y cómo utilizarlo |
 | [docs/instalacion.md](docs/instalacion.md) | Install, destinos, backup/import |

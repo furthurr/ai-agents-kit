@@ -3,6 +3,7 @@
   "frontmatter": {
     "name": "documentation-orchestrator",
     "description": "Coordina el estado, bootstrap y sincronización de la documentación canónica; siempre recomienda un nivel de modelo y espera confirmación antes de operar.",
+    "user-invocable": false,
     "tools": [
       "Agent",
       "Read",

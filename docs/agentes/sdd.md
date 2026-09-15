@@ -23,6 +23,18 @@ SDD separa el **qué y porqué** del **cómo**. La conversación deja requisitos
 Un cambio trivial, localizado y reversible puede usar `direct`; si tiene riesgo,
 contrato público, migración o cruce de capas, debe usar `standard`.
 
+## Recomendación de modelo
+
+Antes de cargar contexto pesado, SDD hace un preflight barato y recomienda un
+nivel genérico `BAJO`, `MEDIO` o `ALTO`. Para `direct`, el aviso es breve y no
+bloquea. Para Quick Plan y trabajo no trivial, presenta una sola vez el nivel
+global y un perfil orientativo de las fases pendientes, y espera confirmación.
+
+El usuario puede cambiar manualmente al nivel recomendado o continuar con el
+actual. SDD no conoce, selecciona ni cambia el modelo del host. La confirmación se
+conserva entre fases mientras no cambien el alcance o el riesgo; no hay una pausa
+nueva antes de cada fase.
+
 ## Modos
 
 | Modo | Uso | Resultado |
@@ -37,6 +49,7 @@ usan regresión y el legado usa caracterización.
 
 ## Flujo y gates
 
+0. **Modelo:** preflight, recomendación y Gate 0 ligero cuando el trabajo no es `direct`.
 1. **Requirements:** historias, criterios EARS, errores, edge cases y supuestos.
    Gate 1: aprobar requisitos.
 2. **Design:** arquitectura, modelos, errores, pruebas y estrategia de testing.
@@ -47,8 +60,29 @@ usan regresión y el legado usa caracterización.
 5. **Verification:** ejecutar pruebas, registrar evidencia y revisar requisitos y RNF.
    Gate 4: cerrar la spec o corregir huecos.
 
-Quick Plan genera requirements, design y tasks en una pasada sin gates y omite
-`verification.md`, pero conserva la evidencia en tareas y resumen final.
+Quick Plan genera requirements, design y tasks en una pasada sin gates de fase y
+omite `verification.md`, pero conserva el Gate 0 y la evidencia en tareas y resumen
+final.
+
+## Contexto opcional de Project Navigator
+
+Si existe una instancia aplicable de `.navigator/`, SDD comprueba su configuración,
+capas y frescura antes de usarla. El orden de lectura es:
+
+1. steering de la plataforma y `.sdd/steering/`;
+2. preflight y capa mínima de Navigator;
+3. README del dominio y documentación estrictamente necesaria;
+4. código y pruebas puntuales según la fase.
+
+Un Navigator `vigente` orienta la exploración inicial. Si está `desfasado` o
+`no_verificable`, solo aporta pistas de ubicación y SDD confirma las afirmaciones
+en documentación y código reales. Si está `ausente` o resulta `ambiguo`, se omite
+y el flujo continúa: Navigator nunca es un requisito para usar SDD.
+
+SDD no crea ni actualiza `.navigator/` automáticamente. Puede recomendar bootstrap
+o update, pero el usuario debe decidir si continúa con Project Navigator y sus
+propios gates. El código, el steering y los contratos canónicos siguen siendo las
+fuentes de verdad.
 
 ## Qué produce
 
@@ -93,9 +127,14 @@ de testing y no implementes todavía.
 
 ## Límites y confirmaciones
 
-- No cruza gates sin aprobación explícita, salvo Quick Plan solicitado.
+- No cruza gates de fase sin aprobación explícita, salvo Quick Plan solicitado; el
+  Gate 0 de modelo aplicable se conserva.
+- No cambia el modelo del host ni menciona nombres de modelos o proveedores en la
+  recomendación.
 - No inventa requisitos, cumplimiento, resultados de tests ni evidencia.
 - No añade dependencias de testing sin un test que las use en la misma entrega.
+- No presenta un Navigator desfasado o sin baseline verificable como vigente.
+- No escribe `.navigator/` ni cambia automáticamente a Project Navigator.
 - Respeta `.architecture/`, `.design/`, `.data/`, `.security/` y `.quality/` cuando
   existen; si falta contexto, documenta solo lo imprescindible dentro de la spec.
 - Confirma acciones destructivas y nunca expone secretos.

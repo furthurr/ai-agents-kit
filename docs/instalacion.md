@@ -74,6 +74,15 @@ Ejemplos:
 | Kiro | `~/.kiro/skills/` | `~/.kiro/agents/` |
 | Claude Code | `~/.claude/skills/` (o `$CLAUDE_CONFIG_DIR/skills/`) | `~/.claude/agents/` (o `$CLAUDE_CONFIG_DIR/agents/`) |
 
+### Copilot y Claude Code en VS Code
+
+VS Code descubre tanto los agentes Copilot de `~/.copilot/agents/` como los
+agentes con formato Claude de `~/.claude/agents/`. Si instalas ambas plataformas,
+el kit conserva los agentes en las dos rutas para que cada herramienta funcione,
+pero marca la copia Claude con `user-invocable: false`: Claude Code la sigue
+cargando y VS Code muestra solo la copia `*.agent.md` de Copilot. Después de
+actualizar una instalación, reinicia VS Code para refrescar el selector.
+
 Antes de sobrescribir, los instaladores (salvo `--force`) crean un backup local
 timestamped. Rutas por plataforma:
 

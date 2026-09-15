@@ -100,6 +100,11 @@ Diferencias notables entre plataformas:
 | Permisos | lista `tools` | `permission` (edit, bash, …) | `tools` + `permissions.rules` | `tools`, `disallowedTools` y settings |
 | Default shell sensible | según tool | confirmación (`ask`) | `ask` por defecto; `deny` en destructivos | flujo de permisos de Claude Code |
 
+VS Code también descubre los archivos de `~/.claude/agents/` cuando usa el
+formato Claude. Por eso los adapters de Claude emiten `user-invocable: false`:
+la copia sigue disponible para Claude Code, pero no duplica en el selector la
+entrada equivalente de `~/.copilot/agents/`.
+
 ### Adapter de skill
 
 Opcional. Si no existe `adapters/<platform>/skills/<id>.json`, la skill se copia

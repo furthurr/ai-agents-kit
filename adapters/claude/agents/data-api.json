@@ -3,6 +3,7 @@
   "frontmatter": {
     "name": "data-api",
     "description": "Documenta, audita y desarrolla datos y APIs en `.data/`; no toca UI ni negocio ajeno a datos.",
+    "user-invocable": false,
     "tools": [
       "Read",
       "Edit",

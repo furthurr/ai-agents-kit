@@ -5,6 +5,10 @@ Resumen de lo que incluye el kit. El detalle operativo vive en
 
 Inventario oficial: `canonical/manifest.json` (10 skills, 9 agentes, 4 plataformas).
 
+Todos los componentes forman **MAS** (*Multi-Agent System*), el sistema
+multiagente de este kit. La convención para referirse al sistema o a un agente
+concreto está documentada en [mas.md](mas.md).
+
 Para una explicación orientada a usuarios, consulta la [guía interna de agentes y
 skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de uso.
 
@@ -12,13 +16,13 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 
 | ID | Descripción breve | Carpeta en el proyecto | Estándares / notas |
 |----|-------------------|------------------------|--------------------|
-| `architecture` | Documenta y audita arquitectura; no modifica código de negocio | `.architecture/` | arc42, C4 (Mermaid), ADRs; modos lite/full |
-| `code-quality` | Audita y remedia calidad de código paso a paso | `.quality/` | SonarQube (reglas públicas), Clean Code; foco móvil |
-| `data-api` | Datos, APIs, DTOs, contratos e integraciones | `.data/` | OpenAPI/JSON Schema (+ GraphQL/AsyncAPI/gRPC si aplica); ER Mermaid |
+| `architecture` | Documenta y audita arquitectura; no modifica código de negocio | `.architecture/` | Aviso de modelo; arc42, C4, ADRs; modos lite/full |
+| `code-quality` | Audita y remedia calidad de código paso a paso | `.quality/` | Aviso de modelo; SonarQube y Clean Code |
+| `data-api` | Datos, APIs, DTOs, contratos e integraciones | `.data/` | Aviso de modelo; OpenAPI/JSON Schema; ER Mermaid; lanzador Scalar opcional |
 | `documentation-orchestrator` | Comprueba, inicializa y sincroniza documentación mediante especialistas | — | Gate 0 de modelo; no crea una fuente documental propia |
-| `security` | Auditoría y remediación de seguridad guiada | `.security/` | OWASP MASVS/MASWE/MASTG, Mobile Top 10, CWE |
-| `ui-design` | Sistema visual: tokens, componentes, deuda de UI | `.design/` | Agnóstica a tecnología |
-| `sdd-spec` | Spec-Driven Development en 4 fases con gates | `.sdd/specs/<ruta-spec>/` | Rutas planas o agrupadas por módulo; EARS y trazabilidad |
+| `security` | Auditoría y remediación de seguridad guiada | `.security/` | Aviso de modelo; OWASP MASVS/MASWE/MASTG y CWE |
+| `ui-design` | Sistema visual: tokens, componentes, deuda de UI | `.design/` | Aviso de modelo; agnóstica a tecnología |
+| `sdd-spec` | Spec-Driven Development en 4 fases con gates | `.sdd/specs/<ruta-spec>/` | Gate 0 de modelo; rutas planas o agrupadas; EARS y trazabilidad |
 | `git-commit` | Commits Conventional Commits en español y push con confirmación | — | No versiona ni crea tags |
 | `release-management` | SemVer, tags anotados, CHANGELOG; perfiles por tecnología | `.release/` | Android/iOS/Flutter de fábrica; resto auto-extensible |
 | `project-navigator` | Navega el repo con mínimo de tokens (capas 0–4) | `.navigator/` | Bootstrap/update asistido; solo lectura fuera de `.navigator/` |
@@ -33,7 +37,7 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 | [`documentation-orchestrator`](agentes/documentation-orchestrator.md) | Documentation Orchestrator | `documentation-orchestrator` + especialistas seleccionadas | Coordina estado, bootstrap, sincronización y release-check documental |
 | [`security`](agentes/security.md) | Security Agent | `security` | Solo seguridad; micro-pasos con confirmación |
 | [`ui-design`](agentes/ui-design.md) | UI Design Agent | `ui-design` | Solo lo visual; no toca negocio ni APIs |
-| [`sdd`](agentes/sdd.md) | Agente SDD | `sdd-spec` | Specs, gates de aprobación e implementación trazable |
+| [`sdd`](agentes/sdd.md) | Agente SDD | `sdd-spec` | Recomienda nivel; specs, gates e implementación trazable |
 | [`git-release-manager`](agentes/git-release-manager.md) | Git & Release Manager | `git-commit` + `release-management` | Commits, push, versiones, tags, CHANGELOG |
 | [`project-navigator`](agentes/project-navigator.md) | Project Navigator | `project-navigator` | Investigación/navegación; bootstrap de índices en `.navigator/` |
 

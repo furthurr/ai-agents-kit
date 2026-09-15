@@ -3,6 +3,7 @@
   "frontmatter": {
     "name": "git-release-manager",
     "description": "Administra Git y releases en español; commit, push y tag requieren confirmación explícita y nunca modifica código fuera de Git/release.",
+    "user-invocable": false,
     "tools": [
       "Read",
       "Edit",

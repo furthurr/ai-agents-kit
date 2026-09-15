@@ -98,6 +98,11 @@ def validate_adapters(manifest: dict, errors: list[str]) -> dict[str, set[str]]:
                 continue
             if not isinstance(frontmatter, dict):
                 errors.append(f"Adaptador {adapter.relative_to(ROOT)}: 'frontmatter' debe ser un objeto")
+            elif platform == "claude" and frontmatter.get("user-invocable") is not False:
+                errors.append(
+                    f"Adaptador Claude {adapter.relative_to(ROOT)}: 'user-invocable' debe ser false "
+                    "para no duplicar el agente en el selector de VS Code"
+                )
             if not _safe_filename(filename):
                 errors.append(f"Adaptador {adapter.relative_to(ROOT)}: filename inseguro {filename!r}")
                 continue

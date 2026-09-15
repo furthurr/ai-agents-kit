@@ -15,6 +15,13 @@ description: >-
 
 # Release Management (Android · iOS · Flutter · extensible)
 
+## Identidad del MAS
+
+En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
+skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
+una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
+confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+
 Procedimiento para preparar **releases**. La skill **detecta la tecnología** del
 repositorio y actualiza el archivo de versión correcto, crea el **tag anotado** y
 genera el **CHANGELOG**, siempre en **español** y **solo tras confirmación**.

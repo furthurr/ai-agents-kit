@@ -3,6 +3,7 @@
   "frontmatter": {
     "name": "architecture",
     "description": "Documenta y audita la arquitectura del proyecto en `.architecture/`; nunca modifica código de negocio ni ejecuta refactors.",
+    "user-invocable": false,
     "tools": [
       "Read",
       "Edit",

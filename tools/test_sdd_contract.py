@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SDD = ROOT / "canonical" / "skills" / "sdd-spec"
+SDD_AGENT = ROOT / "canonical" / "agents" / "sdd.md"
 SPECIALISTS = ("architecture", "code-quality", "data-api", "security", "ui-design")
 
 PASSED = 0
@@ -39,6 +40,73 @@ def test_modes_remain_proportional() -> None:
     check("| `standard` | **Default**" in skill, "standard sigue siendo el modo default")
     check("`deep` no activa TDD estricto" in skill, "deep y TDD estricto permanecen independientes")
     check("sin contrato público" in skill and "cruce de capas" in skill, "direct declara límites de riesgo")
+
+
+def test_model_selection_gate() -> None:
+    skill = read(SDD / "SKILL.md")
+    agent = read(SDD_AGENT)
+    reference_path = SDD / "references" / "model-selection.md"
+    check(reference_path.is_file(), "SDD incluye selección de modelo bajo demanda")
+    reference = read(reference_path) if reference_path.is_file() else ""
+    normalized_reference = normalized(reference)
+    lower_reference = normalized_reference.lower()
+
+    check("model-selection.md" in skill, "la skill carga el contrato de modelo")
+    check("model-selection.md" in agent, "el agente delega la selección a la skill")
+    check(
+        "si la solicitud cumple claramente `direct`" in normalized(skill).lower()
+        and "no cargues la referencia" in normalized(skill).lower(),
+        "direct evita cargar la referencia detallada",
+    )
+    check(
+        all(level in reference for level in ("`BAJO`", "`MEDIO`", "`ALTO`")),
+        "el contrato declara los tres niveles genéricos",
+    )
+    check(len(reference.split()) <= 450, "la referencia de modelo respeta el presupuesto de contexto")
+    check(
+        "no menciones nombres de modelos, proveedores" in lower_reference,
+        "la recomendación permanece agnóstica de modelos y proveedores",
+    )
+    check(
+        "preflight debe ser barato" in lower_reference
+        and "no puede escribir, ejecutar tests, cargar referencias pesadas" in lower_reference,
+        "el preflight no consume trabajo costoso antes del Gate 0",
+    )
+    check(
+        "`direct`: informa" in lower_reference and "continua sin esperar" in lower_reference,
+        "direct recibe un aviso no bloqueante",
+    )
+    check(
+        "quick plan, `standard`, `deep` y bugfix no trivial" in lower_reference
+        and "detiene el turno" in lower_reference,
+        "el trabajo no trivial aplica hard stop",
+    )
+    check(
+        "no repitas el gate por fase" in lower_reference,
+        "la confirmación evita gates repetidos por fase",
+    )
+    check(
+        "detente de nuevo solo si cambia el nivel global" in lower_reference,
+        "un cambio de alcance solo bloquea si altera el nivel",
+    )
+    check(
+        "ni cambies el modelo del host" in normalized(skill + " " + agent + " " + reference).lower(),
+        "SDD nunca cambia el modelo del host",
+    )
+    check(
+        "sin gates de fase" in skill and "conserva el Gate 0 de modelo" in skill,
+        "Quick Plan omite solo los gates de fase",
+    )
+
+    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
+    for platform in manifest["platforms"]:
+        adapter = json.loads(
+            (ROOT / "adapters" / platform / "agents" / "sdd.json").read_text(encoding="utf-8")
+        )
+        generated_agent = read(ROOT / "generated" / platform / "agents" / adapter["filename"])
+        generated_skill = read(ROOT / "generated" / platform / "skills" / "sdd-spec" / "SKILL.md")
+        check("model-selection.md" in generated_agent, f"{platform}: agente propaga Gate 0 de modelo")
+        check("model-selection.md" in generated_skill, f"{platform}: skill propaga Gate 0 de modelo")
 
 
 def test_spec_paths_support_grouping() -> None:
@@ -100,6 +168,55 @@ def test_variants_and_evidence() -> None:
     check("evidencia del RED esperado y del GREEN" in integrity, "integrity gate exige evidencia TDD")
 
 
+def test_navigator_context_contract() -> None:
+    skill = read(SDD / "SKILL.md")
+    agent = read(SDD_AGENT)
+    reference_path = SDD / "references" / "navigator-context.md"
+    check(reference_path.is_file(), "SDD incluye el contrato de contexto Navigator")
+    reference = read(reference_path) if reference_path.is_file() else ""
+    normalized_reference = normalized(reference)
+
+    check("navigator-context.md" in skill, "la skill carga el contrato Navigator bajo demanda")
+    check("navigator-context.md" in agent, "el agente delega el procedimiento Navigator a la skill")
+    check(
+        all(state in reference for state in ("`vigente`", "`desfasado`", "`no_verificable`", "`ambiguo`", "`ausente`")),
+        "Navigator distingue todos los estados de confianza",
+    )
+    check(
+        "steering" in normalized_reference
+        and "Navigator" in normalized_reference
+        and "contexto de dominio" in normalized_reference
+        and "código puntual" in normalized_reference,
+        "el contrato ordena steering, Navigator, dominio y código",
+    )
+    check(
+        "no bloquea SDD" in normalized_reference and "fuentes directas" in normalized_reference,
+        "la ausencia o el desfase degradan hacia fuentes directas",
+    )
+    check(
+        "no crea ni actualiza `.navigator/`" in normalized_reference and "aprobación explícita" in normalized_reference,
+        "SDD no escribe Navigator sin aprobación explícita",
+    )
+    check(
+        "`source_commit`" in reference and "`generated_at`" in reference,
+        "la frescura usa baseline y no depende de la fecha",
+    )
+    check(
+        "fuentes de verdad" in normalized_reference and "pistas de ubicación" in normalized_reference,
+        "un índice no confiable solo aporta pistas verificables",
+    )
+
+    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
+    for platform in manifest["platforms"]:
+        adapter = json.loads(
+            (ROOT / "adapters" / platform / "agents" / "sdd.json").read_text(encoding="utf-8")
+        )
+        generated_agent = read(ROOT / "generated" / platform / "agents" / adapter["filename"])
+        generated_skill = read(ROOT / "generated" / platform / "skills" / "sdd-spec" / "SKILL.md")
+        check("navigator-context.md" in generated_agent, f"{platform}: agente propaga integración Navigator")
+        check("navigator-context.md" in generated_skill, f"{platform}: skill propaga integración Navigator")
+
+
 def test_specialists_recommend_sdd_without_switching() -> None:
     for specialist in SPECIALISTS:
         agent = read(ROOT / "canonical" / "agents" / f"{specialist}.md")
@@ -134,11 +251,13 @@ def test_generated_references_match_canonical() -> None:
 
 
 def main() -> int:
-    print("Contrato SDD — rutas, testing adaptativo e integración")
+    print("Contrato SDD — modelo, rutas, testing adaptativo, Navigator e integración")
     test_modes_remain_proportional()
+    test_model_selection_gate()
     test_spec_paths_support_grouping()
     test_adaptive_testing_selection()
     test_variants_and_evidence()
+    test_navigator_context_contract()
     test_specialists_recommend_sdd_without_switching()
     test_generated_references_match_canonical()
     total = PASSED + FAILED

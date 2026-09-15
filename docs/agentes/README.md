@@ -53,15 +53,17 @@ Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
 - **Navigator:** bootstrap y updates son explícitos; los procesos pesados tienen
   aviso de modelo y gate de disponibilidad.
 - **Architecture, Data & API y UI Design:** la primera documentación masiva parte
-  de un estudio y una propuesta.
+  de un aviso de modelo, un estudio y una propuesta.
 - **Quality y Security:** primero auditan en solo lectura; después requieren
-  confirmación de alcance y remediación en micro-pasos.
+  confirmación de modelo para barridos pesados, alcance y remediación en micro-pasos.
 - **Escalado a SDD:** Architecture, Data & API, UI Design, Quality y Security
   recomiendan SDD si la mejora requiere más requisitos, diseño o coordinación;
   explican el motivo y esperan que el usuario decida si cambia de agente.
-- **SDD:** no avanza de fase sin aprobación explícita, salvo Quick Plan solicitado.
+- **SDD:** recomienda una vez un nivel genérico antes del trabajo no trivial y no
+  avanza de fase sin aprobación explícita, salvo los gates de fase de Quick Plan.
 - **Git y releases:** commit, push, cambios de versión, tags y CHANGELOG requieren
-  confirmación explícita; las acciones destructivas requieren doble confirmación.
+  confirmación explícita; no añaden Gate de modelo y las acciones destructivas
+  requieren doble confirmación.
 
 ## Fichas detalladas
 

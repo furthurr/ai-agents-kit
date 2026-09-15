@@ -3,6 +3,7 @@
   "frontmatter": {
     "name": "code-quality",
     "description": "Audita y documenta la deuda de calidad en `.quality/`, con remediación paso a paso y confirmación; no expone secretos ni trabaja fuera de calidad.",
+    "user-invocable": false,
     "tools": [
       "Read",
       "Edit",

@@ -12,6 +12,26 @@ description: >-
 
 # Skill: UI Design (documentación visual estandarizada)
 
+## Identidad del MAS
+
+En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
+skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
+una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
+confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+
+## Aviso de modelo
+
+Antes de operar, recomienda `BAJO` para consultas/ajustes puntuales y `MEDIO` para
+revisiones incrementales, sin bloquear. Para extracción completa, rediseños de
+varias pantallas o múltiples sistemas visuales, carga
+`references/model-selection.md` y aplica su hard stop. No repitas un nivel ya
+confirmado por Documentation Orchestrator para el mismo alcance. Nunca nombres
+modelos/proveedores ni cambies el modelo del host.
+La primera respuesta visible debe comenzar con
+`Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo esa confirmación previa.
+Clasifica antes de inspeccionar el proyecto. Una solicitud pesada explícita basta:
+carga solo la matriz, emite el hard stop y termina el turno sin más herramientas.
+
 Esta skill es la **referencia canónica** para documentar y estandarizar todo lo
 visual de un proyecto, sin importar la tecnología (Android/Compose/XML, iOS/
 SwiftUI/UIKit, Flutter, Web/CSS, React, etc.). Complementa al agente `UI Design
@@ -184,6 +204,10 @@ Las plantillas completas y criterios de clasificación están en
 [`references/templates.md`](references/templates.md). Ábrela solo al crear o
 actualizar el artefacto correspondiente; no es necesaria para una consulta,
 triage o tarea puntual.
+
+La matriz y el gate para operaciones pesadas están en
+[`references/model-selection.md`](references/model-selection.md); no la cargues
+para consultas o ajustes inequívocamente puntuales.
 
 ## Reglas
 

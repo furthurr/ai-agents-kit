@@ -11,6 +11,13 @@ description: >-
 
 # Skill: Documentation Orchestrator
 
+## Identidad del MAS
+
+En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
+skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
+una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
+confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+
 Referencia canonica para **coordinar** las skills documentales sin sustituirlas.
 Administra el orden, alcance, estado y gates; cada skill especialista sigue siendo
 la autoridad sobre su propia carpeta.

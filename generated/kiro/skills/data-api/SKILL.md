@@ -16,6 +16,26 @@ description: >-
 
 # Skill: Data & API (datos, APIs y contratos)
 
+## Identidad del MAS
+
+En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
+skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
+una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
+confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+
+## Aviso de modelo
+
+Antes de operar, recomienda `BAJO` para consultas/documentación puntual y `MEDIO`
+para cambios localizados que preservan contratos, sin bloquear. Para
+inicialización, catálogo completo, migraciones o contratos/riesgos amplios, carga
+`references/model-selection.md` y aplica su hard stop. No repitas un nivel ya
+confirmado por Documentation Orchestrator para el mismo alcance. Nunca nombres
+modelos/proveedores ni cambies el modelo del host.
+La primera respuesta visible debe comenzar con
+`Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo esa confirmación previa.
+Clasifica antes de inspeccionar el proyecto. Una solicitud pesada explícita basta:
+carga solo la matriz, emite el hard stop y termina el turno sin más herramientas.
+
 Esta skill es la **referencia canónica** para documentar, auditar y ayudar a
 desarrollar la **capa de datos y APIs** de un proyecto, sin importar la
 tecnología. Su objetivo es que cualquier agente o persona encuentre en `.data/`
@@ -51,6 +71,10 @@ API Agent`. Si el agente y esta skill divergen, **manda esta skill**.
 **Soporte condicional (solo si se detecta en el proyecto):**
 - **GraphQL SDL** (si hay GraphQL) · **AsyncAPI** (si hay eventos/colas/streaming)
   · **gRPC/Protobuf** (si hay `.proto`).
+
+**Publicación interactiva opcional:**
+- **Scalar** puede presentar y probar manualmente un contrato OpenAPI. No es otro
+  contrato ni sustituye OpenAPI; es una vista generada para personas.
 
 ## Carpeta canónica: `.data/`
 
@@ -171,6 +195,25 @@ modo lite) con hallazgos priorizados por severidad.
 ### 6. Actualizar la marca de sincronización
 Escribe el hash de `HEAD` (o fecha), tecnología, modo y flag de BD en `README.md`.
 
+### 7. Preparar la documentación interactiva (si aplica)
+
+Cuando el alcance confirmado incluye una API REST/OpenAPI, carga
+[`references/api-docs.md`](references/api-docs.md). En la primera generación de
+documentación, crea un lanzador manual para Scalar y registra sus instrucciones
+en `.data/README.md`. En sincronizaciones posteriores, reutilízalo y no
+sobrescribas personalizaciones sin confirmación.
+
+El lanzador debe comprobar el contrato y la disponibilidad de Node/Scalar, pero no
+debe instalar dependencias ni iniciar servidores durante la sesión del agente. La
+instalación y el servidor se activan únicamente cuando el usuario ejecuta el
+lanzador con la opción correspondiente. Si no hay OpenAPI válido, informa que la
+referencia interactiva no aplica y no inventes un contrato.
+
+Scalar debe servir la referencia en un entorno local o de pruebas. El backend debe
+estar ejecutándose para que el botón de prueba funcione; Scalar no lo inicia.
+Nunca incluyas credenciales, tokens, PII ni dominios productivos en el lanzador,
+HTML o configuración.
+
 ## Gate de ruta antes de implementar: cambio directo o recomendación de SDD
 
 La **severidad por sí sola no decide** la ruta. Un cambio puede implementarse
@@ -205,6 +248,14 @@ Las plantillas completas y criterios de clasificación están en
 actualizar el artefacto correspondiente; no es necesaria para una consulta,
 triage o tarea puntual.
 
+El contrato del lanzador de documentación interactiva está en
+[`references/api-docs.md`](references/api-docs.md); cárgalo solo cuando se
+confirme una API REST/OpenAPI y se vaya a preparar Scalar.
+
+La matriz y el gate para operaciones pesadas están en
+[`references/model-selection.md`](references/model-selection.md); no la cargues
+para consultas o cambios inequívocamente puntuales.
+
 ## Reglas
 
 - Comunícate en español por defecto; si el usuario escribe en otro idioma o lo
@@ -215,4 +266,6 @@ triage o tarea puntual.
   riesgo de seguridad** (cifrado débil, TLS, fugas) se **derivan al Security Agent**.
 - Cita `archivo:línea` como fuente de verdad; no inventes payloads ni respuestas.
 - Mantén los diagramas ER y contratos al día; corrige si un cambio los desactualiza.
+- La interfaz Scalar y su lanzador son artefactos derivados; OpenAPI sigue siendo
+  la fuente de verdad y el usuario ejecuta manualmente las pruebas.
 - git solo de lectura.

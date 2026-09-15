@@ -15,6 +15,26 @@ description: >-
 
 # Skill: Security (auditoría y remediación guiada)
 
+## Identidad del MAS
+
+En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
+skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
+una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
+confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+
+## Aviso de modelo
+
+Antes de operar, recomienda `BAJO` para consultas de estado y `MEDIO` para
+revisiones o micro-remediaciones localizadas no críticas, sin bloquear. Para
+auditoría completa o trabajo crítico de auth, criptografía, PII o red, carga
+`references/model-selection.md` y aplica su hard stop. No repitas un nivel ya
+confirmado por Documentation Orchestrator para el mismo alcance. Nunca nombres
+modelos/proveedores ni cambies el modelo del host.
+La primera respuesta visible debe comenzar con
+`Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo esa confirmación previa.
+Clasifica antes de inspeccionar el proyecto. Una solicitud pesada explícita basta:
+carga solo la matriz, emite el hard stop y termina el turno sin más herramientas.
+
 Esta skill es la **referencia canónica** para auditar, documentar y ayudar a
 remediar la seguridad de un proyecto, con foco en **móvil (Android, iOS,
 Flutter)**. Da a la IA y al equipo un estado claro de riesgos y una ruta de
@@ -187,6 +207,10 @@ Las plantillas completas y criterios de clasificación están en
 [`references/templates.md`](references/templates.md). Ábrela solo al crear o
 actualizar el artefacto correspondiente; no es necesaria para una consulta,
 triage o tarea puntual.
+
+La matriz y el gate para operaciones pesadas están en
+[`references/model-selection.md`](references/model-selection.md); no la cargues
+para consultas o remediaciones inequívocamente puntuales.
 
 ## Reglas
 

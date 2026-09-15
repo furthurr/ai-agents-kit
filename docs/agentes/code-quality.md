@@ -35,6 +35,12 @@ La skill `code-quality` usa:
 - Reglas públicas cacheadas bajo `.quality/standards/` cuando hace falta consultar
   el detalle de un lenguaje.
 
+## Recomendación de modelo
+
+Las consultas y remediaciones localizadas reciben un aviso `BAJO` o `MEDIO` sin
+bloqueo. Una auditoría inicial/completa o transversal recomienda `ALTO` y espera
+confirmación antes de recorrer el código.
+
 ## Cómo trabaja
 
 1. Clasifica la solicitud y delimita el código relevante.

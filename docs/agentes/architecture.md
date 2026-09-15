@@ -34,6 +34,12 @@ La skill `architecture` aplica:
 - **ADRs** para decisiones importantes.
 - Modos `lite` y `full` según el tamaño del proyecto.
 
+## Recomendación de modelo
+
+Las consultas y cambios incrementales reciben un aviso `BAJO` o `MEDIO` sin
+bloqueo. Antes de una inicialización, auditoría completa o arquitectura
+grande/ambigua, recomienda `MEDIO` o `ALTO` y espera confirmación.
+
 ## Cómo trabaja
 
 1. Clasifica la petición y aclara cualquier ambigüedad.

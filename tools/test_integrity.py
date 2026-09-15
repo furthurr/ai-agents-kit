@@ -80,6 +80,8 @@ def test_project_structure() -> None:
         "tools/import_installed.py",
         "tools/check_links.py",
         "tools/test_links.py",
+        "tools/test_model_recommendations.py",
+        "tools/test_mas_identity.py",
         "README.md",
         ".gitignore",
     ]
@@ -267,10 +269,34 @@ def test_kiro_frontmatter_match_is_array() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 10. validate.py passes (the gold standard)
+# 10. Claude agents are hidden from the VS Code/Copilot picker
+# ---------------------------------------------------------------------------
+def test_claude_agents_hidden_from_vscode() -> None:
+    print("\n\033[1m[10] Claude: agentes ocultos del selector de VS Code\033[0m")
+
+    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
+
+    for agent_id in manifest["agents"]:
+        adapter_path = ROOT / "adapters" / "claude" / "agents" / f"{agent_id}.json"
+        adapter = json.loads(adapter_path.read_text(encoding="utf-8"))
+        frontmatter = adapter.get("frontmatter", {})
+        check(
+            frontmatter.get("user-invocable") is False,
+            f"{adapter_path.relative_to(ROOT)}: user-invocable es false",
+        )
+
+        generated_path = ROOT / "generated" / "claude" / "agents" / adapter["filename"]
+        content = generated_path.read_text(encoding="utf-8") if generated_path.is_file() else ""
+        check(
+            bool(re.search(r"^user-invocable: false$", content, re.MULTILINE)),
+            f"{generated_path.relative_to(ROOT)}: selector de VS Code no lo muestra",
+        )
+
+
+# 11. validate.py passes (the gold standard)
 # ---------------------------------------------------------------------------
 def test_validate_passes() -> None:
-    print("\n\033[1m[10] tools/validate.py pasa correctamente\033[0m")
+    print("\n\033[1m[11] tools/validate.py pasa correctamente\033[0m")
 
     result = subprocess.run(
         [sys.executable, str(ROOT / "tools" / "validate.py")],
@@ -282,10 +308,10 @@ def test_validate_passes() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 11. README references match actual file locations
+# 12. README references match actual file locations
 # ---------------------------------------------------------------------------
 def test_readme_references() -> None:
-    print("\n\033[1m[11] README.md: referencias a rutas existentes\033[0m")
+    print("\n\033[1m[12] README.md: referencias a rutas existentes\033[0m")
 
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
 
@@ -303,10 +329,10 @@ def test_readme_references() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 12. Negative test suite passes (tools/test_validate.py)
+# 13. Negative test suite passes (tools/test_validate.py)
 # ---------------------------------------------------------------------------
 def test_negative_suite_passes() -> None:
-    print("\n\033[1m[12] tools/test_validate.py (pruebas negativas) pasa\033[0m")
+    print("\n\033[1m[13] tools/test_validate.py (pruebas negativas) pasa\033[0m")
 
     suite = ROOT / "tools" / "test_validate.py"
     check(suite.is_file(), "tools/test_validate.py existe")
@@ -320,10 +346,10 @@ def test_negative_suite_passes() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 13. Markdown link checks pass
+# 14. Markdown link checks pass
 # ---------------------------------------------------------------------------
 def test_link_checker_passes() -> None:
-    print("\n\033[1m[13] Enlaces Markdown\033[0m")
+    print("\n\033[1m[14] Enlaces Markdown\033[0m")
 
     for tool in ("check_links.py", "test_links.py"):
         result = subprocess.run(
@@ -333,6 +359,59 @@ def test_link_checker_passes() -> None:
         check(result.returncode == 0, f"tools/{tool} exit code 0")
         if result.returncode != 0:
             print(f"      stderr: {result.stderr.strip()}")
+
+
+# ---------------------------------------------------------------------------
+# 15. Model recommendation contracts pass
+# ---------------------------------------------------------------------------
+def test_model_recommendations_pass() -> None:
+    print("\n\033[1m[15] Recomendaciones de modelo\033[0m")
+
+    suite = ROOT / "tools" / "test_model_recommendations.py"
+    result = subprocess.run(
+        [sys.executable, str(suite)],
+        capture_output=True, text=True, cwd=str(ROOT)
+    )
+    check(result.returncode == 0, "test_model_recommendations.py exit code 0")
+    if result.returncode != 0:
+        print(f"      stderr: {result.stderr.strip()}")
+
+
+# ---------------------------------------------------------------------------
+# 16. Data & API interactive documentation workflow is present everywhere
+# ---------------------------------------------------------------------------
+def test_data_api_scalar_workflow() -> None:
+    print("\n\033[1m[16] Data & API: flujo interactivo con Scalar\033[0m")
+
+    reference = ROOT / "canonical" / "skills" / "data-api" / "references" / "api-docs.md"
+    skill = (ROOT / "canonical" / "skills" / "data-api" / "SKILL.md").read_text(encoding="utf-8")
+
+    check(reference.is_file(), "Referencia canónica de Scalar existe")
+    reference_content = reference.read_text(encoding="utf-8") if reference.is_file() else ""
+    for marker in ("@scalar/cli", "--install", "--serve", "document serve", "127.0.0.1"):
+        check(marker in reference_content, f"Referencia Scalar contiene: {marker}")
+    check("references/api-docs.md" in skill, "La skill carga la referencia de Scalar bajo demanda")
+
+    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
+    for platform in manifest["platforms"]:
+        generated = ROOT / "generated" / platform / "skills" / "data-api" / "references" / "api-docs.md"
+        check(generated.is_file(), f"Referencia Scalar generada para {platform}")
+
+
+# ---------------------------------------------------------------------------
+# 17. MAS identity contract passes
+# ---------------------------------------------------------------------------
+def test_mas_identity_pass() -> None:
+    print("\n\033[1m[17] Identidad MAS\033[0m")
+
+    suite = ROOT / "tools" / "test_mas_identity.py"
+    result = subprocess.run(
+        [sys.executable, str(suite)],
+        capture_output=True, text=True, cwd=str(ROOT)
+    )
+    check(result.returncode == 0, "test_mas_identity.py exit code 0")
+    if result.returncode != 0:
+        print(f"      stderr: {result.stderr.strip()}")
 
 
 # ---------------------------------------------------------------------------
@@ -353,10 +432,14 @@ def main() -> int:
     test_manifest_integrity()
     test_generated_artifacts()
     test_kiro_frontmatter_match_is_array()
+    test_claude_agents_hidden_from_vscode()
     test_validate_passes()
     test_readme_references()
     test_negative_suite_passes()
     test_link_checker_passes()
+    test_model_recommendations_pass()
+    test_data_api_scalar_workflow()
+    test_mas_identity_pass()
 
     print(f"\n\033[1m{'='*60}\033[0m")
     total = PASSED + FAILED

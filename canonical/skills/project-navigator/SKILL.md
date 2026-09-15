@@ -10,6 +10,13 @@ description: >-
 
 # Skill: Project Navigator
 
+## Identidad del MAS
+
+En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
+skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
+una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
+confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+
 Referencia canónica de **cómo navegar e indexar** un repositorio con mínimo de
 tokens. Complementa al agente `project-navigator`. Si agente y skill divergen,
 **manda esta skill**.

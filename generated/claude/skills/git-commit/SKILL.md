@@ -13,6 +13,13 @@ description: >-
 
 # Git Commit & Push
 
+## Identidad del MAS
+
+En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
+skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
+una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
+confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+
 Conocimiento y procedimiento para administrar Git en el repositorio actual:
 **commits ordenados y optimizados** siguiendo **Conventional Commits** con
 mensajes en **español**, y **push solo después de una confirmación explícita**
