@@ -22,7 +22,7 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 | `documentation-orchestrator` | Comprueba, inicializa y sincroniza documentación mediante especialistas | — | Gate 0 de modelo; no crea una fuente documental propia |
 | `security` | Auditoría y remediación de seguridad guiada | `.security/` | Aviso de modelo; OWASP MASVS/MASWE/MASTG y CWE |
 | `ui-design` | Sistema visual: tokens, componentes, deuda de UI | `.design/` | Aviso de modelo; agnóstica a tecnología |
-| `sdd-spec` | Spec-Driven Development en 4 fases con gates | `.sdd/specs/<ruta-spec>/` | Gate 0 de modelo; rutas planas o agrupadas; EARS y trazabilidad |
+| `sdd-spec` | Spec-Driven Development con profundidades `direct`, `lite`, `standard` y `deep` | `.sdd/specs/<ruta-spec>/` | `lite`: Quick Plan y Gate 0; `standard`/`deep`: Gates 1-4; EARS y trazabilidad |
 | `git-commit` | Commits Conventional Commits en español y push con confirmación | — | No versiona ni crea tags |
 | `release-management` | SemVer, tags anotados, CHANGELOG; perfiles por tecnología | `.release/` | Android/iOS/Flutter de fábrica; resto auto-extensible |
 | `project-navigator` | Navega el repo con mínimo de tokens (capas 0–4) | `.navigator/` | Bootstrap/update asistido; solo lectura fuera de `.navigator/` |
@@ -37,7 +37,7 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 | [`documentation-orchestrator`](agentes/documentation-orchestrator.md) | Documentation Orchestrator | `documentation-orchestrator` + especialistas seleccionadas | Coordina estado, bootstrap, sincronización y release-check documental |
 | [`security`](agentes/security.md) | Security Agent | `security` | Solo seguridad; micro-pasos con confirmación |
 | [`ui-design`](agentes/ui-design.md) | UI Design Agent | `ui-design` | Solo lo visual; no toca negocio ni APIs |
-| [`sdd`](agentes/sdd.md) | Agente SDD | `sdd-spec` | Recomienda nivel; specs, gates e implementación trazable |
+| [`sdd`](agentes/sdd.md) | Agente SDD | `sdd-spec` | Selecciona `lite` para trabajo acotado de bajo riesgo; specs, gates e implementación trazable |
 | [`git-release-manager`](agentes/git-release-manager.md) | Git & Release Manager | `git-commit` + `release-management` | Commits, push, versiones, tags, CHANGELOG |
 | [`project-navigator`](agentes/project-navigator.md) | Project Navigator | `project-navigator` | Investigación/navegación; bootstrap de índices en `.navigator/` |
 
@@ -69,7 +69,7 @@ release-mgmt  ──┘                                 → .release/ (releases)
 | Endpoints, DTOs, OpenAPI, repositorios, ER | Data & API |
 | Secretos, TLS, auth, permisos, hardening | Security |
 | Colores, tipografía, componentes, temas | UI Design |
-| Feature o bugfix con requisitos y diseño antes de codear | SDD |
+| Feature o bugfix con requisitos y diseño antes de codear | SDD (`standard` para bugfixes no triviales) |
 | Commit / push del día a día | Git & Release Manager → flujo commit |
 | Bump de versión, tag, CHANGELOG | Git & Release Manager → flujo release |
 

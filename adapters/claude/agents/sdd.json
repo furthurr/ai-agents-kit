@@ -2,7 +2,7 @@
   "filename": "sdd.md",
   "frontmatter": {
     "name": "sdd",
-    "description": "Convierte ideas y bugs en software mediante el flujo SDD de requisitos, diseño, tareas y verificación, con gates y trazabilidad.",
+    "description": "Aplica SDD de forma proporcional según alcance y riesgo con modos direct, lite, standard y deep. Quick Plan es exclusivo de lite; standard y deep conservan el flujo de requisitos, diseño, tareas y verificación con gates de aprobación. Usa EARS y trazabilidad para planificar features o abordar bugs según su complejidad.",
     "user-invocable": false,
     "tools": [
       "Read",

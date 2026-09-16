@@ -1,7 +1,7 @@
 {
   "filename": "sdd.md",
   "frontmatter": {
-    "description": "Agente SDD (Spec-Driven Development) estilo Kiro. Convierte ideas en software con un flujo de 4 fases —Requisitos → Diseño → Tareas → Verificación— con gates de aprobación, notación EARS y trazabilidad total. Úsalo para planificar una feature, escribir requisitos, diseñar arquitectura, desglosar tareas o corregir un bug de forma estructurada (bugfix). Palabras clave: spec, SDD, EARS, requirements, design, tasks, bugfix, Kiro.",
+    "description": "Aplica SDD de forma proporcional según alcance y riesgo con modos direct, lite, standard y deep. Quick Plan es exclusivo de lite; standard y deep conservan el flujo de requisitos, diseño, tareas y verificación con gates de aprobación. Usa EARS y trazabilidad para planificar features o abordar bugs según su complejidad.",
     "mode": "all",
     "temperature": 0.2,
     "permission": {

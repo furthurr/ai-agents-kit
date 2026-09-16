@@ -1,7 +1,7 @@
 {
   "filename": "sdd.md",
   "frontmatter": {
-    "description": "Aplica SDD con EARS, gates de aprobación y trazabilidad.",
+    "description": "Aplica SDD de forma proporcional según alcance y riesgo con modos direct, lite, standard y deep. Quick Plan es exclusivo de lite; standard y deep conservan el flujo de requisitos, diseño, tareas y verificación con gates de aprobación. Usa EARS y trazabilidad para planificar features o abordar bugs según su complejidad.",
     "tools": [
       "read",
       "write",

@@ -2,8 +2,8 @@
 name: sdd-spec
 description: >-
   Aplica la metodología Spec-Driven Development (SDD) estilo Kiro: genera y
-  refina specs (requirements.md, design.md, tasks.md, verification.md) con un
-  flujo de 4 fases, gates de aprobación, notación EARS y trazabilidad. Úsala al
+  refina specs (requirements.md, design.md, tasks.md, verification.md) con modos
+  proporcionales, gates de aprobación, notación EARS y trazabilidad. Úsala al
   planificar una feature, escribir requisitos, diseñar arquitectura, desglosar
   tareas o corregir un bug de forma estructurada (bugfix). Palabras clave: spec,
   SDD, especificación, EARS, requirements, design, tasks, bugfix, Kiro.
@@ -18,7 +18,7 @@ skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` diri
 una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
 confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
-Flujo SDD de 4 fases con gates, EARS y trazabilidad. Funciona con cualquier agente.
+Flujo SDD proporcional con gates, EARS y trazabilidad. Funciona con cualquier agente.
 
 > **Precedencia:** si el agente `SDD (Spec-Driven Development)` y esta skill divergen, manda esta skill.
 
@@ -27,32 +27,66 @@ Flujo SDD de 4 fases con gates, EARS y trazabilidad. Funciona con cualquier agen
 | Modo | Cuándo | Qué produce | Carga documental |
 |------|--------|-------------|-------------------|
 | `direct` | Cambio trivial verificable | Sin spec 4 fases | Mínima |
+| `lite` | Cambio acotado, claro y de bajo riesgo | Quick Plan; verificación compacta si implementa | Ligera |
 | `standard` | **Default** | 4 fases, design corto, 0–5 invariantes, testing adaptativo | Moderada |
 | `deep` | Usuario lo pide | + glosario, más diagramas, PBT real si aplica | Alta |
 
-Default = `standard`. No actives `deep` solo. Caps standard: design ~≤250 líneas; máx. 5 invariantes; 1 flowchart + 1 sequence; glosario solo en `deep` o si el usuario lo pide.
+SDD reconoce exactamente cuatro profundidades: `direct`, `lite`, `standard` y
+`deep`. Tipo de trabajo (feature, bugfix o exploración), profundidad, intención
+(solo planificación o implementación) y estrategia de pruebas son ejes separados.
+
+`standard` es el fallback seguro. No actives `deep` solo ni rebajes una solicitud
+explícita de `standard` o `deep`. Caps standard: design ~≤250 líneas; máx. 5
+invariantes; 1 flowchart + 1 sequence; glosario solo en `deep` o si el usuario lo pide.
 
 `direct` exige alcance claro, localizado y reversible, sin contrato público,
 migración, decisión arquitectónica, cruce de capas ni riesgo relevante de seguridad,
-concurrencia o integridad. Si falla una condición, usa `standard`.
+concurrencia o integridad.
+
+Tras descartar `direct`, selecciona `lite` solo si el resultado está claro, no hay
+decisiones funcionales relevantes abiertas, el alcance es acotado, reutiliza
+patrones existentes, tiene verificación viable y es reversible sin migración
+compleja. Excluye `lite` ante contrato público/API, migración, arquitectura,
+integración externa significativa, cruce relevante de capas o módulos, seguridad,
+privacidad, concurrencia, integridad crítica, compliance, legado riesgoso o bugfix
+no trivial. Si la elegibilidad de `lite` no puede demostrarse, usa `standard`.
+
+Quick Plan es obligatorio y exclusivo de `lite`. Rechaza `direct` + Quick Plan,
+`standard` + Quick Plan y `deep` + Quick Plan; una petición de Quick Plan solicita
+evaluar `lite`, pero no evita sus límites. Un bugfix trivial puede ser `direct`; los
+demás bugfixes usan `standard`.
 
 Profundidad y testing son ejes independientes: sin cambio observable → sin test
 nuevo; bug o legado → regresión/caracterización; comportamiento nuevo o modificado
 → TDD focalizado; TDD estricto solo si el usuario lo pide. `direct` puede incluir un
 microciclo TDD y `deep` no activa TDD estricto. Detalle en `references/testing.md`.
 
-## Gate 0: recomendación de modelo
+## Gate 0 y preflight de próxima fase
 
-Antes de cargar contexto pesado o iniciar una fase, recomienda `BAJO`, `MEDIO` o
-`ALTO`. Si la solicitud cumple claramente `direct`, usa los limites compactos de
-esta skill y no cargues la referencia. En los demas casos usa
-`references/model-selection.md`. No nombres modelos o proveedores ni cambies el
-modelo del host.
+Antes de cargar contexto pesado o iniciar una operación, identifica la próxima fase
+real y recomienda únicamente `BAJO`, `MEDIO` o `ALTO` para esa fase. Si la solicitud
+cumple claramente `direct`, usa los limites compactos de esta skill y no cargues la
+referencia. En los demas casos usa `references/model-selection.md`. No nombres
+modelos o proveedores ni cambies el modelo del host.
 
-`direct` recibe un aviso breve y no bloqueante. Quick Plan, `standard`, `deep` y
-bugfix no trivial reciben una recomendación y un único hard stop. No repitas el
-Gate 0 entre fases; si cambia el alcance o el riesgo, recalcula y detente solo si
-cambia el nivel global.
+El Gate 0 inicial muestra el próximo proceso, no un nivel global ni un perfil de
+todas las fases futuras. Para una spec nueva `standard` o `deep`, la próxima fase es
+Requirements; para `lite`, la única operación es Quick Plan.
+
+`direct` recibe un aviso breve y no bloqueante. `lite` recibe un único preflight
+bloqueante para Quick Plan. `standard`, `deep` y bugfix no trivial reciben el
+preflight de la próxima fase y un hard stop. En `standard` y `deep`, muestra una
+recomendación al iniciar Requirements, Design, Tasks, Implementación y Verification,
+sin convertirla en un gate adicional ni repetirla dentro de la misma fase.
+
+En cada transición, presenta en un mismo mensaje el resumen verificable de la fase
+actual, su gate de aprobación cuando aplique y la recomendación de la próxima fase.
+La recomendación queda condicionada a la aprobación actual. Solo inicia la siguiente
+fase cuando el usuario aprueba la fase actual y confirma usar el nivel recomendado o
+mantener el nivel actual. Una respuesta ambigua pide el dato faltante. Si cambia el
+alcance o el riesgo, recalcula; si cambia la política de gates, solicita confirmación
+aunque el nivel de modelo no cambie. Después de Verification muestra únicamente Gate
+4, sin recomendación para el cierre.
 
 ## Contexto selectivo
 
@@ -93,13 +127,23 @@ el nombre de la carpeta final por sí solo no es suficiente.
 | `tasks.md` | 3 | Tareas discretas, trazadas y secuenciadas |
 | `verification.md` | 4 | Matriz + evidencia + cierre |
 
+En `standard` y `deep`, los artefactos nuevos declaran `Modo SDD`, `Fase`, `Estado` y
+el gate pendiente o aprobado que les corresponde. La reanudación usa esos marcadores
+y no infiere aprobación solo por la existencia del archivo. En `lite`, Quick Plan
+genera los tres primeros archivos en una pasada y añade `verification.md` compacto
+solo después de implementar; `requirements.md` declara `Modo SDD: lite`. Las specs
+legacy no se migran; si una spec de tres archivos sin marcador es ambigua, pregunta
+antes de reanudarla.
+
 ## Flujo con gates
 
-> **No avances de fase sin aprobación explícita del usuario.**
+> **En `standard` y `deep`, no avances de fase sin aprobación explícita del usuario.**
 > Copilot no tiene una herramienta de «pregunta» dedicada.
-> El gate se implementa de forma natural: termina tu turno
-> con la pregunta y espera. Excepción: los gates de fase de Quick Plan; su Gate 0
-> de modelo se conserva.
+> El preflight de capacidad para la próxima fase no es un gate:
+> se presenta junto con el resumen y el gate actual, y requiere confirmación del
+> nivel antes de iniciar. El gate se implementa de forma natural: termina tu turno
+> con la pregunta y espera. `lite` conserva el Gate 0, pero Quick Plan funciona sin
+> Gates 1–3 y cierra sin Gate 4.
 
 ### Fase 1 — Requirements
 
@@ -141,6 +185,8 @@ el nombre de la carpeta final por sí solo no es suficiente.
 ### Implementación
 
 - Una tarea a la vez o en waves. Estados: `[ ]` → 🔵 → `[x]`.
+- Antes de iniciar esta fase, ejecuta el preflight de Implementación y espera la
+  confirmación del nivel junto con la aprobación previa de Gate 3.
 - Antes de `[x]`: `references/integrity-gate.md`.
 - Ejecuta el ciclo elegido en `references/testing.md`; no declares TDD sin haber
   observado un RED que falle por la razón esperada.
@@ -150,10 +196,13 @@ el nombre de la carpeta final por sí solo no es suficiente.
 ### Fase 4 — Verificación y cierre
 
 Prerrequisito: `[x]` con artefacto real (o `[omitido: razón]`).
-1. `references/integrity-gate.md`: validar cada `[x]` ↔ disco/evidencia.
-2. Suite de tests + spot-check `quality-bar` y 3–5 RNF del spec.
-3. `verification.md` con columna Evidencia (`templates.md`). No cerrar con huérfanos.
-4. **GATE 4**: "¿Cierro la spec o cubrimos los huecos?"
+1. Presenta el resumen de Implementación y el preflight de Verification; espera la
+   confirmación del nivel antes de ejecutar la suite.
+2. `references/integrity-gate.md`: validar cada `[x]` ↔ disco/evidencia.
+3. Suite de tests + spot-check `quality-bar` y 3–5 RNF del spec.
+4. `verification.md` con columna Evidencia (`templates.md`). No cerrar con huérfanos.
+5. **GATE 4**: "¿Cierro la spec o cubrimos los huecos?" Después de Verification,
+   no muestres otra recomendación de modelo.
 
 ## Variante Bugfix
 
@@ -167,14 +216,23 @@ invariantes si aplican. Primero crea una regresión que falle por el defecto; us
 caracterización para comportamiento legado que deba preservarse. Si no puede
 reproducirse, registra la limitación y no inventes un RED.
 
-## Variante Quick Plan
+## Modo lite y Quick Plan
 
-Genera requirements, design y tasks en una pasada **sin gates de fase**, con
-preguntas aclaratorias por adelantado. Omite Fase 4. Solo para features bien
-entendidas; conserva el Gate 0 de modelo antes de empezar.
-Al implementar, aplica integrity-gate y caps `standard`. `design.md` registra la
-estrategia y `tasks.md` ordena el ciclo. Como no hay `verification.md`, deja la
-evidencia en las tareas y en el resumen final.
+Quick Plan es obligatorio y exclusivo de `lite`. Genera requirements, design y
+tasks en una pasada, con preguntas aclaratorias esenciales por adelantado y sin
+Gates 1–3. El Gate 0 muestra `Modo SDD: lite`, Quick Plan, el nivel de esa única
+operación, los motivos y el flujo omitido; no recomienda por separado sus pasos
+internos.
+
+Si la intención es solo planificación, termina después de `tasks.md` y no
+implementar código. Si la solicitud original incluye implementación, aplica
+integrity-gate y testing adaptativo después del plan. Al terminar, crea un
+`verification.md` compacto con RED o baseline, GREEN, suite, excepciones y matriz
+de evidencia; cierra sin Gate 4.
+
+Si aparece una exclusión, detente en un punto seguro y propón `standard`. La
+reclasificación requiere confirmación aunque el nivel de modelo no cambie. Quick
+Plan no es compatible con `direct`, `standard` ni `deep`.
 
 ## Reglas de calidad
 

@@ -39,12 +39,12 @@ def main() -> int:
     content_has_identity(docs, "docs/mas.md")
 
     version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-    check(bool(re.fullmatch(r"0\.1\.0", version)), "VERSION: primera release 0.1.0")
+    check(bool(re.fullmatch(r"\d+\.\d+\.\d+", version)), "VERSION: SemVer válida")
     check((ROOT / ".release" / "README.md").is_file(), ".release/README.md: existe")
     check((ROOT / ".release" / "config.md").is_file(), ".release/config.md: existe")
     check((ROOT / "CHANGELOG.md").is_file(), "CHANGELOG.md: existe")
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-    check("## [0.1.0] - 2026-09-15" in changelog, "CHANGELOG.md: incluye 0.1.0")
+    check(f"## [{version}] - " in changelog, f"CHANGELOG.md: incluye {version}")
 
     manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
     for agent_id in manifest["agents"]:

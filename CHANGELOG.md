@@ -3,6 +3,27 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [0.1.1] - 2026-09-15
+
+### Funcionalidades
+
+- Incorporar la profundidad SDD `lite` con Quick Plan exclusivo, selección
+  conservadora y verificación proporcional.
+- Añadir recomendaciones de capacidad para la próxima fase SDD, manteniendo los
+  gates y las confirmaciones explícitas entre fases.
+- Permitir especificaciones SDD agrupadas por módulo y reanudarlas con rutas
+  seguras.
+
+### Compatibilidad
+
+- Propagar los contratos SDD actualizados a Copilot, OpenCode, Kiro y Claude
+  Code mediante los artefactos generados.
+
+### Validación
+
+- Ampliar los contratos, smoke tests y specs de SDD para cubrir los nuevos modos,
+  recomendaciones, trazabilidad y evidencia.
+
 ## [0.1.0] - 2026-09-15
 
 ### Funcionalidades

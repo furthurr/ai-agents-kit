@@ -11,7 +11,8 @@ Redactar y aplicar **sin** nombres de framework en el núcleo del checklist; el 
 4. **I/O:** fuera del hilo/loop de UI cuando la plataforma lo permita (leer steering).
 5. **Errores:** tipados o `Result`; no `catch` vacío; log en fallos de infraestructura.
 6. **Persistencia encapsulada:** un solo módulo/adaptador toca storage/BD; UI y domain no llaman APIs crudas de persistencia.
-7. **RNF auto-audit:** antes de cerrar, verificar 3–5 RNF críticos del propio spec (búsqueda en código).
+7. **RNF auto-audit:** en `standard`/`deep`, verificar 3–5 RNF críticos del propio
+   spec. En Lite, revisar solo los RNF declarados y aplicables; no inventar cuotas.
 8. **Testing adaptativo:** comportamiento nuevo/modificado usa TDD focalizado y bugfix usa regresión; caracterización protege refactors. «Sin test nuevo» solo sin cambio observable o con excepción explícita y verificación alternativa. TDD estricto solo por petición.
 9. **PBT:** solo si hay invariante algebraico y el modo lo permite (ver `testing.md`).
 10. **Proporcionalidad design (`standard`):** techo orientativo ~250 líneas; 1 flowchart + 1 sequence; C4/ER solo en `deep` o si hay BD interna real.
@@ -23,3 +24,5 @@ Redactar y aplicar **sin** nombres de framework en el núcleo del checklist; el 
 - **Fase 2:** el design debe satisfacer este bar; citar excepciones en `design.md` si las hay.
 - **Implementación:** revisar este bar antes de marcar waves de UI/datos como `[x]`.
 - **Fase 4:** spot-check explícito (lista corta en `verification.md`).
+- **Cierre lite:** spot-check proporcional en el `verification.md` compacto, sin
+  convertirlo en Fase 4 ni añadir Gate 4.

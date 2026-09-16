@@ -16,7 +16,7 @@ siempre que exista. Si no lo especifica, aplica estos valores por defecto:
 
 ## Selección de estrategia
 
-La profundidad SDD (`direct`, `standard`, `deep`) y la estrategia de pruebas son
+La profundidad SDD (`direct`, `lite`, `standard`, `deep`) y la estrategia de pruebas son
 ejes independientes. Elige una estrategia por comportamiento, no por tamaño del
 diff:
 
@@ -36,6 +36,10 @@ Orden de decisión:
 5. Si debería probarse pero no existe un harness viable, registra la excepción y
    la mejor verificación alternativa. Si el riesgo ya no es trivial, escala de
    `direct` a `standard`.
+
+`lite` reduce gates y documentación, no evidencia. Una implementación `lite` usa
+la misma decisión adaptativa y registra el ciclo en su `verification.md` compacto.
+Un bugfix no trivial se clasifica `standard`, aunque su diff sea pequeño.
 
 ## Ciclos operativos
 

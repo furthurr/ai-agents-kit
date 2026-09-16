@@ -8,40 +8,49 @@
 | Skill | [`sdd-spec`](../../canonical/skills/sdd-spec/SKILL.md) |
 | Propósito | Convertir features y bugfixes en trabajo trazable antes de implementarlos |
 | Artefactos | `.sdd/specs/<ruta-spec>/`, plana o agrupada por módulo |
-| Particularidad | Es el agente del kit que puede implementar código de producto, tras los gates |
+| Particularidad | Puede implementar código de producto según la profundidad y sus confirmaciones |
 
-SDD separa el **qué y porqué** del **cómo**. La conversación deja requisitos,
+SDD separa el **qué y porqué** del **cómo** y deja decisiones trazables.
 
 ## Cuándo usarlo
 
 - Para una feature nueva o un cambio de comportamiento.
 - Para un bugfix que necesita regresión y causa raíz.
 - Para una decisión con impacto entre capas.
-- Para crear un plan rápido de una feature bien entendida mediante Quick Plan.
+- Para crear un plan rápido de trabajo acotado, claro y de bajo riesgo mediante
+  `lite` y Quick Plan.
 - Para continuar la implementación de tareas ya aprobadas.
 
-Un cambio trivial, localizado y reversible puede usar `direct`; si tiene riesgo,
-contrato público, migración o cruce de capas, debe usar `standard`.
+Un cambio trivial, localizado y reversible puede usar `direct`. Tras descartarlo,
+SDD selecciona `lite` automáticamente para trabajo acotado, claro y de bajo riesgo.
+Si hay dudas, riesgo, contrato público, migración, cruce de capas o un bugfix no
+trivial, usa `standard` como modo por defecto y fallback seguro. `deep` solo se
+activa por petición explícita.
 
 ## Recomendación de modelo
 
-Antes de cargar contexto pesado, SDD hace un preflight barato y recomienda un
-nivel genérico `BAJO`, `MEDIO` o `ALTO`. Para `direct`, el aviso es breve y no
-bloquea. Para Quick Plan y trabajo no trivial, presenta una sola vez el nivel
-global y un perfil orientativo de las fases pendientes, y espera confirmación.
+Antes de cargar contexto pesado, SDD hace un preflight barato y recomienda un nivel
+genérico `BAJO`, `MEDIO` o `ALTO` únicamente para la próxima fase u operación. Para
+`direct`, el aviso es breve y no bloquea. `lite` recibe una sola recomendación para
+Quick Plan; `standard` y `deep` reciben una recomendación al iniciar cada fase.
 
-El usuario puede cambiar manualmente al nivel recomendado o continuar con el
-actual. SDD no conoce, selecciona ni cambia el modelo del host. La confirmación se
-conserva entre fases mientras no cambien el alcance o el riesgo; no hay una pausa
-nueva antes de cada fase.
+En cada transición, SDD presenta el resumen verificable, el gate actual y la
+recomendación de la próxima fase en el mismo mensaje. La fase siguiente requiere la
+aprobación actual y la confirmación del nivel recomendado o del nivel actual. SDD no
+conoce, selecciona ni cambia el modelo del host, y no crea gates adicionales.
 
 ## Modos
 
 | Modo | Uso | Resultado |
 |---|---|---|
-| `direct` | Cambio trivial, claro y reversible | Sin spec de cuatro fases; verificación mínima |
-| `standard` | Default para features y bugfixes | Requirements, design, tasks y verification |
-| `deep` | Cuando el usuario lo solicita | Más contexto, glosario, diagramas y PBT real si aplica |
+| `direct` | Cambio trivial, localizado y reversible | Sin spec; verificación mínima |
+| `lite` | Selección automática para trabajo acotado, claro y de bajo riesgo | Quick Plan compacto; artefactos según se planifique o implemente |
+| `standard` | Modo por defecto y fallback seguro; obligatorio para bugfixes no triviales | Requirements, design, tasks y verification; Gates 1-4 |
+| `deep` | Solo cuando el usuario lo solicita explícitamente | Gates 1-4; más contexto, glosario, diagramas y PBT real si aplica |
+
+Estas son las cuatro profundidades válidas: `direct`, `lite`, `standard` y `deep`.
+Quick Plan es obligatorio y exclusivo de `lite`; combinarlo con cualquier otra
+profundidad es inválido.
 
 La profundidad y el testing son decisiones independientes. Una feature normal usa
 TDD focalizado; TDD estricto solo se activa si se pide explícitamente. Los bugfixes
@@ -49,20 +58,24 @@ usan regresión y el legado usa caracterización.
 
 ## Flujo y gates
 
-0. **Modelo:** preflight, recomendación y Gate 0 ligero cuando el trabajo no es `direct`.
+0. **Modelo:** preflight de la próxima fase y recomendación. En `lite`, `standard` y
+   `deep`, el Gate 0 inicial es bloqueante; `direct` no crea spec. Los preflights de
+   transición no son gates adicionales.
 1. **Requirements:** historias, criterios EARS, errores, edge cases y supuestos.
-   Gate 1: aprobar requisitos.
+   Gate 1: aprobar requisitos en `standard` y `deep`.
 2. **Design:** arquitectura, modelos, errores, pruebas y estrategia de testing.
-   Gate 2: aprobar diseño.
+   Gate 2: aprobar diseño en `standard` y `deep`.
 3. **Tasks:** tareas trazadas a requisitos, dependencias y waves.
-   Gate 3: aprobar el plan y empezar a implementar.
+   Gate 3: aprobar el plan y empezar a implementar en `standard` y `deep`.
 4. **Implementación:** ejecutar una tarea o wave, con integrity gate antes de marcarla.
-5. **Verification:** ejecutar pruebas, registrar evidencia y revisar requisitos y RNF.
-   Gate 4: cerrar la spec o corregir huecos.
+5. **Verification:** tras el preflight de Verification, ejecutar pruebas, registrar
+   evidencia y revisar requisitos y RNF. Gate 4: cerrar la spec o corregir huecos en
+   `standard` y `deep`; después no hay otra recomendación.
 
-Quick Plan genera requirements, design y tasks en una pasada sin gates de fase y
-omite `verification.md`, pero conserva el Gate 0 y la evidencia en tareas y resumen
-final.
+En `lite`, Quick Plan genera `requirements.md`, `design.md` y `tasks.md` en una
+pasada después del Gate 0. No existen Gates 1-3 ni Gate 4. Si el alcance es solo
+planificar, termina con esos tres archivos; si también se implementa, añade un
+`verification.md` compacto con la evidencia.
 
 ## Contexto opcional de Project Navigator
 
@@ -105,6 +118,10 @@ agrupador: la raíz de una spec es la carpeta que contiene `requirements.md` o
 `bugfix.md`. Al reanudar sin ruta explícita, SDD busca esos marcadores de forma
 recursiva y pregunta si encuentra varias candidatas plausibles.
 
+La estructura completa corresponde a `standard`, `deep` o a un `lite` implementado.
+Un `lite` solo de planificación omite `verification.md`; `direct` no crea esta
+carpeta.
+
 No marca una tarea `[x]` sin artefacto real o evidencia. El design debe registrar
 la estrategia de pruebas y respetar la barra de calidad de la skill.
 
@@ -125,10 +142,15 @@ de la suite ejecutada.
 de testing y no implementes todavía.
 ```
 
+Esta petición usa `lite` automáticamente. `Quick Plan standard`, `Quick Plan deep`
+y `Quick Plan direct` son combinaciones inválidas.
+
 ## Límites y confirmaciones
 
-- No cruza gates de fase sin aprobación explícita, salvo Quick Plan solicitado; el
-  Gate 0 de modelo aplicable se conserva.
+- No cruza los Gates 1-4 de `standard` o `deep` sin aprobación explícita ni inicia
+  una fase con el nivel sin confirmar.
+- En `lite`, el Gate 0 es obligatorio y bloqueante; no crea Gates 1-3 ni Gate 4.
+- Quick Plan solo existe en `lite` y no se combina con otra profundidad.
 - No cambia el modelo del host ni menciona nombres de modelos o proveedores en la
   recomendación.
 - No inventa requisitos, cumplimiento, resultados de tests ni evidencia.

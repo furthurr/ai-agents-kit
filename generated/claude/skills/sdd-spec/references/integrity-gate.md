@@ -13,6 +13,20 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
 - TDD focalizado/estricto exige evidencia del RED esperado y del GREEN. Sin RED
   observado, etiquetar honestamente como caracterización o cobertura retroactiva.
 
+## Estado de fase y transición
+
+- Toda spec nueva `standard` o `deep` declara en cada artefacto `Modo SDD`, `Fase`,
+  `Estado` y el gate pendiente o aprobado que corresponda.
+- La reanudación determina la próxima operación por esos marcadores; no inferirá
+  aprobación solo por la existencia del archivo. Si faltan o se contradicen, pedir
+  aclaración antes de recomendar un nivel.
+- La recomendación de la próxima fase se presenta junto al resumen y al gate actual,
+  pero no crea un gate nuevo. No repetir la misma recomendación dentro de una fase
+  mientras no cambien alcance, riesgo ni nivel requerido.
+- Antes de iniciar la próxima fase deben estar confirmadas la aprobación de la fase
+  actual y el nivel recomendado o el nivel actual. Un cambio de alcance o riesgo
+  invalida el preflight anterior y exige recalcularlo.
+
 ## Antes de GATE 4
 
 1. Recorrer `tasks.md`: cada `[x]` debe mapear a path en disco o evidencia de comando.
@@ -21,6 +35,17 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
 4. No cerrar GATE 4 con requisitos sin evidencia o con `[x]` huérfanos.
 5. Contrastar la estrategia declarada en `design.md` con tareas, tests y evidencia;
    cada excepción conserva su razón y una verificación alternativa.
+
+## Cierre `lite`
+
+`lite` no abre Fase 4 ni Gate 4, pero una implementación no se cierra sin
+`verification.md` compacto:
+
+1. Recorrer `tasks.md`; cada `[x]` debe tener artefacto o comando verificable.
+2. Registrar RED o baseline, GREEN, suite final y excepciones honestas.
+3. Mapear requisito, tarea, test/check, evidencia y estado.
+4. Revisar solo los RNF declarados y aplicables; no inventar una cuota.
+5. Si solo hubo planificación, no crear evidencia ni marcar implementación hecha.
 
 ## Ejemplos de omisión honesta
 

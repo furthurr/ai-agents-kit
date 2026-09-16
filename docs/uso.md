@@ -96,11 +96,17 @@ Catálogo completo: [catalogo.md](catalogo.md).
    de operar: el aviso puntual no bloquea y las operaciones pesadas esperan
    confirmación. Si el Orchestrator ya mostró y confirmó ese nivel para el mismo
    alcance, el especialista no lo repite.
-3. **SDD antes de features grandes** — requisitos y diseño con gates de fase;
-   implementación solo tras aprobación (salvo Quick Plan / trivial que el usuario
-   pida en directo). El Gate 0 de modelo aplicable se conserva.
-   Antes del trabajo no trivial recomienda una vez un nivel `BAJO`, `MEDIO` o
-   `ALTO`; el usuario puede cambiarlo manualmente o continuar con el actual.
+3. **SDD antes de features grandes** — elige entre exactamente cuatro profundidades:
+   `direct`, sin spec; `lite`, automático para trabajo acotado, claro y de bajo
+   riesgo; `standard`, fallback seguro; y `deep`, solo por petición explícita.
+   Quick Plan es obligatorio y exclusivo de `lite`: requiere Gate 0 bloqueante,
+   pero no Gates 1-3 ni Gate 4. Combinar Quick Plan con otro modo es inválido.
+   `standard` y `deep` conservan los Gates 1-4; los bugfixes no triviales usan
+   `standard`.
+    Antes de cada proceso no trivial recomienda únicamente el nivel `BAJO`, `MEDIO`
+    o `ALTO` de la próxima fase; el usuario puede cambiarlo manualmente o continuar
+    con el actual. En las transiciones combina resumen, aprobación de la fase actual
+    y recomendación de la siguiente, sin crear gates adicionales.
    Si hay `.navigator/`, SDD comprueba primero su disponibilidad y frescura para
    orientar la exploración. Un índice desfasado solo aporta rutas candidatas: la
    documentación aplicable y el código real confirman las decisiones. Su ausencia
@@ -162,6 +168,10 @@ restricción lógica: no sustituye los permisos efectivos de la plataforma.
 Estas carpetas son **del proyecto en el que trabajas**, no del repo del kit.
 Conviene versionarlas con el código para que el equipo y la IA compartan el
 mismo contexto.
+
+En SDD, `lite` solo de planificación crea `requirements.md`, `design.md` y
+`tasks.md`; si también implementa, añade un `verification.md` compacto. `direct`
+no crea spec.
 
 Project Navigator no versiona su caché local. Añade este bloque al `.gitignore`
 del proyecto que indexas:

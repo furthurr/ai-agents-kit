@@ -241,10 +241,11 @@ editado manualmente; el agente no presenta datos obsoletos como actuales.
 
 ### P1.5 — Coherencia del agente SDD
 
-SDD es la skill más compleja del kit (4 fases, 3 variantes, 5 referencias) y la
-única que escribe código de producto. P0.6 ya está cerrado y el contrato TDD junto
-con el smoke test base ya están implementados; quedan pendientes de estado,
-reanudación y evidencia manual.
+SDD es la skill más compleja del kit (4 profundidades, 1 variante Bugfix, 1 flujo
+Quick Plan exclusivo de `lite` y 7 referencias) y la única que escribe código de
+producto.
+P0.6 ya está cerrado y el contrato TDD junto con el smoke test base ya están
+implementados; quedan pendientes de estado, reanudación y evidencia manual.
 
 - [ ] **Añadir lectura de estado al iniciar**, como ya hacen `security` y
   `code-quality`: qué gates se aprobaron, en qué fase está la spec y qué tareas
@@ -271,9 +272,11 @@ reanudación y evidencia manual.
 - [x] **Dar criterio verificable al modo `direct`**: alcance claro, localizado y
   reversible; sin contrato público, migración, decisión arquitectónica, cruce de
   capas ni riesgo relevante. Evidencia: `SKILL.md` y `tools/test_sdd_contract.py`.
-- [x] **Completar las variantes**: Bugfix declara gates normales salvo el caso
-  trivial, regresión antes del fix y manejo honesto de un defecto no reproducible;
-  Quick Plan declara qué evidencia queda en tareas/resumen al omitir Fase 4.
+- [x] **Completar los flujos especiales**: Bugfix declara gates normales salvo el
+  caso trivial, regresión antes del fix y manejo honesto de un defecto no
+  reproducible; Quick Plan es obligatorio y exclusivo de `lite`, y una
+  implementación deja la evidencia principal en `verification.md` compacto sin
+  abrir Fase 4 ni Gate 4.
 - [ ] **Definir la reconciliación de contexto de dominio**: cuando falta
   `.architecture/`, la skill documenta el dominio dentro de `design.md` y nadie lo
   promueve después, porque `documentation-orchestrator` tiene prohibido tocar

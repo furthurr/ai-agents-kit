@@ -13,15 +13,27 @@ canónica de EARS, fases, gates, artefactos y verificación.
 ## Reglas inviolables
 
 - Define el QUÉ y PORQUÉ antes del CÓMO; no cruces gates de fase sin aprobación
-  explícita, salvo Quick Plan solicitado por el usuario. El Gate 0 de modelo
-  aplicable se conserva.
-- Clasifica la solicitud: feature, bugfix, Quick Plan o exploración. Trivial → modo
-  directo, sin spec innecesaria.
-- Default **standard**; **deep** solo si el usuario lo pide (compliance, largo plazo).
-- Antes del trabajo, aplica el Gate 0 de `sdd-spec`; usa
+  explícita en `standard` o `deep`. `lite` usa Quick Plan sin Gates 1–3 ni Gate 4,
+  pero conserva el Gate 0.
+- Clasifica por ejes separados: tipo de trabajo (feature, bugfix o exploración),
+  profundidad (`direct`, `lite`, `standard`, `deep`), intención (solo planificación
+  o implementación) y estrategia de pruebas.
+- SDD tiene exactamente cuatro profundidades. Trivial → `direct`; acotado, claro y
+  de bajo riesgo → `lite`; si la elegibilidad de `lite` no puede demostrarse →
+  `standard`; `deep` solo si el usuario lo pide.
+- Quick Plan es obligatorio y exclusivo de `lite`. Rechaza `direct` + Quick Plan,
+  `standard` + Quick Plan y `deep` + Quick Plan. Una solicitud explícita de
+  `standard` o `deep` no se rebaja automáticamente.
+- Solo planificación significa no implementar. Los bugfixes no triviales usan
+  `standard`.
+- Antes del trabajo, aplica el Gate 0 de `sdd-spec` como preflight; usa
   `references/model-selection.md` salvo `direct` inequívoco. Recomienda solo
-  `BAJO`, `MEDIO` o `ALTO`, sin nombres de modelos o proveedores, y nunca
-  selecciona ni cambia el modelo del host.
+  `BAJO`, `MEDIO` o `ALTO` para la próxima fase u operación, sin nombres de modelos
+  o proveedores, y nunca selecciona ni cambia el modelo del host.
+- En una transición, presenta resumen verificable, gate actual y recomendación de la
+  próxima fase en el mismo mensaje. No inicia la siguiente fase hasta recibir la
+  aprobación de la fase actual y la confirmación del nivel recomendado o del nivel
+  actual. Una recomendación no crea un gate adicional.
 - Profundidad SDD y testing son ejes independientes: selecciona la estrategia con
   `references/testing.md`; una feature normal usa TDD focalizado, TDD estricto solo
   por petición explícita y `direct` no significa «sin pruebas».
@@ -30,12 +42,14 @@ canónica de EARS, fases, gates, artefactos y verificación.
 - TDD no justifica abstracciones anticipadas: GREEN mínimo correcto; refactor solo
   ante duplicación, responsabilidades distintas o reutilización real.
 - No inventes alcance, no expongas secretos y confirma acciones destructivas.
+- Si `lite` deja de ser elegible, detente y solicita reclasificación a `standard`
+  aunque el nivel de modelo recomendado no cambie.
 
 ## Contexto selectivo
 
-1. Ejecuta primero el Gate 0 de `sdd-spec`; no cargues contexto pesado ni inicies
-   una fase antes del gate aplicable.
-2. Tras el Gate 0, lee solo {{steering_paths}} y `.sdd/steering/` si existen.
+1. Ejecuta primero el preflight de la próxima fase de `sdd-spec`; no cargues contexto
+   pesado ni inicies una fase antes de confirmar el nivel aplicable.
+2. Tras el preflight inicial, lee solo {{steering_paths}} y `.sdd/steering/` si existen.
 3. Antes de usar `.navigator/`, carga
    `references/navigator-context.md` desde `sdd-spec`: aplica su preflight, usa
    solo la capa mínima como contexto auxiliar y degrada sin bloquear ni escribir

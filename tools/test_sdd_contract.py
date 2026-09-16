@@ -36,10 +36,87 @@ def normalized(text: str) -> str:
 
 def test_modes_remain_proportional() -> None:
     skill = read(SDD / "SKILL.md")
+    agent = read(SDD_AGENT)
+    compact = normalized(skill + " " + agent).lower()
     check("| `direct` | Cambio trivial verificable" in skill, "direct conserva criterio verificable")
+    check("| `lite` |" in skill, "lite existe como profundidad intermedia")
     check("| `standard` | **Default**" in skill, "standard sigue siendo el modo default")
     check("`deep` no activa TDD estricto" in skill, "deep y TDD estricto permanecen independientes")
     check("sin contrato público" in skill and "cruce de capas" in skill, "direct declara límites de riesgo")
+    check(
+        "exactamente cuatro profundidades" in compact
+        and all(mode in skill for mode in ("`direct`", "`lite`", "`standard`", "`deep`")),
+        "SDD declara exactamente cuatro profundidades",
+    )
+    check(
+        "tipo de trabajo" in compact
+        and "intención" in compact
+        and "estrategia de pruebas" in compact,
+        "tipo, profundidad, intención y testing permanecen separados",
+    )
+    check(
+        "si la elegibilidad de `lite` no puede demostrarse" in compact
+        and "`standard`" in compact,
+        "la incertidumbre sobre lite cae en standard",
+    )
+    check(
+        "`standard` o `deep`" in compact and "no se rebaja" in compact,
+        "standard y deep explícitos no se rebajan automáticamente",
+    )
+
+
+def test_lite_quick_plan_contract() -> None:
+    skill = read(SDD / "SKILL.md")
+    agent = read(SDD_AGENT)
+    model = read(SDD / "references" / "model-selection.md")
+    templates = read(SDD / "references" / "templates.md")
+    integrity = read(SDD / "references" / "integrity-gate.md")
+    quality = read(SDD / "references" / "quality-bar.md")
+    compact = normalized(" ".join((skill, agent, model))).lower()
+
+    check(
+        "quick plan" in compact and "obligatorio y exclusivo" in compact,
+        "Quick Plan es obligatorio y exclusivo de lite",
+    )
+    check(
+        all(combo in compact for combo in ("`direct` + quick plan", "`standard` + quick plan", "`deep` + quick plan")),
+        "Quick Plan rechaza combinaciones con otros modos",
+    )
+    check(
+        "solo planificación" in compact and "no implementar" in compact,
+        "lite distingue planificar de implementar",
+    )
+    check(
+        "sin gates 1–3" in compact and "sin gate 4" in compact,
+        "lite omite únicamente sus gates de fase definidos",
+    )
+    check(
+        "aunque el nivel de modelo" in compact and "no cambie" in compact,
+        "reclasificar lite a standard requiere confirmación de flujo",
+    )
+    check(
+        "Modo SDD: lite" in templates and "verification.md (lite)" in templates,
+        "las plantillas distinguen y verifican specs lite",
+    )
+    check(
+        "cierre `lite`" in integrity.lower() and "verification.md" in integrity,
+        "integrity gate exige evidencia durable para lite",
+    )
+    check(
+        "Lite" in quality and "RNF declarados" in quality,
+        "quality bar mantiene el cierre lite proporcional",
+    )
+
+    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
+    for platform in manifest["platforms"]:
+        adapter = json.loads(
+            (ROOT / "adapters" / platform / "agents" / "sdd.json").read_text(encoding="utf-8")
+        )
+        description = adapter["frontmatter"]["description"].lower()
+        check(
+            all(term in description for term in ("direct", "lite", "standard", "deep", "quick plan")),
+            f"{platform}: descripción expone modos proporcionales y Quick Plan",
+        )
 
 
 def test_model_selection_gate() -> None:
@@ -77,25 +154,28 @@ def test_model_selection_gate() -> None:
         "direct recibe un aviso no bloqueante",
     )
     check(
-        "quick plan, `standard`, `deep` y bugfix no trivial" in lower_reference
+        "`lite`, `standard`, `deep` y bugfix no trivial" in lower_reference
         and "detiene el turno" in lower_reference,
         "el trabajo no trivial aplica hard stop",
     )
     check(
-        "no repitas el gate por fase" in lower_reference,
-        "la confirmación evita gates repetidos por fase",
+        "una sola recomendación visible por cada fase" in lower_reference
+        and "no repitas la misma recomendación" in lower_reference,
+        "la recomendación se limita a la próxima fase",
     )
     check(
-        "detente de nuevo solo si cambia el nivel global" in lower_reference,
-        "un cambio de alcance solo bloquea si altera el nivel",
+        "detente de nuevo solo si cambia el nivel" in lower_reference
+        and "`lite` a `standard`" in lower_reference,
+        "el alcance recalcula modelo y los cambios de flujo se confirman",
     )
     check(
         "ni cambies el modelo del host" in normalized(skill + " " + agent + " " + reference).lower(),
         "SDD nunca cambia el modelo del host",
     )
     check(
-        "sin gates de fase" in skill and "conserva el Gate 0 de modelo" in skill,
-        "Quick Plan omite solo los gates de fase",
+        "sin gates 1–3" in normalized(skill).lower()
+        and "conserva el gate 0" in normalized(skill).lower(),
+        "lite conserva Gate 0 y omite sus gates de fase",
     )
 
     manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
@@ -107,6 +187,81 @@ def test_model_selection_gate() -> None:
         generated_skill = read(ROOT / "generated" / platform / "skills" / "sdd-spec" / "SKILL.md")
         check("model-selection.md" in generated_agent, f"{platform}: agente propaga Gate 0 de modelo")
         check("model-selection.md" in generated_skill, f"{platform}: skill propaga Gate 0 de modelo")
+
+
+def test_phase_scoped_recommendations() -> None:
+    skill = read(SDD / "SKILL.md")
+    agent = read(SDD_AGENT)
+    model = read(SDD / "references" / "model-selection.md")
+    templates = read(SDD / "references" / "templates.md")
+    integrity = read(SDD / "references" / "integrity-gate.md")
+    compact = normalized(" ".join((skill, agent, model, templates, integrity))).lower()
+    templates_lower = templates.lower()
+    output_parts = model.split("## Salida", maxsplit=1)
+    output = output_parts[1] if len(output_parts) == 2 else ""
+
+    check(
+        "próximo proceso" in compact
+        and "modelo recomendado para" in compact,
+        "el preflight recomienda el nivel de la próxima fase",
+    )
+    check(
+        "fases pendientes" not in output.lower()
+        and "perfil" not in output.lower(),
+        "la salida inicial no muestra el perfil global de fases",
+    )
+    check(
+        "resumen verificable" in compact
+        and "gate actual" in compact
+        and "recomendación de la próxima fase" in compact,
+        "la transición combina resumen, gate y próxima recomendación",
+    )
+    check(
+        "condicionada a la aprobación" in compact
+        and "aprobación de la fase actual" in compact,
+        "la próxima recomendación queda condicionada al gate actual",
+    )
+    check(
+        "apruebo y usaré el nivel recomendado" in compact
+        and "apruebo y continúo con el nivel actual" in compact,
+        "la respuesta puede aprobar y confirmar el siguiente nivel",
+    )
+    check(
+        "apruebo`, `adelante` o `continúa`" in compact
+        and "pedirá la parte faltante" in compact,
+        "las respuestas ambiguas no inician la siguiente fase",
+    )
+    check(
+        all(phase in compact for phase in ("requirements", "design", "tasks", "implementación", "verification")),
+        "el contrato cubre las cinco fases recomendables",
+    )
+    check(
+        "después de verification" in compact
+        and "únicamente gate 4" in compact,
+        "el cierre no muestra una recomendación inexistente",
+    )
+    check(
+        "modo sdd: standard" in templates_lower
+        and "fase: requirements" in templates_lower
+        and "gate 1: pendiente" in templates_lower,
+        "las plantillas persisten el estado de fase y gate",
+    )
+    check(
+        "no inferirá aprobación solo por la existencia del archivo" in compact,
+        "la reanudación no confunde archivo existente con aprobación",
+    )
+
+    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
+    for platform in manifest["platforms"]:
+        adapter = json.loads(
+            (ROOT / "adapters" / platform / "agents" / "sdd.json").read_text(encoding="utf-8")
+        )
+        generated_agent = read(ROOT / "generated" / platform / "agents" / adapter["filename"])
+        generated_skill = read(ROOT / "generated" / platform / "skills" / "sdd-spec" / "SKILL.md")
+        check(
+            "próximo proceso" in normalized(generated_agent + generated_skill).lower(),
+            f"{platform}: propaga preflight por próxima fase",
+        )
 
 
 def test_spec_paths_support_grouping() -> None:
@@ -141,6 +296,10 @@ def test_spec_paths_support_grouping() -> None:
 
 def test_adaptive_testing_selection() -> None:
     testing = read(SDD / "references" / "testing.md")
+    check(
+        "(`direct`, `lite`, `standard`, `deep`)" in testing,
+        "testing reconoce las cuatro profundidades SDD",
+    )
     for strategy in (
         "Sin test nuevo",
         "Caracterización / regresión",
@@ -158,11 +317,23 @@ def test_variants_and_evidence() -> None:
     templates = read(SDD / "references" / "templates.md")
     integrity = read(SDD / "references" / "integrity-gate.md")
 
-    bugfix = skill.split("## Variante Bugfix", maxsplit=1)[1].split("## Variante Quick Plan", maxsplit=1)[0]
-    quick_plan = skill.split("## Variante Quick Plan", maxsplit=1)[1].split("## Reglas de calidad", maxsplit=1)[0]
+    bugfix_parts = skill.split("## Variante Bugfix", maxsplit=1)
+    lite_parts = skill.split("## Modo lite y Quick Plan", maxsplit=1)
+    check(len(bugfix_parts) == 2, "la skill conserva la variante Bugfix")
+    check(len(lite_parts) == 2, "la skill declara el flujo lite y Quick Plan")
+    bugfix = bugfix_parts[1].split("## Modo lite y Quick Plan", maxsplit=1)[0] if len(bugfix_parts) == 2 else ""
+    quick_plan = lite_parts[1].split("## Reglas de calidad", maxsplit=1)[0] if len(lite_parts) == 2 else ""
 
     check("regresión que falle" in bugfix, "bugfix exige regresión antes del fix")
-    check("sin gates" in quick_plan and "Omite Fase 4" in quick_plan, "Quick Plan conserva su contrato ligero")
+    check(
+        "obligatorio y exclusivo" in normalized(quick_plan)
+        and "sin Gates 1–3" in normalized(quick_plan),
+        "Quick Plan pertenece exclusivamente a lite",
+    )
+    check(
+        "verification.md" in quick_plan and "sin Gate 4" in quick_plan,
+        "lite implementado conserva evidencia sin fase de cierre completa",
+    )
     check("RED del comportamiento → GREEN mínimo → REFACTOR" in templates, "tasks enseña orden test-first")
     check("RED o baseline" in templates and "GREEN / suite" in templates, "verification registra el ciclo")
     check("evidencia del RED esperado y del GREEN" in integrity, "integrity gate exige evidencia TDD")
@@ -253,7 +424,9 @@ def test_generated_references_match_canonical() -> None:
 def main() -> int:
     print("Contrato SDD — modelo, rutas, testing adaptativo, Navigator e integración")
     test_modes_remain_proportional()
+    test_lite_quick_plan_contract()
     test_model_selection_gate()
+    test_phase_scoped_recommendations()
     test_spec_paths_support_grouping()
     test_adaptive_testing_selection()
     test_variants_and_evidence()

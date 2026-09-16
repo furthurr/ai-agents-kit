@@ -1,4 +1,4 @@
-# AI Agents Kit
+# MAS (Multi-Agent System)
 
 Fuente versionada de **skills** y **agentes** para [GitHub Copilot](https://github.com/features/copilot),
 [OpenCode](https://opencode.ai), [Kiro](https://kiro.dev) y

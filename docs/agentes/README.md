@@ -59,8 +59,12 @@ Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
 - **Escalado a SDD:** Architecture, Data & API, UI Design, Quality y Security
   recomiendan SDD si la mejora requiere más requisitos, diseño o coordinación;
   explican el motivo y esperan que el usuario decida si cambia de agente.
-- **SDD:** recomienda una vez un nivel genérico antes del trabajo no trivial y no
-  avanza de fase sin aprobación explícita, salvo los gates de fase de Quick Plan.
+- **SDD:** ofrece exactamente `direct`, `lite`, `standard` y `deep`. `lite` se
+  selecciona automáticamente para trabajo acotado, claro y de bajo riesgo, exige
+  Gate 0 bloqueante y usa Quick Plan sin Gates 1-4. `standard` es el fallback
+  seguro y, como `deep`, conserva los Gates 1-4; cada fase recibe su recomendación
+  de nivel al iniciar y las transiciones no crean gates adicionales. `deep` siempre
+  es explícito.
 - **Git y releases:** commit, push, cambios de versión, tags y CHANGELOG requieren
   confirmación explícita; no añaden Gate de modelo y las acciones destructivas
   requieren doble confirmación.

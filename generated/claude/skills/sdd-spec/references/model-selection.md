@@ -1,60 +1,63 @@
-# Seleccion de nivel de modelo
+# Selección de nivel de modelo
 
-Contrato breve para recomendar solo `BAJO`, `MEDIO` o `ALTO`. No menciones nombres
-de modelos, proveedores ni equivalencias comerciales.
+Contrato para recomendar solo `BAJO`, `MEDIO` o `ALTO`. No menciones nombres de
+modelos, proveedores.
 
 ## Preflight
 
-Debe ser barato y de solo lectura. Puede usar la solicitud, steering minimo,
-marcadores de la spec, nombres, metadatos e indices compactos. No puede escribir,
-ejecutar tests, cargar referencias pesadas, leer todo el repositorio ni resolver la
-peticion antes de confirmar. Si falta un dato esencial, haz una sola pregunta breve.
+El preflight debe ser barato. Puede usar solicitud, steering y
+marcadores compactos. No puede escribir, ejecutar tests, cargar referencias pesadas.
 
-## Nivel inicial
+## Nivel por próxima operación
 
-| Trabajo | Nivel |
-| --- | --- |
-| `direct` trivial, localizado y reversible | `BAJO` |
-| Quick Plan claro, feature `standard` localizada o bugfix reproducible | `MEDIO` |
-| Exploracion puntual o continuacion de una spec aprobada | `BAJO`/`MEDIO` |
-| `deep`, migracion, contrato publico o cruce de capas | `ALTO` |
-| Seguridad, concurrencia, integridad critica, compliance o arquitectura ambigua | `ALTO` |
+Recomienda capacidad para el **próximo proceso**, no para todo el flujo ni para un
+gate. Requirements, Design, Implementación, Verification y Quick Plan usan `MEDIO`;
+Tasks usa `BAJO`.
 
-Si `direct` no cumple todos sus limites, usa `standard` y al menos `MEDIO`. Solo
-eleva por factores dentro del alcance.
+Eleva a `ALTO` por ambigüedad, arquitectura, migración, contrato público, seguridad,
+concurrencia, integridad o compliance. `direct` trivial usa
+`BAJO`; si no es elegible, evalúa `lite` y después `standard`. `standard` o `deep`
+explícitos no se rebajan automáticamente.
 
-## Perfil por fase
+## Determinar la próxima fase
 
-Muestra solo fases pendientes; es orientativo y no crea gates nuevos:
+- Spec nueva `standard` o `deep`: Requirements. Spec nueva `lite`: Quick Plan, sin
+  pasos internos.
+- Spec existente: usa `Modo SDD`, `Fase`, `Estado` y su gate para localizar la
+  primera operación pendiente. No inferirá aprobación solo por la existencia del archivo.
+- Spec legacy sin estado suficiente: pide aclaración y no migra.
+- Después de Verification muestra únicamente Gate 4; no hay próxima fase.
 
-| Fase | Base | Subir a `ALTO` por |
-| --- | --- | --- |
-| Requirements | `MEDIO` | ambiguedad, actores multiples o compliance |
-| Design | `MEDIO` | arquitectura, migracion, contrato o riesgo critico |
-| Tasks | `BAJO` | dependencias o paralelizacion complejas |
-| Implementacion | `MEDIO` | seguridad, concurrencia, integridad o migracion |
-| Verification | `MEDIO` | integracion, regresion, evidencia o compliance |
-
-## Gate 0
+## Gate 0 y transiciones
 
 - `direct`: informa `Modelo recomendado: BAJO` y continua sin esperar.
-- Quick Plan, `standard`, `deep` y bugfix no trivial: muestra la salida y detiene
-  el turno. Continua con `listo`, `continua`, `procede`, `ya seleccione el modelo` o
-  `continua con el actual`.
-- La confirmacion vale para las fases pendientes. No repitas el gate por fase.
-- Si cambia el alcance o el riesgo, recalcula; detente de nuevo solo si cambia el
-  nivel global.
+- `lite`, `standard`, `deep` y bugfix no trivial: muestra la recomendación de la
+  próxima operación y detiene el turno.
+- En `standard` y `deep`, hay una sola recomendación visible por cada fase que vaya
+  a iniciar. No repitas la misma recomendación dentro de una fase sin cambio.
+- La transición presenta un resumen verificable, el gate actual y la recomendación
+  de la próxima fase, condicionada a la aprobación de la fase actual. No crea gates.
+- Inicia la siguiente fase solo con aprobación de la fase actual y confirmación del
+  nivel recomendado o actual. Si falta una decisión, pide la parte faltante.
+- Si el usuario itera, no inicia la siguiente fase ni aplica la recomendación pendiente.
+- Si cambia alcance o riesgo, recalcula. En `lite` a `standard`, solicita confirmar
+  el nuevo flujo aunque el nivel coincida. Para una fase confirmada, si cambia el
+  alcance o riesgo, detente de nuevo solo si cambia el nivel o la política de gates.
 - Nunca selecciones ni cambies el modelo del host ni afirmes conocer el activo.
+
+Una transición puede responderse con `apruebo y usaré el nivel recomendado` o
+`apruebo y continúo con el nivel actual`. Si responde únicamente `apruebo`,
+`adelante` o `continúa`, pedirá la parte faltante.
 
 ## Salida
 
 ```text
 Preflight SDD
-Trabajo: <tipo> | Alcance: <ruta/spec> | Complejidad: <baja|media|alta>
-Modelo recomendado: <BAJO|MEDIO|ALTO>
-Fases pendientes: <fase:nivel, ...>
+Trabajo: <tipo> | Modo SDD: <direct|lite|standard|deep>
+Alcance: <ruta/spec> | Complejidad: <baja|media|alta>
+Próximo proceso: <fase u operación>
+Modelo recomendado para <fase u operación>: <BAJO|MEDIO|ALTO>
 Motivos: <1-3 razones verificables>
-Antes de continuar: cambia al nivel y responde "listo", o responde "continua con el actual".
+Antes de iniciar: responde "listo" para usar el nivel recomendado o
+"continúa con el actual" para mantener tu nivel.
 ```
-
-En `direct`, omite fases, motivos y confirmacion; usa dos o tres lineas.
