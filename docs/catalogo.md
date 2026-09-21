@@ -18,7 +18,7 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 |----|-------------------|------------------------|--------------------|
 | `architecture` | Documenta y audita arquitectura; no modifica código de negocio | `.architecture/` | Aviso de modelo; arc42, C4, ADRs; modos lite/full |
 | `code-quality` | Audita y remedia calidad de código paso a paso | `.quality/` | Aviso de modelo; SonarQube y Clean Code |
-| `data-api` | Datos, APIs, DTOs, contratos e integraciones | `.data/` | Aviso de modelo; OpenAPI/JSON Schema; ER Mermaid; lanzador Scalar opcional |
+| `data-api` | Datos, APIs, DTOs, contratos e integraciones | `.data/` | Aviso de modelo; OpenAPI/JSON Schema; ER Mermaid; lanzador Scalar bloqueado hasta disponer de OpenAPI válido |
 | `documentation-orchestrator` | Comprueba, inicializa y sincroniza documentación mediante especialistas | — | Gate 0 de modelo; no crea una fuente documental propia |
 | `security` | Auditoría y remediación de seguridad guiada | `.security/` | Aviso de modelo; OWASP MASVS/MASWE/MASTG y CWE |
 | `ui-design` | Sistema visual: tokens, componentes, deuda de UI | `.design/` | Aviso de modelo; agnóstica a tecnología |

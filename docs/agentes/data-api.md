@@ -75,23 +75,24 @@ En modo `full` puede organizarse así:
 └── data-tech-debt.md
 ```
 
-Cuando se documenta una API REST con OpenAPI, el agente también prepara un
-lanzador manual para la referencia interactiva, por ejemplo:
+Cuando se documenta una API REST, el agente también prepara un lanzador manual
+para la referencia interactiva, aunque todavía falte el contrato OpenAPI, por
+ejemplo:
 
 ```text
 scripts/api-docs.<extensión>
 ```
 
-El lanzador comprueba el contrato y Scalar, instala la CLI localmente solo si el
-usuario lo solicita y sirve la referencia para pruebas en local o staging. El
-agente no lo ejecuta durante la documentación. El backend debe estar arrancado
-para que las pruebas funcionen.
+El lanzador comprueba primero el contrato y después Scalar, instala la CLI
+localmente solo si el usuario lo solicita y sirve la referencia para pruebas en
+local o staging. El agente no lo ejecuta durante la documentación. El backend debe
+estar arrancado para que las pruebas funcionen.
 
 ## Documentación interactiva
 
 El flujo esperado es:
 
-1. Data & API actualiza `.data/` y el contrato OpenAPI.
+1. Data & API actualiza `.data/` y referencia el contrato OpenAPI si existe.
 2. Data & API crea o conserva `scripts/api-docs.<extensión>`.
 3. El usuario ejecuta el lanzador manualmente, por ejemplo:
 
@@ -102,9 +103,11 @@ El flujo esperado es:
 4. Scalar sirve la interfaz y muestra la URL local.
 5. El usuario selecciona las operaciones que quiere probar.
 
-Si no existe un contrato OpenAPI válido, el agente informa que Scalar no aplica y
-no inventa endpoints. Nunca se incluyen credenciales, tokens, PII ni dominios
-productivos en el script o la página.
+Si no existe un contrato OpenAPI válido, el agente deja el lanzador en estado
+`bloqueado` y documenta la ruta esperada. Sus opciones de comprobación,
+instalación y servicio fallan antes de modificar el proyecto. El agente no inventa
+endpoints ni genera automáticamente el contrato. Nunca se incluyen credenciales,
+tokens, PII ni dominios productivos en el script o la página.
 
 ## Ejemplos de uso
 
@@ -125,7 +128,7 @@ existencia y ubicación, nunca el valor real.
 - No inventa respuestas, payloads ni endpoints que no existan.
 - Usa placeholders para dominios, tokens, credenciales y valores productivos.
 - No instala dependencias ni inicia el servidor Scalar automáticamente; prepara el
-  lanzador para que el usuario lo ejecute.
+  lanzador para que el usuario lo ejecute cuando exista un OpenAPI válido.
 - Identifica PII y deriva los riesgos de seguridad al Security Agent.
 - Si recomienda SDD, cita el hallazgo/contrato y se detiene antes de modificar código.
 - La primera documentación masiva requiere estudio, propuesta y confirmación.

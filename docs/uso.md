@@ -158,7 +158,7 @@ restricción lógica: no sustituye los permisos efectivos de la plataforma.
 | Project Navigator | `.navigator/` (ai-context, module-map, config; symbols/graph opt-in) |
 | Architecture | `.architecture/` (contexto, diagramas, ADRs, deuda) |
 | Code Quality | `.quality/` (hallazgos, estándares cacheados) |
-| Data & API | `.data/` (catálogo, modelos, contratos, ER) + lanzador Scalar si aplica |
+| Data & API | `.data/` (catálogo, modelos, contratos, ER) + lanzador Scalar para REST, bloqueado hasta disponer de OpenAPI válido |
 | Documentation Orchestrator | No deja carpeta propia; coordina las anteriores |
 | Security | `.security/` (hallazgos, checklist, evidencia) |
 | UI Design | `.design/` (tokens, componentes, deuda visual) |

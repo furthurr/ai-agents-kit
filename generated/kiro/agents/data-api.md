@@ -80,8 +80,9 @@ Documentas, auditas y desarrollas datos y APIs en español. Carga y sigue la ski
 3. Para un cambio puntual, lee `.data/README.md` si existe y solo las fuentes afectadas.
 4. Ejecuta catálogo, ER o sincronización completa únicamente en primera inicialización,
    auditoría explícita o documentación desactualizada.
-5. Si la documentación incluye REST/OpenAPI, prepara el lanzador manual de Scalar
-   definido por la skill; no lo ejecutes ni instales dependencias durante la sesión.
+5. Si la documentación confirmada incluye una API REST, prepara el lanzador manual
+   de Scalar definido por la skill aunque todavía falte OpenAPI; déjalo bloqueado
+   hasta que exista un contrato válido. No lo ejecutes ni instales dependencias.
 6. La skill define convenciones, seguridad, validación y entregables obligatorios.
 
 ## Recomendación de SDD

@@ -1,7 +1,9 @@
 # Referencia — documentación interactiva de APIs con Scalar
 
 Esta referencia define el contrato para crear un lanzador local de documentación
-interactiva cuando el proyecto tiene una API REST documentada con OpenAPI.
+interactiva cuando el alcance confirmado incluye una API REST. El lanzador puede
+prepararse antes que OpenAPI, pero no puede instalar ni servir Scalar hasta que el
+contrato exista y sea válido.
 
 ## Principio
 
@@ -9,6 +11,7 @@ interactiva cuando el proyecto tiene una API REST documentada con OpenAPI.
 - Scalar solo presenta el contrato y permite probar manualmente las operaciones.
 - El agente genera el lanzador; no lo ejecuta ni instala dependencias durante la
   sesión de documentación.
+- La ausencia de OpenAPI bloquea la ejecución del lanzador, no su creación.
 - La interfaz generada no es UI del producto: es una herramienta de documentación
   de la capa de datos/API.
 
@@ -16,13 +19,14 @@ interactiva cuando el proyecto tiene una API REST documentada con OpenAPI.
 
 Créalo cuando se cumplan todas estas condiciones:
 
-1. La documentación REST/OpenAPI forma parte del alcance confirmado.
-2. Existe un contrato OpenAPI oficial o se ha creado uno a partir de fuentes reales.
-3. El proyecto permite añadir una herramienta local de documentación.
+1. La documentación de una API REST forma parte del alcance confirmado.
+2. El proyecto permite añadir una herramienta local de documentación.
 
-No lo crees para una auditoría puntual, para proyectos sin APIs REST/OpenAPI ni
-para sustituir un contrato oficial del backend. Si solo existe un catálogo en
-Markdown, informa que Scalar necesita un contrato OpenAPI y no inventes uno.
+No lo crees para una auditoría puntual, para proyectos sin APIs REST ni para
+sustituir un contrato oficial del backend. Si todavía no existe un OpenAPI oficial
+o aprobado a partir de fuentes reales, crea el lanzador protegido, registra su
+estado `bloqueado` e informa que Scalar necesita ese contrato. Un catálogo en
+Markdown no desbloquea el lanzador. No inventes ni generes automáticamente OpenAPI.
 
 En la primera documentación, crea el lanzador una sola vez. En sincronizaciones
 posteriores, reutilízalo y actualízalo solo si cambió la ruta del contrato o su
@@ -35,7 +39,7 @@ Usa nombres coherentes con el proyecto, respetando archivos existentes:
 ```text
 .data/
 ├── contracts/
-│   └── openapi.yaml              # existente o contrato aprobado
+│   └── openapi.yaml              # opcional al crear; oficial o aprobado
 └── README.md                     # incluye instrucciones y estado del lanzador
 
 scripts/
@@ -59,13 +63,15 @@ El lanzador debe:
    se invoque desde otro directorio.
 2. Localizar el contrato de forma determinista: primero una configuración explícita
    del proyecto y después la ruta documentada en `.data/README.md`.
-3. Fallar con un mensaje claro si el contrato no existe o la ruta es ambigua.
+3. Fallar con un mensaje claro si el contrato no existe, no es válido o la ruta es
+   ambigua. Esta comprobación ocurre antes de instalar dependencias o iniciar Scalar.
 4. Comprobar que existen Node.js y un gestor de paquetes capaz de ejecutar Scalar.
    No debe instalar Node.js automáticamente.
 5. Detectar una instalación local de la CLI oficial de Scalar (`@scalar/cli`).
 6. Si falta Scalar, instalarlo únicamente cuando el usuario lo solicite de forma
-   explícita, por ejemplo con `--install`; usar una dependencia local o una
-   ejecución efímera del gestor del proyecto, nunca una instalación global.
+   explícita, por ejemplo con `--install`, y el contrato ya haya superado las
+   comprobaciones; usar una dependencia local o una ejecución efímera del gestor
+   del proyecto, nunca una instalación global.
 7. Validar el contrato antes de servirlo cuando la CLI lo permita.
 8. Servir la referencia interactiva con la CLI de Scalar a partir del contrato,
    por ejemplo mediante `document serve`, mostrando el puerto y la URL local.
@@ -92,7 +98,9 @@ api-docs --watch                 Recarga al cambiar el contrato, si está soport
 
 El uso normal debe ser manual y explícito. Si se ejecuta sin `--install` y Scalar
 no está disponible, no debe modificar el proyecto: debe indicar el comando o la
-opción necesaria para instalarlo.
+opción necesaria para instalarlo. Si falta un OpenAPI válido, `--check`, `--serve`
+y cualquier combinación con `--install` deben terminar con error antes de comprobar
+o instalar Scalar.
 
 ## Actualización de `.data/README.md`
 
@@ -100,7 +108,7 @@ Cuando se crea el lanzador, añade una sección equivalente a esta:
 
 ```markdown
 ## Documentación interactiva
-- Estado: disponible | requiere instalación | no aplica
+- Estado: disponible | requiere instalación | bloqueado | no aplica
 - Contrato: `contracts/openapi.yaml`
 - Lanzador: `scripts/api-docs.<extensión>`
 - Comando: `api-docs --install --serve`
@@ -110,7 +118,10 @@ Cuando se crea el lanzador, añade una sección equivalente a esta:
 ```
 
 Usa rutas y puertos reales del proyecto solo si están documentados y no son
-secretos. Si no se conocen, conserva placeholders y decláralo.
+secretos. Si no se conocen, conserva placeholders y decláralo. Usa `bloqueado`
+cuando el lanzador existe pero falta un OpenAPI válido, e incluye el motivo y la
+ruta esperada. Reserva `no aplica` para alcances sin API REST o sin permiso para
+añadir la herramienta.
 
 ## Pruebas desde Scalar
 
@@ -129,7 +140,8 @@ secretos. Si no se conocen, conserva placeholders y decláralo.
 
 ## Fallos y límites
 
-- Sin OpenAPI válido: no se genera ni se sirve la referencia; registra el motivo.
+- Sin OpenAPI válido: conserva el lanzador bloqueado, no instala ni sirve Scalar y
+  registra el motivo y la ruta esperada. No genera el contrato automáticamente.
 - Sin Node.js/gestor de paquetes: informa el requisito y no intenta instalarlo.
 - Sin permiso o conexión para instalar: conserva el lanzador y explica cómo
   preparar el entorno manualmente.

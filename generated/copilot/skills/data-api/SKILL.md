@@ -197,17 +197,20 @@ Escribe el hash de `HEAD` (o fecha), tecnología, modo y flag de BD en `README.m
 
 ### 7. Preparar la documentación interactiva (si aplica)
 
-Cuando el alcance confirmado incluye una API REST/OpenAPI, carga
+Cuando el alcance confirmado incluye una API REST, carga
 [`references/api-docs.md`](references/api-docs.md). En la primera generación de
-documentación, crea un lanzador manual para Scalar y registra sus instrucciones
-en `.data/README.md`. En sincronizaciones posteriores, reutilízalo y no
-sobrescribas personalizaciones sin confirmación.
+documentación, crea un lanzador manual para Scalar aunque todavía no exista un
+OpenAPI válido y registra sus instrucciones y estado en `.data/README.md`. En
+sincronizaciones posteriores, reutilízalo y no sobrescribas personalizaciones sin
+confirmación.
 
-El lanzador debe comprobar el contrato y la disponibilidad de Node/Scalar, pero no
-debe instalar dependencias ni iniciar servidores durante la sesión del agente. La
-instalación y el servidor se activan únicamente cuando el usuario ejecuta el
-lanzador con la opción correspondiente. Si no hay OpenAPI válido, informa que la
-referencia interactiva no aplica y no inventes un contrato.
+El lanzador debe comprobar primero el contrato y después la disponibilidad de
+Node/Scalar. No debe instalar dependencias ni iniciar servidores durante la sesión
+del agente. La instalación y el servidor se activan únicamente cuando el usuario
+ejecuta el lanzador con la opción correspondiente. Si no hay OpenAPI válido, deja
+el lanzador en estado `bloqueado`: `--check`, `--serve` y cualquier combinación
+con `--install` deben fallar claramente sin modificar el proyecto. Informa del
+motivo y no inventes ni generes automáticamente un contrato.
 
 Scalar debe servir la referencia en un entorno local o de pruebas. El backend debe
 estar ejecutándose para que el botón de prueba funcione; Scalar no lo inicia.
@@ -249,8 +252,8 @@ actualizar el artefacto correspondiente; no es necesaria para una consulta,
 triage o tarea puntual.
 
 El contrato del lanzador de documentación interactiva está en
-[`references/api-docs.md`](references/api-docs.md); cárgalo solo cuando se
-confirme una API REST/OpenAPI y se vaya a preparar Scalar.
+[`references/api-docs.md`](references/api-docs.md); cárgalo cuando se confirme una
+API REST y se vaya a preparar Scalar, exista o no todavía un OpenAPI válido.
 
 La matriz y el gate para operaciones pesadas están en
 [`references/model-selection.md`](references/model-selection.md); no la cargues

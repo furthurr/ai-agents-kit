@@ -385,12 +385,27 @@ def test_data_api_scalar_workflow() -> None:
 
     reference = ROOT / "canonical" / "skills" / "data-api" / "references" / "api-docs.md"
     skill = (ROOT / "canonical" / "skills" / "data-api" / "SKILL.md").read_text(encoding="utf-8")
+    agent = (ROOT / "canonical" / "agents" / "data-api.md").read_text(encoding="utf-8")
 
     check(reference.is_file(), "Referencia canónica de Scalar existe")
     reference_content = reference.read_text(encoding="utf-8") if reference.is_file() else ""
     for marker in ("@scalar/cli", "--install", "--serve", "document serve", "127.0.0.1"):
         check(marker in reference_content, f"Referencia Scalar contiene: {marker}")
     check("references/api-docs.md" in skill, "La skill carga la referencia de Scalar bajo demanda")
+    check(
+        "La ausencia de OpenAPI bloquea la ejecución del lanzador, no su creación." in reference_content,
+        "La referencia crea el lanzador aunque falte OpenAPI",
+    )
+    check(
+        "cualquier combinación con `--install` deben terminar con error" in reference_content,
+        "La referencia bloquea instalación y servicio sin OpenAPI",
+    )
+    check(
+        "Sin OpenAPI válido: no se genera ni se sirve la referencia" not in reference_content,
+        "La referencia no conserva la regla contradictoria anterior",
+    )
+    check("estado `bloqueado`" in skill, "La skill documenta el estado bloqueado")
+    check("aunque todavía falte OpenAPI" in agent, "El agente prepara el lanzador sin OpenAPI")
 
     manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
     for platform in manifest["platforms"]:
