@@ -1,5 +1,7 @@
 # MAS (Multi-Agent System)
 
+![MAS (Multi-Agent System)](MAS.png)
+
 Fuente versionada de **skills** y **agentes** para [GitHub Copilot](https://github.com/features/copilot),
 [OpenCode](https://opencode.ai), [Kiro](https://kiro.dev) y
 [Claude Code](https://code.claude.com/).
