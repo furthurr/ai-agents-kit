@@ -15,21 +15,23 @@ specs, tests y código de producto tras las aprobaciones correspondientes.
 
 Antes de los escenarios funcionales, valida estas variantes:
 
-- Una petición `direct` recibe `Modelo recomendado: BAJO` y continúa sin esperar
+- Una petición `direct` recibe `Nivel de LLM recomendado: BAJO` y continúa sin esperar
   confirmación.
 - Una feature `standard` o `deep` nueva muestra solo `Requirements` y
-  `Modelo recomendado para Requirements: <nivel>`; no muestra recomendaciones para
-  todo el flujo futuro y termina el turno.
-- `lite` muestra una sola recomendación para Quick Plan, sin exponer sus pasos
-  internos. Un bugfix no trivial sigue el flujo `standard`.
+  `Nivel de LLM recomendado para Requirements: <nivel>`; no muestra recomendaciones
+  para todo el flujo futuro ni detiene el inicio de Requirements para confirmar el LLM.
+- `lite` muestra una sola recomendación informativa para Quick Plan y lo inicia sin
+  confirmación de nivel, sin exponer sus pasos internos. Un bugfix no trivial sigue
+  el flujo `standard`.
 - En cada transición, el agente muestra en un mismo mensaje el resumen verificable,
   el gate actual y la recomendación de la próxima fase, condicionada a la aprobación
-  actual. La recomendación no crea un gate adicional.
-- Solo una respuesta que apruebe la fase actual y confirme el nivel recomendado o el
-  actual inicia la siguiente. `apruebo`, `adelante` o `continúa` por separado deben
-  pedir la decisión faltante.
-- Si cambia alcance o riesgo, recalcula antes de iniciar. `lite` a `standard` siempre
-  solicita confirmar el cambio de flujo aunque el nivel coincida.
+  actual. La recomendación no crea un gate adicional ni requiere confirmación del LLM.
+- La aprobación explícita de la fase actual basta para iniciar la siguiente. `apruebo`,
+  `adelante` o `continúa` deben interpretarse según la pregunta del gate; si la
+  aprobación no es clara, se pide únicamente aclarar esa aprobación, no el nivel.
+- Si cambia alcance o riesgo, recalcula e informa el nivel actualizado sin detenerse
+  a pedir una decisión sobre el LLM. `lite` a `standard` solicita confirmar el cambio
+  de flujo aunque el nivel coincida.
 - La salida usa únicamente `BAJO`, `MEDIO` y `ALTO`, sin nombres de modelos o
   proveedores, y el agente nunca intenta cambiar el modelo del host.
 
@@ -70,7 +72,7 @@ umbral trivial de `direct`. No menciones un modo. Esperado:
 
 - Descarta `direct` por motivos verificables y selecciona `lite` automáticamente.
 - Muestra `Modo SDD: lite`, recomienda normalmente `MEDIO`, explica los criterios
-  satisfechos y espera confirmación en el Gate 0.
+  satisfechos y continúa con Quick Plan sin esperar confirmación de nivel.
 - Activa Quick Plan y no presenta `lite` como una preferencia que el usuario debía
   haber solicitado expresamente.
 
@@ -91,7 +93,8 @@ Esperado:
 Solicita una feature apta para `lite`, sin decir «Quick Plan». Esperado:
 
 - Al seleccionar `lite`, activa Quick Plan automáticamente como su flujo obligatorio.
-- Genera requirements, design y tasks en una pasada tras el Gate 0, sin Gates 1–3.
+- Genera requirements, design y tasks en una pasada tras el preflight informativo,
+  sin Gates 1–3.
 - No presenta Quick Plan como profundidad ni variante transversal, y no lo ofrece
   fuera de `lite`.
 
@@ -100,7 +103,8 @@ Solicita una feature apta para `lite`, sin decir «Quick Plan». Esperado:
 Ejecuta dos variantes equivalentes: «solo planifica este cambio» y «planifica e
 implementa este cambio». Esperado:
 
-- Ambas generan el Quick Plan `lite` tras confirmar el Gate 0.
+- Ambas generan el Quick Plan `lite` tras el preflight informativo, sin confirmar el
+  nivel de LLM.
 - La variante de solo planificación se detiene después de `tasks.md`, deja las
   tareas pendientes, no modifica producto y no crea `verification.md`.
 - La variante con implementación continúa sin Gates 1–3 adicionales, implementa
@@ -170,18 +174,20 @@ Añade bloqueo de cuenta después de tres intentos fallidos.
 
 Esperado:
 
-- Primero recomienda el nivel solo para `Requirements`, espera confirmación y no
-  carga contexto pesado.
+- Primero recomienda el nivel de LLM solo para `Requirements` y continúa con esa fase
+  sin preguntar si el usuario seleccionó o cambiará de nivel.
 - Selecciona `standard`; no implementa antes de aprobar requisitos, diseño y tareas.
 - Tras Requirements, muestra resumen + Gate 1 + recomendación para Design. La
-  respuesta debe aprobar Requirements y confirmar el nivel de Design.
+  respuesta solo debe aprobar Requirements; después comienza Design sin confirmar
+  el nivel de LLM.
 - Tras Design, repite la misma secuencia para Tasks; después de Gate 3, la repite para
-  Implementación. No presenta una recomendación como un gate nuevo.
+  Implementación. En cada transición espera la aprobación del gate real, no una
+  confirmación del nivel de LLM.
 - `design.md` declara TDD focalizado y la tarea de comportamiento expresa RED → GREEN
   → REFACTOR.
-- Tras confirmar Implementación, observa RED antes de escribir el comportamiento
-  productivo. Al terminar, muestra resumen + preflight de Verification y espera su
-  nivel antes de ejecutar la suite.
+- Tras aprobar Gate 3, observa RED antes de escribir el comportamiento productivo.
+  Al terminar, muestra resumen + recomendación informativa de Verification y ejecuta
+  la suite sin esperar confirmación del nivel.
 - Fase 4 registra comandos/resultados; después solo muestra Gate 4 y no cierra
   requisitos sin evidencia.
 

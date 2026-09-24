@@ -61,10 +61,10 @@ Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
   explican el motivo y esperan que el usuario decida si cambia de agente.
 - **SDD:** ofrece exactamente `direct`, `lite`, `standard` y `deep`. `lite` se
   selecciona automáticamente para trabajo acotado, claro y de bajo riesgo, exige
-  Gate 0 bloqueante y usa Quick Plan sin Gates 1-4. `standard` es el fallback
+  un preflight informativo y usa Quick Plan sin Gates 1-4. `standard` es el fallback
   seguro y, como `deep`, conserva los Gates 1-4; cada fase recibe su recomendación
-  de nivel al iniciar y las transiciones no crean gates adicionales. `deep` siempre
-  es explícito.
+  de nivel de LLM al iniciar y las transiciones no crean gates adicionales ni piden
+  confirmar la selección del nivel. `deep` siempre es explícito.
 - **Git y releases:** commit, push, cambios de versión, tags y CHANGELOG requieren
   confirmación explícita; no añaden Gate de modelo y las acciones destructivas
   requieren doble confirmación.

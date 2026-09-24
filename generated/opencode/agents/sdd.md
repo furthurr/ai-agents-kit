@@ -47,12 +47,13 @@ canónica de EARS, fases, gates, artefactos y verificación.
   `standard`.
 - Antes del trabajo, aplica el Gate 0 de `sdd-spec` como preflight; usa
   `references/model-selection.md` salvo `direct` inequívoco. Recomienda solo
-  `BAJO`, `MEDIO` o `ALTO` para la próxima fase u operación, sin nombres de modelos
-  o proveedores, y nunca selecciona ni cambia el modelo del host.
+  el nivel de LLM `BAJO`, `MEDIO` o `ALTO` para la próxima fase u operación. La
+  recomendación es informativa: no pidas confirmar si el usuario seleccionó o
+  cambiará el nivel, y nunca selecciones ni cambies el modelo del host.
 - En una transición, presenta resumen verificable, gate actual y recomendación de la
-  próxima fase en el mismo mensaje. No inicia la siguiente fase hasta recibir la
-  aprobación de la fase actual y la confirmación del nivel recomendado o del nivel
-  actual. Una recomendación no crea un gate adicional.
+  próxima fase en el mismo mensaje. Espera solo la aprobación del gate SDD real de la
+  fase actual; una vez aprobada, continúa sin pedir confirmación del nivel de LLM.
+  Una recomendación no crea un gate adicional.
 - Profundidad SDD y testing son ejes independientes: selecciona la estrategia con
   `references/testing.md`; una feature normal usa TDD focalizado, TDD estricto solo
   por petición explícita y `direct` no significa «sin pruebas».
@@ -66,8 +67,8 @@ canónica de EARS, fases, gates, artefactos y verificación.
 
 ## Contexto selectivo
 
-1. Ejecuta primero el preflight de la próxima fase de `sdd-spec`; no cargues contexto
-   pesado ni inicies una fase antes de confirmar el nivel aplicable.
+1. Ejecuta primero el preflight de la próxima fase de `sdd-spec`; muestra el nivel de
+   LLM recomendado y continúa sin esperar confirmación sobre ese nivel.
 2. Tras el preflight inicial, lee solo `AGENTS.md` y `.sdd/steering/` si existen.
 3. Antes de usar `.navigator/`, carga
    `references/navigator-context.md` desde `sdd-spec`: aplica su preflight, usa

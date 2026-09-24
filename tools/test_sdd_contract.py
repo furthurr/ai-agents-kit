@@ -141,7 +141,7 @@ def test_model_selection_gate() -> None:
     )
     check(len(reference.split()) <= 450, "la referencia de modelo respeta el presupuesto de contexto")
     check(
-        "no menciones nombres de modelos, proveedores" in lower_reference,
+        "no menciones modelos ni proveedores" in lower_reference,
         "la recomendación permanece agnóstica de modelos y proveedores",
     )
     check(
@@ -150,13 +150,15 @@ def test_model_selection_gate() -> None:
         "el preflight no consume trabajo costoso antes del Gate 0",
     )
     check(
-        "`direct`: informa" in lower_reference and "continua sin esperar" in lower_reference,
+        "`direct`: informa" in lower_reference
+        and "nivel de llm recomendado" in lower_reference
+        and "sin esperar" in lower_reference,
         "direct recibe un aviso no bloqueante",
     )
     check(
         "`lite`, `standard`, `deep` y bugfix no trivial" in lower_reference
-        and "detiene el turno" in lower_reference,
-        "el trabajo no trivial aplica hard stop",
+        and "sin detenerse por la recomendación" in lower_reference,
+        "el preflight no bloquea la fase por la recomendación de LLM",
     )
     check(
         "una sola recomendación visible por cada fase" in lower_reference
@@ -164,9 +166,14 @@ def test_model_selection_gate() -> None:
         "la recomendación se limita a la próxima fase",
     )
     check(
-        "detente de nuevo solo si cambia el nivel" in lower_reference
+        "sin detenerte a pedir una decisión sobre el nivel" in lower_reference
         and "`lite` a `standard`" in lower_reference,
         "el alcance recalcula modelo y los cambios de flujo se confirman",
+    )
+    check(
+        "nivel de llm recomendado para" in lower_reference
+        and "no preguntes si el usuario seleccionó o cambiará el llm" in lower_reference,
+        "la recomendación identifica el nivel de LLM y es informativa",
     )
     check(
         "ni cambies el modelo del host" in normalized(skill + " " + agent + " " + reference).lower(),
@@ -174,8 +181,8 @@ def test_model_selection_gate() -> None:
     )
     check(
         "sin gates 1–3" in normalized(skill).lower()
-        and "conserva el gate 0" in normalized(skill).lower(),
-        "lite conserva Gate 0 y omite sus gates de fase",
+        and "preflight informativo" in normalized(skill).lower(),
+        "lite conserva el preflight informativo y omite sus gates de fase",
     )
 
     manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
@@ -199,16 +206,24 @@ def test_phase_scoped_recommendations() -> None:
     templates_lower = templates.lower()
     output_parts = model.split("## Salida", maxsplit=1)
     output = output_parts[1] if len(output_parts) == 2 else ""
+    template_parts = output.split("```text", maxsplit=1)
+    output_template = template_parts[1].split("```", maxsplit=1)[0] if len(template_parts) == 2 else ""
 
     check(
         "próximo proceso" in compact
-        and "modelo recomendado para" in compact,
+        and "nivel de llm recomendado para" in compact,
         "el preflight recomienda el nivel de la próxima fase",
     )
     check(
         "fases pendientes" not in output.lower()
         and "perfil" not in output.lower(),
         "la salida inicial no muestra el perfil global de fases",
+    )
+    check(
+        "nivel de llm recomendado para" in output_template.lower()
+        and "responde" not in output_template.lower()
+        and "modelo recomendado" not in output_template.lower(),
+        "la plantilla recomienda el nivel de LLM sin pedir confirmación",
     )
     check(
         "resumen verificable" in compact
@@ -222,14 +237,11 @@ def test_phase_scoped_recommendations() -> None:
         "la próxima recomendación queda condicionada al gate actual",
     )
     check(
-        "apruebo y usaré el nivel recomendado" in compact
-        and "apruebo y continúo con el nivel actual" in compact,
-        "la respuesta puede aprobar y confirmar el siguiente nivel",
-    )
-    check(
-        "apruebo`, `adelante` o `continúa`" in compact
-        and "pedirá la parte faltante" in compact,
-        "las respuestas ambiguas no inician la siguiente fase",
+        "espera únicamente la aprobación del gate real de la fase actual" in compact
+        and "no preguntes si el usuario seleccionó o cambiará el llm" in compact
+        and "apruebo y usaré el nivel recomendado" not in compact
+        and "apruebo y continúo con el nivel actual" not in compact,
+        "la transición espera aprobación de fase, no confirmación del nivel de LLM",
     )
     check(
         all(phase in compact for phase in ("requirements", "design", "tasks", "implementación", "verification")),

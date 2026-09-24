@@ -1,7 +1,7 @@
-# Selección de nivel de modelo
+# Selección de nivel de LLM
 
-Contrato para recomendar solo `BAJO`, `MEDIO` o `ALTO`. No menciones nombres de
-modelos, proveedores.
+Recomienda solo `BAJO`, `MEDIO` o `ALTO`. No menciones modelos ni proveedores ni
+afirmes conocer el nivel activo del host.
 
 ## Preflight
 
@@ -28,26 +28,24 @@ explícitos no se rebajan automáticamente.
 - Spec legacy sin estado suficiente: pide aclaración y no migra.
 - Después de Verification muestra únicamente Gate 4; no hay próxima fase.
 
-## Gate 0 y transiciones
+## Recomendación informativa y transiciones
 
-- `direct`: informa `Modelo recomendado: BAJO` y continua sin esperar.
-- `lite`, `standard`, `deep` y bugfix no trivial: muestra la recomendación de la
-  próxima operación y detiene el turno.
+- `direct`: informa `Nivel de LLM recomendado: BAJO` y continúa sin esperar.
+- `lite`, `standard`, `deep` y bugfix no trivial: muestra el nivel recomendado para
+  la próxima operación y continúa sin detenerse por la recomendación.
 - En `standard` y `deep`, hay una sola recomendación visible por cada fase que vaya
   a iniciar. No repitas la misma recomendación dentro de una fase sin cambio.
 - La transición presenta un resumen verificable, el gate actual y la recomendación
   de la próxima fase, condicionada a la aprobación de la fase actual. No crea gates.
-- Inicia la siguiente fase solo con aprobación de la fase actual y confirmación del
-  nivel recomendado o actual. Si falta una decisión, pide la parte faltante.
-- Si el usuario itera, no inicia la siguiente fase ni aplica la recomendación pendiente.
-- Si cambia alcance o riesgo, recalcula. En `lite` a `standard`, solicita confirmar
-  el nuevo flujo aunque el nivel coincida. Para una fase confirmada, si cambia el
-  alcance o riesgo, detente de nuevo solo si cambia el nivel o la política de gates.
-- Nunca selecciones ni cambies el modelo del host ni afirmes conocer el activo.
-
-Una transición puede responderse con `apruebo y usaré el nivel recomendado` o
-`apruebo y continúo con el nivel actual`. Si responde únicamente `apruebo`,
-`adelante` o `continúa`, pedirá la parte faltante.
+- Espera únicamente la aprobación del gate real de la fase actual. Tras aprobarlo,
+  inicia la fase siguiente. No preguntes si el usuario seleccionó o cambiará el LLM.
+  Si el usuario itera, no avances y descarta la recomendación condicionada.
+- Después de Implementación no hay gate adicional: presenta el preflight de
+  Verification y continúa con ella sin esperar confirmación del nivel.
+- Si cambia alcance o riesgo, recalcula y comunica el nivel actualizado sin detenerte
+  a pedir una decisión sobre el nivel de LLM. En una reclasificación de `lite` a
+  `standard`, espera aprobación solo para el cambio de flujo SDD.
+- Nunca selecciones ni cambies el modelo del host.
 
 ## Salida
 
@@ -56,8 +54,9 @@ Preflight SDD
 Trabajo: <tipo> | Modo SDD: <direct|lite|standard|deep>
 Alcance: <ruta/spec> | Complejidad: <baja|media|alta>
 Próximo proceso: <fase u operación>
-Modelo recomendado para <fase u operación>: <BAJO|MEDIO|ALTO>
+Nivel de LLM recomendado para <fase u operación>: <BAJO|MEDIO|ALTO>
 Motivos: <1-3 razones verificables>
-Antes de iniciar: responde "listo" para usar el nivel recomendado o
-"continúa con el actual" para mantener tu nivel.
 ```
+
+Esta recomendación es informativa: no solicites confirmación ni detengas el proceso
+por la elección del nivel. Espera solo las aprobaciones de gates SDD reales.

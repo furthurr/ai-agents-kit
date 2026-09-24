@@ -23,9 +23,13 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
 - La recomendación de la próxima fase se presenta junto al resumen y al gate actual,
   pero no crea un gate nuevo. No repetir la misma recomendación dentro de una fase
   mientras no cambien alcance, riesgo ni nivel requerido.
-- Antes de iniciar la próxima fase deben estar confirmadas la aprobación de la fase
-  actual y el nivel recomendado o el nivel actual. Un cambio de alcance o riesgo
-  invalida el preflight anterior y exige recalcularlo.
+- La recomendación de nivel de LLM es informativa: no solicites confirmación de que
+  el usuario la seleccionó o cambiará su LLM. Para iniciar la próxima fase, espera
+  solo la aprobación del gate SDD real que corresponda.
+- Un cambio de alcance o riesgo invalida el preflight anterior: recalcula y comunica
+  la recomendación actualizada, sin detenerte a pedir una decisión sobre el nivel.
+  Si el cambio requiere reclasificar el modo SDD, solicita aprobación de ese cambio
+  de flujo.
 
 ## Antes de GATE 4
 

@@ -27,17 +27,19 @@ Si hay dudas, riesgo, contrato público, migración, cruce de capas o un bugfix 
 trivial, usa `standard` como modo por defecto y fallback seguro. `deep` solo se
 activa por petición explícita.
 
-## Recomendación de modelo
+## Recomendación de nivel de LLM
 
 Antes de cargar contexto pesado, SDD hace un preflight barato y recomienda un nivel
-genérico `BAJO`, `MEDIO` o `ALTO` únicamente para la próxima fase u operación. Para
-`direct`, el aviso es breve y no bloquea. `lite` recibe una sola recomendación para
-Quick Plan; `standard` y `deep` reciben una recomendación al iniciar cada fase.
+de LLM genérico `BAJO`, `MEDIO` o `ALTO` únicamente para la próxima fase u operación.
+El mensaje usa el formato `Nivel de LLM recomendado para <fase>: <nivel>`. La
+recomendación es informativa: SDD no pregunta si el usuario seleccionó o cambiará el
+nivel y continúa con el LLM que ya esté activo en la herramienta.
 
 En cada transición, SDD presenta el resumen verificable, el gate actual y la
-recomendación de la próxima fase en el mismo mensaje. La fase siguiente requiere la
-aprobación actual y la confirmación del nivel recomendado o del nivel actual. SDD no
-conoce, selecciona ni cambia el modelo del host, y no crea gates adicionales.
+recomendación de la próxima fase en el mismo mensaje. Para continuar solo requiere la
+aprobación del gate SDD real; después inicia la siguiente fase sin confirmación del
+nivel de LLM. SDD no conoce, selecciona ni cambia el LLM del host, y no crea gates
+adicionales.
 
 ## Modos
 
@@ -58,9 +60,9 @@ usan regresión y el legado usa caracterización.
 
 ## Flujo y gates
 
-0. **Modelo:** preflight de la próxima fase y recomendación. En `lite`, `standard` y
-   `deep`, el Gate 0 inicial es bloqueante; `direct` no crea spec. Los preflights de
-   transición no son gates adicionales.
+0. **Nivel de LLM:** preflight informativo de la próxima fase. En todos los modos,
+   la recomendación no bloquea; `direct` no crea spec. Los preflights de transición
+   tampoco son gates adicionales.
 1. **Requirements:** historias, criterios EARS, errores, edge cases y supuestos.
    Gate 1: aprobar requisitos en `standard` y `deep`.
 2. **Design:** arquitectura, modelos, errores, pruebas y estrategia de testing.
@@ -73,9 +75,9 @@ usan regresión y el legado usa caracterización.
    `standard` y `deep`; después no hay otra recomendación.
 
 En `lite`, Quick Plan genera `requirements.md`, `design.md` y `tasks.md` en una
-pasada después del Gate 0. No existen Gates 1-3 ni Gate 4. Si el alcance es solo
-planificar, termina con esos tres archivos; si también se implementa, añade un
-`verification.md` compacto con la evidencia.
+pasada después del preflight informativo. No existen Gates 1-3 ni Gate 4. Si el
+alcance es solo planificar, termina con esos tres archivos; si también se
+implementa, añade un `verification.md` compacto con la evidencia.
 
 ## Contexto opcional de Project Navigator
 
@@ -147,9 +149,10 @@ y `Quick Plan direct` son combinaciones inválidas.
 
 ## Límites y confirmaciones
 
-- No cruza los Gates 1-4 de `standard` o `deep` sin aprobación explícita ni inicia
-  una fase con el nivel sin confirmar.
-- En `lite`, el Gate 0 es obligatorio y bloqueante; no crea Gates 1-3 ni Gate 4.
+- No cruza los Gates 1-4 de `standard` o `deep` sin aprobación explícita.
+- El Gate 0 informa el nivel de LLM recomendado, pero no espera confirmación ni
+  bloquea el inicio de una fase. En `lite`, el preflight Quick Plan también es
+  informativo; no crea Gates 1-3 ni Gate 4.
 - Quick Plan solo existe en `lite` y no se combina con otra profundidad.
 - No cambia el modelo del host ni menciona nombres de modelos o proveedores en la
   recomendación.

@@ -99,14 +99,14 @@ Catálogo completo: [catalogo.md](catalogo.md).
 3. **SDD antes de features grandes** — elige entre exactamente cuatro profundidades:
    `direct`, sin spec; `lite`, automático para trabajo acotado, claro y de bajo
    riesgo; `standard`, fallback seguro; y `deep`, solo por petición explícita.
-   Quick Plan es obligatorio y exclusivo de `lite`: requiere Gate 0 bloqueante,
+   Quick Plan es obligatorio y exclusivo de `lite`: tiene un preflight informativo,
    pero no Gates 1-3 ni Gate 4. Combinar Quick Plan con otro modo es inválido.
    `standard` y `deep` conservan los Gates 1-4; los bugfixes no triviales usan
    `standard`.
-    Antes de cada proceso no trivial recomienda únicamente el nivel `BAJO`, `MEDIO`
-    o `ALTO` de la próxima fase; el usuario puede cambiarlo manualmente o continuar
-    con el actual. En las transiciones combina resumen, aprobación de la fase actual
-    y recomendación de la siguiente, sin crear gates adicionales.
+   Antes de cada proceso no trivial recomienda únicamente el nivel de LLM `BAJO`,
+   `MEDIO` o `ALTO` de la próxima fase, sin pedir confirmación sobre su selección.
+   En las transiciones combina resumen, aprobación de la fase actual y recomendación
+   de la siguiente, sin crear gates adicionales.
    Si hay `.navigator/`, SDD comprueba primero su disponibilidad y frescura para
    orientar la exploración. Un índice desfasado solo aporta rutas candidatas: la
    documentación aplicable y el código real confirman las decisiones. Su ausencia
