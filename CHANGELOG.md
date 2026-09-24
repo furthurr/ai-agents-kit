@@ -3,6 +3,22 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [0.2.0] - 2026-09-24
+
+### Funcionalidades
+
+- Pausar tras recomendar un nivel de modelo en SDD y en las tareas puntuales de los agentes especialistas, para permitir un cambio manual opcional.
+- Reanudar sin declarar el modelo elegido, conservando los gates de cada agente y evitando avisos duplicados tras un handoff.
+
+### Compatibilidad
+
+- Propagar las instrucciones a Copilot, OpenCode, Kiro y Claude Code.
+
+### Validación
+
+- Ampliar las pruebas contractuales de SDD y de recomendaciones multiagente.
+- Documentar el smoke conversacional, pendiente de ejecución en los hosts.
+
 ## [0.1.2] - 2026-09-23
 
 ### Correcciones
