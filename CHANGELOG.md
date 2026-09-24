@@ -3,6 +3,25 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [0.1.2] - 2026-09-23
+
+### Correcciones
+
+- Crear el lanzador Scalar aunque falte el contrato OpenAPI.
+
+### Documentación
+
+- Añadir una imagen de presentación de MAS al README.
+- Hacer informativas las recomendaciones de nivel de LLM en SDD: solo los gates
+  reales bloquean las transiciones entre fases.
+- Propagar el contrato SDD actualizado a las guías y las cuatro plataformas
+  generadas.
+
+### Validación
+
+- Actualizar las pruebas de contrato y smoke tests SDD para cubrir transiciones sin
+  confirmación del nivel de LLM.
+
 ## [0.1.1] - 2026-09-15
 
 ### Funcionalidades
