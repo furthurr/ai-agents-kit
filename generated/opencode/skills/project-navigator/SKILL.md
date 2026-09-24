@@ -42,8 +42,8 @@ Objetivo: responder con la capa más barata suficiente y citar fuentes.
 
 1. **Clasificar** (consulta vs bootstrap/update vs fuera de alcance).
 2. Si es bootstrap, update pesado o navegación reiterada de varias capas:
-   **aviso de modelo** antes (`references/bootstrap.md`); esperar confirmación
-   o "sigo con el actual".
+   **aviso de modelo** antes (`references/bootstrap.md`); terminar el turno y
+   reanudar con «continua» sin exigir declarar el modelo elegido.
 3. Ejecutar el **gate de disponibilidad** en cada petición: leer el `config.yaml`
    aplicable y comprobar en filesystem los artefactos de las capas candidatas
    (`references/config.md`). No inferir su estado desde mensajes anteriores.

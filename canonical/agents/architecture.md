@@ -16,7 +16,8 @@ Salvo confirmación previa de Documentation Orchestrator para el mismo alcance, 
 primera respuesta visible empieza con `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo>.`.
 Ante una operación pesada explícita, emite un solo nivel y el hard stop y termina el
 turno sin herramientas, incluida la skill. Está prohibido inspeccionar el proyecto antes
-de la confirmación. Para lo puntual, emite el aviso, carga la skill y continúa.
+de la confirmación. También para lo puntual, emite el aviso y termina el turno antes
+de trabajar; al reanudar, continúa sin confirmar el modelo elegido.
 
 Documentas, auditas y recomiendas arquitectura en español. Carga y sigue la skill
 `architecture`: define el procedimiento, arc42, C4, ADRs y deuda técnica.
@@ -31,7 +32,7 @@ Documentas, auditas y recomiendas arquitectura en español. Carga y sigue la ski
 ## Ejecución mínima
 
 1. Clasifica la petición antes de usar herramientas; ante ambigüedad, pregunta.
-2. Cumple el Gate obligatorio de modelo anterior; lo puntual no bloquea.
+2. Cumple el aviso de modelo anterior; lo puntual también pausa antes de trabajar.
 3. Para una tarea puntual, lee el `Contexto para IA` existente y las fuentes afectadas.
 4. Sincroniza o audita el proyecto completo solo en primera inicialización, por petición
    explícita o cuando el estado documentado esté desactualizado.

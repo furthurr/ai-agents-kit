@@ -157,16 +157,17 @@ def test_model_selection_gate() -> None:
     )
     check(
         "`lite`, `standard`, `deep` y bugfix no trivial" in lower_reference
-        and "sin detenerse por la recomendación" in lower_reference,
-        "el preflight no bloquea la fase por la recomendación de LLM",
+        and "termina el turno" in lower_reference
+        and "sin confirmar el modelo" in lower_reference,
+        "el preflight deja tiempo para cambiar de modelo sin confirmarlo",
     )
     check(
-        "una sola recomendación visible por cada fase" in lower_reference
+        "una sola recomendación visible por fase" in lower_reference
         and "no repitas la misma recomendación" in lower_reference,
         "la recomendación se limita a la próxima fase",
     )
     check(
-        "sin detenerte a pedir una decisión sobre el nivel" in lower_reference
+        "recalcula" in lower_reference
         and "`lite` a `standard`" in lower_reference,
         "el alcance recalcula modelo y los cambios de flujo se confirman",
     )
@@ -181,7 +182,8 @@ def test_model_selection_gate() -> None:
     )
     check(
         "sin gates 1–3" in normalized(skill).lower()
-        and "preflight informativo" in normalized(skill).lower(),
+        and "preflight informativo" in normalized(skill).lower()
+        and "termina el turno" in normalized(skill).lower(),
         "lite conserva el preflight informativo y omite sus gates de fase",
     )
 
@@ -221,9 +223,10 @@ def test_phase_scoped_recommendations() -> None:
     )
     check(
         "nivel de llm recomendado para" in output_template.lower()
+        and "cambiar manualmente" in output_template.lower()
         and "responde" not in output_template.lower()
         and "modelo recomendado" not in output_template.lower(),
-        "la plantilla recomienda el nivel de LLM sin pedir confirmación",
+        "la plantilla permite cambio manual sin pedir confirmación de modelo",
     )
     check(
         "resumen verificable" in compact
@@ -232,8 +235,8 @@ def test_phase_scoped_recommendations() -> None:
         "la transición combina resumen, gate y próxima recomendación",
     )
     check(
-        "condicionada a la aprobación" in compact
-        and "aprobación de la fase actual" in compact,
+        "condicionada a la aprobación actual" in compact
+        and "aprobación del gate real de la fase actual" in compact,
         "la próxima recomendación queda condicionada al gate actual",
     )
     check(
@@ -242,6 +245,19 @@ def test_phase_scoped_recommendations() -> None:
         and "apruebo y usaré el nivel recomendado" not in compact
         and "apruebo y continúo con el nivel actual" not in compact,
         "la transición espera aprobación de fase, no confirmación del nivel de LLM",
+    )
+    check(
+        "después de implementación" in normalized(model).lower()
+        and "verification" in normalized(model).lower()
+        and "termina el turno" in normalized(model).lower()
+        and "reanuda" in normalized(model).lower(),
+        "Verification empieza solo tras reanudar cuando no hay gate intermedio",
+    )
+    check(
+        "`direct` recibe un aviso breve y no bloqueante" in normalized(skill).lower()
+        and "quick plan" in normalized(skill).lower()
+        and "termina el turno" in normalized(skill).lower(),
+        "direct no pausa y Quick Plan sí da tiempo para cambiar de modelo",
     )
     check(
         all(phase in compact for phase in ("requirements", "design", "tasks", "implementación", "verification")),

@@ -36,8 +36,10 @@ La skill relaciona cada hallazgo con:
 ## Recomendación de modelo
 
 Las consultas y revisiones localizadas no críticas reciben un aviso `BAJO` o
-`MEDIO` sin bloqueo. Auditorías completas y trabajo crítico de autenticación,
-criptografía, PII o red recomiendan `ALTO` y esperan confirmación.
+`MEDIO` y pausa antes de trabajar. Auditorías completas y trabajo crítico de
+autenticación, criptografía, PII o red recomiendan `ALTO` y también pausan antes
+del barrido. «Continúa» reanuda sin declarar modelo; cada micro-remediación
+conserva su confirmación de seguridad independiente.
 
 ## Cómo trabaja
 

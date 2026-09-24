@@ -58,8 +58,8 @@ profunda: si la evidencia esta desfasada, falla o advierte y recomienda sincroni
 Para operaciones compuestas, informa tambien niveles por fase cuando difieran.
 Ejemplo: `bootstrap-core` puede recomendar `medio` global, `bajo` para Navigator y
 `medio` para Architecture. El usuario puede mantener el nivel global o cambiarlo
-por fase. Si el Gate 0 expuso la recomendacion de Navigator y fue confirmado, su
-aviso de modelo queda satisfecho y no se repite.
+por fase. Si el Gate 0 expuso la recomendacion de Navigator para el mismo alcance
+y el usuario reanudo tras la pausa, su aviso de modelo no se repite.
 
 ### Salida y hard stop
 
@@ -75,9 +75,9 @@ Motivos:
 - <1-3 razones verificables>
 
 Antes de continuar:
-1. Cambia manualmente al modelo recomendado y responde "listo".
-2. Responde "continua con el actual" para conservarlo.
-3. Indica otro alcance para recalcular.
+Puedes cambiar manualmente de modelo o conservar el actual.
+Responde "continua" para reanudar sin declarar qué modelo elegiste;
+indica otro alcance si quieres recalcular.
 ```
 
 Termina el turno despues de esta salida. El agente no puede cambiar el modelo.
@@ -183,7 +183,7 @@ Advertencias por defecto:
 No comprueba version, changelog, tag ni publicacion. Deriva esas tareas a
 `release-management` despues de obtener un resultado apto.
 
-## Gates tras seleccionar modelo
+## Gates tras reanudar el aviso de modelo
 
 1. **G1 Plan global:** proyectos, dominios, orden y escrituras propuestas.
 2. **G2 Especialista:** cada skill conserva su gate; Quality/Security confirman
@@ -193,7 +193,8 @@ No comprueba version, changelog, tag ni publicacion. Deriva esas tareas a
 4. **G4 Cierre:** verificar artefactos y evidencia antes del informe final.
 
 El Gate 0 no sustituye ninguno de estos gates. Solo puede satisfacer otro aviso
-de **modelo** si mostro la recomendacion de esa fase y el usuario la confirmo.
+de **modelo** si mostro la recomendacion para el mismo alcance y el usuario
+reanudo tras la pausa; no exige declarar el modelo ni aprueba otros gates.
 
 ## Informe final compacto
 

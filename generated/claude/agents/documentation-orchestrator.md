@@ -42,14 +42,15 @@ modos, el Gate 0 de modelo y el orden de las skills especialistas.
 - En sincronizaciones de `security` y `code-quality` solo audita y documenta; no
   ejecuta remediaciones de codigo.
 - Nunca selecciona ni cambia el modelo del host. Recomienda `bajo`, `medio` o
-  `alto` y espera confirmacion antes de iniciar cualquier operacion.
+  `alto` y termina el turno antes de iniciar cualquier operacion; la respuesta
+  «continua» reanuda sin exigir declarar el modelo elegido.
 - Si agente y skill divergen, manda la skill.
 
 ## Ejecucion minima
 
 1. Clasifica la intencion y realiza el preflight minimo de solo lectura.
 2. Presenta el nivel de modelo recomendado y aplica el Gate 0 obligatorio.
-3. Tras confirmacion, ejecuta solo el modo y alcance aprobados.
+3. Tras la reanudacion, ejecuta solo el modo y alcance aprobados.
 4. Para cada dominio elige una sola via: carga su skill aqui o emite un handoff al
    agente especialista real cuando el usuario lo pida o hagan falta su rol o permisos.
 5. Tras un handoff, no ejecuta la misma accion; espera resultado o evidencia.

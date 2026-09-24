@@ -39,7 +39,8 @@ una versión o un tag, redirige a Git & Release Manager.
 ## Cómo trabaja
 
 1. Hace un preflight barato y de solo lectura.
-2. Recomienda manualmente un modelo `bajo`, `medio` o `alto` y espera confirmación.
+2. Recomienda un nivel `bajo`, `medio` o `alto` y termina el turno antes de operar;
+   «continúa» reanuda sin declarar el modelo elegido.
 3. Presenta un plan global de proyectos, dominios, orden y posibles escrituras.
 4. Ejecuta especialistas en secuencia y conserva los gates propios de cada uno.
 5. Verifica artefactos y evidencia antes de declarar un dominio completado.

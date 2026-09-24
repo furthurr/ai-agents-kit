@@ -11,13 +11,14 @@ clasificar.
 
 | Operacion | Nivel | Hard stop |
 | --- | --- | --- |
-| Consulta de estado o finding conocido | `BAJO` | No |
-| Revision o micro-remediacion localizada de riesgo no critico | `MEDIO` | No |
+| Consulta de estado o finding conocido | `BAJO` | Si |
+| Revision o micro-remediacion localizada de riesgo no critico | `MEDIO` | Si |
 | Auditoria inicial/completa o analisis de dependencias amplio | `ALTO` | Si |
 | Auth, criptografia, PII, confianza de red, varios proyectos o riesgo critico | `ALTO` | Si |
 
-Para un hard stop, muestra operacion, alcance, nivel y 1-3 motivos; espera `listo`,
-`continua` o `continua con el actual`. No repitas el aviso en cada finding o
+Para un hard stop, muestra operacion, alcance, nivel y 1-3 motivos; termina el turno
+antes de trabajar. Espera `listo`, `continua` o `continua con el actual`, sin confirmar el modelo.
+No repitas el aviso en cada finding o
 micro-paso. Recalcula solo ante cambios materiales de alcance o riesgo.
 
 Si Documentation Orchestrator ya recomendo explicitamente el nivel para este

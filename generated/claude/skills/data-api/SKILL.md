@@ -26,7 +26,7 @@ confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de
 ## Aviso de modelo
 
 Antes de operar, recomienda `BAJO` para consultas/documentación puntual y `MEDIO`
-para cambios localizados que preservan contratos, sin bloquear. Para
+para cambios localizados que preservan contratos. Para
 inicialización, catálogo completo, migraciones o contratos/riesgos amplios, carga
 `references/model-selection.md` y aplica su hard stop. No repitas un nivel ya
 confirmado por Documentation Orchestrator para el mismo alcance. Nunca nombres
@@ -35,6 +35,8 @@ La primera respuesta visible debe comenzar con
 `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo esa confirmación previa.
 Clasifica antes de inspeccionar el proyecto. Una solicitud pesada explícita basta:
 carga solo la matriz, emite el hard stop y termina el turno sin más herramientas.
+Para lo puntual, termina el turno tras el aviso antes de trabajar; reanuda cuando
+el usuario indique continuar, sin confirmar el modelo ni repetir la recomendación.
 
 Esta skill es la **referencia canónica** para documentar, auditar y ayudar a
 desarrollar la **capa de datos y APIs** de un proyecto, sin importar la

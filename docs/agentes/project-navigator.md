@@ -73,5 +73,6 @@ alcance, las fuentes y el presupuesto.
 - Solo escribe en `.navigator/`; la exportación opt-in a `AGENTS.md` requiere confirmación.
 - No implementa features, refactors, tests, CI ni cambios en Git remoto.
 - No selecciona ni cambia el modelo del host; solo recomienda un cambio manual si
-  el proceso es pesado.
+  el proceso es pesado. Antes de empezar termina el turno; «continúa» reanuda sin
+  declarar el modelo elegido. El aviso final no bloquea ninguna tarea.
 - Si piden código, aporta ubicación o mapa y redirige al agente adecuado.

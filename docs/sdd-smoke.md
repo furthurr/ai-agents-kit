@@ -19,9 +19,11 @@ Antes de los escenarios funcionales, valida estas variantes:
   confirmación.
 - Una feature `standard` o `deep` nueva muestra solo `Requirements` y
   `Nivel de LLM recomendado para Requirements: <nivel>`; no muestra recomendaciones
-  para todo el flujo futuro ni detiene el inicio de Requirements para confirmar el LLM.
-- `lite` muestra una sola recomendación informativa para Quick Plan y lo inicia sin
-  confirmación de nivel, sin exponer sus pasos internos. Un bugfix no trivial sigue
+  para todo el flujo futuro. Termina el turno sin leer contexto de Requirements;
+  tras cambiar manualmente de modelo o conservar el actual, `continúa` inicia la fase
+  sin tener que declarar qué modelo eligió el usuario.
+- `lite` muestra una sola recomendación informativa para Quick Plan y pausa antes
+  de iniciarlo, sin exponer sus pasos internos. Un bugfix no trivial sigue
   el flujo `standard`.
 - En cada transición, el agente muestra en un mismo mensaje el resumen verificable,
   el gate actual y la recomendación de la próxima fase, condicionada a la aprobación
@@ -29,6 +31,9 @@ Antes de los escenarios funcionales, valida estas variantes:
 - La aprobación explícita de la fase actual basta para iniciar la siguiente. `apruebo`,
   `adelante` o `continúa` deben interpretarse según la pregunta del gate; si la
   aprobación no es clara, se pide únicamente aclarar esa aprobación, no el nivel.
+- Tras Implementación, el agente muestra resumen + recomendación de Verification y
+  termina el turno: `continúa` inicia la suite sin confirmar el modelo; después de
+  Verification solo presenta Gate 4.
 - Si cambia alcance o riesgo, recalcula e informa el nivel actualizado sin detenerse
   a pedir una decisión sobre el LLM. `lite` a `standard` solicita confirmar el cambio
   de flujo aunque el nivel coincida.
@@ -72,7 +77,7 @@ umbral trivial de `direct`. No menciones un modo. Esperado:
 
 - Descarta `direct` por motivos verificables y selecciona `lite` automáticamente.
 - Muestra `Modo SDD: lite`, recomienda normalmente `MEDIO`, explica los criterios
-  satisfechos y continúa con Quick Plan sin esperar confirmación de nivel.
+  satisfechos y termina el turno; `continúa` inicia Quick Plan sin confirmar nivel.
 - Activa Quick Plan y no presenta `lite` como una preferencia que el usuario debía
   haber solicitado expresamente.
 
@@ -93,7 +98,7 @@ Esperado:
 Solicita una feature apta para `lite`, sin decir «Quick Plan». Esperado:
 
 - Al seleccionar `lite`, activa Quick Plan automáticamente como su flujo obligatorio.
-- Genera requirements, design y tasks en una pasada tras el preflight informativo,
+- Genera requirements, design y tasks en una pasada tras reanudar el preflight,
   sin Gates 1–3.
 - No presenta Quick Plan como profundidad ni variante transversal, y no lo ofrece
   fuera de `lite`.
@@ -103,7 +108,7 @@ Solicita una feature apta para `lite`, sin decir «Quick Plan». Esperado:
 Ejecuta dos variantes equivalentes: «solo planifica este cambio» y «planifica e
 implementa este cambio». Esperado:
 
-- Ambas generan el Quick Plan `lite` tras el preflight informativo, sin confirmar el
+- Ambas generan el Quick Plan `lite` tras reanudar el preflight, sin confirmar el
   nivel de LLM.
 - La variante de solo planificación se detiene después de `tasks.md`, deja las
   tareas pendientes, no modifica producto y no crea `verification.md`.
@@ -174,8 +179,8 @@ Añade bloqueo de cuenta después de tres intentos fallidos.
 
 Esperado:
 
-- Primero recomienda el nivel de LLM solo para `Requirements` y continúa con esa fase
-  sin preguntar si el usuario seleccionó o cambiará de nivel.
+- Primero recomienda el nivel de LLM solo para `Requirements` y termina el turno
+  antes de esa fase. «Continúa» la inicia sin preguntar si cambió de nivel.
 - Selecciona `standard`; no implementa antes de aprobar requisitos, diseño y tareas.
 - Tras Requirements, muestra resumen + Gate 1 + recomendación para Design. La
   respuesta solo debe aprobar Requirements; después comienza Design sin confirmar
@@ -186,8 +191,8 @@ Esperado:
 - `design.md` declara TDD focalizado y la tarea de comportamiento expresa RED → GREEN
   → REFACTOR.
 - Tras aprobar Gate 3, observa RED antes de escribir el comportamiento productivo.
-  Al terminar, muestra resumen + recomendación informativa de Verification y ejecuta
-  la suite sin esperar confirmación del nivel.
+  Al terminar, muestra resumen + recomendación informativa de Verification y pausa;
+  solo ejecuta la suite tras «continúa», sin confirmar el nivel.
 - Fase 4 registra comandos/resultados; después solo muestra Gate 4 y no cierra
   requisitos sin evidencia.
 
@@ -389,6 +394,25 @@ Esperado:
   índices y retoma el gate SDD correspondiente.
 
 ## Criterio de cierre
+
+### Comprobación multiagente del aviso de modelo
+
+En una instalación nueva y con cada agente, solicita primero una consulta puntual
+(`architecture`: ADR localizado; `code-quality`: estado de un finding; `data-api`:
+un DTO; `security`: estado de un riesgo; `ui-design`: un token). La primera respuesta
+debe recomendar un nivel y terminar el turno sin inspeccionar el proyecto. Cambia
+manualmente el modelo si quieres y responde «continúa»: debe ejecutar la consulta
+sin preguntar qué modelo usas ni repetir la recomendación. Repite con una operación
+pesada: el aviso sigue precediendo todas las herramientas, incluida la skill.
+
+En un handoff desde Documentation Orchestrator con nivel ya recomendado para el
+mismo alcance, confirma el Gate 0 del orquestador y comprueba que el especialista
+no repite el aviso, pero conserva sus gates de alcance/escritura. Project Navigator
+mantiene su pausa previa a operaciones pesadas y el aviso final sin bloqueo; Git
+Release Manager conserva sus confirmaciones de Git sin Gate 0 de modelo.
+
+Estos checks interactivos se registran como no ejecutados hasta realizarlos en
+cada plataforma; los tests textuales y el render no los sustituyen.
 
 La prueba pasa si el Gate 0 y los veintinueve escenarios conservan proporcionalidad,
 recomiendan capacidad para la próxima fase sin identificar productos o proveedores, respetan gates y

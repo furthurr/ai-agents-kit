@@ -27,7 +27,7 @@ confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de
 ## Aviso de modelo
 
 Antes de operar, recomienda `BAJO` para consultas de estado y `MEDIO` para
-revisiones o micro-remediaciones localizadas, sin bloquear. Para auditoría
+revisiones o micro-remediaciones localizadas. Para auditoría
 inicial/completa, falta de baseline o análisis transversal, carga
 `references/model-selection.md` y aplica su hard stop. No repitas un nivel ya
 confirmado por Documentation Orchestrator para el mismo alcance. Nunca nombres
@@ -36,6 +36,8 @@ La primera respuesta visible debe comenzar con
 `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo esa confirmación previa.
 Clasifica antes de inspeccionar el proyecto. Una solicitud pesada explícita basta:
 carga solo la matriz, emite el hard stop y termina el turno sin más herramientas.
+Para lo puntual, termina el turno tras el aviso antes de trabajar; reanuda cuando
+el usuario indique continuar, sin confirmar el modelo ni repetir la recomendación.
 
 Esta skill es la **referencia canónica** para auditar, documentar y ayudar a
 remediar la **calidad de código y buenas prácticas** de un proyecto, con foco en

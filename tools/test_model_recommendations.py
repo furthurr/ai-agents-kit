@@ -52,6 +52,12 @@ def test_specialist_contracts() -> None:
             and "prohibido inspeccionar el proyecto" in normalized(agent),
             f"{specialist}: agente detiene el trabajo pesado antes del barrido",
         )
+        check(
+            "también para lo puntual" in normalized(agent)
+            and "termina el turno" in normalized(agent)
+            and "sin confirmar el modelo" in normalized(agent),
+            f"{specialist}: agente pausa en trabajo puntual y reanuda sin declarar modelo",
+        )
         check("model-selection.md" in skill, f"{specialist}: skill enlaza la matriz")
         check(
             "nunca nombres modelos/proveedores ni cambies el modelo del host" in normalized(skill),
@@ -66,10 +72,22 @@ def test_specialist_contracts() -> None:
             f"{specialist}: skill prohíbe trabajo tras el hard stop",
         )
         check(
+            "para lo puntual" in normalized(skill)
+            and "termina el turno" in normalized(skill)
+            and "sin confirmar el modelo" in normalized(skill),
+            f"{specialist}: skill pausa también el preflight puntual",
+        )
+        check(
             all(level in reference for level in ("`BAJO`", "`MEDIO`", "`ALTO`")),
             f"{specialist}: usa los tres niveles genéricos",
         )
         check("hard stop" in compact, f"{specialist}: distingue operaciones bloqueantes")
+        check(
+            "| si |" in compact
+            and "termina el turno" in compact
+            and "sin confirmar el modelo" in compact,
+            f"{specialist}: matriz pausa todas las operaciones y no exige modelo",
+        )
         check(
             "no menciones nombres de modelos, proveedores" in compact,
             f"{specialist}: permanece agnóstico de proveedor",
@@ -94,6 +112,17 @@ def test_existing_agents_and_git_exception() -> None:
     for agent_id, marker in markers.items():
         agent = read(ROOT / "canonical" / "agents" / f"{agent_id}.md")
         check(marker.lower() in normalized(agent), f"{agent_id}: conserva recomendación existente")
+
+    orchestrator = normalized(read(ROOT / "canonical" / "skills" / "documentation-orchestrator" / "references" / "workflows.md"))
+    navigator = normalized(read(ROOT / "canonical" / "skills" / "project-navigator" / "references" / "bootstrap.md"))
+    check("termina el turno" in orchestrator and "responde \"continua\"" in orchestrator
+          and "sin declarar qué modelo elegiste" in orchestrator,
+          "orquestador conserva pausa y permite reanudar sin declarar modelo")
+    navigator_after = navigator.split("**después:**", maxsplit=1)[1].split("## bootstrap asistido", maxsplit=1)[0]
+    check("termina el turno" in navigator and "sin confirmar el modelo" in navigator
+          and "ya puedes cambiar manualmente" in navigator_after
+          and "termina el turno" not in navigator_after,
+          "Navigator conserva pausa previa y aviso final no bloqueante")
 
     git_agent = read(ROOT / "canonical" / "agents" / "git-release-manager.md")
     check(

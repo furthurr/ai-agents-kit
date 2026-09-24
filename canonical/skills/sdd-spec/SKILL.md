@@ -74,8 +74,10 @@ todas las fases futuras. Para una spec nueva `standard` o `deep`, la próxima fa
 Requirements; para `lite`, la única operación es Quick Plan.
 
 `direct` recibe un aviso breve y no bloqueante. `lite` recibe un único preflight
-informativo para Quick Plan. `standard`, `deep` y bugfix no trivial reciben el
-preflight de la próxima fase y continúan sin esperar confirmación del nivel de LLM.
+informativo para Quick Plan. `lite`, `standard`, `deep` y bugfix no trivial terminan
+el turno tras el preflight inicial, antes de ejecutar la operación: el usuario
+puede cambiar manualmente de modelo o seguir con el actual y responder «continúa».
+Al reanudar, no solicites confirmar el nivel de LLM ni repitas el mismo aviso.
 En `standard` y `deep`, muestra una recomendación al iniciar Requirements, Design,
 Tasks, Implementación y Verification, sin convertirla en un gate adicional ni
 repetirla dentro de la misma fase.
@@ -83,10 +85,11 @@ repetirla dentro de la misma fase.
 En cada transición, presenta en un mismo mensaje el resumen verificable de la fase
 actual, su gate de aprobación cuando aplique y la recomendación de la próxima fase.
 La recomendación queda condicionada a la aprobación actual, pero es solo informativa:
-no preguntes si el usuario seleccionó o cambiará el LLM. Espera únicamente la
-aprobación del gate real de la fase actual; al aprobar, inicia la siguiente fase.
-Después de Implementación, presenta el preflight de Verification y continúa sin
-esperar una confirmación de nivel. Si cambia el alcance o el riesgo, recalcula y
+no preguntes si el usuario seleccionó o cambiará el LLM. El gate actual es la pausa
+entre fases: espera únicamente su aprobación; al aprobar, inicia la siguiente fase
+sin otra pausa ni confirmación de nivel. Después de Implementación, presenta el
+preflight de Verification y termina el turno: no hay gate intermedio, pero la
+continuación del usuario permite iniciarla sin confirmar el nivel. Si cambia el alcance o el riesgo, recalcula y
 comunica la recomendación actualizada. Si cambia la política de gates por una
 reclasificación de modo, solicita aprobación de ese cambio de flujo, no del nivel de
 LLM. Después de Verification muestra únicamente Gate 4, sin recomendación para el
@@ -143,8 +146,9 @@ antes de reanudarla.
 
 > **En `standard` y `deep`, no avances de fase sin aprobación explícita del usuario.**
 > {{gate_instruction}}La recomendación del nivel de LLM es informativa, no es un gate
-> ni requiere confirmación. En las transiciones, termina el turno esperando solo la
-> aprobación del gate SDD real. El Gate 0 tampoco bloquea por el nivel recomendado.
+> ni requiere confirmación del modelo. En las transiciones, termina el turno esperando
+> solo la aprobación del gate SDD real. El Gate 0 inicial pausa la operación salvo en
+> `direct`, sin crear un gate de aprobación de nivel.
 > `lite` usa su preflight informativo para Quick Plan, sin Gates 1–3, y cierra sin
 > Gate 4.
 
@@ -200,7 +204,8 @@ antes de reanudarla.
 
 Prerrequisito: `[x]` con artefacto real (o `[omitido: razón]`).
 1. Presenta el resumen de Implementación y el nivel de LLM recomendado para
-   Verification; continúa con la suite sin esperar confirmación del nivel.
+   Verification; termina el turno para permitir cambio manual y reanuda con la suite
+   cuando el usuario indique continuar, sin pedir confirmación del nivel.
 2. `references/integrity-gate.md`: validar cada `[x]` ↔ disco/evidencia.
 3. Suite de tests + spot-check `quality-bar` y 3–5 RNF del spec.
 4. `verification.md` con columna Evidencia (`templates.md`). No cerrar con huérfanos.
@@ -225,7 +230,8 @@ Quick Plan es obligatorio y exclusivo de `lite`. Genera requirements, design y
 tasks en una pasada, con preguntas aclaratorias esenciales por adelantado y sin
 Gates 1–3. El preflight informativo muestra `Modo SDD: lite`, Quick Plan, el nivel de
 LLM recomendado para esa única operación, los motivos y el flujo omitido; no
-recomienda por separado sus pasos internos ni espera confirmación del nivel.
+recomienda por separado sus pasos internos. Termina el turno antes de Quick Plan y
+reanuda cuando el usuario indique continuar, sin exigir confirmar el modelo.
 
 Si la intención es solo planificación, termina después de `tasks.md` y no
 implementar código. Si la solicitud original incluye implementación, aplica

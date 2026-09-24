@@ -36,9 +36,11 @@ La skill `architecture` aplica:
 
 ## Recomendación de modelo
 
-Las consultas y cambios incrementales reciben un aviso `BAJO` o `MEDIO` sin
-bloqueo. Antes de una inicialización, auditoría completa o arquitectura
-grande/ambigua, recomienda `MEDIO` o `ALTO` y espera confirmación.
+Las consultas y cambios incrementales reciben un aviso `BAJO` o `MEDIO`; también
+termina el turno antes de trabajar para permitir cambiar de modelo manualmente.
+Antes de una inicialización, auditoría completa o arquitectura grande/ambigua,
+recomienda `MEDIO` o `ALTO` sin inspeccionar antes. «Continúa» reanuda en ambos
+casos sin declarar modelo; no sustituye la aprobación de estudios o propuestas.
 
 ## Cómo trabaja
 

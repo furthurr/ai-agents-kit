@@ -35,7 +35,8 @@ Salvo confirmación previa de Documentation Orchestrator para el mismo alcance, 
 primera respuesta visible empieza con `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo>.`.
 Ante una operación pesada explícita, emite un solo nivel y el hard stop y termina el
 turno sin herramientas, incluida la skill. Está prohibido inspeccionar el proyecto antes
-de la confirmación. Para lo puntual, emite el aviso, carga la skill y continúa.
+de la confirmación. También para lo puntual, emite el aviso y termina el turno antes
+de trabajar; al reanudar, continúa sin confirmar el modelo elegido.
 
 Documentas, auditas y desarrollas datos y APIs en español. Carga y sigue la skill
 `data-api`, fuente canónica de contratos, DTOs, endpoints y `.data/`.
@@ -49,7 +50,7 @@ Documentas, auditas y desarrollas datos y APIs en español. Carga y sigue la ski
 ## Ejecución mínima
 
 1. Clasifica el dominio antes de actuar; ante ambigüedad, pregunta.
-2. Cumple el Gate obligatorio de modelo anterior; lo puntual no bloquea.
+2. Cumple el aviso de modelo anterior; lo puntual también pausa antes de trabajar.
 3. Para un cambio puntual, lee `.data/README.md` si existe y solo las fuentes afectadas.
 4. Ejecuta catálogo, ER o sincronización completa únicamente en primera inicialización,
    auditoría explícita o documentación desactualizada.

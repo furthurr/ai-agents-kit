@@ -32,14 +32,16 @@ activa por petición explícita.
 Antes de cargar contexto pesado, SDD hace un preflight barato y recomienda un nivel
 de LLM genérico `BAJO`, `MEDIO` o `ALTO` únicamente para la próxima fase u operación.
 El mensaje usa el formato `Nivel de LLM recomendado para <fase>: <nivel>`. La
-recomendación es informativa: SDD no pregunta si el usuario seleccionó o cambiará el
-nivel y continúa con el LLM que ya esté activo en la herramienta.
+recomendación es informativa: salvo en `direct`, SDD termina el turno para darte
+tiempo a cambiar manualmente de modelo o conservar el actual. Al responder
+«continúa» reanuda el proceso sin pedirte que declares qué modelo elegiste.
 
 En cada transición, SDD presenta el resumen verificable, el gate actual y la
 recomendación de la próxima fase en el mismo mensaje. Para continuar solo requiere la
 aprobación del gate SDD real; después inicia la siguiente fase sin confirmación del
-nivel de LLM. SDD no conoce, selecciona ni cambia el LLM del host, y no crea gates
-adicionales.
+nivel de LLM. Después de Implementación, como no hay gate intermedio, pausa tras
+recomendar el nivel para Verification y la ejecuta cuando reanudes. SDD no conoce,
+selecciona ni cambia el LLM del host, y no crea gates adicionales.
 
 ## Modos
 
@@ -60,9 +62,9 @@ usan regresión y el legado usa caracterización.
 
 ## Flujo y gates
 
-0. **Nivel de LLM:** preflight informativo de la próxima fase. En todos los modos,
-   la recomendación no bloquea; `direct` no crea spec. Los preflights de transición
-   tampoco son gates adicionales.
+0. **Nivel de LLM:** preflight de la próxima fase; salvo `direct`, termina el turno
+   antes de comenzar para permitir un cambio manual opcional. La pausa no es un gate
+   de modelo; `direct` no crea spec.
 1. **Requirements:** historias, criterios EARS, errores, edge cases y supuestos.
    Gate 1: aprobar requisitos en `standard` y `deep`.
 2. **Design:** arquitectura, modelos, errores, pruebas y estrategia de testing.
@@ -70,12 +72,12 @@ usan regresión y el legado usa caracterización.
 3. **Tasks:** tareas trazadas a requisitos, dependencias y waves.
    Gate 3: aprobar el plan y empezar a implementar en `standard` y `deep`.
 4. **Implementación:** ejecutar una tarea o wave, con integrity gate antes de marcarla.
-5. **Verification:** tras el preflight de Verification, ejecutar pruebas, registrar
+5. **Verification:** tras el preflight y la reanudación, ejecutar pruebas, registrar
    evidencia y revisar requisitos y RNF. Gate 4: cerrar la spec o corregir huecos en
    `standard` y `deep`; después no hay otra recomendación.
 
 En `lite`, Quick Plan genera `requirements.md`, `design.md` y `tasks.md` en una
-pasada después del preflight informativo. No existen Gates 1-3 ni Gate 4. Si el
+pasada después del preflight informativo y de que el usuario reanude. No existen Gates 1-3 ni Gate 4. Si el
 alcance es solo planificar, termina con esos tres archivos; si también se
 implementa, añade un `verification.md` compacto con la evidencia.
 
@@ -150,9 +152,9 @@ y `Quick Plan direct` son combinaciones inválidas.
 ## Límites y confirmaciones
 
 - No cruza los Gates 1-4 de `standard` o `deep` sin aprobación explícita.
-- El Gate 0 informa el nivel de LLM recomendado, pero no espera confirmación ni
-  bloquea el inicio de una fase. En `lite`, el preflight Quick Plan también es
-  informativo; no crea Gates 1-3 ni Gate 4.
+- El Gate 0 informa el nivel de LLM recomendado y pausa salvo en `direct`, sin
+  pedir confirmación del modelo; `lite` pausa antes de Quick Plan, sin crear
+  Gates 1-3 ni Gate 4.
 - Quick Plan solo existe en `lite` y no se combina con otra profundidad.
 - No cambia el modelo del host ni menciona nombres de modelos o proveedores en la
   recomendación.

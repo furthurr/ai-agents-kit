@@ -11,14 +11,15 @@ Antes de continuar con project-navigator, te recomiendo cambiar manualmente
 el modelo de esta sesion a uno pequeno/rapido/economico (menor costo y
 latencia para indexar y navegar).
 
-No cambio el modelo por ti. Cuando lo hayas cambiado (o si prefieres seguir
-con el actual), confirmalo y sigo.
+No cambio el modelo por ti. Cambialo si quieres y responde «continua» para
+reanudar; no tienes que decirme cual elegiste.
 ```
 
-Esperar confirmación o "sigo con el actual". Nunca seleccionar ni forzar el modelo.
+Termina el turno y espera «continua» o equivalente, sin confirmar el modelo.
+Nunca seleccionar ni forzar el modelo.
 
 **Invocación orquestada:** si un orquestador canónico ya mostró explícitamente la
-recomendación de modelo para la fase Project Navigator y el usuario la confirmó,
+recomendación de modelo para la fase Project Navigator y el usuario reanudó,
 considera satisfecho este aviso y no lo repitas. Esto no omite ningún gate de
 alcance, ubicación, escritura ni integridad del bootstrap/update.
 

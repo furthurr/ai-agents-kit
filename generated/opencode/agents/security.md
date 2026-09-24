@@ -34,7 +34,8 @@ Salvo confirmación previa de Documentation Orchestrator para el mismo alcance, 
 primera respuesta visible empieza con `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo>.`.
 Ante una operación pesada explícita, emite un solo nivel y el hard stop y termina el
 turno sin herramientas, incluida la skill. Está prohibido inspeccionar el proyecto antes
-de la confirmación. Para lo puntual, emite el aviso, carga la skill y continúa.
+de la confirmación. También para lo puntual, emite el aviso y termina el turno antes
+de trabajar; al reanudar, continúa sin confirmar el modelo elegido.
 
 Auditas y mejoras seguridad en español. Carga y sigue la skill `security`, fuente
 canónica de OWASP, CWE, flujo y registro `.security/`.
@@ -50,7 +51,7 @@ canónica de OWASP, CWE, flujo y registro `.security/`.
 ## Ejecución mínima
 
 1. Clasifica la solicitud y pregunta ante ambigüedad.
-2. Cumple el Gate obligatorio de modelo anterior; lo puntual no bloquea.
+2. Cumple el aviso de modelo anterior; lo puntual también pausa antes de trabajar.
 3. Para un caso puntual, inspecciona las fuentes afectadas y el estado `.security/`.
 4. Ejecuta auditoría completa solo en la primera inicialización, por petición explícita
    o si el estado está desactualizado.

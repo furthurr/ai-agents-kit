@@ -47,12 +47,16 @@ canónica de EARS, fases, gates, artefactos y verificación.
 - Antes del trabajo, aplica el Gate 0 de `sdd-spec` como preflight; usa
   `references/model-selection.md` salvo `direct` inequívoco. Recomienda solo
   el nivel de LLM `BAJO`, `MEDIO` o `ALTO` para la próxima fase u operación. La
-  recomendación es informativa: no pidas confirmar si el usuario seleccionó o
-  cambiará el nivel, y nunca selecciones ni cambies el modelo del host.
+  recomendación es informativa: salvo `direct`, termina el turno tras el preflight
+  inicial para que el usuario pueda cambiar manualmente de modelo. Reanuda cuando
+  indique continuar, sin pedirle confirmar el nivel elegido. Nunca selecciones ni
+  cambies el modelo del host.
 - En una transición, presenta resumen verificable, gate actual y recomendación de la
   próxima fase en el mismo mensaje. Espera solo la aprobación del gate SDD real de la
   fase actual; una vez aprobada, continúa sin pedir confirmación del nivel de LLM.
   Una recomendación no crea un gate adicional.
+- Tras Implementación no hay gate intermedio: muestra el aviso de Verification y
+  termina el turno; ejecuta Verification solo cuando el usuario reanude.
 - Profundidad SDD y testing son ejes independientes: selecciona la estrategia con
   `references/testing.md`; una feature normal usa TDD focalizado, TDD estricto solo
   por petición explícita y `direct` no significa «sin pruebas».
@@ -67,7 +71,8 @@ canónica de EARS, fases, gates, artefactos y verificación.
 ## Contexto selectivo
 
 1. Ejecuta primero el preflight de la próxima fase de `sdd-spec`; muestra el nivel de
-   LLM recomendado y continúa sin esperar confirmación sobre ese nivel.
+   LLM recomendado y, salvo en `direct`, termina el turno para permitir el cambio
+   manual opcional. Al reanudar no exijas confirmar el modelo.
 2. Tras el preflight inicial, lee solo `CLAUDE.md`, `.claude/CLAUDE.md`, `.claude/rules/*.md` y `.sdd/steering/` si existen.
 3. Antes de usar `.navigator/`, carga
    `references/navigator-context.md` desde `sdd-spec`: aplica su preflight, usa

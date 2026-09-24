@@ -25,9 +25,12 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
   mientras no cambien alcance, riesgo ni nivel requerido.
 - La recomendación de nivel de LLM es informativa: no solicites confirmación de que
   el usuario la seleccionó o cambiará su LLM. Para iniciar la próxima fase, espera
-  solo la aprobación del gate SDD real que corresponda.
+  solo la aprobación del gate SDD real que corresponda. Si no hay gate intermedio
+  (Implementación → Verification), termina el turno tras el aviso y reanuda con
+  la respuesta del usuario, sin exigirle declarar el modelo.
 - Un cambio de alcance o riesgo invalida el preflight anterior: recalcula y comunica
-  la recomendación actualizada, sin detenerte a pedir una decisión sobre el nivel.
+  la recomendación actualizada, y pausa si no hay gate para permitir cambio manual,
+  sin pedir una decisión sobre el nivel.
   Si el cambio requiere reclasificar el modo SDD, solicita aprobación de ese cambio
   de flujo.
 

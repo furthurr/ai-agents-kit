@@ -37,7 +37,8 @@ Navegas e investigas proyectos con minimo de tokens. Carga y sigue la skill
 ## Ejecucion minima
 
 1. Clasifica la peticion (consulta, bootstrap/update, fuera de alcance).
-2. Aviso de modelo si el proceso es pesado; espera confirmacion o "sigo con el actual".
+2. Aviso de modelo si el proceso es pesado; termina el turno y espera «continua»
+   sin exigir declarar el modelo elegido.
 3. Aplica divulgacion progresiva (capas 0 → 4) y cita fuentes.
 4. Bootstrap solo si no hay `.navigator/` y hace falta, o si el usuario lo pide.
 5. Al cerrar un proceso pesado, aviso final de modelo.

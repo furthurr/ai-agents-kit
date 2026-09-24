@@ -37,9 +37,11 @@ La skill `code-quality` usa:
 
 ## Recomendación de modelo
 
-Las consultas y remediaciones localizadas reciben un aviso `BAJO` o `MEDIO` sin
-bloqueo. Una auditoría inicial/completa o transversal recomienda `ALTO` y espera
-confirmación antes de recorrer el código.
+Las consultas y remediaciones localizadas reciben un aviso `BAJO` o `MEDIO` y
+terminan el turno antes de trabajar. Una auditoría inicial/completa o transversal
+recomienda `ALTO` y también pausa antes de recorrer el código. «Continúa» permite
+reanudar con el modelo actual o uno elegido manualmente, sin declararlo ni omitir
+las aprobaciones de alcance y micro-remediación.
 
 ## Cómo trabaja
 
