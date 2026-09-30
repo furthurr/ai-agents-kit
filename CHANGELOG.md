@@ -3,6 +3,16 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [0.2.1] - 2026-09-30
+
+### Funcionalidades
+
+- Añadir soporte de Pi con 10 skills nativas y 9 agentes invocables como prompt templates.
+
+### Compatibilidad
+
+- Añadir generación, validación, instalación y backup de los artefactos Pi en Bash y PowerShell.
+
 ## [0.2.0] - 2026-09-24
 
 ### Funcionalidades
