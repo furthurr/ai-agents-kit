@@ -114,7 +114,7 @@ Nunca commits de secretos. Detalle: [docs/desarrollo.md](docs/desarrollo.md).
 
 ## Autor
 
-Pedro G. V. [@furthurr](https://github.com/furthurr)
+Pedro G. V. [@furthurr](https://github.com/furthurr) ✌️
 
 - GitHub: https://github.com/furthurr
 - Email: pedrogvas@gmail.com
