@@ -79,7 +79,9 @@ definir, `render.py` falla.
 
 1. Añade el identificador en `canonical/manifest.json` → `platforms`.
 2. Crea `adapters/<plataforma>/platform.json` (sustituciones mínimas).
-3. Crea un adapter JSON por cada agente del manifest.
+3. Crea un adapter JSON por cada agente del manifest. Opcionalmente incluye
+   `body_suffix` para añadir texto tras el cuerpo canónico (Pi lo usa para
+   `$ARGUMENTS`).
 4. Amplía `tools/render.py` **solo** si la estructura de salida es distinta.
 5. Añade `scripts/install/<plataforma>.sh` y `.ps1` (y backup si aplica).
 6. Renderiza, valida e instala en dry-run.
@@ -102,6 +104,8 @@ python3 tools/test_integrity.py
 python3 tools/test_links.py
 python3 tools/test_model_recommendations.py
 python3 tools/test_sdd_contract.py
+python3 tools/test_validate.py
+python3 tools/test_install.py
 ```
 
 Cubre integridad del pipeline y convenciones del repo. Ejecútalo junto a

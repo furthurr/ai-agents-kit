@@ -1,0 +1,8 @@
+{
+  "filename": "sdd.md",
+  "frontmatter": {
+    "description": "Agente SDD — Spec-Driven Development proporcional con modos direct, lite (Quick Plan), standard y deep. Requisitos EARS, gates de aprobación, diseño, tareas y verificación trazable.",
+    "argument-hint": "<tarea o feature>"
+  },
+  "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
+}

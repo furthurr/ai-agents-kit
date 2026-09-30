@@ -274,6 +274,50 @@ def test_token_in_reference() -> None:
         check(run_validate(root) == 1, "rechaza un token fuera de SKILL.md")
 
 
+def test_pi_body_suffix_missing_arguments() -> None:
+    """Pi adapters must include $ARGUMENTS in body_suffix to receive user input."""
+    print("\n\033[1m[13] body_suffix de Pi sin $ARGUMENTS\033[0m")
+    with tempfile.TemporaryDirectory() as tmp:
+        root = build_fixture(Path(tmp))
+        # Switch the fixture platform to "pi" and use a Pi-shaped adapter.
+        manifest_path = root / "canonical" / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["platforms"] = ["pi"]
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        pi_dir = root / "adapters" / "pi"
+        (pi_dir / "agents").mkdir(parents=True, exist_ok=True)
+        (pi_dir / "platform.json").write_text(
+            json.dumps({"substitutions": {"{{platform_name}}": "Pi"}}), encoding="utf-8"
+        )
+        (pi_dir / "agents" / "demo.json").write_text(
+            json.dumps({
+                "filename": "demo.md",
+                "frontmatter": {"description": "demo", "argument-hint": "<tarea>"},
+                "body_suffix": "sin argumentos",
+            }),
+            encoding="utf-8",
+        )
+        shutil.rmtree(root / "adapters" / "acme")
+        with_kit(root)
+        render_module.render()
+        restore_modules()
+        check(run_validate(root) == 1, "rechaza body_suffix sin $ARGUMENTS")
+
+        # Con $ARGUMENTS pasa.
+        (pi_dir / "agents" / "demo.json").write_text(
+            json.dumps({
+                "filename": "demo.md",
+                "frontmatter": {"description": "demo", "argument-hint": "<tarea>"},
+                "body_suffix": "\n\n$ARGUMENTS\n",
+            }),
+            encoding="utf-8",
+        )
+        with_kit(root)
+        render_module.render()
+        restore_modules()
+        check(run_validate(root) == 0, "acepta body_suffix con $ARGUMENTS")
+
+
 def main() -> int:
     print(f"\033[1m{'='*60}\033[0m")
     print("\033[1m  Pruebas negativas — validate.py / render.py\033[0m")
@@ -291,6 +335,7 @@ def main() -> int:
     test_validate_non_destructive()
     test_unused_substitution()
     test_token_in_reference()
+    test_pi_body_suffix_missing_arguments()
 
     print(f"\n\033[1m{'='*60}\033[0m")
     total = PASSED + FAILED

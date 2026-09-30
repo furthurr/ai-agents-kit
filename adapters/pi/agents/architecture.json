@@ -1,0 +1,8 @@
+{
+  "filename": "architecture.md",
+  "frontmatter": {
+    "description": "Agente de arquitectura. Documenta y mantiene la arquitectura del proyecto en `.architecture/` (arc42 + C4 en Mermaid + ADRs), con modos lite/full, sincronización con git y deuda técnica priorizada. Solo documenta, audita y recomienda.",
+    "argument-hint": "<consulta o tarea de arquitectura>"
+  },
+  "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
+}

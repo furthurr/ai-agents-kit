@@ -3,8 +3,8 @@
 ![MAS (Multi-Agent System)](MAS.png)
 
 Fuente versionada de **skills** y **agentes** para [GitHub Copilot](https://github.com/features/copilot),
-[OpenCode](https://opencode.ai), [Kiro](https://kiro.dev) y
-[Claude Code](https://code.claude.com/).
+[OpenCode](https://opencode.ai), [Kiro](https://kiro.dev),
+[Claude Code](https://code.claude.com/) y [Pi](https://pi.dev).
 
 El sistema multiagente de este kit se denomina **MAS** (*Multi-Agent System*).
 Consulta la [guía de identidad y terminología](docs/mas.md) para dirigir
@@ -31,7 +31,7 @@ Más detalle: [docs/vision.md](docs/vision.md).
 |---|----------|---------|
 | Skills | 10 | architecture, code-quality, data-api, documentation-orchestrator, git-commit, project-navigator, release-management, sdd-spec, security, ui-design |
 | Agentes | 9 | especialistas por dominio; **Documentation Orchestrator** coordina documentación y **Git & Release Manager** coordina Git/release |
-| Plataformas | 4 | copilot, opencode, kiro, claude |
+| Plataformas | 5 | copilot, opencode, kiro, claude, pi |
 
 Catálogo completo (roles, carpetas, cuándo usar cada uno):
 [docs/catalogo.md](docs/catalogo.md).
@@ -50,6 +50,7 @@ python3 tools/validate.py
 ./scripts/install/opencode.sh     # → ~/.config/opencode/
 ./scripts/install/kiro.sh         # → ~/.kiro/
 ./scripts/install/claude.sh       # → ~/.claude/
+./scripts/install/pi.sh           # → ~/.pi/agent/
 
 # 3. Reinicia la herramienta que uses
 ```
@@ -63,6 +64,7 @@ python tools/validate.py
 .\scripts\install\opencode.ps1
 .\scripts\install\kiro.ps1
 .\scripts\install\claude.ps1
+.\scripts\install\pi.ps1
 ```
 
 Opciones: `--dry-run` / `-DryRun`, `--force` / `-Force`.

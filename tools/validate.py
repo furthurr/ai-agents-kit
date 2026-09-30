@@ -103,6 +103,13 @@ def validate_adapters(manifest: dict, errors: list[str]) -> dict[str, set[str]]:
                     f"Adaptador Claude {adapter.relative_to(ROOT)}: 'user-invocable' debe ser false "
                     "para no duplicar el agente en el selector de VS Code"
                 )
+            elif platform == "pi":
+                suffix = data.get("body_suffix", "")
+                if not isinstance(suffix, str) or "$ARGUMENTS" not in suffix:
+                    errors.append(
+                        f"Adaptador Pi {adapter.relative_to(ROOT)}: 'body_suffix' debe ser "
+                        "string y contener '$ARGUMENTS' para recibir la tarea del usuario"
+                    )
             if not _safe_filename(filename):
                 errors.append(f"Adaptador {adapter.relative_to(ROOT)}: filename inseguro {filename!r}")
                 continue

@@ -3,7 +3,7 @@
 Resumen de lo que incluye el kit. El detalle operativo vive en
 `canonical/skills/<id>/SKILL.md` y `canonical/agents/<id>.md`.
 
-Inventario oficial: `canonical/manifest.json` (10 skills, 9 agentes, 4 plataformas).
+Inventario oficial: `canonical/manifest.json` (10 skills, 9 agentes, 5 plataformas).
 
 Todos los componentes forman **MAS** (*Multi-Agent System*), el sistema
 multiagente de este kit. La convención para referirse al sistema o a un agente
@@ -93,6 +93,7 @@ cuando el procedimiento lo pide. Eso reduce tokens en tareas simples.
 | `opencode` | `~/.config/opencode/skills/` y `~/.config/opencode/agent/` |
 | `kiro` | `~/.kiro/skills/` y `~/.kiro/agents/` |
 | `claude` | `~/.claude/skills/` y `~/.claude/agents/` (o `$CLAUDE_CONFIG_DIR`) |
+| `pi` | `~/.pi/agent/skills/` y `~/.pi/agent/prompts/` (o `$PI_CODING_AGENT_DIR`) |
 
 Guía de instalación: [instalacion.md](instalacion.md).  
 Cómo invocarlos: [uso.md](uso.md).

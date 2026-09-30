@@ -1,0 +1,7 @@
+{
+  "substitutions": {
+    "{{sdd_agent}}": "/sdd",
+    "{{gate_instruction}}": "",
+    "{{steering_paths}}": "`AGENTS.md`, `CLAUDE.md`, `.pi/APPEND_SYSTEM.md`"
+  }
+}

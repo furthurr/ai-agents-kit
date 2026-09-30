@@ -104,7 +104,8 @@ def render_platform(manifest: dict[str, Any], platform: str, generated_root: Pat
                 f"filename escapa del destino en {platform} agent {agent_id}: {adapter['filename']!r}"
             )
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_text(frontmatter(adapter["frontmatter"]) + body, encoding="utf-8")
+        suffix = adapter.get("body_suffix", "")
+        destination.write_text(frontmatter(adapter["frontmatter"]) + body + suffix, encoding="utf-8")
 
 
 def render(generated_root: Path | None = None) -> int:

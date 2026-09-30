@@ -1,0 +1,8 @@
+{
+  "filename": "code-quality.md",
+  "frontmatter": {
+    "description": "Agente de buenas prácticas y calidad de código. Audita y documenta la deuda de calidad en `.quality/` con base en SonarQube (Clean Code, reglas por lenguaje, cobertura, duplicación, complejidad). Remedia paso a paso con confirmación.",
+    "argument-hint": "<consulta o tarea de calidad>"
+  },
+  "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
+}

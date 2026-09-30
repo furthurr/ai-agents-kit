@@ -59,11 +59,13 @@ def test_project_structure() -> None:
         "adapters/opencode",
         "adapters/kiro",
         "adapters/claude",
+        "adapters/pi",
         "generated",
         "generated/copilot",
         "generated/opencode",
         "generated/kiro",
         "generated/claude",
+        "generated/pi",
         "tools",
         "scripts",
         "scripts/install",
@@ -115,7 +117,7 @@ def test_no_root_scripts() -> None:
 def test_scripts_exist() -> None:
     print("\n\033[1m[3] Scripts en nueva ubicación\033[0m")
 
-    platforms = ["copilot", "opencode", "kiro", "claude"]
+    platforms = ["copilot", "opencode", "kiro", "claude", "pi"]
     for platform in platforms:
         for ext in ("sh", "ps1"):
             install = ROOT / "scripts" / "install" / f"{platform}.{ext}"

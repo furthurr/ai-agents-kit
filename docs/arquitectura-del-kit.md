@@ -28,7 +28,7 @@ repositorio**.
 └────────────────────────────┬────────────────────────────────┘
                              │  scripts/install/*
                              ▼
-      ~/.copilot  ·  ~/.config/opencode  ·  ~/.kiro  ·  ~/.claude
+      ~/.copilot  ·  ~/.config/opencode  ·  ~/.kiro  ·  ~/.claude  ·  ~/.pi/agent
 ```
 
 ## Capas y responsabilidades
@@ -50,7 +50,7 @@ Fuente de verdad del inventario:
 {
   "skills": [ "architecture", "code-quality", "..." ],
   "agents": [ "architecture", "code-quality", "..." ],
-  "platforms": [ "copilot", "opencode", "kiro", "claude" ]
+  "platforms": [ "copilot", "opencode", "kiro", "claude", "pi" ]
 }
 ```
 
@@ -93,12 +93,13 @@ Campos habituales:
 
 Diferencias notables entre plataformas:
 
-| Aspecto | Copilot | OpenCode | Kiro | Claude Code |
-|---------|---------|----------|------|-------------|
-| Extensión agente | `.agent.md` | `.md` | `.md` | `.md` |
-| Nombre del agente | campo `name` en frontmatter | vía archivo / config | nombre de archivo (sin `name`) | `name` en minúsculas y con guiones |
-| Permisos | lista `tools` | `permission` (edit, bash, …) | `tools` + `permissions.rules` | `tools`, `disallowedTools` y settings |
-| Default shell sensible | según tool | confirmación (`ask`) | `ask` por defecto; `deny` en destructivos | flujo de permisos de Claude Code |
+| Aspecto | Copilot | OpenCode | Kiro | Claude Code | Pi |
+|---------|---------|----------|------|-------------|-----|
+| Extensión agente | `.agent.md` | `.md` | `.md` | `.md` | `.md` (prompt template) |
+| Nombre del agente | campo `name` en frontmatter | vía archivo / config | nombre de archivo (sin `name`) | `name` en minúsculas y con guiones | nombre de archivo → comando `/<id>` |
+| Permisos | lista `tools` | `permission` (edit, bash, …) | `tools` + `permissions.rules` | `tools`, `disallowedTools` y settings | herramientas de la sesión Pi |
+| Default shell sensible | según tool | confirmación (`ask`) | `ask` por defecto; `deny` en destructivos | flujo de permisos de Claude Code | permisos del proceso Pi |
+| Argumentos | — | — | — | — | `$ARGUMENTS` en `body_suffix` |
 
 VS Code también descubre los archivos de `~/.claude/agents/` cuando usa el
 formato Claude. Por eso los adapters de Claude emiten `user-invocable: false`:

@@ -1,0 +1,8 @@
+{
+  "filename": "data-api.md",
+  "frontmatter": {
+    "description": "Agente de datos y APIs. Documenta, audita y ayuda a desarrollar la capa de datos/APIs en `.data/` (catálogo de endpoints, DTOs/modelos, contratos OpenAPI/JSON Schema, ER en Mermaid). Identifica PII.",
+    "argument-hint": "<consulta o tarea de datos/API>"
+  },
+  "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
+}

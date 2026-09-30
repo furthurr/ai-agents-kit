@@ -1,0 +1,8 @@
+{
+  "filename": "documentation-orchestrator.md",
+  "frontmatter": {
+    "description": "Coordina el estado, bootstrap y sincronización de la documentación canónica (.navigator/, .architecture/, .data/, .design/, .quality/, .security/). Recomienda un modelo bajo/medio/alto y espera confirmación antes de operar.",
+    "argument-hint": "<consulta o tarea de documentación>"
+  },
+  "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
+}

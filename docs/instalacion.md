@@ -73,6 +73,19 @@ Ejemplos:
 | OpenCode | `~/.config/opencode/skills/` (o `$XDG_CONFIG_HOME/opencode/skills/`) | `~/.config/opencode/agent/` |
 | Kiro | `~/.kiro/skills/` | `~/.kiro/agents/` |
 | Claude Code | `~/.claude/skills/` (o `$CLAUDE_CONFIG_DIR/skills/`) | `~/.claude/agents/` (o `$CLAUDE_CONFIG_DIR/agents/`) |
+| Pi | `<agent-dir>/skills/` | `<agent-dir>/prompts/` |
+
+### Pi
+
+Pi descubre las skills como Agent Skills nativos y los agentes como prompt
+templates invocables. Tras instalar y reiniciar Pi:
+
+- **Skills:** `/skill:<nombre>` — por ejemplo, `/skill:sdd-spec`.
+- **Agentes:** `/<nombre> <tarea>` — por ejemplo, `/sdd implementar login`.
+
+El directorio de Pi se toma de `$PI_CODING_AGENT_DIR` o `~/.pi/agent` por
+defecto. Los agentes son plantillas de prompt dentro de la sesión activa: no
+crean subagentes aislados ni aplican permisos distintos por agente.
 
 ### Copilot y Claude Code en VS Code
 
@@ -92,6 +105,7 @@ timestamped. Rutas por plataforma:
 | OpenCode | `~/.opencode-kit-backup/<AAAAMMDD-HHMMSS>/` |
 | Kiro | `~/.kiro-kit-backup/<AAAAMMDD-HHMMSS>/` |
 | Claude Code | `~/.claude-kit-backup/<AAAAMMDD-HHMMSS>/` |
+| Pi | `~/.pi-kit-backup/<AAAAMMDD-HHMMSS>/` |
 
 Dentro de cada backup, el contenido previo queda en `skills/` y `agents/`.
 

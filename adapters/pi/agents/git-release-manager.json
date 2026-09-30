@@ -1,0 +1,8 @@
+{
+  "filename": "git-release-manager.md",
+  "frontmatter": {
+    "description": "Administra Git y ejecuta releases en español. Orquesta las skills git-commit (Conventional Commits y push) y release-management (SemVer, tags y CHANGELOG). Nunca hace commit/push/tag sin confirmación explícita.",
+    "argument-hint": "<consulta o tarea de git/release>"
+  },
+  "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
+}

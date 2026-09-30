@@ -35,6 +35,7 @@ PLATFORMS = {
     "opencode": (".config/opencode/skills", ".config/opencode/agent", ".opencode-kit-backup"),
     "kiro": (".kiro/skills", ".kiro/agents", ".kiro-kit-backup"),
     "claude": (".claude/skills", ".claude/agents", ".claude-kit-backup"),
+    "pi": (".pi/agent/skills", ".pi/agent/prompts", ".pi-kit-backup"),
 }
 
 # Directories the kit needs in order to render, validate and install.
