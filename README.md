@@ -116,11 +116,11 @@ Nunca commits de secretos. Detalle: [docs/desarrollo.md](docs/desarrollo.md).
 
 ## Autor
 
-Pedro G. V. [@furthurr](https://github.com/furthurr) ✌️
+<a href="https://furthurr.github.io/" target="_blank" rel="noopener noreferrer">Pedro G. V. @furthurr</a>
 
-- GitHub: https://github.com/furthurr
-- Email: pedrogvas@gmail.com
+- **GitHub:** https://github.com/furthurr
+- **Email:** pedrogvas@gmail.com
 
 ## Licencia
 
-[Apache-2.0](LICENSE)
+MIT

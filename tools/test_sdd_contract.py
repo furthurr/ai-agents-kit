@@ -432,8 +432,7 @@ def test_navigator_context_contract() -> None:
 
 def test_specialists_recommend_sdd_without_switching() -> None:
     for specialist in SPECIALISTS:
-        agent_id = "code-review" if specialist in ("code-quality", "security") else specialist
-        agent = read(ROOT / "canonical" / "agents" / f"{agent_id}.md")
+        agent = read(ROOT / "canonical" / "agents" / f"{specialist}.md")
         skill = read(ROOT / "canonical" / "skills" / specialist / "SKILL.md")
         normalized_agent = normalized(agent)
         normalized_skill = normalized(skill)

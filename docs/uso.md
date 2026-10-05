@@ -93,10 +93,10 @@ Catálogo completo: [catalogo.md](catalogo.md).
 2. **Primera vez en un repo** — usa Project Navigator para bootstrap de
    `.navigator/` (mapa barato); luego deja que cada especialista inicialice su
    carpeta (`.architecture/`, `.design/`, etc.).
-   Architecture, Data & API, UI Design y Code Review recomiendan nivel y pausan
-   antes de operar; «continúa» reanuda sin declarar el modelo. Si el Orchestrator
-   ya mostró y confirmó ese nivel para el mismo alcance, el especialista no lo
-   repite. Code Review no repite el aviso al cargar la segunda skill.
+   Architecture, Data & API, UI Design, Quality y Security recomiendan nivel antes
+   de operar: el aviso puntual no bloquea y las operaciones pesadas esperan
+   confirmación. Si el Orchestrator ya mostró y confirmó ese nivel para el mismo
+   alcance, el especialista no lo repite.
 3. **SDD antes de features grandes** — elige entre exactamente tres profundidades:
    `direct`, sin spec; `lite`, automático para trabajo acotado, claro y de bajo
    riesgo; y `standard`, fallback seguro.
