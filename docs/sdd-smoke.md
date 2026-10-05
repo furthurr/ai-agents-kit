@@ -17,7 +17,7 @@ Antes de los escenarios funcionales, valida estas variantes:
 
 - Una petición `direct` recibe `Nivel de LLM recomendado: BAJO` y continúa sin esperar
   confirmación.
-- Una feature `standard` o `deep` nueva muestra solo `Requirements` y
+- Una feature `standard` nueva muestra solo `Requirements` y
   `Nivel de LLM recomendado para Requirements: <nivel>`; no muestra recomendaciones
   para todo el flujo futuro. Termina el turno sin leer contexto de Requirements;
   tras cambiar manualmente de modelo o conservar el actual, `continúa` inicia la fase
@@ -130,7 +130,7 @@ Esperado:
 
 ## 8. Combinaciones inválidas de Quick Plan
 
-Ejecuta `direct con Quick Plan`, `standard con Quick Plan` y `deep con Quick Plan`.
+Ejecuta `direct con Quick Plan` y `standard con Quick Plan`.
 Esperado: rechaza cada combinación, explica que Quick Plan es exclusivo de `lite` y
 no omite gates ni convierte silenciosamente el modo solicitado.
 
@@ -196,27 +196,37 @@ Esperado:
 - Fase 4 registra comandos/resultados; después solo muestra Gate 4 y no cierra
   requisitos sin evidencia.
 
-## 13. Deep no implica TDD estricto
-
-Repite la feature anterior solicitando `deep`, pero no TDD estricto.
-
-Esperado: aumenta la profundidad documental permitida y conserva TDD focalizado;
-no exige evidencia RED/GREEN por cada incremento interno.
-
-## 14. TDD estricto no implica deep
+## 13. Solicitud de profundidad retirada
 
 Prompt:
 
 ```text
-Planifica e implementa la feature en modo standard con TDD estricto.
+Planifica esta feature en modo deep.
 ```
 
 Esperado:
 
-- Mantiene `standard`.
-- Cada incremento productivo comienza con un RED observado.
-- Registra excepciones; no adelanta código de comportamiento ni crea abstracciones
-  anticipadas solo para facilitar mocks.
+- Informa que `deep` fue retirado y propone `standard`.
+- Espera aceptación antes de crear artefactos o iniciar Requirements.
+- Tras aceptar, usa `standard` y sus Gates 1-4; la aceptación no aprueba Gate 1.
+- No presenta `deep` como una cuarta profundidad ni convierte la solicitud
+  silenciosamente.
+
+## 14. Solicitud de TDD estricto retirada
+
+Prompt:
+
+```text
+Planifica e implementa esta feature con TDD estricto.
+```
+
+Esperado:
+
+- Informa que TDD estricto fue retirado y propone TDD focalizado.
+- Espera aceptación antes de iniciar el flujo de pruebas.
+- Tras aceptar, declara TDD focalizado y observa RED por el comportamiento relevante,
+  GREEN mínimo y suite; no exige un RED por cada incremento interno.
+- No presenta TDD estricto como una estrategia disponible.
 
 ## 15. Bugfix no trivial usa standard
 
@@ -416,7 +426,8 @@ cada plataforma; los tests textuales y el render no los sustituyen.
 
 La prueba pasa si el Gate 0 y los veintinueve escenarios conservan proporcionalidad,
 recomiendan capacidad para la próxima fase sin identificar productos o proveedores, respetan gates y
-distinguen TDD de caracterización/cobertura retroactiva. `lite` debe quedar entre
+distinguen TDD focalizado de caracterización/cobertura retroactiva y rechazan las
+opciones retiradas de forma explícita. `lite` debe quedar entre
 `direct` y `standard`, con Quick Plan exclusivo, intención respetada, escalado
 conservador y evidencia compacta real sin inflar código, documentación o
 dependencias. Las rutas planas y agrupadas deben coexistir sin ambigüedad ni escape

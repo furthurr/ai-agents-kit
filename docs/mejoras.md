@@ -298,8 +298,8 @@ reordenado de historias y existe una tabla fechada de smoke por plataforma y ver
 #### Extensión implementada: testing adaptativo
 
 - [x] Separar profundidad SDD de estrategia de pruebas.
-- [x] Aplicar TDD focalizado por defecto a comportamiento nuevo/modificado y
-  reservar TDD estricto para petición explícita.
+- [x] Aplicar TDD focalizado por defecto a comportamiento nuevo/modificado.
+  El contrato actual retiró TDD estricto y propone TDD focalizado cuando se solicita.
 - [x] Definir regresión para bugfix, caracterización para legado y excepción
   verificable cuando no cambia comportamiento observable o falta un harness viable.
 - [x] Evitar test-after en plantillas y exigir evidencia RED/GREEN en el integrity gate.

@@ -29,15 +29,16 @@ Flujo SDD proporcional con gates, EARS y trazabilidad. Funciona con cualquier ag
 | `direct` | Cambio trivial verificable | Sin spec 4 fases | Mínima |
 | `lite` | Cambio acotado, claro y de bajo riesgo | Quick Plan; verificación compacta si implementa | Ligera |
 | `standard` | **Default** | 4 fases, design corto, 0–5 invariantes, testing adaptativo | Moderada |
-| `deep` | Usuario lo pide | + glosario, más diagramas, PBT real si aplica | Alta |
 
-SDD reconoce exactamente cuatro profundidades: `direct`, `lite`, `standard` y
-`deep`. Tipo de trabajo (feature, bugfix o exploración), profundidad, intención
+SDD reconoce exactamente tres profundidades: `direct`, `lite` y `standard`. Tipo de
+trabajo (feature, bugfix o exploración), profundidad, intención
 (solo planificación o implementación) y estrategia de pruebas son ejes separados.
 
-`standard` es el fallback seguro. No actives `deep` solo ni rebajes una solicitud
-explícita de `standard` o `deep`. Caps standard: design ~≤250 líneas; máx. 5
-invariantes; 1 flowchart + 1 sequence; glosario solo en `deep` o si el usuario lo pide.
+`standard` es el fallback seguro. No existe una profundidad más pesada que debas
+activar: no rebajes una solicitud explícita de `standard`. Sus límites son design
+~≤250 líneas, máx. 5 invariantes y 1 flowchart + 1 sequence. Un glosario o un
+diagrama adicional solo se añade si el requisito lo necesita o el usuario lo pide;
+no crea una profundidad nueva.
 
 `direct` exige alcance claro, localizado y reversible, sin contrato público,
 migración, decisión arquitectónica, cruce de capas ni riesgo relevante de seguridad,
@@ -52,14 +53,33 @@ privacidad, concurrencia, integridad crítica, compliance, legado riesgoso o bug
 no trivial. Si la elegibilidad de `lite` no puede demostrarse, usa `standard`.
 
 Quick Plan es obligatorio y exclusivo de `lite`. Rechaza `direct` + Quick Plan,
-`standard` + Quick Plan y `deep` + Quick Plan; una petición de Quick Plan solicita
-evaluar `lite`, pero no evita sus límites. Un bugfix trivial puede ser `direct`; los
-demás bugfixes usan `standard`.
+`standard` + Quick Plan; una petición de Quick Plan solicita evaluar `lite`, pero no
+evita sus límites. Un bugfix trivial puede ser `direct`; los demás bugfixes usan
+`standard`.
 
 Profundidad y testing son ejes independientes: sin cambio observable → sin test
 nuevo; bug o legado → regresión/caracterización; comportamiento nuevo o modificado
-→ TDD focalizado; TDD estricto solo si el usuario lo pide. `direct` puede incluir un
-microciclo TDD y `deep` no activa TDD estricto. Detalle en `references/testing.md`.
+→ TDD focalizado. `direct` puede incluir un microciclo TDD, pero no significa «sin
+pruebas». TDD estricto no es una estrategia disponible. Detalle en
+`references/testing.md`.
+
+## Opciones retiradas y specs históricas
+
+`deep` y TDD estricto ya no forman parte del contrato operativo. No deben
+seleccionarse ni presentarse como alternativas vigentes, incluso si el usuario los
+solicita explícitamente.
+
+- Si una solicitud nueva pide `deep`, informa que la profundidad se retiró, propone
+  `standard` y espera aceptación antes de iniciar el flujo.
+- Si una solicitud nueva pide TDD estricto, informa que la estrategia se retiró,
+  propone TDD focalizado y espera aceptación antes de iniciar el flujo.
+- Si una spec existente declara cualquiera de esas opciones, conserva sus
+  artefactos, evidencias y decisiones históricas; solicita aceptación de la
+  sustitución antes de modificarla o reanudarla.
+- La aceptación de la alternativa solo autoriza la sustitución de la opción. No
+  aprueba Requirements, Design, Tasks ni ningún gate pendiente.
+- Si faltan o se contradicen los marcadores de modo, fase, estado o gate, pide
+  aclaración y no infiere aprobación por la existencia de archivos.
 
 ## Gate 0 y preflight de próxima fase
 
@@ -70,15 +90,15 @@ referencia. En los demas casos usa `references/model-selection.md`. No nombres
 modelos o proveedores ni cambies el modelo del host.
 
 El Gate 0 inicial muestra el próximo proceso, no un nivel global ni un perfil de
-todas las fases futuras. Para una spec nueva `standard` o `deep`, la próxima fase es
+todas las fases futuras. Para una spec nueva `standard`, la próxima fase es
 Requirements; para `lite`, la única operación es Quick Plan.
 
 `direct` recibe un aviso breve y no bloqueante. `lite` recibe un único preflight
-informativo para Quick Plan. `lite`, `standard`, `deep` y bugfix no trivial terminan
+informativo para Quick Plan. `lite`, `standard` y bugfix no trivial terminan
 el turno tras el preflight inicial, antes de ejecutar la operación: el usuario
 puede cambiar manualmente de modelo o seguir con el actual y responder «continúa».
 Al reanudar, no solicites confirmar el nivel de LLM ni repitas el mismo aviso.
-En `standard` y `deep`, muestra una recomendación al iniciar Requirements, Design,
+En `standard`, muestra una recomendación al iniciar Requirements, Design,
 Tasks, Implementación y Verification, sin convertirla en un gate adicional ni
 repetirla dentro de la misma fase.
 
@@ -134,7 +154,7 @@ el nombre de la carpeta final por sí solo no es suficiente.
 | `tasks.md` | 3 | Tareas discretas, trazadas y secuenciadas |
 | `verification.md` | 4 | Matriz + evidencia + cierre |
 
-En `standard` y `deep`, los artefactos nuevos declaran `Modo SDD`, `Fase`, `Estado` y
+En `standard`, los artefactos nuevos declaran `Modo SDD`, `Fase`, `Estado` y
 el gate pendiente o aprobado que les corresponde. La reanudación usa esos marcadores
 y no infiere aprobación solo por la existencia del archivo. En `lite`, Quick Plan
 genera los tres primeros archivos en una pasada y añade `verification.md` compacto
@@ -144,7 +164,7 @@ antes de reanudarla.
 
 ## Flujo con gates
 
-> **En `standard` y `deep`, no avances de fase sin aprobación explícita del usuario.**
+> **En `standard`, no avances de fase sin aprobación explícita del usuario.**
 > La recomendación del nivel de LLM es informativa, no es un gate
 > ni requiere confirmación del modelo. En las transiciones, termina el turno esperando
 > solo la aprobación del gate SDD real. El Gate 0 inicial pausa la operación salvo en
@@ -184,7 +204,7 @@ antes de reanudarla.
 
 1. Tareas discretas, numeradas, trazadas a requisitos `(Req X)`.
 2. Secuencia por dependencias; marca `[P]` (paralelo) y `[opcional]`.
-3. Para TDD focalizado/estricto, cada tarea de comportamiento explicita el orden
+3. Para TDD focalizado, cada tarea de comportamiento explicita el orden
    interno RED → GREEN → REFACTOR, sin crear tareas ceremoniales por cada paso.
 4. Incluye grafo de waves. Consulta `references/templates.md` para formato.
 5. **GATE 3**: "¿Apruebas el plan y empiezo a implementar?"
@@ -241,7 +261,7 @@ de evidencia; cierra sin Gate 4.
 
 Si aparece una exclusión, detente en un punto seguro y propón `standard`. La
 reclasificación requiere aprobación por el cambio de flujo aunque el nivel de LLM no
-cambie. Quick Plan no es compatible con `direct`, `standard` ni `deep`.
+cambie. Quick Plan no es compatible con `direct` ni `standard`.
 
 ## Reglas de calidad
 

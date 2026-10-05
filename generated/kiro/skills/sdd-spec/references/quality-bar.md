@@ -11,11 +11,11 @@ Redactar y aplicar **sin** nombres de framework en el núcleo del checklist; el 
 4. **I/O:** fuera del hilo/loop de UI cuando la plataforma lo permita (leer steering).
 5. **Errores:** tipados o `Result`; no `catch` vacío; log en fallos de infraestructura.
 6. **Persistencia encapsulada:** un solo módulo/adaptador toca storage/BD; UI y domain no llaman APIs crudas de persistencia.
-7. **RNF auto-audit:** en `standard`/`deep`, verificar 3–5 RNF críticos del propio
+7. **RNF auto-audit:** en `standard`, verificar 3–5 RNF críticos del propio
    spec. En Lite, revisar solo los RNF declarados y aplicables; no inventar cuotas.
-8. **Testing adaptativo:** comportamiento nuevo/modificado usa TDD focalizado y bugfix usa regresión; caracterización protege refactors. «Sin test nuevo» solo sin cambio observable o con excepción explícita y verificación alternativa. TDD estricto solo por petición.
-9. **PBT:** solo si hay invariante algebraico y el modo lo permite (ver `testing.md`).
-10. **Proporcionalidad design (`standard`):** techo orientativo ~250 líneas; 1 flowchart + 1 sequence; C4/ER solo en `deep` o si hay BD interna real.
+8. **Testing adaptativo:** comportamiento nuevo/modificado usa TDD focalizado y bugfix usa regresión; caracterización protege refactors. «Sin test nuevo» solo sin cambio observable o con excepción explícita y verificación alternativa. TDD estricto está retirado.
+9. **PBT:** solo si hay un invariante algebraico claro (ver `testing.md`).
+10. **Proporcionalidad design (`standard`):** techo orientativo ~250 líneas; 1 flowchart + 1 sequence; C4/ER solo si hay BD interna real o el requisito lo necesita.
 11. **Tipos:** sin `any` / tipos opacos cuando el lenguaje lo permita (steering).
 12. **Código mínimo:** GREEN mínimo correcto; no crear abstracciones, mocks o capas anticipadas solo para satisfacer tests.
 

@@ -92,17 +92,16 @@ Catálogo completo: [catalogo.md](catalogo.md).
 2. **Primera vez en un repo** — usa Project Navigator para bootstrap de
    `.navigator/` (mapa barato); luego deja que cada especialista inicialice su
    carpeta (`.architecture/`, `.design/`, etc.).
-   Architecture, Data & API, UI Design, Quality y Security recomiendan nivel antes
-   de operar: el aviso puntual no bloquea y las operaciones pesadas esperan
-   confirmación. Si el Orchestrator ya mostró y confirmó ese nivel para el mismo
-   alcance, el especialista no lo repite.
-3. **SDD antes de features grandes** — elige entre exactamente cuatro profundidades:
+   Architecture, Data & API, UI Design y Code Review recomiendan nivel y pausan
+   antes de operar; «continúa» reanuda sin declarar el modelo. Si el Orchestrator
+   ya mostró y confirmó ese nivel para el mismo alcance, el especialista no lo
+   repite. Code Review no repite el aviso al cargar la segunda skill.
+3. **SDD antes de features grandes** — elige entre exactamente tres profundidades:
    `direct`, sin spec; `lite`, automático para trabajo acotado, claro y de bajo
-   riesgo; `standard`, fallback seguro; y `deep`, solo por petición explícita.
+   riesgo; y `standard`, fallback seguro.
    Quick Plan es obligatorio y exclusivo de `lite`: tiene un preflight informativo,
    pero no Gates 1-3 ni Gate 4. Combinar Quick Plan con otro modo es inválido.
-   `standard` y `deep` conservan los Gates 1-4; los bugfixes no triviales usan
-   `standard`.
+   `standard` conserva los Gates 1-4; los bugfixes no triviales usan `standard`.
    Antes de cada proceso no trivial recomienda únicamente el nivel de LLM `BAJO`,
    `MEDIO` o `ALTO` de la próxima fase, sin pedir confirmación sobre su selección.
    En las transiciones combina resumen, aprobación de la fase actual y recomendación
@@ -122,8 +121,9 @@ Catálogo completo: [catalogo.md](catalogo.md).
 7. **Contexto del proyecto** — si existe `CLAUDE.md`, `AGENTS.md` o steering de
    Kiro, los agentes de SDD lo leen de forma selectiva según la plataforma.
 8. **Testing adaptativo en SDD** — una feature normal usa TDD focalizado; TDD
-   estricto solo se activa si lo pides. Es independiente de la profundidad:
-   `direct` puede incluir un microciclo TDD y `deep` no implica TDD estricto.
+   estricto está retirado. Es independiente de la profundidad: `direct` puede
+   incluir un microciclo TDD y elegir `standard` no obliga a un ciclo más fuerte.
+   Si solicitas TDD estricto, SDD propone TDD focalizado y espera aceptación.
 
 ## Orquestación documental
 

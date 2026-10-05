@@ -16,7 +16,7 @@ siempre que exista. Si no lo especifica, aplica estos valores por defecto:
 
 ## Selección de estrategia
 
-La profundidad SDD (`direct`, `lite`, `standard`, `deep`) y la estrategia de pruebas son
+La profundidad SDD (`direct`, `lite`, `standard`) y la estrategia de pruebas son
 ejes independientes. Elige una estrategia por comportamiento, no por tamaño del
 diff:
 
@@ -25,11 +25,11 @@ diff:
 | Sin test nuevo | No cambia comportamiento observable: docs, formato o cambio mecánico cubierto por validadores | Check existente o razón concreta |
 | Caracterización / regresión | Refactor legado o bugfix | Baseline verde, o RED por el defecto, y suite final verde |
 | TDD focalizado | **Default para comportamiento nuevo o modificado** | RED por comportamiento relevante, GREEN y suite |
-| TDD estricto | Solo si el usuario lo solicita | RED/GREEN por cada incremento productivo y suite tras refactor |
 
 Orden de decisión:
 
-1. Si el usuario pide TDD estricto, úsalo sin activar `deep` automáticamente.
+1. Si el usuario pide TDD estricto, informa que se retiró, propone TDD focalizado y
+   espera aceptación; no lo registres como estrategia vigente.
 2. Para bugfix o legado incierto, usa regresión o caracterización.
 3. Para comportamiento nuevo/modificado, usa TDD focalizado.
 4. Sin cambio observable, no añadas un test solo por ceremonia; ejecuta checks.
@@ -49,8 +49,6 @@ Un bugfix no trivial se clasifica `standard`, aunque su diff sea pequeño.
   aplica el fix mínimo y confirma que pasa.
 - **TDD focalizado:** ejecuta RED → GREEN → REFACTOR por criterio observable o seam
   de riesgo, no por cada método interno. Es el default de una feature normal.
-- **TDD estricto:** cada incremento de producción empieza con un RED observado. No
-  se adelanta comportamiento productivo y toda excepción queda registrada.
 
 Un test añadido sobre código que ya lo satisface es caracterización o cobertura
 retroactiva, no evidencia TDD. Conserva comando y resultado relevante; no pegues
@@ -64,12 +62,12 @@ legibilidad demostrable o reutilización real, y mantén la suite verde.
 ## PBT condicional (no default-heavy)
 
 - **Standard:** propiedades narrativas opcionales, **máx. 5** invariantes críticos en `design.md`. Tests de ejemplo obligatorios para comportamientos testables del dominio.
-- **Deep** o invariante claro (ordenación, round-trip, unicidad, partición de estados): 1–3 PBT reales.
+- **Invariante claro** (ordenación, round-trip, unicidad, partición de estados): 1–3 PBT reales.
 - Añadir dependencia PBT **solo** cuando se vaya a escribir al menos un test PBT en la misma wave.
 - Nunca marcar tarea PBT como `[x]` sin archivo de test que importe la lib PBT.
 - Priorizar propiedades sobre tests de ejemplo **solo** cuando el comportamiento sea algebraico — no como relleno de spec.
-- PBT complementa la estrategia elegida; no convierte por sí solo TDD focalizado
-  en estricto.
+- PBT complementa la estrategia elegida; no cambia TDD focalizado por una estrategia
+  más fuerte.
 
 ## Anti-patrones (prohibidos)
 

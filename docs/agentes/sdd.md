@@ -24,8 +24,9 @@ SDD separa el **qué y porqué** del **cómo** y deja decisiones trazables.
 Un cambio trivial, localizado y reversible puede usar `direct`. Tras descartarlo,
 SDD selecciona `lite` automáticamente para trabajo acotado, claro y de bajo riesgo.
 Si hay dudas, riesgo, contrato público, migración, cruce de capas o un bugfix no
-trivial, usa `standard` como modo por defecto y fallback seguro. `deep` solo se
-activa por petición explícita.
+trivial, usa `standard` como modo por defecto y fallback seguro. No existe una
+profundidad `deep`; las solicitudes históricas o explícitas de ese modo requieren
+aceptar su sustitución por `standard`.
 
 ## Recomendación de nivel de LLM
 
@@ -50,15 +51,19 @@ selecciona ni cambia el LLM del host, y no crea gates adicionales.
 | `direct` | Cambio trivial, localizado y reversible | Sin spec; verificación mínima |
 | `lite` | Selección automática para trabajo acotado, claro y de bajo riesgo | Quick Plan compacto; artefactos según se planifique o implemente |
 | `standard` | Modo por defecto y fallback seguro; obligatorio para bugfixes no triviales | Requirements, design, tasks y verification; Gates 1-4 |
-| `deep` | Solo cuando el usuario lo solicita explícitamente | Gates 1-4; más contexto, glosario, diagramas y PBT real si aplica |
 
-Estas son las cuatro profundidades válidas: `direct`, `lite`, `standard` y `deep`.
+Estas son las tres profundidades válidas: `direct`, `lite` y `standard`.
 Quick Plan es obligatorio y exclusivo de `lite`; combinarlo con cualquier otra
 profundidad es inválido.
 
 La profundidad y el testing son decisiones independientes. Una feature normal usa
-TDD focalizado; TDD estricto solo se activa si se pide explícitamente. Los bugfixes
-usan regresión y el legado usa caracterización.
+TDD focalizado; TDD estricto está retirado. Si se solicita, propone TDD focalizado
+y espera aceptación. Los bugfixes usan regresión y el legado usa caracterización.
+
+`deep` y TDD estricto pueden aparecer en specs históricas, pero no son opciones
+vigentes. SDD conserva esos artefactos y evidencias, informa la retirada y espera
+aceptación antes de continuar con `standard` o TDD focalizado; no convierte la
+solicitud silenciosamente ni confunde esa aceptación con la aprobación de un gate.
 
 ## Flujo y gates
 
@@ -66,15 +71,15 @@ usan regresión y el legado usa caracterización.
    antes de comenzar para permitir un cambio manual opcional. La pausa no es un gate
    de modelo; `direct` no crea spec.
 1. **Requirements:** historias, criterios EARS, errores, edge cases y supuestos.
-   Gate 1: aprobar requisitos en `standard` y `deep`.
+    Gate 1: aprobar requisitos en `standard`.
 2. **Design:** arquitectura, modelos, errores, pruebas y estrategia de testing.
-   Gate 2: aprobar diseño en `standard` y `deep`.
+    Gate 2: aprobar diseño en `standard`.
 3. **Tasks:** tareas trazadas a requisitos, dependencias y waves.
-   Gate 3: aprobar el plan y empezar a implementar en `standard` y `deep`.
+    Gate 3: aprobar el plan y empezar a implementar en `standard`.
 4. **Implementación:** ejecutar una tarea o wave, con integrity gate antes de marcarla.
 5. **Verification:** tras el preflight y la reanudación, ejecutar pruebas, registrar
    evidencia y revisar requisitos y RNF. Gate 4: cerrar la spec o corregir huecos en
-   `standard` y `deep`; después no hay otra recomendación.
+    `standard`; después no hay otra recomendación.
 
 En `lite`, Quick Plan genera `requirements.md`, `design.md` y `tasks.md` en una
 pasada después del preflight informativo y de que el usuario reanude. No existen Gates 1-3 ni Gate 4. Si el
@@ -122,7 +127,7 @@ agrupador: la raíz de una spec es la carpeta que contiene `requirements.md` o
 `bugfix.md`. Al reanudar sin ruta explícita, SDD busca esos marcadores de forma
 recursiva y pregunta si encuentra varias candidatas plausibles.
 
-La estructura completa corresponde a `standard`, `deep` o a un `lite` implementado.
+La estructura completa corresponde a `standard` o a un `lite` implementado.
 Un `lite` solo de planificación omite `verification.md`; `direct` no crea esta
 carpeta.
 
@@ -146,12 +151,12 @@ de la suite ejecutada.
 de testing y no implementes todavía.
 ```
 
-Esta petición usa `lite` automáticamente. `Quick Plan standard`, `Quick Plan deep`
-y `Quick Plan direct` son combinaciones inválidas.
+Esta petición usa `lite` automáticamente. `Quick Plan standard` y
+`Quick Plan direct` son combinaciones inválidas.
 
 ## Límites y confirmaciones
 
-- No cruza los Gates 1-4 de `standard` o `deep` sin aprobación explícita.
+- No cruza los Gates 1-4 de `standard` sin aprobación explícita.
 - El Gate 0 informa el nivel de LLM recomendado y pausa salvo en `direct`, sin
   pedir confirmación del modelo; `lite` pausa antes de Quick Plan, sin crear
   Gates 1-3 ni Gate 4.

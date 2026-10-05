@@ -1,6 +1,6 @@
 ---
 name: "SDD (Spec-Driven Development)"
-description: "Aplica SDD de forma proporcional según alcance y riesgo con modos direct, lite, standard y deep. Quick Plan es exclusivo de lite; standard y deep conservan el flujo de requisitos, diseño, tareas y verificación con gates de aprobación. Usa EARS y trazabilidad para planificar features o abordar bugs según su complejidad."
+description: "Aplica SDD de forma proporcional según alcance y riesgo con modos direct, lite y standard. Quick Plan es exclusivo de lite; standard conserva el flujo de requisitos, diseño, tareas y verificación con gates de aprobación. Usa EARS y trazabilidad para planificar features o abordar bugs según su complejidad."
 argument-hint: "Describe la feature o el bug; o deja vacío para continuar una spec existente."
 tools:
   - "read"
@@ -25,19 +25,23 @@ canónica de EARS, fases, gates, artefactos y verificación.
 ## Reglas inviolables
 
 - Define el QUÉ y PORQUÉ antes del CÓMO; no cruces gates de fase sin aprobación
-  explícita en `standard` o `deep`. `lite` usa Quick Plan sin Gates 1–3 ni Gate 4,
+  explícita en `standard`. `lite` usa Quick Plan sin Gates 1–3 ni Gate 4,
   pero conserva el Gate 0.
 - Clasifica por ejes separados: tipo de trabajo (feature, bugfix o exploración),
-  profundidad (`direct`, `lite`, `standard`, `deep`), intención (solo planificación
+  profundidad (`direct`, `lite`, `standard`), intención (solo planificación
   o implementación) y estrategia de pruebas.
-- SDD tiene exactamente cuatro profundidades. Trivial → `direct`; acotado, claro y
+- SDD tiene exactamente tres profundidades. Trivial → `direct`; acotado, claro y
   de bajo riesgo → `lite`; si la elegibilidad de `lite` no puede demostrarse →
-  `standard`; `deep` solo si el usuario lo pide.
+  `standard`.
 - Quick Plan es obligatorio y exclusivo de `lite`. Rechaza `direct` + Quick Plan,
-  `standard` + Quick Plan y `deep` + Quick Plan. Una solicitud explícita de
-  `standard` o `deep` no se rebaja automáticamente.
+  `standard` + Quick Plan. Una solicitud explícita de `standard` no se rebaja
+  automáticamente.
 - Solo planificación significa no implementar. Los bugfixes no triviales usan
   `standard`.
+- `deep` y TDD estricto son opciones retiradas. Si el usuario solicita cualquiera
+  de ellas, informa la retirada, propone `standard` o TDD focalizado y espera su
+  aceptación; no convierte la solicitud silenciosamente. En specs históricas,
+  conserva la evidencia y solicita esa aceptación antes de reanudar.
 - Antes del trabajo, aplica el Gate 0 de `sdd-spec` como preflight; usa
   `references/model-selection.md` salvo `direct` inequívoco. Recomienda solo
   el nivel de LLM `BAJO`, `MEDIO` o `ALTO` para la próxima fase u operación. La
@@ -52,8 +56,8 @@ canónica de EARS, fases, gates, artefactos y verificación.
 - Tras Implementación no hay gate intermedio: muestra el aviso de Verification y
   termina el turno; ejecuta Verification solo cuando el usuario reanude.
 - Profundidad SDD y testing son ejes independientes: selecciona la estrategia con
-  `references/testing.md`; una feature normal usa TDD focalizado, TDD estricto solo
-  por petición explícita y `direct` no significa «sin pruebas».
+  `references/testing.md`; una feature normal usa TDD focalizado y `direct` no
+  significa «sin pruebas». TDD estricto ya no es una estrategia disponible.
 - Implementación y Fase 4: `references/integrity-gate.md` — no `[x]` sin artefacto o evidencia.
 - Design, implementación y cierre: `references/quality-bar.md` (capas, DI, persistencia, errores).
 - TDD no justifica abstracciones anticipadas: GREEN mínimo correcto; refactor solo

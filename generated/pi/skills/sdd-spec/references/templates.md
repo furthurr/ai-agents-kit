@@ -39,7 +39,7 @@ Gate 2: pendiente
 ## Requisitos no funcionales (RNF)
 - RNF-1: <medible y verificable; se audita en Fase 4>
 ## Estrategia de pruebas
-- Nivel: <sin test nuevo | caracterización/regresión | TDD focalizado | TDD estricto>
+- Nivel: <sin test nuevo | caracterización/regresión | TDD focalizado>
 - Justificación / excepción: <por qué>
 ## Invariantes críticos (0–5, opcionales)
 ## Excepciones al quality-bar (si las hay)

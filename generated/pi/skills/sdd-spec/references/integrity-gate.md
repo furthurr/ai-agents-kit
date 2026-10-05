@@ -10,12 +10,13 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
 - Dependencia en manifest/build sin uso en código/tests → quitar o declarar como deuda explícita en `verification.md`.
 - Carpetas de tests/generators creadas vacías **no** cuentan como tarea hecha.
 - No añadir dependencias de PBT/test sin al menos un test que las use en la misma entrega.
-- TDD focalizado/estricto exige evidencia del RED esperado y del GREEN. Sin RED
-  observado, etiquetar honestamente como caracterización o cobertura retroactiva.
+- TDD focalizado exige evidencia del RED esperado y del GREEN. Sin RED observado,
+  etiquetar honestamente como caracterización o cobertura retroactiva. TDD estricto
+  es una opción retirada y no puede marcarse como estrategia vigente.
 
 ## Estado de fase y transición
 
-- Toda spec nueva `standard` o `deep` declara en cada artefacto `Modo SDD`, `Fase`,
+- Toda spec nueva `standard` declara en cada artefacto `Modo SDD`, `Fase`,
   `Estado` y el gate pendiente o aprobado que corresponda.
 - La reanudación determina la próxima operación por esos marcadores; no inferirá
   aprobación solo por la existencia del archivo. Si faltan o se contradicen, pedir

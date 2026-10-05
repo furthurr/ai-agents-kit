@@ -19,7 +19,7 @@ si no aplica, evalúa `lite` y luego `standard`. No rebajes modos explícitos.
 
 ## Determinar la próxima fase
 
-- Spec nueva `standard` o `deep`: Requirements; `lite`: Quick Plan.
+- Spec nueva `standard`: Requirements; `lite`: Quick Plan.
 - Spec existente: usa `Modo SDD`, `Fase`, `Estado` y su gate para localizar la
   primera operación pendiente. No inferirá aprobación solo por la existencia del archivo.
 - Spec legacy ambigua: pide aclaración y no migra.
@@ -28,11 +28,11 @@ si no aplica, evalúa `lite` y luego `standard`. No rebajes modos explícitos.
 ## Recomendación informativa y transiciones
 
 - `direct`: informa `Nivel de LLM recomendado: BAJO` y continúa sin esperar.
-- `lite`, `standard`, `deep` y bugfix no trivial: muestra el nivel recomendado para
+- `lite`, `standard` y bugfix no trivial: muestra el nivel recomendado para
   la próxima operación y termina el turno antes de iniciarla. Permite cambiar
   manualmente de modelo o continuar con el actual. Reanuda cuando el usuario
   indique continuar, sin confirmar el modelo elegido ni repetir el aviso.
-- En `standard` y `deep`, una sola recomendación visible por fase; no repitas
+- En `standard`, una sola recomendación visible por fase; no repitas
   la misma recomendación sin cambios.
 - La transición presenta resumen verificable, gate actual y recomendación de la
   próxima fase condicionada a la aprobación actual. No crea gates.
@@ -52,7 +52,7 @@ si no aplica, evalúa `lite` y luego `standard`. No rebajes modos explícitos.
 
 ```text
 Preflight SDD
-Trabajo: <tipo> | Modo SDD: <direct|lite|standard|deep>
+Trabajo: <tipo> | Modo SDD: <direct|lite|standard>
 Alcance: <ruta/spec> | Complejidad: <baja|media|alta>
 Próximo proceso: <fase u operación>
 Nivel de LLM recomendado para <fase u operación>: <BAJO|MEDIO|ALTO>

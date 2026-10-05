@@ -41,12 +41,13 @@ def test_modes_remain_proportional() -> None:
     check("| `direct` | Cambio trivial verificable" in skill, "direct conserva criterio verificable")
     check("| `lite` |" in skill, "lite existe como profundidad intermedia")
     check("| `standard` | **Default**" in skill, "standard sigue siendo el modo default")
-    check("`deep` no activa TDD estricto" in skill, "deep y TDD estricto permanecen independientes")
+    check("`deep` y tdd estricto" in compact and "opciones retiradas" in compact,
+          "deep y TDD estricto están retirados")
     check("sin contrato público" in skill and "cruce de capas" in skill, "direct declara límites de riesgo")
     check(
-        "exactamente cuatro profundidades" in compact
-        and all(mode in skill for mode in ("`direct`", "`lite`", "`standard`", "`deep`")),
-        "SDD declara exactamente cuatro profundidades",
+        "exactamente tres profundidades" in compact
+        and all(mode in skill for mode in ("`direct`", "`lite`", "`standard`")),
+        "SDD declara exactamente tres profundidades",
     )
     check(
         "tipo de trabajo" in compact
@@ -60,8 +61,12 @@ def test_modes_remain_proportional() -> None:
         "la incertidumbre sobre lite cae en standard",
     )
     check(
-        "`standard` o `deep`" in compact and "no se rebaja" in compact,
-        "standard y deep explícitos no se rebajan automáticamente",
+        "solicitud explícita de `standard`" in compact and "no se rebaja" in compact,
+        "standard explícito no se rebaja automáticamente",
+    )
+    check(
+        "espera aceptación" in compact and "no convierte la solicitud silenciosamente" in compact,
+        "las opciones retiradas requieren aceptación explícita",
     )
 
 
@@ -79,7 +84,7 @@ def test_lite_quick_plan_contract() -> None:
         "Quick Plan es obligatorio y exclusivo de lite",
     )
     check(
-        all(combo in compact for combo in ("`direct` + quick plan", "`standard` + quick plan", "`deep` + quick plan")),
+        all(combo in compact for combo in ("`direct` + quick plan", "`standard` + quick plan")),
         "Quick Plan rechaza combinaciones con otros modos",
     )
     check(
@@ -114,8 +119,10 @@ def test_lite_quick_plan_contract() -> None:
         )
         description = adapter["frontmatter"]["description"].lower()
         check(
-            all(term in description for term in ("direct", "lite", "standard", "deep", "quick plan")),
-            f"{platform}: descripción expone modos proporcionales y Quick Plan",
+            all(term in description for term in ("direct", "lite", "standard", "quick plan"))
+            and "deep" not in description
+            and "estricto" not in description,
+            f"{platform}: descripción expone modos vigentes y Quick Plan",
         )
 
 
@@ -156,10 +163,15 @@ def test_model_selection_gate() -> None:
         "direct recibe un aviso no bloqueante",
     )
     check(
-        "`lite`, `standard`, `deep` y bugfix no trivial" in lower_reference
+        "`lite`, `standard` y bugfix no trivial" in lower_reference
         and "termina el turno" in lower_reference
         and "sin confirmar el modelo" in lower_reference,
         "el preflight deja tiempo para cambiar de modelo sin confirmarlo",
+    )
+    check(
+        "modo sdd: <direct|lite|standard>" in lower_reference
+        and "modo sdd: <direct|lite|standard|deep>" not in lower_reference,
+        "la salida de preflight solo admite las tres profundidades",
     )
     check(
         "una sola recomendación visible por fase" in lower_reference
@@ -325,18 +337,18 @@ def test_spec_paths_support_grouping() -> None:
 def test_adaptive_testing_selection() -> None:
     testing = read(SDD / "references" / "testing.md")
     check(
-        "(`direct`, `lite`, `standard`, `deep`)" in testing,
-        "testing reconoce las cuatro profundidades SDD",
+        "(`direct`, `lite`, `standard`)" in testing,
+        "testing reconoce las tres profundidades SDD",
     )
     for strategy in (
         "Sin test nuevo",
         "Caracterización / regresión",
         "TDD focalizado",
-        "TDD estricto",
     ):
         check(strategy in testing, f"testing declara estrategia: {strategy}")
     check("Default para comportamiento nuevo o modificado" in testing, "feature normal selecciona TDD focalizado")
-    check("Solo si el usuario lo solicita" in testing, "TDD estricto permanece opt-in")
+    check("Si el usuario pide TDD estricto" in testing and "se retiró" in testing,
+          "TDD estricto se rechaza como opción retirada")
     check("no evidencia TDD" in testing, "un test retroactivo no se presenta como TDD")
 
 
@@ -365,6 +377,8 @@ def test_variants_and_evidence() -> None:
     check("RED del comportamiento → GREEN mínimo → REFACTOR" in templates, "tasks enseña orden test-first")
     check("RED o baseline" in templates and "GREEN / suite" in templates, "verification registra el ciclo")
     check("evidencia del RED esperado y del GREEN" in integrity, "integrity gate exige evidencia TDD")
+    check("TDD estricto" in integrity and "opción retirada" in integrity,
+          "integrity gate no acredita TDD estricto")
 
 
 def test_navigator_context_contract() -> None:
@@ -418,7 +432,8 @@ def test_navigator_context_contract() -> None:
 
 def test_specialists_recommend_sdd_without_switching() -> None:
     for specialist in SPECIALISTS:
-        agent = read(ROOT / "canonical" / "agents" / f"{specialist}.md")
+        agent_id = "code-review" if specialist in ("code-quality", "security") else specialist
+        agent = read(ROOT / "canonical" / "agents" / f"{agent_id}.md")
         skill = read(ROOT / "canonical" / "skills" / specialist / "SKILL.md")
         normalized_agent = normalized(agent)
         normalized_skill = normalized(skill)
