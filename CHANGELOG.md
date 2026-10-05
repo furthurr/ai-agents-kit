@@ -3,6 +3,24 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [0.3.0] - 2026-10-05
+
+### Funcionalidades
+
+- Consolidar calidad y seguridad bajo el agente `code-review`.
+- Simplificar los modos SDD y el testing adaptativo.
+- Documentar el laboratorio de evaluación SDD y añadir una simulación sintética
+  offline sin llamadas a modelos.
+
+### Correcciones
+
+- Aislar el contrato SDD de dependencias locales y conservar su compatibilidad
+  con el agente unificado.
+
+### Otros
+
+- Unificar la autoría y la licencia MIT.
+
 ## [0.2.1] - 2026-09-30
 
 ### Funcionalidades
