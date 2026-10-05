@@ -45,6 +45,12 @@ continuidad con el agente especialista real mediante un handoff. Si una regla de
 dominio entra en conflicto con esta coordinacion, manda la skill especialista
 dentro de su carpeta; esta skill manda sobre orden, seleccion y cierre global.
 
+Los dominios quality y security conservan sus skills y carpetas, pero su agente
+receptor es `code-review`. Para la misma accion, mismo proyecto y via aprobada,
+puedes agruparlos en un handoff cuyo `scope` seleccione ambas carpetas. Si solo
+un dominio esta aprobado/existe en `sync-existing`, selecciona solo ese dominio.
+No amplias permisos ni cambias una accion para poder agruparla.
+
 ## Modos
 
 | Modo | Contrato |
@@ -91,14 +97,16 @@ recalcula. Si el repo cambia mientras esperas, repite el preflight minimo.
 5. Tras un handoff, marca el dominio pendiente del especialista y espera su
    resultado o evidencia antes de reanudar; no ejecuta esa misma accion.
 6. Ejecuta secuencialmente solo los dominios aprobados que no fueron derivados.
-7. Conserva los gates propios de cada especialista. En `quality` y `security`,
-   confirma el alcance de findings; no entres en remediacion de codigo.
+7. Conserva las decisiones pendientes de cada especialista. En `quality` y
+   `security`, el plan autorizado cubre todos los findings verificados del alcance:
+   no pide un filtro por severidad ni repite esa aprobacion en la misma sesion;
+   no entres en remediacion de codigo. `gate_state` no concede autorizacion.
 8. Verifica artefactos y evidencia antes de marcar un dominio completado.
 9. Cierra con estado inicial/final, acciones, bloqueos y recomendaciones.
 
 Orden normal: `architecture` → `data-api` si aplica → `ui-design` si aplica →
-`code-quality` si existe/esta seleccionado → `security` si existe/esta
-seleccionado → `project-navigator` al final. En `bootstrap-core`, crea primero el
+revision `code-review` de los dominios quality/security seleccionados (skills
+locales o handoff) → `project-navigator` al final. En `bootstrap-core`, crea primero el
 Navigator aprobado, documenta arquitectura y refresca solo la capa afectada del
 Navigator al cierre **si fue creado en esa misma operacion**. Un Navigator que ya
 existia requiere `sync-core` o alcance explicito para modificarse.

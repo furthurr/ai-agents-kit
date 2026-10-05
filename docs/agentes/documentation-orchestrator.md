@@ -11,7 +11,7 @@
 | No gestiona | `.sdd/`, `.release/` ni `graphify-out/` |
 
 Es la puerta de entrada cuando una petición cruza varias áreas documentales. No
-reemplaza a Architecture, Data & API, UI Design, Quality, Security o Project
+reemplaza a Architecture, Data & API, UI Design, Code Review o Project
 Navigator: decide cuál aplica y carga la skill especialista correspondiente.
 
 ## Cuándo usarlo
@@ -45,8 +45,8 @@ una versión o un tag, redirige a Git & Release Manager.
 4. Ejecuta especialistas en secuencia y conserva los gates propios de cada uno.
 5. Verifica artefactos y evidencia antes de declarar un dominio completado.
 
-El orden normal es Architecture, Data & API si aplica, UI Design si aplica, Quality,
-Security y Project Navigator al final. El core está formado por Navigator y
+El orden normal es Architecture, Data & API si aplica, UI Design si aplica,
+Code Review para calidad/seguridad seleccionadas y Project Navigator al final. El core está formado por Navigator y
 Architecture; Data y Design son condicionales; Quality y Security son assurance
 recomendado.
 
@@ -59,6 +59,9 @@ El formato y las reglas viven en
 
 `write_scope` documenta la frontera esperada, pero no reemplaza los permisos del
 host ni los gates del especialista.
+Calidad y seguridad conservan sus skills y se derivan al mismo agente `code-review`;
+solo se agrupan con acción, proyecto y vía coincidentes. `scope` contiene una
+lista de una o ambas carpetas y la evidencia debe respetar esa selección.
 
 ## Ejemplos de uso
 
@@ -82,6 +85,7 @@ especialistas cuando el modo y los gates lo autorizan. No crea una carpeta
 - Nunca modifica código de producto, tests, CI, configuración funcional ni Git remoto.
 - No crea ni sincroniza `.sdd/`, `.release/` o `graphify-out/`.
 - No selecciona ni cambia el modelo del host.
-- Quality y Security conservan sus gates de alcance y no se convierten en una
-  remediación masiva de código.
+- La autorización documental de Quality/Security se reutiliza para el mismo
+  alcance en la sesión, sin pedir otro filtro de severidad; no autoriza remediar.
+  Un `gate_state` recibido no concede autorización ni permisos técnicos.
 - `release-check` es solo lectura y no crea tags, CHANGELOG ni versiones.

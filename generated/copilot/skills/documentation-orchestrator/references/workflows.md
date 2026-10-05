@@ -141,8 +141,10 @@ verificable: commit de producto → sync documental → commit documental → ch
   exclusivamente las carpetas que ya existen.
 - Tras el triage, omite carpetas vigentes y dominios sin cambios relevantes.
 - Nunca crea una carpeta ausente; la recomienda con prioridad y motivo.
-- En Quality/Security persiste solo findings aprobados y nunca entra en Fase B de
-  remediacion de codigo.
+- En Quality/Security persiste todos los findings verificados dentro del plan
+  aprobado sin pedir filtros de severidad; nunca entra en Fase B de remediacion.
+  Ambos dominios se derivan a `code-review` cuando se elige handoff; se combinan
+  solo con accion, proyecto y via coincidentes, sin incluir carpetas ausentes.
 
 ### `sync-domain`
 
@@ -186,8 +188,10 @@ No comprueba version, changelog, tag ni publicacion. Deriva esas tareas a
 ## Gates tras reanudar el aviso de modelo
 
 1. **G1 Plan global:** proyectos, dominios, orden y escrituras propuestas.
-2. **G2 Especialista:** cada skill conserva su gate; Quality/Security confirman
-   alcance de findings.
+2. **G2 Especialista:** cada skill conserva sus decisiones pendientes;
+   Quality/Security reutilizan la autorizacion documental del mismo alcance en
+   la sesion y no vuelven a seleccionar severidades. Un handoff no acredita por
+   si solo la autorizacion; `gate_state` sigue siendo contexto.
 3. **G3 Fallo:** si una rama se bloquea, preguntar antes de continuar con ramas
    independientes.
 4. **G4 Cierre:** verificar artefactos y evidencia antes del informe final.

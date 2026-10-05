@@ -1,8 +1,0 @@
-{
-  "filename": "security.md",
-  "frontmatter": {
-    "description": "Agente de seguridad. Audita y documenta riesgos en `.security/` con OWASP MASVS/MASWE/MASTG y CWE. Remedia paso a paso con confirmación del usuario en cada micro-paso.",
-    "argument-hint": "<consulta o tarea de seguridad>"
-  },
-  "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
-}

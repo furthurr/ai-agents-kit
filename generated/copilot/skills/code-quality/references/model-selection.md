@@ -20,6 +20,6 @@ antes de trabajar. Espera `listo`, `continua` o `continua con el actual`, sin co
 No repitas el aviso en cada finding o
 micro-paso. Recalcula solo ante cambios materiales de alcance o complejidad.
 
-Si Documentation Orchestrator ya recomendo explicitamente el nivel para este
+Si Code Review o Documentation Orchestrator ya recomendo el nivel para este
 alcance y el usuario lo confirmo, no repitas el aviso. Nunca selecciones ni
 cambies el modelo del host.

@@ -1,0 +1,15 @@
+{
+  "filename": "code-review.agent.md",
+  "frontmatter": {
+    "name": "Code Review Agent",
+    "description": "Revisa calidad y seguridad con las skills code-quality (Sonar) y security (OWASP/CWE). Mantiene .quality/ y .security/ separados, documenta hallazgos verificados sin repetir filtros y remedia solo con autorización. No expone secretos.",
+    "argument-hint": "Describe el alcance: solo calidad, solo seguridad, revisión completa o un finding QLT/SEC.",
+    "tools": [
+      "read",
+      "edit",
+      "search",
+      "execute",
+      "web"
+    ]
+  }
+}

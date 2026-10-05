@@ -1,0 +1,23 @@
+{
+  "filename": "code-review.md",
+  "frontmatter": {
+    "description": "Revisa calidad y seguridad mediante code-quality (Sonar) y security (OWASP/CWE). Mantiene .quality/ y .security/ separados, registra hallazgos verificados sin repetir filtros y remedia con aprobación por micro-paso. No expone secretos ni hace features o releases.",
+    "mode": "all",
+    "temperature": 0.2,
+    "permission": {
+      "edit": "ask",
+      "webfetch": "allow",
+      "bash": {
+        "*": "ask",
+        "rm *": "ask",
+        "rm -rf *": "ask",
+        "git push*": "ask",
+        "git reset --hard*": "ask",
+        "git checkout -f*": "ask",
+        "git checkout --force*": "ask",
+        "git branch -D*": "ask",
+        "git clean*": "ask"
+      }
+    }
+  }
+}

@@ -49,7 +49,7 @@ Fuente de verdad del inventario:
 ```json
 {
   "skills": [ "architecture", "code-quality", "..." ],
-  "agents": [ "architecture", "code-quality", "..." ],
+  "agents": [ "architecture", "code-review", "..." ],
   "platforms": [ "copilot", "opencode", "kiro", "claude", "pi" ]
 }
 ```

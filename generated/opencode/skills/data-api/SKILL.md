@@ -230,7 +230,7 @@ Recomienda continuar con `@sdd` cuando falten requisitos o criterios de
 aceptación, o el cambio afecte contratos públicos, compatibilidad,
 esquemas/migraciones, estrategias de caché/sincronización, varias fuentes de datos,
 módulos/capas o tenga riesgo relevante de pérdida, duplicación o inconsistencia.
-Si el hallazgo es de seguridad, deriva primero al Security Agent; no uses SDD para
+Si el hallazgo es de seguridad, deriva primero a Code Review con la skill `security`; no uses SDD para
 saltar esa frontera.
 
 Al recomendar SDD, explica los criterios activados, cita el hallazgo o contrato y
@@ -268,7 +268,7 @@ para consultas o cambios inequívocamente puntuales.
 - Solo capa de datos/APIs: nunca toques UI ni negocio ajeno a datos.
 - **Seguridad primero:** nunca expongas secretos, tokens, credenciales ni
   dominios productivos reales; usa placeholders. Marca la PII. Los **hallazgos de
-  riesgo de seguridad** (cifrado débil, TLS, fugas) se **derivan al Security Agent**.
+  riesgo de seguridad** (cifrado débil, TLS, fugas) se **derivan a Code Review con `security`**.
 - Cita `archivo:línea` como fuente de verdad; no inventes payloads ni respuestas.
 - Mantén los diagramas ER y contratos al día; corrige si un cambio los desactualiza.
 - La interfaz Scalar y su lanzador son artefactos derivados; OpenAPI sigue siendo

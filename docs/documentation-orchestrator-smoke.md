@@ -58,7 +58,8 @@ Esperado:
 - Detecta `sync-existing`.
 - Selecciona solo las tres carpetas existentes.
 - Recomienda las ausentes aplicables sin crearlas.
-- Mantiene el gate de alcance de Quality y no remedia código.
+- Reutiliza el plan autorizado para registrar findings de calidad verificados,
+  sin pedir otro filtro de severidad; no remedia código ni agrega seguridad ausente.
 - Actualiza Navigator al final si corresponde.
 
 ## 4. Alias y cambio de alcance
@@ -108,16 +109,16 @@ respectivamente a SDD, Git & Release Manager o Graphify sin modificar `.sdd/`,
 ## 7. Handoff productor–receptor
 
 Después del Gate 0 y del plan, solicita explícitamente continuar con el agente
-Security real para una inspección documental.
+Code Review real para una inspección documental de solo seguridad.
 
 Esperado en el orquestador:
 
-- Emite `## Handoff` con `target: security`, `action: inspect`,
+- Emite `## Handoff` con `target: code-review`, `scope: [.security/]`, `action: inspect`,
   `write_scope: none`, `requires_confirmation: false` y `status: pending`.
 - Incluye `handoff_id`, `project_root` y referencias existentes relativas.
 - No ejecuta la inspección localmente y marca el dominio pendiente.
 
-Copia el bloque al Security Agent. Esperado en el receptor:
+Copia el bloque a Code Review. Esperado en el receptor:
 
 - Rechaza un bloque con target distinto, ruta absoluta/`..`, acción desconocida o
   escritura incoherente.
@@ -128,6 +129,9 @@ Copia el bloque al Security Agent. Esperado en el receptor:
 Devuelve el resultado al orquestador. Esperado: verifica la evidencia antes de
 marcar el dominio completado. Repite al menos una vez con `action: sync` y
 confirma que pide aprobación de escritura y no duplica la acción.
+Si la misma escritura ya está autorizada en esa sesión, no vuelve a preguntar;
+`gate_state` copiado por sí solo no acredita autorización. Para ambos dominios,
+usa `scope: [.quality/, .security/]` y exige evidencia de cada dominio al sincronizar.
 
 ## Criterio de cierre
 

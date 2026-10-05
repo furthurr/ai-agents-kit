@@ -138,6 +138,26 @@ kit). Solo lo informan: **nunca borran nada**, porque no hay forma fiable de
 distinguir un artefacto obsoleto del kit de una skill propia. Retíralos a mano si
 ya no aplican (ver *Desinstalar*).
 
+## Actualizar a Code Review
+
+El kit sustituye los agentes `code-quality` y `security` por `code-review` en las
+cinco plataformas. **Las skills `code-quality` y `security` siguen existiendo**,
+igual que `.quality/`, `.security/` y sus IDs `QLT`/`SEC`: no hay migración de datos.
+
+1. Regenera y valida el kit e instala tu plataforma con su script habitual.
+2. Revisa el backup de la instalación anterior. Los instaladores informan de
+   agentes extra pero no los borran automáticamente.
+3. Si confirmas que son las copias anteriores del kit, retira manualmente solo
+   `code-quality.md` y `security.md` del directorio **de agentes** de esa plataforma
+   (Copilot: `code-quality.agent.md` y `security.agent.md`; Pi: directorio `prompts/`).
+   Conserva archivos personalizados y las carpetas homónimas **de skills**.
+4. Cierra y reinicia la herramienta (OpenCode incluido) para cargar `code-review`
+   y refrescar el selector. En Pi la invocación es `/code-review <tarea>`.
+
+Los nombres retirados no tienen aliases en el catálogo nuevo. Las peticiones de
+solo calidad, solo seguridad o revisión completa se hacen al mismo agente.
+No necesitas borrar documentación ni hallazgos existentes de tus proyectos.
+
 ## Tras instalar
 
 1. **Reinicia** la herramienta para que cargue skills y agentes nuevos.

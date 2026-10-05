@@ -131,6 +131,6 @@ existencia y ubicación, nunca el valor real.
 - Usa placeholders para dominios, tokens, credenciales y valores productivos.
 - No instala dependencias ni inicia el servidor Scalar automáticamente; prepara el
   lanzador para que el usuario lo ejecute cuando exista un OpenAPI válido.
-- Identifica PII y deriva los riesgos de seguridad al Security Agent.
+- Identifica PII y deriva los riesgos a Code Review con el procedimiento `security`.
 - Si recomienda SDD, cita el hallazgo/contrato y se detiene antes de modificar código.
 - La primera documentación masiva requiere estudio, propuesta y confirmación.

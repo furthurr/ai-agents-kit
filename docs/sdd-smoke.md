@@ -408,8 +408,8 @@ Esperado:
 ### Comprobación multiagente del aviso de modelo
 
 En una instalación nueva y con cada agente, solicita primero una consulta puntual
-(`architecture`: ADR localizado; `code-quality`: estado de un finding; `data-api`:
-un DTO; `security`: estado de un riesgo; `ui-design`: un token). La primera respuesta
+(`architecture`: ADR localizado; `code-review`: estado de un finding `QLT` y de
+un riesgo `SEC`; `data-api`: un DTO; `ui-design`: un token). La primera respuesta
 debe recomendar un nivel y terminar el turno sin inspeccionar el proyecto. Cambia
 manualmente el modelo si quieres y responde «continúa»: debe ejecutar la consulta
 sin preguntar qué modelo usas ni repetir la recomendación. Repite con una operación

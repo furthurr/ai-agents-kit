@@ -1,0 +1,8 @@
+{
+  "filename": "code-review.md",
+  "frontmatter": {
+    "description": "Revisa calidad y seguridad con Sonar y OWASP/CWE. Usa skills y registros separados; documenta lo verificado y remedia por micro-pasos autorizados.",
+    "argument-hint": "<solo calidad, solo seguridad, revisión completa o finding QLT/SEC>"
+  },
+  "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
+}

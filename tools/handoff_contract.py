@@ -23,13 +23,12 @@ REQUIRED_HANDOFF_FIELDS = {
     "status",
 }
 OPTIONAL_HANDOFF_FIELDS = {"gate_state"}
-TARGET_SCOPES = {
-    "project-navigator": ".navigator/",
-    "architecture": ".architecture/",
-    "data-api": ".data/",
-    "ui-design": ".design/",
-    "code-quality": ".quality/",
-    "security": ".security/",
+TARGET_SCOPES: dict[str, tuple[str, ...]] = {
+    "project-navigator": (".navigator/",),
+    "architecture": (".architecture/",),
+    "data-api": (".data/",),
+    "ui-design": (".design/",),
+    "code-review": (".quality/", ".security/"),
 }
 ACTIONS = {"inspect", "bootstrap", "sync", "audit-documentation"}
 HANDOFF_ID = re.compile(r"^HND-\d{8}-\d{3,}$")
@@ -92,7 +91,7 @@ def validate_handoff(
         errors.append("source debe ser documentation-orchestrator")
     target = data["target"]
     if not isinstance(target, str) or target not in TARGET_SCOPES:
-        errors.append("target no admitido")
+        errors.append("target no admitido; calidad y seguridad usan code-review")
     if not isinstance(data["action"], str) or data["action"] not in ACTIONS:
         errors.append("action no admitida")
     if not isinstance(data["handoff_reason"], str) or not data["handoff_reason"].strip():
@@ -105,9 +104,7 @@ def validate_handoff(
     project_root = _resolve_safe_path(
         workspace_root, data["project_root"], "project_root", errors, check_exists=True
     )
-    expected_scope = TARGET_SCOPES.get(target) if isinstance(target, str) else None
-    if expected_scope and data["scope"] != expected_scope:
-        errors.append(f"scope debe ser {expected_scope} para target {data['target']}")
+    scopes = _selected_scopes(target, data["scope"], "scope", errors)
 
     refs = data["context_refs"]
     if not isinstance(refs, list) or not refs:
@@ -122,19 +119,18 @@ def validate_handoff(
         if data["requires_confirmation"] is not False:
             errors.append("inspect requiere requires_confirmation false")
     else:
-        if expected_scope and data["write_scope"] != expected_scope:
-            errors.append(f"{data['action']} requiere write_scope {expected_scope}")
+        writes = _selected_scopes(target, data["write_scope"], "write_scope", errors)
+        if set(writes) != set(scopes):
+            errors.append(f"{data['action']} requiere write_scope igual a scope")
         if data["requires_confirmation"] is not True:
             errors.append("una acción con escritura requiere requires_confirmation true")
 
-    if project_root and expected_scope:
-        _resolve_safe_path(
-            project_root,
-            expected_scope,
-            "scope",
-            errors,
-            check_exists=check_exists and data["action"] != "bootstrap",
-        )
+    if project_root:
+        for scope in scopes:
+            _resolve_safe_path(
+                project_root, scope, "scope", errors,
+                check_exists=check_exists and data["action"] != "bootstrap",
+            )
     return errors
 
 
@@ -155,6 +151,7 @@ def validate_result(
         handoff_errors = validate_handoff(expected_handoff, workspace_root)
         if handoff_errors:
             errors.append("expected_handoff no es válido: " + "; ".join(handoff_errors))
+            return errors
     unknown = sorted(data.keys() - required - {"evidence"})
     if unknown:
         errors.append(f"Campos no admitidos: {', '.join(unknown)}")
@@ -179,12 +176,15 @@ def validate_result(
     evidence_root = _resolve_safe_path(
         workspace_root, project_root, "project_root", errors, check_exists=True
     )
-    scope_root: Path | None = None
+    scope_roots: list[Path] = []
     if expected_handoff and evidence_root and status == "delivered":
-        scope = expected_handoff.get("scope")
-        scope_root = _resolve_safe_path(
-            evidence_root, scope, "scope", errors, check_exists=True
-        )
+        scopes = _selected_scopes(expected_handoff.get("target"), expected_handoff.get("scope"),
+                                  "scope", errors)
+        for scope in scopes:
+            root = _resolve_safe_path(evidence_root, scope, "scope", errors, check_exists=True)
+            if root:
+                scope_roots.append(root)
+    covered: set[Path] = set()
     if isinstance(evidence, list) and evidence_root:
         for reference in evidence:
             resolved = _resolve_safe_path(
@@ -192,9 +192,37 @@ def validate_result(
             )
             if resolved and not resolved.is_file():
                 errors.append(f"evidence debe ser un archivo: {reference}")
-            if resolved and scope_root and resolved != scope_root and scope_root not in resolved.parents:
-                errors.append(f"evidence sale del scope: {reference}")
+            if resolved and scope_roots:
+                matches = {root for root in scope_roots if root in resolved.parents}
+                if not matches:
+                    errors.append(f"evidence sale del scope: {reference}")
+                elif resolved.is_file():
+                    covered.update(matches)
+    if (expected_handoff and expected_handoff.get("target") == "code-review"
+            and expected_handoff.get("action") != "inspect" and status == "delivered"
+            and set(scope_roots) - covered):
+        errors.append("delivered requiere evidencia de cada dominio seleccionado")
     return errors
+
+
+def _selected_scopes(target: object, value: object, field: str,
+                     errors: list[str]) -> tuple[str, ...]:
+    """Validate shape and closed vocabulary before normalizing selected roots."""
+    allowed = TARGET_SCOPES.get(target) if isinstance(target, str) else None
+    if not allowed:
+        return ()
+    if target == "code-review":
+        if not isinstance(value, list) or not value or not all(isinstance(item, str) for item in value):
+            errors.append(f"{field} requiere una lista no vacía de carpetas de code-review")
+            return ()
+        if len(value) != len(set(value)) or any(item not in allowed for item in value):
+            errors.append(f"{field} contiene carpetas no admitidas o duplicadas")
+            return ()
+        return tuple(value)
+    if not isinstance(value, str) or value != allowed[0]:
+        errors.append(f"{field} debe ser {allowed[0]} para target {target}")
+        return ()
+    return (value,)
 
 
 def _valid_handoff_id(value: Any) -> bool:
@@ -247,6 +275,9 @@ def _resolve_safe_path(
     resolved = (base_resolved / Path(*candidate.parts)).resolve()
     if resolved != base_resolved and base_resolved not in resolved.parents:
         errors.append(f"{field} escapa del proyecto")
+        return None
+    if field == "scope" and resolved != base_resolved / Path(*candidate.parts):
+        errors.append("scope no admite una raíz redirigida por symlink")
         return None
     if check_exists and not resolved.exists():
         errors.append(f"{field} no existe: {raw_value}")

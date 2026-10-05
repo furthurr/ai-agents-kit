@@ -3,7 +3,7 @@
 Resumen de lo que incluye el kit. El detalle operativo vive en
 `canonical/skills/<id>/SKILL.md` y `canonical/agents/<id>.md`.
 
-Inventario oficial: `canonical/manifest.json` (10 skills, 9 agentes, 5 plataformas).
+Inventario oficial: `canonical/manifest.json` (10 skills, 8 agentes, 5 plataformas).
 
 Todos los componentes forman **MAS** (*Multi-Agent System*), el sistema
 multiagente de este kit. La convención para referirse al sistema o a un agente
@@ -32,10 +32,9 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 | ID | Nombre | Skills que usa | Rol |
 |----|--------|----------------|-----|
 | [`architecture`](agentes/architecture.md) | Architecture Agent | `architecture` | Solo documenta/audita/recomienda en `.architecture/` |
-| [`code-quality`](agentes/code-quality.md) | Code Quality Agent | `code-quality` | Calidad, mantenibilidad, pruebas; deriva seguridad |
+| [`code-review`](agentes/code-review.md) | Code Review Agent | `code-quality` + `security` según alcance | Calidad, mantenibilidad, pruebas y seguridad; registros separados |
 | [`data-api`](agentes/data-api.md) | Data & API Agent | `data-api` | Capa de datos y contratos; identifica PII |
 | [`documentation-orchestrator`](agentes/documentation-orchestrator.md) | Documentation Orchestrator | `documentation-orchestrator` + especialistas seleccionadas | Coordina estado, bootstrap, sincronización y release-check documental |
-| [`security`](agentes/security.md) | Security Agent | `security` | Solo seguridad; micro-pasos con confirmación |
 | [`ui-design`](agentes/ui-design.md) | UI Design Agent | `ui-design` | Solo lo visual; no toca negocio ni APIs |
 | [`sdd`](agentes/sdd.md) | Agente SDD | `sdd-spec` | Selecciona `lite` para trabajo acotado de bajo riesgo; specs, gates e implementación trazable |
 | [`git-release-manager`](agentes/git-release-manager.md) | Git & Release Manager | `git-commit` + `release-management` | Commits, push, versiones, tags, CHANGELOG |
@@ -48,9 +47,10 @@ project-navigator ──────► Project Navigator       → .navigator/
 documentation-orch. ────► Documentation Orchestrator
                           └─ coordina las carpetas existentes; no crea una propia
 architecture  ──────────► Architecture Agent      → .architecture/
-code-quality  ──────────► Code Quality Agent      → .quality/
+code-quality  ──┐
+                ├──────► Code Review Agent       → .quality/ y .security/
+security      ──┘                                 (según dominio solicitado)
 data-api      ──────────► Data & API Agent        → .data/
-security      ──────────► Security Agent          → .security/
 ui-design     ──────────► UI Design Agent         → .design/
 sdd-spec      ──────────► Agente SDD              → .sdd/
 git-commit    ──┐
@@ -65,9 +65,10 @@ release-mgmt  ──┘                                 → .release/ (releases)
 | Onboarding, localizar módulos/símbolos sin reexplorar el repo | Project Navigator |
 | Comprobar o sincronizar varias carpetas documentales | Documentation Orchestrator |
 | Entender o documentar módulos, capas, ADRs | Architecture |
-| Limpiar smells, complejidad, cobertura, convenciones | Code Quality |
+| Limpiar smells, complejidad, cobertura, convenciones | Code Review — solo calidad |
 | Endpoints, DTOs, OpenAPI, repositorios, ER | Data & API |
-| Secretos, TLS, auth, permisos, hardening | Security |
+| Secretos, TLS, auth, permisos, hardening | Code Review — solo seguridad |
+| Revisar calidad y seguridad en la misma sesión | Code Review — revisión completa |
 | Colores, tipografía, componentes, temas | UI Design |
 | Feature o bugfix con requisitos y diseño antes de codear | SDD (`standard` para bugfixes no triviales) |
 | Commit / push del día a día | Git & Release Manager → flujo commit |

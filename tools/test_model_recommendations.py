@@ -34,7 +34,8 @@ def normalized(text: str) -> str:
 
 def test_specialist_contracts() -> None:
     for specialist in SPECIALISTS:
-        agent = read(ROOT / "canonical" / "agents" / f"{specialist}.md")
+        agent_id = "code-review" if specialist in ("code-quality", "security") else specialist
+        agent = read(ROOT / "canonical" / "agents" / f"{agent_id}.md")
         skill_dir = ROOT / "canonical" / "skills" / specialist
         skill = read(skill_dir / "SKILL.md")
         reference_path = skill_dir / "references" / "model-selection.md"

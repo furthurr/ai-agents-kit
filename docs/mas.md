@@ -13,7 +13,7 @@ el modelo del host.
 ## Convención de mensajes
 
 - `MAS:` indica que el comentario o la instrucción se dirige al sistema completo.
-- `@<agente>` indica que se dirige a un agente concreto, por ejemplo `@security`
+- `@<agente>` indica que se dirige a un agente concreto, por ejemplo `@code-review`
   o `@sdd`.
 - `MAS + @<agente>` indica una instrucción del sistema que debe ejecutar un agente
   concreto dentro de su alcance.
@@ -22,7 +22,7 @@ Ejemplos:
 
 ```text
 MAS: conserva la trazabilidad entre agentes y no repitas un gate confirmado.
-@security: revisa únicamente secretos y configuración de red.
+@code-review: solo seguridad; revisa secretos y configuración de red.
 MAS + @sdd: convierte este cambio en una spec con trazabilidad completa.
 ```
 

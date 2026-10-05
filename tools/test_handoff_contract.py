@@ -40,13 +40,13 @@ class HandoffContractTest(unittest.TestCase):
         data: dict[str, object] = {
             "handoff_id": "HND-20260903-001",
             "source": "documentation-orchestrator",
-            "target": "security",
+            "target": "code-review",
             "action": "sync",
             "handoff_reason": "continuar con el especialista real",
             "project_root": ".",
-            "scope": ".security/",
+            "scope": [".security/"],
             "context_refs": [".architecture/README.md", ".data/06-sensitive-data.md"],
-            "write_scope": ".security/",
+            "write_scope": [".security/"],
             "requires_confirmation": True,
             "gate_state": ["Gate0 aprobado"],
             "status": "pending",
@@ -107,7 +107,7 @@ class HandoffContractTest(unittest.TestCase):
             write_scope="none",
             requires_confirmation=True,
         )
-        self.assert_invalid("requiere write_scope", write_scope="none")
+        self.assert_invalid("write_scope", write_scope="none")
         self.assert_invalid("requires_confirmation true", requires_confirmation=False)
 
     def test_unsafe_or_missing_paths(self) -> None:
@@ -268,9 +268,10 @@ class HandoffContractTest(unittest.TestCase):
         self.assertTrue(errors)
 
     def test_all_targets_and_actions_have_valid_instances(self) -> None:
-        for target, scope in TARGET_SCOPES.items():
-            target_dir = self.workspace / scope
-            target_dir.mkdir(exist_ok=True)
+        for target, allowed in TARGET_SCOPES.items():
+            for folder in allowed:
+                (self.workspace / folder).mkdir(exist_ok=True)
+            scope = list(allowed) if target == "code-review" else allowed[0]
             for action in ACTIONS:
                 with self.subTest(target=target, action=action):
                     write_scope = "none" if action == "inspect" else scope
@@ -287,10 +288,9 @@ class HandoffContractTest(unittest.TestCase):
     def test_receiver_agents_declare_the_protocol(self) -> None:
         targets = {
             "architecture": "architecture",
-            "code-quality": "code-quality",
+            "code-review": "code-review",
             "data-api": "data-api",
             "project-navigator": "project-navigator",
-            "security": "security",
             "ui-design": "ui-design",
         }
         for filename, target in targets.items():
@@ -305,8 +305,10 @@ class HandoffContractTest(unittest.TestCase):
 
     def test_contract_declares_code_targets_and_actions(self) -> None:
         contract = CONTRACT.read_text(encoding="utf-8")
-        for target, scope in TARGET_SCOPES.items():
-            self.assertIn(f"| `{target}` | `{scope}` |", contract)
+        for target, scopes in TARGET_SCOPES.items():
+            self.assertIn(f"| `{target}` |", contract)
+            for scope in scopes:
+                self.assertIn(scope, contract)
         for action in ACTIONS:
             self.assertIn(f"| `{action}` |", contract)
 
@@ -325,6 +327,101 @@ class HandoffContractTest(unittest.TestCase):
                 / "references" / "handoff.md"
             )
             self.assertEqual(generated_contract.read_bytes(), expected_contract)
+
+
+class CodeReviewScopeTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.workspace = Path(self.temp.name)
+        (self.workspace / "README.md").write_text("# Project\n")
+        for folder in (".quality", ".security"):
+            (self.workspace / folder).mkdir()
+            (self.workspace / folder / "README.md").write_text("# Findings\n")
+
+    def tearDown(self) -> None:
+        self.temp.cleanup()
+
+    def handoff(self, **overrides: object) -> dict[str, object]:
+        data: dict[str, object] = {
+            "handoff_id": "HND-20261004-001",
+            "source": "documentation-orchestrator",
+            "target": "code-review",
+            "action": "sync",
+            "handoff_reason": "revisión conjunta",
+            "project_root": ".",
+            "scope": [".quality/", ".security/"],
+            "context_refs": ["README.md"],
+            "write_scope": [".quality/", ".security/"],
+            "requires_confirmation": True,
+            "status": "pending",
+        }
+        data.update(overrides)
+        return data
+
+    def result(self, evidence: list[str]) -> dict[str, object]:
+        return {
+            "handoff_id": "HND-20261004-001",
+            "status": "delivered",
+            "evidence": evidence,
+            "result_summary": "revisión entregada",
+        }
+
+    def test_review_scope_matrix(self) -> None:
+        for scopes in ([".quality/"], [".security/"], [".quality/", ".security/"]):
+            for action in ACTIONS:
+                with self.subTest(scopes=scopes, action=action):
+                    data = self.handoff(
+                        action=action, scope=scopes,
+                        write_scope="none" if action == "inspect" else scopes,
+                        requires_confirmation=action != "inspect",
+                    )
+                    self.assertEqual(validate_handoff(data, self.workspace), [])
+
+    def test_scope_order_does_not_expand_authorization(self) -> None:
+        data = self.handoff(write_scope=[".security/", ".quality/"])
+        self.assertEqual(validate_handoff(data, self.workspace), [])
+
+    def test_invalid_scope_shapes_and_values(self) -> None:
+        for scopes in ([], [".quality/", ".quality/"], [".data/"],
+                       ".quality/", [None], ["../"], ["/tmp"], {}, True):
+            with self.subTest(scopes=scopes):
+                self.assertTrue(validate_handoff(self.handoff(scope=scopes), self.workspace))
+        for writes in ([".quality/"], [".data/"], [], [".quality/", ".quality/"], {}):
+            with self.subTest(writes=writes):
+                self.assertTrue(validate_handoff(self.handoff(write_scope=writes), self.workspace))
+
+    def test_retired_targets_are_rejected(self) -> None:
+        for target in ("code-quality", "security"):
+            self.assertTrue(validate_handoff(self.handoff(target=target), self.workspace))
+
+    def test_joint_write_requires_evidence_for_each_domain(self) -> None:
+        complete = self.result([".quality/README.md", ".security/README.md"])
+        self.assertEqual(validate_result(complete, self.workspace, expected_handoff=self.handoff()), [])
+        partial = self.result([".quality/README.md"])
+        self.assertTrue(validate_result(partial, self.workspace, expected_handoff=self.handoff()))
+
+    def test_single_scope_result_cannot_escape_to_other_domain(self) -> None:
+        expected = self.handoff(scope=[".quality/"], write_scope=[".quality/"])
+        self.assertEqual(validate_result(self.result([".quality/README.md"]), self.workspace,
+                                         expected_handoff=expected), [])
+        self.assertTrue(validate_result(self.result([".security/README.md"]), self.workspace,
+                                        expected_handoff=expected))
+
+    def test_joint_inspect_can_return_evidence_from_one_domain(self) -> None:
+        expected = self.handoff(action="inspect", write_scope="none", requires_confirmation=False)
+        self.assertEqual(validate_result(self.result([".security/README.md"]), self.workspace,
+                                         expected_handoff=expected), [])
+
+    def test_markdown_list_scopes_round_trip(self) -> None:
+        data = parse_markdown_fields("- scope: [.quality/, .security/]\n- write_scope: [.security/, .quality/]")
+        self.assertEqual(validate_handoff(self.handoff(**data), self.workspace), [])
+
+    def test_scope_root_cannot_alias_unselected_domain(self) -> None:
+        (self.workspace / ".quality" / "README.md").unlink()
+        (self.workspace / ".quality").rmdir()
+        (self.workspace / ".quality").symlink_to(self.workspace / ".security", target_is_directory=True)
+        expected = self.handoff(scope=[".quality/"], write_scope=[".quality/"])
+        self.assertTrue(validate_handoff(expected, self.workspace))
 
 
 if __name__ == "__main__":

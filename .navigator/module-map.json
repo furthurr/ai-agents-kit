@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "generated_at": "2026-10-05T04:43:32Z",
+  "root": ".",
+  "modules": [
+    {
+      "id": "canonical",
+      "name": "Fuentes canónicas",
+      "path": "canonical",
+      "responsibility": "Mantiene la fuente común de skills, agentes y el manifiesto del kit.",
+      "kind": "other",
+      "tech": ["Markdown", "JSON"],
+      "entrypoints": ["canonical/manifest.json", "canonical/skills/", "canonical/agents/"],
+      "depends_on": [],
+      "tags": ["source-of-truth", "MAS"]
+    },
+    {
+      "id": "adapters",
+      "name": "Adaptadores de plataforma",
+      "path": "adapters",
+      "responsibility": "Declara frontmatter, nombres y ajustes específicos para las cinco plataformas soportadas.",
+      "kind": "other",
+      "tech": ["JSON"],
+      "entrypoints": ["adapters/copilot/", "adapters/opencode/", "adapters/kiro/", "adapters/claude/", "adapters/pi/"],
+      "depends_on": [],
+      "tags": ["platforms"]
+    },
+    {
+      "id": "tools",
+      "name": "Herramientas Python",
+      "path": "tools",
+      "responsibility": "Renderiza, valida y apoya tareas de mantenimiento e importación del kit.",
+      "kind": "other",
+      "tech": ["Python 3"],
+      "entrypoints": ["tools/render.py", "tools/validate.py", "tools/measure_context.py", "tools/import_installed.py"],
+      "depends_on": ["canonical", "adapters"],
+      "tags": ["render", "validation"]
+    },
+    {
+      "id": "generated",
+      "name": "Artefactos generados",
+      "path": "generated",
+      "responsibility": "Contiene las salidas del renderer listas para instalar por plataforma; no editarlas manualmente.",
+      "kind": "other",
+      "tech": ["Markdown", "JSON"],
+      "entrypoints": ["generated/copilot/", "generated/opencode/", "generated/kiro/", "generated/claude/", "generated/pi/"],
+      "depends_on": ["canonical", "adapters", "tools"],
+      "tags": ["generated", "platforms"]
+    },
+    {
+      "id": "scripts",
+      "name": "Instalación y backup",
+      "path": "scripts",
+      "responsibility": "Instala artefactos en herramientas host y respalda/importa configuraciones locales.",
+      "kind": "other",
+      "tech": ["Bash", "PowerShell"],
+      "entrypoints": ["scripts/install/", "scripts/backup/"],
+      "depends_on": ["generated"],
+      "tags": ["install", "backup"]
+    },
+    {
+      "id": "docs",
+      "name": "Documentación del kit",
+      "path": "docs",
+      "responsibility": "Documenta el uso, desarrollo y arquitectura del pipeline del repositorio.",
+      "kind": "other",
+      "tech": ["Markdown"],
+      "entrypoints": ["docs/README.md", "docs/arquitectura-del-kit.md"],
+      "depends_on": [],
+      "tags": ["documentation"]
+    }
+  ]
+}

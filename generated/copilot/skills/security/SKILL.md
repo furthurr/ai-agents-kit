@@ -28,7 +28,8 @@ Antes de operar, recomienda `BAJO` para consultas de estado y `MEDIO` para
 revisiones o micro-remediaciones localizadas no críticas. Para
 auditoría completa o trabajo crítico de auth, criptografía, PII o red, carga
 `references/model-selection.md` y aplica su hard stop. No repitas un nivel ya
-confirmado por Documentation Orchestrator para el mismo alcance. Nunca nombres
+confirmado por Code Review o Documentation Orchestrator para el mismo alcance y
+dominios seleccionados. Nunca nombres
 modelos/proveedores ni cambies el modelo del host.
 La primera respuesta visible debe comenzar con
 `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo esa confirmación previa.
@@ -40,7 +41,7 @@ el usuario indique continuar, sin confirmar el modelo ni repetir la recomendaci�
 Esta skill es la **referencia canónica** para auditar, documentar y ayudar a
 remediar la seguridad de un proyecto, con foco en **móvil (Android, iOS,
 Flutter)**. Da a la IA y al equipo un estado claro de riesgos y una ruta de
-solución **paso a paso**. Complementa al agente `Security Agent`. Si el agente y
+solución **paso a paso**. Complementa al agente `Code Review Agent`. Si el agente y
 esta skill divergen, **manda esta skill**.
 
 > **Regla de alcance (inviolable):** esta skill trabaja SOLO **seguridad**
@@ -65,8 +66,11 @@ esta skill divergen, **manda esta skill**.
   (los 8 grupos de control de arriba). No requiere red.
 - **Otra tecnología** (web, backend, etc.): busca en la web el estándar
   correspondiente (OWASP ASVS/Top 10, CWE, guía del framework), **resúmelo** y
-  **guárdalo** en `.security/standards/<tech>.md` para reutilizarlo (caché). No
+  **guárdalo** solo en operaciones documentales autorizadas en
+  `.security/standards/<tech>.md` para reutilizarlo (caché). No
   vuelvas a buscar si ya existe y sigue vigente.
+- En una consulta de solo lectura usa los estándares en memoria, sin escrituras
+  de cachés, findings ni marcas de sincronización.
 
 ## Carpeta canónica: `.security/`
 
@@ -106,15 +110,17 @@ son **plataformas de un mismo proyecto** → una sola `.security/` en la raíz.
 ## Flujo al iniciar (lectura de estado primero)
 
 1. Busca `.security/`.
-2. **Si NO existe:** realiza el **scan/auditoría** (solo lectura), presenta la
-   **lista priorizada** y, tras el **gate** de confirmación de alcance (ver Fase A),
-   crea la documentación (findings + tablero + PII); luego **ofrece al usuario
-   empezar la remediación**.
-3. **Si YA existe:** lee el estado y **ofrece re-escanear** para (a) confirmar qué
-   puntos siguen **pendientes**, (b) detectar **nuevos** hallazgos, (c) marcar como
-   **resueltos** los que ya no aplican. Luego ofrece **continuar** la remediación
-   por donde se quedó.
-4. Actualiza la marca de sincronización (hash de `HEAD` o fecha).
+2. Clasifica intención: consulta/inspección = solo lectura; auditar y documentar,
+   inicializar o sincronizar = persistencia en el alcance solicitado.
+3. **Si NO existe:** una consulta no crea `.security/`; una auditoría documental
+   solicitada realiza el scan y registra los hallazgos verificados.
+4. **Si YA existe:** lee el estado relevante. Si ya se pidió auditar/sincronizar,
+   revalida pendientes y nuevos sin volver a ofrecer el mismo reescaneo; verifica
+   los resueltos antes de cambiar su estado. Una consulta puntual no dispara un
+   escaneo completo. Ofrece remediar como una operación aparte.
+5. Actualiza la marca de sincronización solo tras una operación documental,
+   cubriendo el alcance realmente auditado; no declares vigente todo un proyecto
+   después de una revisión parcial.
 
 > El usuario puede resolver los problemas en **varias sesiones**: el estado de
 > cada hallazgo queda persistido en `findings/` y en el tablero maestro.
@@ -127,12 +133,15 @@ son **plataformas de un mismo proyecto** → una sola `.security/` en la raíz.
    márcalo como "por revisar".
 3. **Presenta la lista priorizada** (severidad, referencia MASVS/MASWE/CWE,
    ubicación) **antes de escribir**; este análisis es de solo lectura.
-4. **Gate (espera confirmación) antes de persistir en masa:** el escaneo genera
-   **un archivo por hallazgo** en `findings/`, que en repos grandes pueden ser
-   muchos. Confirma el **alcance** (todo, solo `Crítica`/`Alta`, top-N…) antes de
-   crearlos. **Atajo "genera todo":** si el usuario ya lo autoriza ("genera todo",
-   "sin preguntar"), omite la confirmación y persiste directo.
-5. Al confirmar, crea por cada debilidad un **finding** en `findings/SEC-NNNN-*.md`
+4. **Persistencia sin filtro redundante:** una auditoría documental autorizada
+   guarda todos los hallazgos verificados de todas las severidades. Agrupa las
+   ocurrencias de la misma causa con sus ubicaciones y preserva IDs existentes.
+   Reutiliza la autorización explícita de la sesión para la misma operación y
+   proyecto; no pidas otra selección de severidades. Consulta/`inspect` no escribe.
+   Pregunta solo por decisiones pendientes: ambigüedad de proyecto, ampliaciones,
+   sobrescritura manual o volumen que impida completar el alcance y requiera lotes.
+   No trunques resultados ni transfieras esa autorización a remediación.
+5. Dentro de ese alcance, crea por cada debilidad distinta un **finding** en `findings/SEC-NNNN-*.md`
    y una fila en `security-tech-debt.md` con severidad, referencia
    (MASVS/MASWE/CWE), impacto y estado `Pendiente`; luego ofrece iniciar la
    remediación (Fase B).
@@ -171,7 +180,8 @@ hallazgo antes de marcarlo `Resuelto`.
 
 1. **Explica** el hallazgo y por qué es riesgo (breve, con su ref MASVS/CWE).
 2. **Propón el plan** dividido en micro-pasos numerados (ej. "paso 1 de 4").
-3. Ejecuta **UN solo micro-paso**; muestra el **diff mínimo** y **por qué**.
+3. Solicita aprobación antes del primer micro-paso y de cada siguiente; ejecuta
+   **UN solo micro-paso** autorizado y muestra el **diff mínimo** y **por qué**.
 4. **Detente y espera OK** del usuario antes del siguiente micro-paso.
 5. Actualiza el estado del finding (`Pendiente` → `En progreso` → `Resuelto`) y su
    bitácora de micro-pasos, para poder continuar luego.
@@ -219,8 +229,8 @@ para consultas o remediaciones inequívocamente puntuales.
 - Comunícate en español por defecto; si el usuario escribe en otro idioma o lo
   pide, adáptate. Sé claro y conciso.
 - Solo seguridad: no hagas features ni cambios ajenos.
-- Auditar primero (solo lectura), documentar los hallazgos tras confirmar el
-  alcance (nunca arreglar en silencio), remediar paso a paso con confirmación.
+- Auditar primero, documentar dentro del alcance solicitado sin repetir filtros;
+  las consultas son sin escrituras y la remediación requiere aprobación aparte.
 - Persistencia: el estado vive en `.security/` para continuar en varias sesiones.
 - Nunca expongas secretos; usa placeholders. Marca la PII.
 - Cita `archivo:línea`; no inventes. git solo de lectura.

@@ -104,6 +104,8 @@ python3 tools/test_integrity.py
 python3 tools/test_links.py
 python3 tools/test_model_recommendations.py
 python3 tools/test_sdd_contract.py
+python3 tools/test_handoff_contract.py
+python3 tools/test_code_review_contract.py
 python3 tools/test_validate.py
 python3 tools/test_install.py
 ```

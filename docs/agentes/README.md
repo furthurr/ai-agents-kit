@@ -12,8 +12,7 @@ skill canónicos en `canonical/`; estas páginas sirven como orientación rápid
 | Documentar decisiones y estructura técnica | [Architecture](architecture.md) | `architecture` | `.architecture/` |
 | Catálogo de APIs, DTOs o persistencia | [Data & API](data-api.md) | `data-api` | `.data/` |
 | Documentar colores, componentes o temas | [UI Design](ui-design.md) | `ui-design` | `.design/` |
-| Revisar mantenibilidad, tests o complejidad | [Code Quality](code-quality.md) | `code-quality` | `.quality/` y cambios de calidad aprobados |
-| Auditar secretos, auth, red o permisos | [Security](security.md) | `security` | `.security/` |
+| Revisar calidad, seguridad o ambas | [Code Review](code-review.md) | `code-quality` y/o `security` | `.quality/` y/o `.security/`; correcciones autorizadas |
 | Comprobar o sincronizar documentación | [Documentation Orchestrator](documentation-orchestrator.md) | `documentation-orchestrator` + especialistas | Carpetas documentales aplicables |
 | Definir una feature o bugfix antes de implementarlo | [SDD](sdd.md) | `sdd-spec` | `.sdd/` y código aprobado por las tareas |
 | Crear commits, push o preparar releases | [Git & Release Manager](git-release-manager.md) | `git-commit` + `release-management` | Git, versión, tag y CHANGELOG |
@@ -30,14 +29,15 @@ skill canónicos en `canonical/`; estas páginas sirven como orientación rápid
 
 ## Uso por plataforma
 
-Los IDs estables son los mismos en las cuatro plataformas:
+Los IDs estables son los mismos en las cinco plataformas:
 
 | Plataforma | Forma habitual de invocación |
 |---|---|
-| OpenCode | Selecciona el agente o menciónalo, por ejemplo `@architecture`, `@sdd` o `@security`. |
+| OpenCode | Selecciona el agente o menciónalo, por ejemplo `@architecture`, `@sdd` o `@code-review`. |
 | GitHub Copilot | Selecciona el agente personalizado instalado; los nombres salen del catálogo. |
 | Kiro | Selecciona el agente de `~/.kiro/agents/`; para una skill también puede usarse su comando, según la UI. |
-| Claude Code | Delega al subagente o menciónalo, por ejemplo `@architecture`, `@sdd` o `@security`; las skills se invocan con `/nombre`. |
+| Claude Code | Delega al subagente o menciónalo, por ejemplo `@architecture`, `@sdd` o `@code-review`; las skills se invocan con `/nombre`. |
+| Pi | Usa `/code-review <tarea>` como plantilla de prompt; no crea un subagente aislado. |
 
 Una petición útil indica el resultado, el alcance y el nivel de autonomía esperado:
 
@@ -55,10 +55,11 @@ Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
 - **Architecture, Data & API y UI Design:** la primera documentación masiva parte
   de un aviso de modelo, un estudio y una propuesta; también las tareas puntuales
   pausan tras la recomendación inicial, sin omitir los gates posteriores.
-- **Quality y Security:** primero auditan en solo lectura; después requieren
-  pausa para cambiar de modelo opcionalmente antes de cualquier consulta o barrido;
-  el alcance y la remediación en micro-pasos conservan sus aprobaciones.
-- **Escalado a SDD:** Architecture, Data & API, UI Design, Quality y Security
+- **Code Review:** pausa antes de cualquier consulta/barrido para recomendar modelo,
+  una sola vez para el mismo alcance. Las auditorías documentales autorizadas
+  registran todas las severidades verificadas sin pedir otro filtro; consultas sin
+  escrituras y remediación con aprobación antes del primer y cada siguiente paso.
+- **Escalado a SDD:** Architecture, Data & API, UI Design y Code Review
   recomiendan SDD si la mejora requiere más requisitos, diseño o coordinación;
   explican el motivo y esperan que el usuario decida si cambia de agente.
 - **SDD:** ofrece exactamente `direct`, `lite` y `standard`. `lite` se
@@ -79,13 +80,12 @@ Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
 | Agente | Ficha | Skill(s) |
 |---|---|---|
 | Architecture Agent | [architecture.md](architecture.md) | `architecture` |
-| Code Quality Agent | [code-quality.md](code-quality.md) | `code-quality` |
+| Code Review Agent | [code-review.md](code-review.md) | `code-quality` y/o `security` |
 | Data & API Agent | [data-api.md](data-api.md) | `data-api` |
 | Documentation Orchestrator | [documentation-orchestrator.md](documentation-orchestrator.md) | `documentation-orchestrator` + especialistas aplicables |
 | Git & Release Manager | [git-release-manager.md](git-release-manager.md) | `git-commit` + `release-management` |
 | Project Navigator Agent | [project-navigator.md](project-navigator.md) | `project-navigator` |
 | Agente SDD | [sdd.md](sdd.md) | `sdd-spec` |
-| Security Agent | [security.md](security.md) | `security` |
 | UI Design Agent | [ui-design.md](ui-design.md) | `ui-design` |
 
 ## Fuentes canónicas

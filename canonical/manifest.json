@@ -13,13 +13,12 @@
   ],
   "agents": [
     "architecture",
-    "code-quality",
+    "code-review",
     "data-api",
     "documentation-orchestrator",
     "git-release-manager",
     "project-navigator",
     "sdd",
-    "security",
     "ui-design"
   ],
   "platforms": [

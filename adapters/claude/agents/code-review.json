@@ -1,0 +1,19 @@
+{
+  "filename": "code-review.md",
+  "frontmatter": {
+    "name": "code-review",
+    "description": "Revisa calidad y seguridad mediante skills especializadas, conserva .quality/ y .security/ separados y solo remedia con autorización. No expone secretos.",
+    "user-invocable": false,
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Skill"
+    ]
+  }
+}

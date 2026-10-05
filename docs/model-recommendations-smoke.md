@@ -5,9 +5,10 @@ instalar una plataforma y reiniciar la herramienta.
 
 ## Tareas puntuales
 
-Solicita una consulta o ajuste localizado a Architecture, Code Quality, Data & API,
-Security y UI Design. Cada agente debe recomendar `BAJO` o `MEDIO` brevemente y
-continuar sin pedir una confirmación exclusiva de modelo.
+Solicita una consulta o ajuste localizado a Architecture, Code Review, Data & API
+y UI Design. Cada agente debe recomendar `BAJO` o `MEDIO` y pausar antes de operar;
+«continúa» reanuda sin declarar el modelo. Con Code Review prueba un finding `QLT`
+y uno `SEC`; la skill elegida no añade otro aviso para el mismo alcance.
 
 ## Operaciones pesadas
 
@@ -33,11 +34,15 @@ confirmaciones operativas, pero no añade un Gate de modelo.
 - Ningún agente selecciona o cambia el modelo del host.
 - Un cambio material de alcance recalcula el nivel; solo un nivel distinto repite
   el hard stop.
-- Las tareas puntuales no cargan matrices detalladas ni quedan bloqueadas.
+- Las tareas puntuales pausan sin cargar matrices detalladas y reanudan al continuar.
 - `python3 tools/test_model_recommendations.py` y `python3 tools/measure_context.py`
   se registran como evidencia junto con plataforma, fecha y commit del kit.
 
 ## Última evidencia manual
+
+La evidencia siguiente corresponde al catálogo anterior. Los escenarios de
+Code Review están pendientes de ejecución en host real; ver
+[code-review-smoke.md](code-review-smoke.md). No se presentan como pruebas nuevas.
 
 - Fecha: 2026-09-15.
 - Plataforma: OpenCode 1.18.14.

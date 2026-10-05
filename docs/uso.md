@@ -30,17 +30,16 @@ IDs estables del kit:
 |----|------------------------|
 | `project-navigator` | Project Navigator |
 | `architecture` | Architecture Agent |
-| `code-quality` | Code Quality Agent |
+| `code-review` | Code Review Agent |
 | `data-api` | Data & API Agent |
 | `documentation-orchestrator` | Documentation Orchestrator |
-| `security` | Security Agent |
 | `ui-design` | UI Design Agent |
 | `sdd` | Agente SDD / SDD |
 | `git-release-manager` | Git & Release Manager |
 
 ### OpenCode
 
-- Selecciona el agente (p. ej. `@architecture`, `@sdd`, `@security`).
+- Selecciona el agente (p. ej. `@architecture`, `@sdd`, `@code-review`).
 - Las skills viven en `~/.config/opencode/skills/` y pueden cargarse por
   relevancia del prompt.
 - Ejemplo: con `@sdd` — *“Planifica el login biométrico en modo standard”*.
@@ -77,9 +76,10 @@ ruta de destino en [instalacion.md](instalacion.md).
 | “¿Qué es este repo?”, “¿dónde está X?”, “bootstrap del navigator” | Project Navigator |
 | “¿Está actualizada la documentación?”, “actualiza lo que tenemos”, “release-check” | Documentation Orchestrator |
 | “Documenta la arquitectura”, “añade un ADR”, “¿qué módulos hay?” | Architecture |
-| “Revisa code smells”, “baja complejidad”, “mejora este archivo” | Code Quality |
+| “Solo calidad: revisa code smells”, “baja complejidad” | Code Review — `code-quality` |
 | “Catálogo de endpoints”, “DTO de login”, “diagrama ER” | Data & API |
-| “Auditoría de seguridad”, “¿hay secretos en claro?”, “hardening TLS” | Security |
+| “Solo seguridad”, “¿hay secretos en claro?”, “hardening TLS” | Code Review — `security` |
+| “Revisión completa de calidad y seguridad del módulo” | Code Review — ambas skills |
 | “Extrae el design system”, “unifica colores”, “deuda de UI” | UI Design |
 | “Especifica esta feature”, “bugfix estructurado”, “tasks de la spec” | SDD |
 | “Haz commit”, “pushea”, “prepara la release 1.4.0” | Git & Release Manager |
@@ -88,7 +88,8 @@ Catálogo completo: [catalogo.md](catalogo.md).
 
 ## Buenas prácticas
 
-1. **Un dominio por sesión de agente** — no pidas al de UI que arregle la API.
+1. **Respeta el alcance del agente** — no pidas al de UI que arregle la API.
+   Code Review puede revisar calidad y seguridad en la misma sesión, o solo uno.
 2. **Primera vez en un repo** — usa Project Navigator para bootstrap de
    `.navigator/` (mapa barato); luego deja que cada especialista inicialice su
    carpeta (`.architecture/`, `.design/`, etc.).
@@ -110,14 +111,17 @@ Catálogo completo: [catalogo.md](catalogo.md).
    orientar la exploración. Un índice desfasado solo aporta rutas candidatas: la
    documentación aplicable y el código real confirman las decisiones. Su ausencia
    no bloquea el flujo ni provoca bootstrap/update automático.
-4. **Escalado recomendado, no automático** — Architecture, Code Quality, Data & API,
-   Security y UI Design evalúan si una mejora necesita más requisitos o diseño. Si
+4. **Escalado recomendado, no automático** — Architecture, Code Review, Data & API
+   y UI Design evalúan si una mejora necesita más requisitos o diseño. Si
    recomiendan SDD, explican el motivo, citan el hallazgo y se detienen antes del
    código; tú decides si cambias de agente. SDD no amplía el alcance del especialista.
 5. **Git y releases** — el agente propondrá el plan; **tú confirmas** commit, push,
    tag o changelog aplicado.
 6. **Seguridad y calidad** — la remediación va en micro-pasos con confirmación;
    no esperes un “arregla todo el repo” de un golpe.
+   Una auditoría documental autorizada registra todos los hallazgos verificados
+   sin volver a elegir severidades. Las consultas son sin escrituras y no autorizan
+   remediación. `.quality/` y `.security/` conservan sus IDs y estándares.
 7. **Contexto del proyecto** — si existe `CLAUDE.md`, `AGENTS.md` o steering de
    Kiro, los agentes de SDD lo leen de forma selectiva según la plataforma.
 8. **Testing adaptativo en SDD** — una feature normal usa TDD focalizado; TDD
@@ -150,6 +154,8 @@ El orquestador entrega un bloque `## Handoff`; cópialo al agente indicado y
 devuelve después su bloque `## Handoff Result` al orquestador. Para una misma
 acción se usa la skill local o el handoff, nunca ambos. `write_scope` es una
 restricción lógica: no sustituye los permisos efectivos de la plataforma.
+Calidad y seguridad se derivan a `code-review`; `scope` es una lista con una o
+ambas carpetas. Solo se agrupan con la misma acción, proyecto y vía autorizada.
 
 ## Qué deja cada especialista en tu repo
 
@@ -157,10 +163,9 @@ restricción lógica: no sustituye los permisos efectivos de la plataforma.
 |--------|-------------------|
 | Project Navigator | `.navigator/` (ai-context, module-map, config; symbols/graph opt-in) |
 | Architecture | `.architecture/` (contexto, diagramas, ADRs, deuda) |
-| Code Quality | `.quality/` (hallazgos, estándares cacheados) |
+| Code Review | `.quality/` y/o `.security/` (hallazgos, estándares, evidencia por dominio) |
 | Data & API | `.data/` (catálogo, modelos, contratos, ER) + lanzador Scalar para REST, bloqueado hasta disponer de OpenAPI válido |
 | Documentation Orchestrator | No deja carpeta propia; coordina las anteriores |
-| Security | `.security/` (hallazgos, checklist, evidencia) |
 | UI Design | `.design/` (tokens, componentes, deuda visual) |
 | SDD | `.sdd/specs/<ruta-spec>/` plana o agrupada por módulo (requirements, design, tasks, verification) |
 | Git & Release | Commits/tags/CHANGELOG; perfil en `.release/` si aplica |
@@ -190,9 +195,10 @@ Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
 - Documentation Orchestrator no modifica producto, no selecciona el modelo y no
   administra `.sdd/`, `.release/` ni `graphify-out/`.
 - Architecture **no** refactoriza código de negocio.
-- Code Quality **deriva** vulnerabilidades al Security Agent.
+- Code Review usa `security` para riesgos, no los corrige con criterios de calidad;
+  una revisión de solo calidad no autoriza ampliar a seguridad.
 - Data & API **no** implementa pantallas.
-- Security / Quality **no** exponen secretos reales en la documentación.
+- Code Review **no** expone secretos reales en la documentación.
 - Git & Release **no** hace commit/push/tag sin confirmación explícita;
   acciones destructivas piden doble confirmación.
 - SDD **no** cambia el modelo del host ni marca tareas hechas sin evidencia

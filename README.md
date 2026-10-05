@@ -12,7 +12,7 @@ comentarios al sistema completo o a un agente concreto.
 
 La lógica se mantiene **una sola vez** en `canonical/` y se renderiza por
 plataforma con adaptadores declarativos. Así obtienes el mismo comportamiento
-especializado en las cuatro herramientas, sin cuadruplicar prompts.
+especializado en las cinco herramientas, sin duplicar prompts por plataforma.
 
 ## Por qué existe
 
@@ -30,7 +30,7 @@ Más detalle: [docs/vision.md](docs/vision.md).
 | | Cantidad | Detalle |
 |---|----------|---------|
 | Skills | 10 | architecture, code-quality, data-api, documentation-orchestrator, git-commit, project-navigator, release-management, sdd-spec, security, ui-design |
-| Agentes | 9 | especialistas por dominio; **Documentation Orchestrator** coordina documentación y **Git & Release Manager** coordina Git/release |
+| Agentes | 8 | **Code Review** reúne calidad y seguridad; **Documentation Orchestrator** coordina documentación y **Git & Release Manager** coordina Git/release |
 | Plataformas | 5 | copilot, opencode, kiro, claude, pi |
 
 Catálogo completo (roles, carpetas, cuándo usar cada uno):

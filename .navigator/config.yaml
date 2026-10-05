@@ -1,0 +1,36 @@
+version: 1
+project:
+  name: "AI Agents Kit"
+  root: .
+layers:
+  context: true
+  module_map: true
+  symbols: false
+  graph: false
+sources:
+  detect_external: true
+  export_agents_md: false
+graph:
+  provider: none
+  path: graph/graph.json
+exclude:
+  - node_modules/**
+  - .git/**
+  - dist/**
+  - build/**
+  - "**/__pycache__/**"
+  - "**/.navigator/cache/**"
+  - "**/.env"
+  - "**/.env.*"
+  - "**/local.properties"
+  - "**/secrets/**"
+  - "**/*.key"
+  - "**/*.pem"
+  - "**/*.p12"
+  - "**/*.jks"
+  - "**/*.keystore"
+  - "**/credentials*"
+  - "**/*.secret"
+  - "**/service-account*.json"
+update:
+  strategy: manual
