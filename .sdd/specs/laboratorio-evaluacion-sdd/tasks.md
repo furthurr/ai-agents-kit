@@ -30,11 +30,11 @@
 ## Wave 2 — Congelar catálogo y snapshots independientes
 
 - [x] 2.1 Definir esquema tipado/versionado del catálogo, IDs F01–F10, factores de dificultad, elegibilidad lite canónico y digests; validar exactamente diez IDs únicos y orden previstos (evidencia: `runner/src/lab_runner/catalog.py`, `runner/tests/test_catalog.py`, `python3 -m pytest -q` → 18 passed; Req R01, R03–R05, R10, R12).
-- [ ] 2.2 [P] Crear contrato público, snapshot limpio, fixtures y baseline de F01–F04; RED de aceptación ante comportamiento ausente, GREEN de referencia solo para validar el harness, y fijar validaciones/límites y regresiones (Req R02–R04, R07–R08, R20, R22–R23).
+- [x] 2.2 Crear contrato público, snapshot limpio, fixtures y baseline de F01–F04: `catalog/contracts.md` (24 criterios), `snapshots/F01–F04/feature.py` y `test_public.py`, `evaluation/references.py`, `runner/tests/test_feature_harness.py`. Referencias 24/24, skeletons 0/24; baseline público 4 passed (Req R02–R04, R07–R08, R20, R22–R23). El snapshot no contiene soluciones/evaluación reservada; la frontera OS aún está pendiente.
 - [ ] 2.3 [P] Crear contrato público, snapshot limpio, fixtures y baseline de F05–F07; incluir persistencia, transacciones y barreras multiproceso sin filtrar pruebas reservadas (Req R02–R04, R07–R08, R20–R23).
 - [ ] 2.4 [P] Crear contrato público, snapshot limpio, fixtures y baseline de F08–F10; especificar agenda de fallos determinista, reinicio/recuperación y regresiones, sin servicios reales (Req R02–R04, R07–R08, R20–R23).
-- [ ] 2.5 Construir suite externa por feature en zona evaluadora separada; versionar expected outcomes, criterios obligatorios, clasificación parcial y regresiones, sin rutas de lectura desde sandbox candidato (Req R20–R23, R27–R28, R44).
-- [ ] 2.6 [P] Calibrar evaluadores con solución de referencia y mutaciones representativas (errores de límites, concurrencia, atomicidad y recuperación); la referencia debe pasar y las mutaciones fallar por razones previstas; bloquear campaña ante falsos positivos/negativos (Req R20–R28).
+- [🔵] 2.5 Suite externa determinista F01–F04 en `evaluation/criteria.py`, ligada a los 24 IDs públicos. Pendiente F05–F10 e integración con aislamiento y límites; no ejecutar candidatos no confiables mediante el grader de calibración (Req R20–R23, R27–R28, R44).
+- [🔵] 2.6 Calibración F01–F04: 24 criterios pasan con referencias y nueve mutaciones se rechazan en sus criterios; `test_feature_harness.py` 21 passed. Pendiente calibrar concurrencia/atomicidad/recuperación de F05–F10 (Req R20–R28).
 - [ ] 2.7 [P] Añadir propiedad idempotente de normalización para F04 con Hypothesis real y ejemplos deterministas; observar RED antes de la solución de referencia del harness (Req R02, R22–R23; design §6).
 - [ ] 2.8 [P] Añadir propiedad de convergencia determinista ante permutaciones/duplicados de eventos para F09, con Hypothesis real y ejemplos de tombstones; fijar la semántica de orden total (Req R02, R22–R23; design §6).
 
@@ -42,7 +42,7 @@
 
 - [🔵] 3.1 Implementar parser/validador del manifiesto de campaña congelado (modelo, modo MAX seleccionado por el usuario, evidencia de herencia, versiones, semilla, repeticiones, límites, precios y feedback); RED/GREEN para rechazo de campos ausentes o cambios no versionados (Req R06, R09–R12, R37, R59).
 - [ ] 3.2 Definir estados y errores tipados del run; RED/GREEN para transiciones válidas, inválidas, terminales y reanudación sin sobrescribir IDs ni artefactos (Req R12, R38–R42).
-- [ ] 3.3 [P] Implementar almacén de eventos/evidencia encapsulado con composition root e I/O supervisado; RED/GREEN para checkpoints durables antes de invocar modelo y escritura oficial exclusiva del host (Req R19, R30–R32, R41–R45).
+- [🔵] 3.3 Checkpoints JSON atómicos con fsync y rechazo de campaña duplicada implementados solo para escenarios sintéticos en `simulation.py`; no sobrescribir registros de campañas existentes. Pendiente almacén de evidencia real, recuperación, composición e I/O supervisado (Req R19, R30–R32, R41–R45).
 - [ ] 3.4 Implementar gestor de snapshots/sandbox efímero: permisos mínimos, sin repo anfitrión, pruebas secretas, runs ajenos, credenciales, socket Docker o egress arbitrario; sanitizar symlinks/rutas/tamaños al extraer entregas (Req R07–R08, R21, R43–R44).
 - [ ] 3.5 Implementar evaluador aislado, no privilegiado y sin red, que ejecute entrega no confiable contra suite externa y produzca evidencia por criterio; proteger fixtures oficiales contra escritura (Req R20–R28, R44).
 - [ ] 3.6 Implementar política de secretos y sanitización de logs/reportes, con tests sobre tokens y credenciales sintéticas; eliminar o redactar antes de persistir/exportar (Req R42–R45).
@@ -57,7 +57,7 @@
 - [ ] 4.4 Implementar escalamiento de los runs válidos parciales/fallidos o con fallo de proceso; crear run nuevo desde el mismo digest inicial sin código, conversación o feedback previo; aplicar política acotada a runs inválidos, sin contarlos como fallo del modelo (Req R07–R08, R16, R38–R41, R51–R53).
 - [ ] 4.5 [P] Implementar política de pausa/reanudación para fallas de infraestructura y agotamiento de presupuesto; reanudar con IDs nuevos y conciliación cuando posible, sin duplicar llamadas a ciegas (Req R38–R41, R53, R57).
 - [ ] 4.6 Implementar ronda de control seleccionada por semilla desde éxitos ligeros y tercera ronda opcional de otro modelo; validar mismo snapshot/protocolo, opt-in y advertencia contra inferir ventaja general de un muestreo sesgado (Req R08–R12, R35–R36, R55–R58).
-- [ ] 4.7 Añadir pruebas end-to-end con fake adapter para: 10 intentos ligeros, evaluación, escalamiento desde cero, configuración MAX heredada, inválido de infraestructura, presupuesto agotado, pausa/reanudación y evidencia no sobrescrita (Req R37–R42, R44, R46–R59).
+- [🔵] 4.7 Flujo sintético de 10 intentos ligeros + escalamiento, descriptor de baseline idéntico y contexto vacío, límite de intentos y registros no sobrescritos: `simulation.py`, `test_simulation.py`, `test_cli.py`. No usa aún adaptador/evaluador reales, ni implementa recuperación/invalidación/validación efectiva MAX; no equivale al E2E completo (Req R37–R42, R44, R46–R60).
 
 ## Wave 5 — Auditoría, métricas y reportes
 
@@ -69,7 +69,7 @@
 
 ## Wave 6 — Dry-run, aceptación de seguridad y habilitación
 
-- [ ] 6.1 Ejecutar campaña completa simulada con fake adapter y fixtures de referencia; validar secuencia, MAX heredado, presupuestos, estados, métricas e informes sin llamadas reales (Req R06–R12, R37–R59).
+- [🔵] 6.1 Demostración sintética guardada en `runs/offline-demo-001/report.json`: 16 intentos predefinidos, cero modelos, no benchmark. Pendiente conectar referencias/calibración, adaptador falso, MAX observado, métricas y demás ramas del E2E (Req R06–R12, R37–R60).
 - [ ] 6.2 Ejecutar pruebas negativas de aislamiento: intentar leer evaluación reservada, modificar otros runs, escapar rutas, extraer credenciales y generar egress; verificar denegación y revisar evidencia con especialista de seguridad (Req R21, R43–R44).
 - [ ] 6.3 Completar matriz requisito→tarea→test→evidencia, auditoría de calidad y decisión de Git selectivo; documentar limitaciones de cliente, métricas disponibles, población y confianza (Req R01–R59).
 - [ ] 6.4 Preparar manifiesto de piloto real con modelo identificado, evidencia de MAX seleccionado por el usuario/heredado en sesiones nuevas, presupuesto total, límites, repeticiones, precios, modelos auditores y policy digest; solicitar autorización explícita de kickoff antes de cualquier consumo de API (Req R06, R09–R12, R30–R38, R46–R59).
