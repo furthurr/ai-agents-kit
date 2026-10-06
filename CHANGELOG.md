@@ -3,6 +3,37 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [0.4.0] - 2026-10-06
+
+### Funcionalidades
+
+- Añadir la distribución inicial para Antigravity 2.0 con ocho agentes,
+  diez skills y sus recursos.
+- Incorporar instalación y exportación en Bash y PowerShell, con dry-run,
+  respaldo previo y preservación de archivos propios del usuario.
+
+### Correcciones
+
+- Hacer informativas las recomendaciones de nivel de modelo y continuar
+  el trabajo autorizado sin pausas adicionales, conservando los gates
+  reales y las confirmaciones operativas.
+
+### Documentación y mantenimiento
+
+- Sincronizar los artefactos de las cinco plataformas existentes.
+- Actualizar guías, contratos, pruebas y documentación del laboratorio SDD.
+- Añadir el procedimiento smoke de Antigravity y cobertura CI nativa
+  para Linux, macOS y Windows.
+
+### Validación y límites
+
+- Registrar 14 comandos de aceptación locales aprobados en macOS.
+- Mantener pendientes la ejecución real Linux/Windows y la verificación
+  runtime de Antigravity: descubrimiento, selección, carga de recursos
+  e invocación como subagente.
+- Conservar abierto el Gate 4; esta versión no certifica soporte completo
+  de Antigravity.
+
 ## [0.3.0] - 2026-10-05
 
 ### Funcionalidades

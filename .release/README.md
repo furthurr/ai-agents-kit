@@ -7,5 +7,5 @@
 - **Rama de release:** `main`
 - **CHANGELOG:** `CHANGELOG.md`, en español
 - **Patrón de ticket:** opcional, `[A-Z]{2,10}-[0-9]+`
-- **Distribución:** tags y artefactos instalables para cuatro plataformas
+- **Distribución:** tags y artefactos instalables para seis plataformas
 - **Scripts disponibles:** ver `config.md`; no hay script de release automatizado
