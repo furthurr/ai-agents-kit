@@ -101,8 +101,11 @@ Antigravity distribuye los mismos ocho agentes y diez skills, con recursos
 asociados. El alcance nativo inicial es **Antigravity 2.0**, no soporte completo
 del CLI ni del IDE standalone. El CLI documenta skills globales en
 `~/.gemini/antigravity-cli/skills/`, destino distinto que este instalador no usa;
-los agentes personalizados del IDE no están verificados. Runtime y ejecución
-Windows/Linux: **PENDIENTES** hasta obtener evidencia. Véase el
+los agentes personalizados del IDE no están verificados. Los scripts se probaron
+con fixtures en Linux, macOS y Windows: **22/22 pruebas nativas por OS**, Python
+3.10, [CI 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
+El runtime Antigravity (descubrimiento 8/10, UI, referencias e `invoke_subagent`)
+sigue **PENDIENTE**. Véase la evidencia automatizada y el
 [procedimiento de smoke](antigravity-smoke.md).
 
 Guía de instalación: [instalacion.md](instalacion.md).  

@@ -2,7 +2,7 @@
 
 - **Modo SDD:** standard
 - **Fase:** Verification
-- **Estado:** suite local aprobada; verificación externa pendiente
+- **Estado:** suite local y CI Linux/macOS/Windows aprobadas; smoke runtime pendiente
 - **Gate:** Gate 3 — aprobado mediante «procede» tras la solicitud de autorización de implementación
 - **Prerrequisitos:** Gates 1 y 2 aprobados por el usuario.
 - **Intención autorizada:** implementación y pruebas en perfiles temporales; sin commit, push ni instalación real.
@@ -176,7 +176,7 @@ turno. No es un nuevo gate de aprobación, pero requiere continuación del usuar
     registrar resultados pero mantener la tarea pendiente; nunca declarar suite
     verde con checks omitidos. Dependencia: 5.1.
 
-- [ ] **6.2 — Obtener evidencia real Linux/macOS/Windows.** — macOS aprobado; Linux/Windows pendientes
+- [x] **6.2 — Obtener evidencia real Linux/macOS/Windows.** — CI 37510771502 aprobada en los tres OS
   (Req R5.3, R7.3, R8.5)
   - Ejecutar el harness nuevo en los tres OS o adjuntar logs de CI identificables;
     confirmar que Windows ejecutó instalación/exportación PowerShell.
@@ -194,7 +194,7 @@ turno. No es un nuevo gate de aprobación, pero requiere continuación del usuar
     pero mantener esta tarea pendiente y no anunciar soporte completo.
     Dependencia: 5.1; puede recopilarse en paralelo con 6.1/6.2 tras la pausa.
 
-- [ ] **6.4 — Matriz de evidencia, RNF y Gate 4.** — matriz creada; cierre bloqueado por 6.2/6.3
+- [ ] **6.4 — Matriz de evidencia, RNF y Gate 4.** — matriz creada; cierre bloqueado por 6.3
   (Req R1–R10)
   - Crear `verification.md` con requisito, tarea, test, evidencia y estado; auditar
     cada tarea completada contra artefactos/logs y el RED/GREEN realmente observado.
@@ -273,5 +273,5 @@ de implementación. Evidencia de ejecución: `implementation.md`; Verification
 autorizada mediante «procede» tras el aviso de transición.
 
 Las tareas 1.1–5.1 están respaldadas por `implementation.md`; 6.1 por los catorce
-comandos exit 0 registrados en `verification.md`. 6.2–6.4 permanecen pendientes:
-la matriz ya existe, pero faltan Windows/Linux/runtime y no hay cierre de Gate 4.
+comandos exit 0 registrados en `verification.md`. 6.2 dispone de logs CI reales
+Linux/macOS/Windows. 6.3–6.4 permanecen pendientes por runtime; no hay cierre de Gate 4.

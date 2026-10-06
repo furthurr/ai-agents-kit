@@ -91,9 +91,13 @@ IDs estables del kit:
   Antigravity 2.0 sin prueba.
 - El CLI documenta otra ruta de skills, `~/.gemini/antigravity-cli/skills/`; el
   instalador 2.0 no la cubre. Agentes personalizados del IDE standalone: no
-  verificados. Runtime y ejecución Windows/Linux: **PENDIENTES** de evidencia.
+  verificados. Scripts con fixtures: **22/22 pruebas nativas por OS** en Linux,
+  macOS y Windows, Python 3.10, en el
+  [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
+  Runtime (descubrimiento 8/10, UI, referencias e `invoke_subagent`): **PENDIENTE**.
 - Steering admitido: `GEMINI.md`, `AGENTS.md`, `.agents/rules/*.md`; el instalador
   no crea ni sobrescribe estas reglas ni settings del usuario.
+  El bridge `GEMINI.md` → `AGENTS.md` no está implementado.
 - Los ocho agentes declaran `model: inherit`, `mainAgent: true`, `subagent: true`
   y herramientas por rol. Esto no cambia automáticamente el modelo ni constituye
   un sandbox por carpeta/comando. Las skills se descubren globalmente: no se

@@ -87,6 +87,8 @@ El alcance inicial es global: diez directorios de skills con sus recursos y ocho
 agentes `<id>.md`. Bash resuelve `~` desde HOME; PowerShell usa USERPROFILE, no
 un carácter `~` literal. La instalación no modifica credenciales, settings,
 `GEMINI.md`, `AGENTS.md` ni `.agents/rules/*.md`.
+El bridge `GEMINI.md` → `AGENTS.md` **no está implementado**; declarar fuentes
+de steering no equivale a crear ese puente.
 
 ```bash
 ./scripts/install/antigravity.sh --dry-run
@@ -110,8 +112,12 @@ copia puede dejar cambios parciales, devuelve error y requiere revisión manual.
 El respaldo previo, si lo hubo, permite recuperar elementos sobrescritos.
 
 La copia de archivos y el preflight no prueban descubrimiento ni funcionamiento
-del host. **Runtime, Windows y Linux: PENDIENTES de evidencia de ejecución**.
-La versión de referencia será la registrada en un smoke completo exitoso.
+del host. Los scripts de instalación/exportación tienen evidencia de ejecución
+con fixtures en Linux, macOS y Windows: **22/22 pruebas nativas por OS**, Python
+3.10, [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
+**Runtime Antigravity: PENDIENTE** para descubrimiento 8/10, selección UI, carga
+de referencias e `invoke_subagent`. La versión de referencia de la aplicación
+será la registrada en un smoke completo exitoso, no el build de CI del kit.
 El CLI usa otra ruta global de skills (`~/.gemini/antigravity-cli/skills/`);
 este instalador no cubre esa ruta ni certifica agentes personalizados del IDE
 standalone. Recarga y selección real: [antigravity-smoke.md](antigravity-smoke.md).
@@ -162,7 +168,9 @@ garantías verificadas por `tools/test_install.py`:
 
 El contrato de Antigravity se comprueba además con
 `tools/test_antigravity_install.py`; sus ejecuciones por OS deben acreditarse por
-separado y no equivalen a una prueba runtime del host.
+separado y no equivalen a una prueba runtime del host. El run citado acredita
+22/22 en cada uno de los tres OS; el SHA y los resultados por job se detallan en
+[evidencia automatizada de CI](antigravity-smoke.md#evidencia-automatizada-de-ci).
 
 1. **No instalan de menos en silencio.** Si falta cualquier skill o agente
    declarado en el manifest, el script aborta con código distinto de cero

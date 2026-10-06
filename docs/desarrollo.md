@@ -114,10 +114,23 @@ principales; validación y pruebas de copia completa cubren YAML y recursos.
 Restaurar manualmente no es rollback transaccional. Exportar puede ser parcial
 con avisos y no modifica fuentes ni adapters.
 
-Ejecución Windows/Linux y runtime Antigravity: **PENDIENTES hasta evidencia**.
-Crear un workflow o pasar validación estática no acredita esos resultados. Registra
-comando, exit code, OS y entorno por ejecución; PowerShell debe ejecutarse en
-Windows. La versión de referencia del host se fija con un smoke completo exitoso.
+La ejecución automatizada de scripts con fixtures está acreditada por el
+[run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502),
+SHA `57aaf7dd2190f6fe44c697179e93b8609a502433`, con **Python 3.10**: Ubuntu
+(`validate`, incluidas 22/22 pruebas nativas), macOS (22/22 nativas) y Windows
+(22/22 nativas, ejecución PowerShell), todos los jobs en verde. El detalle figura
+en [evidencia automatizada de CI](antigravity-smoke.md#evidencia-automatizada-de-ci).
+
+El harness prepara el directorio de caché PowerShell del fixture y deshabilita
+`gather` en el proceso hijo; los snapshots no ignoran `AppData`. Esto permite
+comprobar escrituras de los scripts en el entorno aislado sin modificar la
+configuración global del usuario.
+
+**Runtime Antigravity: PENDIENTE** para descubrimiento 8/10, UI, referencias e
+`invoke_subagent`. El bridge `GEMINI.md` → `AGENTS.md` no está implementado.
+Crear un workflow o pasar pruebas con fixtures no acredita estos comportamientos
+de la aplicación. Registra comando, exit code, OS y entorno por ejecución.
+La versión de referencia del host se fija con un smoke completo exitoso.
 CLI (`~/.gemini/antigravity-cli/skills/`) e IDE standalone no se certifican por
 haber copiado archivos en las rutas 2.0 (`~/.gemini/config/{skills,agents}`).
 

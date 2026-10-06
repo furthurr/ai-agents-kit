@@ -114,6 +114,8 @@ frontmatter y notas del host, y el renderer existente produce
   literales de tools por rol. Los niveles LLM recomendados siguen siendo manuales.
 - `{{sdd_agent}}` → `sdd` (identificador nominal), `{{gate_instruction}}` → vacío,
   `{{steering_paths}}` → `GEMINI.md`, `AGENTS.md`, `.agents/rules/*.md`.
+  El bridge `GEMINI.md` → `AGENTS.md` no está implementado; el token declara
+  fuentes de steering, no un mecanismo automático de enlace.
 - El `body_suffix` distingue routing semántico `@<agente>` de selección nativa;
   la UI efectiva requiere smoke. `/agents` solo está documentado para CLI.
 - Descubrimiento global de skills y lectura de `SKILL.md`/referencias; no se añade
@@ -129,8 +131,11 @@ solo por petición explícita y sin alterar el protocolo de handoff.
 
 El alcance inicial es 2.0. CLI usa skills globales en
 `~/.gemini/antigravity-cli/skills/`; agentes personalizados del IDE standalone no
-están verificados. **Runtime y ejecución Windows/Linux: PENDIENTES** hasta
-aportar evidencia; ninguna validación estática acredita soporte completo.
+están verificados. La ejecución de scripts con fixtures está acreditada en Linux,
+macOS y Windows: **22/22 pruebas nativas por OS**, Python 3.10, en el
+[run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
+**Runtime Antigravity: PENDIENTE** (descubrimiento 8/10, UI, referencias e
+`invoke_subagent`); la validación y las pruebas de scripts no certifican el host.
 
 VS Code también descubre los archivos de `~/.claude/agents/` cuando usa el
 formato Claude. Por eso los adapters de Claude emiten `user-invocable: false`:

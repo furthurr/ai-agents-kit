@@ -17,6 +17,8 @@ los tags usan el formato `vX.Y.Z`.
 - Hacer informativas las recomendaciones de nivel de modelo y continuar
   el trabajo autorizado sin pausas adicionales, conservando los gates
   reales y las confirmaciones operativas.
+- Aislar la caché de inicio de PowerShell en los fixtures de pruebas,
+  conservando los snapshots completos y la detección de escrituras inesperadas.
 
 ### Documentación y mantenimiento
 
@@ -28,11 +30,15 @@ los tags usan el formato `vX.Y.Z`.
 ### Validación y límites
 
 - Registrar 14 comandos de aceptación locales aprobados en macOS.
-- Mantener pendientes la ejecución real Linux/Windows y la verificación
-  runtime de Antigravity: descubrimiento, selección, carga de recursos
+- Acreditar instalación/exportación con fixtures en Linux, macOS y Windows:
+  22/22 pruebas nativas por OS con Python 3.10, en el
+  [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
+- Mantener pendiente la verificación runtime de Antigravity:
+  descubrimiento, selección, carga de recursos
   e invocación como subagente.
 - Conservar abierto el Gate 4; esta versión no certifica soporte completo
   de Antigravity.
+- El bridge `GEMINI.md` → `AGENTS.md` no está implementado.
 
 ## [0.3.0] - 2026-10-05
 

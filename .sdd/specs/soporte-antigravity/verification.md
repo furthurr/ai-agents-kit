@@ -2,7 +2,7 @@
 
 - **Modo SDD:** standard
 - **Fase:** Verification
-- **Estado:** suite local aprobada; verificación externa bloqueada por falta de evidencia
+- **Estado:** suite local y CI Linux/macOS/Windows aprobadas; smoke runtime pendiente
 - **Gate:** Gate 4 — pendiente; no cerrar como soporte completo
 - **Autorización:** «procede» tras el aviso de transición a Verification.
 - **Entorno observado:** macOS 26.1 arm64, Python 3.12.4, Bash.
@@ -20,9 +20,10 @@ diez `SKILL.md` y sus recursos. El control separado del baseline confirmó
 **333 archivos preexistentes preservados byte a byte**, excluyendo únicamente
 el manifiesto autorizado.
 
-Esta evidencia certifica el pipeline y los instaladores Bash en el entorno local,
-no la ejecución Windows/Linux ni el descubrimiento real por Antigravity 2.0.
-Los criterios externos siguen pendientes y la spec permanece abierta.
+La suite inicial certificó el pipeline y Bash local. La evidencia posterior de
+CI valida instalación/exportación en Linux, macOS y Windows (sección final).
+El descubrimiento real por Antigravity 2.0 y demás criterios runtime siguen
+pendientes; la spec permanece abierta.
 
 ## 2. Comandos y resultados
 
@@ -99,7 +100,7 @@ solo de que exista un archivo.
 | R4.5 | 2.2, 3.1, 6.1 | Sustitución steering y pruebas de preservación de reglas/settings. | APROBADO |
 | R5.1 | 3.1, 6.1 | Destino skills y comparación de contenido en HOME temporal. | APROBADO (macOS) |
 | R5.2 | 3.1, 6.1 | Destino agents y bytes de los ocho archivos. | APROBADO (macOS) |
-| R5.3 | 3.1, 4.2, 6.2 | Cuatro scripts, flags/paridad estática; ejecución macOS; falta Linux/Windows. | PARCIAL |
+| R5.3 | 3.1, 4.2, 6.2 | Cuatro scripts; harness nativo 22/22 en Linux/macOS/Windows, run 37510771502. | APROBADO |
 | R5.4 | 3.1, 6.1 | Tests de skill/agente/referencia ausentes: fallo antes de escrituras. | APROBADO (Bash) |
 | R5.5 | 3.1, 6.1 | stdout + exit 1, postflight, fallo copia y referencias corruptas: no éxito falso. | APROBADO (Bash) |
 | R6.1 | 3.1, 6.1 | DryRun vacío/poblado: snapshots completos sin diferencias. | APROBADO (Bash) |
@@ -109,12 +110,12 @@ solo de que exista un archivo.
 | R6.5 | 3.1, 3.2, 6.1 | Settings/reglas/credenciales ficticias preservadas; HOME real no usado. | APROBADO (Bash) |
 | R7.1 | 3.2, 6.1 | `test_export_filtered_content`: ruta y contenido imports temporal. | APROBADO (Bash) |
 | R7.2 | 3.2, 6.1 | Snapshot canonical/adapters idéntico tras exportación. | APROBADO (Bash) |
-| R7.3 | 3.2, 4.2, 6.2 | Ambos wrappers, error 7 propagado por Bash; PowerShell sin ejecución disponible. | PARCIAL |
+| R7.3 | 3.2, 4.2, 6.2 | Wrappers y error 7 propagado por Bash/PowerShell, run 37510771502. | APROBADO |
 | R8.1 | 2.2, 5.1, 6.1 | Sin nuevos cuerpos comunes; diferencias en adapter; snapshot de canonical. | APROBADO |
 | R8.2 | 1.1, 5.1, 6.1 | validate temporal y hashes de 288 archivos sin cambios tras render. | APROBADO |
 | R8.3 | 1.1, 4.1, 6.1 | Baseline verde y suite final verde; cinco distribuciones previas preservadas. | APROBADO (suite local) |
 | R8.4 | 3.1, 4.1, 6.1 | Inventarios integrity/install y `test_installer_inventory`. | APROBADO |
-| R8.5 | 4.2, 6.2 | Job Windows escrito; sin logs de ejecución real PowerShell/Windows. | PENDIENTE |
+| R8.5 | 4.2, 6.2 | PowerShell/Windows ejecutado realmente: 22/22, run 37510771502. | APROBADO |
 | R9.1 | 4.3, 6.1 | README, catálogo, instalación, arquitectura; enlaces 70 archivos. | APROBADO |
 | R9.2 | 4.3, 4.4, 6.3 | Invocación documentada sin promesas no acreditadas; recarga/selección real aún pendientes. | PARCIAL |
 | R9.3 | 4.3, 6.1 | Distinción 2.0/CLI/IDE y garantías explícitamente limitadas. | APROBADO |
@@ -133,7 +134,7 @@ solo de que exista un archivo.
 | No regresión | Suite completa exit 0; 333 hashes de fuentes/artefactos previos preservados. | APROBADO local |
 | Simulación sin escrituras | Tests de perfiles vacíos/poblados y exportación DryRun. | APROBADO Bash |
 | Preservación del usuario | Inventario explícito, fusión sin delete, backup y fixtures de contenido propio. | APROBADO Bash |
-| Evidencia multiplataforma | macOS real; workflow Linux/Windows preparado pero no ejecutado aquí. | PARCIAL |
+| Evidencia multiplataforma | Logs CI Linux/macOS/Windows: 22/22 pruebas del harness en cada OS. | APROBADO |
 
 Quality bar: separación canonical/adapters/generated/I/O mantenida, helpers
 locales sin nuevas dependencias, errores visibles y códigos de salida. No existen
@@ -142,25 +143,25 @@ listas de tools ni restricciones de prompts como aislamiento técnico del host.
 
 ## 6. Bloqueos y límites residuales
 
-1. **6.2 / Windows y Linux:** no hay resultados reales de esos OS asociados a esta
-   distribución. macOS está aprobado. Escribir la CI no demuestra su ejecución.
-   No se hizo push ni se dispararon workflows remotos; tampoco se instalaron tools.
+1. **6.2 / multiplataforma resuelto:** run 37510771502 sobre SHA `57aaf7dd2190f6fe44c697179e93b8609a502433`
+   aprobado en Linux/macOS/Windows. La ejecución remota ocurrió después del push
+   explícitamente autorizado, no se deduce solo de haber escrito un workflow.
 2. **6.3 / Antigravity:** no se dispone de sesión/version/build ni evidencia de UI
    y tools del host. `agy` ausente del PATH no demuestra por sí mismo que el IDE
    no esté instalado; simplemente no hay acceso runtime verificable en esta sesión.
 3. **Importador compartido:** precisión de segundos; dos exportaciones pueden
    colisionar y, con solo agentes, sobrescribirse. Límite previo documentado en
    `docs/instalacion.md`; no se modificó ese helper fuera del alcance acordado.
-4. **Evidencia temporal:** logs completos locales; faltan referencias duraderas
-   para ejecuciones remotas. No hay certificación de Python 3.10 solo por escribirlo
-   en el workflow; la ejecución local fue Python 3.12.4.
+4. **Evidencia local temporal:** logs locales y resultados registrados; los nuevos
+   logs de CI tienen referencias duraderas. Python 3.10 fue ejecutado realmente
+   en CI; la suite local inicial fue Python 3.12.4.
 
 ## Gate 4 — pendiente con huecos
 
-No cerrar la spec como verificada mientras falten R8.5 y R10.1–R10.4, además de
-las aceptaciones parciales relacionadas. Próximas acciones verificables: aportar
-ejecuciones Linux/Windows del harness y ejecutar el procedimiento de smoke en un
-perfil Antigravity autorizado. Cualquier instalación en HOME real, commit/push
+No cerrar la spec como verificada mientras falten R10.1–R10.4 y las aceptaciones
+parciales relacionadas con runtime. Próxima acción verificable: ejecutar el
+procedimiento de smoke en un perfil Antigravity autorizado. Cualquier instalación
+en HOME real, commit/push
 o cambio del alcance requerirá su propia autorización explícita.
 
 ## Preparación de publicación autorizada
@@ -204,4 +205,18 @@ y [configuración CoreCLR](https://github.com/dotnet/runtime/blob/v10.0.0/src/co
 RED observado: run Windows con 7 fallos. Checks posteriores locales:
 `python3 tools/test_antigravity_install.py` exit 0, **22 tests**;
 `python3 tools/validate.py` y `git diff --check` exit 0.
-El GREEN Windows permanece pendiente del siguiente run de CI.
+El GREEN Windows se confirmó en el siguiente run de CI, registrado a continuación.
+
+### GREEN multiplataforma confirmado
+
+[Run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502),
+SHA `57aaf7dd2190f6fe44c697179e93b8609a502433`, conclusión **success**:
+
+- Ubuntu/Linux: validación, paridad de generated, contratos y harness **22/22**.
+- macOS: validación y harness nativo **22/22**.
+- Windows: validación y ejecución real de instalador/exportador PowerShell,
+  harness **22/22**. Se confirma la corrección del aislamiento de caché de arranque.
+
+La tarea 6.2 y R8.5 quedan aprobadas. Esta evidencia no ejecuta el smoke del
+producto Antigravity ni implementa el puente `GEMINI.md` → `AGENTS.md`.
+La release `v0.4.0` conserva el Gate 4 abierto por falta de evidencia runtime.

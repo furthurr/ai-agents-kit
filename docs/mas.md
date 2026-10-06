@@ -52,5 +52,9 @@ La identidad se documenta aquí y se replica de forma compacta en los agentes y
 skills canónicos. `tools/render.py` la propaga a las seis distribuciones: Copilot,
 OpenCode, Kiro, Claude Code, Pi y Antigravity. El catálogo mantiene ocho agentes y
 diez skills; los artefactos de `generated/` no se editan a mano. Antigravity apunta
-inicialmente a 2.0, con runtime y ejecución Windows/Linux pendientes de evidencia;
-no se infiere certificación completa de los seis hosts a partir de este pipeline.
+inicialmente a 2.0. Los scripts con fixtures tienen evidencia en Linux, macOS y
+Windows: **22/22 pruebas nativas por OS**, Python 3.10, en el
+[run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
+El runtime (descubrimiento 8/10, UI, referencias e `invoke_subagent`) sigue
+**PENDIENTE** y el bridge `GEMINI.md` → `AGENTS.md` no está implementado.
+No se infiere certificación completa de los seis hosts a partir de este pipeline.

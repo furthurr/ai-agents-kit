@@ -2,7 +2,7 @@
 
 - **Modo SDD:** standard
 - **Fase:** Implementación
-- **Estado:** implementación completada; suite local de Verification aprobada, evidencia externa pendiente
+- **Estado:** implementación completada; suite local y CI multiplataforma aprobadas, smoke runtime pendiente
 - **Gate:** Gate 3 aprobado; Gate 4 pendiente (ver `verification.md`).
 - **Autorización:** «procede» tras solicitar aprobación del plan e implementación.
 
@@ -64,6 +64,8 @@
   Documentado en instalación; no se refactorizó el helper compartido fuera de alcance.
 - Windows, Linux y Antigravity 2.0 runtime siguen pendientes de evidencia externa.
   No se ejecutó CI remota ni se instaló en HOME real; no hay commit/push.
+  Esta era la situación al terminar Implementación: tras la publicación autorizada,
+  CI 37510771502 aprobó Linux/macOS/Windows; runtime sigue pendiente (ver Verification).
 - Esta evidencia corresponde a Implementación, no al cierre de Verification.
   La evidencia posterior se registra por separado en `verification.md`.
 
@@ -73,4 +75,5 @@ Implementación terminada con ocho agentes y diez skills generados y checks
 focalizados aprobados. Último control de preservación: 333 archivos idénticos;
 últimos validate/check_links/diff-check: exit 0. No hay aprobación de Gate 4.
 El usuario reanudó mediante «procede»: Verification local ejecutada, con resultados
-en `verification.md`. Windows/Linux/runtime pendientes; no hay aprobación de Gate 4.
+en `verification.md`. CI Linux/macOS/Windows aprobada posteriormente; runtime
+pendiente y sin aprobación de Gate 4.

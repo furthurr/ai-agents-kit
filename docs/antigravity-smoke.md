@@ -2,9 +2,30 @@
 
 Procedimiento para obtener evidencia runtime de la integración. **Estado actual:
 PENDIENTE; este documento no registra un smoke ejecutado ni certifica el host.**
-La ejecución de instaladores/exportadores en Windows y Linux también permanece
-pendiente hasta adjuntar evidencia real por OS. Checks estáticos, archivos
-instalados o un workflow escrito no sustituyen estas comprobaciones.
+Los instaladores/exportadores sí cuentan con evidencia automatizada de scripts
+con fixtures en Linux, macOS y Windows, detallada a continuación. Esa ejecución
+no prueba descubrimiento 8/10, UI, carga de referencias ni `invoke_subagent` en
+la aplicación Antigravity; estos pasos runtime siguen **PENDIENTES**.
+
+## Evidencia automatizada de CI
+
+Evidencia de scripts del kit para la publicación 0.4.0:
+[run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502),
+build del kit en SHA `57aaf7dd2190f6fe44c697179e93b8609a502433`, **Python 3.10**.
+Todos los jobs finalizaron en verde.
+
+| OS de CI | Comprobación automatizada | Resultado |
+|----------|---------------------------|-----------|
+| Ubuntu / Linux | Job `validate`, incluidas pruebas nativas de instalación/exportación Bash | PASS — 22/22 nativas |
+| macOS | Pruebas nativas de instalación/exportación Bash | PASS — 22/22 nativas |
+| Windows | Pruebas nativas de instalación/exportación PowerShell (`.ps1`) | PASS — 22/22 nativas |
+
+El harness ejecuta scripts en fixtures con HOME/USERPROFILE temporales. Prepara
+el directorio de caché PowerShell y deshabilita `gather` en el proceso hijo; los
+snapshots no ignoran `AppData`. No son cambios de configuración global ni una
+ejecución del producto Antigravity. El SHA identifica el build probado del **kit**,
+no una versión/build runtime de la aplicación. La ficha de app/host siguiente
+permanece pendiente y este run no marca el smoke como ejecutado.
 
 ## Alcance y referencias
 
@@ -24,6 +45,8 @@ instalados o un workflow escrito no sustituyen estas comprobaciones.
 El primer smoke completo exitoso fijará la versión de referencia. No extrapoles
 el resultado a otra versión, superficie u OS ni anuncies certificación completa
 de los seis hosts del kit.
+El bridge `GEMINI.md` → `AGENTS.md` **no está implementado**; las rutas de
+steering documentadas no acreditan ese mecanismo.
 
 ## Ficha de ejecución
 
@@ -221,8 +244,10 @@ El hijo no debe escribir, saltar gates ni ampliar el alcance.
 | Carga de skills y referencias | PENDIENTE | Rutas relativas y encabezados reconocidos |
 | Herramientas individuales por rol | PENDIENTE | Nombre expuesto, acción y resultado |
 | Padre invoca hijo con contexto explícito | PENDIENTE | Tool real, ID, recursos, límites y gates respetados |
-| Instalación/exportación Bash en Linux | PENDIENTE | Comandos, OS y exit codes reales |
-| Instalación/exportación PowerShell en Windows | PENDIENTE | Ejecución real `.ps1`, OS y exit codes |
+
+La evidencia de instalación/exportación en los tres OS se registra en la sección
+[automatizada de CI](#evidencia-automatizada-de-ci), separada de esta matriz
+runtime. Sus resultados PASS no completan los pasos de app/host pendientes.
 
 Un smoke completo exige evidencia de todos los pasos runtime, no únicamente
 instalación. Si falla el mapeo de tools o la carga global en hijos, registra el

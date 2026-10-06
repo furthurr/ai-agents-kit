@@ -14,9 +14,12 @@ comentarios al sistema completo o a un agente concreto.
 La lógica se mantiene **una sola vez** en `canonical/` y se renderiza por
 plataforma con adaptadores declarativos. Así obtienes el mismo comportamiento
 especializado en seis distribuciones, sin duplicar prompts por plataforma.
-La integración inicial de Antigravity apunta a **2.0**: su runtime y las
-ejecuciones Windows/Linux están **PENDIENTES** de evidencia. El inventario de
-distribuciones no certifica soporte completo en los seis hosts.
+La integración inicial de Antigravity apunta a **2.0**. Los scripts cuentan con
+evidencia de CI en Linux, macOS y Windows: **22/22 pruebas nativas por OS**, con
+Python 3.10, en el [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
+El runtime de la aplicación (descubrimiento 8/10, UI, referencias e
+`invoke_subagent`) sigue **PENDIENTE**. El inventario de distribuciones y las
+pruebas con fixtures no certifican soporte completo en los seis hosts.
 
 ## Por qué existe
 
