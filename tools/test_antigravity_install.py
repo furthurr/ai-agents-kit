@@ -19,7 +19,46 @@ SHELL = shutil.which("pwsh") or shutil.which("powershell") if WINDOWS else shuti
 
 def snapshot(root):
     return {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
-            if p.is_file() else "directory" for p in root.rglob("*")}
+             if p.is_file() else "directory" for p in root.rglob("*")}
+
+
+def prepare_shell_profile(home: Path, env: dict[str, str], windows: bool) -> None:
+    """Prepare only shell infrastructure; do not exclude it from snapshots."""
+    if windows:
+        # ConsoleHost creates this directory unconditionally. CoreCLR can disable
+        # profile gathering, so a new fixture has no StartupProfileData writes.
+        # https://github.com/PowerShell/PowerShell/blob/v7.6.6/src/Microsoft.PowerShell.ConsoleHost/host/msh/ConsoleHost.cs
+        # https://github.com/dotnet/runtime/blob/v10.0.0/src/coreclr/inc/clrconfigvalues.h
+        env["DOTNET_MultiCoreJitNoProfileGather"] = "1"
+        (home / "AppData/Local/Microsoft/PowerShell").mkdir(parents=True)
+
+
+class ShellProfileIsolation(unittest.TestCase):
+    def test_windows_fixture_disables_profile_gathering(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            home = Path(temporary)
+            env = {"HOME": str(home), "DOTNET_MultiCoreJitNoProfileGather": "0"}
+            prepare_shell_profile(home, env, windows=True)
+            self.assertEqual(env["DOTNET_MultiCoreJitNoProfileGather"], "1")
+            self.assertTrue((home / "AppData/Local/Microsoft/PowerShell").is_dir())
+            self.assertFalse(any(path.is_file() for path in home.rglob("*")))
+
+    def test_non_windows_fixture_unchanged(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            home = Path(temporary)
+            env = {"HOME": str(home)}
+            prepare_shell_profile(home, env, windows=False)
+            self.assertEqual(env, {"HOME": str(home)})
+            self.assertEqual(snapshot(home), {})
+
+    def test_snapshot_still_detects_unexpected_cache_writes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            home = Path(temporary)
+            prepare_shell_profile(home, {}, windows=True)
+            before = snapshot(home)
+            unexpected = home / "AppData/Local/Microsoft/PowerShell/StartupProfileData-NonInteractive"
+            unexpected.write_text("unexpected shell write", encoding="utf-8")
+            self.assertNotEqual(snapshot(home), before)
 
 
 class AntigravityInstall(unittest.TestCase):
@@ -54,6 +93,8 @@ class AntigravityInstall(unittest.TestCase):
         self.home.mkdir()
         self.env = {**os.environ, "HOME": str(self.home), "USERPROFILE": str(self.home),
                     "PYTHONDONTWRITEBYTECODE": "1"}
+        prepare_shell_profile(self.home, self.env, WINDOWS)
+        self.initial_home = snapshot(self.home)
         self.manifest = json.loads((self.repo / "canonical/manifest.json").read_text())
         adapter = self.repo / "adapters/antigravity"
         self.assertIn("antigravity", self.manifest["platforms"], "Copied manifest must declare antigravity")
@@ -114,12 +155,12 @@ class AntigravityInstall(unittest.TestCase):
     def test_missing_skill(self):
         (self.src / "skills" / self.sid / "SKILL.md").unlink()
         self.failure(self.run_script())
-        self.assertEqual(snapshot(self.home), {})
+        self.assertEqual(snapshot(self.home), self.initial_home)
 
     def test_missing_agent(self):
         (self.src / "agents" / self.aid).unlink()
         self.failure(self.run_script())
-        self.assertEqual(snapshot(self.home), {})
+        self.assertEqual(snapshot(self.home), self.initial_home)
 
     def canonical_reference(self):
         for sid in self.manifest["skills"]:
@@ -226,7 +267,7 @@ class AntigravityInstall(unittest.TestCase):
     def test_preflight_stdout_failure(self):
         (self.repo / "tools/install_preflight.py").write_text("print('fake stdout')\nraise SystemExit(1)\n")
         self.failure(self.run_script())
-        self.assertEqual(snapshot(self.home), {})
+        self.assertEqual(snapshot(self.home), self.initial_home)
 
     def test_postflight_failure(self):
         p = self.repo / "tools/install_preflight.py"

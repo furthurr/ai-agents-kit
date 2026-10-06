@@ -182,3 +182,26 @@ Los 288 archivos generados volvieron a ser idénticos antes/después del render.
 Logs locales de esa ejecución:
 `/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/antigravity-verification-20261006-112128/`.
 Windows/Linux/runtime siguen pendientes hasta que se reciban sus resultados.
+
+### Primer run remoto y regresión del harness Windows
+
+Tras publicar los commits `514ebab` y `aec7d68`, el
+[run 37509468135](https://github.com/furthurr/ai-agents-kit/actions/runs/37509468135)
+aprobó Ubuntu y macOS, pero Windows falló en 7 de los 19 tests. Los snapshots
+detectaron `AppData/Local/Microsoft/PowerShell/StartupProfileData-NonInteractive`,
+escrito por el arranque de PowerShell, no por las operaciones de copia del kit.
+No se publicó tag ni release mientras ese run estaba fallando.
+
+La corrección se limita al fixture Windows: preparar el directorio que
+ConsoleHost crea incondicionalmente y desactivar la recopilación del perfil JIT
+en el proceso hijo con `DOTNET_MultiCoreJitNoProfileGather=1`. Este control es
+interno de CoreCLR; no se cambian instaladores, políticas globales ni el entorno
+del usuario. Los snapshots siguen revisando todo AppData: no se excluye esa ruta.
+Una prueba adicional inyecta un archivo de caché inesperado y verifica su detección.
+
+Fuentes de la causa y el control: [ConsoleHost](https://github.com/PowerShell/PowerShell/blob/v7.6.6/src/Microsoft.PowerShell.ConsoleHost/host/msh/ConsoleHost.cs)
+y [configuración CoreCLR](https://github.com/dotnet/runtime/blob/v10.0.0/src/coreclr/inc/clrconfigvalues.h).
+RED observado: run Windows con 7 fallos. Checks posteriores locales:
+`python3 tools/test_antigravity_install.py` exit 0, **22 tests**;
+`python3 tools/validate.py` y `git diff --check` exit 0.
+El GREEN Windows permanece pendiente del siguiente run de CI.
