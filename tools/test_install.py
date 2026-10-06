@@ -14,7 +14,8 @@ Covered contracts (docs/mejoras.md P0.4):
 * The backup taken before overwriting can restore the previous state.
 
 PowerShell installers are not exercised here: ``pwsh`` is not available on every
-development machine. Their parity is covered by review and by CI on Windows.
+development machine. Static parity is checked here; Antigravity's real Windows
+execution is covered separately by test_antigravity_install.py and its CI job.
 """
 
 from __future__ import annotations
@@ -36,6 +37,7 @@ PLATFORMS = {
     "kiro": (".kiro/skills", ".kiro/agents", ".kiro-kit-backup"),
     "claude": (".claude/skills", ".claude/agents", ".claude-kit-backup"),
     "pi": (".pi/agent/skills", ".pi/agent/prompts", ".pi-kit-backup"),
+    "antigravity": (".gemini/config/skills", ".gemini/config/agents", ".antigravity-kit-backup"),
 }
 
 # Directories the kit needs in order to render, validate and install.

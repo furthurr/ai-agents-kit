@@ -11,7 +11,7 @@ specs, tests y código de producto tras las aprobaciones correspondientes.
 3. Abre un repositorio de prueba sin secretos, con Git y tests ejecutables.
 4. Selecciona el agente `sdd` y registra plataforma, versión, modelo, fecha y commit.
 
-## Gate 0 y preflight por fase
+## Preflight informativo por fase
 
 Antes de los escenarios funcionales, valida estas variantes:
 
@@ -19,11 +19,10 @@ Antes de los escenarios funcionales, valida estas variantes:
   confirmación.
 - Una feature `standard` nueva muestra solo `Requirements` y
   `Nivel de LLM recomendado para Requirements: <nivel>`; no muestra recomendaciones
-  para todo el flujo futuro. Termina el turno sin leer contexto de Requirements;
-  tras cambiar manualmente de modelo o conservar el actual, `continúa` inicia la fase
-  sin tener que declarar qué modelo eligió el usuario.
-- `lite` muestra una sola recomendación informativa para Quick Plan y pausa antes
-  de iniciarlo, sin exponer sus pasos internos. Un bugfix no trivial sigue
+  para todo el flujo futuro. Continúa leyendo el contexto y ejecutando Requirements
+  en el mismo turno, sin exigir `continúa` ni confirmar el modelo.
+- `lite` muestra una sola recomendación informativa para Quick Plan y lo inicia
+  en el mismo turno, sin exponer sus pasos internos. Un bugfix no trivial sigue
   el flujo `standard`.
 - En cada transición, el agente muestra en un mismo mensaje el resumen verificable,
   el gate actual y la recomendación de la próxima fase, condicionada a la aprobación
@@ -32,8 +31,8 @@ Antes de los escenarios funcionales, valida estas variantes:
   `adelante` o `continúa` deben interpretarse según la pregunta del gate; si la
   aprobación no es clara, se pide únicamente aclarar esa aprobación, no el nivel.
 - Tras Implementación, el agente muestra resumen + recomendación de Verification y
-  termina el turno: `continúa` inicia la suite sin confirmar el modelo; después de
-  Verification solo presenta Gate 4.
+  ejecuta la suite automáticamente dentro del alcance aprobado, sin esperar por
+  modelo; después de Verification solo presenta Gate 4.
 - Si cambia alcance o riesgo, recalcula e informa el nivel actualizado sin detenerse
   a pedir una decisión sobre el LLM. `lite` a `standard` solicita confirmar el cambio
   de flujo aunque el nivel coincida.
@@ -77,7 +76,7 @@ umbral trivial de `direct`. No menciones un modo. Esperado:
 
 - Descarta `direct` por motivos verificables y selecciona `lite` automáticamente.
 - Muestra `Modo SDD: lite`, recomienda normalmente `MEDIO`, explica los criterios
-  satisfechos y termina el turno; `continúa` inicia Quick Plan sin confirmar nivel.
+  satisfechos e inicia Quick Plan en el mismo turno, sin esperar ni confirmar nivel.
 - Activa Quick Plan y no presenta `lite` como una preferencia que el usuario debía
   haber solicitado expresamente.
 
@@ -98,7 +97,7 @@ Esperado:
 Solicita una feature apta para `lite`, sin decir «Quick Plan». Esperado:
 
 - Al seleccionar `lite`, activa Quick Plan automáticamente como su flujo obligatorio.
-- Genera requirements, design y tasks en una pasada tras reanudar el preflight,
+- Genera requirements, design y tasks en una pasada tras el preflight informativo,
   sin Gates 1–3.
 - No presenta Quick Plan como profundidad ni variante transversal, y no lo ofrece
   fuera de `lite`.
@@ -108,7 +107,7 @@ Solicita una feature apta para `lite`, sin decir «Quick Plan». Esperado:
 Ejecuta dos variantes equivalentes: «solo planifica este cambio» y «planifica e
 implementa este cambio». Esperado:
 
-- Ambas generan el Quick Plan `lite` tras reanudar el preflight, sin confirmar el
+- Ambas generan el Quick Plan `lite` tras el preflight sin pausa, sin confirmar el
   nivel de LLM.
 - La variante de solo planificación se detiene después de `tasks.md`, deja las
   tareas pendientes, no modifica producto y no crea `verification.md`.
@@ -154,7 +153,7 @@ recomendado. Esperado:
 - Se detiene en un punto seguro, conserva como pendiente el estado no completado y
   propone `standard`.
 - Solicita confirmación por el cambio de política de gates aunque el nivel de modelo
-  siga siendo `MEDIO`; no continúa basándose en el Gate 0 anterior.
+  siga siendo `MEDIO`; el aviso anterior no autoriza el cambio de flujo.
 - Si además cambia el nivel, combina ambos avisos en una sola salida.
 
 ## 11. Standard explícito no se rebaja
@@ -179,8 +178,8 @@ Añade bloqueo de cuenta después de tres intentos fallidos.
 
 Esperado:
 
-- Primero recomienda el nivel de LLM solo para `Requirements` y termina el turno
-  antes de esa fase. «Continúa» la inicia sin preguntar si cambió de nivel.
+- Primero recomienda el nivel de LLM solo para `Requirements` e inicia esa fase
+  en el mismo turno, sin exigir «continúa» ni preguntar si cambió de nivel.
 - Selecciona `standard`; no implementa antes de aprobar requisitos, diseño y tareas.
 - Tras Requirements, muestra resumen + Gate 1 + recomendación para Design. La
   respuesta solo debe aprobar Requirements; después comienza Design sin confirmar
@@ -191,8 +190,8 @@ Esperado:
 - `design.md` declara TDD focalizado y la tarea de comportamiento expresa RED → GREEN
   → REFACTOR.
 - Tras aprobar Gate 3, observa RED antes de escribir el comportamiento productivo.
-  Al terminar, muestra resumen + recomendación informativa de Verification y pausa;
-  solo ejecuta la suite tras «continúa», sin confirmar el nivel.
+  Al terminar, muestra resumen + recomendación informativa de Verification y
+  ejecuta la suite automáticamente, sin esperar «continúa» ni confirmar el nivel.
 - Fase 4 registra comandos/resultados; después solo muestra Gate 4 y no cierra
   requisitos sin evidencia.
 
@@ -410,21 +409,24 @@ Esperado:
 En una instalación nueva y con cada agente, solicita primero una consulta puntual
 (`architecture`: ADR localizado; `code-review`: estado de un finding `QLT` y de
 un riesgo `SEC`; `data-api`: un DTO; `ui-design`: un token). La primera respuesta
-debe recomendar un nivel y terminar el turno sin inspeccionar el proyecto. Cambia
-manualmente el modelo si quieres y responde «continúa»: debe ejecutar la consulta
-sin preguntar qué modelo usas ni repetir la recomendación. Repite con una operación
-pesada: el aviso sigue precediendo todas las herramientas, incluida la skill.
+debe recomendar un nivel de forma informativa, inspeccionar y responder en el mismo
+turno sin preguntar qué modelo usas ni exigir «continúa». Incluye una captura UI
+con una consulta visual puntual: falla si solo entrega nivel y petición de reanudación.
+Repite con una operación pesada: tras clasificar con preflight barato y comunicar
+el aviso, continúa el trabajo autorizado; las escrituras conservan sus aprobaciones.
 
 En un handoff desde Documentation Orchestrator con nivel ya recomendado para el
-mismo alcance, confirma el Gate 0 del orquestador y comprueba que el especialista
-no repite el aviso, pero conserva sus gates de alcance/escritura. Project Navigator
-mantiene su pausa previa a operaciones pesadas y el aviso final sin bloqueo; Git
-Release Manager conserva sus confirmaciones de Git sin Gate 0 de modelo.
+mismo alcance, comprueba que el especialista no repite el aviso sin exigir confirmación
+ni reanudación, pero conserva sus gates de alcance/escritura. Project Navigator
+continúa el proceso pesado autorizado tras el aviso previo y conserva el final sin
+bloqueo; Git Release Manager conserva sus confirmaciones operativas y destructivas
+sin gate de modelo. Quality/Security conservan la aprobación de cada micro-paso,
+y los permisos `ask`/`deny` del host no cambian.
 
 Estos checks interactivos se registran como no ejecutados hasta realizarlos en
 cada plataforma; los tests textuales y el render no los sustituyen.
 
-La prueba pasa si el Gate 0 y los veintinueve escenarios conservan proporcionalidad,
+La prueba pasa si el preflight informativo y los veintinueve escenarios conservan proporcionalidad,
 recomiendan capacidad para la próxima fase sin identificar productos o proveedores, respetan gates y
 distinguen TDD focalizado de caracterización/cobertura retroactiva y rechazan las
 opciones retiradas de forma explícita. `lite` debe quedar entre

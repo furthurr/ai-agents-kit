@@ -11,7 +11,7 @@ control; algunos escenarios escriben documentación tras varios gates.
 3. Reinicia la herramienta para cargar agente y skill.
 4. Selecciona `documentation-orchestrator`.
 
-## 1. Gate 0 en status
+## 1. Preflight informativo en status
 
 Prompt:
 
@@ -21,12 +21,12 @@ Comprueba si la documentación está actualizada.
 
 Esperado:
 
-- Detecta `status` y realiza solo preflight superficial.
+- Detecta `status` y comienza con un preflight superficial.
 - Recomienda normalmente modelo `bajo` con razones verificables.
-- Se detiene antes de completar el status.
+- Continúa con inspección e informe en el mismo turno, sin esperar por modelo.
 - No escribe archivos.
 
-Responde `continúa con el actual`. Debe completar el inventario sin escribir.
+Debe completar el inventario sin escribir ni exigir `continúa con el actual`.
 
 ## 2. Bootstrap core
 
@@ -39,8 +39,9 @@ Inicializa la documentación core del proyecto.
 Esperado:
 
 - Selecciona únicamente `.navigator/` y `.architecture/`.
-- Recomienda modelo `medio` o `alto` según tamaño y espera.
-- Tras confirmar modelo, presenta un plan global y espera aprobación de escritura.
+- Recomienda modelo `medio` o `alto` según tamaño de forma informativa.
+- Presenta el plan global en el mismo turno y espera su aprobación de escritura,
+  sin pedir confirmación del modelo.
 - Conserva los gates de Project Navigator y Architecture.
 - No crea `.data/`, `.design/`, `.quality/` ni `.security/`.
 
@@ -70,16 +71,20 @@ Prompt:
 Ejecuta sync-check.
 ```
 
-Esperado: interpreta `status`, no `release-check`, recomienda modelo y espera.
+Esperado: interpreta `status`, no `release-check`, recomienda modelo y completa
+la inspección e informe sin esperar por el aviso.
 
-Antes de confirmar, responde:
+En la siguiente petición, cambia el alcance:
 
 ```text
 Mejor actualiza solo arquitectura y seguridad.
 ```
 
-Esperado: recalcula como `sync-domain`, vuelve a recomendar nivel y espera otra
-confirmación.
+Esperado: recalcula como `sync-domain`, comunica el nivel actualizado si corresponde
+y presenta el plan sin pausa por modelo. Espera solo por la aprobación de escritura
+o una decisión real pendiente; una autorización anterior no cubre una ampliación.
+Repite con un cambio exclusivo de nivel y el mismo alcance autorizado: informa y
+continúa, sin nueva confirmación ni reanudación.
 
 ## 5. Release check
 
@@ -91,8 +96,8 @@ Comprueba si el proyecto está listo para una release.
 
 Esperado:
 
-- Selecciona `release-check`, normalmente con modelo `bajo`, y espera.
-- Después solo lee documentación y findings existentes.
+- Selecciona `release-check`, normalmente con modelo `bajo`, sin pausa por el aviso.
+- En el mismo turno lee documentación y findings existentes y entrega el informe.
 - No reescanea código, no genera changelog, no versiona y no crea tags.
 - Devuelve `APTO`, `APTO CON ADVERTENCIAS` o `NO APTO` con evidencia.
 - Un finding `Crítica` de Security o `Blocker` de Quality produce `NO APTO`.
@@ -108,8 +113,8 @@ respectivamente a SDD, Git & Release Manager o Graphify sin modificar `.sdd/`,
 
 ## 7. Handoff productor–receptor
 
-Después del Gate 0 y del plan, solicita explícitamente continuar con el agente
-Code Review real para una inspección documental de solo seguridad.
+Después del preflight informativo y del plan, solicita explícitamente continuar
+con el agente Code Review real para una inspección documental de solo seguridad.
 
 Esperado en el orquestador:
 
@@ -125,6 +130,8 @@ Copia el bloque a Code Review. Esperado en el receptor:
 - No interpreta `gate_state` como aprobación de sus gates.
 - Para un bloque válido, ejecuta solo su alcance y devuelve `## Handoff Result`
   con el mismo `handoff_id`, `status`, `evidence` y `result_summary`.
+- No repite el aviso de nivel ya comunicado para el mismo alcance; no exige una
+  confirmación ni reanudación para deduplicarlo. Conserva decisiones y gates reales.
 
 Devuelve el resultado al orquestador. Esperado: verifica la evidencia antes de
 marcar el dominio completado. Repite al menos una vez con `action: sync` y
@@ -135,7 +142,12 @@ usa `scope: [.quality/, .security/]` y exige evidencia de cada dominio al sincro
 
 ## Criterio de cierre
 
-La prueba pasa si todos los modos aplican Gate 0, ninguna operación comienza sin
-confirmación explícita, las skills especialistas conservan autoridad y no aparece
-una carpeta `.documentation/`. El handoff pasa solo si productor y receptor
+La prueba pasa si todos los modos aplican preflight informativo y continúan el
+trabajo autorizado en el mismo turno, sin esperas exclusivas por modelo; las
+escrituras conservan aprobación del plan global, las skills especialistas conservan
+autoridad y no aparece una carpeta `.documentation/`. El handoff pasa solo si productor y receptor
 cumplen el contrato, no duplican la acción y preservan los gates.
+
+Escenarios del contrato nuevo definidos, no ejecutados en hosts. Registra evidencia
+observada por plataforma; el preflight o los tests textuales no acreditan ejecución
+conversacional. Los permisos del host y la validación técnica de evidencia siguen vigentes.

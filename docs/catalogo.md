@@ -3,7 +3,7 @@
 Resumen de lo que incluye el kit. El detalle operativo vive en
 `canonical/skills/<id>/SKILL.md` y `canonical/agents/<id>.md`.
 
-Inventario oficial: `canonical/manifest.json` (10 skills, 8 agentes, 5 plataformas).
+Inventario oficial: `canonical/manifest.json` (10 skills, 8 agentes, 6 plataformas).
 
 Todos los componentes forman **MAS** (*Multi-Agent System*), el sistema
 multiagente de este kit. La convención para referirse al sistema o a un agente
@@ -19,10 +19,10 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 | `architecture` | Documenta y audita arquitectura; no modifica código de negocio | `.architecture/` | Aviso de modelo; arc42, C4, ADRs; modos lite/full |
 | `code-quality` | Audita y remedia calidad de código paso a paso | `.quality/` | Aviso de modelo; SonarQube y Clean Code |
 | `data-api` | Datos, APIs, DTOs, contratos e integraciones | `.data/` | Aviso de modelo; OpenAPI/JSON Schema; ER Mermaid; lanzador Scalar bloqueado hasta disponer de OpenAPI válido |
-| `documentation-orchestrator` | Comprueba, inicializa y sincroniza documentación mediante especialistas | — | Gate 0 de modelo; no crea una fuente documental propia |
+| `documentation-orchestrator` | Comprueba, inicializa y sincroniza documentación mediante especialistas | — | Preflight informativo no bloqueante; no crea una fuente documental propia |
 | `security` | Auditoría y remediación de seguridad guiada | `.security/` | Aviso de modelo; OWASP MASVS/MASWE/MASTG y CWE |
 | `ui-design` | Sistema visual: tokens, componentes, deuda de UI | `.design/` | Aviso de modelo; agnóstica a tecnología |
-| `sdd-spec` | Spec-Driven Development con profundidades `direct`, `lite` y `standard` | `.sdd/specs/<ruta-spec>/` | `lite`: Quick Plan y Gate 0; `standard`: Gates 1-4; EARS y trazabilidad |
+| `sdd-spec` | Spec-Driven Development con profundidades `direct`, `lite` y `standard` | `.sdd/specs/<ruta-spec>/` | Preflight informativo no bloqueante; `lite`: Quick Plan; `standard`: Gates 1-4; EARS y trazabilidad |
 | `git-commit` | Commits Conventional Commits en español y push con confirmación | — | No versiona ni crea tags |
 | `release-management` | SemVer, tags anotados, CHANGELOG; perfiles por tecnología | `.release/` | Android/iOS/Flutter de fábrica; resto auto-extensible |
 | `project-navigator` | Navega el repo con mínimo de tokens (capas 0–4) | `.navigator/` | Bootstrap/update asistido; solo lectura fuera de `.navigator/` |
@@ -95,6 +95,15 @@ cuando el procedimiento lo pide. Eso reduce tokens en tareas simples.
 | `kiro` | `~/.kiro/skills/` y `~/.kiro/agents/` |
 | `claude` | `~/.claude/skills/` y `~/.claude/agents/` (o `$CLAUDE_CONFIG_DIR`) |
 | `pi` | `~/.pi/agent/skills/` y `~/.pi/agent/prompts/` (o `$PI_CODING_AGENT_DIR`) |
+| `antigravity` | `~/.gemini/config/skills/` y `~/.gemini/config/agents/` (Antigravity 2.0) |
+
+Antigravity distribuye los mismos ocho agentes y diez skills, con recursos
+asociados. El alcance nativo inicial es **Antigravity 2.0**, no soporte completo
+del CLI ni del IDE standalone. El CLI documenta skills globales en
+`~/.gemini/antigravity-cli/skills/`, destino distinto que este instalador no usa;
+los agentes personalizados del IDE no están verificados. Runtime y ejecución
+Windows/Linux: **PENDIENTES** hasta obtener evidencia. Véase el
+[procedimiento de smoke](antigravity-smoke.md).
 
 Guía de instalación: [instalacion.md](instalacion.md).  
 Cómo invocarlos: [uso.md](uso.md).

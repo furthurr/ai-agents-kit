@@ -7,7 +7,8 @@ Consulta la [guía interna de agentes y skills](agentes/README.md) para conocer 
 alcance, el flujo, los artefactos y ejemplos de cada agente.
 
 El sistema se denomina **MAS** (*Multi-Agent System*). Usa `MAS:` para una
-instrucción dirigida al sistema completo y `@<agente>` para un especialista.
+instrucción dirigida al sistema completo y `@<agente>` como notación semántica
+del kit para un especialista; no garantiza una invocación nativa del host.
 Consulta la [guía de MAS](mas.md) para la terminología completa.
 
 ## Skill vs agente (en la práctica)
@@ -66,6 +67,43 @@ IDs estables del kit:
 - Steering del proyecto: `CLAUDE.md`, `.claude/CLAUDE.md` y `.claude/rules/*.md`.
 - El instalador no crea ni modifica `CLAUDE.md` ni `.claude/settings.json`.
 
+### Pi
+
+- Agentes como plantillas de prompt en `~/.pi/agent/prompts/` (o
+  `$PI_CODING_AGENT_DIR/prompts/`): `/<id> <tarea>`, por ejemplo `/sdd planifica login`.
+- Skills en el directorio `skills/` del mismo perfil: `/skill:<nombre>`.
+- Las plantillas usan la sesión activa; no crean subagentes aislados.
+
+### Antigravity 2.0
+
+- Agentes globales en `~/.gemini/config/agents/<id>.md`; selecciona el principal
+  mediante el mecanismo de la UI que se observe en tu versión. **La selección
+  real está pendiente de smoke**: no se prescribe un nombre de menú no comprobado.
+- Skills globales en `~/.gemini/config/skills/<skill-name>/`; el mecanismo
+  documentado es `/<skill-name>`, por ejemplo `/sdd-spec`. Comprueba además que el
+  agente carga `SKILL.md` y sus referencias, tanto principal como subagente.
+- Tras instalar o actualizar, reinicia la superficie objetivo y comprueba otra
+  vez el descubrimiento 8/10; registra el mecanismo de recarga realmente observado
+  en [antigravity-smoke.md](antigravity-smoke.md).
+- `@sdd` y `@<agente>` expresan routing del kit, **no sintaxis nativa confirmada**.
+  La sustitución `{{sdd_agent}}` produce el identificador nominal `sdd`, no un
+  comando. `/agents` pertenece a la documentación del **CLI**; no se atribuye a
+  Antigravity 2.0 sin prueba.
+- El CLI documenta otra ruta de skills, `~/.gemini/antigravity-cli/skills/`; el
+  instalador 2.0 no la cubre. Agentes personalizados del IDE standalone: no
+  verificados. Runtime y ejecución Windows/Linux: **PENDIENTES** de evidencia.
+- Steering admitido: `GEMINI.md`, `AGENTS.md`, `.agents/rules/*.md`; el instalador
+  no crea ni sobrescribe estas reglas ni settings del usuario.
+- Los ocho agentes declaran `model: inherit`, `mainAgent: true`, `subagent: true`
+  y herramientas por rol. Esto no cambia automáticamente el modelo ni constituye
+  un sandbox por carpeta/comando. Las skills se descubren globalmente: no se
+  declara un campo `skills` explícito cuya resolución de rutas es ambigua.
+
+No hay delegación automática. El handoff sigue siendo explícito y portable; una
+invocación nativa de prueba requiere un padre del host con `invoke_subagent`, una
+petición explícita del usuario y contexto autorizado completo. Los ocho roles
+del kit no reciben esa herramienta para encadenar delegaciones.
+
 Si no ves un agente tras instalar, **reinicia** la herramienta y verifica la
 ruta de destino en [instalacion.md](instalacion.md).
 
@@ -94,9 +132,9 @@ Catálogo completo: [catalogo.md](catalogo.md).
    `.navigator/` (mapa barato); luego deja que cada especialista inicialice su
    carpeta (`.architecture/`, `.design/`, etc.).
    Architecture, Data & API, UI Design, Quality y Security recomiendan nivel antes
-   de operar: el aviso puntual no bloquea y las operaciones pesadas esperan
-   confirmación. Si el Orchestrator ya mostró y confirmó ese nivel para el mismo
-   alcance, el especialista no lo repite.
+   de operar: los avisos puntuales y pesados son informativos y el trabajo autorizado
+   continúa en el mismo turno. Si el Orchestrator ya comunicó ese aviso para el mismo
+   alcance, el especialista no lo repite; no requiere confirmación ni reanudación.
 3. **SDD antes de features grandes** — elige entre exactamente tres profundidades:
    `direct`, sin spec; `lite`, automático para trabajo acotado, claro y de bajo
    riesgo; y `standard`, fallback seguro.
@@ -107,6 +145,9 @@ Catálogo completo: [catalogo.md](catalogo.md).
    `MEDIO` o `ALTO` de la próxima fase, sin pedir confirmación sobre su selección.
    En las transiciones combina resumen, aprobación de la fase actual y recomendación
    de la siguiente, sin crear gates adicionales.
+   El inicio de los tres modos y Quick Plan continúa tras el aviso; Implementación
+   pasa automáticamente a Verification dentro del alcance aprobado. Solo se espera
+   por gates reales o decisiones pendientes, y planificar no autoriza implementar.
    Si hay `.navigator/`, SDD comprueba primero su disponibilidad y frescura para
    orientar la exploración. Un índice desfasado solo aporta rutas candidatas: la
    documentación aplicable y el código real confirman las decisiones. Su ausencia
@@ -146,8 +187,10 @@ especialista conserva la autoridad sobre su dominio.
 | “¿Está listo para release?” | `release-check` |
 
 Antes de cualquier modo, el agente hace un preflight mínimo, recomienda un nivel
-de modelo (`bajo`, `medio` o `alto`) y espera respuesta. El usuario cambia el
-modelo manualmente o responde “continúa con el actual”; el agente nunca lo cambia.
+de modelo (`bajo`, `medio` o `alto`) y continúa el trabajo autorizado en el mismo
+turno. El aviso no requiere respuesta; el cambio de modelo es manual y el agente
+nunca lo cambia. `status` y `release-check` inspeccionan e informan sin pausa por
+modelo; las escrituras conservan la aprobación del plan global y los gates reales.
 
 Si necesitas continuar con el agente especialista real, pídelo explícitamente.
 El orquestador entrega un bloque `## Handoff`; cópialo al agente indicado y
@@ -205,6 +248,9 @@ Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
   (integrity gate).
 
 ## Ejemplo de flujo completo
+
+Los `@<agente>` siguientes identifican roles del kit; en Antigravity usa la
+selección comprobada en el smoke, sin interpretar estas líneas como comandos.
 
 ```text
 0. @documentation-orchestrator → “Inicializa la documentación core”

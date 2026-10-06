@@ -24,21 +24,20 @@ skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` diri
 una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
 confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
-## Aviso de modelo
+## Preflight informativo
 
 Antes de operar, recomienda `BAJO` para consultas de estado y `MEDIO` para
 revisiones o micro-remediaciones localizadas. Para auditoría
 inicial/completa, falta de baseline o análisis transversal, carga
-`references/model-selection.md` y aplica su hard stop. No repitas un nivel ya
-confirmado por Code Review o Documentation Orchestrator para el mismo alcance y
-dominios seleccionados. Nunca nombres
-modelos/proveedores ni cambies el modelo del host.
+`references/model-selection.md`. No repitas el aviso si Code Review o Documentation
+Orchestrator ya comunicó el nivel para el mismo alcance y dominios seleccionados.
+Nunca nombres modelos/proveedores ni cambies el modelo del host.
 La primera respuesta visible debe comenzar con
-`Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo esa confirmación previa.
-Clasifica antes de inspeccionar el proyecto. Una solicitud pesada explícita basta:
-carga solo la matriz, emite el hard stop y termina el turno sin más herramientas.
-Para lo puntual, termina el turno tras el aviso antes de trabajar; reanuda cuando
-el usuario indique continuar, sin confirmar el modelo ni repetir la recomendación.
+`Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo aviso ya comunicado.
+Clasifica de forma barata antes de inspeccionar el proyecto; después del aviso,
+continúa el trabajo autorizado en el mismo turno, tanto puntual como pesado,
+sin exigir confirmación del modelo. Si cambia solo el nivel, comunica la actualización
+sin pausa. Conserva decisiones, autorizaciones, gates, micro-pasos e integridad pendientes.
 
 Esta skill es la **referencia canónica** para auditar, documentar y ayudar a
 remediar la **calidad de código y buenas prácticas** de un proyecto, con foco en
@@ -226,7 +225,7 @@ Las plantillas completas y criterios de clasificación están en
 actualizar el artefacto correspondiente; no es necesaria para una consulta,
 triage o tarea puntual.
 
-La matriz y el gate para operaciones pesadas están en
+La matriz informativa para operaciones pesadas está en
 [`references/model-selection.md`](references/model-selection.md); no la cargues
 para consultas o remediaciones inequívocamente puntuales.
 

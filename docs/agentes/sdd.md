@@ -33,15 +33,18 @@ aceptar su sustitución por `standard`.
 Antes de cargar contexto pesado, SDD hace un preflight barato y recomienda un nivel
 de LLM genérico `BAJO`, `MEDIO` o `ALTO` únicamente para la próxima fase u operación.
 El mensaje usa el formato `Nivel de LLM recomendado para <fase>: <nivel>`. La
-recomendación es informativa: salvo en `direct`, SDD termina el turno para darte
-tiempo a cambiar manualmente de modelo o conservar el actual. Al responder
-«continúa» reanuda el proceso sin pedirte que declares qué modelo elegiste.
+recomendación es informativa: en `direct`, `lite` y `standard`, SDD continúa el
+trabajo autorizado en el mismo turno sin exigir «continúa» ni confirmar el modelo.
+Puedes cambiarlo manualmente; SDD no selecciona ni modifica el modelo del host.
+No repite un aviso ya comunicado para el mismo alcance; un cambio exclusivo de
+nivel se informa sin detener el trabajo. Una decisión esencial pendiente sí se aclara.
 
 En cada transición, SDD presenta el resumen verificable, el gate actual y la
 recomendación de la próxima fase en el mismo mensaje. Para continuar solo requiere la
 aprobación del gate SDD real; después inicia la siguiente fase sin confirmación del
-nivel de LLM. Después de Implementación, como no hay gate intermedio, pausa tras
-recomendar el nivel para Verification y la ejecuta cuando reanudes. SDD no conoce,
+nivel de LLM. Después de Implementación, como no hay gate intermedio, recomienda
+el nivel para Verification y la ejecuta automáticamente dentro del alcance aprobado.
+Solo después de obtener y registrar evidencia presenta Gate 4. SDD no conoce,
 selecciona ni cambia el LLM del host, y no crea gates adicionales.
 
 ## Modos
@@ -67,9 +70,8 @@ solicitud silenciosamente ni confunde esa aceptación con la aprobación de un g
 
 ## Flujo y gates
 
-0. **Nivel de LLM:** preflight de la próxima fase; salvo `direct`, termina el turno
-   antes de comenzar para permitir un cambio manual opcional. La pausa no es un gate
-   de modelo; `direct` no crea spec.
+0. **Nivel de LLM:** preflight informativo de la próxima fase y continuación del
+   trabajo autorizado en el mismo turno, sin pausa por modelo; `direct` no crea spec.
 1. **Requirements:** historias, criterios EARS, errores, edge cases y supuestos.
     Gate 1: aprobar requisitos en `standard`.
 2. **Design:** arquitectura, modelos, errores, pruebas y estrategia de testing.
@@ -77,13 +79,13 @@ solicitud silenciosamente ni confunde esa aceptación con la aprobación de un g
 3. **Tasks:** tareas trazadas a requisitos, dependencias y waves.
     Gate 3: aprobar el plan y empezar a implementar en `standard`.
 4. **Implementación:** ejecutar una tarea o wave, con integrity gate antes de marcarla.
-5. **Verification:** tras el preflight y la reanudación, ejecutar pruebas, registrar
-   evidencia y revisar requisitos y RNF. Gate 4: cerrar la spec o corregir huecos en
-    `standard`; después no hay otra recomendación.
+5. **Verification:** tras Implementación y el aviso no bloqueante, ejecutar pruebas,
+   registrar evidencia y revisar requisitos y RNF. Gate 4: cerrar la spec o corregir
+   huecos en `standard`; después no hay otra recomendación.
 
 En `lite`, Quick Plan genera `requirements.md`, `design.md` y `tasks.md` en una
-pasada después del preflight informativo y de que el usuario reanude. No existen Gates 1-3 ni Gate 4. Si el
-alcance es solo planificar, termina con esos tres archivos; si también se
+pasada después del preflight informativo, sin pausa por modelo. No existen Gates 1-3
+ni Gate 4. Si el alcance es solo planificar, termina con esos tres archivos; si también se
 implementa, añade un `verification.md` compacto con la evidencia.
 
 ## Contexto opcional de Project Navigator
@@ -157,9 +159,10 @@ Esta petición usa `lite` automáticamente. `Quick Plan standard` y
 ## Límites y confirmaciones
 
 - No cruza los Gates 1-4 de `standard` sin aprobación explícita.
-- El Gate 0 informa el nivel de LLM recomendado y pausa salvo en `direct`, sin
-  pedir confirmación del modelo; `lite` pausa antes de Quick Plan, sin crear
-  Gates 1-3 ni Gate 4.
+- El preflight informa el nivel de LLM recomendado y continúa en los tres modos;
+  `lite` inicia Quick Plan sin esperar por modelo, sin crear Gates 1-3 ni Gate 4.
+- La intención de solo planificación no autoriza implementar. Reclasificar `lite`
+  a `standard` requiere aprobación por el cambio de flujo, aunque el nivel no cambie.
 - Quick Plan solo existe en `lite` y no se combina con otra profundidad.
 - No cambia el modelo del host ni menciona nombres de modelos o proveedores en la
   recomendación.

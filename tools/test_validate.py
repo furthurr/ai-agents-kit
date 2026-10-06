@@ -318,6 +318,63 @@ def test_pi_body_suffix_missing_arguments() -> None:
         check(run_validate(root) == 0, "acepta body_suffix con $ARGUMENTS")
 
 
+def test_antigravity_adapter_schema() -> None:
+    """Reject host-invalid metadata even when reproducibility would succeed."""
+    print("\n[Antigravity] Contrato de adapter")
+    valid = {
+        "filename": "demo.md",
+        "frontmatter": {
+            "name": "demo", "description": "Demo agent", "model": "inherit",
+            "mainAgent": True, "subagent": True, "tools": ["view_file"],
+        },
+    }
+    cases = [
+        ("filename", "nested/demo.md"), ("name", "other"),
+        ("description", " "), ("description", None), ("model", "unknown"),
+        ("mainAgent", "true"), ("mainAgent", 1), ("subagent", "true"),
+        ("tools", []), ("tools", "view_file"), ("tools", [123]),
+        ("tools", ["view_file", "view_file"]), ("tools", ["Read"]),
+    ]
+    with tempfile.TemporaryDirectory() as tmp:
+        root = build_fixture(Path(tmp))
+        (root / "adapters/acme").rename(root / "adapters/antigravity")
+        manifest_path = root / "canonical/manifest.json"
+        data = json.loads(manifest_path.read_text(encoding="utf-8"))
+        data["platforms"] = ["antigravity"]
+        manifest_path.write_text(json.dumps(data), encoding="utf-8")
+        adapter = root / "adapters/antigravity/agents/demo.json"
+        with_kit(root)
+        try:
+            for model in ("inherit", "flash", "pro"):
+                candidate = json.loads(json.dumps(valid))
+                candidate["frontmatter"]["model"] = model
+                adapter.write_text(json.dumps(candidate), encoding="utf-8")
+                errors: list[str] = []
+                validate_module.validate_adapters(data, errors)
+                check(not errors, f"Antigravity: acepta modelo {model}")
+            for field, value in cases:
+                candidate = json.loads(json.dumps(valid))
+                if field == "filename":
+                    candidate[field] = value
+                else:
+                    candidate["frontmatter"][field] = value
+                adapter.write_text(json.dumps(candidate), encoding="utf-8")
+                errors = []
+                validate_module.validate_adapters(data, errors)
+                check(any(field in error and "demo.json" in error for error in errors),
+                      f"Antigravity: rechaza {field}={value!r} e identifica archivo/campo")
+            for field in valid["frontmatter"]:
+                candidate = json.loads(json.dumps(valid))
+                del candidate["frontmatter"][field]
+                adapter.write_text(json.dumps(candidate), encoding="utf-8")
+                errors = []
+                validate_module.validate_adapters(data, errors)
+                check(any(field in error for error in errors),
+                      f"Antigravity: requiere {field}")
+        finally:
+            restore_modules()
+
+
 def main() -> int:
     print(f"\033[1m{'='*60}\033[0m")
     print("\033[1m  Pruebas negativas — validate.py / render.py\033[0m")
@@ -336,6 +393,7 @@ def main() -> int:
     test_unused_substitution()
     test_token_in_reference()
     test_pi_body_suffix_missing_arguments()
+    test_antigravity_adapter_schema()
 
     print(f"\n\033[1m{'='*60}\033[0m")
     total = PASSED + FAILED

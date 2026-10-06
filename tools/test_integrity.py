@@ -60,12 +60,14 @@ def test_project_structure() -> None:
         "adapters/kiro",
         "adapters/claude",
         "adapters/pi",
+        "adapters/antigravity",
         "generated",
         "generated/copilot",
         "generated/opencode",
         "generated/kiro",
         "generated/claude",
         "generated/pi",
+        "generated/antigravity",
         "tools",
         "scripts",
         "scripts/install",
@@ -84,6 +86,8 @@ def test_project_structure() -> None:
         "tools/test_links.py",
         "tools/test_model_recommendations.py",
         "tools/test_mas_identity.py",
+        "tools/test_antigravity_contract.py",
+        "tools/test_antigravity_install.py",
         "README.md",
         ".gitignore",
     ]
@@ -117,7 +121,7 @@ def test_no_root_scripts() -> None:
 def test_scripts_exist() -> None:
     print("\n\033[1m[3] Scripts en nueva ubicación\033[0m")
 
-    platforms = ["copilot", "opencode", "kiro", "claude", "pi"]
+    platforms = ["copilot", "opencode", "kiro", "claude", "pi", "antigravity"]
     for platform in platforms:
         for ext in ("sh", "ps1"):
             install = ROOT / "scripts" / "install" / f"{platform}.{ext}"
@@ -322,6 +326,9 @@ def test_readme_references() -> None:
     check("scripts/install/opencode.sh" in readme, "README referencia scripts/install/opencode.sh")
     check("scripts/install/kiro.sh" in readme, "README referencia scripts/install/kiro.sh")
     check("scripts/install/claude.sh" in readme, "README referencia scripts/install/claude.sh")
+    check("scripts/install/antigravity.sh" in readme, "README referencia scripts/install/antigravity.sh")
+    check("scripts/install/antigravity.ps1" in readme.replace("\\", "/"),
+          "README referencia scripts/install/antigravity.ps1")
     check("scripts/backup/" in readme, "README referencia scripts/backup/")
 
     # Should NOT reference old root scripts

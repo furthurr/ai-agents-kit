@@ -89,15 +89,17 @@ cumple claramente `direct`, usa los limites compactos de esta skill y no cargues
 referencia. En los demas casos usa `references/model-selection.md`. No nombres
 modelos o proveedores ni cambies el modelo del host.
 
-El Gate 0 inicial muestra el próximo proceso, no un nivel global ni un perfil de
+El Gate 0 es un preflight técnico informativo, no un gate humano adicional.
+Muestra el próximo proceso, no un nivel global ni un perfil de
 todas las fases futuras. Para una spec nueva `standard`, la próxima fase es
 Requirements; para `lite`, la única operación es Quick Plan.
 
 `direct` recibe un aviso breve y no bloqueante. `lite` recibe un único preflight
-informativo para Quick Plan. `lite`, `standard` y bugfix no trivial terminan
-el turno tras el preflight inicial, antes de ejecutar la operación: el usuario
-puede cambiar manualmente de modelo o seguir con el actual y responder «continúa».
-Al reanudar, no solicites confirmar el nivel de LLM ni repitas el mismo aviso.
+informativo para Quick Plan. `direct`, `lite`, `standard` y bugfix no trivial
+continúan el trabajo autorizado en el mismo turno salvo aclaración esencial o
+gate real pendiente. El cambio manual es opcional; no exijas «continúa», «listo»
+ni confirmación del nivel de LLM. Deduplica por recomendación ya comunicada para
+el mismo alcance, sin exigir confirmación del usuario.
 En `standard`, muestra una recomendación al iniciar Requirements, Design,
 Tasks, Implementación y Verification, sin convertirla en un gate adicional ni
 repetirla dentro de la misma fase.
@@ -105,12 +107,13 @@ repetirla dentro de la misma fase.
 En cada transición, presenta en un mismo mensaje el resumen verificable de la fase
 actual, su gate de aprobación cuando aplique y la recomendación de la próxima fase.
 La recomendación queda condicionada a la aprobación actual, pero es solo informativa:
-no preguntes si el usuario seleccionó o cambiará el LLM. El gate actual es la pausa
-entre fases: espera únicamente su aprobación; al aprobar, inicia la siguiente fase
+no preguntes si el usuario seleccionó o cambiará el LLM. Entre fases, espera
+únicamente la aprobación del gate real de la fase actual; al aprobar, inicia la siguiente fase
 sin otra pausa ni confirmación de nivel. Después de Implementación, presenta el
-preflight de Verification y termina el turno: no hay gate intermedio, pero la
-continuación del usuario permite iniciarla sin confirmar el nivel. Si cambia el alcance o el riesgo, recalcula y
-comunica la recomendación actualizada. Si cambia la política de gates por una
+preflight y continúa con Verification sin pausa: no hay gate intermedio.
+Si cambia el alcance o el riesgo, recalcula y comunica la recomendación actualizada;
+un cambio exclusivo de nivel no detiene el trabajo autorizado. Si falta autorización
+para el nuevo alcance, pregunta por ella. Si cambia la política de gates por una
 reclasificación de modo, solicita aprobación de ese cambio de flujo, no del nivel de
 LLM. Después de Verification muestra únicamente Gate 4, sin recomendación para el
 cierre.
@@ -167,9 +170,10 @@ antes de reanudarla.
 > **En `standard`, no avances de fase sin aprobación explícita del usuario.**
 > Copilot no tiene una herramienta de «pregunta» dedicada.
 > La recomendación del nivel de LLM es informativa, no es un gate
-> ni requiere confirmación del modelo. En las transiciones, termina el turno esperando
-> solo la aprobación del gate SDD real. El Gate 0 inicial pausa la operación salvo en
-> `direct`, sin crear un gate de aprobación de nivel.
+> ni requiere confirmación del modelo. En las transiciones, espera únicamente la
+> aprobación del gate real de la fase actual. Tras aprobarlo, continúa en el mismo
+> turno con la siguiente fase autorizada, sin otra espera por modelo. El Gate 0
+> inicial es un preflight informativo y no bloquea la operación autorizada.
 > `lite` usa su preflight informativo para Quick Plan, sin Gates 1–3, y cierra sin
 > Gate 4.
 
@@ -225,8 +229,8 @@ antes de reanudarla.
 
 Prerrequisito: `[x]` con artefacto real (o `[omitido: razón]`).
 1. Presenta el resumen de Implementación y el nivel de LLM recomendado para
-   Verification; termina el turno para permitir cambio manual y reanuda con la suite
-   cuando el usuario indique continuar, sin pedir confirmación del nivel.
+   Verification; continúa con Verification sin pausa, en el mismo turno, sin esperar
+   cambio manual ni confirmación del nivel. Conserva los controles de integridad.
 2. `references/integrity-gate.md`: validar cada `[x]` ↔ disco/evidencia.
 3. Suite de tests + spot-check `quality-bar` y 3–5 RNF del spec.
 4. `verification.md` con columna Evidencia (`templates.md`). No cerrar con huérfanos.
@@ -251,8 +255,9 @@ Quick Plan es obligatorio y exclusivo de `lite`. Genera requirements, design y
 tasks en una pasada, con preguntas aclaratorias esenciales por adelantado y sin
 Gates 1–3. El preflight informativo muestra `Modo SDD: lite`, Quick Plan, el nivel de
 LLM recomendado para esa única operación, los motivos y el flujo omitido; no
-recomienda por separado sus pasos internos. Termina el turno antes de Quick Plan y
-reanuda cuando el usuario indique continuar, sin exigir confirmar el modelo.
+recomienda por separado sus pasos internos. Continúa con Quick Plan en el mismo
+turno sin esperar cambio manual ni confirmación del modelo, salvo pregunta esencial
+pendiente. Un cambio exclusivo de nivel tampoco añade una pausa.
 
 Si la intención es solo planificación, termina después de `tasks.md` y no
 implementar código. Si la solicitud original incluye implementación, aplica

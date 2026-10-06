@@ -1,0 +1,12 @@
+{
+  "filename": "data-api.md",
+  "frontmatter": {
+    "name": "data-api",
+    "description": "Documenta, audita y desarrolla datos, APIs, contratos, modelos y persistencia en su ámbito; mantiene .data/. No modifica UI ni negocio ajeno a datos.",
+    "model": "inherit",
+    "subagent": true,
+    "mainAgent": true,
+    "tools": ["view_file", "list_dir", "find_by_name", "grep_search", "write_to_file", "replace_file_content", "run_command", "read_url_content", "search_web", "ask_question"]
+  },
+  "body_suffix": "\n\n## Particularidades de Antigravity 2.0\n\n`@<agente>` es notación de routing del kit, no una garantía de invocación nativa. Selecciona el agente por la interfaz del host verificada para tu versión. Las tools disponibles no amplían el alcance ni sustituyen autorizaciones, gates o permisos del host.\n"
+}

@@ -29,6 +29,7 @@ repositorio**.
                              │  scripts/install/*
                              ▼
       ~/.copilot  ·  ~/.config/opencode  ·  ~/.kiro  ·  ~/.claude  ·  ~/.pi/agent
+      ~/.gemini/config/{skills,agents} (Antigravity 2.0)
 ```
 
 ## Capas y responsabilidades
@@ -50,12 +51,14 @@ Fuente de verdad del inventario:
 {
   "skills": [ "architecture", "code-quality", "..." ],
   "agents": [ "architecture", "code-review", "..." ],
-  "platforms": [ "copilot", "opencode", "kiro", "claude", "pi" ]
+  "platforms": [ "copilot", "opencode", "kiro", "claude", "pi", "antigravity" ]
 }
 ```
 
 El render itera estas listas. Si falta un agent adapter en una plataforma
 declarada, la validación o el render fallarán según el caso.
+El inventario compartido es de ocho agentes y diez skills en seis distribuciones;
+la existencia de artefactos no certifica el comportamiento de los seis hosts.
 
 ## Adaptadores
 
@@ -93,13 +96,41 @@ Campos habituales:
 
 Diferencias notables entre plataformas:
 
-| Aspecto | Copilot | OpenCode | Kiro | Claude Code | Pi |
-|---------|---------|----------|------|-------------|-----|
-| Extensión agente | `.agent.md` | `.md` | `.md` | `.md` | `.md` (prompt template) |
-| Nombre del agente | campo `name` en frontmatter | vía archivo / config | nombre de archivo (sin `name`) | `name` en minúsculas y con guiones | nombre de archivo → comando `/<id>` |
-| Permisos | lista `tools` | `permission` (edit, bash, …) | `tools` + `permissions.rules` | `tools`, `disallowedTools` y settings | herramientas de la sesión Pi |
-| Default shell sensible | según tool | confirmación (`ask`) | `ask` por defecto; `deny` en destructivos | flujo de permisos de Claude Code | permisos del proceso Pi |
-| Argumentos | — | — | — | — | `$ARGUMENTS` en `body_suffix` |
+| Aspecto | Copilot | OpenCode | Kiro | Claude Code | Pi | Antigravity 2.0 |
+|---------|---------|----------|------|-------------|-----|-----------------|
+| Extensión agente | `.agent.md` | `.md` | `.md` | `.md` | `.md` (prompt template) | `<id>.md` |
+| Nombre del agente | campo `name` en frontmatter | vía archivo / config | nombre de archivo (sin `name`) | `name` en minúsculas y con guiones | nombre de archivo → comando `/<id>` | `name` igual al ID |
+| Permisos | lista `tools` | `permission` (edit, bash, …) | `tools` + `permissions.rules` | `tools`, `disallowedTools` y settings | herramientas de la sesión Pi | `tools` por rol + permisos heredados del host |
+| Default shell sensible | según tool | confirmación (`ask`) | `ask` por defecto; `deny` en destructivos | flujo de permisos de Claude Code | permisos del proceso Pi | política del usuario; sin override del kit |
+| Argumentos | — | — | — | — | `$ARGUMENTS` en `body_suffix` | contexto explícito del padre si se invoca como hijo |
+
+### Contrato Antigravity
+
+La fuente común permanece en `canonical/`; `adapters/antigravity/` aporta
+frontmatter y notas del host, y el renderer existente produce
+`generated/antigravity/{skills,agents}/`. No se duplican agentes como skills.
+
+- Ocho agentes con `model: inherit`, `mainAgent: true`, `subagent: true` y listas
+  literales de tools por rol. Los niveles LLM recomendados siguen siendo manuales.
+- `{{sdd_agent}}` → `sdd` (identificador nominal), `{{gate_instruction}}` → vacío,
+  `{{steering_paths}}` → `GEMINI.md`, `AGENTS.md`, `.agents/rules/*.md`.
+- El `body_suffix` distingue routing semántico `@<agente>` de selección nativa;
+  la UI efectiva requiere smoke. `/agents` solo está documentado para CLI.
+- Descubrimiento global de skills y lectura de `SKILL.md`/referencias; no se añade
+  el campo `skills` porque su resolución de paths no está suficientemente descrita.
+- No se declaran políticas de ejecución, plugins, MCP ni hooks nuevos. Los nombres
+  de tools se respaldan en la referencia de Hooks, no en un hook instalado por el kit.
+
+Las listas L/D/G/W/Q y su distribución por rol se detallan en el
+[smoke](antigravity-smoke.md). Son un contrato del adapter, no el catálogo
+exhaustivo del host ni un sandbox: shell puede eludir límites de archivos. Los
+roles no reciben `invoke_subagent`; la prueba usa un padre habilitado del host,
+solo por petición explícita y sin alterar el protocolo de handoff.
+
+El alcance inicial es 2.0. CLI usa skills globales en
+`~/.gemini/antigravity-cli/skills/`; agentes personalizados del IDE standalone no
+están verificados. **Runtime y ejecución Windows/Linux: PENDIENTES** hasta
+aportar evidencia; ninguna validación estática acredita soporte completo.
 
 VS Code también descubre los archivos de `~/.claude/agents/` cuando usa el
 formato Claude. Por eso los adapters de Claude emiten `user-invocable: false`:
@@ -152,14 +183,21 @@ Ejecutar siempre antes de instalar o de commitear cambios de prompts.
 
 ```text
 scripts/
-  install/   copilot|opencode|kiro|claude  .sh / .ps1
-  backup/    copilot|opencode|kiro|claude  .sh / .ps1
+  install/   copilot|opencode|kiro|claude|pi|antigravity  .sh / .ps1
+  backup/    copilot|opencode|kiro|claude|pi|antigravity  .sh / .ps1
 ```
 
 - **install:** `generated/<p>/` → rutas globales de la tool; backup timestamped
   salvo `--force`.
 - **backup:** instalación local → `imports/<p>/<fecha>/` solo ids del manifest;
   no escribe en canonical.
+
+Antigravity instala en `~/.gemini/config/{skills,agents}` y respalda elementos
+sobrescritos en `~/.antigravity-kit-backup/<timestamp>/{skills,agents}` salvo
+`--force`/`-Force`. Bash y PowerShell fusionan skills, preservan extras y pueden
+conservar recursos antiguos; no hay rollback transaccional. El exportador lleva
+el estado instalado a `imports/antigravity/<timestamp>/`, distinto del respaldo
+previo; sus avisos de import parcial no acreditan una instalación completa.
 
 Detalle de uso: [instalacion.md](instalacion.md).
 
@@ -219,11 +257,12 @@ Documentation Orchestrator sigue el mismo patrón canónico de skill + agente, p
 coordina procedimientos de varios dominios. No depende de APIs de subagentes de
 una plataforma: para cada acción carga la skill aplicable o emite un handoff
 Markdown para continuar con el agente especialista real, nunca ambas. El handoff
-conserva la misma semántica en Copilot, OpenCode, Kiro y Claude Code.
+conserva la misma semántica en las seis distribuciones, sin implicar que la
+delegación nativa esté comprobada en todos los hosts.
 
 ### Límites y autoridad
 
-- `documentation-orchestrator` gobierna clasificación, orden, Gate 0 de modelo y
+- `documentation-orchestrator` gobierna clasificación, orden, preflight informativo y
   cierre global.
 - Cada skill especialista sigue siendo autoridad dentro de su propia carpeta y
   conserva sus gates.
@@ -235,5 +274,9 @@ conserva la misma semántica en Copilot, OpenCode, Kiro y Claude Code.
   este agente.
 - La recomendación de modelo es genérica (`bajo`/`medio`/`alto`) y manual; ningún
   adapter permite que el agente seleccione el modelo del host.
+- El aviso permite continuar el trabajo autorizado en el mismo turno, incluidos
+  `status` y `release-check`; no exige confirmación ni reanudación. Se deduplica por
+  comunicación para el mismo alcance, no por nivel confirmado. Cambiar solo el
+  nivel recomendado no bloquea; decisiones de alcance, gates y permisos sí se conservan.
 
 Smoke test: [documentation-orchestrator-smoke.md](documentation-orchestrator-smoke.md).

@@ -20,6 +20,45 @@ import render as render_module
 ROOT = Path(__file__).resolve().parent.parent
 PLATFORM_MARKERS = ("GitHub Copilot", "opencode", ".github/copilot-instructions.md", "VS Code")
 
+# Supported by this adapter, not an exhaustive host catalog. Runtime mapping still
+# requires smoke testing: https://antigravity.google/docs/hooks/#supported-tools
+# Schema: https://antigravity.google/docs/subagents/#frontmatter-configuration-yaml
+ANTIGRAVITY_TOOLS = frozenset({
+    "view_file", "list_dir", "find_by_name", "grep_search", "write_to_file",
+    "replace_file_content", "run_command", "read_url_content", "search_web", "ask_question",
+})
+
+
+def validate_antigravity_adapter(data: dict, agent_id: str, context: str,
+                                errors: list[str]) -> None:
+    """Validate our explicit initial contract, independently of render hashes."""
+    metadata = data["frontmatter"]
+    if data.get("filename") != f"{agent_id}.md":
+        errors.append(f"{context}: filename debe ser {agent_id}.md")
+    if metadata.get("name") != agent_id:
+        errors.append(f"{context}: name debe coincidir con {agent_id}")
+    description = metadata.get("description")
+    if not isinstance(description, str) or not description.strip():
+        errors.append(f"{context}: description debe ser string no vacío")
+    model = metadata.get("model")
+    if not isinstance(model, str) or model not in ("inherit", "flash", "pro"):
+        errors.append(f"{context}: model debe ser inherit, flash o pro")
+    for field in ("mainAgent", "subagent"):
+        if not isinstance(metadata.get(field), bool):
+            errors.append(f"{context}: {field} debe ser booleano")
+    supported_fields = {"name", "description", "model", "mainAgent", "subagent", "tools"}
+    for field in metadata.keys() - supported_fields:
+        errors.append(f"{context}: campo {field} no soportado por el contrato inicial")
+    tools = metadata.get("tools")
+    if not isinstance(tools, list) or not tools:
+        errors.append(f"{context}: tools debe ser una lista no vacía")
+    elif not all(isinstance(tool, str) and tool in ANTIGRAVITY_TOOLS for tool in tools):
+        errors.append(f"{context}: tools contiene nombres o tipos no soportados")
+    elif len(tools) != len(set(tools)):
+        errors.append(f"{context}: tools contiene duplicados")
+    if "body_suffix" in data and not isinstance(data["body_suffix"], str):
+        errors.append(f"{context}: body_suffix debe ser string")
+
 
 def digest_tree(path: Path) -> dict[str, str]:
     if not path.exists():
@@ -110,6 +149,8 @@ def validate_adapters(manifest: dict, errors: list[str]) -> dict[str, set[str]]:
                         f"Adaptador Pi {adapter.relative_to(ROOT)}: 'body_suffix' debe ser "
                         "string y contener '$ARGUMENTS' para recibir la tarea del usuario"
                     )
+            elif platform == "antigravity":
+                validate_antigravity_adapter(data, agent_id, str(adapter.relative_to(ROOT)), errors)
             if not _safe_filename(filename):
                 errors.append(f"Adaptador {adapter.relative_to(ROOT)}: filename inseguro {filename!r}")
                 continue

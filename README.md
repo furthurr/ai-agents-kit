@@ -4,7 +4,8 @@
 
 Fuente versionada de **skills** y **agentes** para [GitHub Copilot](https://github.com/features/copilot),
 [OpenCode](https://opencode.ai), [Kiro](https://kiro.dev),
-[Claude Code](https://code.claude.com/) y [Pi](https://pi.dev).
+[Claude Code](https://code.claude.com/), [Pi](https://pi.dev) y
+[Google Antigravity](https://antigravity.google/).
 
 El sistema multiagente de este kit se denomina **MAS** (*Multi-Agent System*).
 Consulta la [guía de identidad y terminología](docs/mas.md) para dirigir
@@ -12,7 +13,10 @@ comentarios al sistema completo o a un agente concreto.
 
 La lógica se mantiene **una sola vez** en `canonical/` y se renderiza por
 plataforma con adaptadores declarativos. Así obtienes el mismo comportamiento
-especializado en las cinco herramientas, sin duplicar prompts por plataforma.
+especializado en seis distribuciones, sin duplicar prompts por plataforma.
+La integración inicial de Antigravity apunta a **2.0**: su runtime y las
+ejecuciones Windows/Linux están **PENDIENTES** de evidencia. El inventario de
+distribuciones no certifica soporte completo en los seis hosts.
 
 ## Por qué existe
 
@@ -31,7 +35,7 @@ Más detalle: [docs/vision.md](docs/vision.md).
 |---|----------|---------|
 | Skills | 10 | architecture, code-quality, data-api, documentation-orchestrator, git-commit, project-navigator, release-management, sdd-spec, security, ui-design |
 | Agentes | 8 | **Code Review** reúne calidad y seguridad; **Documentation Orchestrator** coordina documentación y **Git & Release Manager** coordina Git/release |
-| Plataformas | 5 | copilot, opencode, kiro, claude, pi |
+| Plataformas | 6 | copilot, opencode, kiro, claude, pi, antigravity |
 
 Catálogo completo (roles, carpetas, cuándo usar cada uno):
 [docs/catalogo.md](docs/catalogo.md).
@@ -51,6 +55,7 @@ python3 tools/validate.py
 ./scripts/install/kiro.sh         # → ~/.kiro/
 ./scripts/install/claude.sh       # → ~/.claude/
 ./scripts/install/pi.sh           # → ~/.pi/agent/
+./scripts/install/antigravity.sh   # → ~/.gemini/config/{skills,agents}/ (2.0)
 
 # 3. Reinicia la herramienta que uses
 ```
@@ -65,6 +70,7 @@ python tools/validate.py
 .\scripts\install\kiro.ps1
 .\scripts\install\claude.ps1
 .\scripts\install\pi.ps1
+.\scripts\install\antigravity.ps1
 ```
 
 Opciones: `--dry-run` / `-DryRun`, `--force` / `-Force`.
@@ -100,8 +106,9 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 | [docs/instalacion.md](docs/instalacion.md) | Install, destinos, backup/import |
 | [docs/uso.md](docs/uso.md) | Cómo invocar y flujos recomendados |
 | [docs/navigator-smoke.md](docs/navigator-smoke.md) | Smoke test reproducible del Project Navigator |
-| [docs/documentation-orchestrator-smoke.md](docs/documentation-orchestrator-smoke.md) | Smoke test del orquestador documental y su Gate 0 |
+| [docs/documentation-orchestrator-smoke.md](docs/documentation-orchestrator-smoke.md) | Smoke test del orquestador documental y su preflight informativo no bloqueante |
 | [docs/sdd-smoke.md](docs/sdd-smoke.md) | Smoke test de SDD proporcional y testing adaptativo |
+| [docs/antigravity-smoke.md](docs/antigravity-smoke.md) | Procedimiento Antigravity 2.0; runtime pendiente |
 | [docs/desarrollo.md](docs/desarrollo.md) | Contribuir y extender el kit |
 | [docs/arquitectura-del-kit.md](docs/arquitectura-del-kit.md) | Pipeline técnico |
 | [docs/mejoras.md](docs/mejoras.md) | Backlog priorizado y estado de madurez |

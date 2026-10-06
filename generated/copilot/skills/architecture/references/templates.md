@@ -92,4 +92,3 @@ Ordenada de mayor a menor severidad. Trabaja de arriba hacia abajo.
 - **🟢 Baja:** mejoras menores de organización, documentación faltante.
 
 Cada hallazgo indica **impacto** y **esfuerzo** estimado.
-

@@ -4,8 +4,8 @@ description: >-
   Navega cualquier proyecto con minimo de tokens mediante capas en `.navigator/`
   (contexto, mapa de modulos, simbolos, grafo y codigo puntual). Hace bootstrap
   y update de indices bajo peticion. No modifica codigo de negocio. Avisa al
-  usuario para cambiar el modelo manualmente antes/despues de procesos pesados;
-  nunca selecciona el modelo por el usuario.
+  usuario de forma no bloqueante sobre el cambio manual de modelo antes/despues
+  de procesos pesados; nunca selecciona el modelo por el usuario.
 ---
 
 # Skill: Project Navigator
@@ -42,8 +42,11 @@ Objetivo: responder con la capa más barata suficiente y citar fuentes.
 
 1. **Clasificar** (consulta vs bootstrap/update vs fuera de alcance).
 2. Si es bootstrap, update pesado o navegación reiterada de varias capas:
-   **aviso de modelo** antes (`references/bootstrap.md`); terminar el turno y
-   reanudar con «continua» sin exigir declarar el modelo elegido.
+   **aviso de modelo** previo no bloqueante (`references/bootstrap.md`); continúa el
+   trabajo autorizado en el mismo turno sin exigir confirmación del modelo.
+   No repitas el aviso si un orquestador ya comunicó la recomendación para el mismo
+   alcance. Cambiar solo el nivel se comunica sin pausa; conserva decisiones y permisos.
+   Nunca nombres modelos/proveedores ni cambies el modelo del host.
 3. Ejecutar el **gate de disponibilidad** en cada petición: leer el `config.yaml`
    aplicable y comprobar en filesystem los artefactos de las capas candidatas
    (`references/config.md`). No inferir su estado desde mensajes anteriores.
@@ -55,7 +58,7 @@ Objetivo: responder con la capa más barata suficiente y citar fuentes.
 6. Responder de forma concisa citando **fuente** (path de capa o `archivo:linea`).
 7. Si hubo degradado: distinguir `capas_ausentes` de
    `capas_deshabilitadas` y declarar el límite de confianza.
-8. Si el proceso fue pesado: **aviso de modelo** final.
+8. Si el proceso fue pesado: **aviso de modelo** final no bloqueante.
 
 ### Clasificador pregunta → capa
 
@@ -88,12 +91,12 @@ Contrato de pasos, monorepo, avisos de modelo y export `AGENTS.md`:
 
 Resumen bootstrap:
 
-1. Aviso de modelo → detectar stack y fuentes externas
+1. Aviso de modelo no bloqueante → detectar stack y fuentes externas
 2. Ubicación `.navigator/` (preguntar si ambiguo)
 3. `config.yaml` + `ai-context.md` (~500 tokens) + `module-map.json`
 4. No bloquear si faltan symbols/grafo
 5. Respetar exclude/secretos y ejecutar el gate post-bootstrap de integridad y presupuesto
-6. Informar artefactos, gaps y presupuesto → aviso final de modelo
+6. Informar artefactos, gaps y presupuesto → aviso final de modelo no bloqueante
 
 Schemas: `references/schemas.md`. Plantillas: `references/templates/`.
 

@@ -36,13 +36,18 @@ una versión o un tag, redirige a Git & Release Manager.
 | `sync-domain` | Actualiza los dominios solicitados explícitamente. |
 | `release-check` | Comprueba documentación y riesgos existentes sin versionar ni publicar. |
 
-## Cómo trabaja
+## Flujo de ejecución
 
 1. Hace un preflight barato y de solo lectura.
-2. Recomienda un nivel `bajo`, `medio` o `alto` y termina el turno antes de operar;
-   «continúa» reanuda sin declarar el modelo elegido.
-3. Presenta un plan global de proyectos, dominios, orden y posibles escrituras.
-4. Ejecuta especialistas en secuencia y conserva los gates propios de cada uno.
+2. Recomienda un nivel `bajo`, `medio` o `alto` de forma informativa y continúa el
+   trabajo autorizado en el mismo turno, sin exigir «continúa» ni confirmar el modelo.
+   El cambio de modelo es manual; un aviso ya comunicado para el mismo alcance
+   evita duplicarlo al pasar al especialista.
+3. En `status` y `release-check`, inspecciona e informa sin escrituras. Para modos
+   con escritura presenta el plan global de proyectos, dominios y orden, y espera
+   su aprobación antes de escribir.
+4. Ejecuta especialistas en secuencia y conserva los gates propios de cada uno;
+   una autorización efectiva del mismo alcance en la sesión puede reutilizarse.
 5. Verifica artefactos y evidencia antes de declarar un dominio completado.
 
 El orden normal es Architecture, Data & API si aplica, UI Design si aplica,

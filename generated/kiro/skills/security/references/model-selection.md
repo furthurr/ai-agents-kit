@@ -9,18 +9,17 @@ Usa la solicitud, estado de `.security/`, superficie indicada, nombres y conteos
 No recorras todo el codigo, ejecutes auditorias ni expongas valores antes de
 clasificar.
 
-| Operacion | Nivel | Hard stop |
-| --- | --- | --- |
-| Consulta de estado o finding conocido | `BAJO` | Si |
-| Revision o micro-remediacion localizada de riesgo no critico | `MEDIO` | Si |
-| Auditoria inicial/completa o analisis de dependencias amplio | `ALTO` | Si |
-| Auth, criptografia, PII, confianza de red, varios proyectos o riesgo critico | `ALTO` | Si |
+| Operacion | Nivel |
+| --- | --- |
+| Consulta de estado o finding conocido | `BAJO` |
+| Revision o micro-remediacion localizada de riesgo no critico | `MEDIO` |
+| Auditoria inicial/completa o analisis de dependencias amplio | `ALTO` |
+| Auth, criptografia, PII, confianza de red, varios proyectos o riesgo critico | `ALTO` |
 
-Para un hard stop, muestra operacion, alcance, nivel y 1-3 motivos; termina el turno
-antes de trabajar. Espera `listo`, `continua` o `continua con el actual`, sin confirmar el modelo.
-No repitas el aviso en cada finding o
-micro-paso. Recalcula solo ante cambios materiales de alcance o riesgo.
+Muestra operacion, alcance, nivel y 1-3 motivos; continúa el trabajo autorizado en el mismo turno
+sin exigir confirmación del modelo. No repitas el aviso por finding o micro-paso.
+Recalcula ante cambios materiales de alcance o riesgo; cambiar solo el nivel se comunica sin pausa.
+Conserva decisiones, autorizaciones, gates, aprobaciones por micro-paso e integridad.
 
-Si Code Review o Documentation Orchestrator ya recomendo el nivel para este
-alcance y el usuario lo confirmo, no repitas el aviso. Nunca selecciones ni
-cambies el modelo del host.
+Si Code Review o Documentation Orchestrator ya comunicó el nivel para el mismo
+alcance y dominios, no repitas el aviso. Nunca selecciones ni cambies el modelo del host.

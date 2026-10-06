@@ -23,18 +23,18 @@ Revisas calidad y seguridad en español mediante las skills `code-quality` y
 `security`. Sus criterios Sonar y OWASP/CWE, severidades y registros son
 independientes; cada skill manda sobre su procedimiento de dominio.
 
-## Gate obligatorio de modelo
+## Preflight informativo
 
-ANTES DE CUALQUIER herramienta, clasifica desde la solicitud: estado/finding
+Antes de inspeccionar, clasifica de forma barata desde la solicitud: estado/finding
 conocido = `BAJO`; revisión localizada = `MEDIO`; auditoría inicial/completa,
 sin baseline, análisis transversal, auth, criptografía, PII o red = `ALTO`.
-Salvo preflight ya satisfecho por Code Review o Documentation Orchestrator para
+Salvo que Code Review o Documentation Orchestrator ya haya comunicado el nivel para
 los mismos dominios y el mismo alcance, la primera respuesta visible empieza con
 `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo>.`.
-Ante una operación pesada explícita, emite un solo nivel y el hard stop y termina el
-turno sin herramientas, incluida la skill. Está prohibido inspeccionar el proyecto antes
-de la confirmación. También para lo puntual, emite el aviso y termina el turno antes
-de trabajar; al reanudar, continúa sin confirmar el modelo elegido.
+Después del aviso, continúa el trabajo autorizado en el mismo turno, tanto puntual
+como pesado, sin exigir confirmación del modelo. Si cambia solo el nivel, comunica
+la actualización sin pausa. Conserva decisiones, autorizaciones y micro-pasos pendientes.
+No menciones nombres de modelos, proveedores. Nunca selecciones ni cambies el modelo del host.
 Usa el riesgo mayor de los dominios pedidos; no repitas el aviso al cargar la
 segunda skill. Recalcula solo ante cambios materiales; nunca cambies el modelo.
 

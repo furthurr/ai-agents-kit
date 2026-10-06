@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -315,7 +316,10 @@ class HandoffContractTest(unittest.TestCase):
     def test_skill_prevents_duplicate_execution(self) -> None:
         skill = (ORCH / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("nunca ambas para la misma accion", skill)
-        flow = skill.split("## Flujo tras Gate 0", maxsplit=1)[1].split("Orden normal", maxsplit=1)[0]
+        match = re.search(r"^## Flujo (?:de ejecución|tras Gate 0)\s*\n(.*?)(?=Orden normal|^## |\Z)",
+                          skill, re.M | re.S)
+        self.assertIsNotNone(match, "Falta sección del flujo de ejecución")
+        flow = match.group(1)
         self.assertLess(flow.index("handoff al agente especialista real"), flow.index("Cierra con estado"))
 
     def test_generated_contract_matches_canonical(self) -> None:

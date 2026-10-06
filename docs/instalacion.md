@@ -9,7 +9,8 @@ completo en cada render.
 - **Python 3** — render, validación, métricas e importación
 - **Bash** (macOS/Linux) o **PowerShell** (Windows) — scripts de install/backup
 - **Git** — versionar cambios del kit (recomendado)
-- La herramienta destino instalada (Copilot CLI/IDE, OpenCode, Kiro o Claude Code)
+- La herramienta destino instalada (Copilot, OpenCode, Kiro, Claude Code, Pi o
+  Antigravity 2.0, según el alcance de cada distribución)
 
 ## Flujo recomendado
 
@@ -32,6 +33,8 @@ python3 tools/measure_context.py   # opcional
 ./scripts/install/opencode.sh      # OpenCode
 ./scripts/install/kiro.sh          # Kiro
 ./scripts/install/claude.sh        # Claude Code
+./scripts/install/pi.sh            # Pi
+./scripts/install/antigravity.sh   # Antigravity 2.0
 ```
 
 ### Windows (PowerShell)
@@ -45,6 +48,8 @@ python tools/measure_context.py    # opcional
 .\scripts\install\opencode.ps1
 .\scripts\install\kiro.ps1
 .\scripts\install\claude.ps1
+.\scripts\install\pi.ps1
+.\scripts\install\antigravity.ps1
 ```
 
 Puedes instalar **varias plataformas** en la misma máquina; cada script es
@@ -74,6 +79,42 @@ Ejemplos:
 | Kiro | `~/.kiro/skills/` | `~/.kiro/agents/` |
 | Claude Code | `~/.claude/skills/` (o `$CLAUDE_CONFIG_DIR/skills/`) | `~/.claude/agents/` (o `$CLAUDE_CONFIG_DIR/agents/`) |
 | Pi | `<agent-dir>/skills/` | `<agent-dir>/prompts/` |
+| Antigravity 2.0 | `~/.gemini/config/skills/` | `~/.gemini/config/agents/` |
+
+### Antigravity 2.0
+
+El alcance inicial es global: diez directorios de skills con sus recursos y ocho
+agentes `<id>.md`. Bash resuelve `~` desde HOME; PowerShell usa USERPROFILE, no
+un carácter `~` literal. La instalación no modifica credenciales, settings,
+`GEMINI.md`, `AGENTS.md` ni `.agents/rules/*.md`.
+
+```bash
+./scripts/install/antigravity.sh --dry-run
+./scripts/install/antigravity.sh
+# Solo si decides omitir el respaldo previo:
+./scripts/install/antigravity.sh --force
+```
+
+```powershell
+.\scripts\install\antigravity.ps1 -DryRun
+.\scripts\install\antigravity.ps1
+# Solo si decides omitir el respaldo previo:
+.\scripts\install\antigravity.ps1 -Force
+```
+
+En ambos shells, las skills se copian por **fusión**: se conservan elementos
+ajenos al inventario y recursos propios dentro de skills existentes; también
+pueden quedar recursos antiguos. Los agentes del inventario se sustituyen por
+archivo. No hay borrado espejo ni rollback transaccional automático: un fallo de
+copia puede dejar cambios parciales, devuelve error y requiere revisión manual.
+El respaldo previo, si lo hubo, permite recuperar elementos sobrescritos.
+
+La copia de archivos y el preflight no prueban descubrimiento ni funcionamiento
+del host. **Runtime, Windows y Linux: PENDIENTES de evidencia de ejecución**.
+La versión de referencia será la registrada en un smoke completo exitoso.
+El CLI usa otra ruta global de skills (`~/.gemini/antigravity-cli/skills/`);
+este instalador no cubre esa ruta ni certifica agentes personalizados del IDE
+standalone. Recarga y selección real: [antigravity-smoke.md](antigravity-smoke.md).
 
 ### Pi
 
@@ -106,14 +147,22 @@ timestamped. Rutas por plataforma:
 | Kiro | `~/.kiro-kit-backup/<AAAAMMDD-HHMMSS>/` |
 | Claude Code | `~/.claude-kit-backup/<AAAAMMDD-HHMMSS>/` |
 | Pi | `~/.pi-kit-backup/<AAAAMMDD-HHMMSS>/` |
+| Antigravity | `~/.antigravity-kit-backup/<timestamp>/` |
 
 Dentro de cada backup, el contenido previo queda en `skills/` y `agents/`.
+En Antigravity solo se respaldan elementos existentes que se van a sobrescribir;
+no es una instantánea completa del perfil. Una colisión de timestamp se resuelve
+sin reutilizar ni borrar un respaldo anterior.
 
 ## Garantías del instalador
 
 Los instaladores delegan en `tools/install_preflight.py`, que toma
 `canonical/manifest.json` como fuente de verdad. De ahí se derivan tres
 garantías verificadas por `tools/test_install.py`:
+
+El contrato de Antigravity se comprueba además con
+`tools/test_antigravity_install.py`; sus ejecuciones por OS deben acreditarse por
+separado y no equivalen a una prueba runtime del host.
 
 1. **No instalan de menos en silencio.** Si falta cualquier skill o agente
    declarado en el manifest, el script aborta con código distinto de cero
@@ -123,7 +172,9 @@ garantías verificadas por `tools/test_install.py`:
 2. **`--dry-run` no escribe nada.** No crea ni modifica directorios, ni siquiera
    los de destino.
 3. **Verifican antes de declarar éxito.** Al terminar, comprueban que el destino
-   contiene lo que el manifest declara.
+   contiene lo que el manifest declara. El preflight comprueba presencia de
+   archivos principales, no YAML, hashes ni todos los recursos de referencia;
+   esas comprobaciones corresponden a validación y pruebas de copia completa.
 
 Si el preflight aborta, casi siempre falta regenerar:
 
@@ -141,7 +192,7 @@ ya no aplican (ver *Desinstalar*).
 ## Actualizar a Code Review
 
 El kit sustituye los agentes `code-quality` y `security` por `code-review` en las
-cinco plataformas. **Las skills `code-quality` y `security` siguen existiendo**,
+distribuciones del catálogo de seis plataformas. **Las skills `code-quality` y `security` siguen existiendo**,
 igual que `.quality/`, `.security/` y sus IDs `QLT`/`SEC`: no hay migración de datos.
 
 1. Regenera y valida el kit e instala tu plataforma con su script habitual.
@@ -177,9 +228,35 @@ sin pisar la fuente del repo:
 ./scripts/backup/opencode.sh --dry-run
 ./scripts/backup/kiro.sh --dry-run
 ./scripts/backup/claude.sh --dry-run
+./scripts/backup/pi.sh --dry-run
+./scripts/backup/antigravity.sh --dry-run
 ```
 
 En Windows: `scripts\backup\*.ps1`.
+
+Antigravity, simulación y exportación efectiva:
+
+```bash
+./scripts/backup/antigravity.sh --dry-run
+./scripts/backup/antigravity.sh
+```
+
+```powershell
+.\scripts\backup\antigravity.ps1 -DryRun
+.\scripts\backup\antigravity.ps1
+```
+
+Estos scripts exportan lo instalado **ahora** a
+`imports/antigravity/<timestamp>/{skills,agents}/`; no recuperan el contenido
+anterior de `~/.antigravity-kit-backup/<timestamp>/`. La exportación tolera
+elementos no instalados con avisos: un import parcial no demuestra instalación
+completa. Los errores de copia se propagan como salida distinta de cero.
+El importador compartido usa timestamps con precisión de segundos: evita dos
+exportaciones en el mismo segundo. Si ya existe una carpeta de skill, la colisión
+produce error; en una instalación parcial con solo agentes puede sobrescribir
+archivos de la exportación anterior. No reutilices deliberadamente ese destino.
+Este límite del importador no afecta al respaldo previo del instalador Antigravity,
+que reserva una carpeta nueva con sufijo ante colisiones.
 
 Comportamiento:
 
@@ -210,6 +287,8 @@ Para las otras plataformas cambia la raíz de backup y el destino:
 | OpenCode | `~/.opencode-kit-backup/<fecha>/` | `~/.config/opencode/skills/` | `~/.config/opencode/agent/` |
 | Kiro | `~/.kiro-kit-backup/<fecha>/` | `~/.kiro/skills/` | `~/.kiro/agents/` |
 | Claude Code | `~/.claude-kit-backup/<fecha>/` | `~/.claude/skills/` | `~/.claude/agents/` |
+| Pi | `~/.pi-kit-backup/<fecha>/` | `~/.pi/agent/skills/` | `~/.pi/agent/prompts/` |
+| Antigravity | `~/.antigravity-kit-backup/<timestamp>/` | `~/.gemini/config/skills/` | `~/.gemini/config/agents/` |
 
 En Windows (PowerShell):
 
@@ -221,6 +300,33 @@ Copy-Item -Path "$BK\agents\*" -Destination "$env:USERPROFILE\.kiro\agents" -Rec
 
 Restaurar **fusiona**: recupera lo anterior, pero no elimina lo que el kit añadió
 después. Si quieres partir de cero, desinstala primero y restaura luego.
+
+Ejemplo Antigravity, ajustando el timestamp tras revisar el respaldo. Las carpetas
+`skills` o `agents` pueden faltar si no había elementos previos de ese tipo:
+
+```bash
+BK="$HOME/.antigravity-kit-backup/20261006-120000"
+mkdir -p "$HOME/.gemini/config/skills" "$HOME/.gemini/config/agents"
+if [ -d "$BK/skills" ]; then cp -R "$BK/skills/." "$HOME/.gemini/config/skills/"; fi
+if [ -d "$BK/agents" ]; then cp -R "$BK/agents/." "$HOME/.gemini/config/agents/"; fi
+```
+
+```powershell
+$BK = "$env:USERPROFILE\.antigravity-kit-backup\20261006-120000"
+$Skills = "$env:USERPROFILE\.gemini\config\skills"
+$Agents = "$env:USERPROFILE\.gemini\config\agents"
+New-Item -ItemType Directory -Path $Skills, $Agents -Force | Out-Null
+if (Test-Path -LiteralPath "$BK\skills") {
+    Get-ChildItem -LiteralPath "$BK\skills" -Force | Copy-Item -Destination $Skills -Recurse -Force
+}
+if (Test-Path -LiteralPath "$BK\agents") {
+    Get-ChildItem -LiteralPath "$BK\agents" -Force | Copy-Item -Destination $Agents -Recurse -Force
+}
+```
+
+Revisa los archivos recuperados y recarga el host siguiendo el smoke. Esta
+restauración manual de skills **y** agentes no retira archivos añadidos después
+ni recupera elementos sin respaldo (por ejemplo, tras `--force`/`-Force`).
 
 ## Desinstalar
 

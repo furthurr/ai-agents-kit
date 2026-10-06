@@ -129,6 +129,9 @@ las carpetas documentales. Su core de bootstrap es `.navigator/` más
 son assurance recomendado y se sincronizan cuando existen o se solicitan.
 
 Antes de operar ejecuta un preflight barato, recomienda manualmente un nivel de
-modelo y se detiene. El coste alto queda reservado para barridos iniciales,
-monorepos complejos y auditorías profundas. El detalle operativo vive en
+modelo de forma informativa y continúa el trabajo autorizado en el mismo turno.
+`status` y `release-check` inspeccionan e informan; las escrituras conservan la
+aprobación del plan global y los gates de especialistas. El coste alto queda
+reservado para barridos iniciales, monorepos complejos y auditorías profundas.
+El detalle operativo vive en
 [`canonical/skills/documentation-orchestrator/SKILL.md`](../canonical/skills/documentation-orchestrator/SKILL.md).

@@ -57,9 +57,25 @@ class CodeReviewContractTest(unittest.TestCase):
     def test_model_preflight_reuse_contract(self) -> None:
         for skill in ("code-quality", "security"):
             text = self.text(f"canonical/skills/{skill}/references/model-selection.md")
-            self.assertIn("Code Review", text)
-            self.assertIn("no repitas el aviso", text)
-            self.assertIn("Hard stop", text)
+            compact = " ".join(text.split()).lower()
+            with self.subTest(skill=skill, contract="continuidad"):
+                self.assertIn("code review", compact)
+                self.assertIn("no repitas el aviso", compact)
+                self.assertRegex(compact, r"comunic\w+|mostr[oó]|recomend[oó]")
+                self.assertRegex(compact, r"mismo turno|contin[uú]a[^.]*sin (?:esperar|pausa)")
+            with self.subTest(skill=skill, contract="sin mandatos antiguos"):
+                self.assertNotRegex(compact, r"hard stop|termina el turno|usuario lo confirm[oó]|usuario reanud[oó]")
+
+    def test_remediation_authorization_is_not_model_confirmation(self) -> None:
+        for skill in ("code-quality", "security"):
+            text = self.text(f"canonical/skills/{skill}/SKILL.md")
+            compact = " ".join(text.split()).lower()
+            with self.subTest(skill=skill):
+                self.assertRegex(compact, r"(?:no|ni) transfieras[^.]*autorizaci[oó]n[^.]*remediaci[oó]n")
+                self.assertIn("solicita aprobación antes del primer micro-paso y de cada siguiente", compact)
+                self.assertIn("un solo micro-paso", compact)
+                self.assertRegex(compact, r"detente y espera ok")
+                self.assertIn("nunca encadenes varios cambios sin confirmación", compact)
 
     def test_orchestrator_domain_mapping(self) -> None:
         text = self.text("canonical/skills/documentation-orchestrator/SKILL.md")

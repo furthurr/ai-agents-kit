@@ -116,4 +116,3 @@ Ordenada de mayor a menor severidad. Trabaja de arriba hacia abajo.
   refactor menor.
 
 Cada hallazgo debe indicar **impacto** (qué mejora) y **esfuerzo** estimado.
-

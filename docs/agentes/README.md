@@ -48,15 +48,25 @@ Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
 
 ## Gates que debes esperar
 
+Los avisos de proceso y nivel son informativos: el trabajo solicitado y autorizado
+continúa en el mismo turno. El cambio de modelo es manual; cambiar solo el nivel
+recomendado no crea una espera. Un aviso ya comunicado para el mismo alcance se
+deduplica sin confirmación ni reanudación. Solo una decisión, autorización o gate
+real pendiente requiere intervención; una comprobación técnica fallida bloquea
+el éxito o cierre, sin convertirse automáticamente en una pregunta humana.
+
 - **Documentación:** el Orchestrator hace un preflight, recomienda un modelo y
-  presenta un plan antes de escribir.
+  continúa `status`/`release-check` en el mismo turno. Presenta un plan y espera su
+  aprobación antes de escribir.
 - **Navigator:** bootstrap y updates son explícitos; los procesos pesados tienen
-  aviso de modelo y gate de disponibilidad.
+  avisos previo/final no bloqueantes y gate técnico de disponibilidad. Las escrituras,
+  exportaciones y sobrescrituras conservan su autorización efectiva.
 - **Architecture, Data & API y UI Design:** la primera documentación masiva parte
-  de un aviso de modelo, un estudio y una propuesta; también las tareas puntuales
-  pausan tras la recomendación inicial, sin omitir los gates posteriores.
-- **Code Review:** pausa antes de cualquier consulta/barrido para recomendar modelo,
-  una sola vez para el mismo alcance. Las auditorías documentales autorizadas
+  de un aviso informativo de modelo, un estudio y una propuesta; consultas y trabajo
+  autorizado continúan en el mismo turno, conservando los gates de propuestas y escritura.
+- **Code Review:** recomienda modelo sin pausar consultas ni barridos autorizados,
+  una sola vez por aviso comunicado para el mismo alcance, sin confirmar ni reanudar.
+  Las auditorías documentales autorizadas
   registran todas las severidades verificadas sin pedir otro filtro; consultas sin
   escrituras y remediación con aprobación antes del primer y cada siguiente paso.
 - **Escalado a SDD:** Architecture, Data & API, UI Design y Code Review
@@ -67,8 +77,8 @@ Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
   un preflight informativo y usa Quick Plan sin Gates 1-4. `standard` es el fallback
   seguro y conserva los Gates 1-4; cada fase recibe su recomendación
   de nivel de LLM al iniciar y las transiciones no crean gates adicionales ni piden
-  confirmar la selección del nivel. El preflight inicial (excepto `direct`) y el
-  salto Implementación → Verification pausan para permitir el cambio manual. Las
+  confirmar la selección del nivel. El preflight inicial de los tres modos y el
+  salto Implementación → Verification continúan sin pausa por modelo. Las
   solicitudes de `deep` o TDD estricto informan que esas opciones fueron retiradas
   y esperan aceptación de `standard` o TDD focalizado.
 - **Git y releases:** commit, push, cambios de versión, tags y CHANGELOG requieren

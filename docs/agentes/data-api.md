@@ -38,11 +38,12 @@ La skill `data-api` reconoce:
 
 ## Recomendación de modelo
 
-Las consultas o cambios localizados reciben un aviso `BAJO` o `MEDIO` y pausa
-antes de trabajar. Inicializaciones, catálogos completos, migraciones y contratos
-o riesgos amplios recomiendan `MEDIO` o `ALTO` y también pausan antes del barrido.
-«Continúa» reanuda sin declarar qué modelo se usa; los gates de alcance y cambios
-de datos permanecen independientes.
+Las consultas o cambios localizados reciben un aviso informativo `BAJO` o `MEDIO`.
+Inicializaciones, catálogos completos, migraciones y contratos o riesgos amplios
+recomiendan `MEDIO` o `ALTO` tras un preflight barato. En ambos casos continúa el
+trabajo autorizado en el mismo turno, sin exigir «continúa» ni confirmar el modelo.
+El cambio de modelo es manual y el aviso ya comunicado para el mismo alcance no
+se repite; los gates de alcance, escritura y cambios de datos permanecen independientes.
 
 ## Cómo trabaja
 

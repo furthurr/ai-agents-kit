@@ -22,16 +22,16 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
   aprobación solo por la existencia del archivo. Si faltan o se contradicen, pedir
   aclaración antes de recomendar un nivel.
 - La recomendación de la próxima fase se presenta junto al resumen y al gate actual,
-  pero no crea un gate nuevo. No repetir la misma recomendación dentro de una fase
-  mientras no cambien alcance, riesgo ni nivel requerido.
+  pero no crea un gate nuevo. Deduplica la recomendación ya comunicada para el
+  mismo alcance; no requiere confirmación del usuario.
 - La recomendación de nivel de LLM es informativa: no solicites confirmación de que
   el usuario la seleccionó o cambiará su LLM. Para iniciar la próxima fase, espera
   solo la aprobación del gate SDD real que corresponda. Si no hay gate intermedio
-  (Implementación → Verification), termina el turno tras el aviso y reanuda con
-  la respuesta del usuario, sin exigirle declarar el modelo.
+  (Implementación → Verification), continúa con Verification sin pausa, en el mismo
+  turno, sin esperar respuesta ni cambio manual de modelo.
 - Un cambio de alcance o riesgo invalida el preflight anterior: recalcula y comunica
-  la recomendación actualizada, y pausa si no hay gate para permitir cambio manual,
-  sin pedir una decisión sobre el nivel.
+  la recomendación actualizada sin esperar por un cambio exclusivo de nivel.
+  Si falta autorización para el alcance nuevo, pregunta por ella.
   Si el cambio requiere reclasificar el modo SDD, solicita aprobación de ese cambio
   de flujo.
 

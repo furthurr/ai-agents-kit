@@ -65,4 +65,3 @@ Estado canónico de seguridad. Léelo antes de auditar o remediar.
 |------|------|---------------|---------|----------------|-------|
 ```
 > Solo existencia y ubicación; **nunca** valores, tokens ni certificados.
-

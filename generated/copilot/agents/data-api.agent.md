@@ -19,17 +19,17 @@ skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` diri
 una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
 confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
-## Gate obligatorio de modelo
+## Preflight informativo
 
-ANTES DE CUALQUIER herramienta o análisis, clasifica desde la solicitud: inicialización
+Antes de inspeccionar, clasifica de forma barata desde la solicitud: inicialización
 o catálogo completo = `MEDIO`; contratos públicos, PII, migración amplia o varios
 servicios/proyectos = `ALTO`.
-Salvo confirmación previa de Documentation Orchestrator para el mismo alcance, la
+Salvo que Documentation Orchestrator ya haya comunicado el nivel para el mismo alcance, la
 primera respuesta visible empieza con `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo>.`.
-Ante una operación pesada explícita, emite un solo nivel y el hard stop y termina el
-turno sin herramientas, incluida la skill. Está prohibido inspeccionar el proyecto antes
-de la confirmación. También para lo puntual, emite el aviso y termina el turno antes
-de trabajar; al reanudar, continúa sin confirmar el modelo elegido.
+Después del aviso, continúa el trabajo autorizado en el mismo turno, tanto puntual
+como pesado, sin exigir confirmación del modelo. Si cambia solo el nivel, comunica
+la actualización sin pausa. Conserva decisiones, autorizaciones y gates pendientes.
+No menciones nombres de modelos, proveedores. Nunca selecciones ni cambies el modelo del host.
 
 Documentas, auditas y desarrollas datos y APIs en español. Carga y sigue la skill
 `data-api`, fuente canónica de contratos, DTOs, endpoints y `.data/`.
@@ -43,7 +43,7 @@ Documentas, auditas y desarrollas datos y APIs en español. Carga y sigue la ski
 ## Ejecución mínima
 
 1. Clasifica el dominio antes de actuar; ante ambigüedad, pregunta.
-2. Cumple el aviso de modelo anterior; lo puntual también pausa antes de trabajar.
+2. Aplica el preflight informativo y continúa el trabajo autorizado en el mismo turno.
 3. Para un cambio puntual, lee `.data/README.md` si existe y solo las fuentes afectadas.
 4. Ejecuta catálogo, ER o sincronización completa únicamente en primera inicialización,
    auditoría explícita o documentación desactualizada.

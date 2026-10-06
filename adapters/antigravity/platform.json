@@ -1,0 +1,7 @@
+{
+  "substitutions": {
+    "{{sdd_agent}}": "sdd",
+    "{{gate_instruction}}": "",
+    "{{steering_paths}}": "`GEMINI.md`, `AGENTS.md`, `.agents/rules/*.md`"
+  }
+}

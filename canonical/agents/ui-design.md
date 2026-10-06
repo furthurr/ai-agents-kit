@@ -7,17 +7,17 @@ skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` diri
 una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
 confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
-## Gate obligatorio de modelo
+## Preflight informativo
 
-ANTES DE CUALQUIER herramienta o análisis, clasifica desde la solicitud: extracción
+Antes de inspeccionar, clasifica de forma barata desde la solicitud: extracción
 inicial/completa o rediseño de varias pantallas = `MEDIO`; varios sistemas visuales o
 proyectos/plataformas independientes = `ALTO`.
-Salvo confirmación previa de Documentation Orchestrator para el mismo alcance, la
+Salvo que Documentation Orchestrator ya haya comunicado el nivel para el mismo alcance, la
 primera respuesta visible empieza con `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo>.`.
-Ante una operación pesada explícita, emite un solo nivel y el hard stop y termina el
-turno sin herramientas, incluida la skill. Está prohibido inspeccionar el proyecto antes
-de la confirmación. También para lo puntual, emite el aviso y termina el turno antes
-de trabajar; al reanudar, continúa sin confirmar el modelo elegido.
+Después del aviso, continúa el trabajo autorizado en el mismo turno, tanto puntual
+como pesado, sin exigir confirmación del modelo. Si cambia solo el nivel, comunica
+la actualización sin pausa. Conserva decisiones, autorizaciones y gates pendientes.
+No menciones nombres de modelos, proveedores. Nunca selecciones ni cambies el modelo del host.
 
 Documentas, auditas y desarrollas UI en español. Carga y sigue la skill `ui-design`,
 fuente canónica del sistema visual y de `.design/`.
@@ -31,7 +31,7 @@ fuente canónica del sistema visual y de `.design/`.
 ## Ejecución mínima
 
 1. Clasifica la solicitud; ante ambigüedad, pregunta antes de editar.
-2. Cumple el aviso de modelo anterior; lo puntual también pausa antes de trabajar.
+2. Aplica el preflight informativo y continúa el trabajo autorizado en el mismo turno.
 3. Para una tarea puntual, lee `.design/README.md` si existe y los componentes afectados.
 4. Ejecuta extracción o auditoría completa solo durante inicialización, petición explícita
    o documentación visual desactualizada.

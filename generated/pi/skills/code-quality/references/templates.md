@@ -66,4 +66,3 @@ Estado canónico de la calidad. Léelo antes de auditar o remediar.
 - Deuda técnica estimada: <tiempo>
 - Quality gate: <passed/failed y condiciones>
 ```
-

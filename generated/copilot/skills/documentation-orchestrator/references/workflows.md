@@ -12,13 +12,13 @@
 | "listo para release", `release-check`, `pre-release check` | `release-check` |
 | "feature", "bugfix", "requirements", "design/tasks de spec" | Derivar a SDD |
 
-Si la intencion o el dominio no son claros, pregunta antes del Gate 0. No uses un
+Si la intencion o el dominio no son claros, pregunta antes de actuar. No uses un
 modo con escritura para resolver una ambiguedad.
 
 "Sincroniza todo" es ambiguo: pregunta si significa solo carpetas existentes o
 si desea inicializar ausentes. No existe un modo implicito que haga ambas cosas.
 
-## Preflight permitido antes del Gate 0
+## Preflight informativo permitido
 
 El preflight puede:
 
@@ -58,10 +58,11 @@ profunda: si la evidencia esta desfasada, falla o advierte y recomienda sincroni
 Para operaciones compuestas, informa tambien niveles por fase cuando difieran.
 Ejemplo: `bootstrap-core` puede recomendar `medio` global, `bajo` para Navigator y
 `medio` para Architecture. El usuario puede mantener el nivel global o cambiarlo
-por fase. Si el Gate 0 expuso la recomendacion de Navigator para el mismo alcance
-y el usuario reanudo tras la pausa, su aviso de modelo no se repite.
+por fase. Si el orquestador ya comunico la recomendacion de Navigator u otro
+especialista para el mismo alcance, no repitas el aviso; no exige confirmacion
+del usuario para deduplicar.
 
-### Salida y hard stop
+### Salida informativa
 
 ```text
 Preflight documental
@@ -74,13 +75,14 @@ Modelo recomendado: <bajo|medio|alto>
 Motivos:
 - <1-3 razones verificables>
 
-Antes de continuar:
 Puedes cambiar manualmente de modelo o conservar el actual.
-Responde "continua" para reanudar sin declarar qué modelo elegiste;
-indica otro alcance si quieres recalcular.
+Continuo el trabajo autorizado en el mismo turno sin esperar cambio de modelo.
 ```
 
-Termina el turno despues de esta salida. El agente no puede cambiar el modelo.
+El aviso no es un Gate 0 humano ni exige «continua», «listo» o confirmacion del
+modelo. El agente no puede cambiar el modelo. Si cambia solo el nivel, recalcula
+y comunica la actualizacion sin pausa; si falta decision o autorizacion de alcance,
+pregunta por ella. `status` y `release-check` continuan lectura e informe.
 
 ## Estados documentales
 
@@ -122,7 +124,7 @@ verificable: commit de producto → sync documental → commit documental → ch
 
 - Solo considera `.navigator/` y `.architecture/` ausentes.
 - Presenta propuesta y espera aprobacion antes de crear.
-- Respeta el aviso/gate de bootstrap de Project Navigator y el estudio/propuesta
+- Respeta la autorizacion de bootstrap de Project Navigator y el estudio/propuesta
   inicial de Architecture.
 - Si Navigator ya existia al iniciar, no lo refresca ni sobrescribe; recomienda
   `sync-core` si debe incorporar la nueva documentacion de Architecture.
@@ -185,20 +187,23 @@ Advertencias por defecto:
 No comprueba version, changelog, tag ni publicacion. Deriva esas tareas a
 `release-management` despues de obtener un resultado apto.
 
-## Gates tras reanudar el aviso de modelo
+## Gates de ejecución
 
-1. **G1 Plan global:** proyectos, dominios, orden y escrituras propuestas.
+1. **G1 Plan global:** proyectos, dominios, orden y escrituras propuestas;
+   espera aprobacion antes de escribir, reutilizando autorizacion efectiva de la
+   misma operacion y alcance en la sesion.
 2. **G2 Especialista:** cada skill conserva sus decisiones pendientes;
    Quality/Security reutilizan la autorizacion documental del mismo alcance en
    la sesion y no vuelven a seleccionar severidades. Un handoff no acredita por
    si solo la autorizacion; `gate_state` sigue siendo contexto.
 3. **G3 Fallo:** si una rama se bloquea, preguntar antes de continuar con ramas
    independientes.
-4. **G4 Cierre:** verificar artefactos y evidencia antes del informe final.
+4. **G4 Cierre:** verificar artefactos y evidencia antes del informe final;
+   validacion tecnica, sin pregunta humana adicional automatica.
 
-El Gate 0 no sustituye ninguno de estos gates. Solo puede satisfacer otro aviso
-de **modelo** si mostro la recomendacion para el mismo alcance y el usuario
-reanudo tras la pausa; no exige declarar el modelo ni aprueba otros gates.
+El preflight informativo no sustituye estos controles ni acredita autorizacion.
+Una recomendacion ya comunicada para el mismo alcance evita avisos duplicados,
+sin confirmacion del usuario; no aprueba decisiones ni escrituras.
 
 ## Informe final compacto
 

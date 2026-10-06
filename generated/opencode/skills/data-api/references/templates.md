@@ -100,4 +100,3 @@ Ordenada de mayor a menor severidad. Trabaja de arriba hacia abajo.
 - **🟢 Baja:** documentación faltante, oportunidades menores de refactor.
 
 Cada hallazgo indica **impacto** y **esfuerzo** estimado.
-

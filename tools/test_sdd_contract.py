@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 
@@ -32,6 +33,28 @@ def read(path: Path) -> str:
 
 def normalized(text: str) -> str:
     return " ".join(text.split())
+
+
+def section(text: str, heading: str) -> str:
+    match = re.search(rf"^## (?:{heading})[^\n]*\n(.*?)(?=^## |\Z)", text, re.M | re.S | re.I)
+    return match.group(0) if match else ""
+
+
+def check_nonblocking(text: str, label: str) -> None:
+    compact = normalized(text).lower()
+    check(bool(re.search(r"mismo turno|contin[uú]a\w*[^.]*sin (?:esperar|pausa)|sin (?:espera|pausa)[^.]*contin[uú]a", compact)),
+          f"{label}: continuidad explícita del trabajo autorizado")
+    for pattern in (
+        r"termina(?:n)? el turno (?:tras el preflight|antes de|para permitir)",
+        r"verification y termina el turno", r"termina el turno\. cuando el usuario",
+        r"(?:responde|indica) [^.]{0,100}contin[uú]a",
+        r"reanuda cuando el usuario", r"pausa si no hay gate",
+        r"gate 0 inicial pausa", r"suite cuando el usuario indique continuar",
+        r"termina el turno tras el aviso", r"si cambia la recomendación[^.]*termina el",
+        r"ejecuta verification solo cuando el usuario reanude",
+    ):
+        check(not re.search(r"(?<!no )(?<!sin )\b" + pattern, compact),
+              f"{label}: sin pausa de modelo /{pattern}/")
 
 
 def test_modes_remain_proportional() -> None:
@@ -163,10 +186,11 @@ def test_model_selection_gate() -> None:
         "direct recibe un aviso no bloqueante",
     )
     check(
-        "`lite`, `standard` y bugfix no trivial" in lower_reference
-        and "termina el turno" in lower_reference
-        and "sin confirmar el modelo" in lower_reference,
-        "el preflight deja tiempo para cambiar de modelo sin confirmarlo",
+        all(mode in lower_reference for mode in ("`lite`", "`standard`", "bugfix"))
+        and any("`lite`" in bullet and "`standard`" in bullet
+                and bool(re.search(r"sin (?:esperar|pausa)|mismo turno", bullet))
+                for bullet in re.split(r"(?m)^- ", reference.lower())),
+        "lite, standard y bugfix inician sin espera por modelo",
     )
     check(
         "modo sdd: <direct|lite|standard>" in lower_reference
@@ -189,15 +213,31 @@ def test_model_selection_gate() -> None:
         "la recomendación identifica el nivel de LLM y es informativa",
     )
     check(
-        "ni cambies el modelo del host" in normalized(skill + " " + agent + " " + reference).lower(),
-        "SDD nunca cambia el modelo del host",
+        "ni cambies el modelo del host" in normalized(reference).lower(),
+        "SDD/referencia nunca cambia el modelo del host",
     )
     check(
         "sin gates 1–3" in normalized(skill).lower()
         and "preflight informativo" in normalized(skill).lower()
-        and "termina el turno" in normalized(skill).lower(),
+        and bool(re.search(r"sin (?:esperar|pausa)|mismo turno", normalized(skill).lower())),
         "lite conserva el preflight informativo y omite sus gates de fase",
     )
+    for label, text in (("agente", agent), ("skill/preflight", section(skill, r"Gate 0[^\n]*|Preflight[^\n]*")),
+                        ("referencia/transiciones", section(reference, r"Recomendación informativa y transiciones")),
+                        ("referencia/salida", section(reference, r"Salida")),
+                        ("skill/flujo", section(skill, r"Flujo con gates")),
+                        ("skill/Quick Plan", section(skill, r"Modo lite y Quick Plan")),
+                        ("integrity/transición", section(read(SDD / "references" / "integrity-gate.md"), r"Estado de fase y transición"))):
+        check_nonblocking(text, f"SDD/{label}")
+
+    flow = normalized(section(skill, r"Flujo con gates")).lower()
+    for gate in range(1, 5):
+        check(bool(re.search(rf"\*\*gate {gate}\*\*", flow)), f"SDD: conserva Gate {gate} real")
+    check("aprobación explícita" in flow and "no avances de fase" in flow,
+          "SDD: no cruza gates reales sin aprobación explícita")
+    check("preflight" in normalized(agent).lower() and
+          bool(re.search(r"(?:no (?:es|crea|representa)|sin)[^.]*gate (?:humano|adicional)|no humano|no bloqueante", normalized(agent).lower())),
+          "SDD/agente: Gate 0 identifica preflight no humano")
 
     manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
     for platform in manifest["platforms"]:
@@ -258,18 +298,25 @@ def test_phase_scoped_recommendations() -> None:
         and "apruebo y continúo con el nivel actual" not in compact,
         "la transición espera aprobación de fase, no confirmación del nivel de LLM",
     )
+    for label, text in (("agente", agent), ("skill", skill), ("modelo", model), ("integridad", integrity)):
+        own = normalized(text).lower()
+        check(bool(re.search(r"espera (?:únicamente |solo )?(?:la )?aprobación[^.]*gate|espera[^.]*solo la aprobación[^.]*gate", own)),
+              f"SDD/{label}: espera gate real de forma independiente")
+        check(not re.search(r"apruebo y usaré el nivel recomendado|apruebo y continúo con el nivel actual", own),
+              f"SDD/{label}: aprobación no condicionada al modelo")
+    verification = section(skill, r"Flujo con gates").split("### Fase 4", maxsplit=1)
+    check_nonblocking(verification[1] if len(verification) == 2 else "", "SDD/skill/Verification")
     check(
         "después de implementación" in normalized(model).lower()
         and "verification" in normalized(model).lower()
-        and "termina el turno" in normalized(model).lower()
-        and "reanuda" in normalized(model).lower(),
-        "Verification empieza solo tras reanudar cuando no hay gate intermedio",
+        and bool(re.search(r"contin[uú]a[^.]*verification|verification[^.]*sin (?:esperar|pausa)|mismo turno", normalized(model).lower())),
+        "Verification continúa sin gate ni espera informativa intermedios",
     )
     check(
         "`direct` recibe un aviso breve y no bloqueante" in normalized(skill).lower()
         and "quick plan" in normalized(skill).lower()
-        and "termina el turno" in normalized(skill).lower(),
-        "direct no pausa y Quick Plan sí da tiempo para cambiar de modelo",
+        and bool(re.search(r"mismo turno|contin[uú]a[^.]*sin (?:esperar|pausa)", normalized(section(skill, r"Modo lite y Quick Plan")).lower())),
+        "direct y Quick Plan continúan tras el aviso no bloqueante",
     )
     check(
         all(phase in compact for phase in ("requirements", "design", "tasks", "implementación", "verification")),

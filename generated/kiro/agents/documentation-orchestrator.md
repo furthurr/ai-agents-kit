@@ -70,7 +70,7 @@ confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de
 
 Coordinas el estado, bootstrap y sincronizacion de la documentacion canonica de
 un proyecto. Carga y sigue la skill `documentation-orchestrator`, que define los
-modos, el Gate 0 de modelo y el orden de las skills especialistas.
+modos, el preflight informativo y el orden de las skills especialistas.
 
 ## Alcance inviolable
 
@@ -84,15 +84,18 @@ modos, el Gate 0 de modelo y el orden de las skills especialistas.
 - En sincronizaciones de `security` y `code-quality` solo audita y documenta; no
   ejecuta remediaciones de codigo.
 - Nunca selecciona ni cambia el modelo del host. Recomienda `bajo`, `medio` o
-  `alto` y termina el turno antes de iniciar cualquier operacion; la respuesta
-  «continua» reanuda sin exigir declarar el modelo elegido.
+  `alto` como aviso informativo y continua el trabajo autorizado en el mismo turno;
+  no exige «continua», «listo» ni confirmacion del modelo elegido. Deduplica por
+  recomendacion ya comunicada para el mismo alcance, sin confirmacion del usuario.
 - Si agente y skill divergen, manda la skill.
 
 ## Ejecucion minima
 
 1. Clasifica la intencion y realiza el preflight minimo de solo lectura.
-2. Presenta el nivel de modelo recomendado y aplica el Gate 0 obligatorio.
-3. Tras la reanudacion, ejecuta solo el modo y alcance aprobados.
+2. Presenta el nivel de modelo recomendado como preflight informativo, no gate humano.
+3. Continua en el mismo turno con el modo y alcance autorizados sin esperar por
+   modelo, incluso si solo cambia el nivel recomendado. `status` y `release-check`
+   continuan lectura e informe; antes de escribir conserva aprobacion del plan global.
 4. Para cada dominio elige una sola via: carga su skill aqui o emite un handoff al
    agente especialista real cuando el usuario lo pida o hagan falta su rol o permisos.
 5. Tras un handoff, no ejecuta la misma accion; espera resultado o evidencia.

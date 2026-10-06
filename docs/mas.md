@@ -26,6 +26,19 @@ MAS: conserva la trazabilidad entre agentes y no repitas un gate confirmado.
 MAS + @sdd: convierte este cambio en una spec con trazabilidad completa.
 ```
 
+Esta convención es **semántica**, no una garantía de sintaxis nativa en cada
+host. En Antigravity 2.0, `@<agente>` no está confirmado como invocación: el
+mecanismo real de selección de la UI debe registrarse en el
+[smoke](antigravity-smoke.md). `sdd` es el identificador nominal que reemplaza
+`{{sdd_agent}}`, no un comando. Las skills usan el slash documentado
+`/<skill-name>`; `/agents` solo se documenta para el CLI, no se extrapola a 2.0.
+
+`subagent: true` habilita que un rol pueda ser invocado; no autoriza delegación
+automática. Se mantienen los handoffs, el alcance explícito, los gates de la
+skill y las aprobaciones del usuario. Un padre habilitado por el host puede
+probar `invoke_subagent` cuando el usuario lo solicite, pasando contexto y
+autorizaciones; los roles del kit no encadenan hijos por iniciativa propia.
+
 ## Desambiguación
 
 `MAS` usado solo siempre se refiere al sistema multiagente de este kit. No debe
@@ -36,5 +49,8 @@ completos y no se abrevian como `MAS`.
 ## Fuente de verdad
 
 La identidad se documenta aquí y se replica de forma compacta en los agentes y
-skills canónicos. `tools/render.py` la propaga a Copilot, OpenCode, Kiro y Claude
-Code; los artefactos de `generated/` no se editan a mano.
+skills canónicos. `tools/render.py` la propaga a las seis distribuciones: Copilot,
+OpenCode, Kiro, Claude Code, Pi y Antigravity. El catálogo mantiene ocho agentes y
+diez skills; los artefactos de `generated/` no se editan a mano. Antigravity apunta
+inicialmente a 2.0, con runtime y ejecución Windows/Linux pendientes de evidencia;
+no se infiere certificación completa de los seis hosts a partir de este pipeline.

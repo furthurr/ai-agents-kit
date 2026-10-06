@@ -26,7 +26,7 @@ canónica de EARS, fases, gates, artefactos y verificación.
 
 - Define el QUÉ y PORQUÉ antes del CÓMO; no cruces gates de fase sin aprobación
   explícita en `standard`. `lite` usa Quick Plan sin Gates 1–3 ni Gate 4,
-  pero conserva el Gate 0.
+  pero conserva el Gate 0 como preflight técnico no bloqueante.
 - Clasifica por ejes separados: tipo de trabajo (feature, bugfix o exploración),
   profundidad (`direct`, `lite`, `standard`), intención (solo planificación
   o implementación) y estrategia de pruebas.
@@ -45,16 +45,19 @@ canónica de EARS, fases, gates, artefactos y verificación.
 - Antes del trabajo, aplica el Gate 0 de `sdd-spec` como preflight; usa
   `references/model-selection.md` salvo `direct` inequívoco. Recomienda solo
   el nivel de LLM `BAJO`, `MEDIO` o `ALTO` para la próxima fase u operación. La
-  recomendación es informativa: salvo `direct`, termina el turno tras el preflight
-  inicial para que el usuario pueda cambiar manualmente de modelo. Reanuda cuando
-  indique continuar, sin pedirle confirmar el nivel elegido. Nunca selecciones ni
-  cambies el modelo del host.
+  recomendación es informativa: continúa el trabajo autorizado en el mismo turno,
+  salvo aclaración esencial o gate real pendiente. No exige «continúa», «listo» ni
+  confirmación del nivel. El cambio manual es opcional; nunca selecciones ni
+  cambies el modelo del host. Deduplica por recomendación ya comunicada para el
+  mismo alcance, sin exigir confirmación del usuario.
 - En una transición, presenta resumen verificable, gate actual y recomendación de la
   próxima fase en el mismo mensaje. Espera solo la aprobación del gate SDD real de la
   fase actual; una vez aprobada, continúa sin pedir confirmación del nivel de LLM.
   Una recomendación no crea un gate adicional.
 - Tras Implementación no hay gate intermedio: muestra el aviso de Verification y
-  termina el turno; ejecuta Verification solo cuando el usuario reanude.
+  continúa con Verification sin pausa y registra evidencia antes de Gate 4.
+  Si cambia solo el nivel recomendado, comunica la actualización sin esperar;
+  si falta autorización de alcance o una decisión de flujo, pregunta por ella.
 - Profundidad SDD y testing son ejes independientes: selecciona la estrategia con
   `references/testing.md`; una feature normal usa TDD focalizado y `direct` no
   significa «sin pruebas». TDD estricto ya no es una estrategia disponible.
@@ -69,8 +72,8 @@ canónica de EARS, fases, gates, artefactos y verificación.
 ## Contexto selectivo
 
 1. Ejecuta primero el preflight de la próxima fase de `sdd-spec`; muestra el nivel de
-   LLM recomendado y, salvo en `direct`, termina el turno para permitir el cambio
-   manual opcional. Al reanudar no exijas confirmar el modelo.
+   LLM recomendado y continúa en el mismo turno sin esperar un cambio manual
+   opcional ni confirmación del modelo, respetando decisiones y gates pendientes.
 2. Tras el preflight inicial, lee solo `.github/copilot-instructions.md`, `AGENTS.md` y `.sdd/steering/` si existen.
 3. Antes de usar `.navigator/`, carga
    `references/navigator-context.md` desde `sdd-spec`: aplica su preflight, usa

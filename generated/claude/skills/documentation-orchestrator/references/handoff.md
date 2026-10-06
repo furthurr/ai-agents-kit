@@ -28,7 +28,7 @@ la skill local **o** emite el handoff; nunca hace ambas cosas.
     - .data/06-sensitive-data.md
 - write_scope: [.security/]
 - requires_confirmation: true
-- gate_state: [Gate0 aprobado, plan global aprobado]
+- gate_state: [plan global aprobado]
 - status: pending
 ```
 

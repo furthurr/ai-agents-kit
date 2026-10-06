@@ -86,6 +86,41 @@ definir, `render.py` falla.
 5. Añade `scripts/install/<plataforma>.sh` y `.ps1` (y backup si aplica).
 6. Renderiza, valida e instala en dry-run.
 
+### Antigravity: contrato y evidencia
+
+El catálogo incluye seis plataformas, ocho agentes y diez skills. Antigravity
+apunta inicialmente a **2.0**: cambios del host van en
+`adapters/antigravity/`, contenido compartido en `canonical/` y salida en
+`generated/antigravity/` mediante el renderer existente, nunca edición manual.
+
+Los agentes usan `<id>.md`, `name`, `description`, `model: inherit`,
+`mainAgent: true`, `subagent: true` y `tools` por rol. La descripción SDD conserva
+`direct`, `lite`, `standard` y `Quick Plan`. `{{sdd_agent}}` produce `sdd`
+nominal, no una invocación nativa `@sdd`. No añadas un campo `skills` explícito
+con paths ambiguos: verifica descubrimiento global y carga de recursos.
+
+La referencia de [Hooks](https://antigravity.google/docs/hooks/#supported-tools)
+respalda nombres de herramientas; no demuestra su disponibilidad en cada build.
+El [smoke](antigravity-smoke.md) registra selección real, herramientas individuales,
+descubrimiento 8/10, recursos y un hijo solicitado explícitamente a un padre del
+host con `invoke_subagent`. El kit no añade hooks ni delegación automática, y
+las listas de tools no son aislamiento técnico por rol.
+
+Prueba instaladores y exportación con HOME/USERPROFILE **temporales**, fuera del
+perfil real. El contrato incluye preflight antes/después, flags Bash
+`--dry-run`/`--force` y PowerShell `-DryRun`/`-Force`, copia por fusión sin borrar
+extras, respaldo previo y fallos con código no cero. Preflight comprueba archivos
+principales; validación y pruebas de copia completa cubren YAML y recursos.
+Restaurar manualmente no es rollback transaccional. Exportar puede ser parcial
+con avisos y no modifica fuentes ni adapters.
+
+Ejecución Windows/Linux y runtime Antigravity: **PENDIENTES hasta evidencia**.
+Crear un workflow o pasar validación estática no acredita esos resultados. Registra
+comando, exit code, OS y entorno por ejecución; PowerShell debe ejecutarse en
+Windows. La versión de referencia del host se fija con un smoke completo exitoso.
+CLI (`~/.gemini/antigravity-cli/skills/`) e IDE standalone no se certifican por
+haber copiado archivos en las rutas 2.0 (`~/.gemini/config/{skills,agents}`).
+
 ## Checklist antes de merge / release del kit
 
 - [ ] Cambios solo donde corresponde (`canonical` / `adapters` / tools / docs)
@@ -108,6 +143,8 @@ python3 tools/test_handoff_contract.py
 python3 tools/test_code_review_contract.py
 python3 tools/test_validate.py
 python3 tools/test_install.py
+python3 tools/test_antigravity_install.py
+python3 tools/test_antigravity_contract.py
 ```
 
 Cubre integridad del pipeline y convenciones del repo. Ejecútalo junto a

@@ -30,11 +30,13 @@ Navegas e investigas proyectos con minimo de tokens. Carga y sigue la skill
 ## Ejecucion minima
 
 1. Clasifica la peticion (consulta, bootstrap/update, fuera de alcance).
-2. Aviso de modelo si el proceso es pesado; termina el turno y espera «continua»
-   sin exigir declarar el modelo elegido.
+2. Aviso de modelo previo no bloqueante si el proceso es pesado; continúa el trabajo
+   autorizado en el mismo turno sin exigir confirmar el modelo. Si un orquestador ya
+   comunicó el aviso para el mismo alcance, no lo repitas. Un cambio de nivel se
+   comunica sin pausa; conserva las autorizaciones de bootstrap/update/export.
 3. Aplica divulgacion progresiva (capas 0 → 4) y cita fuentes.
 4. Bootstrap solo si no hay `.navigator/` y hace falta, o si el usuario lo pide.
-5. Al cerrar un proceso pesado, aviso final de modelo.
+5. Al cerrar un proceso pesado, aviso final de modelo no bloqueante.
 
 ## Recepción de handoff
 

@@ -34,11 +34,12 @@ La skill `ui-design` cubre:
 
 ## Recomendación de modelo
 
-Las consultas y ajustes visuales puntuales reciben un aviso `BAJO` o `MEDIO` y
-pausan antes de trabajar. Extracciones completas, rediseños amplios o varios
-sistemas visuales recomiendan `MEDIO` o `ALTO` y también pausan antes del barrido.
-«Continúa» reanuda sin declarar modelo; las aprobaciones de propuestas visuales
-siguen siendo independientes.
+Las consultas y ajustes visuales puntuales reciben un aviso informativo `BAJO` o
+`MEDIO`. Extracciones completas, rediseños amplios o varios sistemas visuales
+recomiendan `MEDIO` o `ALTO` tras un preflight barato. Continúa el trabajo autorizado
+en el mismo turno, sin exigir «continúa» ni confirmar el modelo. El cambio de modelo
+es manual y el aviso ya comunicado para el mismo alcance no se repite; las
+aprobaciones de propuestas visuales y escrituras siguen siendo independientes.
 
 ## Cómo trabaja
 

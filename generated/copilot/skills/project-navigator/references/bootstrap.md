@@ -1,26 +1,28 @@
 # Bootstrap y update
 
-## Avisos de modelo (obligatorios en procesos pesados)
+## Avisos de modelo (informativos en procesos pesados)
 
 Aplica a bootstrap, update pesado, indexado y navegación reiterada de varias capas.
 
 **Antes:**
 
 ```text
-Antes de continuar con project-navigator, te recomiendo cambiar manualmente
+Para el proceso pesado de project-navigator, te recomiendo cambiar manualmente
 el modelo de esta sesion a uno pequeno/rapido/economico (menor costo y
 latencia para indexar y navegar).
 
-No cambio el modelo por ti. Cambialo si quieres y responde «continua» para
-reanudar; no tienes que decirme cual elegiste.
+No cambio el modelo por ti. El aviso es informativo; continúo el trabajo autorizado
+en este mismo turno sin pedir confirmación del modelo.
 ```
 
-Termina el turno y espera «continua» o equivalente, sin confirmar el modelo.
-Nunca seleccionar ni forzar el modelo.
+Después del aviso, continúa el trabajo autorizado en el mismo turno.
+Si cambia solo el nivel recomendado, comunica la actualización sin pausa.
+No menciones nombres de modelos, proveedores. Nunca selecciones ni cambies el modelo del host.
+El aviso no autoriza crear, actualizar ni exportar índices: conserva los permisos efectivos.
 
-**Invocación orquestada:** si un orquestador canónico ya mostró explícitamente la
-recomendación de modelo para la fase Project Navigator y el usuario reanudó,
-considera satisfecho este aviso y no lo repitas. Esto no omite ningún gate de
+**Invocación orquestada:** si un orquestador canónico ya comunicó la
+recomendación de modelo para Project Navigator y el mismo alcance,
+no repitas el aviso. Esto no omite ningún gate de
 alcance, ubicación, escritura ni integridad del bootstrap/update.
 
 **Después:**
@@ -33,9 +35,11 @@ Ya puedes cambiar manualmente el modelo a uno enfocado en tu siguiente tarea
 No lo cambio por ti.
 ```
 
+El aviso final también es no bloqueante y no exige respuesta.
+
 ## Bootstrap asistido (pasos)
 
-1. Aviso de modelo pequeño (arriba).
+1. Aviso previo no bloqueante de modelo pequeño (arriba); verificar autorización de bootstrap.
 2. Detectar lenguajes, build system y fuentes externas de contexto (`sources.md`).
 3. Detectar ubicación de `.navigator/` (monorepo; ver abajo). Si es ambiguo, **preguntar**.
 4. Crear `.navigator/` si no existe.
@@ -48,7 +52,7 @@ No lo cambio por ti.
 9. Respetar `exclude` y no indexar secretos (`config.md`).
 10. Ejecutar el gate post-bootstrap descrito abajo; corregir fallos antes de cerrar.
 11. Informar: artefactos creados, fuentes externas detectadas, gaps, presupuesto y cómo consultar.
-12. Aviso final de modelo.
+12. Aviso final de modelo no bloqueante.
 
 ### Lectura para Capa 0 (presupuesto)
 
@@ -153,7 +157,7 @@ Reglas:
 - Actualizar capas afectadas; no regenerar todo por defecto
 - Si `ai-context.md` tiene edición manual evidente: preguntar antes de sobrescribir o fusionar conservando notas del usuario
 - Mantener `exclude` y política de secretos
-- Avisos de modelo antes/después si el update es pesado
+- Avisos de modelo no bloqueantes antes/después si el update es pesado
 - Preferir regenerar solo capas/módulos afectados
 - Actualizar `source_commit` en cada artefacto tocado solo cuando represente un
   baseline Git verificable; no ocultar cambios locales bajo el hash de `HEAD`

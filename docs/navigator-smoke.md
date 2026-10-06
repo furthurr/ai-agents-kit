@@ -28,10 +28,13 @@ Resultado esperado:
 - Detecta que falta `.navigator/` y ofrece bootstrap.
 - No explora silenciosamente el repositorio completo.
 - En proceso pesado recomienda cambiar manualmente a un modelo económico, pero
-  no intenta cambiarlo.
-- Tras confirmación, crea únicamente `config.yaml`, `ai-context.md` y
-  `module-map.json` bajo `.navigator/`.
+  no intenta cambiarlo ni espera una respuesta por el aviso. Con bootstrap ya
+  autorizado continúa en el mismo turno; el aviso final tampoco bloquea.
+- Tras autorización efectiva de bootstrap (no confirmación de modelo), crea
+  únicamente `config.yaml`, `ai-context.md` y `module-map.json` bajo `.navigator/`.
 - No genera symbols ni grafo salvo opt-in.
+- No repite el aviso ya comunicado para el mismo alcance, tampoco en un handoff;
+  conserva autorizaciones de update, exportación y sobrescritura.
 
 ### 2. Consulta por módulo
 
@@ -108,6 +111,12 @@ Comprobar además:
 ## Registro de resultados
 
 No marcar una plataforma como aprobada sin ejecutar todos los pasos.
+
+La tabla y las ejecuciones de agosto siguientes son **evidencia histórica del
+contrato MVP**. No validan el ajuste posterior de avisos de modelo no bloqueantes:
+los escenarios de ese contrato nuevo están definidos, pero no ejecutados en hosts.
+Conservar los resultados anteriores sin presentarlos como aprobación del checklist
+actualizado.
 
 | Plataforma | Versión | Modelo | Fecha | Commit kit | Resultado | Evidencia / fallos |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -200,6 +209,6 @@ El smoke se considera aprobado en una plataforma cuando:
 La compatibilidad multiplataforma solo se declara cuando todas las plataformas
 incluidas en el manifest están aprobadas con evidencia.
 
-**Resultado actual:** contrato MVP aprobado con evidencia en Copilot, OpenCode y
+**Resultado histórico del MVP:** contrato MVP aprobado con evidencia en Copilot, OpenCode y
 Kiro. Claude Code queda pendiente de smoke manual; esto valida las combinaciones
 de host y modelo registradas, no todos los modelos disponibles en cada plataforma.
