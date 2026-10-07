@@ -3,6 +3,42 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [0.5.0] - 2026-10-07
+
+### Funcionalidades
+
+- Consolidar arquitectura y navegación en `documentation-orchestrator`: modo
+  `inspect` de solo lectura, ejecución core local con las skills `architecture`
+  y `project-navigator`, y contrato compartido de consumo de `.architecture/`
+  y `.navigator/` para el resto de agentes.
+- Añadir la recomendación de agente por dominio en SDD con selección manual
+  (`references/agent-routing.md`) sin alterar gates ni permisos.
+- Incorporar la migración segura de agentes retirados en los instaladores de las
+  seis plataformas: opt-in explícito, catálogo de hashes históricos, respaldo
+  verificado fuera de árboles escaneados y aprobación por ruta exacta + SHA-256.
+
+### Cambios incompatibles
+
+- Retirar los agentes `architecture` y `project-navigator`; sus skills y carpetas
+  se conservan. Las instalaciones previas migran con `--migrate-retired-agents`.
+
+### Correcciones
+
+- Validar destinos de skills y estructura del respaldo antes de copiar durante la
+  migración, y generar instrucciones de aprobación con quoting portable.
+
+### Documentación y mantenimiento
+
+- Actualizar catálogo, guías de agentes, instalación y la guía de migración.
+- Añadir suites de contratos core y migración a CI, con historial completo para
+  la evidencia de artefactos históricos.
+
+### Validación y límites
+
+- Suite completa en verde (integridad 416/416, instalación 196/196, migración
+  26/26, SDD 465/465). Pendiente ejecución nativa PowerShell/Windows y smoke
+  conversacional LLM; ningún perfil de usuario fue modificado.
+
 ## [0.4.0] - 2026-10-06
 
 ### Funcionalidades
