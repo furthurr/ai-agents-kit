@@ -1,16 +1,17 @@
-# Architecture Agent
+# Guía de la skill architecture
 
 ## Resumen
 
 | Campo | Información |
 |---|---|
-| ID | `architecture` |
+| Entrada responsable | `documentation-orchestrator` (agente) |
 | Skill | [`architecture`](../../canonical/skills/architecture/SKILL.md) |
 | Propósito | Documentar, auditar y explicar la arquitectura de un proyecto |
 | Artefactos | `.architecture/` |
 | Alcance | Módulos, capas, dependencias, patrones, decisiones y deuda arquitectónica |
 
-Architecture Agent convierte la estructura real de un repositorio en contexto que
+La skill `architecture`, ejecutada localmente por Documentation Orchestrator,
+convierte la estructura real de un repositorio en contexto que
 pueden usar el equipo y otros agentes. Es agnóstico a la tecnología y cita las
 fuentes (`archivo:línea`) en lugar de inventar componentes.
 
@@ -22,7 +23,7 @@ fuentes (`archivo:línea`) en lugar de inventar componentes.
 - Para auditar riesgos o deuda de arquitectura.
 - Después de un cambio estructural que pueda dejar desactualizados los diagramas.
 
-No es el agente adecuado para implementar una feature, modificar APIs, arreglar
+No es el procedimiento adecuado para implementar una feature, modificar APIs, arreglar
 seguridad o cambiar la UI.
 
 ## Qué skill utiliza
@@ -82,13 +83,24 @@ En modo `full` puede crear, entre otros:
 ## Ejemplos de uso
 
 ```text
-@architecture ¿Qué módulos existen y cómo dependen entre sí?
+@documentation-orchestrator inspect: ¿Qué módulos existen y cómo dependen entre sí?
+Solo lectura; cita fuentes y límites, sin generar documentación.
 ```
 
 ```text
-@architecture Documenta la decisión de usar colas para el procesamiento asíncrono.
+@documentation-orchestrator sync-domain architecture: documenta la decisión de usar colas para el procesamiento asíncrono.
 Propón un ADR y no modifiques código.
 ```
+
+```text
+@documentation-orchestrator bootstrap-core: inicializa arquitectura y Navigator.
+Presenta primero el plan; conserva los gates de ambas skills.
+```
+
+`inspect` no ejecuta generación documental ni acredita sincronización. Las skills
+`architecture` y `project-navigator` permanecen separadas, con carpetas distintas.
+`@architecture` es una entrada retirada, sin alias ejecutable; consulta la
+[migración segura](../migracion-agentes.md) si aún aparece instalada.
 
 ## Límites y confirmaciones
 

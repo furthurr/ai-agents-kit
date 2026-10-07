@@ -5,6 +5,7 @@
 | Peticion | Modo |
 | --- | --- |
 | "estado de la documentacion", "que falta", `sync-check` | `status` |
+| "explica las capas", "localiza el módulo", "investiga dependencias", `inspect` | `inspect` |
 | "inicia la documentacion core" | `bootstrap-core` |
 | "actualiza el core" | `sync-core` |
 | "actualiza lo que tenemos", "todo lo existente" | `sync-existing` |
@@ -14,6 +15,9 @@
 
 Si la intencion o el dominio no son claros, pregunta antes de actuar. No uses un
 modo con escritura para resolver una ambiguedad.
+
+Sin intención específica, conserva `status` como default. Una pregunta core
+concreta usa `inspect`; no convierte `status` en investigación general.
 
 "Sincroniza todo" es ambiguo: pregunta si significa solo carpetas existentes o
 si desea inicializar ausentes. No existe un modo implicito que haga ambas cosas.
@@ -35,6 +39,8 @@ ejecutar auditorias. El objetivo es recomendar el modelo, no resolver la tarea.
 | Tarea base | Nivel inicial |
 | --- | --- |
 | `status` | Bajo |
+| `inspect` puntual | Bajo |
+| `inspect` cruzando módulos/capas | Medio |
 | `release-check` con documentacion verificable | Bajo |
 | `sync-domain` con un dominio, marca valida y hasta 20 archivos relevantes | Bajo |
 | `sync-core` incremental | Medio |
@@ -111,6 +117,25 @@ registre `HEAD` como si incluyera contenido sin commit. Para un release-check
 verificable: commit de producto → sync documental → commit documental → check.
 
 ## Semantica de modos
+
+### `inspect`
+
+- Solo lectura y cero persistencia: no bootstrap, sync, export ni configuración
+  de herramientas. No modifica producto, tests, CI ni instrucciones del proyecto.
+- Ejecuta localmente `architecture` para explicar arquitectura y
+  `project-navigator` para localizar módulos/símbolos o investigar impacto, bajo
+  demanda; usa ambas secuencialmente solo si la pregunta lo necesita, sin handoff.
+- Sigue [contexto compartido](project-context.md): steering y README de
+  arquitectura primero, capas mínimas y comprobación de frescura; ausencia,
+  desfase, ambigüedad o datos ilegibles degradan a fuentes directas sin bloqueo
+  por sí solos y sin generación automática.
+- El preflight sigue siendo informativo; no introduce pausa por modelo. Conserva
+  gates reales de mantenimiento y export de cada skill.
+- En peticion mixta, responde la lectura separable y pide autorización pendiente
+  para mantenimiento; la consulta no la concede ni ejecuta escrituras.
+- Cierra con hallazgos, fuentes, confianza/limitaciones y recomendaciones opcionales.
+  No crea handoff ni estado `delivered`; responder no acredita sincronizacion
+  ni permite declarar contexto vigente sin evidencia.
 
 ### `status`
 

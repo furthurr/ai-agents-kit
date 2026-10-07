@@ -38,8 +38,9 @@ sin pausa. Conserva decisiones, autorizaciones, gates e integridad pendientes.
 Esta skill es la **referencia canónica** para documentar y mantener la
 arquitectura de un proyecto, sin importar la tecnología. Su objetivo es que
 **cualquier agente o persona** encuentre en `.architecture/` un contexto
-predecible del sistema y trabaje más rápido. Complementa al agente `Architecture
-Agent`. Si el agente y esta skill divergen, **manda esta skill**.
+predecible del sistema y trabaje más rápido. `documentation-orchestrator` es la
+entrada core y ejecuta esta skill localmente. Si agente y skill divergen,
+**manda esta skill**.
 
 > **Regla de alcance (inviolable):** esta skill **documenta, audita y recomienda**
 > arquitectura. NO modifica código de negocio ni ejecuta refactors. Solo escribe
@@ -65,7 +66,20 @@ Agent`. Si el agente y esta skill divergen, **manda esta skill**.
 
 Toda la documentación de arquitectura vive en una carpeta `.architecture/`
 (oculta, estilo `.github/`) que **se versiona** con el repo. La skill SIEMPRE
-trabaja aquí; si no existe, **créala**.
+trabaja aquí cuando hay escritura autorizada; si no existe, propone crearla
+mediante el estudio y confirmación del flujo de mantenimiento.
+
+## Consultas de solo lectura
+
+Explicar capas, dependencias o decisiones no activa el flujo de generación o
+sincronización documental. Lee primero instrucciones/steering y después
+`.architecture/README.md` («Contexto para IA»), solo si aporta al alcance.
+Aplica el [contrato compartido](../documentation-orchestrator/references/project-context.md)
+sin cargar plantillas de mantenimiento. Si el contexto falta, está desfasado o
+no es verificable, continúa con fuentes directas y comunica la limitación;
+no crees carpetas, ADRs ni marcas automáticamente. Cita evidencia y confianza.
+Una consulta no autoriza escritura: el mantenimiento conserva propuesta,
+confirmación de modo/alcance y gates existentes.
 
 ### Ubicación: uno o varios proyectos
 
@@ -187,8 +201,8 @@ Escribe el hash de `HEAD` (o la fecha) y la tecnología/modo en `README.md`.
 
 ## Gate de recomendación a SDD
 
-La **severidad por sí sola no decide** la ruta. Continúa directamente con este
-agente si el trabajo es solo análisis, documentación, diagramas o ADRs dentro de
+La **severidad por sí sola no decide** la ruta. Continúa localmente con esta
+skill si el trabajo es solo análisis, documentación, diagramas o ADRs dentro de
 `.architecture/`.
 
 Si una deuda o decisión requiere implementar/refactorizar código y además faltan

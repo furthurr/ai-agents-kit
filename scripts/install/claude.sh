@@ -9,6 +9,9 @@
 # CLAUDE.md y settings.json no forman parte del kit y nunca se modifican.
 #
 # Uso:
+#   --migrate-retired-agents: retirada opt-in con backup obligatorio.
+#   --approve-retired-file RUTA --approve-retired-sha256 SHA: repetibles, ruta exacta.
+#   --additional-agents-dest RUTA: destino local adicional para migración explícita.
 #   ./scripts/install/claude.sh              # instala con backup de lo previo
 #   ./scripts/install/claude.sh --force      # instala sin crear backup
 #   ./scripts/install/claude.sh --dry-run    # muestra lo que haría, sin copiar
@@ -21,16 +24,23 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 FORCE=0
 DRY_RUN=0
+MIGRATE=0
+MIGRATION_ARGS=(--backup-root "$HOME/.ai-agents-kit-retired-backups")
 
-for arg in "$@"; do
+while [ "$#" -gt 0 ]; do
+  arg="$1"; shift
   case "$arg" in
     --force)   FORCE=1 ;;
     --dry-run) DRY_RUN=1 ;;
+    --migrate-retired-agents) MIGRATE=1 ;;
+    --approve-retired-file|--approve-retired-sha256|--additional-agents-dest)
+      [ "$#" -gt 0 ] || { echo "Falta valor para $arg" >&2; exit 2; }
+      MIGRATION_ARGS+=("$arg" "$1"); shift ;;
     -h|--help)
       grep '^#' "$0" | sed 's/^# \{0,1\}//' | sed '/^!/d'
       exit 0
       ;;
-    *) echo "Argumento desconocido: $arg" >&2; exit 1 ;;
+    *) echo "Argumento desconocido: $arg" >&2; exit 2 ;;
   esac
 done
 
@@ -140,8 +150,11 @@ echo
 printf "${BOLD}== Instalación de Skills y Agentes en Claude Code ==${RESET}\n"
 echo
 [ "$DRY_RUN" -eq 1 ] && warn "Modo --dry-run: no se copiará nada."
-[ "$FORCE" -eq 1 ]   && warn "Modo --force: no se crearán backups."
+[ "$FORCE" -eq 1 ]   && warn "Modo --force: omite backup de sobrescritura vigente; retirada siempre con backup."
 
+VALIDATION_ARGS=(--agents-dest "$AGENTS_DEST" --skills-dest "$SKILLS_DEST")
+[ "$MIGRATE" -eq 0 ] || VALIDATION_ARGS+=(--migration-requested)
+preflight --validate-migration "${VALIDATION_ARGS[@]}" "${MIGRATION_ARGS[@]}"
 if ! preflight --check-source; then
   err "Instalación abortada. Regenera los artefactos: python3 tools/render.py"
   exit 1
@@ -153,6 +166,7 @@ install_agents
 echo
 
 if [ "$DRY_RUN" -eq 1 ]; then
+  [ "$MIGRATE" -eq 0 ] || preflight --migrate-retired-agents --dry-run --agents-dest "$AGENTS_DEST" "${MIGRATION_ARGS[@]}"
   ok "Dry-run finalizado: no se escribió nada."
   exit 0
 fi
@@ -162,6 +176,7 @@ if ! preflight --check-installed --skills-dest "$SKILLS_DEST" --agents-dest "$AG
   exit 1
 fi
 
+[ "$MIGRATE" -eq 0 ] || preflight --migrate-retired-agents --skills-dest "$SKILLS_DEST" --agents-dest "$AGENTS_DEST" "${MIGRATION_ARGS[@]}"
 ok "Instalación completada."
 if [ "$FORCE" -eq 0 ] && [ -d "$BACKUP_ROOT" ]; then
   info "Backups del contenido previo en: $BACKUP_ROOT"

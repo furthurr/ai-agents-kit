@@ -60,7 +60,11 @@ independiente.
 | Opción | Bash | PowerShell | Efecto |
 |--------|------|------------|--------|
 | Dry-run | `--dry-run` | `-DryRun` | Muestra qué haría sin copiar |
-| Force | `--force` | `-Force` | Omite el backup previo de lo instalado |
+| Force | `--force` | `-Force` | Omite el backup previo de sobrescrituras vigentes; nunca el respaldo de retirada |
+| Migrar retirados | `--migrate-retired-agents` | `-MigrateRetiredAgents` | Retirada opt-in con respaldo obligatorio |
+| Aprobar archivo | `--approve-retired-file PATH` repetible | `-ApproveRetiredFile` lista | Ruta absoluta exacta revisada; requiere SHA paralelo |
+| Aprobar bytes | `--approve-retired-sha256 SHA` repetible | `-ApproveRetiredSha256` lista | SHA-256 real del plan, emparejado por posición con cada ruta |
+| Destinos adicionales | `--additional-agents-dest RUTA` repetible | `-AdditionalAgentsDest` lista | Directorios locales explícitos, solo para migración opt-in |
 | Ayuda | `-h` / `--help` | (según script) | Uso del script |
 
 Ejemplos:
@@ -83,7 +87,7 @@ Ejemplos:
 
 ### Antigravity 2.0
 
-El alcance inicial es global: diez directorios de skills con sus recursos y ocho
+El alcance inicial es global: diez directorios de skills con sus recursos y seis
 agentes `<id>.md`. Bash resuelve `~` desde HOME; PowerShell usa USERPROFILE, no
 un carácter `~` literal. La instalación no modifica credenciales, settings,
 `GEMINI.md`, `AGENTS.md` ni `.agents/rules/*.md`.
@@ -93,14 +97,14 @@ de steering no equivale a crear ese puente.
 ```bash
 ./scripts/install/antigravity.sh --dry-run
 ./scripts/install/antigravity.sh
-# Solo si decides omitir el respaldo previo:
+# Solo si decides omitir el respaldo de sobrescrituras vigentes (no de retirada):
 ./scripts/install/antigravity.sh --force
 ```
 
 ```powershell
 .\scripts\install\antigravity.ps1 -DryRun
 .\scripts\install\antigravity.ps1
-# Solo si decides omitir el respaldo previo:
+# Solo si decides omitir el respaldo de sobrescrituras vigentes (no de retirada):
 .\scripts\install\antigravity.ps1 -Force
 ```
 
@@ -115,7 +119,7 @@ La copia de archivos y el preflight no prueban descubrimiento ni funcionamiento
 del host. Los scripts de instalación/exportación tienen evidencia de ejecución
 con fixtures en Linux, macOS y Windows: **22/22 pruebas nativas por OS**, Python
 3.10, [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
-**Runtime Antigravity: PENDIENTE** para descubrimiento 8/10, selección UI, carga
+**Runtime Antigravity: PENDIENTE** para descubrimiento 6/10, selección UI, carga
 de referencias e `invoke_subagent`. La versión de referencia de la aplicación
 será la registrada en un smoke completo exitoso, no el build de CI del kit.
 El CLI usa otra ruta global de skills (`~/.gemini/antigravity-cli/skills/`);
@@ -193,9 +197,37 @@ python3 tools/validate.py
 
 Los instaladores también **informan** de skills o agentes presentes en el destino
 que el manifest no declara (propios tuyos, o restos de una versión anterior del
-kit). Solo lo informan: **nunca borran nada**, porque no hay forma fiable de
-distinguir un artefacto obsoleto del kit de una skill propia. Retíralos a mano si
-ya no aplican (ver *Desinstalar*).
+kit). Una instalación normal y `--check-installed` solo informan y no los retiran.
+La excepción es la [migración explícita de agentes retirados](migracion-agentes.md):
+`--migrate-retired-agents`, respaldo obligatorio fuera de árboles escaneados y
+aprobación exacta por archivo personalizado/incierto mediante
+los pares repetibles `--approve-retired-file PATH --approve-retired-sha256 SHA`
+tras revisión. `--force` no concede retirada ni aprobación de bytes nuevos.
+
+## Actualizar el core documental
+
+`documentation-orchestrator` sustituye las entradas de agente `architecture` y
+`project-navigator`; **ambas skills siguen separadas y disponibles**, igual que
+`.architecture/` y `.navigator/`. El catálogo tiene seis agentes y diez skills.
+Usa `inspect` para consultas sin escritura, `bootstrap-core` para proponer la
+inicialización y sync para mantenimiento autorizado. No hay aliases ejecutables.
+
+Antes de migrar una instalación anterior, revisa el
+[plan, clasificación y recuperación segura](migracion-agentes.md). Un hash
+histórico conocido permite reconocer una copia; nombres o versiones sin registro
+de propiedad no bastan. Los desconocidos se conservan y dejan la migración
+incompleta sin aprobación específica. Simula primero con `--dry-run` y registra
+respaldo/hash antes de retirar; reinicia el host tras actualizar si corresponde.
+
+OpenCode revisa por defecto `agent/` y su hermano `agents/` en el perfil global
+efectivo; instala contenido vigente en `agent/`. Directorios locales requieren
+`--additional-agents-dest RUTA` explícito (PowerShell: `-AdditionalAgentsDest` lista),
+sin descubrimiento recursivo. En PowerShell las aprobaciones usan listas paralelas
+`-ApproveRetiredFile` y `-ApproveRetiredSha256`, con igual longitud y orden.
+Los [ejemplos con pares revisados](migracion-agentes.md#clasificación-y-aprobación-específica)
+incluyen placeholders que deben sustituirse con SHA reales del plan.
+La migración y recuperación **nativas en Windows siguen PENDIENTES**; la evidencia
+CI histórica de instalación/exportación no valida este flujo nuevo.
 
 ## Actualizar a Code Review
 
@@ -278,6 +310,11 @@ Comportamiento:
 Cada instalación sin `--force` deja el estado anterior en su raíz de backup (ver
 *Destinos de instalación*). Para volver atrás, elige el backup por fecha y copia
 su contenido sobre el destino. Ejemplo con Kiro:
+
+Los ejemplos de fusión siguientes son recuperación general de una instalación,
+no restauración segura de agentes retirados. Para esos agentes usa la
+[restauración por archivo sin overwrite](migracion-agentes.md#restauración-segura-por-archivo):
+verifica el hash y restaura solo a destino ausente, conservando cualquier archivo nuevo.
 
 ```bash
 ls ~/.kiro-kit-backup/                       # elige la marca de tiempo

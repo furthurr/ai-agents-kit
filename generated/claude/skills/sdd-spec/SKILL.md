@@ -126,6 +126,26 @@ exploración y en cada fase que necesite contexto nuevo. Navigator es auxiliar: 
 ausencia o desfase no bloquea SDD y nunca autoriza escribir sus índices sin
 aprobación explícita.
 
+## Recomendación de agente por dominio
+
+Resuelve la decisión de ejecutor antes de la primera modificación: no uses
+herramientas de escritura ni comandos que modifiquen archivos mientras falte una
+elección esencial entre especialista y SDD. Cargar esta skill y, ante UI/datos,
+leer `references/agent-routing.md` precede a esa escritura; no basta con descubrir
+la skill en el catálogo. Abrir SDD no es una decisión de rechazar al especialista.
+La lista v1 es cerrada a `ui-design` y `data-api`; no enumeres otros agentes como
+alternativas; no enumeres ni recomiendes otros agentes. Si el usuario elige
+explícitamente un especialista, entrega el contexto manual y detente en SDD; la
+elección de especialista significa que esa actividad no se ejecuta en SDD, aunque
+la petición original incluyera «implementa».
+
+Antes de editar o ejecutar una actividad, evalúa si corresponde íntegramente a
+`ui-design` o `data-api`. Carga `references/agent-routing.md` bajo demanda para
+criterios, precedencias y contexto copiable. Ofrece selección manual o continuidad
+con SDD; no cambies de agente automáticamente ni invoques subagentes. La elección
+explícita compatible evita una pregunta redundante. Conserva planificación SDD
+ante ambigüedad, riesgo o cruce de dominios, sin cambiar profundidad, testing ni gates.
+
 ## Artefactos
 
 Destino: `.sdd/specs/<ruta-spec>/`
@@ -182,8 +202,9 @@ antes de reanudarla.
    aplicable, ejecuta el preflight de `references/navigator-context.md` y usa solo
    la capa mínima antes del contexto de dominio.
 2. Detecta dominio y lee solo su `README.md` de contexto (`.architecture/`,
-   `.design/`, `.data/`, `.security/`, `.quality/`). Si falta, recomienda
-   especialista; si el usuario continúa, captura lo imprescindible en `design.md`.
+   `.design/`, `.data/`, `.security/`, `.quality/`). La ausencia de contexto no obliga
+   a cambiar de agente: aplica `references/agent-routing.md` si corresponde, respeta
+   la elección previa y, si el usuario continúa, captura lo imprescindible en `design.md`.
 3. Descompón en historias de usuario.
 4. Criterios en EARS:
    - `CUANDO <condición> EL SISTEMA DEBERÁ <comportamiento>`
@@ -215,6 +236,9 @@ antes de reanudarla.
 
 ### Implementación
 
+- Para una tarea especializada acotada, aplica `references/agent-routing.md` antes
+  de ejecutarla: conserva vínculo a requisitos/tareas, autorización y gates pendientes.
+  La selección de ejecutor no aprueba gates ni amplía alcance.
 - Una tarea a la vez o en waves. Estados: `[ ]` → 🔵 → `[x]`.
 - Antes de iniciar esta fase, muestra el nivel de LLM recomendado para Implementación.
   La aprobación de Gate 3 basta para continuar; no pidas confirmar el nivel.

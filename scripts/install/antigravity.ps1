@@ -1,6 +1,12 @@
 <# Instala el inventario declarado; fusiona skills y conserva recursos personales. #>
 [CmdletBinding()]
-param([switch]$Force, [switch]$DryRun)
+param(
+    [switch]$Force, [switch]$DryRun,
+    [Alias("migrate-retired-agents")][switch]$MigrateRetiredAgents,
+    [Alias("approve-retired-file")][string[]]$ApproveRetiredFile = @(),
+    [Alias("approve-retired-sha256")][string[]]$ApproveRetiredSha256 = @(),
+    [Alias("additional-agents-dest")][string[]]$AdditionalAgentsDest = @()
+)
 $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $SkillsDest = Join-Path $env:USERPROFILE ".gemini/config/skills"
@@ -23,6 +29,24 @@ function Invoke-Preflight {
     foreach ($line in $output) { Write-Host $line }
     return ($code -eq 0)
 }
+
+function Invoke-RetiredMigration {
+    param([switch]$ValidateOnly)
+    $options = @("--agents-dest", $AgentsDest, "--skills-dest", $SkillsDest, "--backup-root", (Join-Path $env:USERPROFILE ".ai-agents-kit-retired-backups"))
+    if ($ValidateOnly) {
+        $options += "--validate-migration"
+        if ($MigrateRetiredAgents) { $options += "--migration-requested" }
+    } else {
+        $options += "--migrate-retired-agents"
+        if ($DryRun) { $options += "--dry-run" }
+    }
+    foreach ($path in $ApproveRetiredFile) { $options += @("--approve-retired-file", $path) }
+    foreach ($sha in $ApproveRetiredSha256) { $options += @("--approve-retired-sha256", $sha) }
+    foreach ($dest in $AdditionalAgentsDest) { $options += @("--additional-agents-dest", $dest) }
+    & $Python (Join-Path $RepoRoot "tools/install_preflight.py") --platform antigravity @options | Out-Host
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+}
+Invoke-RetiredMigration -ValidateOnly
 
 function New-Directory {
     param([string]$Path)
@@ -112,7 +136,10 @@ print(json.dumps(items))
             Copy-Item -LiteralPath $src -Destination $dest -Force
         }
     }
-    if ($DryRun) { Write-Host "Dry-run finalizado: no se escribio nada."; exit 0 }
+    if ($DryRun) {
+        if ($MigrateRetiredAgents) { Invoke-RetiredMigration }
+        Write-Host "Dry-run finalizado: no se escribio nada."; exit 0
+    }
     if (-not (Invoke-Preflight -Arguments @("--check-installed", "--skills-dest", $SkillsDest, "--agents-dest", $AgentsDest))) {
         throw "Instalacion incompleta; se conservan los backups."
     }
@@ -143,6 +170,7 @@ for agent_id in manifest['agents']:
     $code = $LASTEXITCODE
     foreach ($line in $output) { Write-Host $line }
     if ($code -ne 0) { throw "Verificacion de recursos fallida; se conservan los backups." }
+    if ($MigrateRetiredAgents) { Invoke-RetiredMigration }
     Write-Host "Instalacion completada."
     if ($script:BackupRoot) { Write-Host "Backup previo de skills y agents: $script:BackupRoot" }
     exit 0

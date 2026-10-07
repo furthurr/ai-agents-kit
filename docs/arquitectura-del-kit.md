@@ -50,14 +50,14 @@ Fuente de verdad del inventario:
 ```json
 {
   "skills": [ "architecture", "code-quality", "..." ],
-  "agents": [ "architecture", "code-review", "..." ],
+  "agents": [ "documentation-orchestrator", "code-review", "..." ],
   "platforms": [ "copilot", "opencode", "kiro", "claude", "pi", "antigravity" ]
 }
 ```
 
 El render itera estas listas. Si falta un agent adapter en una plataforma
 declarada, la validación o el render fallarán según el caso.
-El inventario compartido es de ocho agentes y diez skills en seis distribuciones;
+El inventario compartido es de seis agentes y diez skills en seis distribuciones;
 la existencia de artefactos no certifica el comportamiento de los seis hosts.
 
 ## Adaptadores
@@ -110,7 +110,7 @@ La fuente común permanece en `canonical/`; `adapters/antigravity/` aporta
 frontmatter y notas del host, y el renderer existente produce
 `generated/antigravity/{skills,agents}/`. No se duplican agentes como skills.
 
-- Ocho agentes con `model: inherit`, `mainAgent: true`, `subagent: true` y listas
+- Seis agentes con `model: inherit`, `mainAgent: true`, `subagent: true` y listas
   literales de tools por rol. Los niveles LLM recomendados siguen siendo manuales.
 - `{{sdd_agent}}` → `sdd` (identificador nominal), `{{gate_instruction}}` → vacío,
   `{{steering_paths}}` → `GEMINI.md`, `AGENTS.md`, `.agents/rules/*.md`.
@@ -134,7 +134,7 @@ El alcance inicial es 2.0. CLI usa skills globales en
 están verificados. La ejecución de scripts con fixtures está acreditada en Linux,
 macOS y Windows: **22/22 pruebas nativas por OS**, Python 3.10, en el
 [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
-**Runtime Antigravity: PENDIENTE** (descubrimiento 8/10, UI, referencias e
+**Runtime Antigravity: PENDIENTE** (descubrimiento 6/10, UI, referencias e
 `invoke_subagent`); la validación y las pruebas de scripts no certifican el host.
 
 VS Code también descubre los archivos de `~/.claude/agents/` cuando usa el
@@ -232,7 +232,8 @@ no ramificar copias del texto canónico por herramienta.
 
 ## Project Navigator en el kit
 
-Project Navigator está implementado como skill y agente del manifest. Usa capas
+Project Navigator está implementado como skill del manifest, ejecutada localmente
+por `documentation-orchestrator`. Usa capas
 de contexto en `.navigator/` para responder con la fuente más barata suficiente:
 contexto raíz, mapa de módulos, símbolos opt-in, grafo opt-in y código puntual.
 
@@ -246,7 +247,7 @@ contratos normativos de índices viven en `references/schemas.md`.
 
 ### Decisiones de diseño
 
-- Navigator no sustituye a Architecture: localiza y resume; Architecture
+- Las skills Navigator y Architecture permanecen separadas: Navigator localiza y resume; Architecture
   documenta decisiones, límites y deuda estructural.
 - El comportamiento es agnóstico al proveedor y al modelo. El agente puede
   recomendar un cambio manual para procesos pesados, pero nunca seleccionarlo.
@@ -260,7 +261,8 @@ contratos normativos de índices viven en `references/schemas.md`.
 
 Documentation Orchestrator sigue el mismo patrón canónico de skill + agente, pero
 coordina procedimientos de varios dominios. No depende de APIs de subagentes de
-una plataforma: para cada acción carga la skill aplicable o emite un handoff
+una plataforma: el core se ejecuta localmente con skills bajo demanda; para otros
+dominios carga la skill aplicable o emite un handoff
 Markdown para continuar con el agente especialista real, nunca ambas. El handoff
 conserva la misma semántica en las seis distribuciones, sin implicar que la
 delegación nativa esté comprobada en todos los hosts.
@@ -272,7 +274,8 @@ delegación nativa esté comprobada en todos los hosts.
 - Cada skill especialista sigue siendo autoridad dentro de su propia carpeta y
   conserva sus gates.
 - Un handoff se usa solo cuando el usuario solicita continuar con el agente real
-  o hacen falta su rol o permisos; el orquestador espera resultado o evidencia.
+  `data-api`, `ui-design` o `code-review`, o hacen falta su rol o permisos;
+  el orquestador espera resultado o evidencia. No hay handoffs a agentes core retirados.
 - El agente no crea `.documentation/`; el estado permanece en los READMEs y
   artefactos ya definidos por cada especialista.
 - SDD, Release Management y Graphify son workflows externos de solo lectura para
@@ -285,3 +288,8 @@ delegación nativa esté comprobada en todos los hosts.
   nivel recomendado no bloquea; decisiones de alcance, gates y permisos sí se conservan.
 
 Smoke test: [documentation-orchestrator-smoke.md](documentation-orchestrator-smoke.md).
+
+`inspect` investiga core sin escribir ni declarar sincronización. Los demás agentes
+consumen contexto relevante directamente y verifican frescura; ante ausencia,
+ambigüedad o desfase usan fuentes directas. La [migración de agentes](migracion-agentes.md)
+es opt-in del instalador, respaldada y distinta del mantenimiento documental.

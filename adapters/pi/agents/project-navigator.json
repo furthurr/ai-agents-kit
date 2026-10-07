@@ -1,8 +1,0 @@
-{
-  "filename": "project-navigator.md",
-  "frontmatter": {
-    "description": "Navegación e investigación del proyecto con mínimo de tokens (.navigator/). Solo lectura por defecto; bootstrap/update de índices bajo petición. No modifica código de negocio.",
-    "argument-hint": "<consulta de navegación>"
-  },
-  "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
-}

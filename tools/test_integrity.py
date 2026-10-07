@@ -438,6 +438,17 @@ def test_mas_identity_pass() -> None:
         print(f"      stderr: {result.stderr.strip()}")
 
 
+def test_documentation_core_pass() -> None:
+    print("\n[18] Contratos de documentación core")
+    result = subprocess.run(
+        [sys.executable, "-B", str(ROOT / "tools/test_documentation_core.py")],
+        capture_output=True, text=True, cwd=ROOT,
+    )
+    check(result.returncode == 0, "test_documentation_core.py exit code 0")
+    if result.returncode != 0:
+        print(result.stdout + result.stderr)
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -464,6 +475,7 @@ def main() -> int:
     test_model_recommendations_pass()
     test_data_api_scalar_workflow()
     test_mas_identity_pass()
+    test_documentation_core_pass()
 
     print(f"\n\033[1m{'='*60}\033[0m")
     total = PASSED + FAILED

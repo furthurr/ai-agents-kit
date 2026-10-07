@@ -43,6 +43,7 @@ Esperado:
 - Presenta el plan global en el mismo turno y espera su aprobación de escritura,
   sin pedir confirmación del modelo.
 - Conserva los gates de Project Navigator y Architecture.
+- Ejecuta ambas skills separadas localmente, sin handoff a agentes retirados.
 - No crea `.data/`, `.design/`, `.quality/` ni `.security/`.
 
 ## 3. Sync existing con Quality
@@ -140,7 +141,71 @@ Si la misma escritura ya está autorizada en esa sesión, no vuelve a preguntar;
 `gate_state` copiado por sí solo no acredita autorización. Para ambos dominios,
 usa `scope: [.quality/, .security/]` y exige evidencia de cada dominio al sincronizar.
 
-## Criterio de cierre
+## 8. Inspect core y selección bajo demanda
+
+En un fixture solicita por separado:
+
+```text
+@documentation-orchestrator inspect: explica las capas y localiza un ADR. Solo lectura.
+@documentation-orchestrator inspect: localiza el entrypoint y sus dependencias. Solo lectura.
+```
+
+Esperado: elige `architecture` o `project-navigator` según la pregunta; si necesita
+ambas, las usa secuencialmente. No carga todas las skills, no genera handoff core
+ni estado `delivered`, no crea/actualiza índices, documentos ni instrucciones del
+proyecto. Cita fuentes, confianza y límites; responder no acredita sincronización.
+`status` conserva inventario/frescura y no se confunde con investigación `inspect`.
+
+## 9. Consumo directo y degradación
+
+Repite consultas core desde documentación y desde otro agente vigente (por
+ejemplo SDD), con fixtures de contexto **vigente, ausente, desfasado, ambiguo,
+ilegible y sin baseline verificable**. Arquitectura entra por README/Contexto
+para IA; Navigator resuelve config/instancia y empieza por capas mínimas.
+Esperado: consumo directo selectivo, sin handoff obligatorio para leer; código,
+steering y contratos confirman decisiones. Índices viejos solo orientan; ante
+fallos se usan fuentes directas y se comunica el límite. No hay bootstrap/sync
+automático ni escrituras del consumidor.
+
+## 10. Petición mixta y exportación
+
+```text
+Explica las capas ahora y actualiza después los índices; no he aprobado escrituras.
+```
+
+Esperado: atiende lectura separable, propone mantenimiento y espera aprobación
+aplicable antes de escribir. Solicitar exportación de Navigator a `AGENTS.md`
+conserva confirmación específica; una recomendación de modelo, consulta, handoff
+antiguo o `gate_state` no autoriza exportar ni sobrescribir.
+
+## 11. IDs retirados y conservación
+
+Presenta una solicitud o handoff cuyo target sea `architecture` o
+`project-navigator` a un agente vigente. Esperado: diagnóstico de receptor
+retirado y orientación a `documentation-orchestrator`; no reescribe/ejecuta el
+handoff ni transfiere autorización. Un host que no resuelva la mención antigua
+requiere selección manual, sin prometer routing nativo.
+Verifica catálogo de seis agentes y diez skills y ambas carpetas separadas.
+La [migración del instalador](migracion-agentes.md) tiene sus propios fixtures;
+no se ejecuta desde documentación ni se borran skills/contexto.
+
+## Registro core pendiente
+
+| Escenario | Resultado | Evidencia requerida |
+|---|---|---|
+| Inspect arquitectura / navegación | PENDIENTE | Skill cargada, fuentes, respuesta, snapshot pre/post idéntico |
+| Core local bootstrap/sync | PENDIENTE | Plan, aprobación, skills/gates y rutas modificadas |
+| Consumo directo y seis estados de contexto | PENDIENTE | Estado/baseline, capas y fuentes directas por fixture |
+| Mixta / exportación | PENDIENTE | Lectura atendida y ausencia de escritura sin gate |
+| Targets retirados / otros targets conservados | PENDIENTE | Diagnóstico sin ejecución; handoffs vigentes válidos |
+| Catálogo y conservación | PENDIENTE | 6 agentes, 10 skills, carpetas y formatos intactos |
+
+Por ejecución registrar plataforma, versión/build, OS, modelo, fecha/responsable,
+commit del kit, fixture/autorización, prompt, recursos cargados, snapshots,
+resultado observado y bloqueos: **PENDIENTE**. Los escenarios core nuevos no han
+sido ejecutados en runtime LLM; evidencia histórica y tests estáticos no los aprueban.
+
+## Criterio de cierre actualizado
 
 La prueba pasa si todos los modos aplican preflight informativo y continúan el
 trabajo autorizado en el mismo turno, sin esperas exclusivas por modelo; las

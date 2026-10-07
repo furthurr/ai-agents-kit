@@ -28,7 +28,11 @@
 [CmdletBinding()]
 param(
     [switch]$Force,
-    [switch]$DryRun
+    [switch]$DryRun,
+    [Alias("migrate-retired-agents")][switch]$MigrateRetiredAgents,
+    [Alias("approve-retired-file")][string[]]$ApproveRetiredFile = @(),
+    [Alias("approve-retired-sha256")][string[]]$ApproveRetiredSha256 = @(),
+    [Alias("additional-agents-dest")][string[]]$AdditionalAgentsDest = @()
 )
 
 $ErrorActionPreference = "Stop"
@@ -66,12 +70,31 @@ function Invoke-Preflight {
         return $false
     }
     $preflight = Join-Path $RepoRoot "tools\install_preflight.py"
-    & $Python $preflight --platform kiro @Arguments
+    & $Python $preflight --platform kiro @Arguments | Out-Host
     return ($LASTEXITCODE -eq 0)
 }
 
 # --- Copia el contenido de un arbol excluyendo basura de macOS (.DS_Store) ---
 # Fusiona sin borrar lo previo (equivalente a rsync sin --delete / cp -R).
+function Invoke-RetiredMigration {
+    param([switch]$ValidateOnly)
+    if (-not $Python) { exit 1 }
+    $options = @("--agents-dest", $AgentsDest, "--skills-dest", $SkillsDest, "--backup-root", (Join-Path $env:USERPROFILE ".ai-agents-kit-retired-backups"))
+    if ($ValidateOnly) {
+        $options += "--validate-migration"
+        if ($MigrateRetiredAgents) { $options += "--migration-requested" }
+    } else {
+        $options += "--migrate-retired-agents"
+        if ($DryRun) { $options += "--dry-run" }
+    }
+    foreach ($path in $ApproveRetiredFile) { $options += @("--approve-retired-file", $path) }
+    foreach ($sha in $ApproveRetiredSha256) { $options += @("--approve-retired-sha256", $sha) }
+    foreach ($dest in $AdditionalAgentsDest) { $options += @("--additional-agents-dest", $dest) }
+    & $Python (Join-Path $RepoRoot "tools/install_preflight.py") --platform kiro @options | Out-Host
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+}
+Invoke-RetiredMigration -ValidateOnly
+
 function Copy-Tree {
     param([string]$Src, [string]$Dest)
     $srcFull = (Resolve-Path -LiteralPath $Src).Path
@@ -153,7 +176,7 @@ Write-Host "== Instalacion de Skills y Agentes en Kiro ==" -ForegroundColor Whit
 Write-Host ""
 
 if ($DryRun) { Write-Warn "Modo -DryRun: no se copiara nada." }
-if ($Force)  { Write-Warn "Modo -Force: no se crearan backups." }
+if ($Force)  { Write-Warn "Modo -Force: omite backup de sobrescritura vigente; retirada siempre con backup." }
 
 # Verificar el origen antes de tocar el destino: una instalacion incompleta es
 # peor que ninguna, porque se manifiesta como un agente que ignora su alcance.
@@ -168,6 +191,7 @@ Install-Agents
 Write-Host ""
 
 if ($DryRun) {
+    if ($MigrateRetiredAgents) { Invoke-RetiredMigration }
     Write-Ok "Dry-run finalizado: no se escribio nada."
     exit 0
 }
@@ -177,6 +201,7 @@ if (-not (Invoke-Preflight @("--check-installed", "--skills-dest", $SkillsDest, 
     exit 1
 }
 
+if ($MigrateRetiredAgents) { Invoke-RetiredMigration }
 Write-Ok "Instalacion completada."
 if (-not $Force -and (Test-Path -LiteralPath $BackupRoot)) {
     Write-Info "Backups del contenido previo en: $BackupRoot"

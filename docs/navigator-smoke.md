@@ -1,4 +1,4 @@
-# Smoke test de Project Navigator
+# Smoke test de la skill Project Navigator vía Documentation Orchestrator
 
 Checklist manual y reproducible para comprobar el MVP después de instalarlo. No
 certifica aislamiento de seguridad: también distingue límites del prompt de
@@ -17,42 +17,47 @@ permisos aplicados realmente por cada plataforma.
 
 ### 1. Descubrimiento y bootstrap
 
-Seleccionar `project-navigator` y preguntar:
+Seleccionar `documentation-orchestrator` y preguntar:
 
 ```text
-¿Qué es este repositorio y cómo está organizado?
+inspect: ¿Qué es este repositorio y cómo está organizado? Solo lectura.
 ```
 
 Resultado esperado:
 
-- Detecta que falta `.navigator/` y ofrece bootstrap.
+- Detecta que falta `.navigator/`, investiga con fuentes directas y declara el límite.
+- No crea índices ni hace depender la respuesta de un bootstrap; puede recomendarlo.
+- No crea handoff a un agente core retirado ni afirma que el contexto fue sincronizado.
 - No explora silenciosamente el repositorio completo.
 - En proceso pesado recomienda cambiar manualmente a un modelo económico, pero
   no intenta cambiarlo ni espera una respuesta por el aviso. Con bootstrap ya
   autorizado continúa en el mismo turno; el aviso final tampoco bloquea.
-- Tras autorización efectiva de bootstrap (no confirmación de modelo), crea
+- En una segunda solicitud explícita `sync-domain project-navigator: inicializa
+  solo los índices`, presenta plan/alcance y conserva los gates. Tras autorización
+  efectiva de bootstrap (no confirmación de modelo), crea
   únicamente `config.yaml`, `ai-context.md` y `module-map.json` bajo `.navigator/`.
 - No genera symbols ni grafo salvo opt-in.
-- No repite el aviso ya comunicado para el mismo alcance, tampoco en un handoff;
+- No repite el aviso ya comunicado para el mismo alcance en la ejecución local;
   conserva autorizaciones de update, exportación y sobrescritura.
 
 ### 2. Consulta por módulo
 
 ```text
-¿En qué módulo vive la funcionalidad principal y de qué depende?
+inspect: ¿En qué módulo vive la funcionalidad principal y de qué depende?
 ```
 
 Resultado esperado:
 
 - Empieza por `module-map.json`.
 - Cita `.navigator/module-map.json` como fuente.
-- No abre código si la capa 1 basta.
+- Contrasta con fuentes directas las afirmaciones relevantes para decisiones;
+  un índice desfasado solo aporta pistas, no autoridad.
 - No inventa dependencias ausentes del índice.
 
 ### 3. Consulta puntual
 
 ```text
-¿Dónde se define el entrypoint principal?
+inspect: ¿Dónde se define el entrypoint principal?
 ```
 
 Resultado esperado:
@@ -117,6 +122,14 @@ contrato MVP**. No validan el ajuste posterior de avisos de modelo no bloqueante
 los escenarios de ese contrato nuevo están definidos, pero no ejecutados en hosts.
 Conservar los resultados anteriores sin presentarlos como aprobación del checklist
 actualizado.
+
+La entrada core consolidada tampoco está validada por esos resultados. Registro
+actual por plataforma, versión, modelo, fecha, commit, fuentes/capas consultadas,
+snapshot pre/post, resultado y bloqueos: **PENDIENTE** en las seis plataformas.
+Las consultas `inspect` deben dejar snapshot idéntico; solo el bootstrap autorizado
+puede generar índices. El escenario `bootstrap-core` con ambas skills y el consumo
+directo/degradado se detallan en
+[documentation-orchestrator-smoke.md](documentation-orchestrator-smoke.md).
 
 | Plataforma | Versión | Modelo | Fecha | Commit kit | Resultado | Evidencia / fallos |
 | --- | --- | --- | --- | --- | --- | --- |

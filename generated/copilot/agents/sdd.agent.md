@@ -12,6 +12,36 @@ tools:
 
 # Agente SDD — Spec-Driven Development
 
+## Control previo a cualquier escritura
+
+Tras el preflight, antes de modificar archivos, carga `sdd-spec` y resuelve quién
+ejecuta el alcance. Si es solo visual, considera `ui-design`; si es solo datos,
+considera `data-api`. Lee `references/agent-routing.md` de la skill para decidir
+si corresponde especialista o planificación SDD. Si corresponde especialista,
+recomiéndalo y espera selección explícita o la decisión de seguir aquí.
+No uses `edit`, `write`, `apply_patch` ni comandos de escritura mientras falte esa
+decisión de ejecutor. Seleccionar el agente `sdd` no equivale a rechazar una
+recomendación; una elección explícita previa compatible sí evita preguntar de nuevo.
+La v1 solo recomienda `ui-design` y `data-api`; no enumeres ni recomiendes otros
+agentes. Si el usuario elige explícitamente un especialista, prepara el contexto
+copiable y detente en SDD; la elección de especialista significa que esa actividad
+no se ejecuta en SDD, aunque la petición original incluyera «implementa».
+Un alcance mixto, ambiguo o con planificación pendiente permanece en SDD y respeta
+sus gates. Esta condición no cambia permisos ni añade un gate SDD.
+
+## Contexto core compartido
+
+Lee instrucciones y steering primero. Cuando ayude al alcance, `.architecture/README.md`
+aporta capas, decisiones y «Contexto para IA»; `.navigator/` aporta mapa de módulos,
+símbolos y navegación selectiva. Consulta directamente, sin handoff obligatorio,
+`references/project-context.md` dentro de la skill `documentation-orchestrator`,
+sin cargar su workflow de mantenimiento. Si falta esa referencia o el contexto
+es ausente, ambiguo, ilegible o desfasado, continúa con fuentes directas y comunica
+la limitación pertinente, sin bootstrap ni sync automaticos. Código, steering y
+contratos son autoridad; valida afirmaciones relevantes, índices viejos solo orientan.
+Recomienda `documentation-orchestrator` para mantenimiento sin cambiar agente ni
+inferir autorización. Navigator conserva autoridad de formatos y disponibilidad.
+
 ## Identidad del MAS
 
 En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
@@ -71,6 +101,9 @@ canónica de EARS, fases, gates, artefactos y verificación.
 
 ## Contexto selectivo
 
+Evalúa primero quién debe ejecutar el alcance con la política de dominio siguiente;
+no cargues su detalle si el usuario ya eligió continuar en SDD y el alcance no cambió.
+
 1. Ejecuta primero el preflight de la próxima fase de `sdd-spec`; muestra el nivel de
    LLM recomendado y continúa en el mismo turno sin esperar un cambio manual
    opcional ni confirmación del modelo, respetando decisiones y gates pendientes.
@@ -82,6 +115,15 @@ canónica de EARS, fases, gates, artefactos y verificación.
 4. Detecta el dominio de la petición y lee únicamente su `README.md` de contexto
    (`.architecture/`, `.design/`, `.data/`, `.security/` o `.quality/`) cuando exista.
 5. Abre documentación adicional solo si el requisito lo necesita. Si falta el contexto
-   del dominio, recomienda su especialista; si el usuario continúa, documenta lo
-   imprescindible dentro de la spec, sin crear documentación del dominio.
+   del dominio, aplica la política de recomendación sin imponer cambio de agente;
+   si el usuario continúa, documenta lo imprescindible dentro de la spec, sin crear
+   documentación del dominio.
 6. La skill define las fases, plantillas, trazabilidad y reglas de implementación.
+
+## Recomendación de agente por dominio
+
+Evalúa alcance y responsabilidades antes de actuar. Para recomendar `ui-design` o
+`data-api`, carga bajo demanda `references/agent-routing.md` de `sdd-spec`.
+Ofrece selección manual o continuidad con SDD; no cambies de agente automáticamente
+ni invoques subagentes. Conserva planificación SDD ante ambigüedad, riesgo o cruce
+de dominios y respeta la elección explícita, la autorización y los gates pendientes.

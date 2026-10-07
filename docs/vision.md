@@ -9,13 +9,15 @@ asistentes de código con IA:
 - [OpenCode](https://opencode.ai)
 - [Kiro](https://kiro.dev)
 - [Claude Code](https://code.claude.com/)
+- [Pi](https://pi.dev)
+- [Antigravity](https://antigravity.google/)
 
 El sistema multiagente se denomina **MAS** (*Multi-Agent System*). En este
 documento, `MAS` se refiere al conjunto coordinado de agentes, skills,
 orquestación y handoffs del kit. La convención completa está en [mas.md](mas.md).
 
 La lógica común se escribe **una sola vez** en `canonical/` y se renderiza para
-cada herramienta mediante adaptadores declarativos. Así se evita mantener cuatro
+cada herramienta mediante adaptadores declarativos. Así se evita mantener seis
 copias del mismo prompt.
 
 ## Problema que resuelve
@@ -33,8 +35,8 @@ El kit combina tres ideas:
 
 ### 1. Especialistas con alcance fijo
 
-Cada agente tiene un **dominio inviolable**. El de arquitectura no refactoriza
-negocio; el de seguridad no implementa pantallas; el de Git no toca la UI.
+Cada agente tiene un **dominio inviolable**. Documentation Orchestrator no refactoriza
+negocio; Code Review no implementa pantallas; el de Git no toca la UI.
 Cuando la petición sale de su alcance, se detiene y redirige al especialista
 adecuado.
 
@@ -87,9 +89,11 @@ Usuario pide algo
    p. ej. .architecture/, .sdd/specs/...
 ```
 
-Algunos agentes cargan **una** skill (`architecture` → `architecture`).
+El catálogo conserva seis agentes y diez skills.
+Algunos agentes cargan **una** skill (`data-api` → `data-api`).
 `Git & Release Manager` orquesta `git-commit` y `release-management`.
-`Documentation Orchestrator` selecciona las skills documentales aplicables o
+`Documentation Orchestrator` ejecuta localmente las skills core separadas
+`architecture` y `project-navigator`. Para otros dominios selecciona skills o
 prepara un handoff al agente real, sin duplicar la acción; no sustituye su
 autoridad ni crea una carpeta propia.
 
@@ -111,7 +115,8 @@ Detalle técnico: [arquitectura-del-kit.md](arquitectura-del-kit.md).
 
 ## Project Navigator
 
-Project Navigator forma parte del kit como **MVP instalable**. Materializa
+Project Navigator forma parte del kit como **skill instalable**, atendida por
+`documentation-orchestrator`; no tiene agente independiente. Materializa
 contexto selectivo en `.navigator/` mediante capas: contexto raíz y mapa de
 módulos obligatorios; símbolos y grafo opt-in; código puntual como último nivel.
 
@@ -123,7 +128,8 @@ manual en [navigator-smoke.md](navigator-smoke.md) y la evolución pendiente en
 
 ## Documentation Orchestrator
 
-El orquestador ofrece una entrada única para comprobar, inicializar y sincronizar
+El orquestador ofrece `inspect` para consultas core sin persistencia y una entrada
+única para comprobar, inicializar y sincronizar
 las carpetas documentales. Su core de bootstrap es `.navigator/` más
 `.architecture/`; Data y Design son condicionales, mientras Quality y Security
 son assurance recomendado y se sincronizan cuando existen o se solicitan.

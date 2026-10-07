@@ -24,8 +24,6 @@ REQUIRED_HANDOFF_FIELDS = {
 }
 OPTIONAL_HANDOFF_FIELDS = {"gate_state"}
 TARGET_SCOPES: dict[str, tuple[str, ...]] = {
-    "project-navigator": (".navigator/",),
-    "architecture": (".architecture/",),
     "data-api": (".data/",),
     "ui-design": (".design/",),
     "code-review": (".quality/", ".security/"),
@@ -91,7 +89,11 @@ def validate_handoff(
         errors.append("source debe ser documentation-orchestrator")
     target = data["target"]
     if not isinstance(target, str) or target not in TARGET_SCOPES:
-        errors.append("target no admitido; calidad y seguridad usan code-review")
+        if isinstance(target, str) and target in {"architecture", "project-navigator"}:
+            errors.append(f"target retirado: {target}; usa documentation-orchestrator para core; "
+                          "no se transfiere autorización del handoff antiguo")
+        else:
+            errors.append("target no admitido; calidad y seguridad usan code-review")
     if not isinstance(data["action"], str) or data["action"] not in ACTIONS:
         errors.append("action no admitida")
     if not isinstance(data["handoff_reason"], str) or not data["handoff_reason"].strip():

@@ -101,9 +101,12 @@ def run_installer(
     """Run an installer with an isolated HOME and a deterministic XDG path."""
     env = dict(os.environ)
     env["HOME"] = str(home)
+    env["USERPROFILE"] = str(home)
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
     # opencode falls back to $HOME/.config only when XDG_CONFIG_HOME is unset.
     env.pop("XDG_CONFIG_HOME", None)
     env.pop("CLAUDE_CONFIG_DIR", None)
+    env.pop("PI_CODING_AGENT_DIR", None)
     if config_dir is not None:
         env["CLAUDE_CONFIG_DIR"] = str(config_dir)
     return subprocess.run(
@@ -357,6 +360,8 @@ def test_paridad_bash_powershell() -> None:
             )
             # -printf is a GNU extension missing from the find shipped with macOS.
             check("-printf" not in content, f"{rel}: sin extensiones GNU de find")
+            for flag in ("--migrate-retired-agents", "--approve-retired-file", "--approve-retired-sha256", "--validate-migration"):
+                check(flag in content, f"{rel}: delega {flag} en Python")
 
 
 def main() -> int:

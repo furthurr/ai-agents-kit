@@ -29,8 +29,6 @@ IDs estables del kit:
 
 | ID | Nombre visible típico |
 |----|------------------------|
-| `project-navigator` | Project Navigator |
-| `architecture` | Architecture Agent |
 | `code-review` | Code Review Agent |
 | `data-api` | Data & API Agent |
 | `documentation-orchestrator` | Documentation Orchestrator |
@@ -40,7 +38,7 @@ IDs estables del kit:
 
 ### OpenCode
 
-- Selecciona el agente (p. ej. `@architecture`, `@sdd`, `@code-review`).
+- Selecciona el agente (p. ej. `@documentation-orchestrator`, `@sdd`, `@code-review`).
 - Las skills viven en `~/.config/opencode/skills/` y pueden cargarse por
   relevancia del prompt.
 - Ejemplo: con `@sdd` — *“Planifica el login biométrico en modo standard”*.
@@ -61,7 +59,7 @@ IDs estables del kit:
 ### Claude Code
 
 - Agentes en `~/.claude/agents/` o `$CLAUDE_CONFIG_DIR/agents/`; se invocan con
-  una petición de delegación o mención `@architecture`, `@sdd`, etc.
+  una petición de delegación o mención `@documentation-orchestrator`, `@sdd`, etc.
 - Skills en `~/.claude/skills/` o `$CLAUDE_CONFIG_DIR/skills/`; también puedes
   invocarlas con `/sdd-spec`, `/security`, etc.
 - Steering del proyecto: `CLAUDE.md`, `.claude/CLAUDE.md` y `.claude/rules/*.md`.
@@ -83,7 +81,7 @@ IDs estables del kit:
   documentado es `/<skill-name>`, por ejemplo `/sdd-spec`. Comprueba además que el
   agente carga `SKILL.md` y sus referencias, tanto principal como subagente.
 - Tras instalar o actualizar, reinicia la superficie objetivo y comprueba otra
-  vez el descubrimiento 8/10; registra el mecanismo de recarga realmente observado
+  vez el descubrimiento 6/10; registra el mecanismo de recarga realmente observado
   en [antigravity-smoke.md](antigravity-smoke.md).
 - `@sdd` y `@<agente>` expresan routing del kit, **no sintaxis nativa confirmada**.
   La sustitución `{{sdd_agent}}` produce el identificador nominal `sdd`, no un
@@ -94,18 +92,18 @@ IDs estables del kit:
   verificados. Scripts con fixtures: **22/22 pruebas nativas por OS** en Linux,
   macOS y Windows, Python 3.10, en el
   [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
-  Runtime (descubrimiento 8/10, UI, referencias e `invoke_subagent`): **PENDIENTE**.
+  Runtime (descubrimiento 6/10, UI, referencias e `invoke_subagent`): **PENDIENTE**.
 - Steering admitido: `GEMINI.md`, `AGENTS.md`, `.agents/rules/*.md`; el instalador
   no crea ni sobrescribe estas reglas ni settings del usuario.
   El bridge `GEMINI.md` → `AGENTS.md` no está implementado.
-- Los ocho agentes declaran `model: inherit`, `mainAgent: true`, `subagent: true`
+- Los seis agentes declaran `model: inherit`, `mainAgent: true`, `subagent: true`
   y herramientas por rol. Esto no cambia automáticamente el modelo ni constituye
   un sandbox por carpeta/comando. Las skills se descubren globalmente: no se
   declara un campo `skills` explícito cuya resolución de rutas es ambigua.
 
 No hay delegación automática. El handoff sigue siendo explícito y portable; una
 invocación nativa de prueba requiere un padre del host con `invoke_subagent`, una
-petición explícita del usuario y contexto autorizado completo. Los ocho roles
+petición explícita del usuario y contexto autorizado completo. Los seis roles
 del kit no reciben esa herramienta para encadenar delegaciones.
 
 Si no ves un agente tras instalar, **reinicia** la herramienta y verifica la
@@ -115,9 +113,9 @@ ruta de destino en [instalacion.md](instalacion.md).
 
 | Dices algo como… | Agente |
 |------------------|--------|
-| “¿Qué es este repo?”, “¿dónde está X?”, “bootstrap del navigator” | Project Navigator |
+| “¿Qué es este repo?”, “¿dónde está X?” | Documentation Orchestrator → `inspect` |
 | “¿Está actualizada la documentación?”, “actualiza lo que tenemos”, “release-check” | Documentation Orchestrator |
-| “Documenta la arquitectura”, “añade un ADR”, “¿qué módulos hay?” | Architecture |
+| “Documenta la arquitectura”, “añade un ADR”, “bootstrap del core” | Documentation Orchestrator → mantenimiento core autorizado |
 | “Solo calidad: revisa code smells”, “baja complejidad” | Code Review — `code-quality` |
 | “Catálogo de endpoints”, “DTO de login”, “diagrama ER” | Data & API |
 | “Solo seguridad”, “¿hay secretos en claro?”, “hardening TLS” | Code Review — `security` |
@@ -132,10 +130,10 @@ Catálogo completo: [catalogo.md](catalogo.md).
 
 1. **Respeta el alcance del agente** — no pidas al de UI que arregle la API.
    Code Review puede revisar calidad y seguridad en la misma sesión, o solo uno.
-2. **Primera vez en un repo** — usa Project Navigator para bootstrap de
-   `.navigator/` (mapa barato); luego deja que cada especialista inicialice su
-   carpeta (`.architecture/`, `.design/`, etc.).
-   Architecture, Data & API, UI Design, Quality y Security recomiendan nivel antes
+2. **Primera vez en un repo** — usa Documentation Orchestrator con `inspect` para
+   investigar sin persistencia, o solicita `bootstrap-core` para proponer
+   `.navigator/` y `.architecture/`; cada skill conserva sus gates y su carpeta.
+   Las skills Architecture, Data & API, UI Design, Quality y Security recomiendan nivel antes
    de operar: los avisos puntuales y pesados son informativos y el trabajo autorizado
    continúa en el mismo turno. Si el Orchestrator ya comunicó ese aviso para el mismo
    alcance, el especialista no lo repite; no requiere confirmación ni reanudación.
@@ -156,7 +154,7 @@ Catálogo completo: [catalogo.md](catalogo.md).
    orientar la exploración. Un índice desfasado solo aporta rutas candidatas: la
    documentación aplicable y el código real confirman las decisiones. Su ausencia
    no bloquea el flujo ni provoca bootstrap/update automático.
-4. **Escalado recomendado, no automático** — Architecture, Code Review, Data & API
+4. **Escalado recomendado, no automático** — Documentation Orchestrator, Code Review, Data & API
    y UI Design evalúan si una mejora necesita más requisitos o diseño. Si
    recomiendan SDD, explican el motivo, citan el hallazgo y se detienen antes del
    código; tú decides si cambias de agente. SDD no amplía el alcance del especialista.
@@ -177,13 +175,15 @@ Catálogo completo: [catalogo.md](catalogo.md).
 ## Orquestación documental
 
 Elige `documentation-orchestrator` cuando la petición cruza varias carpetas. No
-crea `.documentation/`: por cada acción carga la skill especialista o emite un
-handoff portable para continuar con el agente real; nunca hace ambas cosas. Cada
-especialista conserva la autoridad sobre su dominio.
+crea `.documentation/`. También es la entrada para consultas y mantenimiento core:
+ejecuta localmente `architecture` y `project-navigator`, que siguen siendo skills
+separadas. Para datos, UI y calidad/seguridad carga la skill o emite un handoff al
+agente vigente; nunca ambas vías para la misma acción.
 
 | Intención | Modo detectado |
 |-----------|----------------|
 | “Estado de la documentación” / `sync-check` | `status` |
+| “Explica las capas” / “Localiza autenticación” | `inspect` (solo lectura core) |
 | “Inicializa el core” | `bootstrap-core` (`.navigator/` + `.architecture/`) |
 | “Actualiza el core existente” | `sync-core` |
 | “Actualiza las carpetas que ya tenemos” | `sync-existing` |
@@ -197,6 +197,8 @@ nunca lo cambia. `status` y `release-check` inspeccionan e informan sin pausa po
 modelo; las escrituras conservan la aprobación del plan global y los gates reales.
 
 Si necesitas continuar con el agente especialista real, pídelo explícitamente.
+Los receptores documentales son `data-api`, `ui-design` y `code-review`; el core
+se ejecuta localmente sin handoff ni alias a agentes retirados.
 El orquestador entrega un bloque `## Handoff`; cópialo al agente indicado y
 devuelve después su bloque `## Handoff Result` al orquestador. Para una misma
 acción se usa la skill local o el handoff, nunca ambos. `write_scope` es una
@@ -208,11 +210,9 @@ ambas carpetas. Solo se agrupan con la misma acción, proyecto y vía autorizada
 
 | Agente | Artefactos típicos |
 |--------|-------------------|
-| Project Navigator | `.navigator/` (ai-context, module-map, config; symbols/graph opt-in) |
-| Architecture | `.architecture/` (contexto, diagramas, ADRs, deuda) |
 | Code Review | `.quality/` y/o `.security/` (hallazgos, estándares, evidencia por dominio) |
 | Data & API | `.data/` (catálogo, modelos, contratos, ER) + lanzador Scalar para REST, bloqueado hasta disponer de OpenAPI válido |
-| Documentation Orchestrator | No deja carpeta propia; coordina las anteriores |
+| Documentation Orchestrator | `.navigator/` mediante `project-navigator`; `.architecture/` mediante `architecture`; coordina otros dominios, sin carpeta propia |
 | UI Design | `.design/` (tokens, componentes, deuda visual) |
 | SDD | `.sdd/specs/<ruta-spec>/` plana o agrupada por módulo (requirements, design, tasks, verification) |
 | Git & Release | Commits/tags/CHANGELOG; perfil en `.release/` si aplica |
@@ -237,11 +237,11 @@ Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
 
 ## Límites que debes esperar
 
-- Project Navigator **no** implementa features ni escribe fuera de `.navigator/`
+- La skill Project Navigator **no** implementa features ni escribe fuera de `.navigator/`
   (salvo export opt-in a `AGENTS.md` con confirmación); no selecciona el modelo.
 - Documentation Orchestrator no modifica producto, no selecciona el modelo y no
   administra `.sdd/`, `.release/` ni `graphify-out/`.
-- Architecture **no** refactoriza código de negocio.
+- La skill Architecture **no** refactoriza código de negocio.
 - Code Review usa `security` para riesgos, no los corrige con criterios de calidad;
   una revisión de solo calidad no autoriza ampliar a seguridad.
 - Data & API **no** implementa pantallas.
@@ -252,6 +252,19 @@ Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
   (integrity gate).
 
 ## Ejemplo de flujo completo
+
+Los agentes pueden consumir contexto core directamente sin handoff: entrar por
+`.architecture/README.md` y resolver config/instancia de `.navigator/` para leer
+`ai-context.md` o `module-map.json`. Verificar baseline y cambios relevantes;
+escalar a símbolos/grafo solo si hace falta. Si falta contexto, es ambiguo,
+ilegible o desfasado, continuar con fuentes directas y declarar límites.
+Código, steering y contratos son autoridad; un índice viejo solo orienta.
+Consultar no autoriza crear, sincronizar ni exportar contexto.
+
+Las menciones `@architecture` y `@project-navigator` ya no son receptores vigentes.
+Reformula la petición a `@documentation-orchestrator`; no se transfiere ninguna
+autorización antigua. Si el host no resuelve la mención retirada, selecciona el
+agente vigente manualmente. Consulta [migración segura](migracion-agentes.md).
 
 Los `@<agente>` siguientes identifican roles del kit; en Antigravity usa la
 selección comprobada en el smoke, sin interpretar estas líneas como comandos.

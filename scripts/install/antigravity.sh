@@ -1,16 +1,26 @@
 #!/usr/bin/env bash
-# Instala el inventario Antigravity en HOME; --dry-run no escribe, --force omite backup.
+# Instala el inventario Antigravity en HOME; --force solo omite backup de sobrescritura.
+# --migrate-retired-agents: opt-in con backup obligatorio; --dry-run no escribe.
+# --approve-retired-file RUTA --approve-retired-sha256 SHA: repetibles, ruta exacta.
+# --additional-agents-dest RUTA: destino local adicional para migración explícita.
 set -euo pipefail
 trap 'printf "Instalación fallida; se conservan los backups previos.\n" >&2' ERR
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 FORCE=0
 DRY_RUN=0
-for arg in "$@"; do
+MIGRATE=0
+MIGRATION_ARGS=(--backup-root "$HOME/.ai-agents-kit-retired-backups")
+while [ "$#" -gt 0 ]; do
+  arg="$1"; shift
   case "$arg" in
     --force) FORCE=1 ;;
     --dry-run) DRY_RUN=1 ;;
-    -h|--help) printf 'Uso: antigravity.sh [--dry-run] [--force]\n'; exit 0 ;;
+    --migrate-retired-agents) MIGRATE=1 ;;
+    --approve-retired-file|--approve-retired-sha256|--additional-agents-dest)
+      [ "$#" -gt 0 ] || { echo "Falta valor para $arg" >&2; exit 2; }
+      MIGRATION_ARGS+=("$arg" "$1"); shift ;;
+    -h|--help) printf 'Uso: antigravity.sh [--dry-run] [--force] [--migrate-retired-agents] [--approve-retired-file RUTA --approve-retired-sha256 SHA] [--additional-agents-dest RUTA]\n'; exit 0 ;;
     *) printf 'Argumento desconocido: %s\n' "$arg" >&2; exit 2 ;;
   esac
 done
@@ -28,6 +38,9 @@ BACKUP_ROOT=""
 preflight() {
   "$PYTHON" "$REPO_ROOT/tools/install_preflight.py" --platform antigravity "$@"
 }
+VALIDATION_ARGS=(--agents-dest "$AGENTS_DEST" --skills-dest "$SKILLS_DEST")
+[ "$MIGRATE" -eq 0 ] || VALIDATION_ARGS+=(--migration-requested)
+preflight --validate-migration "${VALIDATION_ARGS[@]}" "${MIGRATION_ARGS[@]}"
 if ! preflight --check-source; then
   printf 'Instalación abortada: fuente incompleta.\n' >&2; exit 1
 fi
@@ -98,7 +111,10 @@ while IFS=$'\t' read -r section name; do
     cp "$src" "$dest"
   fi
 done <<< "$INVENTORY"
-if [ "$DRY_RUN" -eq 1 ]; then printf 'Dry-run finalizado: no se escribió nada.\n'; exit 0; fi
+if [ "$DRY_RUN" -eq 1 ]; then
+  [ "$MIGRATE" -eq 0 ] || preflight --migrate-retired-agents --dry-run --agents-dest "$AGENTS_DEST" "${MIGRATION_ARGS[@]}"
+  printf 'Dry-run finalizado: no se escribió nada.\n'; exit 0
+fi
 if ! preflight --check-installed --skills-dest "$SKILLS_DEST" --agents-dest "$AGENTS_DEST"; then
   printf 'Instalación incompleta; se conservan los backups.\n' >&2; exit 1
 fi
@@ -126,5 +142,6 @@ for agent_id in manifest['agents']:
     if not installed.is_file() or installed.read_bytes() != source.read_bytes():
         raise ValueError(f'Agente instalado ausente o diferente: {installed}')
 PY
+[ "$MIGRATE" -eq 0 ] || preflight --migrate-retired-agents --skills-dest "$SKILLS_DEST" --agents-dest "$AGENTS_DEST" "${MIGRATION_ARGS[@]}"
 printf 'Instalación completada.\n'
 if [ -n "$BACKUP_ROOT" ]; then printf 'Backup previo de skills y agents: %s\n' "$BACKUP_ROOT"; fi

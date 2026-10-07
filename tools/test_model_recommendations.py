@@ -61,7 +61,8 @@ def check_continuity(text: str, label: str, *, positive: bool = True) -> None:
 
 def test_specialist_contracts() -> None:
     for specialist in SPECIALISTS:
-        agent_id = "code-review" if specialist in ("code-quality", "security") else specialist
+        agent_id = ("documentation-orchestrator" if specialist == "architecture" else
+                    "code-review" if specialist in ("code-quality", "security") else specialist)
         agent = read(ROOT / "canonical" / "agents" / f"{agent_id}.md")
         skill_dir = ROOT / "canonical" / "skills" / specialist
         skill = read(skill_dir / "SKILL.md")
@@ -111,7 +112,6 @@ def test_specialist_contracts() -> None:
 def test_existing_agents_and_git_exception() -> None:
     markers = {
         "documentation-orchestrator": "Preflight informativo",
-        "project-navigator": "Aviso de modelo",
         "sdd": "Gate 0 de `sdd-spec`",
     }
     for agent_id, marker in markers.items():

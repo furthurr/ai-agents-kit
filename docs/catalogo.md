@@ -3,7 +3,7 @@
 Resumen de lo que incluye el kit. El detalle operativo vive en
 `canonical/skills/<id>/SKILL.md` y `canonical/agents/<id>.md`.
 
-Inventario oficial: `canonical/manifest.json` (10 skills, 8 agentes, 6 plataformas).
+Inventario oficial: `canonical/manifest.json` (10 skills, 6 agentes, 6 plataformas).
 
 Todos los componentes forman **MAS** (*Multi-Agent System*), el sistema
 multiagente de este kit. La convención para referirse al sistema o a un agente
@@ -31,22 +31,19 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 
 | ID | Nombre | Skills que usa | Rol |
 |----|--------|----------------|-----|
-| [`architecture`](agentes/architecture.md) | Architecture Agent | `architecture` | Solo documenta/audita/recomienda en `.architecture/` |
 | [`code-review`](agentes/code-review.md) | Code Review Agent | `code-quality` + `security` según alcance | Calidad, mantenibilidad, pruebas y seguridad; registros separados |
 | [`data-api`](agentes/data-api.md) | Data & API Agent | `data-api` | Capa de datos y contratos; identifica PII |
-| [`documentation-orchestrator`](agentes/documentation-orchestrator.md) | Documentation Orchestrator | `documentation-orchestrator` + especialistas seleccionadas | Coordina estado, bootstrap, sincronización y release-check documental |
+| [`documentation-orchestrator`](agentes/documentation-orchestrator.md) | Documentation Orchestrator | `documentation-orchestrator` + `architecture` y/o `project-navigator` bajo demanda; otras especialistas según alcance | Consultas core (`inspect`), arquitectura, navegación y mantenimiento documental |
 | [`ui-design`](agentes/ui-design.md) | UI Design Agent | `ui-design` | Solo lo visual; no toca negocio ni APIs |
 | [`sdd`](agentes/sdd.md) | Agente SDD | `sdd-spec` | Selecciona `lite` para trabajo acotado de bajo riesgo; specs, gates e implementación trazable |
 | [`git-release-manager`](agentes/git-release-manager.md) | Git & Release Manager | `git-commit` + `release-management` | Commits, push, versiones, tags, CHANGELOG |
-| [`project-navigator`](agentes/project-navigator.md) | Project Navigator | `project-navigator` | Investigación/navegación; bootstrap de índices en `.navigator/` |
 
 ## Mapa skill ↔ agente ↔ carpeta
 
 ```text
-project-navigator ──────► Project Navigator       → .navigator/
-documentation-orch. ────► Documentation Orchestrator
-                          └─ coordina las carpetas existentes; no crea una propia
-architecture  ──────────► Architecture Agent      → .architecture/
+project-navigator ──┐
+architecture ───────┼───► Documentation Orchestrator → .navigator/ y .architecture/
+documentation-orch. ┘     Skills separadas; core local; no carpeta propia
 code-quality  ──┐
                 ├──────► Code Review Agent       → .quality/ y .security/
 security      ──┘                                 (según dominio solicitado)
@@ -62,9 +59,9 @@ release-mgmt  ──┘                                 → .release/ (releases)
 
 | Necesitas… | Usa |
 |------------|-----|
-| Onboarding, localizar módulos/símbolos sin reexplorar el repo | Project Navigator |
+| Onboarding, localizar módulos/símbolos sin reexplorar el repo | Documentation Orchestrator → `inspect` con `project-navigator` |
 | Comprobar o sincronizar varias carpetas documentales | Documentation Orchestrator |
-| Entender o documentar módulos, capas, ADRs | Architecture |
+| Entender o documentar módulos, capas, ADRs | Documentation Orchestrator → `inspect` o mantenimiento con `architecture` |
 | Limpiar smells, complejidad, cobertura, convenciones | Code Review — solo calidad |
 | Endpoints, DTOs, OpenAPI, repositorios, ER | Data & API |
 | Secretos, TLS, auth, permisos, hardening | Code Review — solo seguridad |
@@ -97,16 +94,21 @@ cuando el procedimiento lo pide. Eso reduce tokens en tareas simples.
 | `pi` | `~/.pi/agent/skills/` y `~/.pi/agent/prompts/` (o `$PI_CODING_AGENT_DIR`) |
 | `antigravity` | `~/.gemini/config/skills/` y `~/.gemini/config/agents/` (Antigravity 2.0) |
 
-Antigravity distribuye los mismos ocho agentes y diez skills, con recursos
+Antigravity distribuye los mismos seis agentes y diez skills, con recursos
 asociados. El alcance nativo inicial es **Antigravity 2.0**, no soporte completo
 del CLI ni del IDE standalone. El CLI documenta skills globales en
 `~/.gemini/antigravity-cli/skills/`, destino distinto que este instalador no usa;
 los agentes personalizados del IDE no están verificados. Los scripts se probaron
 con fixtures en Linux, macOS y Windows: **22/22 pruebas nativas por OS**, Python
 3.10, [CI 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
-El runtime Antigravity (descubrimiento 8/10, UI, referencias e `invoke_subagent`)
+El runtime Antigravity (descubrimiento 6/10, UI, referencias e `invoke_subagent`)
 sigue **PENDIENTE**. Véase la evidencia automatizada y el
 [procedimiento de smoke](antigravity-smoke.md).
 
 Guía de instalación: [instalacion.md](instalacion.md).  
 Cómo invocarlos: [uso.md](uso.md).
+
+`architecture` y `project-navigator` son skills vigentes, no agentes receptores ni
+aliases. Sus [guías de arquitectura](agentes/architecture.md) y
+[navegación](agentes/project-navigator.md) se conservan. Para instalaciones previas,
+consulta [migración y recuperación](migracion-agentes.md).

@@ -5,7 +5,7 @@ instalar una plataforma y reiniciar la herramienta.
 
 ## Tareas puntuales
 
-Solicita una consulta o ajuste localizado a Architecture, Code Review, Data & API
+Solicita una consulta o ajuste localizado a Documentation Orchestrator (skill Architecture), Code Review, Data & API
 y UI Design. Cada agente debe recomendar `BAJO` o `MEDIO` de forma informativa e
 inspeccionar y responder en el mismo turno, sin exigir «continúa» ni confirmar el modelo.
 Con Code Review prueba un finding `QLT`
@@ -45,13 +45,13 @@ confirmaciones operativas, pero no añade un Gate de modelo.
 - **UI de la captura:** adjunta una captura y pide explicar una inconsistencia
   visual puntual, sin escribir. Debe inspeccionar la captura y las fuentes necesarias
   y responder en el mismo turno; falla si solo recomienda un nivel y pide «continúa».
-- **Orchestrator:** `status`/`release-check` inspeccionan e informan sin pausa;
+- **Orchestrator:** `inspect`/`status`/`release-check` inspeccionan e informan sin pausa;
   bootstrap/sync presentan el plan y conservan aprobación de escritura. El handoff
   no duplica avisos ni acredita autorización mediante `gate_state`.
 - **SDD:** `direct`, Requirements `standard` y Quick Plan `lite` empiezan tras el
   aviso. Gates 1–4 esperan aprobación; Implementación → Verification continúa
   automáticamente. Plan-only no implementa y reclasificar el flujo requiere aprobación.
-- **Navigator:** proceso pesado autorizado continúa tras el aviso previo y el final
+- **Navigator (skill local del Orchestrator):** proceso pesado autorizado continúa tras el aviso previo y el final
   no bloquea; creación/update/export y sobrescritura requieren autorización efectiva.
 - **Quality/Security:** auditoría no autoriza remediación; el primer micro-paso y
   cada siguiente conservan su aprobación. Los permisos `ask`/`deny` del host,

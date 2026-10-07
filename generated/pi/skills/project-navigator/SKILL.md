@@ -18,7 +18,8 @@ una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. N
 confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
 Referencia canónica de **cómo navegar e indexar** un repositorio con mínimo de
-tokens. Complementa al agente `project-navigator`. Si agente y skill divergen,
+tokens. `documentation-orchestrator` es la entrada core y la ejecuta localmente.
+Si agente y skill divergen,
 **manda esta skill**.
 
 Objetivo: responder con la capa más barata suficiente y citar fuentes.
@@ -35,8 +36,8 @@ Objetivo: responder con la capa más barata suficiente y citar fuentes.
 - Onboarding: qué es el proyecto, cómo está organizado
 - Localizar módulos, símbolos, dependencias e impacto
 - Antes de una feature/refactor cuando haga falta mapa sin reexplorar el repo
-- Primera vez sin `.navigator/` → bootstrap
-- Actualizar índices cuando el usuario lo pida o haya desfase claro
+- Primera vez sin `.navigator/` → lectura degradada; proponer bootstrap si conviene
+- Actualizar índices solo cuando el usuario lo pida o autorice el mantenimiento
 
 ## Flujo obligatorio al recibir una petición
 
@@ -52,8 +53,10 @@ Objetivo: responder con la capa más barata suficiente y citar fuentes.
    (`references/config.md`). No inferir su estado desde mensajes anteriores.
    Resolver índices junto al `config.yaml` seleccionado, nunca desde el path del
    archivo consultado ni desde `project.root`.
-4. Si no hay navigator y la consulta lo necesita → **ofrecer bootstrap**; si el
-   usuario no quiere → modo degradado (`references/config.md`).
+4. Si falta contexto o está desfasado, ambiguo, inválido o ilegible → modo
+   degradado (`references/config.md`) sin bloquear la consulta. Puedes recomendar
+   mantenimiento a `documentation-orchestrator`, sin bootstrap/update automático
+   ni exigir aceptación antes de responder con fuentes directas.
 5. Elegir la **capa mínima** (tabla abajo); subir de capa solo si no basta.
 6. Responder de forma concisa citando **fuente** (path de capa o `archivo:linea`).
 7. Si hubo degradado: distinguir `capas_ausentes` de
@@ -75,6 +78,13 @@ Detalle de capas y presupuestos: `references/layers.md`. Contratos normativos de
 `module-map.json` y `symbols.json`: `references/schemas.md`.
 
 ### Reglas de consulta
+
+Lee instrucciones/steering primero y aplica bajo demanda el
+[contrato compartido](../documentation-orchestrator/references/project-context.md).
+Esta skill conserva autoridad de formatos y disponibilidad. La consulta no
+ejecuta bootstrap, update ni export: son acciones distintas con sus gates y
+confirmación aplicables. Baselines no verificables o desfasados solo aportan
+pistas; valida decisiones en código y contratos. No cambia la política de avisos.
 
 - Preferir archivo + rango de líneas sobre leer directorios enteros
 - No volcar grafo ni `symbols.json` / `module-map.json` completos al contexto

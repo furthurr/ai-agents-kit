@@ -12,12 +12,10 @@
     "ui-design"
   ],
   "agents": [
-    "architecture",
     "code-review",
     "data-api",
     "documentation-orchestrator",
     "git-release-manager",
-    "project-navigator",
     "sdd",
     "ui-design"
   ],

@@ -1,8 +1,9 @@
 ---
 name: documentation-orchestrator
 description: >-
-  Coordina y comprueba la documentacion canonica de un proyecto. Use when the
-  user asks for docs status, sync-check, bootstrap-core, sync-core,
+  Consulta arquitectura y navegación y coordina la documentacion canonica de un
+  proyecto. Use when the user asks to explain architecture, locate modules,
+  inspect, docs status, sync-check, bootstrap-core, sync-core,
   sync-existing, sync-domain, release-check, pre-release check, comprobar si la
   documentacion esta actualizada, actualizar las carpetas existentes o verificar
   si el proyecto esta listo para una release. Recomienda un modelo bajo, medio o
@@ -40,7 +41,9 @@ la autoridad sobre su propia carpeta.
 `.sdd/`, `.release/` y `graphify-out/` pertenecen a otros workflows. Se pueden
 leer como contexto, pero esta skill nunca los crea, sincroniza ni modifica.
 
-Cuando se activa un dominio, elige una sola via: carga su skill o prepara la
+El core se ejecuta localmente: carga `architecture` o `project-navigator` bajo
+demanda, sin handoff para consultas ni mantenimiento core. Conserva ambas skills
+y destinos separados. Cuando se activa otro dominio, elige una sola via: carga su skill o prepara la
 continuidad con el agente especialista real mediante un handoff. Si una regla de
 dominio entra en conflicto con esta coordinacion, manda la skill especialista
 dentro de su carpeta; esta skill manda sobre orden, seleccion y cierre global.
@@ -56,13 +59,15 @@ No amplias permisos ni cambias una accion para poder agruparla.
 | Modo | Contrato |
 | --- | --- |
 | `status` | Solo lectura; inventario, aplicabilidad y frescura. Alias natural: `sync-check`. |
+| `inspect` | Consulta de arquitectura o navegación, solo lectura y cero persistencia; skills core locales bajo demanda. |
 | `bootstrap-core` | Propone inicializar solo `.navigator/` y `.architecture/`; nunca sobrescribe. |
 | `sync-core` | Actualiza core existente; recomienda el core ausente sin crearlo. |
 | `sync-existing` | Actualiza solo carpetas primarias existentes; no crea ausentes. |
 | `sync-domain` | Actualiza los dominios explicitamente solicitados. |
 | `release-check` | Solo lectura; gate documental y de riesgos criticos previo a release. |
 
-Defaults: sin modo → `status`; "actualiza lo que tenemos" → `sync-existing`;
+Defaults: sin modo → `status` si no hay intención específica; preguntas sobre
+capas, módulos, símbolos o impacto → `inspect`; "actualiza lo que tenemos" → `sync-existing`;
 feature o bugfix → derivar a `sdd-spec`. Si pide "sincronizar todo" sin aclarar
 si incluye carpetas ausentes, pregunta antes de elegir modo.
 
@@ -92,11 +97,14 @@ Si el repo cambia durante una espera por decision real, repite el preflight mini
 
 1. Resuelve uno o varios proyectos independientes; pregunta si hay empate.
 2. Ejecuta un estado inicial y presenta el plan de carpetas y acciones cuando aplique.
-   `status` y `release-check` continuan con lectura e informe en el mismo turno.
+   `inspect`, `status` y `release-check` continuan con lectura e informe en el mismo turno.
+   En `inspect`, investiga la pregunta con contexto mínimo o fuentes directas,
+   sin plan de escritura ni inventario global obligatorio.
 3. Antes de escribir, espera aprobacion global del plan; reutiliza autorizacion
    efectiva de la misma operacion y alcance en la sesion, sin confundir un aviso
    o metadatos de handoff con autorizacion.
-4. Para cada dominio aprobado elige una sola via: ejecuta aqui su skill, o emite
+4. Ejecuta siempre core aquí con su skill bajo demanda. Para cada otro dominio
+   aprobado elige una sola via: ejecuta aqui su skill, o emite
    un handoff al agente especialista real si el usuario lo pide o hacen falta su
    rol o permisos; nunca ambas para la misma accion (`references/handoff.md`).
 5. Tras un handoff, marca el dominio pendiente del especialista y espera su
@@ -131,12 +139,18 @@ existia requiere `sync-core` o alcance explicito para modificarse.
 - Git es solo lectura (`status`, `log`, `diff`, `show`, `rev-parse`).
 - Ejecuta un solo comando Git por llamada; no uses pipes ni separadores de shell.
 - Si un dominio falla o no tiene evidencia, marca `Bloqueado`; no lo declares
-  completado. Pregunta antes de continuar con dominios independientes.
+   completado. Pregunta antes de continuar con dominios independientes.
+- En una consulta `inspect`, ausencia, desfase o contexto ilegible no es fallo de
+  ejecución documental: degrada a fuentes directas sin bloquear ni autoactualizar.
 - No instales herramientas ni ejecutes Graphify.
 - `release-check` no versiona, no genera changelog y no crea tags; eso pertenece
   a `release-management`.
 
 ## Referencia bajo demanda
+
+Lee [`references/project-context.md`](references/project-context.md) para consumo
+selectivo de arquitectura y Navigator. No exige cargar otros workflows ni todas
+las skills. Navigator conserva autoridad de formatos y disponibilidad.
 
 Lee [`references/workflows.md`](references/workflows.md) al clasificar una
 operacion o ejecutar un modo. Contiene la matriz de modelo, estados, gates,

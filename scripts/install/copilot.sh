@@ -9,6 +9,9 @@
 # Antes de sobrescribir, hace una copia de seguridad de lo existente.
 #
 # Uso:
+#   --migrate-retired-agents: retirada opt-in con backup obligatorio.
+#   --approve-retired-file RUTA --approve-retired-sha256 SHA: repetibles, ruta exacta.
+#   --additional-agents-dest RUTA: destino local adicional para migración explícita.
 #   ./scripts/install/copilot.sh                 # instalación normal (con backup automático)
 #   ./scripts/install/copilot.sh --force         # sobrescribe sin crear backup
 #   ./scripts/install/copilot.sh --dry-run       # muestra lo que haría, sin copiar nada
@@ -21,16 +24,23 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 FORCE=0
 DRY_RUN=0
+MIGRATE=0
+MIGRATION_ARGS=(--backup-root "$HOME/.ai-agents-kit-retired-backups")
 
-for arg in "$@"; do
+while [ "$#" -gt 0 ]; do
+  arg="$1"; shift
   case "$arg" in
     --force)   FORCE=1 ;;
     --dry-run) DRY_RUN=1 ;;
+    --migrate-retired-agents) MIGRATE=1 ;;
+    --approve-retired-file|--approve-retired-sha256|--additional-agents-dest)
+      [ "$#" -gt 0 ] || { echo "Falta valor para $arg" >&2; exit 2; }
+      MIGRATION_ARGS+=("$arg" "$1"); shift ;;
     -h|--help)
       grep '^#' "$0" | sed 's/^# \{0,1\}//' | sed '/^!/d'
       exit 0
       ;;
-    *) echo "Argumento desconocido: $arg" >&2; exit 1 ;;
+    *) echo "Argumento desconocido: $arg" >&2; exit 2 ;;
   esac
 done
 
@@ -108,10 +118,13 @@ echo
 if [ "$DRY_RUN" -eq 1 ]; then
   warn "Modo --dry-run: no se copiará nada."
 fi
-[ "$FORCE" -eq 1 ] && warn "Modo --force: no se crearán backups."
+[ "$FORCE" -eq 1 ] && warn "Modo --force: omite backup de sobrescritura vigente; retirada siempre con backup."
 
 # Verificar el origen antes de tocar el destino: una instalación incompleta es
 # peor que ninguna, porque se manifiesta como un agente que ignora su alcance.
+VALIDATION_ARGS=(--agents-dest "$AGENTS_DEST" --skills-dest "$SKILLS_DEST")
+[ "$MIGRATE" -eq 0 ] || VALIDATION_ARGS+=(--migration-requested)
+preflight --validate-migration "${VALIDATION_ARGS[@]}" "${MIGRATION_ARGS[@]}"
 if ! preflight --check-source; then
   err "Instalación abortada. Regenera los artefactos: python3 tools/render.py"
   exit 1
@@ -123,6 +136,7 @@ copy_dir "$REPO_ROOT/generated/copilot/agents"  "$AGENTS_DEST"  "agents (~/.copi
 
 echo
 if [ "$DRY_RUN" -eq 1 ]; then
+  [ "$MIGRATE" -eq 0 ] || preflight --migrate-retired-agents --dry-run --agents-dest "$AGENTS_DEST" "${MIGRATION_ARGS[@]}"
   ok "Dry-run finalizado: no se escribió nada."
   exit 0
 fi
@@ -132,6 +146,7 @@ if ! preflight --check-installed --skills-dest "$SKILLS_DEST" --agents-dest "$AG
   exit 1
 fi
 
+[ "$MIGRATE" -eq 0 ] || preflight --migrate-retired-agents --skills-dest "$SKILLS_DEST" --agents-dest "$AGENTS_DEST" "${MIGRATION_ARGS[@]}"
 ok "Restauración completada."
 if [ -d "$BACKUP_ROOT" ]; then
   info "Copias de seguridad guardadas en: $BACKUP_ROOT"

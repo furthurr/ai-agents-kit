@@ -15,6 +15,14 @@ Modes
     Verify that the destination directories hold that same content, and report
     artifacts that the manifest does not declare. Run before reporting success.
 
+``--validate-migration``
+    Read-only argument/path validation used by wrappers before any copies.
+
+``--migrate-retired-agents``
+    Explicit retirement after checking current installed bytes. Unknown bytes
+    require repeated --approve-retired-file and --approve-retired-sha256 pairs.
+    --dry-run prints the plan without creating backups or changing installation.
+
 Exit codes
 ----------
 ``0``
@@ -32,6 +40,9 @@ import argparse
 import json
 import sys
 from pathlib import Path
+
+sys.dont_write_bytecode = True
+import retired_agents
 
 ROOT = Path(__file__).resolve().parent.parent
 CANONICAL = ROOT / "canonical"
@@ -93,6 +104,12 @@ def check_source(platform: str, manifest: dict) -> list[str]:
         if not agent.is_file():
             problems.append(f"falta el agente '{agent_id}' (esperado {agent.relative_to(ROOT)})")
 
+    for entry in retired_agents.load_catalog():
+        if entry["platform"] == platform and entry["id"] not in manifest["agents"]:
+            retired = agents_src / entry["filename"]
+            if retired.exists() or retired.is_symlink():
+                problems.append(f"generated desfasado contiene agente retirado: {retired}; regenerar antes de copiar")
+
     return problems
 
 
@@ -131,8 +148,17 @@ def check_installed(
         for child in sorted(agents_dest.iterdir()):
             if child.name in IGNORED_NAMES:
                 continue
-            if child.is_file() and child.name not in declared:
-                notices.append(f"agente no declarado en el manifest: {child}")
+            if (child.is_file() or child.is_symlink()) and child.name not in declared:
+                retired = any(e["platform"] == platform and e["filename"] == child.name for e in retired_agents.load_catalog())
+                notices.append(f"agente {'retirado; migración explícita pendiente' if retired else 'no declarado en el manifest'}: {child}")
+
+    if platform == "opencode" and agents_dest.name in {"agent", "agents"}:
+        alternate = agents_dest.with_name("agents" if agents_dest.name == "agent" else "agent")
+        for entry in retired_agents.load_catalog():
+            if entry["platform"] == platform and entry["id"] not in manifest["agents"]:
+                child = alternate / entry["filename"]
+                if child.exists() or child.is_symlink():
+                    notices.append(f"agente retirado; migración explícita pendiente: {child}")
 
     return problems, notices
 
@@ -143,7 +169,8 @@ def report(problems: list[str], notices: list[str], success: str) -> int:
     if notices:
         print(
             "  Revisa si son artefactos propios o restos de una versión anterior.\n"
-            "  El instalador nunca los borra; retíralos a mano si ya no aplican."
+            "  Instalación vigente y migración son estados distintos.\n"
+            "  Usa --migrate-retired-agents para la retirada con respaldo verificado."
         )
     if problems:
         print("preflight: instalación incompleta", file=sys.stderr)
@@ -152,6 +179,30 @@ def report(problems: list[str], notices: list[str], success: str) -> int:
         return 1
     print(success)
     return 0
+
+
+def validate_copy_targets(platform: str, skills_dest: Path, agents_dest: Path) -> None:
+    """Read-only check of every generated path wrappers may copy, before writes.
+
+    Inspect actual source trees as some wrappers copy more than manifest entry
+    points. Checking directory and file targets also covers nested references.
+    """
+    for section, destination in (("skills", skills_dest), ("agents", agents_dest)):
+        source = GENERATED / platform / section
+        retired_agents.safe_directory(source)
+        if not source.is_dir():
+            raise OSError(f"origen de copia ausente: {source}")
+        retired_agents.safe_directory(destination)
+        for item in source.rglob("*"):
+            retired_agents.safe_path(item)
+            target = destination / item.relative_to(source)
+            if item.is_dir():
+                retired_agents.safe_directory(target)
+            else:
+                retired_agents.read_regular(item)
+                retired_agents.safe_path(target)
+                if target.exists() and not target.is_file():
+                    raise OSError(f"destino de archivo no regular: {target}")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -164,20 +215,87 @@ def main(argv: list[str] | None = None) -> int:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--check-source", action="store_true", help="Valida generated/<platform>/")
     mode.add_argument("--check-installed", action="store_true", help="Valida el destino instalado")
+    mode.add_argument("--validate-migration", action="store_true", help="Valida argumentos antes de copiar; solo lectura")
+    mode.add_argument("--migrate-retired-agents", action="store_true", help="Retirada explícita con respaldo obligatorio")
+    parser.add_argument("--migration-requested", action="store_true")
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--approve-retired-file", action="append", default=[])
+    parser.add_argument("--approve-retired-sha256", action="append", default=[])
+    parser.add_argument("--backup-root", type=Path)
+    parser.add_argument("--additional-agents-dest", type=Path, action="append", default=[])
     parser.add_argument("--skills-dest", type=Path, help="Destino de skills (--check-installed)")
     parser.add_argument("--agents-dest", type=Path, help="Destino de agentes (--check-installed)")
     args = parser.parse_args(argv)
 
+    if (args.approve_retired_file or args.approve_retired_sha256) and not (args.migrate_retired_agents or args.migration_requested):
+        return fail("aprobación requiere --migrate-retired-agents")
+    if args.check_installed and (args.migration_requested or args.dry_run or args.approve_retired_file or args.backup_root or args.additional_agents_dest):
+        return fail("--check-installed es solo lectura; no acepta opciones de migración")
+    if args.migration_requested and not args.validate_migration:
+        return fail("--migration-requested solo es válido en --validate-migration")
+    if args.additional_agents_dest and not (args.migrate_retired_agents or args.migration_requested):
+        return fail("destinos adicionales requieren migración explícita")
+    if args.check_source and (args.dry_run or args.approve_retired_file or args.backup_root):
+        return fail("--check-source no acepta opciones de migración")
+
     try:
         manifest = load_manifest()
     except (OSError, ValueError) as error:
-        return fail(str(error))
+        return report([str(error)], [], "")
 
     if args.platform not in manifest.get("platforms", []):
         declared = ", ".join(manifest.get("platforms", [])) or "(ninguna)"
         return fail(f"plataforma desconocida {args.platform!r}; declaradas: {declared}")
 
     try:
+        retired_agents.load_catalog()
+    except (OSError, ValueError) as error:
+        return report([str(error)], [], "")
+
+    try:
+        if args.validate_migration or args.migrate_retired_agents:
+            if not args.agents_dest:
+                return fail("migración requiere --agents-dest")
+            destinations = [args.agents_dest, *args.additional_agents_dest]
+            if args.platform == "opencode" and args.agents_dest.name in {"agent", "agents"}:
+                destinations.append(args.agents_dest.with_name("agents" if args.agents_dest.name == "agent" else "agent"))
+            destinations = list(dict.fromkeys(destinations))
+            try:
+                approvals = retired_agents.approvals_from_args(args.approve_retired_file, args.approve_retired_sha256, destinations, args.platform)
+            except ValueError as error:
+                return fail(str(error))
+            if args.validate_migration:
+                if args.migration_requested:
+                    if not args.skills_dest:
+                        return fail("validación de migración requiere --skills-dest")
+                    validate_copy_targets(args.platform, args.skills_dest, args.agents_dest)
+                    for destination in destinations:
+                        retired_agents.safe_directory(destination)
+                    retired_agents.validate_backup(args.backup_root or Path.home() / ".ai-agents-kit-retired-backups", destinations)
+                return 0
+            backup_root = args.backup_root or Path.home() / ".ai-agents-kit-retired-backups"
+            if not args.dry_run:
+                if not args.skills_dest:
+                    return fail("migración requiere --skills-dest")
+                problems, notices = check_installed(args.platform, manifest, args.skills_dest, args.agents_dest)
+                # Verify bytes, not merely presence, before retiring anything.
+                sources = [(GENERATED / args.platform / "agents" / name, args.agents_dest / name) for name in agent_filenames(args.platform, manifest["agents"]).values()]
+                for skill in manifest["skills"]:
+                    root = GENERATED / args.platform / "skills" / skill
+                    canonical = CANONICAL / "skills" / skill
+                    sources.extend((root / src.relative_to(canonical), args.skills_dest / skill / src.relative_to(canonical)) for src in canonical.rglob("*") if src.is_file())
+                for source, target in sources:
+                    try:
+                        if retired_agents.read_regular(source)[0] != retired_agents.read_regular(target)[0]:
+                            problems.append(f"contenido vigente no coincide: {target}")
+                    except OSError as error:
+                        problems.append(str(error))
+                if problems:
+                    return report(problems, notices, "")
+            active_retired = retired_agents.IDS & set(manifest["agents"])
+            if active_retired:
+                return report([f"catálogo vigente todavía declara retirados: {sorted(active_retired)}"], [], "")
+            return retired_agents.migrate(args.platform, destinations, backup_root, approvals=approvals, dry_run=args.dry_run)
         if args.check_source:
             problems = check_source(args.platform, manifest)
             return report(
@@ -199,7 +317,7 @@ def main(argv: list[str] | None = None) -> int:
             f"{len(manifest['agents'])} agentes instalados.",
         )
     except (OSError, ValueError) as error:
-        return fail(str(error))
+        return report([str(error)], [], "")
 
 
 if __name__ == "__main__":

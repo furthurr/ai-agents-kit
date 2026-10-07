@@ -23,7 +23,12 @@ class CodeReviewContractTest(unittest.TestCase):
 
     def test_single_agent_and_separate_skills(self) -> None:
         manifest = self.manifest()
-        self.assertEqual(len(manifest["agents"]), 8)
+        # El manifest y las fuentes canónicas deben declarar el mismo inventario,
+        # sin congelar un total que cambia al retirar agentes consolidados.
+        self.assertEqual(
+            set(manifest["agents"]),
+            {path.stem for path in (ROOT / "canonical" / "agents").glob("*.md")},
+        )
         self.assertEqual(len(manifest["skills"]), 10)
         self.assertIn("code-review", manifest["agents"])
         for old in ("code-quality", "security"):
@@ -108,10 +113,14 @@ class CodeReviewContractTest(unittest.TestCase):
 
     def test_generated_catalog(self) -> None:
         canonical = self.text("canonical/agents/code-review.md")
+        manifest = self.manifest()
         for platform in self.manifest()["platforms"]:
             adapter = json.loads(self.text(f"adapters/{platform}/agents/code-review.json"))
             generated = ROOT / "generated" / platform
-            self.assertEqual(len(list((generated / "agents").glob("*.md"))), 8)
+            self.assertEqual(
+                len(list((generated / "agents").glob("*.md"))),
+                len(manifest["agents"]),
+            )
             body = self.text(f"generated/{platform}/agents/{adapter['filename']}")
             self.assertIn("# Code Review Agent", body)
             self.assertIn("sin escrituras", body)

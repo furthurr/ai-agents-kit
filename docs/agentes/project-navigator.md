@@ -1,16 +1,17 @@
-# Project Navigator Agent
+# Guía de la skill project-navigator
 
 ## Resumen
 
 | Campo | Información |
 |---|---|
-| ID | `project-navigator` |
+| Entrada responsable | `documentation-orchestrator` (agente) |
 | Skill | [`project-navigator`](../../canonical/skills/project-navigator/SKILL.md) |
 | Propósito | Navegar e investigar un repositorio usando la capa más barata suficiente |
 | Memoria | `.navigator/` |
 | Estilo | Divulgación progresiva y respuestas con fuentes |
 
-Project Navigator reduce la reexploración del repositorio. No intenta leerlo todo:
+La skill Project Navigator, ejecutada localmente por Documentation Orchestrator,
+reduce la reexploración del repositorio. No intenta leerlo todo:
 elige la mínima capa que puede responder la pregunta y cita el índice o el código.
 
 ## Cuándo usarlo
@@ -54,18 +55,29 @@ El bootstrap crea como mínimo:
 ## Ejemplos de uso
 
 ```text
-@project-navigator ¿Qué es este repositorio y cómo está organizado?
+@documentation-orchestrator inspect: ¿Qué es este repositorio y cómo está organizado?
 ```
 
 ```text
-@project-navigator ¿Dónde se define el entrypoint y qué módulos dependen de él?
+@documentation-orchestrator inspect: ¿Dónde se define el entrypoint y qué módulos dependen de él?
 Cita archivo y línea; no leas el repositorio completo.
 ```
 
 ```text
-@project-navigator Inicializa los índices del proyecto y presenta primero el
-alcance, las fuentes y el presupuesto.
+@documentation-orchestrator bootstrap-core: inicializa el core y presenta primero
+el alcance, las fuentes, el presupuesto y el plan de escritura.
 ```
+
+```text
+@documentation-orchestrator sync-domain project-navigator: actualiza solo los índices existentes.
+Presenta las capas afectadas y conserva las autorizaciones de escritura/exportación.
+```
+
+`inspect` no crea ni actualiza índices. Si faltan, están desfasados, no son
+verificables o hay varias instancias ambiguas, usa fuentes directas y comunica
+los límites. No obliga a bootstrap ni crea handoff core. La skill se conserva
+separada de `architecture`; `@project-navigator` es un agente retirado sin alias.
+Para instalaciones anteriores, consulta [migración segura](../migracion-agentes.md).
 
 ## Límites y confirmaciones
 

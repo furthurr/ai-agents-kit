@@ -62,6 +62,18 @@ class HandoffContractTest(unittest.TestCase):
     def test_valid_handoff(self) -> None:
         self.assertEqual(validate_handoff(self.valid_handoff(), self.workspace), [])
 
+    def test_core_targets_retired_without_authorization_transfer(self) -> None:
+        self.assertEqual(set(TARGET_SCOPES), {"data-api", "ui-design", "code-review"})
+        for target, scope in (("architecture", ".architecture/"),
+                              ("project-navigator", ".navigator/")):
+            with self.subTest(target=target):
+                data = self.valid_handoff(target=target, scope=scope, write_scope=scope)
+                original = dict(data)
+                errors = validate_handoff(data, self.workspace)
+                self.assertTrue(any("retirado" in error and "documentation-orchestrator" in error
+                                    for error in errors), errors)
+                self.assertEqual(data, original)
+
     def test_canonical_example_is_semantically_valid(self) -> None:
         document = CONTRACT.read_text(encoding="utf-8")
         block = extract_first_markdown_block(document, "## Bloque de emisión")
@@ -288,10 +300,8 @@ class HandoffContractTest(unittest.TestCase):
 
     def test_receiver_agents_declare_the_protocol(self) -> None:
         targets = {
-            "architecture": "architecture",
             "code-review": "code-review",
             "data-api": "data-api",
-            "project-navigator": "project-navigator",
             "ui-design": "ui-design",
         }
         for filename, target in targets.items():

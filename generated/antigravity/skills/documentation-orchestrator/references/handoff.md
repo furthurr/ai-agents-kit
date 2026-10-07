@@ -53,8 +53,6 @@ la skill local **o** emite el handoff; nunca hace ambas cosas.
 
 | target | `scope` y máximo `write_scope` |
 |--------|---------------------------------|
-| `project-navigator` | `.navigator/` |
-| `architecture` | `.architecture/` |
 | `data-api` | `.data/` |
 | `ui-design` | `.design/` |
 | `code-review` | `[.quality/]`, `[.security/]` o `[.quality/, .security/]` |
@@ -63,6 +61,11 @@ En `code-review` incluso un dominio requiere lista. Rechaza listas vacías,
 duplicados, carpetas ajenas y targets retirados `code-quality`/`security`; no los
 convierte automáticamente. El orden no cambia el alcance. Los otros targets
 conservan sus cadenas únicas; no admiten listas ni otros dominios.
+
+Los targets `architecture` y `project-navigator` están retirados. Arquitectura y
+navegación se atienden localmente en `documentation-orchestrator` mediante sus
+skills core, sin handoff a sí mismo. Rechaza emisiones antiguas e indica esa nueva
+entrada; no reescribe targets ni transfiere autorización o `gate_state`.
 
 ## Vocabulario de `action`
 

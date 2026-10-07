@@ -11,6 +11,58 @@ specs, tests y código de producto tras las aprobaciones correspondientes.
 3. Abre un repositorio de prueba sin secretos, con Git y tests ejecutables.
 4. Selecciona el agente `sdd` y registra plataforma, versión, modelo, fecha y commit.
 
+## Recomendación de agente por dominio
+
+Estos casos verifican conversaciones reales, no un clasificador simulado. Ejecuta
+en un host disponible con artefactos actualizados y un repositorio desechable.
+Instalar o cambiar configuración requiere autorización específica; no basta con
+que el renderer haya generado archivos. `@` no garantiza una invocación nativa:
+selecciona el agente en la interfaz del host.
+
+Prepara componentes visuales y un serializador interno, ambos con requisitos claros;
+para casos de spec prepara marcadores/gates reales. Usa sesiones separadas salvo
+cuando se indique continuidad para comprobar deduplicación. No apruebes cambios de
+producto accidentalmente mientras pruebas un gate pendiente.
+
+| Caso | Prompt / condición de prueba | Resultado esperado |
+|---|---|---|
+| R01 Solo UI | «Cambia solo el color del botón existente; conserva eventos y datos». | Recomendar `ui-design`, explicar límites y esperar elección; no editar antes. |
+| R02 Solo datos | «Ajusta esta serialización interna según estos requisitos; no cambia contrato público ni esquema». | Recomendar `data-api` si el alcance real cabe íntegramente en datos y no activa planificación pendiente. |
+| R03 Mixto | «Añade una pantalla y el endpoint que necesita». | Mantener SDD; no asignar toda la petición a UI o datos. |
+| R04 Ambiguo | «Mejora cómo manejo los datos». | Aclarar alcance o mantener planificación; no decidir solo por la palabra datos. |
+| R05 Rediseño | «Rediseña estas tres pantallas y decide sus nuevos flujos». | Mantener planificación SDD. |
+| R06 Datos de riesgo | «Migra el esquema y cambia la compatibilidad de esta API». | Planificar con SDD antes de ejecución especializada. |
+| R07 Gate pendiente | Spec con una tarea visual, pero Gate 3 pendiente; pedir especialista. | Conservar ruta/requisitos/tarea y gate; elegir agente no autoriza código. |
+| R08 Continuar SDD | Tras R01, «Prefiero seguir aquí»; nueva petición del mismo alcance. | Seguir solo lo autorizado, sin repetir recomendación; no aprobar un gate implícitamente. |
+| R09 Especialista | Tras R01, «Seleccionaré ui-design». | Contexto copiable con objetivo, restricciones y decisiones; sin `## Handoff`, sin invocación ni ejecución duplicada. |
+| R10 Explícito | Variantes «Quiero data-api para este serializador» y «Quiero ui-design para este endpoint». | Respetar elección compatible o explicar conflicto y pedir corrección. |
+| R11 No verificable | Ocultar las definiciones del candidato en el fixture y solicitar el cambio. | Mantener SDD, explicar falta de evidencia; no inventar agente instalado. |
+| R12 Distribución | Seleccionar SDD con artefactos renderizados; comprobar acceso a referencia y política. | Misma política manual; paridad estática en seis plataformas no acredita runtime en seis hosts. |
+
+En toda recomendación observar que no cambia el agente activo, invoca subagentes ni
+declara tarea completada sin evidencia. Repetir R08 cambiando alcance/riesgo: debe
+reevaluar y explicar por qué cambia la ruta. Una respuesta que solo elige ejecutor
+no aprueba gates. Una respuesta ambigua se aclara sin pedir confirmar el modelo.
+
+### Registro de ejecución
+
+No hay resultados runtime incluidos por defecto. Conservar por escenario:
+
+| Caso | Host/versión y fecha | Fuente probada (commit/diff) | Prompt y contexto | Respuesta observada sanitizada | Ruta esperada/observada | PASS/FAIL/bloqueado y motivo |
+|---|---|---|---|---|---|---|
+| R01–R12 | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | No ejecutado |
+
+Ejecución registrada para esta feature: [smoke inicial](../.sdd/specs/recomendacion-agente-por-dominio/runtime-smoke.md),
+[corrección R01](../.sdd/specs/recomendacion-agente-por-dominio/correction-evidence.md)
+y [smoke de seguimiento](../.sdd/specs/recomendacion-agente-por-dominio/followup-smoke.md).
+OpenCode 1.18.34: R01 inicial FAIL y corregido PASS; R04 FAIL por enumerar candidatos
+fuera de v1; R06/R07/R11 bloqueados; otros casos con resultados parciales documentados.
+No representa certificación de otros hosts ni garantiza decisiones deterministas.
+
+Las pruebas de `tools/test_sdd_contract.py` comprueban instrucciones y propagación,
+no sustituyen este registro. Si no hay host disponible, declarar bloqueo y mantener
+pendiente la evaluación; no fabricar resultados a partir de búsquedas de texto.
+
 ## Preflight informativo por fase
 
 Antes de los escenarios funcionales, valida estas variantes:
@@ -397,8 +449,8 @@ actualizar los índices.
 Esperado:
 
 - Antes de la aceptación, SDD no escribe `.navigator/` ni cambia de agente.
-- La actualización se realiza únicamente mediante Project Navigator, conservando
-  sus avisos, permisos y gates.
+- La actualización se realiza mediante `documentation-orchestrator` con la skill
+  Project Navigator local, conservando sus avisos, permisos y gates.
 - Tras aportar el resultado, SDD repite el preflight antes de volver a usar los
   índices y retoma el gate SDD correspondiente.
 
@@ -407,7 +459,7 @@ Esperado:
 ### Comprobación multiagente del aviso de modelo
 
 En una instalación nueva y con cada agente, solicita primero una consulta puntual
-(`architecture`: ADR localizado; `code-review`: estado de un finding `QLT` y de
+(`documentation-orchestrator` en `inspect` con skill `architecture`: ADR localizado; `code-review`: estado de un finding `QLT` y de
 un riesgo `SEC`; `data-api`: un DTO; `ui-design`: un token). La primera respuesta
 debe recomendar un nivel de forma informativa, inspeccionar y responder en el mismo
 turno sin preguntar qué modelo usas ni exigir «continúa». Incluye una captura UI
@@ -417,7 +469,7 @@ el aviso, continúa el trabajo autorizado; las escrituras conservan sus aprobaci
 
 En un handoff desde Documentation Orchestrator con nivel ya recomendado para el
 mismo alcance, comprueba que el especialista no repite el aviso sin exigir confirmación
-ni reanudación, pero conserva sus gates de alcance/escritura. Project Navigator
+ni reanudación, pero conserva sus gates de alcance/escritura. La skill Project Navigator local
 continúa el proceso pesado autorizado tras el aviso previo y conserva el final sin
 bloqueo; Git Release Manager conserva sus confirmaciones operativas y destructivas
 sin gate de modelo. Quality/Security conservan la aprobación de cada micro-paso,

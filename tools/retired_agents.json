@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "d206ae811b14c44699c7040bdb59742eac1f122d",
+  "entries": [
+    {"id":"architecture","platform":"copilot","filename":"architecture.agent.md","sha256":"b985f716fb7a162fa83ccb1db1c76bd46deec3065ce6b4a3420f18e428700842","adapter_sha256":"5db92a97d317975ba57b3638b92fc8af73afb5e2d4e10ec43c5b1b9be1db0bfb"},
+    {"id":"project-navigator","platform":"copilot","filename":"project-navigator.agent.md","sha256":"14e0bc010ddec4ee74499f90ec684a1ff62ca27e577065ffe6e815656e3300fc","adapter_sha256":"705530b55905787fc1142e432b931e75181e208d5200bba4243b89734ecae76d"},
+    {"id":"architecture","platform":"opencode","filename":"architecture.md","sha256":"b64ff3c7649c9bea98c4f2f1dcfafca7999a2b724c2718be3187b3a5b41b8353","adapter_sha256":"41338654889e3d5e025949e32b2cce781d6e3f3f30e19fcaa78abec920805022"},
+    {"id":"project-navigator","platform":"opencode","filename":"project-navigator.md","sha256":"f03006701b5c1c2c1a4fabb6a690bb1adb884bef7d14024cb2b54b09fe329694","adapter_sha256":"7417d5cc6aeb4cd5d53888b11da46719bd4bb2c377f7c2088d36e551487e7e8a"},
+    {"id":"architecture","platform":"kiro","filename":"architecture.md","sha256":"ecc864c19923a34c5bb934894b3439c8bf8e3db389cb9bd53edeedadaa7fe46b","adapter_sha256":"4d54c7bdd1a36194d200531cd08747aecff77fa62d1ff455b413141a4634fcac"},
+    {"id":"project-navigator","platform":"kiro","filename":"project-navigator.md","sha256":"2d45ff304a4234919514c0b77eeee529641e9f614913dc6b1cdf45e8579f8d86","adapter_sha256":"2183f7ce43861dde9431f9b7c62e00329a624ec601af3835a84071de89bc29f8"},
+    {"id":"architecture","platform":"claude","filename":"architecture.md","sha256":"e3873d9e2708ad249fff4d1a1f46658ebe8fcf7105a9c688604f40fcd9f0632f","adapter_sha256":"a48c4b728ed98e64092880e318915ff3253578bafdba25b5073b8a774c32e7f7"},
+    {"id":"project-navigator","platform":"claude","filename":"project-navigator.md","sha256":"16d5f0aa99b7100e7ea875d6f5672be8293703bf8d256c60030623a0d3460dc9","adapter_sha256":"35ff4848a4b0ebbae04c82a13c73e0b0d6bc611f5f2d5c37240b53bd9c486119"},
+    {"id":"architecture","platform":"pi","filename":"architecture.md","sha256":"0824bcfab242e7fd8976491409c779e54866e3296e8724658ba2a1531252cfcb","adapter_sha256":"55205949bcd8b9add73a837b8ebe98d192dc89ffc1c2052208f0c269ac4c4250"},
+    {"id":"project-navigator","platform":"pi","filename":"project-navigator.md","sha256":"3637cae3e59f765048a2e6a1933f18b4cc3f0a7cee7310146fba6f0159923deb","adapter_sha256":"896504a3692c1d494398569ac1683fc8a882a3858bea0ad3c908f2897e846071"},
+    {"id":"architecture","platform":"antigravity","filename":"architecture.md","sha256":"3f6313e364964a1a7902c13413a535fc4724a5bbe67ea68c155420de4da7c24f","adapter_sha256":"2d1abdbafa518eb7a6389514d95e757aee954846ac1c765a8e01ba2c607b58d7"},
+    {"id":"project-navigator","platform":"antigravity","filename":"project-navigator.md","sha256":"f93b4ab83e48bb23b3def5ab50f599f1d174f72c9621333a7ed4304d9441c90f","adapter_sha256":"cedfd2ba5ccfe3df45510265617c38c17b3a5a9b90b738b1147d20c27cc0f956"}
+  ],
+  "origin": "git show <baseline_commit>:generated/<platform>/agents/<filename>; filename verified against git show <baseline_commit>:adapters/<platform>/agents/<id>.json; IDs verified in canonical/manifest.json at that commit. No release version inferred."
+}

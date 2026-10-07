@@ -32,7 +32,8 @@ cumplidos.
 2. Preferir controles técnicos a instrucciones que solo dependen del prompt.
 3. No afirmar compatibilidad, seguridad o ahorro de tokens sin evidencia.
 4. Toda mejora debe tener una definición de hecho y un método de verificación.
-5. No unificar `project-navigator` y `architecture`: tienen alcances distintos.
+5. Mantener las skills `project-navigator` y `architecture` separadas y sus carpetas
+   distintas; `documentation-orchestrator` asume sus responsabilidades como agente.
 6. No auto-seleccionar ni fijar un modelo desde el kit.
 7. No añadir nuevas skills hasta demostrar la adopción de las existentes.
 
@@ -360,7 +361,7 @@ pero no inventa desde cero toda la estructura.
 
 | Idea | Motivo |
 | --- | --- |
-| Unificar `project-navigator` + `architecture` | Roles, contexto y permisos diferentes |
+| Fusionar las skills `project-navigator` + `architecture` | Procedimientos, contexto y carpetas diferentes; la entrada de agente se consolida en `documentation-orchestrator` |
 | Auto-selección o hardcode de modelo | Reduce portabilidad y control del usuario |
 | Prometer “≥90 % menos tokens” sin medición | Crea una expectativa no demostrada |
 | Añadir agentes para cubrir cada tarea | Aumenta solapes y coste de adopción |
@@ -369,6 +370,10 @@ pero no inventa desde cero toda la estructura.
 ---
 
 ## Hecho
+
+Los hitos siguientes conservan su inventario y resultados históricos. El catálogo
+vigente es de seis agentes y diez skills; Navigator y Architecture siguen como
+skills separadas bajo Documentation Orchestrator.
 
 - [x] Contrato MVP migrado a `canonical/skills/project-navigator/` y criterios
   manuales extraídos a [navigator-smoke.md](navigator-smoke.md).

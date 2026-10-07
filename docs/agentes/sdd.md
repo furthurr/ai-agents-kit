@@ -47,6 +47,44 @@ el nivel para Verification y la ejecuta automáticamente dentro del alcance apro
 Solo después de obtener y registrar evidencia presenta Gate 4. SDD no conoce,
 selecciona ni cambia el LLM del host, y no crea gates adicionales.
 
+## Recomendación de agente por dominio
+
+SDD evalúa quién puede ejecutar el alcance antes de editarlo. La política inicial
+cubre dos especialistas, sin invocarlos automáticamente:
+
+| Actividad | Ruta |
+|---|---|
+| Solo apariencia/componentes visuales, clara y acotada | Recomendar `ui-design`. |
+| Solo datos/APIs, clara y dentro de límites | Recomendar `data-api`. |
+| Ambigua, varios dominios o planificación pendiente por riesgo/contratos/migraciones | Mantener planificación SDD. |
+| Tarea especializada autorizada de una spec aprobada | Puede recomendar al especialista para esa tarea, conservando la spec. |
+
+La recomendación justifica el candidato y pregunta si quieres **seleccionarlo
+manualmente o continuar con SDD**. Si decides seguir aquí, no repite la recomendación
+mientras no cambien alcance, riesgo o decisión. Una selección explícita compatible
+ya dada se respeta; si contradice límites, se aclara antes de actuar.
+
+SDD no clasifica por palabras aisladas como «pantalla» o «JSON», ni ofrece un agente
+de UI para lógica de negocio o uno de datos para UI. La falta de `.design/` o `.data/`
+no obliga a cambiar de agente. Tampoco recomienda candidatos cuyo alcance no pueda
+verificar ni afirma conocer su instalación en tu host.
+
+Si eliges al especialista, entrega **Contexto para selección manual**: objetivo,
+alcance autorizado, exclusiones, rutas verificadas, requisitos/tareas y decisiones
+aprobadas si existen, fase/gates pendientes y preguntas abiertas. Copia ese contexto
+al agente seleccionado en la interfaz del host. `@` es notación del kit, no un
+comando universal. SDD no cambia la interfaz, llama subagentes ni ejecuta en paralelo
+la actividad transferida; el contexto no acredita entrega o finalización.
+
+La elección de ejecutor **no aprueba gates**, no modifica permisos ni amplía alcance.
+SDD mantiene planificación para rediseños ambiguos/multipantalla y cambios de datos
+con contratos, esquemas, migraciones o compatibilidad afectados. Una tarea aprobada
+puede ejecutarse después con el especialista sin reabrir requisitos por el mero
+cambio de ejecutor, pero el receptor conserva sus propias comprobaciones y gates.
+
+Contrato: [recomendación de agente](../../canonical/skills/sdd-spec/references/agent-routing.md).
+Evaluación: [escenarios manuales](../sdd-smoke.md#recomendación-de-agente-por-dominio).
+
 ## Modos
 
 | Modo | Uso | Resultado |
@@ -104,9 +142,9 @@ en documentación y código reales. Si está `ausente` o resulta `ambiguo`, se o
 y el flujo continúa: Navigator nunca es un requisito para usar SDD.
 
 SDD no crea ni actualiza `.navigator/` automáticamente. Puede recomendar bootstrap
-o update, pero el usuario debe decidir si continúa con Project Navigator y sus
-propios gates. El código, el steering y los contratos canónicos siguen siendo las
-fuentes de verdad.
+o update, pero el usuario debe decidir si continúa con `documentation-orchestrator`,
+que ejecuta la skill Project Navigator con sus propios gates. El código, el steering
+y los contratos canónicos siguen siendo las fuentes de verdad.
 
 ## Qué produce
 
@@ -169,7 +207,7 @@ Esta petición usa `lite` automáticamente. `Quick Plan standard` y
 - No inventa requisitos, cumplimiento, resultados de tests ni evidencia.
 - No añade dependencias de testing sin un test que las use en la misma entrega.
 - No presenta un Navigator desfasado o sin baseline verificable como vigente.
-- No escribe `.navigator/` ni cambia automáticamente a Project Navigator.
+- No escribe `.navigator/` ni cambia automáticamente a `documentation-orchestrator`.
 - Respeta `.architecture/`, `.design/`, `.data/`, `.security/` y `.quality/` cuando
   existen; si falta contexto, documenta solo lo imprescindible dentro de la spec.
 - Confirma acciones destructivas y nunca expone secretos.

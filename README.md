@@ -17,7 +17,7 @@ especializado en seis distribuciones, sin duplicar prompts por plataforma.
 La integración inicial de Antigravity apunta a **2.0**. Los scripts cuentan con
 evidencia de CI en Linux, macOS y Windows: **22/22 pruebas nativas por OS**, con
 Python 3.10, en el [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
-El runtime de la aplicación (descubrimiento 8/10, UI, referencias e
+El runtime de la aplicación (descubrimiento 6 agentes / 10 skills, UI, referencias e
 `invoke_subagent`) sigue **PENDIENTE**. El inventario de distribuciones y las
 pruebas con fixtures no certifican soporte completo en los seis hosts.
 
@@ -37,7 +37,7 @@ Más detalle: [docs/vision.md](docs/vision.md).
 | | Cantidad | Detalle |
 |---|----------|---------|
 | Skills | 10 | architecture, code-quality, data-api, documentation-orchestrator, git-commit, project-navigator, release-management, sdd-spec, security, ui-design |
-| Agentes | 8 | **Code Review** reúne calidad y seguridad; **Documentation Orchestrator** coordina documentación y **Git & Release Manager** coordina Git/release |
+| Agentes | 6 | code-review, data-api, documentation-orchestrator, ui-design, sdd, git-release-manager; **Documentation Orchestrator** asume arquitectura y navegación con sus skills separadas |
 | Plataformas | 6 | copilot, opencode, kiro, claude, pi, antigravity |
 
 Catálogo completo (roles, carpetas, cuándo usar cada uno):
@@ -78,6 +78,13 @@ python tools/validate.py
 
 Opciones: `--dry-run` / `-DryRun`, `--force` / `-Force`.
 Importación segura de instalaciones locales: `scripts/backup/`.
+
+Para actualizar agentes antiguos, revisa la [migración segura opt-in](docs/migracion-agentes.md):
+`--migrate-retired-agents` exige respaldo; los archivos personalizados o inciertos
+requieren pares repetibles `--approve-retired-file PATH --approve-retired-sha256 SHA`
+para ligar la aprobación a ruta exacta y bytes revisados. Los destinos locales
+se seleccionan con `--additional-agents-dest RUTA`; OpenCode incluye ambos hermanos
+globales `agent/` y `agents/`. No retira skills ni contexto del proyecto.
 
 Guía completa: [docs/instalacion.md](docs/instalacion.md) ·  
 Uso diario: [docs/uso.md](docs/uso.md).

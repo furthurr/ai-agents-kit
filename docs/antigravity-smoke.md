@@ -4,7 +4,7 @@ Procedimiento para obtener evidencia runtime de la integración. **Estado actual
 PENDIENTE; este documento no registra un smoke ejecutado ni certifica el host.**
 Los instaladores/exportadores sí cuentan con evidencia automatizada de scripts
 con fixtures en Linux, macOS y Windows, detallada a continuación. Esa ejecución
-no prueba descubrimiento 8/10, UI, carga de referencias ni `invoke_subagent` en
+no prueba descubrimiento 6/10, UI, carga de referencias ni `invoke_subagent` en
 la aplicación Antigravity; estos pasos runtime siguen **PENDIENTES**.
 
 ## Evidencia automatizada de CI
@@ -29,7 +29,7 @@ permanece pendiente y este run no marca el smoke como ejecutado.
 
 ## Alcance y referencias
 
-- Inventario: ocho agentes y diez skills del [catálogo](catalogo.md).
+- Inventario: seis agentes y diez skills del [catálogo](catalogo.md).
 - Destinos 2.0: `~/.gemini/config/agents/<id>.md` y
   `~/.gemini/config/skills/<skill-name>/`, incluidos sus recursos.
 - CLI: skills globales en `~/.gemini/antigravity-cli/skills/`, ruta distinta que
@@ -100,24 +100,23 @@ conversaciones. Un resultado omitido no es PASS.
 
    Estos comandos requieren que el entorno temporal ya esté preparado. No los
    ejecutes en un perfil personal por defecto. `--force`/`-Force` omite el
-   respaldo previo; no es necesario para el smoke runtime.
+    respaldo previo de sobrescrituras vigentes; nunca el de retirada de agentes.
+    No es necesario para el smoke runtime.
 4. Reinicia la superficie de prueba tras instalar. Registra qué acción recargó
    agentes y skills y comprueba el descubrimiento de nuevo tras una actualización.
    Si reiniciar no basta, registra el bloqueo sin asumir otro menú/comando.
 
-## 2. Descubrir 8 agentes y 10 skills
+## 2. Descubrir 6 agentes y 10 skills
 
 Registra para cada ID si el host lo descubre, no solo si existe el archivo.
 Extras del usuario no cuentan en estas cantidades y no se borran.
 
 | Agente esperado | Descubierto / seleccionable | Resultado |
 |-----------------|----------------------------|-----------|
-| `architecture` | PENDIENTE | PENDIENTE |
 | `code-review` | PENDIENTE | PENDIENTE |
 | `data-api` | PENDIENTE | PENDIENTE |
 | `documentation-orchestrator` | PENDIENTE | PENDIENTE |
 | `git-release-manager` | PENDIENTE | PENDIENTE |
-| `project-navigator` | PENDIENTE | PENDIENTE |
 | `sdd` | PENDIENTE | PENDIENTE |
 | `ui-design` | PENDIENTE | PENDIENTE |
 
@@ -185,26 +184,24 @@ hay que observar `ask_question` realmente, no sustituirla silenciosamente.
 
 | Rol | Tools declaradas | Límite canónico que se mantiene |
 |-----|------------------|--------------------------------|
-| `architecture` | L + D + G + W + Q | Escritura en `.architecture/`; no refactor de producto |
 | `code-review` | L + D + G + W + Q | `inspect` no escribe; remediación aprobada por micro-paso |
 | `data-api` | L + D + G + W + Q | `.data/` y datos/APIs autorizados; no UI |
-| `documentation-orchestrator` | L + D + G + W + Q | Documentación/indexado autorizados; no SDD, producto, CI ni Git mutante |
+| `documentation-orchestrator` | L + D + G + W + Q | `inspect` core sin escritura; skills architecture/navigator locales; documentación/indexado autorizados, no producto/CI/Git mutante |
 | `git-release-manager` | L + D + G + W + Q | Git/release solo dentro de las aprobaciones explícitas |
-| `project-navigator` | L + D + G + Q | Lectura por defecto; índices/exportación solo autorizados |
 | `sdd` | L + D + G + W + Q | Specs; producto solo con intención y gates aprobados |
 | `ui-design` | L + D + G + W + Q | `.design/` y UI autorizada; no APIs/negocio |
 
 Para las escrituras D del fixture usa `sdd` con una microtarea `direct` de cambio
 local explícitamente autorizada en scratch, separada de la consulta de solo
 lectura anterior. No autorices a otro rol a sobrepasar su alcance para probar D.
-Comprueba las listas efectivas de los ocho roles y las tools correspondientes
+Comprueba las listas efectivas de los seis roles y las tools correspondientes
 cuando la operación sea compatible con su rol. El resultado de una tool en un
 rol no demuestra su disponibilidad en los demás. Listas y prohibiciones son
 instrucciones más permisos heredados, **no sandbox por carpeta o comando**.
 
 ## 5. Invocación de subagente solicitada explícitamente
 
-Usa un **padre del host** que exponga `invoke_subagent`; los ocho roles del kit
+Usa un **padre del host** que exponga `invoke_subagent`; los seis roles del kit
 no reciben esa herramienta. El usuario debe pedir esta prueba explícitamente.
 No encadenes hijos ni automatices handoffs. Si no existe padre habilitado, deja
 la comprobación pendiente con ese bloqueo.
@@ -239,7 +236,7 @@ El hijo no debe escribir, saltar gates ni ampliar el alcance.
 | Comprobación | Resultado actual | Evidencia necesaria |
 |--------------|------------------|---------------------|
 | Versión/build, OS y superficie | PENDIENTE | Información observada del producto |
-| Descubrimiento 8 agentes / 10 skills | PENDIENTE | IDs observados en host |
+| Descubrimiento 6 agentes / 10 skills | PENDIENTE | IDs observados en host; skills core separadas |
 | Recarga y selección principal | PENDIENTE | Acción real e ID activo |
 | Carga de skills y referencias | PENDIENTE | Rutas relativas y encabezados reconocidos |
 | Herramientas individuales por rol | PENDIENTE | Nombre expuesto, acción y resultado |
@@ -248,6 +245,13 @@ El hijo no debe escribir, saltar gates ni ampliar el alcance.
 La evidencia de instalación/exportación en los tres OS se registra en la sección
 [automatizada de CI](#evidencia-automatizada-de-ci), separada de esta matriz
 runtime. Sus resultados PASS no completan los pasos de app/host pendientes.
+
+La evidencia CI citada corresponde a la publicación anterior; no valida por sí
+sola la consolidación core ni su migración. Añade una consulta `inspect` de
+arquitectura y una de navegación con `documentation-orchestrator`: ambas deben
+cargar solo la skill necesaria, citar fuentes y no escribir ni emitir handoff core.
+Resultado y evidencia: **PENDIENTE**. Si aparecen agentes retirados, registra el
+residuo y revisa la [migración opt-in](migracion-agentes.md), sin borrarlos por nombre.
 
 Un smoke completo exige evidencia de todos los pasos runtime, no únicamente
 instalación. Si falla el mapeo de tools o la carga global en hijos, registra el

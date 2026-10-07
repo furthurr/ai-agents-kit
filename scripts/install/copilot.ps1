@@ -23,7 +23,11 @@
 [CmdletBinding()]
 param(
     [switch]$Force,
-    [switch]$DryRun
+    [switch]$DryRun,
+    [Alias("migrate-retired-agents")][switch]$MigrateRetiredAgents,
+    [Alias("approve-retired-file")][string[]]$ApproveRetiredFile = @(),
+    [Alias("approve-retired-sha256")][string[]]$ApproveRetiredSha256 = @(),
+    [Alias("additional-agents-dest")][string[]]$AdditionalAgentsDest = @()
 )
 
 $ErrorActionPreference = "Stop"
@@ -57,9 +61,28 @@ function Invoke-Preflight {
         return $false
     }
     $preflight = Join-Path $RepoRoot "tools\install_preflight.py"
-    & $Python $preflight --platform copilot @Arguments
+    & $Python $preflight --platform copilot @Arguments | Out-Host
     return ($LASTEXITCODE -eq 0)
 }
+
+function Invoke-RetiredMigration {
+    param([switch]$ValidateOnly)
+    if (-not $Python) { exit 1 }
+    $options = @("--agents-dest", $AgentsDest, "--skills-dest", $SkillsDest, "--backup-root", (Join-Path $env:USERPROFILE ".ai-agents-kit-retired-backups"))
+    if ($ValidateOnly) {
+        $options += "--validate-migration"
+        if ($MigrateRetiredAgents) { $options += "--migration-requested" }
+    } else {
+        $options += "--migrate-retired-agents"
+        if ($DryRun) { $options += "--dry-run" }
+    }
+    foreach ($path in $ApproveRetiredFile) { $options += @("--approve-retired-file", $path) }
+    foreach ($sha in $ApproveRetiredSha256) { $options += @("--approve-retired-sha256", $sha) }
+    foreach ($dest in $AdditionalAgentsDest) { $options += @("--additional-agents-dest", $dest) }
+    & $Python (Join-Path $RepoRoot "tools/install_preflight.py") --platform copilot @options | Out-Host
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+}
+Invoke-RetiredMigration -ValidateOnly
 
 function Copy-Section {
     param(
@@ -100,7 +123,7 @@ Write-Host "== Restauracion de Skills y Agentes de GitHub Copilot ==" -Foregroun
 Write-Host ""
 
 if ($DryRun) { Write-Warn "Modo -DryRun: no se copiara nada." }
-if ($Force) { Write-Warn "Modo -Force: no se crearan backups." }
+if ($Force) { Write-Warn "Modo -Force: omite backup de sobrescritura vigente; retirada siempre con backup." }
 
 # Verificar el origen antes de tocar el destino: una instalacion incompleta es
 # peor que ninguna, porque se manifiesta como un agente que ignora su alcance.
@@ -114,6 +137,7 @@ Copy-Section -Src (Join-Path $RepoRoot "generated\copilot\agents") -Dest $Agents
 
 Write-Host ""
 if ($DryRun) {
+    if ($MigrateRetiredAgents) { Invoke-RetiredMigration }
     Write-Ok "Dry-run finalizado: no se escribio nada."
     exit 0
 }
@@ -123,6 +147,7 @@ if (-not (Invoke-Preflight @("--check-installed", "--skills-dest", $SkillsDest, 
     exit 1
 }
 
+if ($MigrateRetiredAgents) { Invoke-RetiredMigration }
 Write-Ok "Restauracion completada."
 if (Test-Path $BackupRoot) {
     Write-Info "Copias de seguridad guardadas en: $BackupRoot"

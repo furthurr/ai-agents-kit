@@ -8,8 +8,8 @@ skill canónicos en `canonical/`; estas páginas sirven como orientación rápid
 
 | Necesitas… | Agente | Skill principal | Escribe principalmente en… |
 |---|---|---|---|
-| Entender el repositorio, módulos o símbolos | [Project Navigator](project-navigator.md) | `project-navigator` | `.navigator/` |
-| Documentar decisiones y estructura técnica | [Architecture](architecture.md) | `architecture` | `.architecture/` |
+| Entender el repositorio, módulos o símbolos | [Documentation Orchestrator](documentation-orchestrator.md) | `project-navigator` | Consulta sin escritura; índices autorizados en `.navigator/` |
+| Documentar decisiones y estructura técnica | [Documentation Orchestrator](documentation-orchestrator.md) | `architecture` | `.architecture/` con autorización |
 | Catálogo de APIs, DTOs o persistencia | [Data & API](data-api.md) | `data-api` | `.data/` |
 | Documentar colores, componentes o temas | [UI Design](ui-design.md) | `ui-design` | `.design/` |
 | Revisar calidad, seguridad o ambas | [Code Review](code-review.md) | `code-quality` y/o `security` | `.quality/` y/o `.security/`; correcciones autorizadas |
@@ -29,20 +29,21 @@ skill canónicos en `canonical/`; estas páginas sirven como orientación rápid
 
 ## Uso por plataforma
 
-Los IDs estables son los mismos en las cinco plataformas:
+Los seis IDs estables son los mismos en las seis plataformas; se mantienen diez skills:
 
 | Plataforma | Forma habitual de invocación |
 |---|---|
-| OpenCode | Selecciona el agente o menciónalo, por ejemplo `@architecture`, `@sdd` o `@code-review`. |
+| OpenCode | Selecciona el agente o menciónalo, por ejemplo `@documentation-orchestrator`, `@sdd` o `@code-review`. |
 | GitHub Copilot | Selecciona el agente personalizado instalado; los nombres salen del catálogo. |
 | Kiro | Selecciona el agente de `~/.kiro/agents/`; para una skill también puede usarse su comando, según la UI. |
-| Claude Code | Delega al subagente o menciónalo, por ejemplo `@architecture`, `@sdd` o `@code-review`; las skills se invocan con `/nombre`. |
+| Claude Code | Delega al subagente o menciónalo, por ejemplo `@documentation-orchestrator`, `@sdd` o `@code-review`; las skills se invocan con `/nombre`. |
 | Pi | Usa `/code-review <tarea>` como plantilla de prompt; no crea un subagente aislado. |
+| Antigravity 2.0 | Usa la selección comprobada en el smoke del host; `@<agente>` es notación semántica, no sintaxis nativa verificada. |
 
 Una petición útil indica el resultado, el alcance y el nivel de autonomía esperado:
 
 ```text
-@architecture documenta la arquitectura del módulo de autenticación.
+@documentation-orchestrator sync-domain: documenta la arquitectura del módulo de autenticación.
 Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
 ```
 
@@ -58,10 +59,10 @@ el éxito o cierre, sin convertirse automáticamente en una pregunta humana.
 - **Documentación:** el Orchestrator hace un preflight, recomienda un modelo y
   continúa `status`/`release-check` en el mismo turno. Presenta un plan y espera su
   aprobación antes de escribir.
-- **Navigator:** bootstrap y updates son explícitos; los procesos pesados tienen
+- **Skill Navigator (core local):** bootstrap y updates son explícitos; los procesos pesados tienen
   avisos previo/final no bloqueantes y gate técnico de disponibilidad. Las escrituras,
   exportaciones y sobrescrituras conservan su autorización efectiva.
-- **Architecture, Data & API y UI Design:** la primera documentación masiva parte
+- **Skill Architecture (core local), Data & API y UI Design:** la primera documentación masiva parte
   de un aviso informativo de modelo, un estudio y una propuesta; consultas y trabajo
   autorizado continúan en el mismo turno, conservando los gates de propuestas y escritura.
 - **Code Review:** recomienda modelo sin pausar consultas ni barridos autorizados,
@@ -69,7 +70,7 @@ el éxito o cierre, sin convertirse automáticamente en una pregunta humana.
   Las auditorías documentales autorizadas
   registran todas las severidades verificadas sin pedir otro filtro; consultas sin
   escrituras y remediación con aprobación antes del primer y cada siguiente paso.
-- **Escalado a SDD:** Architecture, Data & API, UI Design y Code Review
+- **Escalado a SDD:** Documentation Orchestrator, Data & API, UI Design y Code Review
   recomiendan SDD si la mejora requiere más requisitos, diseño o coordinación;
   explican el motivo y esperan que el usuario decida si cambia de agente.
 - **SDD:** ofrece exactamente `direct`, `lite` y `standard`. `lite` se
@@ -89,16 +90,20 @@ el éxito o cierre, sin convertirse automáticamente en una pregunta humana.
 
 | Agente | Ficha | Skill(s) |
 |---|---|---|
-| Architecture Agent | [architecture.md](architecture.md) | `architecture` |
 | Code Review Agent | [code-review.md](code-review.md) | `code-quality` y/o `security` |
 | Data & API Agent | [data-api.md](data-api.md) | `data-api` |
 | Documentation Orchestrator | [documentation-orchestrator.md](documentation-orchestrator.md) | `documentation-orchestrator` + especialistas aplicables |
 | Git & Release Manager | [git-release-manager.md](git-release-manager.md) | `git-commit` + `release-management` |
-| Project Navigator Agent | [project-navigator.md](project-navigator.md) | `project-navigator` |
 | Agente SDD | [sdd.md](sdd.md) | `sdd-spec` |
 | UI Design Agent | [ui-design.md](ui-design.md) | `ui-design` |
 
 ## Fuentes canónicas
+
+Guías de skills core: [architecture.md](architecture.md) y
+[project-navigator.md](project-navigator.md). Ambas se ejecutan localmente desde
+`documentation-orchestrator`; no son receptores de handoff. `inspect` investiga sin
+escribir; bootstrap/sync conservan sus gates. Los demás agentes pueden consumir
+contexto core directamente, con lectura selectiva y verificación de frescura.
 
 - Inventario: [`canonical/manifest.json`](../../canonical/manifest.json).
 - Agentes: [`canonical/agents/`](../../canonical/agents/).

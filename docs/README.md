@@ -10,6 +10,7 @@ de entrada; aquí está el detalle por tema.
 | [catalogo.md](catalogo.md) | Usuarios | Skills, agentes y carpetas canónicas |
 | [agentes/README.md](agentes/README.md) | Usuarios y contribuidores | Qué hace cada agente, qué skill utiliza y cómo invocarlo |
 | [instalacion.md](instalacion.md) | Usuarios | Render, validación e instalación por plataforma |
+| [migracion-agentes.md](migracion-agentes.md) | Usuarios y contribuidores | Retirada opt-in, revisión por archivo, respaldo obligatorio, recuperación y smoke pendiente |
 | [uso.md](uso.md) | Usuarios | Cómo invocar especialistas y cuándo usar cada uno |
 | [navigator-smoke.md](navigator-smoke.md) | Usuarios y contribuidores | Smoke test reproducible del Project Navigator |
 | [documentation-orchestrator-smoke.md](documentation-orchestrator-smoke.md) | Usuarios y contribuidores | Smoke test de modos, modelo recomendado y límites del orquestador |
