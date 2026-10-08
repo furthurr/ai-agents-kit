@@ -3,6 +3,28 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [0.6.0] - 2026-10-07
+
+### Funcionalidades
+
+- Añadir a SDD una calificación de dificultad de feature de 1 a 10, con emoji
+  según el rango, tras analizar y definir el alcance.
+
+### Cambios incompatibles
+
+- Retirar las recomendaciones de nivel o selección de LLM de agentes y skills;
+  conservar únicamente las decisiones, autorizaciones y gates reales.
+
+### Documentación y mantenimiento
+
+- Actualizar contratos, guías, smoke tests y artefactos generados para seis plataformas.
+- Añadir rúbrica y pruebas de exclusividad, formato y distribución de la calificación.
+
+### Validación y límites
+
+- Registrar que las suites automatizadas pasan.
+- Dejar explícito que el smoke conversacional en hosts reales sigue pendiente.
+
 ## [0.5.0] - 2026-10-07
 
 ### Funcionalidades
