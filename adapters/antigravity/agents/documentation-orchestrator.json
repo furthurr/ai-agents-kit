@@ -2,7 +2,7 @@
   "filename": "documentation-orchestrator.md",
   "frontmatter": {
     "name": "documentation-orchestrator",
-    "description": "Consulta arquitectura y navegación en inspect de solo lectura, con skills core locales bajo demanda. Coordina estado, bootstrap y sincronización documental mediante skills core locales o skill local/handoff portable para otros dominios. Recomienda nivel LLM con preflight informativo; no modifica producto, administra Git ni automatiza delegación.",
+    "description": "Consulta arquitectura y navegación en inspect de solo lectura, con skills core locales bajo demanda. Coordina estado, bootstrap y sincronización documental mediante skills core locales o skill local/handoff portable para otros dominios. No modifica producto, administra Git ni automatiza delegación.",
     "model": "inherit",
     "subagent": true,
     "mainAgent": true,

@@ -32,13 +32,9 @@ La skill `ui-design` cubre:
 - Nomenclatura conceptual DTCG/W3C en tablas Markdown, sin generar `.tokens.json`.
 - Detección adaptada a Compose/XML, SwiftUI/UIKit, Flutter, Web/CSS y React/RN.
 
-## Recomendación de modelo
+## Modelos LLM
 
-Las consultas y ajustes visuales puntuales reciben un aviso informativo `BAJO` o
-`MEDIO`. Extracciones completas, rediseños amplios o varios sistemas visuales
-recomiendan `MEDIO` o `ALTO` tras un preflight barato. Continúa el trabajo autorizado
-en el mismo turno, sin exigir «continúa» ni confirmar el modelo. El cambio de modelo
-es manual y el aviso ya comunicado para el mismo alcance no se repite; las
+UI Design no recomienda ni selecciona niveles, modelos o proveedores LLM. Las
 aprobaciones de propuestas visuales y escrituras siguen siendo independientes.
 
 ## Cómo trabaja

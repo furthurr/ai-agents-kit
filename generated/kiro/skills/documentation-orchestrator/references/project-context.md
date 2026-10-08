@@ -57,5 +57,4 @@ bootstrap, sync, export ni instalación de herramientas. Recomendar
 `documentation-orchestrator` para mantenimiento cuando sea útil, sin invocarlo
 automáticamente ni inferir autorización. Allí core se ejecuta localmente con sus
 skills separadas y gates; Navigator mantiene export opt-in con confirmación
-específica. La recomendación de modelo no autoriza escritura y conserva la política
-de avisos vigente. Los demás especialistas mantienen sus contratos de handoff.
+específica. Los demás especialistas mantienen sus contratos de handoff.

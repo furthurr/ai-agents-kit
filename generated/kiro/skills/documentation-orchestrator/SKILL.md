@@ -6,8 +6,7 @@ description: >-
   inspect, docs status, sync-check, bootstrap-core, sync-core,
   sync-existing, sync-domain, release-check, pre-release check, comprobar si la
   documentacion esta actualizada, actualizar las carpetas existentes o verificar
-  si el proyecto esta listo para una release. Recomienda un modelo bajo, medio o
-  alto de forma informativa y continua el trabajo autorizado sin pausa por modelo.
+  si el proyecto esta listo para una release.
 ---
 
 # Skill: Documentation Orchestrator
@@ -25,7 +24,6 @@ la autoridad sobre su propia carpeta.
 
 > **Alcance inviolable:** solo coordina documentacion e indices canonicos. No
 > modifica codigo de producto, tests, CI ni Git remoto. No crea `.documentation/`.
-> No selecciona ni cambia el modelo del host.
 
 ## Autoridad y especialistas
 
@@ -71,26 +69,17 @@ capas, módulos, símbolos o impacto → `inspect`; "actualiza lo que tenemos" �
 feature o bugfix → derivar a `sdd-spec`. Si pide "sincronizar todo" sin aclarar
 si incluye carpetas ausentes, pregunta antes de elegir modo.
 
-## Preflight informativo
+## Preflight técnico
 
 Antes de **cualquier** operacion, incluso `status`:
 
 1. Haz un preflight barato y de solo lectura: detecta proyecto(s), carpetas,
    marcas disponibles, `git status` y nombres de archivos cambiados.
-2. Clasifica tarea, alcance y complejidad con `references/workflows.md`.
-3. Recomienda `bajo`, `medio` o `alto` y explica los motivos en pocas lineas.
-4. Continua el trabajo autorizado en el mismo turno sin esperar cambio manual ni
-   confirmacion del modelo; no exige «continua» ni «listo». Si falta una decision
-   esencial o autorizacion efectiva, pregunta por ella, no por el modelo.
-
-En operaciones compuestas, muestra el nivel global y las fases que justifican un
-nivel distinto. Deduplica un aviso especialista por recomendacion ya comunicada
-para el mismo alcance, sin confirmacion del usuario; los gates reales nunca se omiten.
-El preflight no es un Gate 0 humano ni acredita autorizacion de escritura.
+2. Clasifica la tarea y el alcance con `references/workflows.md`.
+3. Usa los datos del preflight para delimitar el plan y comprobar los gates aplicables.
+   El preflight no acredita autorizacion de escritura.
 
 El preflight no carga todas las skills, no lee el codigo completo y no escribe.
-No afirmes conocer el modelo activo si el host no lo expone. Si cambia el alcance,
-recalcula y comunica el nivel sin pausa si solo cambia la recomendacion.
 Si el repo cambia durante una espera por decision real, repite el preflight minimo.
 
 ## Flujo de ejecución
@@ -153,8 +142,8 @@ selectivo de arquitectura y Navigator. No exige cargar otros workflows ni todas
 las skills. Navigator conserva autoridad de formatos y disponibilidad.
 
 Lee [`references/workflows.md`](references/workflows.md) al clasificar una
-operacion o ejecutar un modo. Contiene la matriz de modelo, estados, gates,
-criterios de release y formato de informe.
+operacion o ejecutar un modo. Contiene estados, gates, criterios de release y
+formato de informe.
 
 Lee [`references/handoff.md`](references/handoff.md) solo si el trabajo debe
 continuar con el agente especialista real; define el formato, los campos, las

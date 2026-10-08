@@ -22,7 +22,7 @@ concreta usa `inspect`; no convierte `status` en investigación general.
 "Sincroniza todo" es ambiguo: pregunta si significa solo carpetas existentes o
 si desea inicializar ausentes. No existe un modo implicito que haga ambas cosas.
 
-## Preflight informativo permitido
+## Preflight técnico permitido
 
 El preflight puede:
 
@@ -32,63 +32,16 @@ El preflight puede:
 - Contar proyectos, dominios y archivos relevantes.
 
 No puede escribir, cargar todos los especialistas, leer el repo completo ni
-ejecutar auditorias. El objetivo es recomendar el modelo, no resolver la tarea.
+ejecutar auditorias. Su objetivo es delimitar la operación, identificar evidencia
+disponible y determinar qué decisiones o autorizaciones reales siguen pendientes.
 
-## Nivel de modelo
-
-| Tarea base | Nivel inicial |
-| --- | --- |
-| `status` | Bajo |
-| `inspect` puntual | Bajo |
-| `inspect` cruzando módulos/capas | Medio |
-| `release-check` con documentacion verificable | Bajo |
-| `sync-domain` con un dominio, marca valida y hasta 20 archivos relevantes | Bajo |
-| `sync-core` incremental | Medio |
-| `sync-existing` incremental | Medio |
-| `bootstrap-core` pequeno/mediano | Medio |
-| Auditoria inicial o completa de Quality/Security | Alto |
-| Arquitectura grande/ambigua o monorepo complejo | Alto |
-
-Sube un nivel, con tope `alto`, por cualquiera de estas condiciones relevantes:
-
-- Varios proyectos independientes o monorepo ambiguo.
-- Mas de 100 archivos relevantes.
-- No hay marca util y hace falta barrido completo.
-- Cambios cruzados entre cuatro o mas dominios.
-- Es necesario reconstruir contratos, diagramas o inventarios extensos.
-- El usuario solicita auditoria profunda/completa.
-
-No subas por archivos ajenos al alcance. Un `release-check` no se vuelve auditoria
-profunda: si la evidencia esta desfasada, falla o advierte y recomienda sincronizar.
-
-Para operaciones compuestas, informa tambien niveles por fase cuando difieran.
-Ejemplo: `bootstrap-core` puede recomendar `medio` global, `bajo` para Navigator y
-`medio` para Architecture. El usuario puede mantener el nivel global o cambiarlo
-por fase. Si el orquestador ya comunico la recomendacion de Navigator u otro
-especialista para el mismo alcance, no repitas el aviso; no exige confirmacion
-del usuario para deduplicar.
-
-### Salida informativa
-
-```text
-Preflight documental
-
-Tarea detectada: <modo>
-Alcance: <proyecto(s) y carpetas>
-Complejidad: <baja|media|alta>
-Modelo recomendado: <bajo|medio|alto>
-
-Motivos:
-- <1-3 razones verificables>
-
-Puedes cambiar manualmente de modelo o conservar el actual.
-Continuo el trabajo autorizado en el mismo turno sin esperar cambio de modelo.
-```
-
-El aviso no es un Gate 0 humano ni exige «continua», «listo» o confirmacion del
-modelo. El agente no puede cambiar el modelo. Si cambia solo el nivel, recalcula
-y comunica la actualizacion sin pausa; si falta decision o autorizacion de alcance,
-pregunta por ella. `status` y `release-check` continuan lectura e informe.
+Para dimensionar técnicamente el trabajo, considera proyectos independientes,
+cantidad de archivos relevantes, disponibilidad de marcas útiles, cantidad de
+dominios afectados, necesidad de reconstruir contratos/diagramas/inventarios y si
+se solicita auditoría profunda o completa. Excluye archivos ajenos al alcance.
+Un `release-check` sigue siendo una comprobación documental; evidencia desfasada,
+fallida o incompleta se informa y puede motivar recomendar sincronización, no una
+auditoría implícita.
 
 ## Estados documentales
 
@@ -129,8 +82,7 @@ verificable: commit de producto → sync documental → commit documental → ch
   arquitectura primero, capas mínimas y comprobación de frescura; ausencia,
   desfase, ambigüedad o datos ilegibles degradan a fuentes directas sin bloqueo
   por sí solos y sin generación automática.
-- El preflight sigue siendo informativo; no introduce pausa por modelo. Conserva
-  gates reales de mantenimiento y export de cada skill.
+- Conserva gates reales de mantenimiento y export de cada skill.
 - En peticion mixta, responde la lectura separable y pide autorización pendiente
   para mantenimiento; la consulta no la concede ni ejecuta escrituras.
 - Cierra con hallazgos, fuentes, confianza/limitaciones y recomendaciones opcionales.
@@ -226,9 +178,7 @@ No comprueba version, changelog, tag ni publicacion. Deriva esas tareas a
 4. **G4 Cierre:** verificar artefactos y evidencia antes del informe final;
    validacion tecnica, sin pregunta humana adicional automatica.
 
-El preflight informativo no sustituye estos controles ni acredita autorizacion.
-Una recomendacion ya comunicada para el mismo alcance evita avisos duplicados,
-sin confirmacion del usuario; no aprueba decisiones ni escrituras.
+El preflight técnico no sustituye estos controles ni acredita autorizacion.
 
 ## Informe final compacto
 

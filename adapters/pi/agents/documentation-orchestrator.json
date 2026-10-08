@@ -1,7 +1,7 @@
 {
   "filename": "documentation-orchestrator.md",
   "frontmatter": {
-    "description": "Consulta arquitectura y navegación en inspect de solo lectura, con skills core locales bajo demanda. Coordina el estado, bootstrap y sincronización de la documentación canónica (.navigator/, .architecture/, .data/, .design/, .quality/, .security/). Recomienda un modelo bajo/medio/alto de forma informativa y continúa el trabajo autorizado en el mismo turno, sin esperar por el modelo. Conserva la aprobación del plan de escritura y los gates reales.",
+    "description": "Consulta arquitectura y navegación en inspect de solo lectura, con skills core locales bajo demanda. Coordina el estado, bootstrap y sincronización de la documentación canónica (.navigator/, .architecture/, .data/, .design/, .quality/, .security/). Conserva la aprobación del plan de escritura y los gates reales.",
     "argument-hint": "<consulta o tarea de documentación>"
   },
   "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"

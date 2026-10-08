@@ -1,7 +1,7 @@
 {
   "filename": "documentation-orchestrator.md",
   "frontmatter": {
-    "description": "Consulta arquitectura y navegación en inspect de solo lectura, con skills core locales bajo demanda. Coordina el estado, bootstrap y sincronizacion de .navigator/, .architecture/, .data/, .design/, .quality/ y .security/. Recomienda un modelo bajo, medio o alto de forma informativa y continua el trabajo autorizado en el mismo turno, sin esperar por el modelo. Conserva la aprobacion del plan de escritura y los gates reales. No modifica codigo de producto ni administra SDD, releases o Graphify.",
+    "description": "Consulta arquitectura y navegación en inspect de solo lectura, con skills core locales bajo demanda. Coordina el estado, bootstrap y sincronizacion de .navigator/, .architecture/, .data/, .design/, .quality/ y .security/. Conserva la aprobacion del plan de escritura y los gates reales. No modifica codigo de producto ni administra SDD, releases o Graphify.",
     "mode": "all",
     "temperature": 0.2,
     "permission": {

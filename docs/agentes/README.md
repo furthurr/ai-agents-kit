@@ -49,42 +49,37 @@ Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
 
 ## Gates que debes esperar
 
-Los avisos de proceso y nivel son informativos: el trabajo solicitado y autorizado
-continúa en el mismo turno. El cambio de modelo es manual; cambiar solo el nivel
-recomendado no crea una espera. Un aviso ya comunicado para el mismo alcance se
-deduplica sin confirmación ni reanudación. Solo una decisión, autorización o gate
-real pendiente requiere intervención; una comprobación técnica fallida bloquea
-el éxito o cierre, sin convertirse automáticamente en una pregunta humana.
+Ningún agente recomienda ni selecciona niveles o modelos LLM. SDD clasifica la
+feature una sola vez, después de analizar su alcance definido, con
+`Nivel de feature: <n> <emoji>` (1–7 🟢, 8–9 🟠, 10 🔴); no repite la clasificación
+por fase ni pausa el flujo por modelo. Solo una decisión, autorización o gate real
+pendiente requiere intervención; una comprobación técnica fallida bloquea el éxito
+o cierre, sin convertirse automáticamente en una pregunta humana.
 
-- **Documentación:** el Orchestrator hace un preflight, recomienda un modelo y
-  continúa `status`/`release-check` en el mismo turno. Presenta un plan y espera su
-  aprobación antes de escribir.
-- **Skill Navigator (core local):** bootstrap y updates son explícitos; los procesos pesados tienen
-  avisos previo/final no bloqueantes y gate técnico de disponibilidad. Las escrituras,
-  exportaciones y sobrescrituras conservan su autorización efectiva.
-- **Skill Architecture (core local), Data & API y UI Design:** la primera documentación masiva parte
-  de un aviso informativo de modelo, un estudio y una propuesta; consultas y trabajo
-  autorizado continúan en el mismo turno, conservando los gates de propuestas y escritura.
-- **Code Review:** recomienda modelo sin pausar consultas ni barridos autorizados,
-  una sola vez por aviso comunicado para el mismo alcance, sin confirmar ni reanudar.
-  Las auditorías documentales autorizadas
+- **Documentación:** el Orchestrator no recomienda modelos; `status`/`release-check`
+  inspeccionan e informan. Presenta un plan y espera su aprobación antes de escribir.
+- **Skill Navigator (core local):** bootstrap y updates son explícitos; conserva el
+  gate técnico de disponibilidad. Las escrituras, exportaciones y sobrescrituras
+  conservan su autorización efectiva.
+- **Skill Architecture (core local), Data & API y UI Design:** no recomiendan modelos;
+  la primera documentación masiva conserva sus gates de estudio, propuesta y escritura.
+- **Code Review:** no recomienda modelo. Consultas y barridos autorizados conservan
+  su alcance; las auditorías documentales autorizadas
   registran todas las severidades verificadas sin pedir otro filtro; consultas sin
   escrituras y remediación con aprobación antes del primer y cada siguiente paso.
 - **Escalado a SDD:** Documentation Orchestrator, Data & API, UI Design y Code Review
   recomiendan SDD si la mejora requiere más requisitos, diseño o coordinación;
   explican el motivo y esperan que el usuario decida si cambia de agente.
 - **SDD:** ofrece exactamente `direct`, `lite` y `standard`. `lite` se
-  selecciona automáticamente para trabajo acotado, claro y de bajo riesgo, exige
-  un preflight informativo y usa Quick Plan sin Gates 1-4. `standard` es el fallback
-  seguro y conserva los Gates 1-4; cada fase recibe su recomendación
-  de nivel de LLM al iniciar y las transiciones no crean gates adicionales ni piden
-  confirmar la selección del nivel. El preflight inicial de los tres modos y el
-  salto Implementación → Verification continúan sin pausa por modelo. Las
+  selecciona automáticamente para trabajo acotado, claro y de bajo riesgo y usa
+  Quick Plan sin Gates 1-4. `standard` es el fallback seguro y conserva los Gates
+  1-4. Tras analizar el alcance definido, SDD emite una sola vez
+  `Nivel de feature: <n> <emoji>` (1–7 🟢, 8–9 🟠, 10 🔴); no recomienda ni
+  selecciona modelos, no repite el nivel por fase ni pausa el flujo por modelo. Las
   solicitudes de `deep` o TDD estricto informan que esas opciones fueron retiradas
   y esperan aceptación de `standard` o TDD focalizado.
 - **Git y releases:** commit, push, cambios de versión, tags y CHANGELOG requieren
-  confirmación explícita; no añaden Gate de modelo y las acciones destructivas
-  requieren doble confirmación.
+  confirmación explícita; las acciones destructivas requieren doble confirmación.
 
 ## Fichas detalladas
 

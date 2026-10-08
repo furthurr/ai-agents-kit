@@ -39,7 +39,7 @@ class CodeReviewContractTest(unittest.TestCase):
     def test_routing_and_evidence_contract(self) -> None:
         agent = self.text("canonical/agents/code-review.md")
         for rule in ("solo calidad", "solo seguridad", "revisión completa", "QLT", "SEC",
-                     "Sonar", "OWASP", "severidad original", "mismo alcance",
+                     "Sonar", "OWASP", "severidad original", "misma causa",
                      "no amplía", "target: code-review", "Handoff Result"):
             self.assertTrue(rule in agent, f"Falta regla del agente: {rule}")
         self.assertIn("carga únicamente", agent)
@@ -52,24 +52,12 @@ class CodeReviewContractTest(unittest.TestCase):
                                       ("security", ".security/", "SEC")):
             text = self.text(f"canonical/skills/{skill}/SKILL.md")
             for rule in ("Code Review", folder, prefix, "todas las severidades",
-                         "misma causa", "sin escrituras", "cachés", "marcas",
+                         "ocurrencias de la", "sin escrituras", "cachés", "marcas",
                          "antes del primer", "sesión"):
                 with self.subTest(skill=skill, rule=rule):
                     self.assertTrue(rule in text, f"Falta regla de {skill}: {rule}")
             self.assertNotIn("Confirma el **alcance** (todo, solo", text)
             self.assertNotIn("deriva al Security Agent", text)
-
-    def test_model_preflight_reuse_contract(self) -> None:
-        for skill in ("code-quality", "security"):
-            text = self.text(f"canonical/skills/{skill}/references/model-selection.md")
-            compact = " ".join(text.split()).lower()
-            with self.subTest(skill=skill, contract="continuidad"):
-                self.assertIn("code review", compact)
-                self.assertIn("no repitas el aviso", compact)
-                self.assertRegex(compact, r"comunic\w+|mostr[oó]|recomend[oó]")
-                self.assertRegex(compact, r"mismo turno|contin[uú]a[^.]*sin (?:esperar|pausa)")
-            with self.subTest(skill=skill, contract="sin mandatos antiguos"):
-                self.assertNotRegex(compact, r"hard stop|termina el turno|usuario lo confirm[oó]|usuario reanud[oó]")
 
     def test_remediation_authorization_is_not_model_confirmation(self) -> None:
         for skill in ("code-quality", "security"):

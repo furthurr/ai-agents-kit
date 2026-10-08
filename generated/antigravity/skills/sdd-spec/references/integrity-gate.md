@@ -20,18 +20,13 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
   `Estado` y el gate pendiente o aprobado que corresponda.
 - La reanudación determina la próxima operación por esos marcadores; no inferirá
   aprobación solo por la existencia del archivo. Si faltan o se contradicen, pedir
-  aclaración antes de recomendar un nivel.
-- La recomendación de la próxima fase se presenta junto al resumen y al gate actual,
-  pero no crea un gate nuevo. Deduplica la recomendación ya comunicada para el
-  mismo alcance; no requiere confirmación del usuario.
-- La recomendación de nivel de LLM es informativa: no solicites confirmación de que
-  el usuario la seleccionó o cambiará su LLM. Para iniciar la próxima fase, espera
-  solo la aprobación del gate SDD real que corresponda. Si no hay gate intermedio
-  (Implementación → Verification), continúa con Verification sin pausa, en el mismo
-  turno, sin esperar respuesta ni cambio manual de modelo.
-- Un cambio de alcance o riesgo invalida el preflight anterior: recalcula y comunica
-  la recomendación actualizada sin esperar por un cambio exclusivo de nivel.
-  Si falta autorización para el alcance nuevo, pregunta por ella.
+  aclaración antes de continuar.
+- El resumen de transición se presenta junto al gate actual, pero no crea un gate
+  nuevo. Para iniciar la próxima fase, espera solo la aprobación del gate SDD real
+  que corresponda. Si no hay gate intermedio
+  (Implementación → Verification), continúa con Verification en el mismo turno.
+- Un cambio de alcance o riesgo invalida la evaluación previa: reevalúa el trabajo
+  autorizado. Si falta autorización para el alcance nuevo, pregunta por ella.
   Si el cambio requiere reclasificar el modo SDD, solicita aprobación de ese cambio
   de flujo.
 

@@ -84,7 +84,7 @@ def test_project_structure() -> None:
         "tools/import_installed.py",
         "tools/check_links.py",
         "tools/test_links.py",
-        "tools/test_model_recommendations.py",
+        "tools/test_sdd_contract.py",
         "tools/test_mas_identity.py",
         "tools/test_antigravity_contract.py",
         "tools/test_antigravity_install.py",
@@ -371,26 +371,10 @@ def test_link_checker_passes() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 15. Model recommendation contracts pass
-# ---------------------------------------------------------------------------
-def test_model_recommendations_pass() -> None:
-    print("\n\033[1m[15] Recomendaciones de modelo\033[0m")
-
-    suite = ROOT / "tools" / "test_model_recommendations.py"
-    result = subprocess.run(
-        [sys.executable, str(suite)],
-        capture_output=True, text=True, cwd=str(ROOT)
-    )
-    check(result.returncode == 0, "test_model_recommendations.py exit code 0")
-    if result.returncode != 0:
-        print(f"      stderr: {result.stderr.strip()}")
-
-
-# ---------------------------------------------------------------------------
-# 16. Data & API interactive documentation workflow is present everywhere
+# 15. Data & API interactive documentation workflow is present everywhere
 # ---------------------------------------------------------------------------
 def test_data_api_scalar_workflow() -> None:
-    print("\n\033[1m[16] Data & API: flujo interactivo con Scalar\033[0m")
+    print("\n\033[1m[15] Data & API: flujo interactivo con Scalar\033[0m")
 
     reference = ROOT / "canonical" / "skills" / "data-api" / "references" / "api-docs.md"
     skill = (ROOT / "canonical" / "skills" / "data-api" / "SKILL.md").read_text(encoding="utf-8")
@@ -423,10 +407,10 @@ def test_data_api_scalar_workflow() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 17. MAS identity contract passes
+# 16. MAS identity contract passes
 # ---------------------------------------------------------------------------
 def test_mas_identity_pass() -> None:
-    print("\n\033[1m[17] Identidad MAS\033[0m")
+    print("\n\033[1m[16] Identidad MAS\033[0m")
 
     suite = ROOT / "tools" / "test_mas_identity.py"
     result = subprocess.run(
@@ -439,7 +423,7 @@ def test_mas_identity_pass() -> None:
 
 
 def test_documentation_core_pass() -> None:
-    print("\n[18] Contratos de documentación core")
+    print("\n[17] Contratos de documentación core")
     result = subprocess.run(
         [sys.executable, "-B", str(ROOT / "tools/test_documentation_core.py")],
         capture_output=True, text=True, cwd=ROOT,
@@ -472,7 +456,6 @@ def main() -> int:
     test_readme_references()
     test_negative_suite_passes()
     test_link_checker_passes()
-    test_model_recommendations_pass()
     test_data_api_scalar_workflow()
     test_mas_identity_pass()
     test_documentation_core_pass()

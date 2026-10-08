@@ -217,7 +217,7 @@ class MigrationTests(unittest.TestCase):
                             (skill / "references").symlink_to(outside, target_is_directory=True)
                         else:
                             (skill / "references").mkdir()
-                            (skill / "references/model-selection.md").symlink_to(sentinel)
+                            (skill / "references/templates.md").symlink_to(sentinel)
                     elif defect == "current-agent-link":
                         name = test_install.agent_filenames(platform, ["documentation-orchestrator"])[0]
                         (agents / name).symlink_to(sentinel)

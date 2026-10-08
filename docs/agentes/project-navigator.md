@@ -84,9 +84,6 @@ Para instalaciones anteriores, consulta [migración segura](../migracion-agentes
 - Por defecto es de solo lectura.
 - Solo escribe en `.navigator/`; la exportación opt-in a `AGENTS.md` requiere confirmación.
 - No implementa features, refactors, tests, CI ni cambios en Git remoto.
-- No selecciona ni cambia el modelo del host; solo recomienda un cambio manual si
-  el proceso es pesado. Los avisos previo y final son informativos: continúa el
-  trabajo autorizado en el mismo turno sin exigir «continúa» ni confirmar el modelo.
-  No repite un aviso ya comunicado para el mismo alcance, incluido el orquestado.
+- No recomienda ni selecciona niveles, modelos o proveedores LLM.
   Crear, actualizar, exportar o sobrescribir índices conserva su autorización efectiva.
 - Si piden código, aporta ubicación o mapa y redirige al agente adecuado.

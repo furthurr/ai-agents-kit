@@ -134,10 +134,9 @@ las carpetas documentales. Su core de bootstrap es `.navigator/` más
 `.architecture/`; Data y Design son condicionales, mientras Quality y Security
 son assurance recomendado y se sincronizan cuando existen o se solicitan.
 
-Antes de operar ejecuta un preflight barato, recomienda manualmente un nivel de
-modelo de forma informativa y continúa el trabajo autorizado en el mismo turno.
+Antes de operar ejecuta un preflight barato sin recomendar niveles ni modelos LLM.
 `status` y `release-check` inspeccionan e informan; las escrituras conservan la
-aprobación del plan global y los gates de especialistas. El coste alto queda
-reservado para barridos iniciales, monorepos complejos y auditorías profundas.
+aprobación del plan global y los gates de especialistas. El alcance de cada modo
+determina el trabajo y sus gates, no una selección de modelo.
 El detalle operativo vive en
 [`canonical/skills/documentation-orchestrator/SKILL.md`](../canonical/skills/documentation-orchestrator/SKILL.md).

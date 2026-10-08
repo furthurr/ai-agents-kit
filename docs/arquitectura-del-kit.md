@@ -111,7 +111,7 @@ frontmatter y notas del host, y el renderer existente produce
 `generated/antigravity/{skills,agents}/`. No se duplican agentes como skills.
 
 - Seis agentes con `model: inherit`, `mainAgent: true`, `subagent: true` y listas
-  literales de tools por rol. Los niveles LLM recomendados siguen siendo manuales.
+  literales de tools por rol. Ningún agente recomienda ni selecciona modelos LLM.
 - `{{sdd_agent}}` → `sdd` (identificador nominal), `{{gate_instruction}}` → vacío,
   `{{steering_paths}}` → `GEMINI.md`, `AGENTS.md`, `.agents/rules/*.md`.
   El bridge `GEMINI.md` → `AGENTS.md` no está implementado; el token declara
@@ -249,8 +249,8 @@ contratos normativos de índices viven en `references/schemas.md`.
 
 - Las skills Navigator y Architecture permanecen separadas: Navigator localiza y resume; Architecture
   documenta decisiones, límites y deuda estructural.
-- El comportamiento es agnóstico al proveedor y al modelo. El agente puede
-  recomendar un cambio manual para procesos pesados, pero nunca seleccionarlo.
+- El comportamiento es agnóstico al proveedor y al modelo. Ningún agente recomienda
+  niveles o cambios de modelo, ni puede seleccionar el modelo del host.
 - Capas 0–1 forman el MVP; símbolos y grafo son opt-in y no bloquean bootstrap.
 - Los límites declarados por prompts no equivalen a un sandbox. Los adapters
   reducen o solicitan permisos según las capacidades reales de cada host.
@@ -269,7 +269,7 @@ delegación nativa esté comprobada en todos los hosts.
 
 ### Límites y autoridad
 
-- `documentation-orchestrator` gobierna clasificación, orden, preflight informativo y
+- `documentation-orchestrator` gobierna clasificación, orden, preflight de solo lectura y
   cierre global.
 - Cada skill especialista sigue siendo autoridad dentro de su propia carpeta y
   conserva sus gates.
@@ -280,12 +280,11 @@ delegación nativa esté comprobada en todos los hosts.
   artefactos ya definidos por cada especialista.
 - SDD, Release Management y Graphify son workflows externos de solo lectura para
   este agente.
-- La recomendación de modelo es genérica (`bajo`/`medio`/`alto`) y manual; ningún
-  adapter permite que el agente seleccione el modelo del host.
-- El aviso permite continuar el trabajo autorizado en el mismo turno, incluidos
-  `status` y `release-check`; no exige confirmación ni reanudación. Se deduplica por
-  comunicación para el mismo alcance, no por nivel confirmado. Cambiar solo el
-  nivel recomendado no bloquea; decisiones de alcance, gates y permisos sí se conservan.
+- Ningún agente recomienda niveles o cambios de modelo y ningún adapter permite
+  seleccionar el modelo del host. SDD emite una sola clasificación de nivel de
+  feature después de analizar el alcance definido; no es una recomendación LLM.
+- Las decisiones de alcance, gates y permisos sí pueden requerir intervención y
+  conservan sus autorizaciones efectivas.
 
 Smoke test: [documentation-orchestrator-smoke.md](documentation-orchestrator-smoke.md).
 

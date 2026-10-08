@@ -29,16 +29,14 @@ Resultado esperado:
 - No crea índices ni hace depender la respuesta de un bootstrap; puede recomendarlo.
 - No crea handoff a un agente core retirado ni afirma que el contexto fue sincronizado.
 - No explora silenciosamente el repositorio completo.
-- En proceso pesado recomienda cambiar manualmente a un modelo económico, pero
-  no intenta cambiarlo ni espera una respuesta por el aviso. Con bootstrap ya
-  autorizado continúa en el mismo turno; el aviso final tampoco bloquea.
+- No recomienda niveles, modelos ni proveedores LLM. El bootstrap autorizado conserva
+  sus gates operativos.
 - En una segunda solicitud explícita `sync-domain project-navigator: inicializa
   solo los índices`, presenta plan/alcance y conserva los gates. Tras autorización
-  efectiva de bootstrap (no confirmación de modelo), crea
+  efectiva de bootstrap, crea
   únicamente `config.yaml`, `ai-context.md` y `module-map.json` bajo `.navigator/`.
 - No genera symbols ni grafo salvo opt-in.
-- No repite el aviso ya comunicado para el mismo alcance en la ejecución local;
-  conserva autorizaciones de update, exportación y sobrescritura.
+- Conserva autorizaciones de update, exportación y sobrescritura.
 
 ### 2. Consulta por módulo
 
@@ -111,17 +109,16 @@ Comprobar además:
 - Con Git y working tree limpio, `ai-context.md`, `module-map.json` y los índices
   habilitados registran el `source_commit` verificable usado como baseline.
 - Los IDs referenciados por `depends_on` existen.
-- El agente emitió el aviso final tras un proceso pesado.
+- El agente no emitió recomendaciones ni avisos de selección de modelo.
 
 ## Registro de resultados
 
 No marcar una plataforma como aprobada sin ejecutar todos los pasos.
 
 La tabla y las ejecuciones de agosto siguientes son **evidencia histórica del
-contrato MVP**. No validan el ajuste posterior de avisos de modelo no bloqueantes:
-los escenarios de ese contrato nuevo están definidos, pero no ejecutados en hosts.
-Conservar los resultados anteriores sin presentarlos como aprobación del checklist
-actualizado.
+contrato MVP**. No validan la ausencia actual de recomendaciones LLM; los escenarios
+actuales deben ejecutarse en hosts. Conservar los resultados anteriores sin
+presentarlos como aprobación del checklist actualizado.
 
 La entrada core consolidada tampoco está validada por esos resultados. Registro
 actual por plataforma, versión, modelo, fecha, commit, fuentes/capas consultadas,

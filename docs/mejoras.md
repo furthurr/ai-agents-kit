@@ -234,7 +234,8 @@ tendencia similar. No se publica un porcentaje de ahorro sin esos datos.
 - [ ] Añadir una regla de frescura: antigüedad de `generated_at`, commit indexado
   y desfase evidente antes de confiar en los índices.
 - [ ] Documentar actualización parcial y resolución de ediciones manuales.
-- [ ] Unificar el aviso de modelo para evitar divergencias entre documentos.
+- [x] Alinear la documentación para que los agentes no recomienden niveles ni
+  modelos LLM; SDD clasifica una vez el nivel de feature tras definir el alcance.
 - [x] Añadir el snippet recomendado de `.gitignore` para `.navigator/cache/`.
 
 Definición de hecho: las pruebas cubren índice ausente, desactualizado, parcial y

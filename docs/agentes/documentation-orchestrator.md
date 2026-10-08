@@ -42,17 +42,13 @@ una versión o un tag, redirige a Git & Release Manager.
 
 ## Flujo de ejecución
 
-1. Hace un preflight barato y de solo lectura.
-2. Recomienda un nivel `bajo`, `medio` o `alto` de forma informativa y continúa el
-   trabajo autorizado en el mismo turno, sin exigir «continúa» ni confirmar el modelo.
-   El cambio de modelo es manual; un aviso ya comunicado para el mismo alcance
-   evita duplicarlo al pasar al especialista.
-3. En `inspect`, `status` y `release-check`, inspecciona e informa sin escrituras. Para modos
+1. Hace un preflight barato y de solo lectura, sin recomendar ni seleccionar modelos.
+2. En `inspect`, `status` y `release-check`, inspecciona e informa sin escrituras. Para modos
    con escritura presenta el plan global de proyectos, dominios y orden, y espera
    su aprobación antes de escribir.
-4. Ejecuta especialistas en secuencia y conserva los gates propios de cada uno;
+3. Ejecuta especialistas en secuencia y conserva los gates propios de cada uno;
    una autorización efectiva del mismo alcance en la sesión puede reutilizarse.
-5. Verifica artefactos y evidencia antes de declarar un dominio completado.
+4. Verifica artefactos y evidencia antes de declarar un dominio completado.
 
 El orden normal es skill Architecture local, Data & API si aplica, UI Design si
 aplica, Code Review para calidad/seguridad seleccionadas y skill Project Navigator
@@ -114,7 +110,7 @@ especialistas cuando el modo y los gates lo autorizan. No crea una carpeta
 
 - Nunca modifica código de producto, tests, CI, configuración funcional ni Git remoto.
 - No crea ni sincroniza `.sdd/`, `.release/` o `graphify-out/`.
-- No selecciona ni cambia el modelo del host.
+- No recomienda ni selecciona niveles, modelos o proveedores LLM.
 - La autorización documental de Quality/Security se reutiliza para el mismo
   alcance en la sesión, sin pedir otro filtro de severidad; no autoriza remediar.
   Un `gate_state` recibido no concede autorización ni permisos técnicos.

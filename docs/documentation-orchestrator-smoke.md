@@ -22,8 +22,8 @@ Comprueba si la documentación está actualizada.
 Esperado:
 
 - Detecta `status` y comienza con un preflight superficial.
-- Recomienda normalmente modelo `bajo` con razones verificables.
-- Continúa con inspección e informe en el mismo turno, sin esperar por modelo.
+- No recomienda nivel, modelo ni proveedor LLM.
+- Completa la inspección e informe en el mismo turno.
 - No escribe archivos.
 
 Debe completar el inventario sin escribir ni exigir `continúa con el actual`.
@@ -39,9 +39,8 @@ Inicializa la documentación core del proyecto.
 Esperado:
 
 - Selecciona únicamente `.navigator/` y `.architecture/`.
-- Recomienda modelo `medio` o `alto` según tamaño de forma informativa.
-- Presenta el plan global en el mismo turno y espera su aprobación de escritura,
-  sin pedir confirmación del modelo.
+- No recomienda nivel, modelo ni proveedor LLM.
+- Presenta el plan global y espera su aprobación de escritura.
 - Conserva los gates de Project Navigator y Architecture.
 - Ejecuta ambas skills separadas localmente, sin handoff a agentes retirados.
 - No crea `.data/`, `.design/`, `.quality/` ni `.security/`.
@@ -72,8 +71,8 @@ Prompt:
 Ejecuta sync-check.
 ```
 
-Esperado: interpreta `status`, no `release-check`, recomienda modelo y completa
-la inspección e informe sin esperar por el aviso.
+Esperado: interpreta `status`, no `release-check`, no recomienda modelos y completa
+la inspección e informe.
 
 En la siguiente petición, cambia el alcance:
 
@@ -81,11 +80,9 @@ En la siguiente petición, cambia el alcance:
 Mejor actualiza solo arquitectura y seguridad.
 ```
 
-Esperado: recalcula como `sync-domain`, comunica el nivel actualizado si corresponde
-y presenta el plan sin pausa por modelo. Espera solo por la aprobación de escritura
-o una decisión real pendiente; una autorización anterior no cubre una ampliación.
-Repite con un cambio exclusivo de nivel y el mismo alcance autorizado: informa y
-continúa, sin nueva confirmación ni reanudación.
+Esperado: recalcula como `sync-domain`, no recomienda modelos y presenta el plan.
+Espera la aprobación de escritura o una decisión real pendiente; una autorización
+anterior no cubre una ampliación.
 
 ## 5. Release check
 
@@ -97,7 +94,7 @@ Comprueba si el proyecto está listo para una release.
 
 Esperado:
 
-- Selecciona `release-check`, normalmente con modelo `bajo`, sin pausa por el aviso.
+- Selecciona `release-check` sin recomendar nivel o modelo LLM.
 - En el mismo turno lee documentación y findings existentes y entrega el informe.
 - No reescanea código, no genera changelog, no versiona y no crea tags.
 - Devuelve `APTO`, `APTO CON ADVERTENCIAS` o `NO APTO` con evidencia.
@@ -114,7 +111,7 @@ respectivamente a SDD, Git & Release Manager o Graphify sin modificar `.sdd/`,
 
 ## 7. Handoff productor–receptor
 
-Después del preflight informativo y del plan, solicita explícitamente continuar
+Después del análisis inicial y del plan, solicita explícitamente continuar
 con el agente Code Review real para una inspección documental de solo seguridad.
 
 Esperado en el orquestador:
@@ -131,8 +128,7 @@ Copia el bloque a Code Review. Esperado en el receptor:
 - No interpreta `gate_state` como aprobación de sus gates.
 - Para un bloque válido, ejecuta solo su alcance y devuelve `## Handoff Result`
   con el mismo `handoff_id`, `status`, `evidence` y `result_summary`.
-- No repite el aviso de nivel ya comunicado para el mismo alcance; no exige una
-  confirmación ni reanudación para deduplicarlo. Conserva decisiones y gates reales.
+- No comunica recomendaciones de modelo. Conserva decisiones y gates reales.
 
 Devuelve el resultado al orquestador. Esperado: verifica la evidencia antes de
 marcar el dominio completado. Repite al menos una vez con `action: sync` y
@@ -175,8 +171,8 @@ Explica las capas ahora y actualiza después los índices; no he aprobado escrit
 
 Esperado: atiende lectura separable, propone mantenimiento y espera aprobación
 aplicable antes de escribir. Solicitar exportación de Navigator a `AGENTS.md`
-conserva confirmación específica; una recomendación de modelo, consulta, handoff
-antiguo o `gate_state` no autoriza exportar ni sobrescribir.
+conserva confirmación específica; una consulta, handoff antiguo o `gate_state` no
+autoriza exportar ni sobrescribir.
 
 ## 11. IDs retirados y conservación
 
@@ -207,8 +203,7 @@ sido ejecutados en runtime LLM; evidencia histórica y tests estáticos no los a
 
 ## Criterio de cierre actualizado
 
-La prueba pasa si todos los modos aplican preflight informativo y continúan el
-trabajo autorizado en el mismo turno, sin esperas exclusivas por modelo; las
+La prueba pasa si todos los modos aplican preflight sin recomendaciones LLM; las
 escrituras conservan aprobación del plan global, las skills especialistas conservan
 autoridad y no aparece una carpeta `.documentation/`. El handoff pasa solo si productor y receptor
 cumplen el contrato, no duplican la acción y preservan los gates.

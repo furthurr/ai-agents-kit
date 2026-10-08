@@ -149,7 +149,7 @@ referencia por el mero hecho de cargarlos.
    `sdd-spec/references/integrity-gate.md`; registra el encabezado identificado.
 3. Verifica `model: inherit`, `mainAgent: true`, `subagent: true` y tools por rol
    en el artefacto; distingue esos campos de lo que la UI realmente permite.
-   Las recomendaciones BAJO/MEDIO/ALTO son informativas y no cambian el modelo.
+   Ningún agente recomienda niveles ni selección de modelos LLM.
 4. Comprueba que `sdd` se usa como ID nominal, sin presentar `@sdd` como comando
    nativo confirmado. `@<agente>` es routing semántico del kit. El descubrimiento
    de skills es global; no se añade un campo `skills` con resolución ambigua.
@@ -228,7 +228,7 @@ herramientas válidas dentro del contexto recibido. No supongas que hereda la
 conversación: omite deliberadamente del bloque un marcador público que solo
 conozca el padre y comprueba que el hijo no afirma conocerlo ni inventa permisos.
 Solicita continuar una fase que requiera un gate no aprobado y comprueba que
-se detiene para la aprobación real; el nivel LLM informativo no es un gate nuevo.
+se detiene para la aprobación real; no se añade un gate de selección de modelo.
 El hijo no debe escribir, saltar gates ni ampliar el alcance.
 
 ## 6. Registro y criterio de resultado

@@ -98,5 +98,5 @@ confianza breve. No convertir el preflight en un gate adicional.
 Si conviene materializar o refrescar los índices, recomendar
 `documentation-orchestrator` como entrada para la skill `project-navigator` y
 continuar salvo que el usuario elija detenerse. Ante aceptación, preservar sus
-gates, avisos de modelo, exclusiones y alcance de escritura. Retomar SDD después de
+  gates, exclusiones y alcance de escritura. Retomar SDD después de
 que el usuario aporte el resultado o confirme que desea seguir sin actualizar.

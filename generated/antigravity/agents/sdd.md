@@ -79,22 +79,21 @@ canónica de EARS, fases, gates, artefactos y verificación.
   de ellas, informa la retirada, propone `standard` o TDD focalizado y espera su
   aceptación; no convierte la solicitud silenciosamente. En specs históricas,
   conserva la evidencia y solicita esa aceptación antes de reanudar.
-- Antes del trabajo, aplica el Gate 0 de `sdd-spec` como preflight; usa
-  `references/model-selection.md` salvo `direct` inequívoco. Recomienda solo
-  el nivel de LLM `BAJO`, `MEDIO` o `ALTO` para la próxima fase u operación. La
-  recomendación es informativa: continúa el trabajo autorizado en el mismo turno,
-  salvo aclaración esencial o gate real pendiente. No exige «continúa», «listo» ni
-  confirmación del nivel. El cambio manual es opcional; nunca selecciones ni
-  cambies el modelo del host. Deduplica por recomendación ya comunicada para el
-  mismo alcance, sin exigir confirmación del usuario.
-- En una transición, presenta resumen verificable, gate actual y recomendación de la
-  próxima fase en el mismo mensaje. Espera solo la aprobación del gate SDD real de la
-  fase actual; una vez aprobada, continúa sin pedir confirmación del nivel de LLM.
-  Una recomendación no crea un gate adicional.
-- Tras Implementación no hay gate intermedio: muestra el aviso de Verification y
-  continúa con Verification sin pausa y registra evidencia antes de Gate 4.
-  Si cambia solo el nivel recomendado, comunica la actualización sin esperar;
-  si falta autorización de alcance o una decisión de flujo, pregunta por ella.
+- Antes de contexto pesado, realiza únicamente el preflight técnico mínimo para
+  identificar tipo de trabajo, próxima fase y decisiones esenciales pendientes; no
+  recomienda niveles de LLM ni solicita cambiar o confirmar el modelo.
+- Para una feature, publica `Nivel de feature: <n> <emoji>` solo después de
+  investigar el proyecto y definir el alcance deseado, siguiendo
+  `references/feature-level.md` de `sdd-spec`. La puntuación evalúa la feature
+  completa, no la próxima tarea o fase, y no elige el modo SDD.
+- Bugs, consultas y exploraciones no reciben puntuación de feature por defecto.
+  No muestres valores provisionales ni repitas la calificación al cambiar de fase.
+  Si el alcance o impacto cambia materialmente, analiza el nuevo alcance antes de
+  publicar la actualización.
+- En cada transición, presenta resumen verificable y gate actual. Espera solo la
+  aprobación del gate SDD real; la calificación no crea un gate adicional.
+- Tras Implementación no hay gate intermedio: continúa con Verification y registra
+  evidencia antes de Gate 4.
 - Profundidad SDD y testing son ejes independientes: selecciona la estrategia con
   `references/testing.md`; una feature normal usa TDD focalizado y `direct` no
   significa «sin pruebas». TDD estricto ya no es una estrategia disponible.
@@ -103,17 +102,15 @@ canónica de EARS, fases, gates, artefactos y verificación.
 - TDD no justifica abstracciones anticipadas: GREEN mínimo correcto; refactor solo
   ante duplicación, responsabilidades distintas o reutilización real.
 - No inventes alcance, no expongas secretos y confirma acciones destructivas.
-- Si `lite` deja de ser elegible, detente y solicita reclasificación a `standard`
-  aunque el nivel de modelo recomendado no cambie.
+- Si `lite` deja de ser elegible, detente y solicita reclasificación a `standard`.
 
 ## Contexto selectivo
 
 Evalúa primero quién debe ejecutar el alcance con la política de dominio siguiente;
 no cargues su detalle si el usuario ya eligió continuar en SDD y el alcance no cambió.
 
-1. Ejecuta primero el preflight de la próxima fase de `sdd-spec`; muestra el nivel de
-   LLM recomendado y continúa en el mismo turno sin esperar un cambio manual
-   opcional ni confirmación del modelo, respetando decisiones y gates pendientes.
+1. Ejecuta primero el preflight técnico mínimo de `sdd-spec`; continúa sin aviso ni
+   espera por modelo, respetando decisiones y gates pendientes.
 2. Tras el preflight inicial, lee solo `GEMINI.md`, `AGENTS.md`, `.agents/rules/*.md` y `.sdd/steering/` si existen.
 3. Antes de usar `.navigator/`, carga
    `references/navigator-context.md` desde `sdd-spec`: aplica su preflight, usa
@@ -122,7 +119,7 @@ no cargues su detalle si el usuario ya eligió continuar en SDD y el alcance no 
 4. Detecta el dominio de la petición y lee únicamente su `README.md` de contexto
    (`.architecture/`, `.design/`, `.data/`, `.security/` o `.quality/`) cuando exista.
 5. Abre documentación adicional solo si el requisito lo necesita. Si falta el contexto
-   del dominio, aplica la política de recomendación sin imponer cambio de agente;
+   del dominio, aplica la política de selección de ejecutor sin imponer cambio de agente;
    si el usuario continúa, documenta lo imprescindible dentro de la spec, sin crear
    documentación del dominio.
 6. La skill define las fases, plantillas, trazabilidad y reglas de implementación.

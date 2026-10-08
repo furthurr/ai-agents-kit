@@ -1,45 +1,8 @@
 # Bootstrap y update
 
-## Avisos de modelo (informativos en procesos pesados)
-
-Aplica a bootstrap, update pesado, indexado y navegación reiterada de varias capas.
-
-**Antes:**
-
-```text
-Para el proceso pesado de project-navigator, te recomiendo cambiar manualmente
-el modelo de esta sesion a uno pequeno/rapido/economico (menor costo y
-latencia para indexar y navegar).
-
-No cambio el modelo por ti. El aviso es informativo; continúo el trabajo autorizado
-en este mismo turno sin pedir confirmación del modelo.
-```
-
-Después del aviso, continúa el trabajo autorizado en el mismo turno.
-Si cambia solo el nivel recomendado, comunica la actualización sin pausa.
-No menciones nombres de modelos, proveedores. Nunca selecciones ni cambies el modelo del host.
-El aviso no autoriza crear, actualizar ni exportar índices: conserva los permisos efectivos.
-
-**Invocación orquestada:** si un orquestador canónico ya comunicó la
-recomendación de modelo para Project Navigator y el mismo alcance,
-no repitas el aviso. Esto no omite ningún gate de
-alcance, ubicación, escritura ni integridad del bootstrap/update.
-
-**Después:**
-
-```text
-project-navigator termino.
-
-Ya puedes cambiar manualmente el modelo a uno enfocado en tu siguiente tarea
-(p. ej. coding agentic para implementar, o razonamiento fuerte para disenar).
-No lo cambio por ti.
-```
-
-El aviso final también es no bloqueante y no exige respuesta.
-
 ## Bootstrap asistido (pasos)
 
-1. Aviso previo no bloqueante de modelo pequeño (arriba); verificar autorización de bootstrap.
+1. Verificar autorización de bootstrap.
 2. Detectar lenguajes, build system y fuentes externas de contexto (`sources.md`).
 3. Detectar ubicación de `.navigator/` (monorepo; ver abajo). Si es ambiguo, **preguntar**.
 4. Crear `.navigator/` si no existe.
@@ -52,7 +15,6 @@ El aviso final también es no bloqueante y no exige respuesta.
 9. Respetar `exclude` y no indexar secretos (`config.md`).
 10. Ejecutar el gate post-bootstrap descrito abajo; corregir fallos antes de cerrar.
 11. Informar: artefactos creados, fuentes externas detectadas, gaps, presupuesto y cómo consultar.
-12. Aviso final de modelo no bloqueante.
 
 ### Lectura para Capa 0 (presupuesto)
 
@@ -111,7 +73,7 @@ Presupuesto de `module-map.json`:
 - Si supera 4k, reducir granularidad o acotar `project.root`; no truncar JSON.
 
 Si el gate falla, corregir solo los artefactos de `.navigator/`, repetir las
-comprobaciones y después emitir el aviso final de modelo.
+comprobaciones antes de cerrar.
 
 ### Symbols (opt-in en bootstrap)
 
@@ -157,7 +119,6 @@ Reglas:
 - Actualizar capas afectadas; no regenerar todo por defecto
 - Si `ai-context.md` tiene edición manual evidente: preguntar antes de sobrescribir o fusionar conservando notas del usuario
 - Mantener `exclude` y política de secretos
-- Avisos de modelo no bloqueantes antes/después si el update es pesado
 - Preferir regenerar solo capas/módulos afectados
 - Actualizar `source_commit` en cada artefacto tocado solo cuando represente un
   baseline Git verificable; no ocultar cambios locales bajo el hash de `HEAD`

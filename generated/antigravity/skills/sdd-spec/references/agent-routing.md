@@ -59,7 +59,7 @@ ejecución automáticamente. El usuario selecciona el agente en la interfaz del 
   sesión, sin persistencia nueva; no asumas una elección si falta ese contexto.
 - Si elige al especialista, prepara el contexto siguiente y deja de ejecutar esa
   actividad en SDD. No afirmes que la interfaz haya cambiado de agente.
-- Si la respuesta no permite distinguir ejecutor, aclara esa elección, no el modelo.
+- Si la respuesta no permite distinguir ejecutor, aclara esa elección.
 
 ## Contexto para selección manual
 
@@ -87,8 +87,8 @@ nuevo ni otorga permisos al agente receptor.
 
 ## Integración con SDD
 
-La evaluación barata inicial puede acompañar el preflight aplicable; no justifica
-cargar contexto pesado antes de él. Consulta esta referencia cuando haga falta
+El preflight técnico inicial puede orientar la evaluación; no justifica cargar
+contexto pesado antes de resolver decisiones esenciales. Consulta esta referencia cuando haga falta
 evaluar un especialista y comprueba contexto mínimo antes de editar o ejecutar la
 actividad candidata. Reevaluar solo si cambia el alcance, riesgo o decisión.
 
@@ -99,5 +99,5 @@ por sí solo un gate: una respuesta puede elegir ejecutor y aprobar el gate úni
 si ambas decisiones son explícitas. Mantén SDD para planificación/coordinación si
 el alcance no pertenece enteramente a un especialista.
 
-Esta política no modifica el preflight de nivel de LLM ni crea un gate SDD nuevo:
-la elección manual se aclara solo cuando es una decisión esencial pendiente.
+Esta política no crea un gate SDD nuevo: la elección manual se aclara solo cuando
+es una decisión esencial pendiente.

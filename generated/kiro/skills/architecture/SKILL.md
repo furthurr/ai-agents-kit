@@ -18,22 +18,7 @@ description: >-
 En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
 skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
 una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
-
-## Preflight informativo
-
-Antes de operar, recomienda `BAJO` para consultas/ADRs puntuales y `MEDIO` para
-trabajo incremental. Para inicialización, modo `full`, auditoría
-completa o arquitectura grande/ambigua, carga
-`references/model-selection.md`. No repitas el aviso si Documentation Orchestrator
-ya comunicó el nivel para el mismo alcance.
-Nunca nombres modelos/proveedores ni cambies el modelo del host.
-La primera respuesta visible debe comenzar con
-`Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo aviso ya comunicado.
-Clasifica de forma barata antes de inspeccionar el proyecto; después del aviso,
-continúa el trabajo autorizado en el mismo turno, tanto puntual como pesado,
-sin exigir confirmación del modelo. Si cambia solo el nivel, comunica la actualización
-sin pausa. Conserva decisiones, autorizaciones, gates e integridad pendientes.
+confundas `MAS` con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
 Esta skill es la **referencia canónica** para documentar y mantener la
 arquitectura de un proyecto, sin importar la tecnología. Su objetivo es que
@@ -230,10 +215,6 @@ Las plantillas completas y criterios de clasificación están en
 [`references/templates.md`](references/templates.md). Ábrela solo al crear o
 actualizar el artefacto correspondiente; no es necesaria para una consulta,
 triage o tarea puntual.
-
-La matriz informativa para operaciones pesadas está en
-[`references/model-selection.md`](references/model-selection.md); no la cargues
-para consultas o ajustes inequívocamente puntuales.
 
 ## Reglas
 

@@ -39,17 +39,12 @@ skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` diri
 una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
 confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
-## Preflight informativo
+## Preflight técnico
 
-Antes de inspeccionar, clasifica de forma barata desde la solicitud: inicialización
-o catálogo completo = `MEDIO`; contratos públicos, PII, migración amplia o varios
-servicios/proyectos = `ALTO`.
-Salvo que Documentation Orchestrator ya haya comunicado el nivel para el mismo alcance, la
-primera respuesta visible empieza con `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo>.`.
-Después del aviso, continúa el trabajo autorizado en el mismo turno, tanto puntual
-como pesado, sin exigir confirmación del modelo. Si cambia solo el nivel, comunica
-la actualización sin pausa. Conserva decisiones, autorizaciones y gates pendientes.
-No menciones nombres de modelos, proveedores. Nunca selecciones ni cambies el modelo del host.
+Antes de inspeccionar, identifica si la solicitud requiere inicialización o catálogo
+completo, contratos públicos, tratamiento de PII, migraciones amplias o varios
+servicios/proyectos. Usa estas señales para delimitar fuentes, contratos y artefactos
+que deben revisarse; no amplían el alcance ni sustituyen las autorizaciones pendientes.
 
 Documentas, auditas y desarrollas datos y APIs en español. Carga y sigue la skill
 `data-api`, fuente canónica de contratos, DTOs, endpoints y `.data/`.
@@ -62,15 +57,14 @@ Documentas, auditas y desarrollas datos y APIs en español. Carga y sigue la ski
 
 ## Ejecución mínima
 
-1. Clasifica el dominio antes de actuar; ante ambigüedad, pregunta.
-2. Aplica el preflight informativo y continúa el trabajo autorizado en el mismo turno.
-3. Para un cambio puntual, lee `.data/README.md` si existe y solo las fuentes afectadas.
-4. Ejecuta catálogo, ER o sincronización completa únicamente en primera inicialización,
+1. Clasifica el dominio y el alcance antes de actuar; ante ambigüedad, pregunta.
+2. Para un cambio puntual, lee `.data/README.md` si existe y solo las fuentes afectadas.
+3. Ejecuta catálogo, ER o sincronización completa únicamente en primera inicialización,
    auditoría explícita o documentación desactualizada.
-5. Si la documentación confirmada incluye una API REST, prepara el lanzador manual
+4. Si la documentación confirmada incluye una API REST, prepara el lanzador manual
    de Scalar definido por la skill aunque todavía falte OpenAPI; déjalo bloqueado
    hasta que exista un contrato válido. No lo ejecutes ni instales dependencias.
-6. La skill define convenciones, seguridad, validación y entregables obligatorios.
+5. La skill define convenciones, seguridad, validación y entregables obligatorios.
 
 ## Recomendación de SDD
 

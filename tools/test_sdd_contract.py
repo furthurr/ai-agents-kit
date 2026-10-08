@@ -40,23 +40,6 @@ def section(text: str, heading: str) -> str:
     return match.group(0) if match else ""
 
 
-def check_nonblocking(text: str, label: str) -> None:
-    compact = normalized(text).lower()
-    check(bool(re.search(r"mismo turno|contin[uú]a\w*[^.]*sin (?:esperar|pausa)|sin (?:espera|pausa)[^.]*contin[uú]a", compact)),
-          f"{label}: continuidad explícita del trabajo autorizado")
-    for pattern in (
-        r"termina(?:n)? el turno (?:tras el preflight|antes de|para permitir)",
-        r"verification y termina el turno", r"termina el turno\. cuando el usuario",
-        r"(?:responde|indica) [^.]{0,100}contin[uú]a",
-        r"reanuda cuando el usuario", r"pausa si no hay gate",
-        r"gate 0 inicial pausa", r"suite cuando el usuario indique continuar",
-        r"termina el turno tras el aviso", r"si cambia la recomendación[^.]*termina el",
-        r"ejecuta verification solo cuando el usuario reanude",
-    ):
-        check(not re.search(r"(?<!no )(?<!sin )\b" + pattern, compact),
-              f"{label}: sin pausa de modelo /{pattern}/")
-
-
 def test_modes_remain_proportional() -> None:
     skill = read(SDD / "SKILL.md")
     agent = read(SDD_AGENT)
@@ -95,12 +78,10 @@ def test_modes_remain_proportional() -> None:
 
 def test_lite_quick_plan_contract() -> None:
     skill = read(SDD / "SKILL.md")
-    agent = read(SDD_AGENT)
-    model = read(SDD / "references" / "model-selection.md")
     templates = read(SDD / "references" / "templates.md")
     integrity = read(SDD / "references" / "integrity-gate.md")
     quality = read(SDD / "references" / "quality-bar.md")
-    compact = normalized(" ".join((skill, agent, model))).lower()
+    compact = normalized(skill).lower()
 
     check(
         "quick plan" in compact and "obligatorio y exclusivo" in compact,
@@ -119,10 +100,6 @@ def test_lite_quick_plan_contract() -> None:
         "lite omite únicamente sus gates de fase definidos",
     )
     check(
-        "aunque el nivel de modelo" in compact and "no cambie" in compact,
-        "reclasificar lite a standard requiere confirmación de flujo",
-    )
-    check(
         "Modo SDD: lite" in templates and "verification.md (lite)" in templates,
         "las plantillas distinguen y verifican specs lite",
     )
@@ -134,7 +111,6 @@ def test_lite_quick_plan_contract() -> None:
         "Lite" in quality and "RNF declarados" in quality,
         "quality bar mantiene el cierre lite proporcional",
     )
-
     manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
     for platform in manifest["platforms"]:
         adapter = json.loads(
@@ -149,95 +125,112 @@ def test_lite_quick_plan_contract() -> None:
         )
 
 
-def test_model_selection_gate() -> None:
+def test_feature_level_contract() -> None:
     skill = read(SDD / "SKILL.md")
     agent = read(SDD_AGENT)
-    reference_path = SDD / "references" / "model-selection.md"
-    check(reference_path.is_file(), "SDD incluye selección de modelo bajo demanda")
+    reference_path = SDD / "references" / "feature-level.md"
+    check(not (SDD / "references" / "model-selection.md").exists(),
+          "SDD ya no distribuye model-selection.md")
+    check(reference_path.is_file(), "SDD incluye la referencia de calificación de feature")
     reference = read(reference_path) if reference_path.is_file() else ""
-    normalized_reference = normalized(reference)
-    lower_reference = normalized_reference.lower()
+    compact = normalized(" ".join((skill, agent, reference))).lower()
+    lower_reference = normalized(reference).lower()
 
-    check("model-selection.md" in skill, "la skill carga el contrato de modelo")
-    check("model-selection.md" in agent, "el agente delega la selección a la skill")
-    check(
-        "si la solicitud cumple claramente `direct`" in normalized(skill).lower()
-        and "no cargues la referencia" in normalized(skill).lower(),
-        "direct evita cargar la referencia detallada",
-    )
-    check(
-        all(level in reference for level in ("`BAJO`", "`MEDIO`", "`ALTO`")),
-        "el contrato declara los tres niveles genéricos",
-    )
-    check(len(reference.split()) <= 450, "la referencia de modelo respeta el presupuesto de contexto")
-    check(
-        "no menciones modelos ni proveedores" in lower_reference,
-        "la recomendación permanece agnóstica de modelos y proveedores",
-    )
-    check(
-        "preflight debe ser barato" in lower_reference
-        and "no puede escribir, ejecutar tests, cargar referencias pesadas" in lower_reference,
-        "el preflight no consume trabajo costoso antes del Gate 0",
-    )
-    check(
-        "`direct`: informa" in lower_reference
-        and "nivel de llm recomendado" in lower_reference
-        and "sin esperar" in lower_reference,
-        "direct recibe un aviso no bloqueante",
-    )
-    check(
-        all(mode in lower_reference for mode in ("`lite`", "`standard`", "bugfix"))
-        and any("`lite`" in bullet and "`standard`" in bullet
-                and bool(re.search(r"sin (?:esperar|pausa)|mismo turno", bullet))
-                for bullet in re.split(r"(?m)^- ", reference.lower())),
-        "lite, standard y bugfix inician sin espera por modelo",
-    )
-    check(
-        "modo sdd: <direct|lite|standard>" in lower_reference
-        and "modo sdd: <direct|lite|standard|deep>" not in lower_reference,
-        "la salida de preflight solo admite las tres profundidades",
-    )
-    check(
-        "una sola recomendación visible por fase" in lower_reference
-        and "no repitas la misma recomendación" in lower_reference,
-        "la recomendación se limita a la próxima fase",
-    )
-    check(
-        "recalcula" in lower_reference
-        and "`lite` a `standard`" in lower_reference,
-        "el alcance recalcula modelo y los cambios de flujo se confirman",
-    )
-    check(
-        "nivel de llm recomendado para" in lower_reference
-        and "no preguntes si el usuario seleccionó o cambiará el llm" in lower_reference,
-        "la recomendación identifica el nivel de LLM y es informativa",
-    )
-    check(
-        "ni cambies el modelo del host" in normalized(reference).lower(),
-        "SDD/referencia nunca cambia el modelo del host",
-    )
-    check(
-        "sin gates 1–3" in normalized(skill).lower()
-        and "preflight informativo" in normalized(skill).lower()
-        and bool(re.search(r"sin (?:esperar|pausa)|mismo turno", normalized(skill).lower())),
-        "lite conserva el preflight informativo y omite sus gates de fase",
-    )
-    for label, text in (("agente", agent), ("skill/preflight", section(skill, r"Gate 0[^\n]*|Preflight[^\n]*")),
-                        ("referencia/transiciones", section(reference, r"Recomendación informativa y transiciones")),
-                        ("referencia/salida", section(reference, r"Salida")),
-                        ("skill/flujo", section(skill, r"Flujo con gates")),
-                        ("skill/Quick Plan", section(skill, r"Modo lite y Quick Plan")),
-                        ("integrity/transición", section(read(SDD / "references" / "integrity-gate.md"), r"Estado de fase y transición"))):
-        check_nonblocking(text, f"SDD/{label}")
+    check("references/feature-level.md" in skill,
+          "la skill carga la referencia de calificación")
+    check("references/feature-level.md" in agent,
+          "el agente SDD delega la rúbrica a la referencia de la skill")
+    check("solo puede emitirla el agente" in normalized(skill).lower()
+          and "cargar esta skill desde otro agente no autoriza" in normalized(skill).lower(),
+          "la skill no autoriza a agentes consumidores a emitir la calificación")
+    check("solo el agente sdd comunica" in lower_reference
+          and "no concede permiso para emitirla" in lower_reference,
+          "la referencia reserva la emisión al agente SDD")
+    check("feature completa" in lower_reference
+          and "nunca una tarea, fase" in lower_reference,
+          "la calificación mide la feature completa, no fases ni tareas")
+    check("analiza primero el alcance deseado y su impacto real" in lower_reference,
+          "el alcance e impacto se analizan antes de puntuar")
+    check("no muestres puntuación provisional" in lower_reference
+          and "no muestres valores provisionales" in normalized(agent).lower(),
+          "no se emiten puntuaciones provisionales")
+    check("nivel de feature: <n> <emoji>" in lower_reference
+          and "entero real calculado" in lower_reference,
+          "la emisión usa el formato y entero real definidos")
+    check("1–7 inclusive: 🟢" in reference and "8–9: 🟠" in reference
+          and "10: 🔴" in reference,
+          "la escala asigna emoji verde, naranja y rojo a los rangos correctos")
+    check("nivel 7 → `nivel de feature: 7 🟢`" in lower_reference
+          and "nivel 8 → `nivel de feature: 8 🟠`" in lower_reference
+          and "nivel 9 → `nivel de feature: 9 🟠`" in lower_reference,
+          "los ejemplos sustituyen el marcador por el nivel real, no un valor fijo")
+    for level in range(1, 11):
+        check(bool(re.search(rf"\| {level} \|", reference)),
+              f"la rúbrica define ancla para el nivel {level}")
+    check("no uses 0, decimales, rangos" in lower_reference,
+          "la salida excluye valores fuera de escala, decimales y rangos")
+    check(all(phrase in lower_reference for phrase in (
+        "`direct`: después de inspeccionar el cambio y antes de editar",
+        "`lite`: al cerrar quick plan",
+        "`standard`: al cerrar requirements",
+    )), "cada profundidad emite tras el análisis de alcance que le corresponde")
+    check("no repitas el nivel al cambiar de fase" in lower_reference
+          and "no muestres valores provisionales" in normalized(agent).lower(),
+          "la calificación no se repite en transiciones")
+    check("si cambia materialmente alcance o impacto, analiza primero" in lower_reference
+          and "analiza el nuevo alcance antes de publicar la actualización" in normalized(agent).lower(),
+          "los cambios materiales de alcance requieren reanálisis antes de actualizar")
+    check("no puntúes bugs, consultas o exploraciones como features por defecto" in lower_reference,
+          "bugfixes, consultas y exploraciones no se puntúan como features por defecto")
+    check("no recomienda niveles de llm ni solicita cambiar o confirmar el modelo" in normalized(agent).lower()
+          and "no recomiendes ni menciones modelos/proveedores llm" in normalized(skill).lower()
+          and "no pauses para pedir aprobación de la calificación" in normalized(skill).lower()
+          and "continúa sin aviso ni espera por modelo" in normalized(agent).lower()
+          and "la calificación de feature no es un gate" in normalized(skill).lower(),
+          "no hay recomendación LLM ni pausa o gate adicional por modelo")
+    check("recomendación de modelo" not in lower_reference
+          and "nivel de llm recomendado" not in lower_reference
+          and "model-selection.md" not in compact,
+          "el contrato de feature no conserva avisos ni selección de modelo")
+    templates = read(SDD / "references" / "templates.md")
+    check("calificación de feature (solo si sdd analizó una feature)" in templates.lower()
+          and "entero real 1–10 + emoji" in templates.lower()
+          and "no emitir antes de definir alcance" in templates.lower(),
+          "la plantilla standard registra calificación real solo tras definir alcance")
+    check("calificación de feature (añadir solo tras análisis completo)" in templates.lower()
+          and "entero real 1–10 + emoji" in templates.lower(),
+          "la plantilla lite reserva la calificación al cierre del análisis")
+    integrity = normalized(read(SDD / "references" / "integrity-gate.md")).lower()
+    check("no crea un gate nuevo" in integrity
+          and "espera solo la aprobación del gate sdd real" in integrity,
+          "integrity mantiene gates reales y no introduce uno por la calificación")
+    check("modo sdd: standard" in templates.lower()
+          and "fase: requirements" in templates.lower()
+          and "gate 1: pendiente" in templates.lower()
+          and "no inferirá aprobación solo por la existencia del archivo" in integrity,
+          "plantillas y reanudación conservan fase y aprobación explícita")
 
     flow = normalized(section(skill, r"Flujo con gates")).lower()
     for gate in range(1, 5):
         check(bool(re.search(rf"\*\*gate {gate}\*\*", flow)), f"SDD: conserva Gate {gate} real")
     check("aprobación explícita" in flow and "no avances de fase" in flow,
           "SDD: no cruza gates reales sin aprobación explícita")
-    check("preflight" in normalized(agent).lower() and
-          bool(re.search(r"(?:no (?:es|crea|representa)|sin)[^.]*gate (?:humano|adicional)|no humano|no bloqueante", normalized(agent).lower())),
-          "SDD/agente: Gate 0 identifica preflight no humano")
+    check("preflight técnico" in normalized(agent).lower()
+          and "no recomienda niveles de llm" in normalized(agent).lower(),
+          "SDD/agente: conserva el preflight técnico, sin pausa de modelo")
+
+    for specialist in SPECIALISTS:
+        agent_id = ("documentation-orchestrator" if specialist == "architecture" else
+                    "code-review" if specialist in ("code-quality", "security") else specialist)
+        specialist_agent = read(ROOT / "canonical" / "agents" / f"{agent_id}.md")
+        specialist_skill = read(ROOT / "canonical" / "skills" / specialist / "SKILL.md")
+        specialist_text = normalized(specialist_agent + " " + specialist_skill).lower()
+        check("nivel de feature:" not in specialist_text
+              and "references/feature-level.md" not in specialist_text,
+              f"{specialist}: no reclama emisión de calificación ni carga su rúbrica")
+        check("cargar esta skill desde otro agente no autoriza" in normalized(skill).lower()
+              and "no concede permiso para emitirla" in lower_reference,
+              f"{specialist}: cargar sdd-spec no le concede autorización para emitir")
 
     manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
     for platform in manifest["platforms"]:
@@ -246,109 +239,20 @@ def test_model_selection_gate() -> None:
         )
         generated_agent = read(ROOT / "generated" / platform / "agents" / adapter["filename"])
         generated_skill = read(ROOT / "generated" / platform / "skills" / "sdd-spec" / "SKILL.md")
-        check("model-selection.md" in generated_agent, f"{platform}: agente propaga Gate 0 de modelo")
-        check("model-selection.md" in generated_skill, f"{platform}: skill propaga Gate 0 de modelo")
-
-
-def test_phase_scoped_recommendations() -> None:
-    skill = read(SDD / "SKILL.md")
-    agent = read(SDD_AGENT)
-    model = read(SDD / "references" / "model-selection.md")
-    templates = read(SDD / "references" / "templates.md")
-    integrity = read(SDD / "references" / "integrity-gate.md")
-    compact = normalized(" ".join((skill, agent, model, templates, integrity))).lower()
-    templates_lower = templates.lower()
-    output_parts = model.split("## Salida", maxsplit=1)
-    output = output_parts[1] if len(output_parts) == 2 else ""
-    template_parts = output.split("```text", maxsplit=1)
-    output_template = template_parts[1].split("```", maxsplit=1)[0] if len(template_parts) == 2 else ""
-
-    check(
-        "próximo proceso" in compact
-        and "nivel de llm recomendado para" in compact,
-        "el preflight recomienda el nivel de la próxima fase",
-    )
-    check(
-        "fases pendientes" not in output.lower()
-        and "perfil" not in output.lower(),
-        "la salida inicial no muestra el perfil global de fases",
-    )
-    check(
-        "nivel de llm recomendado para" in output_template.lower()
-        and "cambiar manualmente" in output_template.lower()
-        and "responde" not in output_template.lower()
-        and "modelo recomendado" not in output_template.lower(),
-        "la plantilla permite cambio manual sin pedir confirmación de modelo",
-    )
-    check(
-        "resumen verificable" in compact
-        and "gate actual" in compact
-        and "recomendación de la próxima fase" in compact,
-        "la transición combina resumen, gate y próxima recomendación",
-    )
-    check(
-        "condicionada a la aprobación actual" in compact
-        and "aprobación del gate real de la fase actual" in compact,
-        "la próxima recomendación queda condicionada al gate actual",
-    )
-    check(
-        "espera únicamente la aprobación del gate real de la fase actual" in compact
-        and "no preguntes si el usuario seleccionó o cambiará el llm" in compact
-        and "apruebo y usaré el nivel recomendado" not in compact
-        and "apruebo y continúo con el nivel actual" not in compact,
-        "la transición espera aprobación de fase, no confirmación del nivel de LLM",
-    )
-    for label, text in (("agente", agent), ("skill", skill), ("modelo", model), ("integridad", integrity)):
-        own = normalized(text).lower()
-        check(bool(re.search(r"espera (?:únicamente |solo )?(?:la )?aprobación[^.]*gate|espera[^.]*solo la aprobación[^.]*gate", own)),
-              f"SDD/{label}: espera gate real de forma independiente")
-        check(not re.search(r"apruebo y usaré el nivel recomendado|apruebo y continúo con el nivel actual", own),
-              f"SDD/{label}: aprobación no condicionada al modelo")
-    verification = section(skill, r"Flujo con gates").split("### Fase 4", maxsplit=1)
-    check_nonblocking(verification[1] if len(verification) == 2 else "", "SDD/skill/Verification")
-    check(
-        "después de implementación" in normalized(model).lower()
-        and "verification" in normalized(model).lower()
-        and bool(re.search(r"contin[uú]a[^.]*verification|verification[^.]*sin (?:esperar|pausa)|mismo turno", normalized(model).lower())),
-        "Verification continúa sin gate ni espera informativa intermedios",
-    )
-    check(
-        "`direct` recibe un aviso breve y no bloqueante" in normalized(skill).lower()
-        and "quick plan" in normalized(skill).lower()
-        and bool(re.search(r"mismo turno|contin[uú]a[^.]*sin (?:esperar|pausa)", normalized(section(skill, r"Modo lite y Quick Plan")).lower())),
-        "direct y Quick Plan continúan tras el aviso no bloqueante",
-    )
-    check(
-        all(phase in compact for phase in ("requirements", "design", "tasks", "implementación", "verification")),
-        "el contrato cubre las cinco fases recomendables",
-    )
-    check(
-        "después de verification" in compact
-        and "únicamente gate 4" in compact,
-        "el cierre no muestra una recomendación inexistente",
-    )
-    check(
-        "modo sdd: standard" in templates_lower
-        and "fase: requirements" in templates_lower
-        and "gate 1: pendiente" in templates_lower,
-        "las plantillas persisten el estado de fase y gate",
-    )
-    check(
-        "no inferirá aprobación solo por la existencia del archivo" in compact,
-        "la reanudación no confunde archivo existente con aprobación",
-    )
-
-    manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
-    for platform in manifest["platforms"]:
-        adapter = json.loads(
-            (ROOT / "adapters" / platform / "agents" / "sdd.json").read_text(encoding="utf-8")
-        )
-        generated_agent = read(ROOT / "generated" / platform / "agents" / adapter["filename"])
-        generated_skill = read(ROOT / "generated" / platform / "skills" / "sdd-spec" / "SKILL.md")
-        check(
-            "próximo proceso" in normalized(generated_agent + generated_skill).lower(),
-            f"{platform}: propaga preflight por próxima fase",
-        )
+        check("references/feature-level.md" in generated_skill,
+              f"{platform}: skill generada carga la rúbrica de feature")
+        check("model-selection.md" not in generated_agent + generated_skill,
+              f"{platform}: generated no conserva contrato de modelo retirado")
+        generated_reference = (ROOT / "generated" / platform / "skills" / "sdd-spec"
+                               / "references" / "feature-level.md")
+        check(generated_reference.is_file(),
+              f"{platform}: referencia feature-level se distribuye dentro de la skill")
+        if generated_reference.is_file():
+            check(generated_reference.read_bytes() == reference_path.read_bytes(),
+                  f"{platform}: referencia de calificación coincide con canonical")
+        check(not (ROOT / "generated" / platform / "agents" / "references"
+                   / "feature-level.md").exists(),
+              f"{platform}: referencia feature-level no se instala junto al agente")
 
 
 def test_spec_paths_support_grouping() -> None:
@@ -652,11 +556,10 @@ def test_generated_references_match_canonical() -> None:
 
 
 def main() -> int:
-    print("Contrato SDD — modelo, rutas, testing adaptativo, Navigator e integración")
+    print("Contrato SDD — calificación de feature, rutas, testing adaptativo, Navigator e integración")
     test_modes_remain_proportional()
     test_lite_quick_plan_contract()
-    test_model_selection_gate()
-    test_phase_scoped_recommendations()
+    test_feature_level_contract()
     test_spec_paths_support_grouping()
     test_adaptive_testing_selection()
     test_variants_and_evidence()

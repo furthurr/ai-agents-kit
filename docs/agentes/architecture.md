@@ -35,15 +35,11 @@ La skill `architecture` aplica:
 - **ADRs** para decisiones importantes.
 - Modos `lite` y `full` según el tamaño del proyecto.
 
-## Recomendación de modelo
+## Modelos LLM
 
-Las consultas y cambios incrementales reciben un aviso informativo `BAJO` o `MEDIO`
-y continúan el trabajo autorizado en el mismo turno.
-Antes de una inicialización, auditoría completa o arquitectura grande/ambigua,
-clasifica con un preflight barato y recomienda `MEDIO` o `ALTO`; después continúa
-sin esperar por el modelo. El cambio de modelo es manual; el aviso no sustituye
-la aprobación de estudios o propuestas ni se repite si ya se comunicó para el
-mismo alcance. Un cambio exclusivo de nivel se informa sin pausar el trabajo autorizado.
+La skill y el agente Documentation Orchestrator no recomiendan niveles, modelos ni
+proveedores LLM. Los gates de estudio, propuesta y escritura siguen aplicándose
+según el alcance.
 
 ## Cómo trabaja
 

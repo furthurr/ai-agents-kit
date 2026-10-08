@@ -20,22 +20,7 @@ description: >-
 En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
 skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
 una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
-
-## Preflight informativo
-
-Antes de operar, recomienda `BAJO` para consultas de estado y `MEDIO` para
-revisiones o micro-remediaciones localizadas no críticas. Para
-auditoría completa o trabajo crítico de auth, criptografía, PII o red, carga
-`references/model-selection.md`. No repitas el aviso si Code Review o Documentation
-Orchestrator ya comunicó el nivel para el mismo alcance y dominios seleccionados.
-Nunca nombres modelos/proveedores ni cambies el modelo del host.
-La primera respuesta visible debe comenzar con
-`Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo aviso ya comunicado.
-Clasifica de forma barata antes de inspeccionar el proyecto; después del aviso,
-continúa el trabajo autorizado en el mismo turno, tanto puntual como pesado,
-sin exigir confirmación del modelo. Si cambia solo el nivel, comunica la actualización
-sin pausa. Conserva decisiones, autorizaciones, gates, micro-pasos e integridad pendientes.
+confundas `MAS` con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
 Esta skill es la **referencia canónica** para auditar, documentar y ayudar a
 remediar la seguridad de un proyecto, con foco en **móvil (Android, iOS,
@@ -132,9 +117,9 @@ son **plataformas de un mismo proyecto** → una sola `.security/` en la raíz.
    márcalo como "por revisar".
 3. **Presenta la lista priorizada** (severidad, referencia MASVS/MASWE/CWE,
    ubicación) **antes de escribir**; este análisis es de solo lectura.
-4. **Persistencia sin filtro redundante:** una auditoría documental autorizada
-   guarda todos los hallazgos verificados de todas las severidades. Agrupa las
-   ocurrencias de la misma causa con sus ubicaciones y preserva IDs existentes.
+4. **Persistencia de hallazgos:** una auditoría documental autorizada guarda todos
+   los hallazgos verificados de todas las severidades. Agrupa las ocurrencias de la
+   misma causa con sus ubicaciones y preserva los IDs existentes.
    Reutiliza la autorización explícita de la sesión para la misma operación y
    proyecto; no pidas otra selección de severidades. Consulta/`inspect` no escribe.
    Pregunta solo por decisiones pendientes: ambigüedad de proyecto, ampliaciones,
@@ -219,16 +204,12 @@ Las plantillas completas y criterios de clasificación están en
 actualizar el artefacto correspondiente; no es necesaria para una consulta,
 triage o tarea puntual.
 
-La matriz informativa para operaciones pesadas está en
-[`references/model-selection.md`](references/model-selection.md); no la cargues
-para consultas o remediaciones inequívocamente puntuales.
-
 ## Reglas
 
 - Comunícate en español por defecto; si el usuario escribe en otro idioma o lo
   pide, adáptate. Sé claro y conciso.
 - Solo seguridad: no hagas features ni cambios ajenos.
-- Auditar primero, documentar dentro del alcance solicitado sin repetir filtros;
+- Auditar primero y documentar dentro del alcance solicitado;
   las consultas son sin escrituras y la remediación requiere aprobación aparte.
 - Persistencia: el estado vive en `.security/` para continuar en varias sesiones.
 - Nunca expongas secretos; usa placeholders. Marca la PII.

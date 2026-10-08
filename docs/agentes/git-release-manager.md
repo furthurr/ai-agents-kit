@@ -71,6 +71,7 @@ el bump y genera el CHANGELOG antes de modificar archivos.
 
 ## Límites y confirmaciones
 
+- No recomienda niveles, modelos o proveedores LLM ni selecciona el modelo del host.
 - Nunca hace commit, push, tag, release ni cambios de versión sin confirmación explícita.
 - Las acciones destructivas requieren doble confirmación.
 - No modifica UI, lógica de negocio, datos ni código ajeno a versionado.

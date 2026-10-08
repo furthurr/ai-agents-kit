@@ -10,9 +10,9 @@ Renderiza y valida el kit. Instala una plataforma solo cuando lo autorice el
 usuario, retira las copias antiguas del kit según
 [la guía](instalacion.md#actualizar-a-code-review) y reinicia el host.
 Debe aparecer `code-review`; las dos skills siguen instaladas.
-El preflight es informativo: cada operación autorizada continúa en el mismo turno,
-sin exigir «continúa» ni confirmación de modelo. Un aviso ya comunicado para el
-mismo alcance no se repite al cargar otra skill o recibir un handoff.
+Ningún agente debe recomendar niveles, modelos o proveedores LLM. Las consultas
+autorizadas se completan; auditorías, escrituras y remediaciones conservan sus
+gates efectivos, incluso al cargar otra skill o recibir un handoff.
 Compara el árbol de archivos antes/después cuando el caso sea de solo lectura.
 
 ## Escenarios

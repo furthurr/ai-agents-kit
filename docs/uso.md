@@ -133,23 +133,20 @@ Catálogo completo: [catalogo.md](catalogo.md).
 2. **Primera vez en un repo** — usa Documentation Orchestrator con `inspect` para
    investigar sin persistencia, o solicita `bootstrap-core` para proponer
    `.navigator/` y `.architecture/`; cada skill conserva sus gates y su carpeta.
-   Las skills Architecture, Data & API, UI Design, Quality y Security recomiendan nivel antes
-   de operar: los avisos puntuales y pesados son informativos y el trabajo autorizado
-   continúa en el mismo turno. Si el Orchestrator ya comunicó ese aviso para el mismo
-   alcance, el especialista no lo repite; no requiere confirmación ni reanudación.
+   Ningún agente recomienda niveles o selección de modelos LLM. Las escrituras
+   conservan los gates efectivos de estudio, propuesta y autorización; el Orchestrator
+   no añade una pausa por modelo.
 3. **SDD antes de features grandes** — elige entre exactamente tres profundidades:
    `direct`, sin spec; `lite`, automático para trabajo acotado, claro y de bajo
    riesgo; y `standard`, fallback seguro.
-   Quick Plan es obligatorio y exclusivo de `lite`: tiene un preflight informativo,
-   pero no Gates 1-3 ni Gate 4. Combinar Quick Plan con otro modo es inválido.
+   Quick Plan es obligatorio y exclusivo de `lite`; no tiene Gates 1-3 ni Gate 4.
+   Combinar Quick Plan con otro modo es inválido.
    `standard` conserva los Gates 1-4; los bugfixes no triviales usan `standard`.
-   Antes de cada proceso no trivial recomienda únicamente el nivel de LLM `BAJO`,
-   `MEDIO` o `ALTO` de la próxima fase, sin pedir confirmación sobre su selección.
-   En las transiciones combina resumen, aprobación de la fase actual y recomendación
-   de la siguiente, sin crear gates adicionales.
-   El inicio de los tres modos y Quick Plan continúa tras el aviso; Implementación
-   pasa automáticamente a Verification dentro del alcance aprobado. Solo se espera
-   por gates reales o decisiones pendientes, y planificar no autoriza implementar.
+   Tras analizar y definir el alcance de la feature, SDD emite una sola vez
+   `Nivel de feature: <n> <emoji>`: 1–7 🟢, 8–9 🟠, 10 🔴. No lo muestra antes
+   de definir alcance ni lo repite por fase; no recomienda ni selecciona LLM y no
+   pausa el flujo por modelo. Se espera solo por gates reales o decisiones pendientes,
+   y planificar no autoriza implementar.
    Si hay `.navigator/`, SDD comprueba primero su disponibilidad y frescura para
    orientar la exploración. Un índice desfasado solo aporta rutas candidatas: la
    documentación aplicable y el código real confirman las decisiones. Su ausencia
@@ -190,11 +187,9 @@ agente vigente; nunca ambas vías para la misma acción.
 | “Actualiza solo datos y seguridad” | `sync-domain` |
 | “¿Está listo para release?” | `release-check` |
 
-Antes de cualquier modo, el agente hace un preflight mínimo, recomienda un nivel
-de modelo (`bajo`, `medio` o `alto`) y continúa el trabajo autorizado en el mismo
-turno. El aviso no requiere respuesta; el cambio de modelo es manual y el agente
-nunca lo cambia. `status` y `release-check` inspeccionan e informan sin pausa por
-modelo; las escrituras conservan la aprobación del plan global y los gates reales.
+Antes de cualquier modo, el agente hace un preflight mínimo sin recomendar niveles,
+modelos ni proveedores LLM. `status` y `release-check` inspeccionan e informan;
+las escrituras conservan la aprobación del plan global y los gates reales.
 
 Si necesitas continuar con el agente especialista real, pídelo explícitamente.
 Los receptores documentales son `data-api`, `ui-design` y `code-review`; el core
@@ -238,9 +233,9 @@ Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
 ## Límites que debes esperar
 
 - La skill Project Navigator **no** implementa features ni escribe fuera de `.navigator/`
-  (salvo export opt-in a `AGENTS.md` con confirmación); no selecciona el modelo.
-- Documentation Orchestrator no modifica producto, no selecciona el modelo y no
-  administra `.sdd/`, `.release/` ni `graphify-out/`.
+  (salvo export opt-in a `AGENTS.md` con confirmación); no recomienda ni selecciona modelos.
+- Documentation Orchestrator no modifica producto, no recomienda ni selecciona
+  modelos y no administra `.sdd/`, `.release/` ni `graphify-out/`.
 - La skill Architecture **no** refactoriza código de negocio.
 - Code Review usa `security` para riesgos, no los corrige con criterios de calidad;
   una revisión de solo calidad no autoriza ampliar a seguridad.
@@ -248,8 +243,8 @@ Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
 - Code Review **no** expone secretos reales en la documentación.
 - Git & Release **no** hace commit/push/tag sin confirmación explícita;
   acciones destructivas piden doble confirmación.
-- SDD **no** cambia el modelo del host ni marca tareas hechas sin evidencia
-  (integrity gate).
+- SDD **no** recomienda ni selecciona modelos, ni marca tareas hechas sin evidencia
+  (integrity gate). Su nivel de feature es una clasificación del alcance, no del LLM.
 
 ## Ejemplo de flujo completo
 

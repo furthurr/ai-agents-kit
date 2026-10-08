@@ -18,7 +18,9 @@ skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` diri
 una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
 confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
-Flujo SDD proporcional con gates, EARS y trazabilidad. Funciona con cualquier agente.
+Flujo SDD proporcional con gates, EARS y trazabilidad. La calificación de feature
+solo puede emitirla el agente `{{sdd_agent}}`; cargar esta skill desde otro agente
+no autoriza a mostrarla.
 
 > **Precedencia:** si el agente `{{sdd_agent}}` y esta skill divergen, manda esta skill.
 
@@ -81,42 +83,36 @@ solicita explícitamente.
 - Si faltan o se contradicen los marcadores de modo, fase, estado o gate, pide
   aclaración y no infiere aprobación por la existencia de archivos.
 
-## Gate 0 y preflight de próxima fase
+## Preflight técnico y calificación de feature
 
-Antes de cargar contexto pesado o iniciar una operación, identifica la próxima fase
-real y recomienda únicamente `BAJO`, `MEDIO` o `ALTO` para esa fase. Si la solicitud
-cumple claramente `direct`, usa los limites compactos de esta skill y no cargues la
-referencia. En los demas casos usa `references/model-selection.md`. No nombres
-modelos o proveedores ni cambies el modelo del host.
+Antes de contexto pesado, realiza un preflight técnico breve para identificar el
+tipo de trabajo, la siguiente operación y decisiones esenciales pendientes. No
+recomiendes ni menciones modelos/proveedores LLM, no califiques fases o tareas y no
+conviertas el preflight en un gate de usuario. Continúa el trabajo autorizado en el
+mismo turno; solo una decisión esencial o un gate real puede requerir respuesta.
 
-El Gate 0 es un preflight técnico informativo, no un gate humano adicional.
-Muestra el próximo proceso, no un nivel global ni un perfil de
-todas las fases futuras. Para una spec nueva `standard`, la próxima fase es
-Requirements; para `lite`, la única operación es Quick Plan.
+La calificación es exclusiva del agente `{{sdd_agent}}`, no de la skill aislada ni
+de especialistas que la consulten. Solo aplica a una feature cuyo alcance e impacto
+en el proyecto ya fueron analizados y definidos. Consulta
+`references/feature-level.md` para rúbrica, escala y emisión. Bugs, exploraciones y
+consultas no reciben puntuación de feature por defecto.
 
-`direct` recibe un aviso breve y no bloqueante. `lite` recibe un único preflight
-informativo para Quick Plan. `direct`, `lite`, `standard` y bugfix no trivial
-continúan el trabajo autorizado en el mismo turno salvo aclaración esencial o
-gate real pendiente. El cambio manual es opcional; no exijas «continúa», «listo»
-ni confirmación del nivel de LLM. Deduplica por recomendación ya comunicada para
-el mismo alcance, sin exigir confirmación del usuario.
-En `standard`, muestra una recomendación al iniciar Requirements, Design,
-Tasks, Implementación y Verification, sin convertirla en un gate adicional ni
-repetirla dentro de la misma fase.
+Publica `Nivel de feature: <n> <emoji>` una sola vez después del análisis del
+alcance deseado: en `direct` antes de editar; en `lite` al concluir Quick Plan; en
+`standard` en el resumen de Requirements junto a Gate 1. Usa el entero real 1–10
+con emoji correspondiente; nunca un ejemplo fijo, nivel de tarea/fase o
+recomendación de modelo. No pauses para pedir aprobación de la calificación ni la
+repitas al cambiar de fase. Si cambia materialmente el alcance, analiza el nuevo
+alcance antes de actualizarla.
 
-En cada transición, presenta en un mismo mensaje el resumen verificable de la fase
-actual, su gate de aprobación cuando aplique y la recomendación de la próxima fase.
-La recomendación queda condicionada a la aprobación actual, pero es solo informativa:
-no preguntes si el usuario seleccionó o cambiará el LLM. Entre fases, espera
-únicamente la aprobación del gate real de la fase actual; al aprobar, inicia la siguiente fase
-sin otra pausa ni confirmación de nivel. Después de Implementación, presenta el
-preflight y continúa con Verification sin pausa: no hay gate intermedio.
-Si cambia el alcance o el riesgo, recalcula y comunica la recomendación actualizada;
-un cambio exclusivo de nivel no detiene el trabajo autorizado. Si falta autorización
-para el nuevo alcance, pregunta por ella. Si cambia la política de gates por una
-reclasificación de modo, solicita aprobación de ese cambio de flujo, no del nivel de
-LLM. Después de Verification muestra únicamente Gate 4, sin recomendación para el
-cierre.
+La línea visible usa el valor calculado (p. ej. nivel 7 → `Nivel de feature: 7 🟢`);
+los ejemplos de esta explicación no son puntuaciones prefijadas.
+
+La calificación no sustituye ni determina profundidad SDD, testing, selección de
+ejecutor, gates o permisos. En transiciones `standard`, presenta el resumen
+verificable y gate actual; espera únicamente aprobación del gate SDD real. Tras
+Implementación continúa con Verification sin gate intermedio. Después de
+Verification muestra únicamente Gate 4.
 
 ## Contexto selectivo
 
@@ -188,13 +184,10 @@ antes de reanudarla.
 ## Flujo con gates
 
 > **En `standard`, no avances de fase sin aprobación explícita del usuario.**
-> {{gate_instruction}}La recomendación del nivel de LLM es informativa, no es un gate
-> ni requiere confirmación del modelo. En las transiciones, espera únicamente la
-> aprobación del gate real de la fase actual. Tras aprobarlo, continúa en el mismo
-> turno con la siguiente fase autorizada, sin otra espera por modelo. El Gate 0
-> inicial es un preflight informativo y no bloquea la operación autorizada.
-> `lite` usa su preflight informativo para Quick Plan, sin Gates 1–3, y cierra sin
-> Gate 4.
+> {{gate_instruction}}La calificación de feature no es un gate ni requiere aprobación
+> separada. El preflight técnico no recomienda modelos ni añade pausas. En las
+> transiciones, espera solo la aprobación del gate SDD real. `lite` usa Quick Plan
+> sin Gates 1–3 y cierra sin Gate 4.
 
 ### Fase 1 — Requirements
 
@@ -205,14 +198,17 @@ antes de reanudarla.
    `.design/`, `.data/`, `.security/`, `.quality/`). La ausencia de contexto no obliga
    a cambiar de agente: aplica `references/agent-routing.md` si corresponde, respeta
    la elección previa y, si el usuario continúa, captura lo imprescindible en `design.md`.
-3. Descompón en historias de usuario.
-4. Criterios en EARS:
+3. Analiza el impacto en el proyecto y el alcance deseado; si es una feature y el
+   alcance quedó definido, el agente SDD registra/muestra la calificación única
+   antes de presentar Gate 1. No la muestres si persiste una decisión esencial.
+4. Descompón en historias de usuario.
+5. Criterios en EARS:
    - `CUANDO <condición> EL SISTEMA DEBERÁ <comportamiento>`
    - `SI <error> ENTONCES EL SISTEMA DEBERÁ <manejo>`
    - `MIENTRAS <estado> EL SISTEMA DEBERÁ <comportamiento>`
    - `EL SISTEMA DEBERÁ <siempre activo>`
-5. Cubre edge cases y errores; declara supuestos.
-6. **GATE 1**: "¿Apruebas los requisitos o quieres iterarlos?"
+6. Cubre edge cases y errores; declara supuestos.
+7. **GATE 1**: "¿Apruebas los requisitos o quieres iterarlos?"
 
 ### Fase 2 — Design
 
@@ -240,8 +236,7 @@ antes de reanudarla.
   de ejecutarla: conserva vínculo a requisitos/tareas, autorización y gates pendientes.
   La selección de ejecutor no aprueba gates ni amplía alcance.
 - Una tarea a la vez o en waves. Estados: `[ ]` → 🔵 → `[x]`.
-- Antes de iniciar esta fase, muestra el nivel de LLM recomendado para Implementación.
-  La aprobación de Gate 3 basta para continuar; no pidas confirmar el nivel.
+- No emitas niveles por tarea/fase ni recomendaciones de modelo durante Implementación.
 - Antes de `[x]`: `references/integrity-gate.md`.
 - Ejecuta el ciclo elegido en `references/testing.md`; no declares TDD sin haber
   observado un RED que falle por la razón esperada.
@@ -251,14 +246,13 @@ antes de reanudarla.
 ### Fase 4 — Verificación y cierre
 
 Prerrequisito: `[x]` con artefacto real (o `[omitido: razón]`).
-1. Presenta el resumen de Implementación y el nivel de LLM recomendado para
-   Verification; continúa con Verification sin pausa, en el mismo turno, sin esperar
-   cambio manual ni confirmación del nivel. Conserva los controles de integridad.
+1. Presenta el resumen de Implementación y continúa con Verification sin pausa por
+   modelo; no emitas nivel de tarea/fase. Conserva los controles de integridad.
 2. `references/integrity-gate.md`: validar cada `[x]` ↔ disco/evidencia.
 3. Suite de tests + spot-check `quality-bar` y 3–5 RNF del spec.
 4. `verification.md` con columna Evidencia (`templates.md`). No cerrar con huérfanos.
 5. **GATE 4**: "¿Cierro la spec o cubrimos los huecos?" Después de Verification,
-   no muestres otra recomendación de modelo.
+   no repitas la calificación de feature.
 
 ## Variante Bugfix
 
@@ -276,11 +270,9 @@ reproducirse, registra la limitación y no inventes un RED.
 
 Quick Plan es obligatorio y exclusivo de `lite`. Genera requirements, design y
 tasks en una pasada, con preguntas aclaratorias esenciales por adelantado y sin
-Gates 1–3. El preflight informativo muestra `Modo SDD: lite`, Quick Plan, el nivel de
-LLM recomendado para esa única operación, los motivos y el flujo omitido; no
-recomienda por separado sus pasos internos. Continúa con Quick Plan en el mismo
-turno sin esperar cambio manual ni confirmación del modelo, salvo pregunta esencial
-pendiente. Un cambio exclusivo de nivel tampoco añade una pausa.
+Gates 1–3. El preflight técnico identifica `Modo SDD: lite` y Quick Plan, sin
+recomendar modelos ni pausar. Al concluir el análisis y definir el alcance deseado,
+el agente SDD publica la calificación única de la feature en el resumen de Quick Plan.
 
 Si la intención es solo planificación, termina después de `tasks.md` y no
 implementar código. Si la solicitud original incluye implementación, aplica
@@ -289,8 +281,8 @@ integrity-gate y testing adaptativo después del plan. Al terminar, crea un
 de evidencia; cierra sin Gate 4.
 
 Si aparece una exclusión, detente en un punto seguro y propón `standard`. La
-reclasificación requiere aprobación por el cambio de flujo aunque el nivel de LLM no
-cambie. Quick Plan no es compatible con `direct` ni `standard`.
+reclasificación requiere aprobación por el cambio de flujo. Quick Plan no es
+compatible con `direct` ni `standard`.
 
 ## Reglas de calidad
 

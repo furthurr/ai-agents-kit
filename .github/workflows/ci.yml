@@ -27,6 +27,8 @@ jobs:
         run: python tools/test_validate.py
       - name: Run SDD contract tests
         run: python tools/test_sdd_contract.py
+      - name: Run model-guidance removal and feature-level contract tests
+        run: python tools/test_model_recommendations.py
       - name: Run Code Review contract tests
         run: python tools/test_code_review_contract.py
       - name: Run Antigravity distribution contract tests

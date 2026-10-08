@@ -21,22 +21,7 @@ description: >-
 En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
 skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
 una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
-
-## Preflight informativo
-
-Antes de operar, recomienda `BAJO` para consultas/documentación puntual y `MEDIO`
-para cambios localizados que preservan contratos. Para
-inicialización, catálogo completo, migraciones o contratos/riesgos amplios, carga
-`references/model-selection.md`. No repitas el aviso si Documentation Orchestrator
-ya comunicó el nivel para el mismo alcance.
-Nunca nombres modelos/proveedores ni cambies el modelo del host.
-La primera respuesta visible debe comenzar con
-`Nivel recomendado: BAJO|MEDIO|ALTO — <motivo breve>.`, salvo aviso ya comunicado.
-Clasifica de forma barata antes de inspeccionar el proyecto; después del aviso,
-continúa el trabajo autorizado en el mismo turno, tanto puntual como pesado,
-sin exigir confirmación del modelo. Si cambia solo el nivel, comunica la actualización
-sin pausa. Conserva decisiones, autorizaciones, gates e integridad pendientes.
+confundas `MAS` con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
 Esta skill es la **referencia canónica** para documentar, auditar y ayudar a
 desarrollar la **capa de datos y APIs** de un proyecto, sin importar la
@@ -256,10 +241,6 @@ triage o tarea puntual.
 El contrato del lanzador de documentación interactiva está en
 [`references/api-docs.md`](references/api-docs.md); cárgalo cuando se confirme una
 API REST y se vaya a preparar Scalar, exista o no todavía un OpenAPI válido.
-
-La matriz informativa para operaciones pesadas está en
-[`references/model-selection.md`](references/model-selection.md); no la cargues
-para consultas o cambios inequívocamente puntuales.
 
 ## Reglas
 

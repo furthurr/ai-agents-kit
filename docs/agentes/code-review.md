@@ -18,10 +18,7 @@ selecciona solo su dominio. No mezcla escalas de severidad ni migra registros.
 
 1. Clasifica proyecto, archivos/módulos, dominios e intención. Una revisión puntual
    no se expande a todo el repositorio ni a otro dominio sin autorización.
-2. Recomienda `BAJO`, `MEDIO` o `ALTO` de forma informativa y continúa el trabajo
-   autorizado en el mismo turno. El cambio de modelo es manual; no exige «continúa»
-   ni confirmación del nivel y no repite el aviso ya comunicado para el mismo alcance,
-   tampoco al cargar la segunda skill.
+2. No recomienda ni selecciona nivel o modelo LLM.
 3. Carga solo los procedimientos necesarios y cita evidencia verificable.
 4. Consulta/`inspect`: no escribe findings, cachés ni marcas de sincronización.
 5. Auditar y documentar, inicializar o sincronizar: registra todos los hallazgos

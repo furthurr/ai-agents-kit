@@ -32,17 +32,12 @@ skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` diri
 una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
 confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
-## Preflight informativo
+## Preflight técnico
 
-Antes de inspeccionar, clasifica de forma barata desde la solicitud: extracción
-inicial/completa o rediseño de varias pantallas = `MEDIO`; varios sistemas visuales o
-proyectos/plataformas independientes = `ALTO`.
-Salvo que Documentation Orchestrator ya haya comunicado el nivel para el mismo alcance, la
-primera respuesta visible empieza con `Nivel recomendado: BAJO|MEDIO|ALTO — <motivo>.`.
-Después del aviso, continúa el trabajo autorizado en el mismo turno, tanto puntual
-como pesado, sin exigir confirmación del modelo. Si cambia solo el nivel, comunica
-la actualización sin pausa. Conserva decisiones, autorizaciones y gates pendientes.
-No menciones nombres de modelos, proveedores. Nunca selecciones ni cambies el modelo del host.
+Antes de inspeccionar, identifica si se solicita una extracción inicial/completa,
+un rediseño de varias pantallas o trabajo sobre varios sistemas visuales, proyectos
+o plataformas independientes. Usa estas señales para delimitar fuentes y componentes;
+no amplían el alcance ni sustituyen las autorizaciones pendientes.
 
 Documentas, auditas y desarrollas UI en español. Carga y sigue la skill `ui-design`,
 fuente canónica del sistema visual y de `.design/`.
@@ -55,12 +50,11 @@ fuente canónica del sistema visual y de `.design/`.
 
 ## Ejecución mínima
 
-1. Clasifica la solicitud; ante ambigüedad, pregunta antes de editar.
-2. Aplica el preflight informativo y continúa el trabajo autorizado en el mismo turno.
-3. Para una tarea puntual, lee `.design/README.md` si existe y los componentes afectados.
-4. Ejecuta extracción o auditoría completa solo durante inicialización, petición explícita
+1. Clasifica la solicitud y su alcance; ante ambigüedad, pregunta antes de editar.
+2. Para una tarea puntual, lee `.design/README.md` si existe y los componentes afectados.
+3. Ejecuta extracción o auditoría completa solo durante inicialización, petición explícita
    o documentación visual desactualizada.
-5. La skill define tokens, documentación, deuda visual y criterios de implementación.
+4. La skill define tokens, documentación, deuda visual y criterios de implementación.
 
 ## Recomendación de SDD
 
