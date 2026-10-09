@@ -18,8 +18,9 @@ niveles, modelos o proveedores LLM.
 - Presenta un alcance de feature ambiguo y confirma que no emite clasificación hasta
   analizarlo y definirlo.
 - Tras definir alcance, emite el bloque `Esfuerzo previsto del LLM: <nota e icono>`
-  una sola vez; 1–7 🟢, 8–9 🟠, 10 🔴 y superior a X13: exactamente `10+ 🔴`.
-  Incluye referente ReserveLab, justificación de 2–4 factores y supuestos según la
+  una sola vez antes de recomendar profundidad; 1–7 🟢 o 🟠 con atención especial,
+  8–9 🟠, 10 🔴 y superior a X13: exactamente `10+ 🔴`.
+  Registra referente, factores y supuestos en la spec sin mostrarlos rutinariamente según la
   [rúbrica compartida](../canonical/skills/sdd-spec/references/feature-level.md).
 - Contrasta las condiciones manuales en
   [sdd-smoke](sdd-smoke.md#esfuerzo-previsto-del-llm-referencia-reservelab) y los

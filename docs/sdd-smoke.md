@@ -67,9 +67,10 @@ pendiente la evaluación; no fabricar resultados a partir de búsquedas de texto
 
 Antes de los escenarios funcionales, verifica que SDD analice y defina un alcance
 concreto. Solo entonces emite una vez el formato exacto
-`Esfuerzo previsto del LLM: <nota e icono>`: 1–7 🟢, 8–9 🟠, 10 🔴 o exactamente
-`10+ 🔴` si supera claramente X13, nunca enteros mayores de 10. Añade referente
-del laboratorio, justificación de 2–4 factores y supuestos relevantes según la
+`Esfuerzo previsto del LLM: <nota e icono>` antes de recomendar profundidad:
+1–7 🟢 o 🟠 con atención especial, 8–9 🟠, 10 🔴 o exactamente
+`10+ 🔴` si supera claramente X13, nunca enteros mayores de 10. Registra referente,
+factores y supuestos en la spec si existe, sin mostrarlos rutinariamente según la
 [rúbrica canónica](../canonical/skills/sdd-spec/references/feature-level.md).
 
 - Antes de tener alcance definido, no muestra una clasificación ni recomienda un
@@ -99,6 +100,60 @@ Las suites documentales comprueban contrato, ejemplos y paridad, no sustituyen e
 observaciones ni garantizan el razonamiento de un LLM. No atribuir PASS a este
 registro por haber ejecutado solo checks textuales.
 
+## Alcance, atención y entregas — escenarios nuevos
+
+Ejecutar en sesiones separadas con contexto técnico suficiente; no son pruebas
+runtime ya realizadas. Los tests de contrato solo verifican instrucciones y paridad.
+
+| Caso | Condición | Resultado esperado |
+|---|---|---|
+| A01 | Petición ambigua | Preguntar decisiones esenciales; no calificar provisionalmente ni elegir modo. |
+| A02 | Transformación pura trivial nivel 1 | Recomendar direct; elegir → implementar → comprobar; sin spec. |
+| A03 | Predicados locales nivel 2 | Aclarar límites/orden, recomendar direct si trivial y verificar. |
+| A04 | Cálculo puro de ejemplo nivel 3 | Aclarar redondeo, direct si trivial; no extrapolar a pagos críticos. |
+| A05 | Normalización/conflictos acotados nivel 4 | Calificar antes de Quick Plan, recomendar lite y esperar selección pendiente. |
+| A06 | Reserva nivel 6 con mecanismo y pruebas concurrentes | 6 🟠, advertencia concreta, lite o standard; controles registrados y verificados. |
+| A07 | Reserva nivel 6 sin garantía verificable | Aclarar o standard; naranja no autoriza lite sin mecanismos/pruebas. |
+| A08 | Alcance conjunto 10/10+ | Standard para conjunto; ofrecer división con resultados/dependencias. |
+| A09 | Entrega dividida sigue 10/10+ | Evaluar otra división útil o standard; no forzar lite ni fragmentar garantías. |
+| A10 | Elección explícita compatible previa | Respetar, no repetir pregunta; elegir standard no aprueba Gate 1. |
+| A11 | Elegir UI tras alcance visual claro | Contexto copiable y detener actividad en SDD; sin invocación automática. |
+| A12 | Cierres parciales de entregas | No cerrar conjunto sin evidencia de requisitos transversales e integración. |
+
+| Casos | Host/versión/fecha/fuente | Respuesta y evidencia | Resultado |
+|---|---|---|---|
+| A01–A12 | Pendiente | Pendiente | No ejecutado |
+
+Las pruebas lite reportadas por el usuario motivan la preferencia 4–9; no son una
+certificación general ni sustituyen ejecutar y registrar estos escenarios.
+
+## Continuidad y costo de contexto — escenarios nuevos
+
+Ejecutar con specs y tests reales en un repositorio desechable. La paridad y los
+checks textuales no acreditan estos resultados runtime. Mantener autorizaciones.
+
+| Caso | Contexto/petición | Resultado esperado |
+|---|---|---|
+| C01 | Cambio aislado sin relación encontrada | Búsqueda localizada, sin cargar política de continuidad ni afirmar auditoría exhaustiva. |
+| C02 | Ruta explícita o spec activa | Empezar por ella; cabecera y requisito, dependencias según impacto, sin búsqueda global rutinaria. |
+| C03 | Nota 2: conservar orden que antes se restablecía | Enmienda actual/propuesto; conservar modo y aprobaciones pertinentes, no forzar direct. |
+| C04 | Implementar tarea con Gate 3 pendiente | Mantener spec/gate; no implementar por recalificar la tarea como trivial. |
+| C05 | Cambio localizado que conserva requisito | Direct evaluable sin evasión de tarea/gate; evidencia proporcional, sin nueva spec. |
+| C06 | Modificar spec cerrada | Revisión explícita o spec vinculada; conservar cierre histórico y distinguir vigencia. |
+| C07 | Pruebas/tareas previamente completadas tras enmienda | Revalidar solo afectadas; evidencia anterior histórica, no GREEN del requisito nuevo. |
+| C08 | Código y spec discrepan; varias specs contradictorias | Determinar tipo/autoridad; preguntar si no es evidente y no elegir por antigüedad. |
+| C09 | Varias peticiones pequeñas relacionadas | Evaluar impacto conjunto sin sumar notas ni extender autorización a toda la sesión. |
+| C10 | Misma spec sin cambios y luego archivos modificados | Reutilizar contexto al inicio; revalidar tras cambio sin asumir caché fiable. |
+
+Registrar por caso herramientas/búsquedas, archivos/secciones leídos, decisiones,
+gates, evidencia y métricas de tokens solo si el host las proporciona. Los presupuestos
+estáticos de test_sdd_contract cubren cambio aislado, spec conocida, enmienda y
+candidatas múltiples, pero no miden contenido variable del proyecto ni búsquedas reales.
+
+| Casos | Host/versión/fecha/fuente | Respuesta y lecturas observadas | Resultado |
+|---|---|---|---|
+| C01–C10 | Pendiente | Pendiente | No ejecutado |
+
 ## 1. Direct sin test nuevo
 
 Prompt:
@@ -109,7 +164,7 @@ Corrige un error ortográfico en el README.
 
 Esperado:
 
-- Selecciona `direct`, sin spec de cuatro fases ni gates.
+- Recomienda `direct`, resuelve selección pendiente y no crea spec ni gates de fase.
 - No emite clasificación de feature para una petición puntual que no define una
   feature, ni recomienda niveles o modelos LLM.
 - No crea un test ceremonial.
@@ -129,16 +184,17 @@ Esperado:
 - Crea u observa un test RED que falla por la condición.
 - Implementa GREEN mínimo, ejecuta la suite y no crea una spec innecesaria.
 
-## 3. Selección automática de lite
+## 3. Recomendación y selección manual de lite
 
 Prepara un cambio de comportamiento localizado, reversible, con resultado claro,
 varios criterios y tests viables, que reutilice un patrón existente y no cumpla el
 umbral trivial de `direct`. No menciones un modo. Esperado:
 
-- Descarta `direct` por motivos verificables y selecciona `lite` automáticamente.
-- Muestra `Modo SDD: lite`, explica los criterios satisfechos e inicia Quick Plan.
-- Activa Quick Plan y no presenta `lite` como una preferencia que el usuario debía
-  haber solicitado expresamente.
+- Define alcance antes de modo, califica y recomienda `lite` sin prefacio ceremonial.
+- Presenta nota, advertencia concreta si aplica y profundidad recomendada, sin
+  referente de laboratorio ni explicaciones rutinarias de rangos/exclusiones.
+- Ofrece aceptar lite o elegir standard y espera la decisión antes de Quick Plan.
+- Si el usuario ya eligió lite explícitamente y es compatible, no vuelve a preguntar.
 
 ## 4. Límite direct / lite
 
@@ -147,8 +203,8 @@ y verificable; después, un cambio claro con varios criterios y tareas trazables
 
 Esperado:
 
-- La primera usa `direct`, sin spec ni recomendación de modelo.
-- La segunda usa `lite` si satisface todos sus criterios positivos y exclusiones.
+- La primera recomienda `direct`, sin spec ni recomendación de modelo.
+- La segunda recomienda `lite` si satisface todos sus criterios positivos y exclusiones.
 - No elige `lite` solo porque el cambio sea pequeño ni fuerza `direct` solo porque
   esté localizado; explica el criterio que separa ambos casos.
 
@@ -167,7 +223,7 @@ Solicita una feature apta para `lite`, sin decir «Quick Plan». Esperado:
 Ejecuta dos variantes equivalentes: «solo planifica este cambio» y «planifica e
 implementa este cambio». Esperado:
 
-- Ambas generan el Quick Plan `lite` tras analizar el alcance, sin pausa por modelo.
+- Ambas generan Quick Plan tras definir alcance y resolver selección lite, sin pausa por modelo.
 - La variante de solo planificación se detiene después de `tasks.md`, deja las
   tareas pendientes, no modifica producto y no crea `verification.md`.
 - La variante con implementación continúa sin Gates 1–3 adicionales, implementa

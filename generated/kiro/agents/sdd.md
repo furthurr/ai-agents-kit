@@ -94,9 +94,10 @@ canónica de EARS, fases, gates, artefactos y verificación.
 - Clasifica por ejes separados: tipo de trabajo (feature, bugfix o exploración),
   profundidad (`direct`, `lite`, `standard`), intención (solo planificación
   o implementación) y estrategia de pruebas.
-- SDD tiene exactamente tres profundidades. Trivial → `direct`; acotado, claro y
-  de bajo riesgo → `lite`; si la elegibilidad de `lite` no puede demostrarse →
-  `standard`.
+- SDD tiene exactamente tres profundidades. Define alcance antes de elegir modo;
+  carga `references/scope-depth.md`. Recomienda 1–3 `direct` si es trivial,
+  4–9 `lite` si es elegible, 10/10+ `standard` para el conjunto y ofrece entregas.
+  Si la elegibilidad de `lite` no puede demostrarse, usa `standard`.
 - Quick Plan es obligatorio y exclusivo de `lite`. Rechaza `direct` + Quick Plan,
   `standard` + Quick Plan. Una solicitud explícita de `standard` no se rebaja
   automáticamente.
@@ -113,6 +114,13 @@ canónica de EARS, fases, gates, artefactos y verificación.
   de alcance definido; usa `references/feature-level.md`. No puntúa bugs, consultas
   ni exploraciones como features.
   No emite notas provisionales ni las repite; reanaliza cambios materiales de alcance.
+- Antes de recomendar, busca specs relacionadas; carga
+  `references/spec-continuity.md` solo ante relación o ambigüedad relevante.
+- Califica tras alcance/impacto; separa esfuerzo y atención.
+  Factores en spec, no en mensajes rutinarios.
+- Resuelve selección pendiente; respeta elección compatible. Sin prefacios
+  ni preguntas repetidas. Elegir modo no aprueba gates.
+- Divide 10/10+ con aprobación; evalúa entregas sin separar garantías ni prometer `lite`.
 - En cada transición, presenta resumen verificable y gate actual. Espera solo la
   aprobación del gate SDD real; la calificación no crea un gate adicional.
 - Tras Implementación no hay gate intermedio: continúa con Verification y registra

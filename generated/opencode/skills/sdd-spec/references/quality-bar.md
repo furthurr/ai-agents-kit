@@ -26,3 +26,6 @@ Redactar y aplicar **sin** nombres de framework en el núcleo del checklist; el 
 - **Fase 4:** spot-check explícito (lista corta en `verification.md`).
 - **Cierre lite:** spot-check proporcional en el `verification.md` compacto, sin
   convertirlo en Fase 4 ni añadir Gate 4.
+- **Atención especial:** controles concretos y evidencia de garantías; el icono
+  naranja no justifica omitir mecanismos de concurrencia, integridad o recuperación.
+- **Entregas:** verificar garantías transversales e integración antes de cerrar el conjunto.

@@ -29,8 +29,8 @@ no autoriza a mostrarla.
 | Modo | Cuándo | Qué produce | Carga documental |
 |------|--------|-------------|-------------------|
 | `direct` | Cambio trivial verificable | Sin spec 4 fases | Mínima |
-| `lite` | Cambio acotado, claro y de bajo riesgo | Quick Plan; verificación compacta si implementa | Ligera |
-| `standard` | **Default** | 4 fases, design corto, 0–5 invariantes, testing adaptativo | Moderada |
+| `lite` | Alcance claro y acotado, garantías verificables | Quick Plan; verificación compacta si implementa | Ligera |
+| `standard` | Fallback seguro; alcance completo 10/10+ | 4 fases, design corto, 0–5 invariantes, testing adaptativo | Moderada |
 
 SDD reconoce exactamente tres profundidades: `direct`, `lite` y `standard`. Tipo de
 trabajo (feature, bugfix o exploración), profundidad, intención
@@ -46,13 +46,14 @@ no crea una profundidad nueva.
 migración, decisión arquitectónica, cruce de capas ni riesgo relevante de seguridad,
 concurrencia o integridad.
 
-Tras descartar `direct`, selecciona `lite` solo si el resultado está claro, no hay
-decisiones funcionales relevantes abiertas, el alcance es acotado, reutiliza
-patrones existentes, tiene verificación viable y es reversible sin migración
-compleja. Excluye `lite` ante contrato público/API, migración, arquitectura,
-integración externa significativa, cruce relevante de capas o módulos, seguridad,
-privacidad, concurrencia, integridad crítica, compliance, legado riesgoso o bugfix
-no trivial. Si la elegibilidad de `lite` no puede demostrarse, usa `standard`.
+Recomienda profundidad después de definir alcance e impacto: 1–3 `direct` si
+es trivial; 4–9 prioriza `lite` si es elegible; 10/10+ `standard` para el conjunto
+y ofrece división. Un 1–3 no trivial puede usar `lite`. Carga
+`references/scope-depth.md` para condiciones, atención y selección manual.
+Concurrencia/persistencia/integridad acotadas permiten evaluar `lite` con mecanismos
+adecuados y pruebas reales; no basta una advertencia. Si la elegibilidad de `lite`
+no puede demostrarse, usa `standard`. Conserva las exclusiones de la referencia
+y el tratamiento standard de bugfix no trivial.
 
 Quick Plan es obligatorio y exclusivo de `lite`. Rechaza `direct` + Quick Plan,
 `standard` + Quick Plan; una petición de Quick Plan solicita evaluar `lite`, pero no
@@ -96,12 +97,23 @@ skill desde otro agente no autoriza la emisión. Consulta
 `references/feature-level.md`, fuente única de la rúbrica. Bugs, exploraciones y
 consultas no reciben nota por defecto.
 
-Publica `Esfuerzo previsto del LLM: <nota e icono>` una vez tras analizar el alcance:
-`direct`, antes de editar; `lite`, al cerrar Quick Plan; `standard`, con Requirements
-y Gate 1. Registra referente, justificación (2–4 factores) y supuestos. No muestra
-notas provisionales, no repite ni pausa ni pide aprobación de la nota; si cambia
-materialmente el alcance, reanaliza. No cambia profundidad, lite, testing, ejecutor,
-permisos o modelo ni crea un gate adicional.
+Publica `Esfuerzo previsto del LLM: <nota e icono>` al terminar alcance e impacto,
+antes de recomendar profundidad. Referente, factores y supuestos quedan en la spec,
+no en mensajes rutinarios. Separa nota y atención según la rúbrica. No muestra
+notas provisionales, no repite ni pausa ni pide aprobación de la nota; reanaliza
+cambios materiales. No cambia testing, ejecutor, permisos o modelo ni crea gates.
+
+## Definición de alcance y criterios de aceptación
+
+Antes de elegir profundidad, define objetivo, resultados, exclusiones, criterios,
+errores y supuestos. Preguntas esenciales sin repetir información; consulta
+contexto técnico mínimo. No crea un documento obligatorio
+y no aprueba Gate 1. Mantén rigor EARS sin duplicar contexto.
+Antes de recomendar, busca specs relacionadas localmente; carga
+`references/spec-continuity.md` solo ante relación o ambigüedad relevante.
+Aplica `references/scope-depth.md`: califica features, recomienda modo y resuelve
+elección explícita pendiente antes de Quick Plan, fases standard o cambios direct;
+respeta la previa compatible. Solo planificación nunca implementa.
 
 ## Contexto selectivo
 
@@ -188,9 +200,8 @@ antes de reanudarla.
    `.design/`, `.data/`, `.security/`, `.quality/`). La ausencia de contexto no obliga
    a cambiar de agente: aplica `references/agent-routing.md` si corresponde, respeta
    la elección previa y, si el usuario continúa, captura lo imprescindible en `design.md`.
-3. Analiza el impacto en el proyecto y el alcance deseado; si es una feature y el
-   alcance quedó definido, el agente SDD registra/muestra la calificación única
-   antes de presentar Gate 1. No la muestres si persiste una decisión esencial.
+3. Reutiliza el alcance y los criterios acordados; registra la calificación ya
+   emitida si aplica y la profundidad elegida, sin repetirla ni inferir Gate 1 aprobado.
 4. Descompón en historias de usuario.
 5. Criterios en EARS:
    - `CUANDO <condición> EL SISTEMA DEBERÁ <comportamiento>`
@@ -258,11 +269,10 @@ reproducirse, registra la limitación y no inventes un RED.
 
 ## Modo lite y Quick Plan
 
-Quick Plan es obligatorio y exclusivo de `lite`. Genera requirements, design y
-tasks en una pasada, con preguntas aclaratorias esenciales por adelantado y sin
-Gates 1–3. El preflight técnico identifica `Modo SDD: lite` y Quick Plan, sin
-recomendar modelos ni pausar. Al concluir el análisis y definir el alcance deseado,
-el agente SDD publica la calificación única de la feature en el resumen de Quick Plan.
+Quick Plan es obligatorio y exclusivo de `lite`. Tras definir alcance, calificar
+features y resolver selección, genera requirements, design y tasks en una pasada,
+sin Gates 1–3. Reutiliza criterios acordados y registra la nota sin volver a
+publicarla. El preflight técnico no recomienda modelos ni pausa por modelo.
 
 Si la intención es solo planificación, termina después de `tasks.md` y no
 implementar código. Si la solicitud original incluye implementación, aplica
@@ -273,6 +283,14 @@ de evidencia; cierra sin Gate 4.
 Si aparece una exclusión, detente en un punto seguro y propón `standard`. La
 reclasificación requiere aprobación por el cambio de flujo. Quick Plan no es
 compatible con `direct` ni `standard`.
+
+## Modo direct
+
+Tras acordar alcance y resolver selección, ejecuta solo lo autorizado, con el
+cambio mínimo correcto y testing adaptativo. No crea archivos formales de spec
+ni Quick Plan. Presenta cambios, evidencia real y límites en un cierre breve;
+actualiza documentación existente solo si el cambio o steering lo exige.
+Si deja de ser trivial, detente y solicita reclasificación antes de ampliar el flujo.
 
 ## Reglas de calidad
 

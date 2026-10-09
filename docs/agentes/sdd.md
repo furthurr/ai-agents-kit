@@ -17,28 +17,89 @@ SDD separa el **qué y porqué** del **cómo** y deja decisiones trazables.
 - Para una feature nueva o un cambio de comportamiento.
 - Para un bugfix que necesita regresión y causa raíz.
 - Para una decisión con impacto entre capas.
-- Para crear un plan rápido de trabajo acotado, claro y de bajo riesgo mediante
+- Para crear un plan rápido de trabajo acotado, claro y con garantías verificables mediante
   `lite` y Quick Plan.
 - Para continuar la implementación de tareas ya aprobadas.
 
-Un cambio trivial, localizado y reversible puede usar `direct`. Tras descartarlo,
-SDD selecciona `lite` automáticamente para trabajo acotado, claro y de bajo riesgo.
-Si hay dudas, riesgo, contrato público, migración, cruce de capas o un bugfix no
-trivial, usa `standard` como modo por defecto y fallback seguro. No existe una
+Primero define alcance y criterios de aceptación, consulta el contexto técnico
+mínimo y califica features. Después recomienda profundidad y permite elegir entre
+opciones elegibles; respeta una elección explícita previa sin repetir la pregunta.
+1–3 recomienda `direct` si es trivial; 4–9 prioriza `lite`; 10/10+ recomienda
+`standard` para el conjunto y ofrece entregas incrementales. La nota no basta:
+se comprueba elegibilidad. `standard` es el fallback seguro. No existe una
 profundidad `deep`; las solicitudes históricas o explícitas de ese modo requieren
 aceptar su sustitución por `standard`.
 
 ## Esfuerzo previsto del LLM
 
-Tras definir alcance, SDD publica una sola vez el bloque `Esfuerzo previsto del LLM`
-con referente, justificación y supuestos. La
+Al terminar alcance e impacto, antes de recomendar profundidad, SDD publica una
+sola vez `Esfuerzo previsto del LLM: <nota e icono>`. Referente, factores y supuestos
+se registran en la spec, no en mensajes rutinarios. La
 [rúbrica ReserveLab](../../canonical/skills/sdd-spec/references/feature-level.md)
-define anclas, rangos, reutilización y `10+`; es independiente de profundidad y
-elegibilidad de lite. No puntúa antes de entender el alcance ni repite la nota en Requirements,
+define anclas, reutilización y `10+`. La nota orienta la recomendación, pero no
+demuestra elegibilidad. No puntúa antes de entender el alcance ni repite la nota en Requirements,
 Design, Tasks, Implementación o Verification. No es una recomendación de modelo,
 no identifica ni selecciona un LLM y nunca pausa el flujo por modelo. Si el alcance
 cambia de forma sustancial, primero vuelve a analizarlo y actualiza la clasificación;
 las decisiones y aprobaciones propias del flujo siguen siendo independientes.
+
+Esfuerzo y atención son distintos: 1–7 normalmente 🟢, pero pueden mostrar 🟠
+con una complicación concreta; 8–9 🟠, 10/10+ 🔴. Una reserva de nivel 6 puede
+usar `lite` con atención especial si hay garantía definida, mecanismo adecuado,
+pruebas concurrentes viables y recuperación acotada. Naranja no reemplaza controles.
+
+Ejemplo de mensaje:
+
+> **Esfuerzo previsto del LLM: 6 🟠**
+>
+> **Atención especial:** reservas simultáneas; se verificarán con pruebas específicas.
+>
+> **Profundidad recomendada: `lite`.**
+>
+> ¿Continuamos con `lite` o prefieres `standard`?
+
+## Definición de alcance y entregas
+
+La etapa común acuerda objetivo, resultados, límites, criterios, errores y supuestos
+sin imponer un archivo ni una aprobación ceremonial. Pregunta solo lo esencial.
+Mantiene rigor testable y reutiliza lo definido en los artefactos del modo elegido.
+Elegir standard o acordar alcance no aprueba su Gate 1.
+
+Para 10/10+ ofrece dividir o abordar completo en standard. Cada entrega debe tener
+resultado verificable, dependencias y garantías transversales explícitas; se califica
+individualmente y puede seguir en 10/10+. Si otra separación no es segura, mantener
+standard. No prometer que todo será lite ni cerrar el conjunto sin pruebas integradas.
+Política: [alcance y profundidad](../../canonical/skills/sdd-spec/references/scope-depth.md).
+
+## Continuidad de specs y contexto selectivo
+
+Antes de recomendar profundidad para una modificación, SDD comprueba specs
+relacionadas mediante búsqueda localizada: ruta indicada/spec activa primero,
+después candidatas por módulo y comportamiento si hace falta. No audita toda `.sdd`
+ni afirma ausencia global por una búsqueda limitada. La política detallada de
+[continuidad](../../canonical/skills/sdd-spec/references/spec-continuity.md) se carga
+solo ante relación o ambigüedad relevante.
+
+| Situación | Tratamiento |
+|---|---|
+| Implementar una tarea ya especificada | Conservar modo, autorización y gates pendientes. |
+| Ajuste trivial que conserva requisitos | Direct evaluable si no evita una tarea/gate; vínculo y evidencia breve. |
+| Cambio de requisito, incluso con nota 2 | Mostrar actual/propuesto, mantener modo y revisar dependencias/aprobaciones afectadas. |
+| Spec cerrada | Proponer revisión o spec vinculada conservando historia del cierre. |
+| Evidencia de comportamiento anterior | Conservar como histórica y marcar solo lo afectado para revalidación. |
+| Código y spec contradictorios | Determinar bug, documentación obsoleta o cambio funcional; aclarar si la autoridad no es evidente. |
+
+Enmiendas mantienen IDs del mismo requisito y señalan adiciones/sustituciones.
+En standard se revisan gates afectados; elegir direct no permite evitarlos. En lite
+se actualiza Quick Plan autorizado sin crear gates nuevos. No desmarcar todas las
+tareas ni considerar un archivo presente como evidencia del requisito modificado.
+
+Las elecciones de modo/ejecutor valen para el alcance aceptado, no para toda la
+sesión. Cambios pequeños relacionados se evalúan en conjunto, sin sumar notas.
+Reutilizar contexto si fuentes/alcance siguen vigentes; revalidar cuando cambien.
+Leer cabecera/requisitos y ampliar según impacto, sin cargar todos los artefactos.
+Las pruebas miden palabras/caracteres de instrucciones fijas y presupuestos,
+no tokens reales ni ahorro porcentual; código/specs y número de candidatas son variables.
 
 ## Recomendación de agente por dominio
 
@@ -82,9 +143,9 @@ Evaluación: [escenarios manuales](../sdd-smoke.md#recomendación-de-agente-por-
 
 | Modo | Uso | Resultado |
 |---|---|---|
-| `direct` | Cambio trivial, localizado y reversible | Sin spec; verificación mínima |
-| `lite` | Selección automática para trabajo acotado, claro y de bajo riesgo | Quick Plan compacto; artefactos según se planifique o implemente |
-| `standard` | Modo por defecto y fallback seguro; obligatorio para bugfixes no triviales | Requirements, design, tasks y verification; Gates 1-4 |
+| `direct` | Preferencia 1–3 si es trivial, localizado y reversible | Sin spec; pruebas/checks y evidencia breve |
+| `lite` | Preferencia 4–9, alcance acotado y garantías verificables | Quick Plan compacto; artefactos según se planifique o implemente |
+| `standard` | Conjunto 10/10+ o no elegible; bugfix no trivial | Requirements, design, tasks y verification; Gates 1-4 |
 
 Estas son las tres profundidades válidas: `direct`, `lite` y `standard`.
 Quick Plan es obligatorio y exclusivo de `lite`; combinarlo con cualquier otra
@@ -101,10 +162,9 @@ solicitud silenciosamente ni confunde esa aceptación con la aprobación de un g
 
 ## Flujo y gates
 
-0. **Clasificación de feature:** tras analizar el alcance definido, emite una sola
-   vez el bloque `Esfuerzo previsto del LLM: <nota e icono>` con referente,
-   justificación y supuestos; no recomienda modelos ni pausa por modelo.
-   `direct` no crea spec.
+0. **Alcance y elección:** acordar criterios, revisar contexto mínimo, calificar
+   features y recomendar profundidad. Resolver elección pendiente o respetar la previa.
+   `direct` ejecuta lo autorizado, verifica y resume sin crear spec ni Quick Plan.
 1. **Requirements:** historias, criterios EARS, errores, edge cases y supuestos.
     Gate 1: aprobar requisitos en `standard`.
 2. **Design:** arquitectura, modelos, errores, pruebas y estrategia de testing.
@@ -117,7 +177,7 @@ solicitud silenciosamente ni confunde esa aceptación con la aprobación de un g
    huecos en `standard`; después termina el flujo.
 
 En `lite`, Quick Plan genera `requirements.md`, `design.md` y `tasks.md` en una
-pasada después de analizar el alcance, sin pausa por modelo. No existen Gates 1-3
+pasada después de definir alcance y resolver elección, sin repetir la nota. No existen Gates 1-3
 ni Gate 4. Si el alcance es solo planificar, termina con esos tres archivos; si también se
 implementa, añade un `verification.md` compacto con la evidencia.
 
@@ -186,15 +246,16 @@ de la suite ejecutada.
 de testing y no implementes todavía.
 ```
 
-Esta petición usa `lite` automáticamente. `Quick Plan standard` y
+Esta petición solicita evaluar `lite` y Quick Plan; no evita sus condiciones.
+`Quick Plan standard` y
 `Quick Plan direct` son combinaciones inválidas.
 
 ## Límites y confirmaciones
 
 - No cruza los Gates 1-4 de `standard` sin aprobación explícita.
 - La clasificación del esfuerzo se emite una sola vez tras analizar el alcance
-  definido, con el formato `Esfuerzo previsto del LLM: <nota e icono>` (1–7 🟢,
-  8–9 🟠, 10 🔴, superior a X13: `10+ 🔴`) y referente/justificación/supuestos;
+  definido, con el formato `Esfuerzo previsto del LLM: <nota e icono>` (1–7 🟢 o
+  🟠 con atención especial, 8–9 🟠, 10 🔴, superior a X13: `10+ 🔴`);
   no recomienda niveles ni selecciona LLM.
 - Ninguna fase repite esa clasificación ni espera por modelo; `lite` inicia Quick
   Plan sin pausa por modelo, sin crear Gates 1-3 ni Gate 4.

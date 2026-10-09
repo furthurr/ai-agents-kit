@@ -50,6 +50,26 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
 4. Revisar solo los RNF declarados y aplicables; no inventar una cuota.
 5. Si solo hubo planificación, no crear evidencia ni marcar implementación hecha.
 
+## Atención y entregas
+
+- Los controles de atención definidos en diseño/tareas requieren evidencia de la
+  garantía real antes del cierre: transacciones, concurrencia, idempotencia o
+  recuperación según aplique. Un mock que oculta el mecanismo no es evidencia.
+- Comprobar integración entre entregas y requisitos transversales antes de cerrar
+  el conjunto. Cerrar entregas parciales no demuestra garantías de extremo a extremo.
+- Direct conserva criterios y evidencia breve en conversación, sin verification.md.
+- Seleccionar profundidad no aprueba gates ni amplía alcance. Respetar elección
+  pendiente, autorización e intención antes de ejecutar su flujo.
+
+## Enmiendas y vigencia
+
+- Una enmienda identifica requisito, dependencias y aprobaciones afectadas según
+  `spec-continuity.md`; no evade gates ni autoridad de la spec por su nota baja.
+- Marcar pendiente de revalidación solo tareas/evidencias afectadas. La evidencia
+  anterior permanece histórica, no acredita el comportamiento modificado.
+- Conservar historia de cierre y acuerdos sustituidos; no desmarcar tareas ajenas
+  ni sobrescribir un cierre como si el requisito nuevo siempre hubiera existido.
+
 ## Ejemplos de omisión honesta
 
 ```markdown

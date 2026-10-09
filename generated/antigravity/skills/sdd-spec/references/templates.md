@@ -11,11 +11,14 @@ Estado: en progreso
 Gate 1: pendiente
 
 ## Calificación de feature (solo si SDD analizó una feature)
-- Esfuerzo previsto del LLM: <1–10 o 10+ con icono según feature-level.md; no emitir antes de definir alcance>
-- Referente del laboratorio: <prueba o rango comparable>
-- Justificación: <2–4 factores concretos; para 10+ explicar dimensiones que exceden X13>
-- Supuestos relevantes: <infraestructura reutilizada o incertidumbres que cambian la nota>
+- Esfuerzo previsto del LLM: <1–10 o 10+; ver feature-level.md; no emitir antes de definir alcance>
+- Referente del laboratorio: <referente>
+- Justificación: <2–4 factores; explicar exceso sobre X13>
+- Supuestos relevantes: <infraestructura/incertidumbres>
 - Alcance evaluado: <resumen>
+- Atención: <indicador/controles>
+- Profundidad recomendada/seleccionada: <elección>
+- Entrega: <dependencias/integración>
 
 ## Historia 1: <título>
 Como <rol> quiero <objetivo> para <beneficio>.
@@ -49,7 +52,7 @@ Gate 2: pendiente
 - Nivel: <sin test nuevo | caracterización/regresión | TDD focalizado>
 - Justificación / excepción: <por qué>
 ## Invariantes críticos (0–5, opcionales)
-## Excepciones al quality-bar (si las hay)
+## Excepciones al quality-bar
 ## Diagramas (flowchart + sequence)
 ```
 
@@ -66,11 +69,14 @@ obligatorio y una petición de solo planificación no crea evidencia de implemen
 Modo SDD: lite
 
 ## Calificación de feature (añadir solo tras análisis completo)
-- Esfuerzo previsto del LLM: <1–10 o 10+ con icono según feature-level.md>
-- Referente del laboratorio: <prueba o rango comparable>
-- Justificación: <2–4 factores concretos; para 10+ explicar dimensiones que exceden X13>
-- Supuestos relevantes: <infraestructura reutilizada o incertidumbres que cambian la nota>
+- Esfuerzo previsto del LLM: <1–10 o 10+; ver feature-level.md>
+- Referente del laboratorio: <referente>
+- Justificación: <2–4 factores; explicar exceso sobre X13>
+- Supuestos relevantes: <infraestructura/incertidumbres>
 - Alcance evaluado: <resumen>
+- Atención: <indicador/controles>
+- Profundidad recomendada/seleccionada: <elección>
+- Entrega: <dependencias/integración>
 
 ## Historia 1: <título>
 Como <rol> quiero <objetivo> para <beneficio>.
@@ -170,8 +176,7 @@ Gate 4: pendiente
 | Req 1.2   | 2.1      | `NombreTest` | `tests/...` | ✅ |
 
 ## Self-check RNF (3–5 críticos del spec)
-Los RNF salen de la sección homónima de `design.md`. Si no están declarados allí,
-no los inventes en esta fase: decláralo como hueco.
+Usa RNF declarados en `design.md`; si faltan, registra el hueco sin inventarlos.
 
 | RNF | Evidencia (búsqueda / path) | Estado |
 |-----|----------------------------|--------|

@@ -51,22 +51,47 @@ aislada no bastan; nunca lo expreses como nota 11.
 
 ```text
 Esfuerzo previsto del LLM: <nota e icono>
+Atención especial: <complicación concreta, solo si aplica>
+Profundidad recomendada: <direct | lite | standard>
+
+¿Continuamos con <recomendada> o prefieres <otra elegible>?
+```
+
+Para 10/10+ ofrece dividir en entregas o abordar el conjunto en standard; no
+expliques rutinariamente rangos ni exclusiones. No añadas prefacios ceremoniales.
+Si ya hay elección explícita compatible, respétala sin repetir la pregunta.
+
+### Registro interno
+
+En la spec, si corresponde, conservar:
+
+```text
+Esfuerzo previsto del LLM: <nota e icono>
 Referente del laboratorio: <prueba o rango comparable>
 Justificación: <2–4 factores; para 10+ explicar qué supera X13>
 Supuestos relevantes: <infraestructura o incertidumbres que cambian la nota>
+Atención: <normal | reforzada | alta; controles concretos>
+Profundidad recomendada / seleccionada: <modos y elección explícita>
 ```
 
-1–7 inclusive: 🟢; 8–9: 🟠; 10: 🔴; superior a X13: exactamente 10+ 🔴. No uses
+1–7 inclusive: 🟢 normalmente, o 🟠 con complicaciones concretas controlables;
+8–9: 🟠; 10: 🔴; superior a X13: exactamente 10+ 🔴. No uses
 0, decimales, rangos ni enteros mayores de 10 como nota. Si se necesita estructura,
 conserva el entero 1–10 y un indicador separado `exceeds_x13`; 10+ es valor 10 e
-indicador verdadero. No cambies datos históricos.
+indicador verdadero. Atención es un indicador separado, no otra nota de riesgo.
+No cambies datos históricos. Direct no crea archivos solo para este registro.
 
-Emite tras definir alcance: `direct`, antes de editar; `lite`, al cerrar Quick Plan;
-`standard`, con Requirements/Gate 1. No muestres puntuación provisional. No repitas
+Emite al terminar definición de alcance e impacto, antes de recomendar profundidad,
+independientemente del modo posterior. No muestres puntuación provisional. No repitas
 el nivel al cambiar de fase. Si cambia materialmente alcance o impacto, analiza
-primero. La nota no elige profundidad, elegibilidad de lite, testing, ejecutor,
-permisos, modelo, gates, riesgo o resultado funcional. Verde no habilita lite ni
-elimina exclusiones vigentes de seguridad, concurrencia, migración o integridad.
+primero. La nota orienta la recomendación base de `scope-depth.md`, pero no demuestra
+elegibilidad ni elige testing, ejecutor, permisos, modelo, gates o resultado funcional.
+Verde no habilita lite sin verificar condiciones; naranja no sustituye garantías.
+
+Ejemplo: `Esfuerzo previsto del LLM: 6 🟠`, `Atención especial: reservas simultáneas;
+se comprobará la disponibilidad con pruebas concurrentes`, `Profundidad recomendada:
+lite`, solo si mecanismo y verificación son adecuados. Si no lo son, aclarar o
+recomendar standard. No rebajar la nota al dividir: evaluar cada entrega.
 
 ## Contrastes mínimos
 

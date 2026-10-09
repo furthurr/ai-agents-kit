@@ -137,19 +137,28 @@ Catálogo completo: [catalogo.md](catalogo.md).
    conservan los gates efectivos de estudio, propuesta y autorización; el Orchestrator
    no añade una pausa por modelo.
 3. **SDD antes de features grandes** — elige entre exactamente tres profundidades:
-   `direct`, sin spec; `lite`, automático para trabajo acotado, claro y de bajo
-   riesgo; y `standard`, fallback seguro.
+   `direct`, sin spec; `lite`, para trabajo acotado con garantías verificables;
+   y `standard`, fallback seguro. Primero define alcance y criterios; después
+   califica y recomienda: 1–3 direct si trivial, 4–9 lite si elegible, 10/10+
+   standard para el conjunto y opción de dividir. El usuario elige; una elección
+   explícita compatible previa no se vuelve a preguntar.
    Quick Plan es obligatorio y exclusivo de `lite`; no tiene Gates 1-3 ni Gate 4.
    Combinar Quick Plan con otro modo es inválido.
    `standard` conserva los Gates 1-4; los bugfixes no triviales usan `standard`.
    Tras definir el alcance, SDD emite una sola vez su nota de esfuerzo prevista,
-   incluyendo referente, justificación y supuestos según la
+   registrando referente, justificación y supuestos en la spec según la
    [rúbrica ReserveLab](../canonical/skills/sdd-spec/references/feature-level.md).
-   Evalúa implementar y verificar, no predice recursos; es independiente de lite y
-   de sus exclusiones. No la muestra antes
+   Evalúa implementar y verificar, no predice recursos; orienta la recomendación
+   pero no demuestra elegibilidad. Puede mostrar naranja bajo 8 con complicaciones
+   concretas controlables. Entregas se evalúan individualmente, aunque sigan 10/10+.
+   No la muestra antes
    de definir alcance ni la repite por fase; no recomienda ni selecciona LLM y no
    pausa el flujo por modelo. Se espera solo por gates reales o decisiones pendientes,
    y planificar no autoriza implementar.
+   Una modificación comprueba specs relacionadas localmente. Si cambia un requisito,
+   se trata como enmienda conservando modo/gates y revalidando evidencia afectada;
+   nota baja no habilita direct para evitarlos. La política de continuidad se carga
+   bajo demanda, sin auditoría completa rutinaria de `.sdd`.
    Si hay `.navigator/`, SDD comprueba primero su disponibilidad y frescura para
    orientar la exploración. Un índice desfasado solo aporta rutas candidatas: la
    documentación aplicable y el código real confirman las decisiones. Su ausencia

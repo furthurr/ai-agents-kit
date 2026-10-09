@@ -46,7 +46,7 @@ def test_modes_remain_proportional() -> None:
     compact = normalized(skill + " " + agent).lower()
     check("| `direct` | Cambio trivial verificable" in skill, "direct conserva criterio verificable")
     check("| `lite` |" in skill, "lite existe como profundidad intermedia")
-    check("| `standard` | **Default**" in skill, "standard sigue siendo el modo default")
+    check("| `standard` | Fallback seguro" in skill, "standard sigue siendo el fallback seguro")
     check("`deep` y tdd estricto" in compact and "opciones retiradas" in compact,
           "deep y TDD estricto están retirados")
     check("sin contrato público" in skill and "cruce de capas" in skill, "direct declara límites de riesgo")
@@ -125,6 +125,131 @@ def test_lite_quick_plan_contract() -> None:
         )
 
 
+def test_scope_depth_contract() -> None:
+    """Check normative instructions, not a simulated LLM scorer or eligibility engine."""
+    skill = read(SDD / "SKILL.md")
+    agent = read(SDD_AGENT)
+    path = SDD / "references" / "scope-depth.md"
+    check(path.is_file(), "alcance: política de profundidad existe")
+    policy = read(path) if path.is_file() else ""
+    for label, text in (("skill", skill), ("agente", agent)):
+        check("references/scope-depth.md" in text, f"alcance/{label}: carga política común")
+    common = normalized(section(skill, "Definición de alcance y criterios de aceptación")).lower()
+    for rule in ("antes de elegir profundidad", "objetivo", "exclusiones", "criterios",
+                 "preguntas esenciales", "contexto técnico mínimo", "elección explícita",
+                 "no crea un documento obligatorio", "no aprueba gate 1"):
+        check(rule in common, f"alcance común: {rule}")
+    rows = table_rows(policy, "Recomendación base")
+    for case, mode in (("1–3 trivial", "direct"), ("1–3 no trivial elegible", "lite"),
+                       ("4–9 elegible", "lite"), ("1–9 no elegible", "standard"),
+                       ("10 / 10+", "standard")):
+        check(mode in " ".join(rows.get(case, [])), f"profundidad: {case} → {mode}")
+    attention = normalized(section(policy, "Complicaciones controlables")).lower()
+    for term in ("invariante", "mecanismo", "pruebas", "mock", "reversibilidad",
+                 "no excluyen lite por sí solas", "standard", "autorización"):
+        check(term in attention, f"lite con atención: {term}")
+    examples = table_rows(policy, "Casos de decisión")
+    check(all(case in examples for case in ("1", "2", "3", "4", "6-controlado",
+                                            "6-sin-garantías", "10", "10+-entrega")),
+          "alcance: ejemplos direct, lite, garantías y división")
+    check("lite" in " ".join(examples.get("6-controlado", []))
+          and "6 🟠" in " ".join(examples.get("6-controlado", [])),
+          "alcance: 6 naranja permite lite con garantías")
+    check("standard" in " ".join(examples.get("6-sin-garantías", [])),
+          "alcance: 6 sin garantías no fuerza lite")
+    split = normalized(section(policy, "Entregas incrementales")).lower()
+    for term in ("10 o 10+", "dependencias", "garantías transversales", "integración",
+                 "no existe", "standard", "no garantiza", "cada entrega"):
+        check(term in split, f"división segura: {term}")
+    selection = normalized(section(policy, "Selección y continuidad")).lower()
+    for term in ("elección explícita", "no se rebaja", "no aprueba gates", "no repitas",
+                 "solo planificación", "históricas", "bugfix", "especialista"):
+        check(term in selection, f"selección manual: {term}")
+    reference = read(SDD / "references" / "feature-level.md")
+    output = section(reference, "Formato de salida")
+    routine = output.split("Registro interno", maxsplit=1)[0]
+    check("Referente del laboratorio:" not in routine and "Profundidad recomendada:" in routine,
+          "presentación: recomendación concisa sin referente rutinario")
+    check("6 🟠" in reference and "Atención especial:" in reference,
+          "presentación: esfuerzo y atención separados")
+    check("antes de recomendar profundidad" in normalized(reference).lower(),
+          "publicación: califica al terminar alcance antes de recomendar")
+    check("al cerrar Quick Plan" not in skill + reference,
+          "publicación: no conserva momento retirado de lite")
+    integrity = normalized(read(SDD / "references" / "integrity-gate.md")).lower()
+    check("controles de atención" in integrity and "integración entre entregas" in integrity,
+          "integridad: atención e integración requieren evidencia")
+
+
+def continuity_contract_errors(text: str) -> list[str]:
+    """Validate written continuity rules, never infer authority from project content."""
+    errors = []
+    rules = {
+        "Búsqueda localizada": ("ruta explícita", "spec activa", "candidatas", "no auditar",
+                                "no afirmar ausencia global", "antes de recomendar"),
+        "Enmiendas y gates": ("actual/propuesto", "conservar id", "no evade", "gate 1",
+                             "aprobaciones afectadas", "no implementar", "lite"),
+        "Estado y evidencia": ("histórica", "revalidación", "spec cerrada", "vigente",
+                              "no borrar", "no desmarcar", "no caduca"),
+        "Impacto y continuidad": ("código", "bugfix", "no sumar", "alcance aceptado",
+                                  "elección", "no repetir"),
+        "Contexto proporcional": ("bajo demanda", "sin relación", "reutilizar",
+                                  "revalidar", "sin índice", "palabras/caracteres",
+                                  "no tokens reales"),
+    }
+    for heading, terms in rules.items():
+        body = normalized(section(text, heading)).lower()
+        for term in terms:
+            if term not in body:
+                errors.append(f"{heading}: {term}")
+    rows = table_rows(text, "Casos de continuidad")
+    expected = {
+        "nota-2-enmienda": "modo existente",
+        "gate-3-pendiente": "no implementar",
+        "conserva-requisito": "direct",
+        "cerrada": "historia",
+        "evidencia-obsoleta": "revalidación",
+        "código-spec": "aclarar",
+        "varias-candidatas": "preguntar",
+        "cambios-relacionados": "conjunto",
+    }
+    for case, required in expected.items():
+        if required not in " ".join(rows.get(case, [])).lower():
+            errors.append(f"caso {case}")
+    return errors
+
+
+def test_spec_continuity_contract() -> None:
+    path = SDD / "references" / "spec-continuity.md"
+    check(path.is_file(), "continuidad: política bajo demanda existe")
+    text = read(path) if path.is_file() else ""
+    errors = continuity_contract_errors(text)
+    check(not errors, f"continuidad: reglas de enmienda/estado/contexto ({errors})")
+    for label, source in (("agente", SDD_AGENT), ("skill", SDD / "SKILL.md")):
+        compact = normalized(read(source)).lower()
+        check("spec-continuity.md" in compact and "relación" in compact,
+              f"continuidad/{label}: entrada condicionada a relación")
+    check("spec-continuity.md" in read(SDD / "references" / "scope-depth.md"),
+          "continuidad: precedencia vinculada a selección")
+    integrity = normalized(read(SDD / "references" / "integrity-gate.md")).lower()
+    check("revalidación" in integrity and "histórica" in integrity,
+          "continuidad: integridad no acredita cambio con evidencia histórica")
+    for old, new, expected in (
+        ("no evade", "evade", "Enmiendas y gates: no evade"),
+        ("no implementar", "implementar", "Enmiendas y gates: no implementar"),
+        ("revalidación", "aceptación automática", "Estado y evidencia: revalidación"),
+        ("no afirmar ausencia global", "afirmar ausencia global", "Búsqueda localizada: no afirmar ausencia global"),
+        ("no sumar", "sumar", "Impacto y continuidad: no sumar"),
+    ):
+        check(old in text, f"continuidad/negativo: mutación alcanza {old}")
+        check(expected in continuity_contract_errors(re.sub(re.escape(old), lambda _: new, text, flags=re.I)),
+              f"continuidad/negativo: detecta pérdida de {old}")
+    for case in ("nota-2-enmienda", "gate-3-pendiente", "conserva-requisito",
+                 "cerrada", "evidencia-obsoleta", "código-spec", "varias-candidatas",
+                 "cambios-relacionados"):
+        check(f"caso {case}" not in errors, f"continuidad: caso {case}")
+
+
 def test_feature_level_contract() -> None:
     skill = read(SDD / "SKILL.md")
     agent = read(SDD_AGENT)
@@ -156,9 +281,9 @@ def test_feature_level_contract() -> None:
           "no se emiten puntuaciones provisionales")
     check("esfuerzo previsto del llm: <nota e icono>" in lower_reference,
           "la emisión usa el formato de esfuerzo definido")
-    check("1–7 inclusive: 🟢" in reference and "8–9: 🟠" in reference
+    check("1–7 inclusive: 🟢 normalmente, o 🟠" in reference and "8–9: 🟠" in reference
           and "10: 🔴" in reference,
-          "la escala asigna emoji verde, naranja y rojo a los rangos correctos")
+          "la atención puede ser naranja bajo 8 sin alterar las anclas numéricas")
     for consumer_name, consumer in (("skill", skill), ("agente", agent)):
         check("Esfuerzo previsto del LLM:" in consumer and "Nivel de feature:" not in consumer,
               f"{consumer_name}: usa la nueva etiqueta, sin salida alternativa antigua")
@@ -167,11 +292,9 @@ def test_feature_level_contract() -> None:
               f"la rúbrica define ancla para el nivel {level}")
     check("no uses 0, decimales, rangos" in lower_reference,
           "la salida excluye valores fuera de escala, decimales y rangos")
-    check(all(phrase in lower_reference for phrase in (
-        "`direct`, antes de editar",
-        "`lite`, al cerrar quick plan",
-        "`standard`, con requirements/gate 1",
-    )), "cada profundidad emite tras el análisis de alcance que le corresponde")
+    check("al terminar definición de alcance e impacto, antes de recomendar profundidad" in lower_reference
+          and "independientemente del modo posterior" in lower_reference,
+          "la nota se emite en la etapa común antes de recomendar profundidad")
     check("no repitas el nivel al cambiar de fase" in lower_reference
           and "no emite notas provisionales ni las repite" in normalized(agent).lower(),
           "la calificación no se repite en transiciones")
@@ -287,7 +410,8 @@ def effort_contract_errors(text: str) -> list[str]:
             errors.append(f"referente {level}")
     output = normalized(section(text, "Formato de salida")).lower()
     for rule in (
-        "1–7 inclusive: 🟢", "8–9: 🟠", "10: 🔴", "superior a x13: exactamente 10+ 🔴",
+        "1–7 inclusive: 🟢 normalmente, o 🟠", "8–9: 🟠", "10: 🔴",
+        "superior a x13: exactamente 10+ 🔴",
     ):
         if rule not in output:
             errors.append(f"presentación {rule}")
@@ -337,9 +461,9 @@ def test_lab_effort_rubric() -> None:
     check(all(field in emission for field in (
         "Esfuerzo previsto del LLM: <nota e icono>", "Referente del laboratorio:",
         "Justificación:", "Supuestos relevantes:", "2–4",
-    )), "ReserveLab: conserva los cuatro campos de la salida")
+    )), "ReserveLab: conserva los cuatro campos en registro interno")
     check("verde no habilita lite" in reference.lower(),
-          "ReserveLab: verde no elimina exclusiones de lite")
+          "ReserveLab: verde no demuestra elegibilidad de lite")
     check("indicador separado `exceeds_x13`" in reference
           and "10+ es valor 10 e" in reference
           and "como nota 11" in reference,
@@ -354,7 +478,8 @@ def test_lab_effort_rubric() -> None:
         ("ancla F01", "| 1 | F01 |", "| 1 | F01 alterado |", "referente 1"),
         ("ancla X13", "| 10 | X13 |", "| 10 | X13 alterado |", "referente 10"),
         ("ancla F10", "| 8 | F10 |", "| 8 | F10 alterado |", "referente 8"),
-        ("emoji/rango", "1–7 inclusive: 🟢", "1–7 inclusive: 🟠", "presentación 1–7 inclusive: 🟢"),
+        ("atención bajo 8", "1–7 inclusive: 🟢 normalmente, o 🟠", "1–7 inclusive: 🟢 siempre",
+         "presentación 1–7 inclusive: 🟢 normalmente, o 🟠"),
         ("10+ como nota", "exactamente 10+ 🔴", "exactamente 11 🔴", "presentación superior a x13: exactamente 10+ 🔴"),
         ("reutilización", "participantes y locks ya proporcionados", "infraestructura no especificada", "factores F10-scaffold"),
         ("exceso sin dimensiones", "Saga y compensación externa", "Cambio muy grande", "factores X13-plus-saga"),
@@ -384,6 +509,9 @@ def test_sdd_effort_context_budgets() -> None:
         "skill": (SDD / "SKILL.md", 2357, 16378),
         "rúbrica": (SDD / "references/feature-level.md", 1774, 12303),
         "plantillas": (SDD / "references/templates.md", 863, 5722),
+        # New policy has its own bounded, on-demand context; original budgets remain.
+        "selección": (SDD / "references/scope-depth.md", 1400, 11000),
+        "continuidad": (SDD / "references/spec-continuity.md", 1200, 9000),
     }
     measured: dict[str, tuple[int, int]] = {}
     for label, (path, max_words, max_chars) in paths.items():
@@ -398,11 +526,17 @@ def test_sdd_effort_context_budgets() -> None:
         ("inicio", ("agente", "skill"), 3423, 23958),
         ("scoring", ("agente", "skill", "rúbrica"), 5197, 36261),
         ("planificación con plantillas", ("agente", "skill", "rúbrica", "plantillas"), 6060, 41983),
+        ("selección con política", ("agente", "skill", "rúbrica", "selección"), 6597, 47261),
+        ("spec conocida", ("agente", "skill", "continuidad"), 4623, 32958),
+        ("enmienda con plantillas", ("agente", "skill", "continuidad", "selección", "plantillas"), 6886, 49680),
+        ("candidatas múltiples", ("agente", "skill", "continuidad"), 4623, 32958),
     ):
         words = sum(measured[label][0] for label in labels)
         chars = sum(measured[label][1] for label in labels)
         check(words < max_words and chars < max_chars,
               f"eficiencia escenario {scenario}: {words} palabras/{chars} caracteres")
+    print("  INFO contexto: inicio = cambio aislado; escenarios miden instrucciones fijas, "
+          "no tokens reales; specs/código/lecturas de candidatas son variables no medidas")
 
 
 def test_spec_paths_support_grouping() -> None:
@@ -709,6 +843,8 @@ def main() -> int:
     print("Contrato SDD — calificación de feature, rutas, testing adaptativo, Navigator e integración")
     test_modes_remain_proportional()
     test_lite_quick_plan_contract()
+    test_scope_depth_contract()
+    test_spec_continuity_contract()
     test_feature_level_contract()
     test_lab_effort_rubric()
     test_sdd_effort_context_budgets()

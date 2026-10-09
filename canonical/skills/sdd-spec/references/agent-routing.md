@@ -94,6 +94,9 @@ actividad candidata. Reevaluar solo si cambia el alcance, riesgo o decisión.
 
 La elección no aprueba gates, no cambia permisos y no amplía autorización.
 Ejecutor, profundidad SDD y estrategia de pruebas son ejes independientes.
+La definición común de alcance precede a la elección de profundidad. Si el usuario
+continúa en SDD, aplicar `scope-depth.md`: calificar features y resolver selección
+pendiente antes del flujo. Elegir especialista no obliga a generar una spec SDD.
 Conserva decisiones y gates pendientes de una spec activa. «Sigue aquí» no aprueba
 por sí solo un gate: una respuesta puede elegir ejecutor y aprobar el gate únicamente
 si ambas decisiones son explícitas. Mantén SDD para planificación/coordinación si

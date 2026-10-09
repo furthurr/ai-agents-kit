@@ -41,6 +41,12 @@ Orden de decisión:
 la misma decisión adaptativa y registra el ciclo en su `verification.md` compacto.
 Un bugfix no trivial se clasifica `standard`, aunque su diff sea pequeño.
 
+Lite con atención especial exige pruebas de la garantía identificada, incluyendo
+concurrencia, reintentos o fallos pertinentes con mecanismos reales o seams
+representativos. No sustituirlas por mocks que oculten la garantía. Si no hay
+verificación viable, no mantener lite solo por la nota; aplicar `scope-depth.md`.
+Entregas incrementales conservan pruebas de integración de criterios transversales.
+
 ## Ciclos operativos
 
 - **Caracterización:** captura solo el comportamiento que debe preservarse; el test
