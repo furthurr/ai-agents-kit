@@ -172,6 +172,9 @@ python3 tools/test_links.py
 python3 tools/test_model_recommendations.py
 python3 tools/test_sdd_contract.py
 python3 tools/test_handoff_contract.py
+python3 tools/test_documentation_core.py
+python3 tools/test_mas_identity.py
+python3 tools/test_retired_agents.py
 python3 tools/test_code_review_contract.py
 python3 tools/test_validate.py
 python3 tools/test_install.py
@@ -212,3 +215,9 @@ Al cambiar comportamiento visible para usuarios o contribuidores, actualiza:
 - [uso.md](uso.md) / [instalacion.md](instalacion.md) — si cambia la UX o rutas
 - [vision.md](vision.md) / [arquitectura-del-kit.md](arquitectura-del-kit.md) — si cambia el modelo
 - [README.md](../README.md) — solo el resumen de aterrizaje
+
+Para cambios SDD, contrasta también [agentes/sdd.md](agentes/sdd.md),
+[sdd-effort-examples.md](sdd-effort-examples.md) y [sdd-smoke.md](sdd-smoke.md)
+con las referencias canónicas de alcance, continuidad y testing. El contrato
+automatizado comprueba instrucciones y paridad; los escenarios conversacionales
+requieren evidencia runtime independiente.

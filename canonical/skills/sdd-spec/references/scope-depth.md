@@ -11,11 +11,52 @@ solo decisiones esenciales pendientes; reutilizar lo ya indicado por el usuario.
 Consultar código y contratos mínimos: una capacidad existente y otra por construir
 no tienen el mismo esfuerzo. No introducir algoritmos ni arquitectura en requisitos.
 
-Esta etapa no exige archivo propio ni gate nuevo. Alcance claro puede resumirse
-brevemente; un alcance ambiguo requiere interacción antes de puntuar. Conservar
-el mismo rigor testable en lite y standard, con documentación proporcional.
-Para features, publicar nota una vez al terminar alcance e impacto, antes de
-recomendar profundidad. No repetirla al producir Quick Plan o Requirements.
+Esta etapa no exige archivo propio ni gate numerado nuevo. Presentar y validar
+alcance completo según la sección siguiente; conservar rigor testable en todos los modos.
+Para features, publicar nota tras alcance e impacto, antes de recomendar profundidad;
+no repetirla por fase.
+
+## Alcance completo y validación
+
+Mostrar `Alcance definido` con:
+- Objetivo y resultado esperado.
+- Todos los comportamientos acordados, reglas y condiciones.
+- Criterios de aceptación verificables por comportamiento.
+- Errores, casos límite y estados relevantes identificados.
+- Exclusiones, restricciones y supuestos; distinguir confirmado de supuesto.
+
+Sin recortar información funcional por brevedad. No inventar requisitos ni detalles
+de implementación; aclarar decisiones esenciales antes de calificar. Completo no
+significa documentación exhaustiva del proyecto.
+
+Esperar validación explícita antes de generar artefactos o implementar. Combinar
+validación y elección pendientes en una pregunta. Elegir solo modo no valida el
+alcance; elegir solo ejecutor tampoco. La nota no requiere aprobación propia.
+
+Ante ajustes, presentar alcance completo actualizado y volver a validar, no solo el delta.
+Reutilizar aprobación explícita previa de la misma versión completa si sigue vigente;
+no repetir presentación/pregunta. Un resumen breve previo no acredita esa aprobación.
+Nueva entrega necesita alcance propio; cambio material exige reevaluar esfuerzo,
+elegibilidad y autorización. La aprobación anterior no cubre contenido nuevo.
+
+Calificar features después de mostrar su alcance completo, incluidas 10 y 10+.
+Bugfix conserva tratamiento sin nota; consulta informativa sin artefactos ni
+implementación no añade aprobación ceremonial.
+
+Validar alcance no equivale a Gate 1: standard formaliza requisitos y conserva gates;
+lite genera Quick Plan en una pasada sin otra aprobación rutinaria de requirements.
+Direct sigue sin spec. Exponer diferencias funcionales de formalización antes de ejecutar.
+Planificación aceptada no autoriza implementación. Reanudar sin cambios conserva decisiones.
+
+## Respuestas de validación
+
+| Respuesta/contexto | Acción |
+|---|---|
+| aceptación conjunta | Continuar según modo, autorización y gates. |
+| solo modo | Resolver validación pendiente. |
+| solo alcance | Resolver elección pendiente. |
+| ajuste | Mostrar completo actualizado y validar. |
+| validación vigente | No repetir; reutilizar solo misma versión completa. |
 
 ## Recomendación base
 

@@ -16,7 +16,8 @@ de entrada; aquí está el detalle por tema.
 | [documentation-orchestrator-smoke.md](documentation-orchestrator-smoke.md) | Usuarios y contribuidores | Smoke test de modos, gates y límites del orquestador |
 | [model-recommendations-smoke.md](model-recommendations-smoke.md) | Usuarios y contribuidores | Smoke test histórico y criterios actuales: sin recomendaciones LLM |
 | [code-review-smoke.md](code-review-smoke.md) | Usuarios y contribuidores | Revisión de calidad/seguridad, documentación y handoffs acotados |
-| [sdd-smoke.md](sdd-smoke.md) | Usuarios y contribuidores | Smoke test de nivel de feature, gates SDD y testing adaptativo |
+| [sdd-smoke.md](sdd-smoke.md) | Usuarios y contribuidores | Smoke test de alcance completo, continuidad, gates y testing adaptativo |
+| [sdd-effort-examples.md](sdd-effort-examples.md) | Usuarios y contribuidores | Ejemplos de esfuerzo previsto, atención especial y profundidad elegible |
 | [desarrollo.md](desarrollo.md) | Contribuidores | Editar `canonical/`, `adapters/` y flujo de trabajo |
 | [arquitectura-del-kit.md](arquitectura-del-kit.md) | Contribuidores | Pipeline de render y herramientas |
 | [mejoras.md](mejoras.md) | Contribuidores | Backlog priorizado (impacto → esfuerzo) para subir calidad del kit |

@@ -17,10 +17,19 @@ como el flujo recomendado (`../docs/instalacion.md:14-22`).
 | Kiro | `~/.kiro/skills/` | `~/.kiro/agents/` | — |
 | Claude Code | `~/.claude/skills/` | `~/.claude/agents/` | `$CLAUDE_CONFIG_DIR` |
 | Pi | `<agent-dir>/skills/` | `<agent-dir>/prompts/` | `$PI_CODING_AGENT_DIR`; default `~/.pi/agent` |
+| Antigravity 2.0 | `~/.gemini/config/skills/` | `~/.gemini/config/agents/` | Runtime pendiente de smoke |
 
 Fuente de la matriz y detalles de Pi: `../docs/instalacion.md:68-88`.
 Los directorios son propiedad del entorno del usuario; el repo no controla el
 descubrimiento ni la carga de esos archivos después de la copia.
+Antigravity CLI documenta una ruta distinta de skills y el instalador 2.0 no la
+cubre (`../docs/arquitectura-del-kit.md:107-138`).
+
+La evidencia documentada para scripts Antigravity es de 22/22 pruebas nativas
+por OS en Linux, macOS y Windows con Python 3.10 (run 37510771502).
+El workflow actual tiene un job general Ubuntu y jobs nativos Antigravity en
+macOS/Windows (`../.github/workflows/ci.yml:10-73`). Esto no acredita runtime ni
+la migración PowerShell de agentes retirados (`../docs/desarrollo.md:125-154`).
 
 ## 6.3 Requisitos de ejecución
 
@@ -49,4 +58,6 @@ descubrimiento ni la carga de esos archivos después de la copia.
 En el alcance documentado no aparecen bases de datos, servicios de red,
 orquestadores ni una topología de despliegue server-side. La sección describe
 entrega a entornos locales; no implica un análisis de infraestructura externa ni
-de la configuración interna de los cinco hosts.
+de la configuración interna de los seis hosts. El laboratorio local `.agent-lab/`
+queda fuera de este pipeline de distribución; su runner experimental no convierte
+el kit en un servicio runtime.

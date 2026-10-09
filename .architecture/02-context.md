@@ -3,7 +3,7 @@
 AI Agents Kit transforma fuentes compartidas y adapters declarativos en archivos
 de agente/skill para herramientas host. El contribuidor mantiene el repo; el
 usuario instala la salida en su entorno y opera desde el cliente correspondiente.
-El sistema declara cinco hosts en el manifiesto (`../canonical/manifest.json:24-30`).
+El sistema declara seis hosts en el manifiesto (`../canonical/manifest.json:22-29`).
 
 ```mermaid
 flowchart LR
@@ -16,6 +16,7 @@ flowchart LR
   kiro["Kiro"]
   claude["Claude Code"]
   pi["Pi"]
+  antigravity["Antigravity 2.0\nruntime pendiente"]
 
   contributor -->|edita, renderiza y valida| kit
   user -->|elige plataforma e instala| kit
@@ -25,11 +26,13 @@ flowchart LR
   local --> kiro
   local --> claude
   local --> pi
+  local --> antigravity
   copilot --> user
   opencode --> user
   kiro --> user
   claude --> user
   pi --> user
+  antigravity --> user
 ```
 
 ## Actores y sistemas externos
@@ -38,7 +41,7 @@ flowchart LR
 |---|---|
 | Contribuidor | Mantiene `canonical/`, `adapters/`, herramientas, scripts y documentación; ejecuta el pipeline. |
 | Usuario del kit | Selecciona e instala uno o más destinos y luego invoca los agentes/skills en el host. |
-| GitHub Copilot, OpenCode, Kiro, Claude Code y Pi | Sistemas externos que leen artefactos instalados en sus rutas de configuración. |
+| GitHub Copilot, OpenCode, Kiro, Claude Code, Pi y Antigravity | Sistemas externos destinatarios de artefactos instalados; runtime Antigravity pendiente de smoke. |
 | Configuración local del usuario | Destino fuera del repo; puede contener elementos propios que el kit no debe borrar automáticamente. |
 
 ## Límites de confianza y responsabilidad

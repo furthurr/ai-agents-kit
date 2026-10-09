@@ -288,6 +288,25 @@ delegación nativa esté comprobada en todos los hosts.
 
 Smoke test: [documentation-orchestrator-smoke.md](documentation-orchestrator-smoke.md).
 
+## Contrato SDD y continuidad
+
+El agente `sdd` ejecuta `sdd-spec`; sus referencias separan alcance/profundidad,
+calificación de esfuerzo, continuidad de specs, routing y estrategia de pruebas.
+El flujo común presenta alcance completo y resuelve su validación explícita y
+la elección pendiente antes de artefactos o código. Validación, modo, ejecutor,
+autorización de implementación y gates de fase son decisiones distintas.
+
+`direct` no crea spec formal; `lite` genera Quick Plan sin Gates 1–4;
+`standard` conserva los cuatro gates. Las enmiendas preservan acuerdos e historia
+y revalidan solo tareas/evidencias afectadas, tras aceptar el alcance completo
+actualizado. Una consulta informativa no activa esas aprobaciones.
+
+Fuentes: `canonical/skills/sdd-spec/references/scope-depth.md`,
+`spec-continuity.md` e `integrity-gate.md` en ese mismo directorio.
+`tools/test_sdd_contract.py` verifica el contrato escrito, casos negativos y
+paridad de las seis distribuciones; [sdd-smoke.md](sdd-smoke.md) registra por
+separado los escenarios runtime pendientes.
+
 `inspect` investiga core sin escribir ni declarar sincronización. Los demás agentes
 consumen contexto relevante directamente y verifican frescura; ante ausencia,
 ambigüedad o desfase usan fuentes directas. La [migración de agentes](migracion-agentes.md)

@@ -21,9 +21,9 @@ SDD separa el **qué y porqué** del **cómo** y deja decisiones trazables.
   `lite` y Quick Plan.
 - Para continuar la implementación de tareas ya aprobadas.
 
-Primero define alcance y criterios de aceptación, consulta el contexto técnico
-mínimo y califica features. Después recomienda profundidad y permite elegir entre
-opciones elegibles; respeta una elección explícita previa sin repetir la pregunta.
+Primero define y presenta el alcance funcional completo, consulta contexto técnico
+mínimo y califica features. Recomienda profundidad y espera validación del alcance
+y elección pendientes en una interacción; reutiliza decisiones vigentes.
 1–3 recomienda `direct` si es trivial; 4–9 prioriza `lite`; 10/10+ recomienda
 `standard` para el conjunto y ofrece entregas incrementales. La nota no basta:
 se comprueba elegibilidad. `standard` es el fallback seguro. No existe una
@@ -43,27 +43,62 @@ no identifica ni selecciona un LLM y nunca pausa el flujo por modelo. Si el alca
 cambia de forma sustancial, primero vuelve a analizarlo y actualiza la clasificación;
 las decisiones y aprobaciones propias del flujo siguen siendo independientes.
 
+Antes de calificar debe quedar visible el alcance completo, también para 10/10+:
+objetivo/resultado, todos los comportamientos, reglas/condiciones, criterios de
+aceptación, errores/estados/casos límite, exclusiones, restricciones y supuestos.
+Distinguir confirmado de supuesto; no omitir detalles por brevedad ni inventar
+requisitos. Esperar validación explícita antes de artefactos o implementación.
+Solo elegir modo/ejecutor no valida el alcance. Ajustes requieren presentar todo
+el conjunto actualizado y volver a validar. Reutilizar únicamente aprobación
+explícita vigente de la misma versión completa, no un resumen breve previo.
+
 Esfuerzo y atención son distintos: 1–7 normalmente 🟢, pero pueden mostrar 🟠
 con una complicación concreta; 8–9 🟠, 10/10+ 🔴. Una reserva de nivel 6 puede
 usar `lite` con atención especial si hay garantía definida, mecanismo adecuado,
 pruebas concurrentes viables y recuperación acotada. Naranja no reemplaza controles.
 
-Ejemplo de mensaje:
+Ejemplo ilustrativo, después de acordar estas condiciones:
 
+> **Alcance definido**
+>
+> **Objetivo:** reservar unidades disponibles y recuperarlas al cancelar, sin sobreventa.
+>
+> **Comportamientos y reglas:**
+> - Reservar una unidad solo si está disponible; una reserva confirmada reduce la disponibilidad en uno.
+> - Cancelar una reserva activa devuelve una unidad y pasa la reserva a cancelada.
+> - Repetir la cancelación no devuelve otra unidad ni cambia la disponibilidad.
+>
+> **Criterios de aceptación:**
+> - Con una unidad disponible y dos reservas simultáneas, solo una se confirma y la disponibilidad termina en cero.
+> - Al cancelar una reserva activa, su estado queda cancelado y la disponibilidad aumenta en uno.
+> - Al repetir esa cancelación, la disponibilidad permanece igual.
+> - Sin unidades disponibles o con reserva inexistente al cancelar, se informa el error sin modificar reservas ni disponibilidad.
+>
+> **Errores y estados:** reserva activa/cancelada; sin disponibilidad y reserva inexistente son errores explícitos sin cambios parciales.
+>
+> **Exclusiones:** vencimiento automático y funcionamiento offline.
+>
+> **Restricciones:** conservar los contratos existentes del catálogo y las reservas.
+>
+> **Contexto confirmado:** catálogo y reservas ya existen. No hay supuestos funcionales pendientes en este ejemplo.
+>
 > **Esfuerzo previsto del LLM: 6 🟠**
 >
 > **Atención especial:** reservas simultáneas; se verificarán con pruebas específicas.
 >
 > **Profundidad recomendada: `lite`.**
 >
-> ¿Continuamos con `lite` o prefieres `standard`?
+> ¿Este alcance refleja completamente lo que quieres y continuamos con `lite`, o necesitas corregir, agregar o eliminar algo? También puedes elegir `standard`.
 
 ## Definición de alcance y entregas
 
-La etapa común acuerda objetivo, resultados, límites, criterios, errores y supuestos
-sin imponer un archivo ni una aprobación ceremonial. Pregunta solo lo esencial.
+La etapa común exige validar el contenido completo, sin imponer archivo propio
+ni un gate numerado nuevo. Combina validación y elección cuando faltan ambas;
+si el usuario responde solo «usa lite», queda validación pendiente. Consultas
+informativas sin artefactos ni código no adquieren otra aprobación ceremonial.
 Mantiene rigor testable y reutiliza lo definido en los artefactos del modo elegido.
-Elegir standard o acordar alcance no aprueba su Gate 1.
+Validar alcance o elegir standard no aprueba su Gate 1 formal. Lite conserva Quick
+Plan en una pasada sin otra pausa de requirements; direct no genera spec formal.
 
 Para 10/10+ ofrece dividir o abordar completo en standard. Cada entrega debe tener
 resultado verificable, dependencias y garantías transversales explícitas; se califica
@@ -162,8 +197,8 @@ solicitud silenciosamente ni confunde esa aceptación con la aprobación de un g
 
 ## Flujo y gates
 
-0. **Alcance y elección:** acordar criterios, revisar contexto mínimo, calificar
-   features y recomendar profundidad. Resolver elección pendiente o respetar la previa.
+0. **Alcance y elección:** presentar contenido completo, revisar contexto mínimo,
+   calificar features y recomendar profundidad. Resolver validación y elección pendientes.
    `direct` ejecuta lo autorizado, verifica y resume sin crear spec ni Quick Plan.
 1. **Requirements:** historias, criterios EARS, errores, edge cases y supuestos.
     Gate 1: aprobar requisitos en `standard`.
@@ -177,7 +212,7 @@ solicitud silenciosamente ni confunde esa aceptación con la aprobación de un g
    huecos en `standard`; después termina el flujo.
 
 En `lite`, Quick Plan genera `requirements.md`, `design.md` y `tasks.md` en una
-pasada después de definir alcance y resolver elección, sin repetir la nota. No existen Gates 1-3
+pasada después de validar alcance y resolver elección, sin repetir la nota. No existen Gates 1-3
 ni Gate 4. Si el alcance es solo planificar, termina con esos tres archivos; si también se
 implementa, añade un `verification.md` compacto con la evidencia.
 

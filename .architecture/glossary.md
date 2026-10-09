@@ -11,7 +11,7 @@
 | Renderer | `tools/render.py`, transforma contenido canónico y adapters en árboles bajo `generated/`. |
 | Generated | Artefactos de salida por plataforma; derivables y no editables a mano. |
 | Preflight | Comprobación compartida que verifica completitud del origen o instalación contra el manifest. |
-| Host / plataforma | Cliente externo que consume skills/agentes instalados: Copilot, OpenCode, Kiro, Claude Code o Pi. |
+| Host / plataforma | Cliente externo destinatario de skills/agentes: Copilot, OpenCode, Kiro, Claude Code, Pi o Antigravity. |
 | Backup | Copia timestamped del contenido de destino antes de instalar, salvo cuando se usa `--force`. |
 | Import | Copia filtrada de contenido instalado a `imports/<plataforma>/<fecha>/` para revisión y promoción manual. |
 | Working tree | Estado local del repositorio, que durante esta revisión tenía cambios no atribuidos a un baseline `HEAD`. |

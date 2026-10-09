@@ -35,7 +35,7 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 | [`data-api`](agentes/data-api.md) | Data & API Agent | `data-api` | Capa de datos y contratos; identifica PII |
 | [`documentation-orchestrator`](agentes/documentation-orchestrator.md) | Documentation Orchestrator | `documentation-orchestrator` + `architecture` y/o `project-navigator` bajo demanda; otras especialistas según alcance | Consultas core (`inspect`), arquitectura, navegación y mantenimiento documental |
 | [`ui-design`](agentes/ui-design.md) | UI Design Agent | `ui-design` | Solo lo visual; no toca negocio ni APIs |
-| [`sdd`](agentes/sdd.md) | Agente SDD | `sdd-spec` | Define alcance, califica y recomienda profundidad con elección manual; atención y entregas incrementales; specs, gates e implementación trazable |
+| [`sdd`](agentes/sdd.md) | Agente SDD | `sdd-spec` | Presenta/valida alcance completo, califica y recomienda profundidad con elección manual; atención, entregas y continuidad; specs, gates e implementación trazable |
 | [`git-release-manager`](agentes/git-release-manager.md) | Git & Release Manager | `git-commit` + `release-management` | Commits, push, versiones, tags, CHANGELOG |
 
 ## Mapa skill ↔ agente ↔ carpeta

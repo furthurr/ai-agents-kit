@@ -30,6 +30,12 @@ para reservas concurrentes controlables. Referente, 2–4 motivos y supuestos qu
 en la spec si existe, no en la presentación rutinaria. No publiques enteros mayores
 de 10. La nota orienta; no prueba elegibilidad del modo.
 
+Antes de la nota, presentar alcance funcional completo, incluidas 10/10+; criterios,
+reglas, errores y límites no se omiten por brevedad. Esperar validación explícita
+y elección pendientes antes de artefactos/código. Ajustes requieren el conjunto
+completo actualizado; reutilizar solo aprobación vigente de esa misma versión.
+Esta tabla muestra solo la línea de calificación, no una respuesta completa.
+
 ## Casos detallados
 
 F10-sin-scaffold y X13-ampliado son contrastes sintéticos, no ejercicios construidos
@@ -48,13 +54,13 @@ rangos históricos del laboratorio.
 ## Interacciones breves
 
 - **1 / direct:** trim de una función pura, sin modificar espacios internos.
-  Selección → cambio localizado → pruebas de límites → evidencia breve, sin spec.
+  Validación/selección → cambio localizado → pruebas de límites → evidencia breve, sin spec.
 - **2 / direct:** predicados locales con límites inclusivos y orden estable.
-  Aclarar rango invertido → selección → pruebas → resumen, sin spec.
+  Aclarar rango invertido → validar/elegir → pruebas → resumen de ejecución, sin spec.
 - **3 / direct:** calculadora pura de ejemplo, sin pagos reales ni persistencia.
-  Aclarar redondeo → selección → pruebas → resumen, sin spec.
+  Aclarar redondeo → validar/elegir → pruebas → resumen de ejecución, sin spec.
 - **4 / lite:** normalizar contactos y resolver duplicados en memoria.
-  Aclarar conflictos → selección → Quick Plan → implementación y verification.
+  Aclarar conflictos → validar/elegir → Quick Plan → implementación y verification.
 - **6 / lite:** reservas con garantía definida, mecanismo adecuado y pruebas reales.
   Mostrar 6 🟠, advertir reservas simultáneas y ofrecer lite o standard.
 - **10 / standard o división:** offline/sync multiusuario. Ofrecer entregas de

@@ -5,7 +5,7 @@
 
 ## Contexto
 
-El kit distribuye el mismo catálogo funcional a cinco plataformas que usan
+El kit distribuye el mismo catálogo funcional a seis plataformas que usan
 formatos, nombres de archivo, frontmatter y ubicaciones diferentes. La
 documentación del proyecto describe una fuente común y adapters para evitar
 duplicar prompts (`../README.md:13-15`; `../docs/arquitectura-del-kit.md:7-32`).

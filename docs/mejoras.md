@@ -7,6 +7,10 @@ real y facilitar una adopción sostenible.
 
 ## Evaluación de partida y objetivo
 
+Revisión documental: **2026-10-09**. Catálogo vigente: seis plataformas, seis
+agentes y diez skills. Los resultados históricos de este backlog conservan sus
+fechas y cantidades; no acreditan la ejecución del working tree actual.
+
 La calificación separa la calidad de la idea de la madurez del producto que se
 instala y ejecuta:
 
@@ -88,8 +92,9 @@ altera `generated/`.
 
 - [x] **Añadir CI base en GitHub Actions** para Linux con Python 3.10: render,
   validación, integridad, enlaces y paridad de `generated/`.
-- [ ] Ampliar la matriz a Python soportado y, cuando aplique, Linux, macOS y
-  Windows.
+- [ ] Ampliar la matriz general a versiones de Python soportadas y todos los SO.
+  Antigravity ya tiene pruebas nativas en Linux, macOS y Windows con Python 3.10;
+  ese alcance específico no equivale a una matriz completa del kit.
 - [ ] Ejecutar parseo explícito de JSON/YAML en la matriz de CI.
 - [x] Ejecutar render reproducible, validación e integridad en CI.
 - [x] Comprobar sintaxis de scripts Bash.
@@ -101,8 +106,9 @@ altera `generated/`.
 
 Definición de hecho: el workflow se ejecuta en pull requests, detecta al menos un
 fixture inválido por cada clase crítica y pasa desde un clon limpio. La ejecución
-de scripts PowerShell y el parseo explícito JSON/YAML siguen pendientes hasta
-ampliar la matriz de CI.
+del conjunto de scripts PowerShell y el parseo explícito JSON/YAML siguen
+pendientes. Los scripts Antigravity sí tienen evidencia nativa Windows; ver
+[antigravity-smoke.md](antigravity-smoke.md#evidencia-automatizada-de-ci).
 
 ### P0.4 — Instalación estricta y reversible
 
@@ -114,9 +120,10 @@ ampliar la matriz de CI.
 - [x] Documentar restauración de backup y desinstalación.
 - [x] Probar install, actualización, dry-run y rollback en directorios HOME
   temporales para las cuatro plataformas.
-- [ ] **Ejecutar los instaladores PowerShell en un runner Windows.** Su contrato
-  hoy solo está garantizado de forma estática (test `[7]` de `test_install.py`);
-  no se han ejecutado nunca. Bloqueo: se necesita la matriz de SO de P0.3.
+- [ ] **Completar evidencia Windows para los instaladores PowerShell del kit y
+  la migración de retirados.** Antigravity install/export sí tiene 22/22 pruebas
+  nativas Windows en el run 37510771502; ese resultado no cubre todos los hosts
+  ni la nueva retirada/recuperación de agentes.
 
 Definición de hecho:
 
@@ -191,12 +198,12 @@ valor. Meta acumulada tras P0: **7.5–8.0/10** como producto instalable.
 
 ### P1.1 — Uso y público objetivo
 
-- [ ] Añadir al README una sección honesta **“Para quién / No es para”**.
-- [ ] Añadir en [uso.md](uso.md) un árbol de decisión de una pantalla:
-  Navigator vs Architecture vs SDD vs especialistas vs Git & Release.
+- [x] Añadir al README público objetivo y límites de compatibilidad del kit.
+- [x] Añadir en [uso.md](uso.md) una guía de decisión de una pantalla:
+  consultas/mantenimiento core, SDD, especialistas y Git & Release.
 - [ ] Añadir en [catalogo.md](catalogo.md) una tabla de solapes: “si preguntas X,
   usa Y y no Z”.
-- [ ] Explicar el coste de mantener `.navigator/`, `.architecture/`, `.quality/`
+- [x] Explicar el coste de mantener `.navigator/`, `.architecture/`, `.quality/`
   y las demás carpetas canónicas.
 
 Definición de hecho: un usuario nuevo puede elegir agente y flujo sin conocer la
@@ -243,21 +250,20 @@ editado manualmente; el agente no presenta datos obsoletos como actuales.
 
 ### P1.5 — Coherencia del agente SDD
 
-SDD es la skill más compleja del kit (4 profundidades, 1 variante Bugfix, 1 flujo
-Quick Plan exclusivo de `lite` y 7 referencias) y la única que escribe código de
-producto.
+SDD tiene exactamente tres profundidades (`direct`, `lite`, `standard`), variante
+Bugfix y Quick Plan exclusivo de `lite`. Las referencias se cargan bajo demanda;
+SDD puede implementar el alcance autorizado y los especialistas pueden apoyar
+cambios dentro de sus dominios. `deep` y TDD estricto están retirados.
 P0.6 ya está cerrado y el contrato TDD junto con el smoke test base ya están
 implementados; quedan pendientes de estado, reanudación y evidencia manual.
 
-- [ ] **Añadir lectura de estado al iniciar**, como ya hacen `security` y
-  `code-quality`: qué gates se aprobaron, en qué fase está la spec y qué tareas
-  quedan abiertas. Hoy no existe ningún paso 0 ni registro de gates aprobados, así
-  que una sesión interrumpida tras GATE 2 no puede reconstruir el estado.
-- [ ] **Resolver la promesa de reanudación**: el adapter de Copilot ofrece
-  «deja vacío para continuar una spec existente» y la skill no define ningún
-  procedimiento completo para reconstruir gates y tareas. La skill ya descubre
-  specs planas o agrupadas mediante marcadores recursivos y resuelve ambigüedades
-  por ruta; falta reconstruir y persistir el estado para cerrar esta promesa.
+- [x] **Definir lectura de estado y continuidad:** `spec-continuity.md` indica
+  leer modo, estado, gates y requisitos pertinentes; la ambigüedad no se resuelve
+  infiriendo aprobación por archivos. Incluye enmiendas, specs cerradas y evidencia
+  afectada. Contrato implementado; el smoke runtime sigue pendiente.
+- [ ] **Verificar reanudación en hosts reales:** probar una interrupción tras Gate 2
+  y recuperar acuerdos, tareas y aprobaciones sin inferencias ni reinicio ceremonial.
+  La política escrita de continuidad no basta como evidencia de ejecución.
 - [ ] **Usar IDs de requisito estables** (`REQ-001`) en lugar de posicionales
   (`Req 1.1`). Reordenar o borrar una historia rompe en silencio las referencias de
   `tasks.md` y `verification.md`. El resto del kit ya usa IDs no posicionales
@@ -301,12 +307,17 @@ reordenado de historias y existe una tabla fechada de smoke por plataforma y ver
 
 - [x] Separar profundidad SDD de estrategia de pruebas.
 - [x] Aplicar TDD focalizado por defecto a comportamiento nuevo/modificado.
-  El contrato actual retiró TDD estricto y propone TDD focalizado cuando se solicita.
+  TDD estricto está retirado; si se solicita, se propone TDD focalizado y se espera
+  aceptación. Los cambios sin comportamiento observable no exigen tests ceremoniales.
 - [x] Definir regresión para bugfix, caracterización para legado y excepción
   verificable cuando no cambia comportamiento observable o falta un harness viable.
 - [x] Evitar test-after en plantillas y exigir evidencia RED/GREEN en el integrity gate.
 - [x] Añadir contrato automatizado (`tools/test_sdd_contract.py`) y el documento
   base [sdd-smoke.md](sdd-smoke.md).
+- [x] Presentar y validar alcance completo antes de artefactos/código, distinguir
+  elección de modo de aceptación y conservar vigencia ante ajustes. Contrato local
+  en `scope-depth.md`, `feature-level.md`, continuidad e integridad; escenarios
+  runtime A01–A19 pendientes en [sdd-smoke.md](sdd-smoke.md).
 - [ ] Ejecutar el smoke manual en las cuatro plataformas y completar sus casos de
   integrity gate y alcance; Claude Code sigue pendiente y sin esa evidencia no se
   marca la matriz como aprobada.
@@ -468,9 +479,9 @@ No iniciar P2, Graphify ni nuevas skills mientras estos gates P0 sigan abiertos.
 
 ## Orden de ejecución
 
-1. Completar P0.3, empezando por la matriz de SO. Es lo único que puede validar
-   los tres instaladores PowerShell, cuyo contrato hoy solo está garantizado de
-   forma estática, y desbloquea el último ítem abierto de P0.4.
+1. Completar P0.3 y P0.4 ampliando la evidencia nativa Windows más allá de
+   Antigravity y verificando migración/recuperación de retirados; mantener la
+   distinción entre pruebas de scripts y smoke del runtime.
 2. Endurecer la seguridad con P0.5.
 3. Ejecutar los smoke tests y la demo de P1 antes de afirmar utilidad o ahorro.
 4. Completar los pendientes restantes de P1.5; medir el coste de cualquier texto

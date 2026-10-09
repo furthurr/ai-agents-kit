@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-05T04:43:32Z",
+  "generated_at": "2026-10-09T06:58:55Z",
   "root": ".",
   "modules": [
     {
@@ -18,10 +18,10 @@
       "id": "adapters",
       "name": "Adaptadores de plataforma",
       "path": "adapters",
-      "responsibility": "Declara frontmatter, nombres y ajustes específicos para las cinco plataformas soportadas.",
+      "responsibility": "Declara frontmatter, nombres y ajustes para las seis distribuciones; no acredita runtime de cada host.",
       "kind": "other",
       "tech": ["JSON"],
-      "entrypoints": ["adapters/copilot/", "adapters/opencode/", "adapters/kiro/", "adapters/claude/", "adapters/pi/"],
+      "entrypoints": ["adapters/copilot/", "adapters/opencode/", "adapters/kiro/", "adapters/claude/", "adapters/pi/", "adapters/antigravity/"],
       "depends_on": [],
       "tags": ["platforms"]
     },
@@ -43,7 +43,7 @@
       "responsibility": "Contiene las salidas del renderer listas para instalar por plataforma; no editarlas manualmente.",
       "kind": "other",
       "tech": ["Markdown", "JSON"],
-      "entrypoints": ["generated/copilot/", "generated/opencode/", "generated/kiro/", "generated/claude/", "generated/pi/"],
+      "entrypoints": ["generated/copilot/", "generated/opencode/", "generated/kiro/", "generated/claude/", "generated/pi/", "generated/antigravity/"],
       "depends_on": ["canonical", "adapters", "tools"],
       "tags": ["generated", "platforms"]
     },

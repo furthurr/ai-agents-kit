@@ -9,13 +9,14 @@ cambiar sus fuentes, adaptadores, renderer o distribución.
 - Modo: `full`.
 - Último commit documentado: **omitido**. No se declara `HEAD` como baseline:
   esta revisión se realizó con modificaciones locales presentes.
-- Última actualización: 2026-10-05.
+- Última actualización: 2026-10-09.
 - Marca: revisión documental por fecha; no representa un snapshot Git limpio.
 
 ## Contexto para IA
 
 - **Qué es el sistema:** repositorio fuente y pipeline para producir e instalar
-  skills y agentes del MAS en GitHub Copilot, OpenCode, Kiro, Claude Code y Pi.
+  skills y agentes del MAS en GitHub Copilot, OpenCode, Kiro, Claude Code, Pi y
+  Antigravity (integración inicial 2.0; runtime pendiente).
   No es una aplicación de usuario ni un servicio runtime propio.
 - **Estilo arquitectónico:** contenido canónico compartido + adaptadores
   declarativos por plataforma + render determinista a artefactos consumibles.
@@ -55,8 +56,13 @@ presentes; no forman parte del pipeline canónico (`../docs/desarrollo.md:15-17`
 
 ## Alcance de esta revisión
 
-La documentación describe las fuentes visibles durante el bootstrap aprobado.
-El working tree tenía cambios locales; se preservaron y no se atribuye esta
-documentación a `HEAD`. La revisión documenta arquitectura, no certifica una
+La sincronización del 2026-10-09 incorpora seis distribuciones, el contrato SDD de
+alcance completo/continuidad y la evidencia CI documentada para Antigravity.
+Fuentes: `../canonical/manifest.json:1-30`,
+`../canonical/skills/sdd-spec/references/scope-depth.md:16-59`,
+`../canonical/skills/sdd-spec/references/spec-continuity.md:22-77` y
+`../.github/workflows/ci.yml:10-73`.
+El working tree tiene cambios locales; esta revisión queda pendiente de baseline
+Git verificable. La revisión documenta arquitectura, no certifica una
 auditoría de seguridad, la compatibilidad efectiva de cada host ni la ejecución
 de las pruebas del proyecto.

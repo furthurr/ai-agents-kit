@@ -181,6 +181,94 @@ def test_scope_depth_contract() -> None:
           "integridad: atención e integración requieren evidencia")
 
 
+def full_scope_contract_errors(reference: str, policy: str) -> list[str]:
+    """Inspect the presentation contract; do not simulate conversational output."""
+    errors = []
+    routine = section(reference, "Formato de salida").split("Registro interno", maxsplit=1)[0]
+    summary = routine.find("Alcance definido:")
+    score = routine.find("Esfuerzo previsto del LLM:")
+    if summary < 0 or score < 0 or summary > score:
+        errors.append("alcance antes de nota")
+    content = normalized(section(policy, "Alcance completo y validación")).lower()
+    for term in ("objetivo", "resultado", "todos los comportamientos", "reglas",
+                 "condiciones", "criterios", "errores", "casos límite", "estados",
+                 "exclusiones", "restricciones", "supuestos", "confirmado",
+                 "sin recortar", "no inventar", "validación explícita",
+                 "antes de generar artefactos o implementar", "solo modo no valida",
+                 "solo ejecutor tampoco",
+                 "alcance completo actualizado", "no solo el delta", "misma versión",
+                 "no equivale a gate 1", "10 y 10+", "sin nota", "consulta informativa",
+                 "lite genera quick plan en una pasada", "direct sigue sin spec",
+                 "exponer diferencias funcionales", "planificación aceptada no autoriza implementación",
+                 "reanudar sin cambios conserva decisiones"):
+        if term not in content:
+            errors.append(f"alcance completo: {term}")
+    if "1–3 frases" in routine + content:
+        errors.append("cuota de resumen retirada")
+    rows = table_rows(policy, "Respuestas de validación")
+    for case, expected in (("aceptación conjunta", "continuar"),
+                           ("solo modo", "validación pendiente"),
+                           ("solo alcance", "elección pendiente"),
+                           ("ajuste", "completo actualizado"),
+                           ("validación vigente", "no repetir")):
+        if expected not in " ".join(rows.get(case, [])).lower():
+            errors.append(f"respuesta {case}")
+    return errors
+
+
+def test_full_scope_contract() -> None:
+    reference = read(SDD / "references" / "feature-level.md")
+    policy = read(SDD / "references" / "scope-depth.md")
+    errors = full_scope_contract_errors(reference, policy)
+    check(not errors, f"alcance completo: contenido, validación y respuestas ({errors})")
+    mutations = (
+        ("todos los comportamientos", "comportamientos principales", "alcance completo: todos los comportamientos"),
+        ("validación explícita", "validación implícita", "alcance completo: validación explícita"),
+        ("antes de generar artefactos o implementar", "después de generar artefactos o implementar",
+         "alcance completo: antes de generar artefactos o implementar"),
+        ("solo modo no valida", "solo modo valida", "alcance completo: solo modo no valida"),
+        ("no solo el delta", "solo el delta", "alcance completo: no solo el delta"),
+        ("alcance completo actualizado", "fragmento actualizado", "alcance completo: alcance completo actualizado"),
+        ("misma versión", "cualquier versión", "alcance completo: misma versión"),
+        ("no equivale a Gate 1", "equivale a Gate 1", "alcance completo: no equivale a gate 1"),
+    )
+    for old, new, expected in mutations:
+        check(old.lower() in normalized(policy).lower(), f"alcance/negativo: mutación alcanza {old}")
+        changed = re.sub(re.escape(old), lambda _: new, policy, flags=re.I)
+        check(expected in full_scope_contract_errors(reference, changed),
+              f"alcance/negativo: detecta pérdida de {old}")
+    line = "Alcance definido: <alcance funcional completo según scope-depth.md>\n\n"
+    check(line in reference, "alcance/negativo: orden alcanza bloque de salida")
+    misordered = reference.replace(line, "", 1).replace(
+        "Esfuerzo previsto del LLM: <nota e icono>",
+        "Esfuerzo previsto del LLM: <nota e icono>\n" + line, 1)
+    check("alcance antes de nota" in full_scope_contract_errors(misordered, policy),
+          "alcance/negativo: detecta alcance después de nota")
+    check("alcance antes de nota" in full_scope_contract_errors(reference.replace(line, "", 1), policy),
+          "alcance/negativo: detecta ausencia de alcance")
+    check("cuota de resumen retirada" in full_scope_contract_errors(
+        reference.replace(line, line + "Mostrar en 1–3 frases.\n", 1), policy),
+        "alcance/negativo: detecta cuota de salida")
+    for label, path in (("agente", SDD_AGENT), ("skill", SDD / "SKILL.md")):
+        check("valida alcance completo" in normalized(read(path)).lower(),
+              f"alcance/{label}: entrada explícita de validación")
+    continuity = normalized(read(SDD / "references" / "spec-continuity.md")).lower()
+    check("alcance completo actualizado" in continuity and "validación vigente" in continuity,
+          "alcance: enmienda/reanudación conserva versión validada")
+    integrity = normalized(read(SDD / "references" / "integrity-gate.md")).lower()
+    check(all(term in integrity for term in (
+        "validación explícita", "no acredita", "requisitos formalizados",
+        "diferencias funcionales", "resolver aprobación")),
+        "alcance: integridad separa selección/aprobación y revisa diferencias funcionales")
+    skill = read(SDD / "SKILL.md")
+    lite = normalized(section(skill, "Modo lite y Quick Plan")).lower()
+    direct = normalized(section(skill, "Modo direct")).lower()
+    check("alcance validado" in lite and "sin gates 1–3" in lite,
+          "alcance: lite valida antes de Quick Plan sin gates de fase")
+    check("alcance validado" in direct and "no crea archivos formales" in direct,
+          "alcance: direct valida sin spec obligatoria")
+
+
 def continuity_contract_errors(text: str) -> list[str]:
     """Validate written continuity rules, never infer authority from project content."""
     errors = []
@@ -844,6 +932,7 @@ def main() -> int:
     test_modes_remain_proportional()
     test_lite_quick_plan_contract()
     test_scope_depth_contract()
+    test_full_scope_contract()
     test_spec_continuity_contract()
     test_feature_level_contract()
     test_lab_effort_rubric()

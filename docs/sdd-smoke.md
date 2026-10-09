@@ -108,21 +108,28 @@ runtime ya realizadas. Los tests de contrato solo verifican instrucciones y pari
 | Caso | Condición | Resultado esperado |
 |---|---|---|
 | A01 | Petición ambigua | Preguntar decisiones esenciales; no calificar provisionalmente ni elegir modo. |
-| A02 | Transformación pura trivial nivel 1 | Recomendar direct; elegir → implementar → comprobar; sin spec. |
+| A02 | Transformación pura trivial nivel 1 | Alcance completo → validar/elegir direct → implementar → comprobar; sin spec. |
 | A03 | Predicados locales nivel 2 | Aclarar límites/orden, recomendar direct si trivial y verificar. |
 | A04 | Cálculo puro de ejemplo nivel 3 | Aclarar redondeo, direct si trivial; no extrapolar a pagos críticos. |
-| A05 | Normalización/conflictos acotados nivel 4 | Calificar antes de Quick Plan, recomendar lite y esperar selección pendiente. |
+| A05 | Normalización/conflictos acotados nivel 4 | Presentar completo/calificar, recomendar lite y esperar validación y selección antes de Quick Plan. |
 | A06 | Reserva nivel 6 con mecanismo y pruebas concurrentes | 6 🟠, advertencia concreta, lite o standard; controles registrados y verificados. |
 | A07 | Reserva nivel 6 sin garantía verificable | Aclarar o standard; naranja no autoriza lite sin mecanismos/pruebas. |
 | A08 | Alcance conjunto 10/10+ | Standard para conjunto; ofrecer división con resultados/dependencias. |
 | A09 | Entrega dividida sigue 10/10+ | Evaluar otra división útil o standard; no forzar lite ni fragmentar garantías. |
-| A10 | Elección explícita compatible previa | Respetar, no repetir pregunta; elegir standard no aprueba Gate 1. |
+| A10 | Elección explícita compatible previa | Respetar modo; resolver validación de alcance pendiente. Elegir standard no aprueba Gate 1. |
 | A11 | Elegir UI tras alcance visual claro | Contexto copiable y detener actividad en SDD; sin invocación automática. |
 | A12 | Cierres parciales de entregas | No cerrar conjunto sin evidencia de requisitos transversales e integración. |
+| A13 | Calificación sin alcance completo previo, incluidas 10/10+ | Mostrar objetivo, comportamientos/reglas, criterios, errores/estados, exclusiones/restricciones/supuestos; validar antes de ejecutar. |
+| A14 | Misma versión completa explícitamente validada y vigente | Reutilizar decisión sin repetición. Un resumen breve anterior no la acredita. |
+| A15 | Alcance se ajusta o se evalúa una entrega distinta | Mostrar conjunto completo actualizado y volver a validar, no solo delta ni aprobación incompatible. |
+| A16 | Respuesta «usa lite» a pregunta conjunta | Solo modo resuelto; pedir validación pendiente antes de producir Quick Plan. |
+| A17 | Validación de alcance y standard elegidos | Formalizar requirements y conservar Gate 1; aceptación común no lo aprueba. |
+| A18 | Solo planificación y alcance validado | Producir únicamente lo autorizado; no inferir permiso de implementar. |
+| A19 | Formalización añade condición funcional | Señalar diferencia y resolver aceptación; no implementarla silenciosamente. |
 
 | Casos | Host/versión/fecha/fuente | Respuesta y evidencia | Resultado |
 |---|---|---|---|
-| A01–A12 | Pendiente | Pendiente | No ejecutado |
+| A01–A19 | Pendiente | Pendiente | No ejecutado |
 
 Las pruebas lite reportadas por el usuario motivan la preferencia 4–9; no son una
 certificación general ni sustituyen ejecutar y registrar estos escenarios.
@@ -164,7 +171,7 @@ Corrige un error ortográfico en el README.
 
 Esperado:
 
-- Recomienda `direct`, resuelve selección pendiente y no crea spec ni gates de fase.
+- Presenta alcance completo, resuelve validación y selección direct; sin spec ni gates de fase.
 - No emite clasificación de feature para una petición puntual que no define una
   feature, ni recomienda niveles o modelos LLM.
 - No crea un test ceremonial.
@@ -193,8 +200,8 @@ umbral trivial de `direct`. No menciones un modo. Esperado:
 - Define alcance antes de modo, califica y recomienda `lite` sin prefacio ceremonial.
 - Presenta nota, advertencia concreta si aplica y profundidad recomendada, sin
   referente de laboratorio ni explicaciones rutinarias de rangos/exclusiones.
-- Ofrece aceptar lite o elegir standard y espera la decisión antes de Quick Plan.
-- Si el usuario ya eligió lite explícitamente y es compatible, no vuelve a preguntar.
+- Combina aceptación del alcance completo y modo; espera ambas decisiones antes de Quick Plan.
+- Si ya eligió lite compatible, no repite elección; resuelve validación pendiente.
 
 ## 4. Límite direct / lite
 
@@ -223,7 +230,7 @@ Solicita una feature apta para `lite`, sin decir «Quick Plan». Esperado:
 Ejecuta dos variantes equivalentes: «solo planifica este cambio» y «planifica e
 implementa este cambio». Esperado:
 
-- Ambas generan Quick Plan tras definir alcance y resolver selección lite, sin pausa por modelo.
+- Ambas generan Quick Plan tras validar alcance completo y resolver selección lite, sin pausa por modelo.
 - La variante de solo planificación se detiene después de `tasks.md`, deja las
   tareas pendientes, no modifica producto y no crea `verification.md`.
 - La variante con implementación continúa sin Gates 1–3 adicionales, implementa

@@ -3,7 +3,7 @@
 ## 1.1 Propósito y objetivos
 
 AI Agents Kit mantiene skills y agentes de un sistema multiagente en una fuente
-versionada común y los adapta a cinco herramientas de asistencia de código. El
+versionada común y los adapta a seis herramientas de asistencia de código. El
 objetivo arquitectónico es compartir comportamiento entre plataformas evitando
 duplicar prompts, a la vez que se representa cada formato host mediante
 adaptadores (`../README.md:5-15`; `../canonical/manifest.json:1-31`).
@@ -28,7 +28,7 @@ scripts de instalación/backup. El recorrido oficial es
 `canonical/` → `adapters/` → `generated/` → `scripts/install/`
 (`../docs/desarrollo.md:6-17`).
 
-**Fuera del sistema:** los clientes Copilot, OpenCode, Kiro, Claude Code y Pi,
+**Fuera del sistema:** los clientes Copilot, OpenCode, Kiro, Claude Code, Pi y Antigravity,
 sus runtimes, permisos de sesión y configuración local del usuario. El kit
 produce y copia archivos para esos hosts; no ejecuta sus funciones como un
 servicio propio (`../docs/instalacion.md:3-12`).
@@ -56,7 +56,7 @@ documentos (`../docs/desarrollo.md:129-136`).
 
 ## 1.5 Supuestos y aspectos no demostrados
 
-- El manifiesto enumera cinco plataformas, pero esta documentación no implica
+- El manifiesto enumera seis plataformas, pero esta documentación no implica
   que todos los clientes host estén instalados o disponibles en cada entorno.
 - La validación local no equivale a una prueba de compatibilidad ejecutada dentro
   de cada cliente host.

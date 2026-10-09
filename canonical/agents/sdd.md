@@ -72,7 +72,7 @@ canónica de EARS, fases, gates, artefactos y verificación.
   `references/spec-continuity.md` solo ante relación o ambigüedad relevante.
 - Califica tras alcance/impacto; separa esfuerzo y atención.
   Factores en spec, no en mensajes rutinarios.
-- Resuelve selección pendiente; respeta elección compatible. Sin prefacios
+- Valida alcance completo y selección pendiente; respeta elección compatible. Sin prefacios
   ni preguntas repetidas. Elegir modo no aprueba gates.
 - Divide 10/10+ con aprobación; evalúa entregas sin separar garantías ni prometer `lite`.
 - En cada transición, presenta resumen verificable y gate actual. Espera solo la

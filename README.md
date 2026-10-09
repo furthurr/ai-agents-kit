@@ -32,6 +32,18 @@ sesiones. Este kit aporta:
 
 Más detalle: [docs/vision.md](docs/vision.md).
 
+## Para quién
+
+Para desarrolladores y equipos que usan asistentes de código y necesitan roles
+especializados, contexto persistente del proyecto y cambios trazables. Puedes
+instalar una sola plataforma y empezar con el agente del dominio que necesites.
+Las carpetas de contexto se mantienen bajo petición y requieren sincronización
+cuando cambian las fuentes que documentan.
+
+El kit distribuye instrucciones y herramientas de mantenimiento; sus agentes
+operan dentro del host que elijas. La compatibilidad efectiva y los permisos
+dependen de ese host y de la evidencia de sus smoke tests.
+
 ## Qué incluye
 
 | | Cantidad | Detalle |
@@ -42,6 +54,34 @@ Más detalle: [docs/vision.md](docs/vision.md).
 
 Catálogo completo (roles, carpetas, cuándo usar cada uno):
 [docs/catalogo.md](docs/catalogo.md).
+
+## Qué agente elegir
+
+| Necesidad | Agente |
+|-----------|--------|
+| Entender arquitectura, localizar módulos o actualizar contexto documental | `documentation-orchestrator` |
+| Revisar calidad de código o seguridad | `code-review` |
+| Trabajar APIs, contratos, DTOs o persistencia | `data-api` |
+| Trabajar diseño visual, componentes o tokens | `ui-design` |
+| Definir una feature, corregir un bug o implementar con trazabilidad | `sdd` |
+| Preparar commits, push o una release | `git-release-manager` |
+
+### SDD proporcional
+
+SDD presenta el alcance funcional completo y espera su validación explícita antes
+de generar artefactos o implementar. Para features, estima el esfuerzo y recomienda
+una profundidad elegible; elegir solo el modo no valida el alcance.
+
+- **`direct`**: cambio trivial, localizado y reversible; sin spec formal.
+- **`lite`**: cambio acotado con garantías verificables; Quick Plan obligatorio
+  (`requirements.md`, `design.md`, `tasks.md`) en una pasada, sin Gates 1–4.
+- **`standard`**: requisitos, diseño, tareas y verificación con Gates 1–4.
+
+Validar el alcance no aprueba los gates de `standard`; pedir solo planificación
+no autoriza implementación. SDD conserva los acuerdos de specs relacionadas y
+revalida el alcance completo si cambia. Testing, ejecutor y profundidad se
+deciden por separado. Detalle: [guía SDD](docs/agentes/sdd.md) y
+[ejemplos de esfuerzo](docs/sdd-effort-examples.md).
 
 ## Inicio rápido
 
@@ -117,7 +157,9 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 | [docs/uso.md](docs/uso.md) | Cómo invocar y flujos recomendados |
 | [docs/navigator-smoke.md](docs/navigator-smoke.md) | Smoke test reproducible del Project Navigator |
 | [docs/documentation-orchestrator-smoke.md](docs/documentation-orchestrator-smoke.md) | Smoke test del orquestador documental y su preflight informativo no bloqueante |
-| [docs/sdd-smoke.md](docs/sdd-smoke.md) | Smoke test de SDD proporcional y testing adaptativo |
+| [docs/sdd-smoke.md](docs/sdd-smoke.md) | Smoke test de alcance completo, continuidad, gates SDD y testing adaptativo |
+| [docs/sdd-effort-examples.md](docs/sdd-effort-examples.md) | Rúbrica de esfuerzo y ejemplos de profundidad SDD |
+| [docs/code-review-smoke.md](docs/code-review-smoke.md) | Smoke test de revisión de calidad y seguridad |
 | [docs/antigravity-smoke.md](docs/antigravity-smoke.md) | Procedimiento Antigravity 2.0; runtime pendiente |
 | [docs/desarrollo.md](docs/desarrollo.md) | Contribuir y extender el kit |
 | [docs/arquitectura-del-kit.md](docs/arquitectura-del-kit.md) | Pipeline técnico |

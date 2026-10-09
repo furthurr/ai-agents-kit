@@ -50,16 +50,26 @@ aislada no bastan; nunca lo expreses como nota 11.
 ## Formato de salida
 
 ```text
+Alcance definido: <alcance funcional completo según scope-depth.md>
+
 Esfuerzo previsto del LLM: <nota e icono>
 Atención especial: <complicación concreta, solo si aplica>
 Profundidad recomendada: <direct | lite | standard>
 
-¿Continuamos con <recomendada> o prefieres <otra elegible>?
+¿Este alcance refleja completamente lo que quieres y continuamos con <recomendada>,
+o necesitas corregir, agregar o eliminar algo? También puedes elegir <otra elegible>.
 ```
+
+Antes de calificar, incluidas 10 y 10+, mostrar alcance funcional completo según
+`scope-depth.md`. No sustituirlo por un resumen ni limitar frases. Esperar validación
+explícita del alcance y elección pendientes antes de continuar. Reutilizar únicamente
+validación previa de la misma versión completa vigente. Ante ajustes, presentar
+el conjunto completo actualizado; reevaluar nota solo por cambios materiales.
 
 Para 10/10+ ofrece dividir en entregas o abordar el conjunto en standard; no
 expliques rutinariamente rangos ni exclusiones. No añadas prefacios ceremoniales.
-Si ya hay elección explícita compatible, respétala sin repetir la pregunta.
+Si ya hay elección compatible, respetarla y preguntar solo por validación pendiente.
+Nota, validación de alcance y gates de fase son decisiones distintas.
 
 ### Registro interno
 
@@ -88,10 +98,10 @@ primero. La nota orienta la recomendación base de `scope-depth.md`, pero no dem
 elegibilidad ni elige testing, ejecutor, permisos, modelo, gates o resultado funcional.
 Verde no habilita lite sin verificar condiciones; naranja no sustituye garantías.
 
-Ejemplo: `Esfuerzo previsto del LLM: 6 🟠`, `Atención especial: reservas simultáneas;
-se comprobará la disponibilidad con pruebas concurrentes`, `Profundidad recomendada:
-lite`, solo si mecanismo y verificación son adecuados. Si no lo son, aclarar o
-recomendar standard. No rebajar la nota al dividir: evaluar cada entrega.
+Tras mostrar alcance completo de reserva/cancelación, ejemplo de bloque numérico:
+`Esfuerzo previsto del LLM: 6 🟠`, `Atención especial: reservas simultáneas; pruebas
+concurrentes`, `Profundidad recomendada: lite`, solo con garantías verificables.
+Si faltan, aclarar o standard. No rebajar la nota al dividir: evaluar cada entrega.
 
 ## Contrastes mínimos
 

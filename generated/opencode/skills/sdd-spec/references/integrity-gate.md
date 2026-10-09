@@ -63,6 +63,11 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
 
 ## Enmiendas y vigencia
 
+- Antes de ejecutar, verificar validación explícita vigente del alcance completo,
+  elección, autorización y gates. Elegir modo/ejecutor no acredita aceptación del
+  alcance; una aprobación anterior no cubre contenido nuevo. Aplicar scope-depth.md.
+- Contrastar requisitos formalizados con alcance validado; diferencias funcionales
+  requieren exponer el cambio y resolver aprobación, no ejecutarlas silenciosamente.
 - Una enmienda identifica requisito, dependencias y aprobaciones afectadas según
   `spec-continuity.md`; no evade gates ni autoridad de la spec por su nota baja.
 - Marcar pendiente de revalidación solo tareas/evidencias afectadas. La evidencia

@@ -69,7 +69,7 @@ funcional. Solo decisiones y gates reales requieren intervención.
 - **Escalado a SDD:** Documentation Orchestrator, Data & API, UI Design y Code Review
   recomiendan SDD si la mejora requiere más requisitos, diseño o coordinación;
   explican el motivo y esperan que el usuario decida si cambia de agente.
-- **SDD:** ofrece exactamente `direct`, `lite` y `standard`. Define alcance,
+- **SDD:** ofrece exactamente `direct`, `lite` y `standard`. Presenta y valida alcance completo,
   califica features y propone selección manual: 1–3 direct si trivial, 4–9 lite
   si elegible, 10/10+ standard para el conjunto y opción de dividir. Lite usa
   Quick Plan sin Gates 1-4. `standard` es el fallback seguro y conserva los Gates

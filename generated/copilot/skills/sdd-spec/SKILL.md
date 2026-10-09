@@ -108,11 +108,11 @@ cambios materiales. No cambia testing, ejecutor, permisos o modelo ni crea gates
 Antes de elegir profundidad, define objetivo, resultados, exclusiones, criterios,
 errores y supuestos. Preguntas esenciales sin repetir información; consulta
 contexto técnico mínimo. No crea un documento obligatorio
-y no aprueba Gate 1. Mantén rigor EARS sin duplicar contexto.
+y no aprueba Gate 1. Conserva EARS.
 Antes de recomendar, busca specs relacionadas localmente; carga
 `references/spec-continuity.md` solo ante relación o ambigüedad relevante.
-Aplica `references/scope-depth.md`: califica features, recomienda modo y resuelve
-elección explícita pendiente antes de Quick Plan, fases standard o cambios direct;
+Aplica `references/scope-depth.md`: presenta alcance, califica features y recomienda modo;
+valida alcance completo y elección explícita antes de artefactos/código;
 respeta la previa compatible. Solo planificación nunca implementa.
 
 ## Contexto selectivo
@@ -269,8 +269,8 @@ reproducirse, registra la limitación y no inventes un RED.
 
 ## Modo lite y Quick Plan
 
-Quick Plan es obligatorio y exclusivo de `lite`. Tras definir alcance, calificar
-features y resolver selección, genera requirements, design y tasks en una pasada,
+Quick Plan es obligatorio y exclusivo de `lite`. Con alcance validado y selección
+resuelta, genera requirements, design y tasks en una pasada,
 sin Gates 1–3. Reutiliza criterios acordados y registra la nota sin volver a
 publicarla. El preflight técnico no recomienda modelos ni pausa por modelo.
 
@@ -286,7 +286,7 @@ compatible con `direct` ni `standard`.
 
 ## Modo direct
 
-Tras acordar alcance y resolver selección, ejecuta solo lo autorizado, con el
+Con alcance validado y selección resuelta, ejecuta solo lo autorizado, con el
 cambio mínimo correcto y testing adaptativo. No crea archivos formales de spec
 ni Quick Plan. Presenta cambios, evidencia real y límites en un cierre breve;
 actualiza documentación existente solo si el cambio o steering lo exige.

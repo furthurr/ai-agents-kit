@@ -32,8 +32,10 @@ Un ajuste trivial que conserva acuerdos y no evita una tarea/gate pendiente pued
 evaluarse como direct sin nueva spec, con vínculo y evidencia proporcional.
 
 Si se cambia un requisito vigente, preparar propuesta/en revisión. No implementar
-el alcance nuevo hasta autorización y gates pertinentes; petición inequívoca puede
-autorizar la enmienda lite, pero no aprobar por inferencia un gate standard.
+el alcance nuevo hasta validar alcance completo actualizado, autorización y gates
+pertinentes. Presentar conjunto completo, no solo delta. Elección de modo/ejecutor
+no sustituye validación; respuesta inequívoca tras presentación puede aprobar alcance y enmienda lite,
+pero no por inferencia un gate standard.
 
 - Standard: Gate 1 cubre requisito cambiado; revisar Gate 2/3 si afecta diseño/plan.
   Identificar aprobaciones afectadas y cuáles siguen válidas con motivo; no repetir
@@ -71,6 +73,8 @@ e impacto relevante, no automáticamente toda la feature histórica o el proyect
 Elección de modo/ejecutor aplica al alcance aceptado. Ante cambio material,
 reevaluar compatibilidad y autorización; no repetir elecciones por retoques sin
 impacto. Respetar routing manual, límites especialistas y gates pendientes.
+Reutilizar validación vigente solo de la misma versión completa; reanudación sin
+cambios no reinicia decisiones. Ajustes invalidan aprobación del contenido modificado.
 
 ## Contexto proporcional
 

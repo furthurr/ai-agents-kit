@@ -32,6 +32,20 @@ La separación y prohibición de editar salida se documentan en
 
 ## Consistencia y diagnóstico
 
+El catálogo conserva diez skills y seis agentes. `documentation-orchestrator`
+ejecuta las skills core Architecture/Navigator localmente; cada una conserva
+su carpeta y autoridad (`../canonical/manifest.json:2-29`).
+
+SDD presenta y valida alcance completo antes de artefactos/implementación, separa
+esa decisión de modo/ejecutor/gates y conserva continuidad con specs relacionadas.
+Direct no genera spec formal; lite exige Quick Plan sin Gates 1–4; standard
+conserva gates. Los ajustes revalidan el conjunto actualizado y las evidencias
+afectadas, sin borrar historia ni reutilizar aprobaciones incompatibles
+(`../canonical/skills/sdd-spec/references/scope-depth.md:16-59`;
+`../canonical/skills/sdd-spec/references/spec-continuity.md:22-77`).
+Estos controles son instrucciones del flujo; los tests de contrato no prueban
+su cumplimiento conversacional en todos los hosts.
+
 - La validación de paridad renderiza en un temporal y compara SHA-256; no
   reemplaza `generated/` (`../tools/validate.py:200-216`).
 - El preflight detiene una instalación si el origen/destino no contiene el

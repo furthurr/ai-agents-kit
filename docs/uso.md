@@ -22,6 +22,23 @@ Consulta la [guía de MAS](mas.md) para la terminología completa.
 Para el día a día: **elige el especialista del dominio** y pide la tarea. El
 agente cargará la skill correspondiente.
 
+## Elegir el agente según la tarea
+
+| Quieres… | Empieza con… | Flujo |
+|----------|---------------|-------|
+| Entender capas o localizar código | `documentation-orchestrator` | `inspect`, consulta de solo lectura |
+| Actualizar el contexto ya existente | `documentation-orchestrator` | `sync-existing`, plan documental aprobado |
+| Revisar calidad o seguridad | `code-review` | Auditoría del dominio; remediación con aprobación por micro-paso |
+| Cambiar solo APIs/datos | `data-api` | Trabajo dentro de la capa de datos y contratos |
+| Cambiar solo lo visual | `ui-design` | Trabajo dentro de UI y diseño |
+| Planificar o implementar una feature/bugfix | `sdd` | Alcance completo validado y profundidad elegible |
+| Publicar cambios o versionar | `git-release-manager` | Commit/push o release con autorización explícita |
+
+Mantener contexto también tiene un coste: las carpetas canónicas deben reflejar
+las fuentes actuales. Las consultas verifican frescura y recurren al código si
+el contexto está desfasado; actualizar índices o documentación es una operación
+solicitada y aprobada, no un efecto automático de consultar.
+
 ## Cómo invocar por plataforma
 
 Los nombres exactos del selector pueden variar según versión de la herramienta.
@@ -142,6 +159,10 @@ Catálogo completo: [catalogo.md](catalogo.md).
    califica y recomienda: 1–3 direct si trivial, 4–9 lite si elegible, 10/10+
    standard para el conjunto y opción de dividir. El usuario elige; una elección
    explícita compatible previa no se vuelve a preguntar.
+   Presenta alcance funcional completo (comportamientos, reglas, criterios, errores,
+   exclusiones y supuestos) y espera validación explícita antes de artefactos/código.
+   Elegir solo modo no lo valida; ajustes requieren presentar el conjunto actualizado.
+   Validación y elección pueden resolverse juntas; no sustituyen Gate 1 de standard.
    Quick Plan es obligatorio y exclusivo de `lite`; no tiene Gates 1-3 ni Gate 4.
    Combinar Quick Plan con otro modo es inválido.
    `standard` conserva los Gates 1-4; los bugfixes no triviales usan `standard`.

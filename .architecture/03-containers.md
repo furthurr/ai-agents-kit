@@ -19,7 +19,7 @@ flowchart LR
   end
 
   config["Configuración local del usuario"]
-  hosts["Clientes host\nCopilot · OpenCode · Kiro · Claude Code · Pi"]
+  hosts["Clientes host\nCopilot · OpenCode · Kiro · Claude Code · Pi · Antigravity"]
 
   contributor --> canonical
   contributor --> adapters
