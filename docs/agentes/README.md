@@ -49,12 +49,11 @@ Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
 
 ## Gates que debes esperar
 
-Ningún agente recomienda ni selecciona niveles o modelos LLM. SDD clasifica la
-feature una sola vez, después de analizar su alcance definido, con
-`Nivel de feature: <n> <emoji>` (1–7 🟢, 8–9 🟠, 10 🔴); no repite la clasificación
-por fase ni pausa el flujo por modelo. Solo una decisión, autorización o gate real
-pendiente requiere intervención; una comprobación técnica fallida bloquea el éxito
-o cierre, sin convertirse automáticamente en una pregunta humana.
+Ningún agente recomienda ni selecciona modelos LLM. SDD emite una sola vez el bloque
+de esfuerzo previsto tras definir una feature. La
+[rúbrica ReserveLab](../../canonical/skills/sdd-spec/references/feature-level.md)
+define su formato y comparación; la nota no habilita lite ni representa el resultado
+funcional. Solo decisiones y gates reales requieren intervención.
 
 - **Documentación:** el Orchestrator no recomienda modelos; `status`/`release-check`
   inspeccionan e informan. Presenta un plan y espera su aprobación antes de escribir.
@@ -73,8 +72,8 @@ o cierre, sin convertirse automáticamente en una pregunta humana.
 - **SDD:** ofrece exactamente `direct`, `lite` y `standard`. `lite` se
   selecciona automáticamente para trabajo acotado, claro y de bajo riesgo y usa
   Quick Plan sin Gates 1-4. `standard` es el fallback seguro y conserva los Gates
-  1-4. Tras analizar el alcance definido, SDD emite una sola vez
-  `Nivel de feature: <n> <emoji>` (1–7 🟢, 8–9 🟠, 10 🔴); no recomienda ni
+  1-4. Tras definir alcance, SDD emite una sola vez la nota de esfuerzo conforme a
+  la rúbrica ReserveLab; no recomienda ni
   selecciona modelos, no repite el nivel por fase ni pausa el flujo por modelo. Las
   solicitudes de `deep` o TDD estricto informan que esas opciones fueron retiradas
   y esperan aceptación de `standard` o TDD focalizado.

@@ -28,11 +28,13 @@ trivial, usa `standard` como modo por defecto y fallback seguro. No existe una
 profundidad `deep`; las solicitudes históricas o explícitas de ese modo requieren
 aceptar su sustitución por `standard`.
 
-## Nivel de feature
+## Esfuerzo previsto del LLM
 
-Después de analizar y definir el alcance de la feature, SDD emite una sola vez la
-clasificación `Nivel de feature: <n> <emoji>`: niveles 1–7 usan 🟢, 8–9 usan 🟠 y
-10 usa 🔴. No la emite antes de comprender el alcance ni la repite en Requirements,
+Tras definir alcance, SDD publica una sola vez el bloque `Esfuerzo previsto del LLM`
+con referente, justificación y supuestos. La
+[rúbrica ReserveLab](../../canonical/skills/sdd-spec/references/feature-level.md)
+define anclas, rangos, reutilización y `10+`; es independiente de profundidad y
+elegibilidad de lite. No puntúa antes de entender el alcance ni repite la nota en Requirements,
 Design, Tasks, Implementación o Verification. No es una recomendación de modelo,
 no identifica ni selecciona un LLM y nunca pausa el flujo por modelo. Si el alcance
 cambia de forma sustancial, primero vuelve a analizarlo y actualiza la clasificación;
@@ -100,7 +102,8 @@ solicitud silenciosamente ni confunde esa aceptación con la aprobación de un g
 ## Flujo y gates
 
 0. **Clasificación de feature:** tras analizar el alcance definido, emite una sola
-   vez `Nivel de feature: <n> <emoji>`; no recomienda modelos ni pausa por modelo.
+   vez el bloque `Esfuerzo previsto del LLM: <nota e icono>` con referente,
+   justificación y supuestos; no recomienda modelos ni pausa por modelo.
    `direct` no crea spec.
 1. **Requirements:** historias, criterios EARS, errores, edge cases y supuestos.
     Gate 1: aprobar requisitos en `standard`.
@@ -189,9 +192,10 @@ Esta petición usa `lite` automáticamente. `Quick Plan standard` y
 ## Límites y confirmaciones
 
 - No cruza los Gates 1-4 de `standard` sin aprobación explícita.
-- La clasificación del nivel de feature se emite una sola vez tras analizar el
-  alcance definido, con el formato `Nivel de feature: <n> <emoji>` (1–7 🟢, 8–9
-  🟠, 10 🔴); no recomienda niveles ni selecciona LLM.
+- La clasificación del esfuerzo se emite una sola vez tras analizar el alcance
+  definido, con el formato `Esfuerzo previsto del LLM: <nota e icono>` (1–7 🟢,
+  8–9 🟠, 10 🔴, superior a X13: `10+ 🔴`) y referente/justificación/supuestos;
+  no recomienda niveles ni selecciona LLM.
 - Ninguna fase repite esa clasificación ni espera por modelo; `lite` inicia Quick
   Plan sin pausa por modelo, sin crear Gates 1-3 ni Gate 4.
 - La intención de solo planificación no autoriza implementar. Cambiar de `lite`

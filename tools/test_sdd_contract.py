@@ -147,44 +147,42 @@ def test_feature_level_contract() -> None:
           and "no concede permiso para emitirla" in lower_reference,
           "la referencia reserva la emisión al agente SDD")
     check("feature completa" in lower_reference
-          and "nunca una tarea, fase" in lower_reference,
+          and "no tareas/fases" in lower_reference,
           "la calificación mide la feature completa, no fases ni tareas")
     check("analiza primero el alcance deseado y su impacto real" in lower_reference,
           "el alcance e impacto se analizan antes de puntuar")
     check("no muestres puntuación provisional" in lower_reference
-          and "no muestres valores provisionales" in normalized(agent).lower(),
+          and "no emite notas provisionales" in normalized(agent).lower(),
           "no se emiten puntuaciones provisionales")
-    check("nivel de feature: <n> <emoji>" in lower_reference
-          and "entero real calculado" in lower_reference,
-          "la emisión usa el formato y entero real definidos")
+    check("esfuerzo previsto del llm: <nota e icono>" in lower_reference,
+          "la emisión usa el formato de esfuerzo definido")
     check("1–7 inclusive: 🟢" in reference and "8–9: 🟠" in reference
           and "10: 🔴" in reference,
           "la escala asigna emoji verde, naranja y rojo a los rangos correctos")
-    check("nivel 7 → `nivel de feature: 7 🟢`" in lower_reference
-          and "nivel 8 → `nivel de feature: 8 🟠`" in lower_reference
-          and "nivel 9 → `nivel de feature: 9 🟠`" in lower_reference,
-          "los ejemplos sustituyen el marcador por el nivel real, no un valor fijo")
+    for consumer_name, consumer in (("skill", skill), ("agente", agent)):
+        check("Esfuerzo previsto del LLM:" in consumer and "Nivel de feature:" not in consumer,
+              f"{consumer_name}: usa la nueva etiqueta, sin salida alternativa antigua")
     for level in range(1, 11):
         check(bool(re.search(rf"\| {level} \|", reference)),
               f"la rúbrica define ancla para el nivel {level}")
     check("no uses 0, decimales, rangos" in lower_reference,
           "la salida excluye valores fuera de escala, decimales y rangos")
     check(all(phrase in lower_reference for phrase in (
-        "`direct`: después de inspeccionar el cambio y antes de editar",
-        "`lite`: al cerrar quick plan",
-        "`standard`: al cerrar requirements",
+        "`direct`, antes de editar",
+        "`lite`, al cerrar quick plan",
+        "`standard`, con requirements/gate 1",
     )), "cada profundidad emite tras el análisis de alcance que le corresponde")
     check("no repitas el nivel al cambiar de fase" in lower_reference
-          and "no muestres valores provisionales" in normalized(agent).lower(),
+          and "no emite notas provisionales ni las repite" in normalized(agent).lower(),
           "la calificación no se repite en transiciones")
     check("si cambia materialmente alcance o impacto, analiza primero" in lower_reference
-          and "analiza el nuevo alcance antes de publicar la actualización" in normalized(agent).lower(),
+          and "reanaliza cambios materiales de alcance" in normalized(agent).lower(),
           "los cambios materiales de alcance requieren reanálisis antes de actualizar")
-    check("no puntúes bugs, consultas o exploraciones como features por defecto" in lower_reference,
+    check("bugs, consultas y exploraciones no puntúan como features por defecto" in lower_reference,
           "bugfixes, consultas y exploraciones no se puntúan como features por defecto")
     check("no recomienda niveles de llm ni solicita cambiar o confirmar el modelo" in normalized(agent).lower()
           and "no recomiendes ni menciones modelos/proveedores llm" in normalized(skill).lower()
-          and "no pauses para pedir aprobación de la calificación" in normalized(skill).lower()
+          and "no repite ni pausa ni pide aprobación de la nota" in normalized(skill).lower()
           and "continúa sin aviso ni espera por modelo" in normalized(agent).lower()
           and "la calificación de feature no es un gate" in normalized(skill).lower(),
           "no hay recomendación LLM ni pausa o gate adicional por modelo")
@@ -194,11 +192,15 @@ def test_feature_level_contract() -> None:
           "el contrato de feature no conserva avisos ni selección de modelo")
     templates = read(SDD / "references" / "templates.md")
     check("calificación de feature (solo si sdd analizó una feature)" in templates.lower()
-          and "entero real 1–10 + emoji" in templates.lower()
+          and "1–10 o 10+" in templates.lower()
+          and all(field in templates for field in (
+              "Esfuerzo previsto del LLM:", "Referente del laboratorio:",
+              "Justificación:", "Supuestos relevantes:",
+          ))
           and "no emitir antes de definir alcance" in templates.lower(),
           "la plantilla standard registra calificación real solo tras definir alcance")
     check("calificación de feature (añadir solo tras análisis completo)" in templates.lower()
-          and "entero real 1–10 + emoji" in templates.lower(),
+          and "1–10 o 10+" in templates.lower(),
           "la plantilla lite reserva la calificación al cierre del análisis")
     integrity = normalized(read(SDD / "references" / "integrity-gate.md")).lower()
     check("no crea un gate nuevo" in integrity
@@ -239,6 +241,11 @@ def test_feature_level_contract() -> None:
         )
         generated_agent = read(ROOT / "generated" / platform / "agents" / adapter["filename"])
         generated_skill = read(ROOT / "generated" / platform / "skills" / "sdd-spec" / "SKILL.md")
+        generated_templates = read(ROOT / "generated" / platform / "skills" / "sdd-spec"
+                                   / "references" / "templates.md")
+        check(all("Esfuerzo previsto del LLM:" in consumer and "Nivel de feature:" not in consumer
+                  for consumer in (generated_agent, generated_skill, generated_templates)),
+              f"{platform}: agente, skill y plantillas adoptan salida de esfuerzo")
         check("references/feature-level.md" in generated_skill,
               f"{platform}: skill generada carga la rúbrica de feature")
         check("model-selection.md" not in generated_agent + generated_skill,
@@ -253,6 +260,149 @@ def test_feature_level_contract() -> None:
         check(not (ROOT / "generated" / platform / "agents" / "references"
                    / "feature-level.md").exists(),
               f"{platform}: referencia feature-level no se instala junto al agente")
+
+
+def table_rows(text: str, heading: str) -> dict[str, list[str]]:
+    """Inspect a normative Markdown table; this is not a feature scorer."""
+    rows: dict[str, list[str]] = {}
+    for line in section(text, re.escape(heading)).splitlines():
+        if line.startswith("| "):
+            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+            if cells[0] in rows:
+                raise ValueError(f"Fila duplicada en {heading}: {cells[0]}")
+            rows[cells[0]] = cells[1:]
+    return rows
+
+
+def effort_contract_errors(text: str) -> list[str]:
+    """Validate the operational rubric only; never infer a feature score."""
+    errors: list[str] = []
+    profiles = table_rows(text, "Perfiles comparables")
+    for level in range(1, 11):
+        profile = profiles.get(str(level), [])
+        if len(profile) != 2 or not all(profile):
+            errors.append(f"perfil {level}")
+    for level, anchor in (("1", "F01"), ("8", "F10"), ("10", "X13")):
+        if profiles.get(level, [None])[0] != anchor:
+            errors.append(f"referente {level}")
+    output = normalized(section(text, "Formato de salida")).lower()
+    for rule in (
+        "1–7 inclusive: 🟢", "8–9: 🟠", "10: 🔴", "superior a x13: exactamente 10+ 🔴",
+    ):
+        if rule not in output:
+            errors.append(f"presentación {rule}")
+    if re.search(r"esfuerzo previsto del llm:\s*(?:1[1-9]|[2-9]\d|\d{3,})\b", text, re.I):
+        errors.append("nota superior a 10")
+    contrasts = table_rows(text, "Contrastes mínimos")
+    expected_contrasts = {
+        "F10-scaffold": ("8 🟠", "F10", ("tres métodos", "participantes", "locks")),
+        "F10-sin-scaffold": ("9 🟠", "Entre F10 y X13", ("mismo alcance", "construir")),
+        "X13-plus-saga": ("10+ 🔴", "Superior a X13", ("saga", "compensación", "interacciones")),
+    }
+    for case_id, (note, reference, factors) in expected_contrasts.items():
+        row = contrasts.get(case_id, [])
+        if len(row) != 3:
+            errors.append(f"contraste {case_id}")
+            continue
+        if row[:2] != [note, reference]:
+            errors.append(f"ancla {case_id}")
+        if not all(factor in row[2].lower() for factor in factors):
+            errors.append(f"factores {case_id}")
+    if "verde no habilita lite" not in text.lower():
+        errors.append("independencia de lite")
+    return errors
+
+
+def test_lab_effort_rubric() -> None:
+    reference = read(SDD / "references" / "feature-level.md")
+    examples_path = ROOT / "docs" / "sdd-effort-examples.md"
+    examples = read(examples_path) if examples_path.is_file() else ""
+    errors = effort_contract_errors(reference)
+    check(not errors, f"ReserveLab: anclas, presentación y contrastes coherentes ({errors})")
+    protocol = normalized(section(reference, "Comparación del esfuerzo")).lower()
+    for concept in (
+        "regresión", "casos límite", "estados", "capas", "persistencia", "integraciones",
+        "concurrencia", "idempotencia", "compensación", "recuperación", "migraciones",
+        "legado", "aislamiento", "autorización", "pruebas significativas",
+    ):
+        check(concept in protocol, f"ReserveLab: contempla {concept}")
+    check("infraestructura correcta reutilizada" in protocol
+          and "pendientes" in protocol and "no es una fórmula" in protocol,
+          "ReserveLab: distingue trabajo pendiente de infraestructura reutilizada, sin fórmula")
+    evidence = normalized(section(reference, "Evidencia de X13")).lower()
+    check(all(fact in evidence for fact in (
+        "10/11", "c12 válido", "admin_create", "no superó x13",
+    )), "ReserveLab: conserva resultado parcial y límites de X13")
+    emission = normalized(section(reference, "Formato de salida"))
+    check(all(field in emission for field in (
+        "Esfuerzo previsto del LLM: <nota e icono>", "Referente del laboratorio:",
+        "Justificación:", "Supuestos relevantes:", "2–4",
+    )), "ReserveLab: conserva los cuatro campos de la salida")
+    check("verde no habilita lite" in reference.lower(),
+          "ReserveLab: verde no elimina exclusiones de lite")
+    check("indicador separado `exceeds_x13`" in reference
+          and "10+ es valor 10 e" in reference
+          and "como nota 11" in reference,
+          "ReserveLab: conserva valor numérico e indicador 10+ separado")
+    consumers = " ".join((read(SDD / "SKILL.md"), read(SDD_AGENT),
+                          read(SDD / "references" / "templates.md")))
+    check(examples_path.is_file() and "solo respaldo opcional" in examples.lower(),
+          "ReserveLab: ejemplos extensos disponibles fuera del camino operativo")
+    check("sdd-effort-examples.md" not in consumers,
+          "agente/skill/plantillas no exigen cargar ejemplos de respaldo")
+    mutations = (
+        ("ancla F01", "| 1 | F01 |", "| 1 | F01 alterado |", "referente 1"),
+        ("ancla X13", "| 10 | X13 |", "| 10 | X13 alterado |", "referente 10"),
+        ("ancla F10", "| 8 | F10 |", "| 8 | F10 alterado |", "referente 8"),
+        ("emoji/rango", "1–7 inclusive: 🟢", "1–7 inclusive: 🟠", "presentación 1–7 inclusive: 🟢"),
+        ("10+ como nota", "exactamente 10+ 🔴", "exactamente 11 🔴", "presentación superior a x13: exactamente 10+ 🔴"),
+        ("reutilización", "participantes y locks ya proporcionados", "infraestructura no especificada", "factores F10-scaffold"),
+        ("exceso sin dimensiones", "Saga y compensación externa", "Cambio muy grande", "factores X13-plus-saga"),
+        ("verde habilita lite", "Verde no habilita lite", "Verde habilita lite", "independencia de lite"),
+    )
+    for name, old, new, expected_error in mutations:
+        check(old in reference, f"negativo/{name}: mutación alcanza el contrato real")
+        mutated = reference.replace(old, new)
+        check(expected_error in effort_contract_errors(mutated),
+              f"negativo/{name}: detecta el defecto pertinente")
+
+    backup_cases = table_rows(examples, "Casos detallados")
+    check({"F01", "F10-scaffold", "F10-sin-scaffold", "X13", "X13-ampliado", "F07"}
+          <= set(backup_cases), "respaldo conserva contrastes detallados sin cargar en scoring")
+    backup_outputs = table_rows(examples, "Salidas por nota")
+    check({str(level) for level in range(1, 11)} | {"10+"} <= set(backup_outputs),
+          "respaldo enumera presentaciones sin repetirlas en la referencia operativa")
+    check(all(fact in examples.lower() for fact in (
+        "contracts.md", "contracts-f05-f07.md", "contracts-f08-f09.md", "contracts-f10.md",
+        "contracts-x13.md", "10/11", "c12 válido", "admin_create", "post-hoc",
+    )), "respaldo conserva procedencia y matiz histórico de X13")
+
+
+def test_sdd_effort_context_budgets() -> None:
+    paths = {
+        "agente": (ROOT / "canonical/agents/sdd.md", 1066, 7580),
+        "skill": (SDD / "SKILL.md", 2357, 16378),
+        "rúbrica": (SDD / "references/feature-level.md", 1774, 12303),
+        "plantillas": (SDD / "references/templates.md", 863, 5722),
+    }
+    measured: dict[str, tuple[int, int]] = {}
+    for label, (path, max_words, max_chars) in paths.items():
+        text = read(path)
+        words, chars = len(text.split()), len(text)
+        measured[label] = words, chars
+        word_ok = words <= max_words if label == "plantillas" else words < max_words
+        char_ok = chars <= max_chars if label == "plantillas" else chars < max_chars
+        check(word_ok and char_ok,
+              f"eficiencia {label}: {words} palabras/{chars} caracteres bajo baseline")
+    for scenario, labels, max_words, max_chars in (
+        ("inicio", ("agente", "skill"), 3423, 23958),
+        ("scoring", ("agente", "skill", "rúbrica"), 5197, 36261),
+        ("planificación con plantillas", ("agente", "skill", "rúbrica", "plantillas"), 6060, 41983),
+    ):
+        words = sum(measured[label][0] for label in labels)
+        chars = sum(measured[label][1] for label in labels)
+        check(words < max_words and chars < max_chars,
+              f"eficiencia escenario {scenario}: {words} palabras/{chars} caracteres")
 
 
 def test_spec_paths_support_grouping() -> None:
@@ -560,6 +710,8 @@ def main() -> int:
     test_modes_remain_proportional()
     test_lite_quick_plan_contract()
     test_feature_level_contract()
+    test_lab_effort_rubric()
+    test_sdd_effort_context_budgets()
     test_spec_paths_support_grouping()
     test_adaptive_testing_selection()
     test_variants_and_evidence()

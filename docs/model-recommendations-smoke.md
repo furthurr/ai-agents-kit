@@ -17,8 +17,14 @@ niveles, modelos o proveedores LLM.
 
 - Presenta un alcance de feature ambiguo y confirma que no emite clasificación hasta
   analizarlo y definirlo.
-- Tras definir alcance, emite exactamente `Nivel de feature: <n> <emoji>` una sola vez;
-  1–7 🟢, 8–9 🟠, 10 🔴.
+- Tras definir alcance, emite el bloque `Esfuerzo previsto del LLM: <nota e icono>`
+  una sola vez; 1–7 🟢, 8–9 🟠, 10 🔴 y superior a X13: exactamente `10+ 🔴`.
+  Incluye referente ReserveLab, justificación de 2–4 factores y supuestos según la
+  [rúbrica compartida](../canonical/skills/sdd-spec/references/feature-level.md).
+- Contrasta las condiciones manuales en
+  [sdd-smoke](sdd-smoke.md#esfuerzo-previsto-del-llm-referencia-reservelab) y los
+  [ejemplos opcionales](sdd-effort-examples.md). Verde no habilita lite.
+  No presentes ejemplos ni checks textuales como inferencias ejecutadas.
 - No repite la clasificación al pasar por Requirements, Design, Tasks,
   Implementación o Verification; no pausa ni pregunta por el modelo.
 - Si cambia sustancialmente el alcance, vuelve a analizarlo antes de actualizar la

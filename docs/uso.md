@@ -142,9 +142,12 @@ Catálogo completo: [catalogo.md](catalogo.md).
    Quick Plan es obligatorio y exclusivo de `lite`; no tiene Gates 1-3 ni Gate 4.
    Combinar Quick Plan con otro modo es inválido.
    `standard` conserva los Gates 1-4; los bugfixes no triviales usan `standard`.
-   Tras analizar y definir el alcance de la feature, SDD emite una sola vez
-   `Nivel de feature: <n> <emoji>`: 1–7 🟢, 8–9 🟠, 10 🔴. No lo muestra antes
-   de definir alcance ni lo repite por fase; no recomienda ni selecciona LLM y no
+   Tras definir el alcance, SDD emite una sola vez su nota de esfuerzo prevista,
+   incluyendo referente, justificación y supuestos según la
+   [rúbrica ReserveLab](../canonical/skills/sdd-spec/references/feature-level.md).
+   Evalúa implementar y verificar, no predice recursos; es independiente de lite y
+   de sus exclusiones. No la muestra antes
+   de definir alcance ni la repite por fase; no recomienda ni selecciona LLM y no
    pausa el flujo por modelo. Se espera solo por gates reales o decisiones pendientes,
    y planificar no autoriza implementar.
    Si hay `.navigator/`, SDD comprueba primero su disponibilidad y frescura para

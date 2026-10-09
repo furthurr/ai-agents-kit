@@ -24,6 +24,7 @@ MODEL_GUIDANCE = re.compile(
 FEATURE_SCORING = re.compile(
     r"references/feature-level\.md"
     r"|nivel de feature"
+    r"|esfuerzo previsto del llm"
     r"|calificaci[oó]n[^.\n]{0,60}feature"
     r"|puntuaci[oó]n[^.\n]{0,60}feature"
     r"|scoring[^.\n]{0,60}feature",
@@ -125,8 +126,10 @@ class ModelRecommendationsContractTest(unittest.TestCase):
         for label, content in (("agente SDD", agent), ("skill SDD", skill)):
             with self.subTest(source=label):
                 self.assertRegex(content, FEATURE_SCORING)
-        self.assertIn("Nivel de feature:", agent)
-        self.assertIn("Nivel de feature:", skill)
+        self.assertIn("Esfuerzo previsto del LLM:", agent)
+        self.assertIn("Esfuerzo previsto del LLM:", skill)
+        self.assertNotIn("Nivel de feature:", agent + skill)
+        self.assertNotIn("sdd-effort-examples.md", agent + skill)
         self.assertIn("no recomienda modelos", skill)
         self.assertIn("no\n  recomienda niveles de LLM", agent)
         self.assertNotIn("model-selection.md", feature_reference.read_text(encoding="utf-8"))
@@ -136,7 +139,7 @@ class ModelRecommendationsContractTest(unittest.TestCase):
         sdd_skill = (ROOT / "canonical/skills/sdd-spec/SKILL.md").read_text(encoding="utf-8")
         for gate in ("GATE 1", "GATE 2", "GATE 3", "GATE 4"):
             self.assertIn(gate, sdd_skill)
-        self.assertIn("espera únicamente aprobación del gate SDD real", sdd_skill)
+        self.assertIn("espera solo la aprobación del gate SDD real", sdd_skill)
 
         for skill_id in ("architecture", "data-api"):
             skill = (ROOT / "canonical/skills" / skill_id / "SKILL.md").read_text(encoding="utf-8")

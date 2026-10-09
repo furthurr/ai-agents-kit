@@ -91,28 +91,17 @@ recomiendes ni menciones modelos/proveedores LLM, no califiques fases o tareas y
 conviertas el preflight en un gate de usuario. Continúa el trabajo autorizado en el
 mismo turno; solo una decisión esencial o un gate real puede requerir respuesta.
 
-La calificación es exclusiva del agente `@sdd`, no de la skill aislada ni
-de especialistas que la consulten. Solo aplica a una feature cuyo alcance e impacto
-en el proyecto ya fueron analizados y definidos. Consulta
-`references/feature-level.md` para rúbrica, escala y emisión. Bugs, exploraciones y
-consultas no reciben puntuación de feature por defecto.
+Solo el agente `@sdd` califica features de alcance definido; cargar esta
+skill desde otro agente no autoriza la emisión. Consulta
+`references/feature-level.md`, fuente única de la rúbrica. Bugs, exploraciones y
+consultas no reciben nota por defecto.
 
-Publica `Nivel de feature: <n> <emoji>` una sola vez después del análisis del
-alcance deseado: en `direct` antes de editar; en `lite` al concluir Quick Plan; en
-`standard` en el resumen de Requirements junto a Gate 1. Usa el entero real 1–10
-con emoji correspondiente; nunca un ejemplo fijo, nivel de tarea/fase o
-recomendación de modelo. No pauses para pedir aprobación de la calificación ni la
-repitas al cambiar de fase. Si cambia materialmente el alcance, analiza el nuevo
-alcance antes de actualizarla.
-
-La línea visible usa el valor calculado (p. ej. nivel 7 → `Nivel de feature: 7 🟢`);
-los ejemplos de esta explicación no son puntuaciones prefijadas.
-
-La calificación no sustituye ni determina profundidad SDD, testing, selección de
-ejecutor, gates o permisos. En transiciones `standard`, presenta el resumen
-verificable y gate actual; espera únicamente aprobación del gate SDD real. Tras
-Implementación continúa con Verification sin gate intermedio. Después de
-Verification muestra únicamente Gate 4.
+Publica `Esfuerzo previsto del LLM: <nota e icono>` una vez tras analizar el alcance:
+`direct`, antes de editar; `lite`, al cerrar Quick Plan; `standard`, con Requirements
+y Gate 1. Registra referente, justificación (2–4 factores) y supuestos. No muestra
+notas provisionales, no repite ni pausa ni pide aprobación de la nota; si cambia
+materialmente el alcance, reanaliza. No cambia profundidad, lite, testing, ejecutor,
+permisos o modelo ni crea un gate adicional.
 
 ## Contexto selectivo
 

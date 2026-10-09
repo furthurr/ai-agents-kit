@@ -11,9 +11,11 @@ Estado: en progreso
 Gate 1: pendiente
 
 ## Calificación de feature (solo si SDD analizó una feature)
-- Nivel de feature: <entero real 1–10 + emoji; no emitir antes de definir alcance>
+- Esfuerzo previsto del LLM: <1–10 o 10+ con icono según feature-level.md; no emitir antes de definir alcance>
+- Referente del laboratorio: <prueba o rango comparable>
+- Justificación: <2–4 factores concretos; para 10+ explicar dimensiones que exceden X13>
+- Supuestos relevantes: <infraestructura reutilizada o incertidumbres que cambian la nota>
 - Alcance evaluado: <resumen>
-- Motivos: <1–3 evidencias de dificultad e impacto>
 
 ## Historia 1: <título>
 Como <rol> quiero <objetivo> para <beneficio>.
@@ -64,9 +66,11 @@ obligatorio y una petición de solo planificación no crea evidencia de implemen
 Modo SDD: lite
 
 ## Calificación de feature (añadir solo tras análisis completo)
-- Nivel de feature: <entero real 1–10 + emoji>
+- Esfuerzo previsto del LLM: <1–10 o 10+ con icono según feature-level.md>
+- Referente del laboratorio: <prueba o rango comparable>
+- Justificación: <2–4 factores concretos; para 10+ explicar dimensiones que exceden X13>
+- Supuestos relevantes: <infraestructura reutilizada o incertidumbres que cambian la nota>
 - Alcance evaluado: <resumen>
-- Motivos: <1–3 evidencias de dificultad e impacto>
 
 ## Historia 1: <título>
 Como <rol> quiero <objetivo> para <beneficio>.

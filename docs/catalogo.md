@@ -22,7 +22,7 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 | `documentation-orchestrator` | Comprueba, inicializa y sincroniza documentación mediante especialistas | — | Preflight y gates por modo; no crea una fuente documental propia |
 | `security` | Auditoría y remediación de seguridad guiada | `.security/` | OWASP MASVS/MASWE/MASTG y CWE |
 | `ui-design` | Sistema visual: tokens, componentes, deuda de UI | `.design/` | Agnóstica a tecnología |
-| `sdd-spec` | Spec-Driven Development con profundidades `direct`, `lite` y `standard` | `.sdd/specs/<ruta-spec>/` | `Nivel de feature: <n> <emoji>` una vez definido alcance (1–7 🟢, 8–9 🟠, 10 🔴); `lite`: Quick Plan; `standard`: Gates 1-4 |
+| `sdd-spec` | Spec-Driven Development con profundidades `direct`, `lite` y `standard` | `.sdd/specs/<ruta-spec>/` | Nota ordinal de esfuerzo tras definir alcance; [rúbrica ReserveLab](../canonical/skills/sdd-spec/references/feature-level.md); independiente de `lite`; `standard`: Gates 1-4 |
 | `git-commit` | Commits Conventional Commits en español y push con confirmación | — | No versiona ni crea tags |
 | `release-management` | SemVer, tags anotados, CHANGELOG; perfiles por tecnología | `.release/` | Android/iOS/Flutter de fábrica; resto auto-extensible |
 | `project-navigator` | Navega el repo con mínimo de tokens (capas 0–4) | `.navigator/` | Bootstrap/update asistido; solo lectura fuera de `.navigator/` |

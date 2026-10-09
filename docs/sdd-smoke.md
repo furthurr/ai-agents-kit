@@ -63,11 +63,14 @@ Las pruebas de `tools/test_sdd_contract.py` comprueban instrucciones y propagaci
 no sustituyen este registro. Si no hay host disponible, declarar bloqueo y mantener
 pendiente la evaluación; no fabricar resultados a partir de búsquedas de texto.
 
-## Clasificación única del nivel de feature
+## Esfuerzo previsto del LLM: referencia ReserveLab
 
 Antes de los escenarios funcionales, verifica que SDD analice y defina un alcance
 concreto. Solo entonces emite una vez el formato exacto
-`Nivel de feature: <n> <emoji>`: 1–7 🟢, 8–9 🟠, 10 🔴.
+`Esfuerzo previsto del LLM: <nota e icono>`: 1–7 🟢, 8–9 🟠, 10 🔴 o exactamente
+`10+ 🔴` si supera claramente X13, nunca enteros mayores de 10. Añade referente
+del laboratorio, justificación de 2–4 factores y supuestos relevantes según la
+[rúbrica canónica](../canonical/skills/sdd-spec/references/feature-level.md).
 
 - Antes de tener alcance definido, no muestra una clasificación ni recomienda un
   nivel, modelo o proveedor LLM.
@@ -79,6 +82,22 @@ concreto. Solo entonces emite una vez el formato exacto
 - Un cambio sustancial de alcance exige analizarlo de nuevo antes de actualizar la
   clasificación; el cambio de modo `lite` → `standard` conserva su propia aprobación.
 - Ningún agente recomienda ni selecciona modelo, proveedor o nivel LLM.
+
+### Casos manuales de esfuerzo — pendientes de ejecución en host
+
+Los casos E01–E07, condiciones de contraste y salida esperada se mantienen en el
+[respaldo opcional](sdd-effort-examples.md). Para ejecutar un smoke, aporta el
+contrato del caso y el inventario de infraestructura, pide evaluar solo la
+implementación/verificación y registra host, fuente, resultado y supuestos. Ninguno
+se ha ejecutado por búsquedas textuales; E03/E05 son sintéticos, no benchmarks.
+
+| Caso | Host/versión/fecha/fuente | Respuesta sanitizada y supuestos | Resultado |
+|---|---|---|---|
+| E01–E07 | Pendiente | Pendiente | No ejecutado |
+
+Las suites documentales comprueban contrato, ejemplos y paridad, no sustituyen estas
+observaciones ni garantizan el razonamiento de un LLM. No atribuir PASS a este
+registro por haber ejecutado solo checks textuales.
 
 ## 1. Direct sin test nuevo
 
@@ -219,10 +238,11 @@ Añade bloqueo de cuenta después de tres intentos fallidos.
 Esperado:
 
 - Analiza y define el alcance de la feature; después emite una sola vez
-  `Nivel de feature: <n> <emoji>` con la escala documentada. No recomienda LLM.
+  `Esfuerzo previsto del LLM: <nota e icono>` y el bloque ReserveLab documentado.
+  No recomienda LLM.
 - Selecciona `standard`; no implementa antes de aprobar requisitos, diseño y tareas.
 - Tras Requirements, muestra resumen + Gate 1. Tras Design y Tasks presenta sus gates
-  reales; no repite `Nivel de feature`.
+  reales; no repite la nota de esfuerzo.
 - La aprobación de cada gate real permite la transición correspondiente; no existe
   confirmación de modelo ni pausa por modelo.
 - `design.md` declara TDD focalizado y la tarea de comportamiento expresa RED → GREEN

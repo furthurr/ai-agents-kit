@@ -23,6 +23,7 @@
 - [x] 1.1 Congelar el alcance aprobado: ReserveLab, Python 3.12, pytest, SQLite y las diez metas con dificultad prevista (evidencia: `design.md` §1–2; Req R01–R05).
 - [x] 1.2 Mantener explícita la política local mientras `.agent-lab/` esté ignorado: no cambiar `.gitignore` ni publicar runs; proponer versionado selectivo antes de cualquier distribución del laboratorio (evidencia: `.gitignore:24`, `design.md` §7; Req R10, R42–R45).
 - [ ] 1.3 [P] Encargar revisión de seguridad del límite de confianza: cliente de herramientas, ejecución de código no confiable, acceso a pruebas reservadas, secretos, egress y sandbox; resolver hallazgos críticos antes de ejecutar candidatos (Req R21, R43–R44).
+  - Usuario decidió omitir revisión formal del piloto F01–F04. Registro `runtime/pilot-review-waiver.json`: no revisión ejecutada/certificado; sandbox, evaluación, límites y autorización de gasto intactos. El gate reconoce la excepción de scope limitado. No marcar revisión realizada.
 - [ ] 1.4 [P] Verificar capacidades del cliente con una prueba no facturable o smoke autorizado: capturar ID real, confirmar que MAX seleccionado por el usuario en la interfaz se aplica a todas las sesiones nuevas, y verificar herramientas/restricciones y métricas disponibles; el runner nunca cambia MAX y bloquea campaña si no puede demostrar aislamiento/herencia (Req R07, R09, R19, R30–R31, R44, R59).
 - [ ] 1.5 [P] Fijar modelo auditor/comparador, presupuesto y tarifas, tiempos, repeticiones, reparación y umbrales antes de congelar un manifiesto real (Req R06, R30–R38, R46–R58).
 - [x] 1.6 Configurar entrada local `/lab-start`, plantilla de manifiesto y launcher/preflight offline que no invoca modelos ni concede autorización; evidencia: `.opencode/commands/lab-start.md`, `lab.py`, `campaigns/pilot.template.json`, `runner/src/lab_runner/preflight.py`, tests `test_preflight.py` y `test_cli.py` (Req R37, R46, R59–R60). No constituye kickoff ni prueba de aislamiento.
@@ -47,7 +48,7 @@
 - [🔵] 3.5 Transporte F01–F04 por `function_rpc.py`: código y respuestas en Docker, evaluación/expected privados en host, tipos/identidades/mutación preservados. Calibración real: referencias 24/24, bases 0/24 y dos defectos rechazados (`runtime/function-evaluation-result.json`). JSON validado/acotado; 36 tests RPC. Pendiente F05–F10, exportación de entregas, clasificación infraestructura vs fallo funcional y revisión adversarial; no habilita código desconocido aún (Req R20–R28, R44).
 - [ ] 3.6 Implementar política de secretos y sanitización de logs/reportes, con tests sobre tokens y credenciales sintéticas; eliminar o redactar antes de persistir/exportar (Req R42–R45).
 - [🔵] 3.7 Supervisor POSIX y cleanup explícito de contenedor propio dentro de `ManagedContainer`; timeout/overflow reales probados. Pendiente cuotas monetarias/globales, reservas, repair cap real y reconciliación/cierre de sesiones remotas; no confundir kill del CLI con cierre de sesión remota ni garantizar cleanup tras muerte del host (Req R30–R31, R37–R40, R57).
-- [🔵] 3.8 Adaptador OpenCode con executor inyectable: constructor/parser/errores probados con falsos (51 tests), `bounded_run` ya satisface protocolo sin activarse por defecto. Pendiente telemetría real, agentes experimentales aislados y verificación efectiva de selección/sesiones (Req R07, R09, R19, R30–R31, R40–R42, R59–R60).
+- [🔵] 3.8 Adaptador OpenCode con executor inyectable: constructor/parser/errores probados con falsos (51 tests), `bounded_run` ya satisface protocolo sin activarse por defecto. Recibos efectivos validados en F01 y F02. Se corrigió stdout truncado del CLI con captura PTY cruda y regresión RED/GREEN (70 KB). Pendientes telemetría detallada por fase y validación en más condiciones (Req R07, R09, R19, R30–R31, R40–R42, R59–R60).
 
 ## Wave 4 — Orquestación experimental autónoma
 
@@ -73,9 +74,56 @@
 - [ ] 6.2 Ejecutar pruebas negativas de aislamiento: intentar leer evaluación reservada, modificar otros runs, escapar rutas, extraer credenciales y generar egress; verificar denegación y revisar evidencia con especialista de seguridad (Req R21, R43–R44).
 - [ ] 6.3 Completar matriz requisito→tarea→test→evidencia, auditoría de calidad y decisión de Git selectivo; documentar limitaciones de cliente, métricas disponibles, población y confianza (Req R01–R59).
 - [ ] 6.4 Preparar manifiesto de piloto real con modelo identificado, evidencia de MAX seleccionado por el usuario/heredado en sesiones nuevas, presupuesto total, límites, repeticiones, precios, modelos auditores y policy digest; solicitar autorización explícita de kickoff antes de cualquier consumo de API (Req R06, R09–R12, R30–R38, R46–R59).
+  - Checkpoint de integración funcional (no campaña10): `PILOT.md`, `pilot_cli.py`, actor OpenCode aislado, MCP, exportación y evaluación F01–F04. Dry-runs F01 lite/standard pasan 6/6 cada uno, cero modelos; config/MCP real verificados. Faltan aprobación del review, IDs/budget reales y kickoff. No se marca todo el plan realizado.
 - [ ] 6.5 Tras autorización explícita, iniciar el piloto autónomo monitorizado por límites; detener si capacidades, aislamiento o coste real contradicen el manifiesto, conservar todos los estados y emitir informe (Req R37–R45).
+  - Primer piloto limitado F01 real ejecutado con autorización: success 6/6, Luna/max,
+    162.064s, 16 pasos,125517 tokens reportados, costo cliente0 bajo cap200000.
+    Historial preserva dos incidentes de instrumentation y un budget_exhausted
+    cap100000. Evidencia `results/first-real-pilot.md`. Campaña10 pendiente;
+    no se marca todo el hito ni cierre de la spec como realizado.
+  - Seguimiento autorizado: segundo intento F01 `pilot-287d9509-eeef-4750-a33a-752cf7d86267`
+    success 6/6; usó cap de 2147483647 tokens frente a 200000 en el éxito previo,
+    por lo que no es repetición bajo condición idéntica. F02
+    `pilot-88c55a6a-60f5-4214-9363-a587c1721cfa` terminó `process_failure` al agotar
+    16 pasos antes de Verification, sin entrega evaluada (0/0 criterios). Evidencia:
+    `.agent-lab/sdd-escalation/results/second-pilot-f01-f02.md`. No marca campaña10 ni
+    éxito/fallo funcional de F02. Repeticiones, análisis comparativo y campaña siguen pendientes.
+  - Repetición F02 autorizada con máximo 32 pasos: el actor reportó 10/10 tests locales
+    y escribió Verification, pero el recibo de selección resultó `invalid_control_json`;
+    runner `process_failure`, sin entrega exportada/evaluada (0/0 criterios). Evidencia
+    en el mismo resultado. No clasificarlo como fallo funcional ni marcar la tarea completa.
+  - F02 después del fix: `pilot-ef73a5e0-e290-4c73-8abf-ffa925229c23`, success 6/6,
+    entrega y evaluación externa, 197330 tokens reportados, 183.301s, costo OpenCode
+    USD0. Hash SDD `24bba98b…` en vez de `b086a829…` por cambios locales preexistentes
+    de la skill; no comparable directamente con los intentos F02 anteriores (R12).
+    Evidencia: `.agent-lab/sdd-escalation/results/second-pilot-f01-f02.md`. No equivale
+    a completar campaña10 ni a estimar confiabilidad.
 
 ## Grafo de waves
+
+F10 real autorizado y completado bajo implementación aprobada: Luna/max,
+lite forzado experimental, un intento `pilot-03e56ba6-743c-4150-9db6-f9709c0ebd49`,
+success 6/6, 984.724 s completos, 28 pasos, 839964 tokens reportados, USD0 cliente
+no factura. Límites USD1 blando/1200s/32 pasos, tokens sin tope. Circuito aislado
+cuatro DBs, calibración/E2E y revisión técnica F10 registrados; evidencia
+`.agent-lab/sdd-escalation/results/f10-first-real-pilot.md` y `f10-preparation.md`.
+No se marca completa la campaña10 ni se cierra esta spec; F05/F06/F08/F09 en el
+circuito real, repeticiones y control siguen pendientes.
+
+Primer resultado real F07 autorizado: `pilot-5f8c4d43-5448-4ae9-8430-8348d1103cc5`,
+Luna/max, lite forzado experimental, success 6/6, 246.701 s, 23 pasos y 377026 tokens
+reportados; costo cliente USD0, no factura. Límites USD1 blando/1200 s/32 pasos,
+tokens sin tope. Evidencia `.agent-lab/sdd-escalation/results/f07-first-real-pilot.md`.
+Un solo intento; no benchmark10, tasa de confiabilidad ni cierre de esta spec.
+
+Checkpoint adicional F07: la sub-spec `aislamiento-evaluador-f07/` completó la
+implementación del supervisor/inspector y E2E fake de 3/5 fases, cero modelos,
+referencia 6/6 y cinco mutaciones rechazadas. Suite 861 passed, 1 deselected.
+Reauditoría técnica IA documentada en `.security/reviews/f07-2026-10-07.md` y registro
+F07 instalado sin autorización de gasto. Evidencia local:
+`.agent-lab/sdd-escalation/results/f07-implementation-complete.md`.
+Verification de esa sub-spec y primer intento real F07 siguen pendientes; esto
+no completa campaña10, confiabilidad ni Verification de la spec principal.
 
 ```mermaid
 flowchart LR

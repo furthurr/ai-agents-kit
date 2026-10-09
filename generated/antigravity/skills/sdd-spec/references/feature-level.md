@@ -1,68 +1,83 @@
-# Calificación de feature
+# Esfuerzo previsto del LLM — ReserveLab
 
 Solo el agente SDD comunica esta calificación. Cargar `sdd-spec` desde otro agente
-no concede permiso para emitirla. La puntuación evalúa la feature completa, nunca
-una tarea, fase, modelo o proveedor.
+no concede permiso para emitirla. Puntúa la feature completa solicitada
+(implementación y verificación), no tareas/fases ni el proyecto entero. Bugs,
+consultas y exploraciones no puntúan como features por defecto.
 
-## Evidencia y rúbrica ordinal
+## Comparación del esfuerzo
 
-Analiza primero el alcance deseado y su impacto real en el proyecto. Considera
-extensión del alcance, acoplamiento, dificultad técnica, impacto de fallos y
-esfuerzo de verificación/reversión. Usa evidencia de módulos, contratos,
-integraciones, persistencia y tests; no estimes por cantidad de archivos/líneas,
-tiempo o capacidad del modelo.
+Analiza primero el alcance deseado y su impacto real. Compara el trabajo pedido con
+ReserveLab, descontando infraestructura correcta reutilizada y considerando las
+garantías pendientes de integración, regresión y verificación. Un stub no resuelve coordinación.
+Evalúa: alcance/regresión; reglas/casos límite; estados/integridad; capas/entradas;
+persistencia/integraciones; concurrencia/idempotencia; fallos/compensación/recuperación;
+migraciones/legado; aislamiento/autorización; pruebas significativas.
 
-Selecciona el ancla más alta sustentada por evidencia. Los niveles son ordinales,
-no mediciones exactas. Una señal aislada (p. ej. editar un contrato público) no
-impone una puntuación alta sin impacto material. Si falta evidencia para definir
-alcance/impacto, investiga o pregunta; no muestres puntuación provisional.
+La escala ordinal no es una fórmula validada ni predice tokens, tiempo, pasos o costo.
+No sumes dimensiones ni puntúes por archivos, líneas o palabras de riesgo. Elige el
+perfil conjunto más comparable y explica diferencias. Si falta evidencia esencial,
+investiga o pregunta; no muestres puntuación provisional.
 
-| Nivel | Ancla orientativa |
-|---|---|
-| 1 | Cambio mínimo y localizado, patrón directo, impacto y verificación inmediatos. |
-| 2 | Cambio local pequeño con varios casos sencillos y reversión inmediata. |
-| 3 | Comportamiento acotado en un componente, con errores y tests conocidos. |
-| 4 | Varios componentes de un módulo; coordinación interna limitada. |
-| 5 | Feature de un módulo con integración existente y tests no triviales. |
-| 6 | Varios módulos con patrones conocidos y dependencias controladas. |
-| 7 | Cambio transversal significativo con coordinación amplia, sin condiciones materiales de 8–10. |
-| 8 | Impacto transversal y contrato público, integración externa significativa o decisión arquitectónica relevante. |
-| 9 | Dificultad elevada con migración compleja, concurrencia, seguridad/privacidad sensible o legado riesgoso, de impacto amplio. |
-| 10 | Cambio sistémico crítico: falla/reversión puede comprometer integridad crítica, disponibilidad general o cumplimiento; exige coordinación y verificación excepcionales. |
+## Perfiles comparables
 
-## Emisión
+| Nota | Referente | Trabajo pendiente que distingue el perfil |
+|---|---|---|
+| 1 | F01 | Transformación pura; formato exacto y validación de campos/tipos/límites. |
+| 2 | F02 | Predicados combinados, límites inclusivos y orden estable. |
+| 3 | F03 | Reglas monetarias ordenadas, redondeo entero y casos extremos. |
+| 4 | F04 | Agrupación, conflictos, normalización e idempotencia. |
+| 5 | F05–F06 | Persistencia transaccional, rollback y reintentos sobre esquema correcto. |
+| 6 | F07 | Escasez, reserve/cancel e integridad entre procesos. |
+| 7 | F08–F09 | Recuperación/dedup o convergencia/versiones con auxiliares existentes. |
+| 8 | F10 | Saga durable: tres métodos sobre participantes, locks y esquema correctos. |
+| 9 | Entre F10 y X13 | Más coordinación por construir que F10; menos interacciones que X13. Interpolación, no benchmark. |
+| 10 | X13 | Offline/sync, persistencia, autorización multiusuario, sesión, migración y recuperación combinadas. |
 
-Publica solo después de cerrar el análisis y definir el alcance deseado:
+F10 vale **8** para `Saga.submit`, `Saga.step` y `Saga.get`, con participantes,
+locking, esquema y validadores proporcionados. X13 vale **10**: hay puertos/IPC/reloj,
+pero su coordinación local/remota forma parte del trabajo; no se suma construir C12
+ni el evaluador. Los rangos históricos no se convierten matemáticamente.
 
-- `direct`: después de inspeccionar el cambio y antes de editar.
-- `lite`: al cerrar Quick Plan, en el resumen del alcance.
-- `standard`: al cerrar Requirements, en el resumen junto a Gate 1.
+## Superior a X13
 
-Formato exacto con el entero real calculado:
+Usa **10+ 🔴** solo si garantías e interacciones pendientes superan claramente X13,
+descontando infraestructura reutilizada. Explica dimensiones adicionales: por
+ejemplo, mantener X13 y añadir saga externa multirrecurso, compensaciones/fallos no
+proporcionados e interacción con permisos, sesión y migración. Volumen o una señal
+aislada no bastan; nunca lo expreses como nota 11.
+
+## Formato de salida
 
 ```text
-Nivel de feature: <n> <emoji>
+Esfuerzo previsto del LLM: <nota e icono>
+Referente del laboratorio: <prueba o rango comparable>
+Justificación: <2–4 factores; para 10+ explicar qué supera X13>
+Supuestos relevantes: <infraestructura o incertidumbres que cambian la nota>
 ```
 
-El marcador `<n>` se sustituye por el valor asignado, no por un número fijo para
-todo el rango: por ejemplo, nivel 7 → `Nivel de feature: 7 🟢`, nivel 8 →
-`Nivel de feature: 8 🟠`, nivel 9 → `Nivel de feature: 9 🟠`.
+1–7 inclusive: 🟢; 8–9: 🟠; 10: 🔴; superior a X13: exactamente 10+ 🔴. No uses
+0, decimales, rangos ni enteros mayores de 10 como nota. Si se necesita estructura,
+conserva el entero 1–10 y un indicador separado `exceeds_x13`; 10+ es valor 10 e
+indicador verdadero. No cambies datos históricos.
 
-- 1–7 inclusive: 🟢
-- 8–9: 🟠
-- 10: 🔴
+Emite tras definir alcance: `direct`, antes de editar; `lite`, al cerrar Quick Plan;
+`standard`, con Requirements/Gate 1. No muestres puntuación provisional. No repitas
+el nivel al cambiar de fase. Si cambia materialmente alcance o impacto, analiza
+primero. La nota no elige profundidad, elegibilidad de lite, testing, ejecutor,
+permisos, modelo, gates, riesgo o resultado funcional. Verde no habilita lite ni
+elimina exclusiones vigentes de seguridad, concurrencia, migración o integridad.
 
-No uses 0, decimales, rangos ni números de ejemplo como puntuación fija. Añade
-1–3 motivos concretos y el alcance evaluado en el artefacto de Requirements cuando
-exista; la línea visible mantiene el formato exacto anterior. No repitas el nivel
-al cambiar de fase ni pidas aprobación de la calificación. Un gate real sigue
-requiriendo su propia aprobación.
+## Contrastes mínimos
 
-Si cambia materialmente alcance o impacto, analiza primero la nueva definición y
-actualiza el registro con los motivos. No mantengas una puntuación que describa el
-alcance anterior.
+| Caso | Nota | Referente | Diferencia que explica el esfuerzo |
+|---|---|---|---|
+| F10-scaffold | 8 🟠 | F10 | Tres métodos; participantes y locks ya proporcionados; falta coordinar la saga. |
+| F10-sin-scaffold | 9 🟠 | Entre F10 y X13 | Mismo alcance funcional, pero hay que construir coordinación/participantes. |
+| X13-plus-saga | 10+ 🔴 | Superior a X13 | Saga y compensación externa con interacciones nuevas. |
 
-No puntúes bugs, consultas o exploraciones como features por defecto. No uses la
-puntuación para elegir `direct`, `lite` o `standard`, estrategia de testing,
-ejecutor, permisos o modelo. La calificación no es una certificación de seguridad,
-estimación de tiempo ni autorización para implementar.
+## Evidencia de X13
+
+Luna/MAX **no superó X13**: 10/11 familias funcionales aprobadas, C12 válido y
+fallo `admin_create`. Es un resultado suplementario acotado, no éxito completo ni
+frontera universal de capacidad.

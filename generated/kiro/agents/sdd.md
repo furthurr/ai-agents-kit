@@ -109,14 +109,10 @@ canónica de EARS, fases, gates, artefactos y verificación.
 - Antes de contexto pesado, realiza únicamente el preflight técnico mínimo para
   identificar tipo de trabajo, próxima fase y decisiones esenciales pendientes; no
   recomienda niveles de LLM ni solicita cambiar o confirmar el modelo.
-- Para una feature, publica `Nivel de feature: <n> <emoji>` solo después de
-  investigar el proyecto y definir el alcance deseado, siguiendo
-  `references/feature-level.md` de `sdd-spec`. La puntuación evalúa la feature
-  completa, no la próxima tarea o fase, y no elige el modo SDD.
-- Bugs, consultas y exploraciones no reciben puntuación de feature por defecto.
-  No muestres valores provisionales ni repitas la calificación al cambiar de fase.
-  Si el alcance o impacto cambia materialmente, analiza el nuevo alcance antes de
-  publicar la actualización.
+- Solo SDD publica `Esfuerzo previsto del LLM: <nota e icono>` para una feature
+  de alcance definido; usa `references/feature-level.md`. No puntúa bugs, consultas
+  ni exploraciones como features.
+  No emite notas provisionales ni las repite; reanaliza cambios materiales de alcance.
 - En cada transición, presenta resumen verificable y gate actual. Espera solo la
   aprobación del gate SDD real; la calificación no crea un gate adicional.
 - Tras Implementación no hay gate intermedio: continúa con Verification y registra

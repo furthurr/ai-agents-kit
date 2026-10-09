@@ -1,49 +1,33 @@
-# Seguridad — AI Agents Kit
+# Seguridad — ai-agents-kit / laboratorio SDD
 
-Estado canónico de seguridad del kit. Este repositorio distribuye agentes,
-skills y herramientas de instalación; no es una aplicación móvil ni un servicio
-de usuario.
+Registro de revisión puntual de seguridad del circuito experimental F07. No es una
+certificación del repositorio completo ni del sandbox.
 
 ## Estado de sincronización
 
-- Plataforma/tecnología: Markdown, JSON, Python 3 (biblioteca estándar), Bash,
-  PowerShell, GitHub Actions y configuraciones de agentes.
-- Estándares aplicados: OWASP Top 10 for LLM Applications 2025, OWASP AI Agent
-  Security, OWASP GitHub Actions guidance y CWE.
-- Snapshot: working tree local observado el 2026-10-05; había modificaciones
-  locales. No se usa `HEAD` como baseline ni se atribuyen cambios a él.
-- Última actualización: 2026-10-05.
-- Estado: auditoría inicial **entregada**. Hay 5 findings abiertos (2 Media,
-  3 Baja). El diferencial SDD fue revisado y SEC-0005 se registró tras la
-  autorización explícita.
+- Plataforma/tecnología: Python, pytest, SQLite, Docker y OpenCode; runner local de laboratorio.
+- Estándar aplicado: OWASP ASVS 5.0.0 (controles generales de límite de confianza e integridad) + CWE.
+- Alcance: ejecución/evaluación F07, supervisor/inspector y proxy observado; otros dominios por revisar.
+- Última actualización: 2026-10-07.
 
 ## Contexto para IA
 
-- **Perfil de riesgo:** artefactos de agentes que pueden leer repositorios y,
-  según el host, editar archivos, ejecutar comandos o consultar la web; scripts
-  que copian contenido entre el repositorio y directorios de usuario.
-- **Superficie sensible:** permisos de herramientas y prompt injection en
-  agentes; instrucciones de workspace leídas por SDD; importación mediante
-  enlaces; persistencia de artefactos antiguos; dependencias npm de OpenCode y
-  referencias de GitHub Actions.
-- **Autenticación/red/almacenamiento de aplicación:** no hay servicio de
-  aplicación, endpoints propios, usuarios finales ni almacenamiento de datos de
-  usuario. Los accesos de red revisados son los de herramientas/CI.
-- **PII/secretos:** el README publica datos de contacto del autor; no se copian
-  sus valores aquí. Una búsqueda de formatos comunes de claves/tokens no halló
-  coincidencias. Ver [`pii-secrets.md`](pii-secrets.md) para límites y ubicación.
-- **Hallazgos abiertos:** 2 Media y 3 Baja en
-  [`security-tech-debt.md`](security-tech-debt.md). El diferencial SDD está
-  registrado como SEC-0005; los hallazgos siguen pendientes de remediación.
-- **Dependencias:** el único manifiesto de paquetes detectado es
-  `.opencode/package.json`; `npm audit` informó cero vulnerabilidades conocidas
-  en el lockfile revisado. Ver [`dependencies.md`](dependencies.md).
+- Perfil de riesgo: candidato LLM no confiable modifica lógica y se ejecuta para medir reservas concurrentes e integridad del inventario.
+- Superficie sensible: `sandbox_lab_run`, MCP del candidato, `storage_rpc.py`, SQLite de evaluación y worker en Docker.
+- PII/secretos: no son el objeto de este piloto; inventario en `pii-secrets.md`, sin valores.
+- Hallazgos SEC-0001/SEC-0002 resueltos en el alcance F07 revisado; decisión y límites en `reviews/f07-2026-10-07.md`.
+- Dependencias vulnerables: SCA no ejecutado; ver `dependencies.md`.
+
+La excepción del usuario para omitir revisión formal está limitada a F01–F04
+(`.agent-lab/sdd-escalation/runtime/pilot-review-waiver.json`). No cubre F07 y no es
+un certificado de seguridad. La reauditoría técnica F07 fue realizada por el asistente
+IA y no encontró bloqueantes pendientes en el alcance comprobado. El registro final
+debe vincular fuentes/imagen y no sustituye gates SDD ni autorización de gasto/modelos.
 
 ## Índice
 
-- Tablero: [`security-tech-debt.md`](security-tech-debt.md)
-- Findings aprobados: [`findings/`](findings/)
-- PII y secretos: [`pii-secrets.md`](pii-secrets.md)
-- Dependencias: [`dependencies.md`](dependencies.md)
-- Estándares cacheados: [`standards/`](standards/) — `agentic-ai.md`,
-  `github-actions.md`, `python-shell-powershell.md`.
+- Hallazgos: `findings/`
+- Tablero: `security-tech-debt.md`
+- PII/secretos: `pii-secrets.md`
+- Dependencias: `dependencies.md`
+- Estándar utilizado: `standards/python-runner.md`
