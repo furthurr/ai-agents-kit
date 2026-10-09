@@ -3,6 +3,24 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [0.7.0] - 2026-10-08
+
+### Funcionalidades
+
+- Refinar la rúbrica de esfuerzo SDD con referentes ReserveLab y escala 10+;
+  añadir el comando de preparación del piloto del laboratorio.
+
+### Documentación y mantenimiento
+
+- Compactar y distribuir la guía SDD en seis plataformas; añadir ejemplos, specs
+  y evidencias F07/X13 y revisiones de seguridad.
+- Reforzar las pruebas de contrato y registrar la reducción de contexto operativo.
+
+### Validación y límites
+
+- Registrar la validación local: 483 comprobaciones SDD, 5 tests de recomendaciones,
+  415 de integridad y enlaces en 67 archivos.
+
 ## [0.6.0] - 2026-10-07
 
 ### Funcionalidades
