@@ -3,6 +3,34 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [1.0.0] - 2026-10-09
+
+### Funcionalidades
+
+- Definir y presentar el alcance funcional completo antes de calificar features;
+  validar explícitamente el alcance y resolver la elección de profundidad antes
+  de generar artefactos o implementar.
+- Preservar acuerdos, aprobaciones y evidencia al reanudar o modificar specs;
+  presentar el conjunto actualizado ante ajustes y distinguir aceptación del
+  alcance, modo, ejecutor, autorización de implementación y gates de fase.
+
+### Documentación y mantenimiento
+
+- Publicar la versión 1.0.0 de MAS y sincronizar el contrato SDD en seis plataformas.
+- Actualizar guías, ejemplos, arquitectura, navegación y backlog con el catálogo
+  vigente y los límites de la evidencia disponible.
+- Añadir la spec de validación del alcance completo y pruebas de contrato con
+  casos negativos de aprobación, orden de presentación y continuidad.
+
+### Validación y límites
+
+- Aprobar las 13 suites automatizadas locales, incluidas 613 comprobaciones SDD;
+  validar 10 skills y 6 agentes en 6 plataformas, enlaces en 69 archivos Markdown,
+  render reproducible y sintaxis de 12 scripts Bash.
+- Mantener pendientes los smoke tests conversacionales en hosts reales y la
+  evidencia nativa Windows de migración/recuperación de agentes retirados.
+  La versión 1.0.0 no amplía la certificación runtime documentada.
+
 ## [0.7.0] - 2026-10-08
 
 ### Funcionalidades
