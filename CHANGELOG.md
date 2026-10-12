@@ -3,6 +3,41 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [1.3.0] - 2026-10-11
+
+### Funcionalidades
+
+- Gestionar desde Documentation Orchestrator un bloque documental delimitado
+  en `AGENTS.md`, preservando el contenido externo y retirando la exportación
+  competidora de Project Navigator.
+- Añadir fragmentos compartidos para identidad y contexto, propagados a las seis
+  plataformas desde las fuentes canónicas.
+- Incorporar medición de bytes, caracteres, líneas y palabras para archivos
+  explícitamente cargados; no estima tokens reales.
+
+### Flujo de trabajo y documentación
+
+- Ajustar las instrucciones de agentes y skills para reducir duplicación y cargar
+  referencias bajo demanda.
+- Aplicar aprobación única a correcciones atómicas de bajo riesgo y conservar
+  micro-pasos para cambios estructurales o de mayor riesgo.
+- Permitir continuar dominios independientes ya autorizados cuando otro dominio
+  quede bloqueado; acotar la investigación de releases a fuentes oficiales.
+
+### Auditoría y validación
+
+- Actualizar evidencias de cierre y seguimiento de REC-01/REC-02, con sus límites
+  de cobertura documentados.
+- Ampliar pruebas y CI para fragmentos compartidos, eficiencia de contexto,
+  contratos de agentes y validación de distribuciones.
+
+### Verificación y límites
+
+- Pasar localmente las suites de CI: validación de seis plataformas, secretos,
+  contratos, integridad, permisos, enlaces e instalación; `git diff --check` limpio.
+- No se ejecutó smoke runtime de LLM; las pruebas estáticas no acreditan obediencia
+  universal de los hosts.
+
 ## [1.2.0] - 2026-10-11
 
 ### Funcionalidades
