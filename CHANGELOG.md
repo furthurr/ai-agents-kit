@@ -3,6 +3,40 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [1.2.0] - 2026-10-11
+
+### Funcionalidades
+
+- Incorporar un control distribuido de secretos de solo lectura para candidatos,
+  archivos tracked e índice Git, con exclusión de secretos confirmados y revisión
+  contextual de configuración pública y placeholders.
+- Integrar el control de secretos y sus pruebas negativas en CI.
+
+### Seguridad y permisos
+
+- Reforzar los permisos de agentes en OpenCode y Kiro, limitar las escrituras y
+  delegaciones del orquestador documental y distinguir evidencia de autorización.
+- Añadir pruebas de contrato de permisos y herramientas de comprobación en hosts
+  para permisos y política de secretos.
+
+### Documentación y mantenimiento
+
+- Añadir auditorías de MAS, consolidación de hallazgos y seguimiento REC-01/REC-02.
+- Documentar permisos por host, el procedimiento de revisión de secretos y las
+  limitaciones de los controles automatizados.
+- Incorporar specs de política de secretos y del caso F10 del laboratorio SDD,
+  junto con una presentación HTML de MAS.
+- Sincronizar agentes, skills y el control distribuido para las seis plataformas.
+
+### Validación y límites
+
+- Aprobar las 14 suites automatizadas locales, la validación de 10 skills y
+  6 agentes en 6 plataformas, los enlaces en 80 archivos Markdown y la sintaxis
+  de los scripts Bash de instalación y respaldo.
+- El control de firmas no acredita ausencia universal de secretos; las pruebas
+  locales no sustituyen la evidencia conversacional en hosts ni los pendientes
+  registrados en las fichas de seguimiento.
+
 ## [1.0.0] - 2026-10-09
 
 ### Funcionalidades
