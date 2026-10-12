@@ -3,6 +3,20 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.0.0] - 2026-10-12
+
+### Cambios incompatibles
+
+- Convertir `standard` de SDD en modo legacy opt-in; `direct` y `lite` quedan como
+  modos operativos predeterminados y `standard` requiere solicitud explícita.
+
+### Documentación y verificación
+
+- Añadir al README un prompt copiable para instalar o actualizar MAS y aclarar que
+  se reinicia la herramienta de IA donde se ejecutó el prompt.
+- Actualizar contratos y evidencias SDD, incluida la verificación experimental F10
+  con fixture; alinear el test con la política vigente para modos retirados.
+
 ## [2.0.0] - 2026-10-12
 
 ### Cambios incompatibles
