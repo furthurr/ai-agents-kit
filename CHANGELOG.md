@@ -3,6 +3,22 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.1.0] - 2026-10-12
+
+### Funcionalidades
+
+- Añadir SDD-Tiny con un único `spec.md` y recomendar profundidad según la nota de
+  feature: `direct` (1–3), SDD-Tiny (4–8) y SDD-Lite (9–10/10+).
+- Mantener Quick Plan en SDD-Lite y conservar las guardas de Direct, las elecciones
+  explícitas y los gates SDD existentes.
+
+### Verificación y distribución
+
+- Añadir pruebas de fronteras de score, incluida la codificación 10 +
+  `exceeds_x13=true`, y regenerar los artefactos para seis plataformas.
+- Documentar el antecedente F10 como evidencia acotada, sin modificar sus artefactos
+  históricos ni inferir superioridad universal de Tiny.
+
 ## [3.0.0] - 2026-10-12
 
 ### Cambios incompatibles
