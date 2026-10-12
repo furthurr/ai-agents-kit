@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SDD = ROOT / "canonical" / "skills" / "sdd-spec"
 SDD_AGENT = ROOT / "canonical" / "agents" / "sdd.md"
-SPECIALISTS = ("architecture", "code-quality", "data-api", "security", "ui-design")
+SPECIALISTS = ("code-quality", "security")
 
 PASSED = 0
 FAILED = 0
@@ -165,7 +165,7 @@ def test_scope_depth_contract() -> None:
         check(term in split, f"división segura: {term}")
     selection = normalized(section(policy, "Selección y continuidad")).lower()
     for term in ("elección explícita", "no se rebaja", "no aprueba gates", "no repitas",
-                 "solo planificación", "históricas", "bugfix", "especialista"):
+                 "solo planificación", "históricas", "bugfix", "developer"):
         check(term in selection, f"selección manual: {term}")
     reference = read(SDD / "references" / "feature-level.md")
     output = section(reference, "Formato de salida")
@@ -757,18 +757,14 @@ def test_navigator_context_contract() -> None:
 
 def test_specialists_recommend_sdd_without_switching() -> None:
     for specialist in SPECIALISTS:
-        agent_id = ("documentation-orchestrator" if specialist == "architecture" else
-                    "code-review" if specialist in ("code-quality", "security") else specialist)
-        agent = read(ROOT / "canonical" / "agents" / f"{agent_id}.md")
+        agent = read(ROOT / "canonical" / "agents" / "code-review.md")
         skill = read(ROOT / "canonical" / "skills" / specialist / "SKILL.md")
         normalized_agent = normalized(agent)
         normalized_skill = normalized(skill)
-        check("{{sdd_agent}}" in agent, f"{specialist}: agente puede recomendar SDD")
-        check("{{sdd_agent}}" in skill, f"{specialist}: skill define criterio SDD")
+        check("{{sdd_agent}}" in agent, f"{specialist}: Code Review can recommend explicit SDD selection")
+        check("{{sdd_agent}}" in skill, f"{specialist}: review skill describes SDD escalation")
         check("cambies de agente" in normalized_agent and "automáticamente" in normalized_agent,
-              f"{specialist}: agente no cambia automáticamente")
-        check("cambies de agente" in normalized_skill and "automáticamente" in normalized_skill,
-              f"{specialist}: skill conserva decisión del usuario")
+              f"{specialist}: Code Review never switches automatically")
 
     quality = read(ROOT / "canonical" / "skills" / "code-quality" / "SKILL.md")
     security = read(ROOT / "canonical" / "skills" / "security" / "SKILL.md")
@@ -779,116 +775,96 @@ def test_specialists_recommend_sdd_without_switching() -> None:
 
 
 def test_agent_routing_policy() -> None:
-    """Validate instructions, not a simulated runtime LLM classifier."""
+    """SDD is an explicit methodology choice, not domain-based agent routing."""
     path = SDD / "references" / "agent-routing.md"
-    check(path.is_file(), "routing: referencia canónica existe")
+    check(path.is_file(), "selection: reference for explicit SDD selection exists")
     if not path.is_file():
         return
     text = read(path)
     compact = normalized(text).lower()
     for heading, terms in (
-        ("Candidatos y límites", ("`ui-design`", "`data-api`", "lógica de negocio",
-                                  "seguridad transversal", "no verificable",
-                                  "no enumeres ni recomiendes otros agentes")),
-        ("Precedencias", ("elección explícita", "palabras clave", "mixto",
-                          "contratos", "migraciones", "múltiples pantallas")),
-        ("Decisión manual", ("seleccionar manualmente", "continuar con sdd",
-                            "no cambia el agente activo", "no invoca subagentes",
-                            "no delega ejecución automáticamente", "no repetir")),
-        ("Contexto para selección manual", ("objetivo", "exclusiones", "rutas relativas",
-                                           "requisitos", "tareas", "gate pendiente",
-                                           "preguntas", "secretos", "no acredita entrega")),
-        ("Integración con SDD", ("preflight", "antes de editar", "gate",
-                                "profundidad", "estrategia de pruebas", "autorización")),
+        ("Precedencia", ("selecciona el agente `sdd`", "planificación e implementación",
+                         "no deriva automáticamente a `developer`", "skills `ui-design` y `data-api`",
+                         "developer nunca carga esta metodología")),
+        ("Continuidad y autorización", ("no aprueba fases", "ni amplía permisos",
+                                       "no transfiere autorización", "no crea gates adicionales")),
     ):
         body = normalized(section(text, heading)).lower()
-        check(bool(body), f"routing: sección {heading}")
+        check(bool(body), f"selection: section {heading}")
         for term in terms:
-            check(term in body, f"routing/{heading}: regla {term}")
+            check(term in body, f"selection/{heading}: rule {term}")
     manifest = json.loads(read(ROOT / "canonical" / "manifest.json"))
-    check(all(candidate in manifest["agents"] for candidate in ("ui-design", "data-api")),
-          "routing: candidatos pertenecen al catálogo real")
-    check("no es un comando universal" in compact, "routing: notación portable, no invocación nativa")
-    check("no usar `## handoff`" in compact, "routing: contexto manual separado de handoff documental")
-    check("no aprueba gates" in compact, "routing: elección no aprueba gates")
-    check("no cambia permisos" in compact, "routing: elección no cambia permisos")
-    check("no enumeres ni recomiendes otros agentes" in compact,
-          "routing: lista blanca v1 no se amplía al proponer aclaraciones")
-    check("la elección de especialista significa que esa actividad no se ejecuta en sdd" in compact,
-          "routing: selección especializada detiene ejecución local incluso si se pidió implementar")
+    check("developer" in manifest["agents"] and "sdd" in manifest["agents"],
+          "selection: Developer and SDD are separate active agents")
+    check("data-api" not in manifest["agents"] and "ui-design" not in manifest["agents"],
+          "selection: domain skills are not standalone agents")
+    check("únicamente cuando el usuario selecciona" in compact,
+          "selection: SDD starts only after explicit user selection")
+    check("dominio (ui, datos/apis, negocio o transversal) no deriva automáticamente" in compact,
+          "selection: no domain-based automatic routing")
 
 
 def test_agent_routing_integration() -> None:
     agent = read(SDD_AGENT)
     skill = read(SDD / "SKILL.md")
     for label, text in (("agente", agent), ("skill", skill)):
-        body = normalized(section(text, "Recomendación de agente por dominio")).lower()
-        check(bool(body), f"routing/{label}: entrada explícita")
-        check("references/agent-routing.md" in body, f"routing/{label}: referencia bajo demanda")
-        check("selección manual" in body and "no" in body and "automáticamente" in body,
-              f"routing/{label}: selección manual, sin cambio automático")
+        body = normalized(section(text, "Selección explícita de metodología")).lower()
+        check(bool(body), f"selection/{label}: explicit methodology section")
+        check("no" in body and "automáticamente" in body and "developer" in body,
+              f"selection/{label}: no automatic switch to Developer")
+        check("data-api" in body and "ui-design" in body,
+              f"selection/{label}: domain skills are optional technical context")
     implementation = normalized(section(skill.replace("### Implementación", "## Implementación"),
                                         "Implementación")).lower()
-    check("agent-routing.md" in implementation and "gates pendientes" in implementation,
-          "routing: tareas acotadas preservan gates pendientes")
+    check("dentro de sdd" in implementation and "gates pendientes" in implementation,
+          "selection: implementation remains in SDD and preserves pending gates")
     requirements = normalized(skill[skill.index("### Fase 1 — Requirements"):]).lower()
     check("la ausencia de contexto no obliga a cambiar de agente" in requirements,
-          "routing: ausencia de README no impone cambio ni duplica elección")
+          "selection: missing README does not change the selected agent")
 
 
 def test_agent_routing_write_barrier() -> None:
-    """Regression for R01: instructions must make routing a prerequisite to writing."""
+    """Selecting SDD activates SDD gates without a second domain-agent choice."""
     agent = read(SDD_AGENT)
     guard = section(agent, "Control previo a cualquier escritura")
     compact = normalized(guard).lower()
-    check(bool(guard), "routing/R01: control de escritura explícito en agente")
+    check(bool(guard), "selection: write control remains explicit in agent")
     check(bool(guard) and agent.index(guard) < agent.index("## Reglas inviolables"),
-          "routing/R01: control visible antes de las reglas generales")
-    for term in ("solo visual", "`ui-design`", "solo datos", "`data-api`",
-                 "carga `sdd-spec`", "references/agent-routing.md", "no uses `edit`",
-                 "selección explícita", "no equivale", "preflight"):
-        check(term in compact, f"routing/R01: antecedente {term}")
-    skill = normalized(section(read(SDD / "SKILL.md"), "Recomendación de agente por dominio")).lower()
-    check("no uses herramientas de escritura" in skill and "decisión de ejecutor" in skill,
-          "routing/R01: skill prohíbe escribir sin resolver ejecutor")
-    check("la lista v1 es cerrada" in skill and "no enumeres ni recomiendes otros agentes" in skill,
-          "routing: skill refuerza lista cerrada")
+          "selection: control precedes general rules")
+    for term in ("seleccionó explícitamente", "no clasifiques por dominio", "developer",
+                 "carga `sdd-spec`", "`data-api`", "`ui-design`", "no uses herramientas de escritura",
+                 "decisiones esenciales", "gates"):
+        check(term in compact, f"selection: SDD guard includes {term}")
+    skill = normalized(section(read(SDD / "SKILL.md"), "Selección explícita de metodología")).lower()
+    check("no vuelvas a clasificar el agente ejecutor" in skill and "no deriva automáticamente" in skill,
+          "selection: skill does not add a second executor-routing gate")
+    check("mantén planificación e implementación" in skill and "gates sdd" in skill,
+          "selection: skill keeps SDD ownership and gates")
     reference = normalized(read(SDD / "references" / "agent-routing.md")).lower()
-    check("seleccionar el agente `sdd` no equivale" in reference,
-          "routing/R01: abrir SDD no suprime recomendación del especialista")
-    check("no uses herramientas de escritura" in reference,
-          "routing/R01: referencia conserva barrera explícita")
-    check("la petición original incluyera «implementa»" in reference
-          and "detente en sdd" in reference,
-          "routing/R10: selección manual detiene implementación local")
+    check("únicamente cuando el usuario selecciona el agente `sdd`" in reference,
+          "selection: methodology requires explicit SDD selection")
+    check("developer nunca carga esta metodología" in reference,
+          "selection: Developer remains outside SDD")
 
 
 def test_agent_routing_scope_and_manual_handoff() -> None:
-    """Keep v1 candidates closed and make specialist choice a stop-and-package branch."""
+    """Keep SDD independent and make requested agent changes explicit."""
     reference = normalized(read(SDD / "references" / "agent-routing.md")).lower()
-    check("solo `ui-design` y `data-api`" in reference,
-          "routing/R04: lista blanca v1 explícita")
-    check("no enumeres ni recomiendes otros agentes" in reference,
-          "routing/R04: no filtrar otros candidatos al aclarar")
-    check("mantén sdd" in reference,
-          "routing/R04: agente fuera de la lista mantiene SDD")
-    specialist = normalized(section(read(SDD / "references" / "agent-routing.md"),
-                                   "Contexto para selección manual")).lower()
-    for term in ("si el usuario elige explícitamente al especialista", "detente en sdd",
-                 "no continúes la implementación aquí", "la petición original incluyera «implementa»",
-                 "contexto copiable"):
-        check(term in specialist, f"routing/R10: selección especialista → stop/package ({term})")
+    for term in ("el usuario selecciona el agente `sdd`", "no deriva automáticamente a `developer`",
+                 "skills `ui-design` y `data-api`", "si el usuario pide cambiar de agente",
+                 "resumen portable", "no transfiere autorización"):
+        check(term in reference, f"selection: explicit SDD continuity contract ({term})")
 
 
 def test_agent_routing_conflict_clarification() -> None:
-    """Clarification must never broaden the v1 candidate set."""
+    """Domain classification cannot silently activate or leave SDD."""
     skill = normalized(read(SDD / "references" / "agent-routing.md")).lower()
-    check("no enumeres ni recomiendes otros agentes" in skill,
-          "routing/R04: no propone candidatos fuera de v1 al aclarar")
-    check("explica solo que queda fuera de los dos candidatos" in skill,
-          "routing/R04: dominio externo a lista queda en SDD")
-    check("security" not in skill and "code-quality" not in skill and "architecture" not in skill,
-          "routing/R04: referencia no lista terceros como candidatos")
+    check("el dominio" in skill and "no deriva automáticamente" in skill,
+          "selection: no automatic routing based on feature domain")
+    check("developer nunca carga esta metodología" in skill,
+          "selection: Developer cannot silently enter SDD")
+    check("si el usuario pide cambiar de agente" in skill,
+          "selection: only user-requested changes prepare portable context")
 
 
 def test_agent_routing_generated() -> None:
@@ -898,23 +874,19 @@ def test_agent_routing_generated() -> None:
         agent = read(ROOT / "generated" / platform / "agents" / adapter["filename"])
         skill = read(ROOT / "generated" / platform / "skills" / "sdd-spec" / "SKILL.md")
         barrier = normalized(section(agent, "Control previo a cualquier escritura")).lower()
-        check("no uses `edit`" in barrier and "carga `sdd-spec`" in barrier,
-              f"routing/{platform}: barrera R01 propagada")
+        check("carga `sdd-spec`" in barrier and "seleccionó explícitamente" in barrier,
+              f"selection/{platform}: explicit SDD choice propagated")
         for label, text in (("agente", agent), ("skill", skill)):
-            body = normalized(section(text, "Recomendación de agente por dominio")).lower()
-            check("references/agent-routing.md" in body, f"routing/{platform}/{label}: referencia integrada")
-            check("selección manual" in body and "no cambies de agente automáticamente" in body,
-                  f"routing/{platform}/{label}: manual, sin cambio automático")
             compact = normalized(text).lower()
-            check("no enumeres ni recomiendes otros agentes" in compact,
-                  f"routing/{platform}/{label}: whitelist sin ampliación")
-            check("la elección de especialista significa que esa actividad no se ejecuta en sdd" in compact,
-                  f"routing/{platform}/{label}: stop al elegir especialista")
+            check("no deriva automáticamente a `developer`" in compact,
+                  f"selection/{platform}/{label}: no automatic Developer routing")
+            check("no vuelvas a clasificar el agente ejecutor" in compact,
+                  f"selection/{platform}/{label}: SDD remains executor")
         reference = ROOT / "generated" / platform / "skills" / "sdd-spec" / "references" / "agent-routing.md"
-        check(reference.is_file(), f"routing/{platform}: referencia distribuida")
+        check(reference.is_file(), f"selection/{platform}: reference distributed")
         if reference.is_file():
             check(reference.read_bytes() == (SDD / "references" / "agent-routing.md").read_bytes(),
-                  f"routing/{platform}: referencia idéntica a canonical")
+                  f"selection/{platform}: reference matches canonical")
 
 
 def test_generated_references_match_canonical() -> None:

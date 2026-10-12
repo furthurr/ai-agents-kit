@@ -89,13 +89,13 @@ Usuario pide algo
    p. ej. .architecture/, .sdd/specs/...
 ```
 
-El catálogo conserva seis agentes y diez skills.
-Algunos agentes cargan **una** skill (`data-api` → `data-api`).
+El catálogo conserva cinco agentes y once skills.
+Developer carga su skill de flujo y usa `data-api`/`ui-design` bajo demanda;
 `Git & Release Manager` orquesta `git-commit` y `release-management`.
 `Documentation Orchestrator` ejecuta localmente las skills core separadas
-`architecture` y `project-navigator`. Para otros dominios selecciona skills o
-prepara un handoff al agente real, sin duplicar la acción; no sustituye su
-autoridad ni crea una carpeta propia.
+`architecture` y `project-navigator`, además de `data-api`/`ui-design` para
+documentación. Solo quality/security pueden continuar con un handoff a `code-review`;
+no sustituye la autoridad de las skills ni crea una carpeta propia.
 
 ## Multiplataforma
 

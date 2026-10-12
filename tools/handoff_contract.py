@@ -24,8 +24,6 @@ REQUIRED_HANDOFF_FIELDS = {
 }
 OPTIONAL_HANDOFF_FIELDS = {"gate_state"}
 TARGET_SCOPES: dict[str, tuple[str, ...]] = {
-    "data-api": (".data/",),
-    "ui-design": (".design/",),
     "code-review": (".quality/", ".security/"),
 }
 ACTIONS = {"inspect", "bootstrap", "sync", "audit-documentation"}
@@ -89,9 +87,9 @@ def validate_handoff(
         errors.append("source debe ser documentation-orchestrator")
     target = data["target"]
     if not isinstance(target, str) or target not in TARGET_SCOPES:
-        if isinstance(target, str) and target in {"architecture", "project-navigator"}:
-            errors.append(f"target retirado: {target}; usa documentation-orchestrator para core; "
-                          "no se transfiere autorización del handoff antiguo")
+        if isinstance(target, str) and target in {"architecture", "project-navigator", "data-api", "ui-design"}:
+            errors.append(f"target retirado: {target}; usa documentation-orchestrator para documentación "
+                          "o developer para implementación; no se transfiere autorización del handoff antiguo")
         else:
             errors.append("target no admitido; calidad y seguridad usan code-review")
     if not isinstance(data["action"], str) or data["action"] not in ACTIONS:
@@ -131,7 +129,7 @@ def validate_handoff(
         for scope in scopes:
             _resolve_safe_path(
                 project_root, scope, "scope", errors,
-                check_exists=check_exists and data["action"] != "bootstrap",
+                check_exists=check_exists and data["action"] not in ("bootstrap", "inspect"),
             )
     return errors
 
@@ -179,7 +177,8 @@ def validate_result(
         workspace_root, project_root, "project_root", errors, check_exists=True
     )
     scope_roots: list[Path] = []
-    if expected_handoff and evidence_root and status == "delivered":
+    inspect_only = bool(expected_handoff and expected_handoff.get("action") == "inspect")
+    if expected_handoff and evidence_root and status == "delivered" and not inspect_only:
         scopes = _selected_scopes(expected_handoff.get("target"), expected_handoff.get("scope"),
                                   "scope", errors)
         for scope in scopes:

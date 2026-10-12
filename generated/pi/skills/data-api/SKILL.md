@@ -14,17 +14,19 @@ description: >-
 MAS significa **Multi-Agent System**; `MAS:` se dirige al kit y `@<agente>` a un rol concreto.
 
 
-Esta skill es la **referencia canónica** para documentar, auditar y ayudar a
-desarrollar la **capa de datos y APIs** de un proyecto, sin importar la
-tecnología. Su objetivo es que cualquier agente o persona encuentre en `.data/`
-un contrato claro de qué datos entran/salen y cómo. Complementa al agente `Data &
-API Agent`. Si el agente y esta skill divergen, **manda esta skill**.
+Esta skill es la **referencia canónica** para documentar, auditar y desarrollar la
+**capa de datos y APIs** de un proyecto, sin importar la tecnología. Su objetivo
+es que cualquier agente o persona encuentre en `.data/` un contrato claro de qué
+datos entran/salen y cómo. `developer` la usa para criterios técnicos de
+implementación y `documentation-orchestrator` para trabajo documental. La skill
+mantiene autoridad sobre sus estándares de dominio.
 
-> **Regla de alcance (inviolable):** esta skill trabaja SOLO la **capa de datos y
-> APIs** (DTOs, modelos, contratos, clientes de red, repositorios, mappers,
-> serialización, esquema de datos). NO toca UI ni lógica de presentación, y no se
-> mete con negocio ajeno a datos. Si aparece algo fuera de este alcance,
-> decláralo y detente.
+> **Regla de dominio:** esta skill define criterios para la **capa de datos y APIs**
+> (DTOs, modelos, contratos, clientes de red, repositorios, mappers, serialización,
+> esquema de datos). En el flujo documental no escribas UI ni negocio. Cuando
+> `developer` la use para una feature multicapa, este límite solo delimita los
+> criterios de datos/API: Developer conserva la responsabilidad integral del alcance
+> y puede continuar con las demás capas usando su skill propia.
 
 ## Cuándo usar esta skill
 
@@ -49,10 +51,6 @@ API Agent`. Si el agente y esta skill divergen, **manda esta skill**.
 **Soporte condicional (solo si se detecta en el proyecto):**
 - **GraphQL SDL** (si hay GraphQL) · **AsyncAPI** (si hay eventos/colas/streaming)
   · **gRPC/Protobuf** (si hay `.proto`).
-
-**Publicación interactiva opcional:**
-- **Scalar** puede presentar y probar manualmente un contrato OpenAPI. No es otro
-  contrato ni sustituye OpenAPI; es una vista generada para personas.
 
 ## Carpeta canónica: `.data/`
 
@@ -173,48 +171,19 @@ modo lite) con hallazgos priorizados por severidad.
 ### 6. Actualizar la marca de sincronización
 Escribe el hash de `HEAD` (o fecha), tecnología, modo y flag de BD en `README.md`.
 
-### 7. Preparar la documentación interactiva (si aplica)
+## Uso durante implementación de producto
 
-Cuando el alcance confirmado incluye una API REST, carga
-[`references/api-docs.md`](references/api-docs.md). En la primera generación de
-documentación, crea un lanzador manual para Scalar aunque todavía no exista un
-OpenAPI válido y registra sus instrucciones y estado en `.data/README.md`. En
-sincronizaciones posteriores, reutilízalo y no sobrescribas personalizaciones sin
-confirmación.
+`developer` determina el flujo global y utiliza su modo PLAN ante requisitos o
+decisiones esenciales pendientes, contratos incompatibles, esquemas/migraciones,
+varias fuentes o riesgo relevante de pérdida, duplicación o inconsistencia. Esta
+skill no recomienda ni inicia SDD; no crea `.sdd/` ni detiene una implementación
+multicapa. Implementa solo la parte de datos/API según el plan global aprobado,
+conserva la compatibilidad acordada y valida contratos y pruebas pertinentes.
 
-El lanzador debe comprobar primero el contrato y después la disponibilidad de
-Node/Scalar. No debe instalar dependencias ni iniciar servidores durante la sesión
-del agente. La instalación y el servidor se activan únicamente cuando el usuario
-ejecuta el lanzador con la opción correspondiente. Si no hay OpenAPI válido, deja
-el lanzador en estado `bloqueado`: `--check`, `--serve` y cualquier combinación
-con `--install` deben fallar claramente sin modificar el proyecto. Informa del
-motivo y no inventes ni generes automáticamente un contrato.
-
-Scalar debe servir la referencia en un entorno local o de pruebas. El backend debe
-estar ejecutándose para que el botón de prueba funcione; Scalar no lo inicia.
-Nunca incluyas credenciales, tokens, PII ni dominios productivos en el lanzador,
-HTML o configuración.
-
-## Gate de ruta antes de implementar: cambio directo o recomendación de SDD
-
-La **severidad por sí sola no decide** la ruta. Un cambio puede implementarse
-directamente cuando el resultado está claro, es localizado y reversible, queda
-por completo en datos/APIs, preserva contratos y esquemas, no requiere migración
-ni decisión arquitectónica y puede verificarse con pruebas focalizadas.
-
-Recomienda continuar con `/sdd` cuando falten requisitos o criterios de
-aceptación, o el cambio afecte contratos públicos, compatibilidad,
-esquemas/migraciones, estrategias de caché/sincronización, varias fuentes de datos,
-módulos/capas o tenga riesgo relevante de pérdida, duplicación o inconsistencia.
-Si el hallazgo es de seguridad, deriva primero a Code Review con la skill `security`; no uses SDD para
-saltar esa frontera.
-
-Al recomendar SDD, explica los criterios activados, cita el hallazgo o contrato y
-las ubicaciones disponibles, ofrece una instrucción copiable para `/sdd`
-y **detente antes de modificar código**. Nunca cambies de agente ni crees `.sdd/`
-automáticamente: el usuario decide. Si prefiere continuar aquí, aclara el alcance
-y procede solo si queda completamente dentro de esta skill y cumple sus reglas.
-Tras una implementación SDD, verifica los contratos, datos y documentación afectados.
+Durante una implementación de producto, no ejecutes el bootstrap/sync completo de
+`.data/` salvo que el usuario lo solicite como parte del alcance. Al cierre, Developer
+evalúa si `.data/` quedó desactualizada y ofrece la actualización documental
+correspondiente.
 
 ## Índice de contexto para otros agentes
 
@@ -229,20 +198,18 @@ Las plantillas completas y criterios de clasificación están en
 actualizar el artefacto correspondiente; no es necesaria para una consulta,
 triage o tarea puntual.
 
-El contrato del lanzador de documentación interactiva está en
-[`references/api-docs.md`](references/api-docs.md); cárgalo cuando se confirme una
-API REST y se vaya a preparar Scalar, exista o no todavía un OpenAPI válido.
-
 ## Reglas
 
 - Comunícate en español por defecto; si el usuario escribe en otro idioma o lo
   pide, adáptate. Sé claro y conciso.
-- Solo capa de datos/APIs: nunca toques UI ni negocio ajeno a datos.
+- En trabajo documental, limita las escrituras a datos/APIs; en implementación con
+  Developer, aplica estos criterios al dominio de datos sin restringir el alcance
+  integral autorizado.
 - **Seguridad primero:** nunca expongas secretos, tokens, credenciales ni
   dominios productivos reales; usa placeholders. Marca la PII. Los **hallazgos de
   riesgo de seguridad** (cifrado débil, TLS, fugas) se **derivan a Code Review con `security`**.
 - Cita `archivo:línea` como fuente de verdad; no inventes payloads ni respuestas.
 - Mantén los diagramas ER y contratos al día; corrige si un cambio los desactualiza.
-- La interfaz Scalar y su lanzador son artefactos derivados; OpenAPI sigue siendo
-  la fuente de verdad y el usuario ejecuta manualmente las pruebas.
+- Documenta APIs con el contrato OpenAPI existente o con el catálogo de endpoints
+  cuando no haya uno; no generes visores interactivos ni lanzadores de documentación.
 - git solo de lectura.

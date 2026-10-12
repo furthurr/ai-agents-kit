@@ -13,8 +13,9 @@
 Es la entrada responsable del core, incluso para consultas puntuales. Ejecuta
 localmente las skills separadas `architecture` y `project-navigator`, cargadas
 bajo demanda; conservan autoridad sobre `.architecture/` y `.navigator/`.
-También coordina otros dominios mediante sus skills o los agentes vigentes
-Data & API, UI Design y Code Review, sin duplicar acciones.
+También ejecuta localmente las skills `data-api` y `ui-design` para mantener sus
+carpetas documentales; Quality/Security puede ejecutarlas localmente o continuar con
+el agente vigente `code-review`, sin duplicar acciones.
 
 ## Cuándo usarlo
 
@@ -25,8 +26,9 @@ Data & API, UI Design y Code Review, sin duplicar acciones.
 - Para actualizar dominios concretos, como arquitectura y seguridad.
 - Para comprobar si la documentación cumple el gate previo a una release.
 
-Si la petición es una feature o un bugfix, redirige al agente SDD. Si es un commit,
-una versión o un tag, redirige a Git & Release Manager.
+Si la petición es una feature o un bugfix de producto, recomienda Developer. SDD se
+usa únicamente cuando el usuario selecciona explícitamente esa metodología. Si es un
+commit, una versión o un tag, recomienda Git & Release Manager.
 
 ## Modos
 
@@ -50,13 +52,13 @@ una versión o un tag, redirige a Git & Release Manager.
    una autorización efectiva del mismo alcance en la sesión puede reutilizarse.
 4. Verifica artefactos y evidencia antes de declarar un dominio completado.
 
-El orden normal es skill Architecture local, Data & API si aplica, UI Design si
-aplica, Code Review para calidad/seguridad seleccionadas y skill Project Navigator
-local al final. El core está formado por las dos skills; Data y Design son
-condicionales; Quality y Security son assurance recomendado.
+El orden normal es skill Architecture local, Data API/UI local si aplica, Code Review
+para calidad/seguridad seleccionadas y skill Project Navigator local al final. El
+core está formado por las dos skills; Data y Design son condicionales; Quality y
+Security son assurance recomendado.
 
-Cuando el usuario solicita continuar con el especialista real —o hacen falta su
-rol o permisos— en datos, UI o calidad/seguridad, emite un bloque **handoff** con identificador, origen/destino,
+Cuando el usuario solicita continuar con `code-review` —o hacen falta su
+rol o permisos— en calidad/seguridad, emite un bloque **handoff** con identificador, origen/destino,
 acción/motivo, proyecto, contexto, alcance de lectura/escritura y confirmación.
 En ese caso no ejecuta la misma acción: espera un `Handoff Result` correlacionado.
 El formato y las reglas viven en
@@ -94,7 +96,7 @@ primero el estado, el plan y las escrituras previstas.
 
 ## Qué puede modificar
 
-Los seis agentes pueden leer directamente contexto relevante: arquitectura entra
+Los agentes pueden leer directamente contexto relevante: arquitectura entra
 por `.architecture/README.md`; Navigator resuelve instancia/config y empieza por
 `ai-context.md` o `module-map.json`. Verifican baseline y cambios antes de afirmar
 vigencia. Ausencia, desfase, ambigüedad o ilegibilidad llevan a fuentes directas;
@@ -102,8 +104,8 @@ código, steering y contratos son autoridad. La lectura no autoriza mantenimient
 Una consulta local devuelve fuentes y limitaciones, sin estado `delivered` ni
 afirmación de sincronización. Los IDs de agentes retirados no heredan permisos.
 
-Puede coordinar escrituras en las carpetas documentales canónicas de los
-especialistas cuando el modo y los gates lo autorizan. No crea una carpeta
+Puede coordinar escrituras en carpetas documentales canónicas cuando el modo y los
+gates lo autorizan. No crea una carpeta
 `.documentation/` propia ni duplica la documentación de los especialistas. En el
 `AGENTS.md` raíz solo mantiene el bloque entre los marcadores
 `ai-agents-kit:documentation:start/end`; conserva todo el texto exterior y se

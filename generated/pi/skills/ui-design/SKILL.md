@@ -13,14 +13,17 @@ description: >-
 MAS significa **Multi-Agent System**; `MAS:` se dirige al kit y `@<agente>` a un rol concreto.
 
 
-Esta skill es la **referencia canónica** para documentar y estandarizar todo lo
-visual de un proyecto, sin importar la tecnología (Android/Compose/XML, iOS/
-SwiftUI/UIKit, Flutter, Web/CSS, React, etc.). Complementa al agente `UI Design
-Agent`. Si el agente y esta skill divergen, **manda esta skill**.
+Esta skill es la **referencia canónica** para documentar, estandarizar y desarrollar
+lo visual de un proyecto, sin importar la tecnología (Android/Compose/XML, iOS/
+SwiftUI/UIKit, Flutter, Web/CSS, React, etc.). `developer` la usa para criterios
+visuales de implementación y `documentation-orchestrator` para trabajo documental.
+La skill mantiene autoridad sobre sus estándares visuales.
 
-> **Regla de alcance (inviolable):** esta skill trabaja SOLO sobre lo **visual**
-> (UI). No documenta ni modifica lógica de negocio, APIs, datos, red, seguridad
-> ni infraestructura. Si aparece una petición fuera de UI, decláralo y detente.
+> **Regla de dominio:** esta skill define criterios para lo **visual** (UI). El
+> flujo documental no modifica lógica de negocio, APIs, datos, red, seguridad ni
+> infraestructura. Cuando `developer` la use en una feature multicapa, este límite
+> delimita los criterios visuales, no el alcance integral de Developer; para las
+> demás capas aplica el plan global y las fuentes pertinentes.
 
 ## Cuándo usar esta skill
 
@@ -140,25 +143,19 @@ plantilla). Del más delicado al menos importante.
 Escribe en `.design/README.md` el hash de `HEAD` y la fecha actual como último
 commit documentado.
 
-## Gate de ruta antes de implementar: cambio directo o recomendación de SDD
+## Uso durante implementación de producto
 
-La **severidad por sí sola no decide** la ruta. Un cambio puede implementarse
-directamente cuando el objetivo visual está claro, es localizado y reversible,
-queda por completo en UI, no introduce comportamiento de producto ni exige una
-decisión compartida y puede verificarse de forma focalizada.
+`developer` resuelve requisitos visuales ambiguos, rediseños de múltiples pantallas
+o flujos, nuevos estados/comportamientos, cambios reutilizables de impacto amplio y
+coordinación entre UI y otras capas mediante su modo PLAN. Esta skill no recomienda
+ni inicia SDD, no crea `.sdd/` y no detiene un cambio multicapa. Implementa UI conforme
+al plan global aprobado, reutiliza patrones existentes y verifica estados y
+accesibilidad pertinentes.
 
-Recomienda continuar con `/sdd` ante requisitos o criterios de aceptación
-ambiguos, rediseños de múltiples pantallas o flujos, nuevos estados o
-comportamientos, cambios reutilizables con impacto amplio, accesibilidad transversal
-o coordinación con negocio, datos, seguridad u otros módulos. SDD no amplía el
-alcance de esta skill: no implementes aquí las partes ajenas a UI.
-
-Al recomendar SDD, explica los criterios activados, cita el hallazgo/componente y
-las ubicaciones disponibles, ofrece una instrucción copiable para `/sdd`
-y **detente antes de modificar código**. Nunca cambies de agente ni crees `.sdd/`
-automáticamente: el usuario decide. Si prefiere continuar aquí, aclara el alcance
-y procede solo si queda exclusivamente en UI y cumple estas reglas. Tras una
-implementación SDD, verifica UI, accesibilidad y documentación visual.
+Durante una implementación de producto, no ejecutes el bootstrap/sync completo de
+`.design/` salvo que el usuario lo solicite como parte del alcance. Al cierre,
+Developer evalúa si `.design/` quedó desactualizada y ofrece la actualización
+documental correspondiente.
 
 ## Qué documentar (checklist visual)
 
@@ -190,7 +187,8 @@ triage o tarea puntual.
 
 - Comunícate en español por defecto; si el usuario escribe en otro idioma o lo
   pide, adáptate. Sé claro y conciso.
-- Solo UI: nunca documentes ni toques lógica de negocio, APIs, datos o red.
+- En trabajo documental, limita las escrituras a UI; en implementación con Developer,
+  aplica estos criterios visuales sin restringir el alcance integral autorizado.
 - No expongas secretos, tokens de auth ni certificados.
 - Cita `archivo:línea` como fuente de verdad; no inventes valores.
 - Documenta lo estandarizado Y lo estandarizable (marca lo segundo como deuda).

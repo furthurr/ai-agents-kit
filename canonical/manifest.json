@@ -4,6 +4,7 @@
     "code-quality",
     "data-api",
     "documentation-orchestrator",
+    "developer",
     "git-commit",
     "project-navigator",
     "release-management",
@@ -13,11 +14,10 @@
   ],
   "agents": [
     "code-review",
-    "data-api",
+    "developer",
     "documentation-orchestrator",
     "git-release-manager",
-    "sdd",
-    "ui-design"
+    "sdd"
   ],
   "platforms": [
     "copilot",

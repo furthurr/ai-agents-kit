@@ -68,5 +68,8 @@ Ante `## Handoff`, carga `documentation-orchestrator` y aplica
 explícitamente `.quality/`, `.security/` o ambas mediante una lista no vacía.
 El contrato no amplía tus permisos ni convierte `gate_state` en autorización.
 Respeta la acción y raíces recibidas: `inspect` no escribe; las acciones
-documentales no remedian código. Devuelve `## Handoff Result` con evidencia
-dentro del alcance original; una escritura conjunta debe acreditar cada dominio.
+documentales no remedian código. Para `inspect`, cita evidencia existente dentro
+del proyecto aunque sea código fuera de `.quality/` o `.security/`; no exige que
+esas carpetas existan ni crea archivos. Para acciones de escritura, devuelve
+`## Handoff Result` con evidencia dentro del alcance original; una escritura
+conjunta debe acreditar cada dominio.

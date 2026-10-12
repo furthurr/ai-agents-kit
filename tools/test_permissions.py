@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DOMAINS = (".navigator", ".architecture", ".data", ".design", ".quality", ".security")
-SPECIALISTS = ("code-review", "data-api", "ui-design", "sdd", "git-release-manager")
+SPECIALISTS = ("code-review", "developer", "sdd", "git-release-manager")
 
 
 def adapter(host: str, agent: str) -> dict:
@@ -53,7 +53,9 @@ class PermissionContracts(unittest.TestCase):
         rules = adapter("opencode", "documentation-orchestrator")["permission"]["task"]
         for agent in ("general", "explore", "sdd", "git-release-manager"):
             self.assertEqual(opencode_rule(rules, agent), "deny")
-        for agent in ("data-api", "ui-design", "code-review"):
+        for agent in ("developer", "sdd", "git-release-manager"):
+            self.assertEqual(opencode_rule(rules, agent), "deny")
+        for agent in ("code-review",):
             self.assertEqual(opencode_rule(rules, agent), "ask")
 
     def test_documentation_command_queries_do_not_autoapprove_write_options(self):
@@ -71,10 +73,12 @@ class PermissionContracts(unittest.TestCase):
             permission = adapter("opencode", agent)["permission"]
             for path in ("src/fixture.py", "tests/test_fixture.py", "VERSION", "CHANGELOG.md"):
                 self.assertEqual(opencode_rule(permission["edit"], path), "ask", agent)
+            if agent == "developer":
+                self.assertEqual(opencode_rule(permission["edit"], ".sdd/specs/feature/tasks.md"), "deny")
             for command in ("python3 -m unittest", "git status --short", "git commit -m fixture",
                             "git push origin fixture", "git tag fixture", "rm nonexistent-fixture"):
                 self.assertEqual(opencode_rule(permission["bash"], command), "ask", agent)
-            self.assertEqual(permission["task"], "ask")
+            self.assertEqual(permission["task"], "deny" if agent == "developer" else "ask")
             self.assertEqual(permission["external_directory"], "ask")
 
     def test_removed_rules_do_not_change_explicit_command_resolution(self):
@@ -99,7 +103,7 @@ class PermissionContracts(unittest.TestCase):
                                ("copilot", {"edit", "execute", "web"}),
                                ("kiro", {"write", "shell", "web"}),
                                ("antigravity", {"write_to_file", "replace_file_content", "run_command"})):
-            for agent in ("code-review", "data-api", "ui-design", "git-release-manager"):
+            for agent in ("code-review", "developer", "git-release-manager"):
                 self.assertTrue(required <= set(adapter(host, agent)["tools"]), (host, agent))
 
     def test_kiro_boundary_uses_exclusions_not_last_match_allow(self):

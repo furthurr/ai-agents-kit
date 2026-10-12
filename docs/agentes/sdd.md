@@ -136,43 +136,21 @@ Leer cabecera/requisitos y ampliar según impacto, sin cargar todos los artefact
 Las pruebas miden palabras/caracteres de instrucciones fijas y presupuestos,
 no tokens reales ni ahorro porcentual; código/specs y número de candidatas son variables.
 
-## Recomendación de agente por dominio
+## Selección explícita de metodología
 
-SDD evalúa quién puede ejecutar el alcance antes de editarlo. La política inicial
-cubre dos especialistas, sin invocarlos automáticamente:
+La metodología se activa al seleccionar el agente SDD. SDD mantiene la planificación
+y la implementación de solicitudes visuales, de datos/APIs, negocio o multicapa bajo
+sus propios gates; no hace routing automático a Developer ni a agentes retirados.
+Puede cargar `data-api` y `ui-design` bajo demanda como referencias técnicas sin
+cambiar el ejecutor.
 
-| Actividad | Ruta |
-|---|---|
-| Solo apariencia/componentes visuales, clara y acotada | Recomendar `ui-design`. |
-| Solo datos/APIs, clara y dentro de límites | Recomendar `data-api`. |
-| Ambigua, varios dominios o planificación pendiente por riesgo/contratos/migraciones | Mantener planificación SDD. |
-| Tarea especializada autorizada de una spec aprobada | Puede recomendar al especialista para esa tarea, conservando la spec. |
+Developer tiene un flujo independiente, con modo PLAN conversacional y sin creación
+de specs. Para usar SDD, selecciona explícitamente el agente y acepta sus gates; para
+implementar sin esa metodología, selecciona Developer. Un cambio de agente que pida
+el usuario conserva la evidencia y decisiones, pero no transfiere autorización ni
+marca tareas como completadas.
 
-La recomendación justifica el candidato y pregunta si quieres **seleccionarlo
-manualmente o continuar con SDD**. Si decides seguir aquí, no repite la recomendación
-mientras no cambien alcance, riesgo o decisión. Una selección explícita compatible
-ya dada se respeta; si contradice límites, se aclara antes de actuar.
-
-SDD no clasifica por palabras aisladas como «pantalla» o «JSON», ni ofrece un agente
-de UI para lógica de negocio o uno de datos para UI. La falta de `.design/` o `.data/`
-no obliga a cambiar de agente. Tampoco recomienda candidatos cuyo alcance no pueda
-verificar ni afirma conocer su instalación en tu host.
-
-Si eliges al especialista, entrega **Contexto para selección manual**: objetivo,
-alcance autorizado, exclusiones, rutas verificadas, requisitos/tareas y decisiones
-aprobadas si existen, fase/gates pendientes y preguntas abiertas. Copia ese contexto
-al agente seleccionado en la interfaz del host. `@` es notación del kit, no un
-comando universal. SDD no cambia la interfaz, llama subagentes ni ejecuta en paralelo
-la actividad transferida; el contexto no acredita entrega o finalización.
-
-La elección de ejecutor **no aprueba gates**, no modifica permisos ni amplía alcance.
-SDD mantiene planificación para rediseños ambiguos/multipantalla y cambios de datos
-con contratos, esquemas, migraciones o compatibilidad afectados. Una tarea aprobada
-puede ejecutarse después con el especialista sin reabrir requisitos por el mero
-cambio de ejecutor, pero el receptor conserva sus propias comprobaciones y gates.
-
-Contrato: [recomendación de agente](../../canonical/skills/sdd-spec/references/agent-routing.md).
-Evaluación: [escenarios manuales](../sdd-smoke.md#recomendación-de-agente-por-dominio).
+Contrato: [selección de metodología](../../canonical/skills/sdd-spec/references/agent-routing.md).
 
 ## Modos
 

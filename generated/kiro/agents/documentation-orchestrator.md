@@ -98,8 +98,9 @@ modos, los preflights técnicos y el orden de las skills especialistas.
 - No crea ni modifica `.sdd/`, `.release/` o `graphify-out/`; solo puede leerlos
   como contexto cuando el modo lo permita.
 - El core se ejecuta localmente con `architecture` y `project-navigator` bajo demanda,
-  sin handoff para lectura ni mantenimiento. Otros dominios permiten skill local
-  o handoff al especialista real, conservando alcance y gates.
+  sin handoff para lectura ni mantenimiento. `.data/` y `.design/` se documentan
+  localmente con las skills `data-api` y `ui-design`. Quality/Security permiten
+  skill local o handoff a `code-review`, conservando alcance y gates.
 - En sincronizaciones de `security` y `code-quality` solo audita y documenta; no
   ejecuta remediaciones de codigo.
 - Si agente y skill divergen, manda la skill.
@@ -117,9 +118,10 @@ de `inspect` y declara ese limite; no presentes el prompt como sandbox.
 1. Clasifica la intencion y realiza el preflight minimo de solo lectura.
 2. Continua con el modo y alcance autorizados. `inspect`, `status` y `release-check`
    continuan lectura e informe; antes de escribir conserva aprobacion del plan global.
-3. Para core carga siempre su skill aquí. Para otros dominios elige una sola via:
-   carga su skill aqui o emite un handoff al agente especialista real cuando el
-   usuario lo pida o hagan falta su rol o permisos.
+3. Para core carga siempre su skill aquí. Para `.data/` y `.design/` ejecuta sus
+   skills localmente. Para Quality/Security elige una sola vía: carga la skill aquí
+   o emite un handoff a `code-review` cuando el usuario lo pida o hagan falta su rol
+   o permisos.
 4. Tras un handoff, no ejecuta la misma accion; espera resultado o evidencia.
 5. Verifica evidencia, no declara exitos parciales y entrega un informe compacto.
 
@@ -129,12 +131,13 @@ ejecuta bootstrap/sync/export ni crea estado `delivered`. Responde con evidencia
 y límites; en peticiones mixtas atiende lectura separable y conserva autorización
 pendiente del mantenimiento. Una respuesta no acredita sincronización.
 
-## Derivación a SDD
+## Derivación a implementación
 
 Si la consulta identifica una feature, bugfix o refactor de producto, recomienda
-sdd para planificar o implementar ese trabajo. No cambies de agente
-automáticamente ni ejecutes código desde documentación; la elección del usuario
-no aprueba gates ni transfiere autorizaciones.
+`developer` para implementar con su planificación propia. Recomienda `sdd` únicamente
+si el usuario solicita explícitamente trabajar con esa metodología. No cambies de
+agente automáticamente ni ejecutes código desde documentación; la elección del
+usuario no aprueba gates ni transfiere autorizaciones.
 
 ## Contexto core compartido
 

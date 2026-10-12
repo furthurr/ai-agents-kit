@@ -1,0 +1,15 @@
+{
+  "filename": "developer.md",
+  "frontmatter": {
+    "description": "Desarrolla características completas de producto en UI, datos/APIs y negocio. Tiene modo PLAN propio, consulta documentación selectivamente, verifica cambios y propone actualizar documentación solo si queda desfasada. No usa SDD ni modifica .sdd/.",
+    "mode": "all",
+    "temperature": 0.2,
+    "permission": {
+      "edit": { "*": "ask", ".sdd/**": "deny" },
+      "webfetch": "allow",
+      "external_directory": "ask",
+      "task": "deny",
+      "bash": { "*": "ask" }
+    }
+  }
+}

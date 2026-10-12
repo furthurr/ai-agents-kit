@@ -114,16 +114,17 @@ exploración y en cada fase que necesite contexto nuevo. Navigator es auxiliar: 
 ausencia o desfase no bloquea SDD y nunca autoriza escribir sus índices sin
 aprobación explícita.
 
-## Recomendación de agente por dominio
+## Selección explícita de metodología
 
-Antes de escribir, resuelve el ejecutor. Solo ante un alcance íntegramente visual o
-de datos, carga una vez `references/agent-routing.md` y ofrece selección manual entre
-el especialista aplicable y SDD. No uses herramientas de escritura sin decisión de
-ejecutor. La lista v1 es cerrada a `ui-design` y `data-api`; no enumeres ni recomiendes
-otros agentes. No cambies de agente automáticamente. Si el usuario elige especialista,
-la elección de especialista significa que esa actividad no se ejecuta en SDD; entrega
-contexto y detente aunque la petición original incluyera «implementa». Reutiliza decisión
-y referencia si no cambia el alcance.
+El usuario activa esta metodología al seleccionar el agente `sdd`. No vuelvas a
+clasificar el agente ejecutor por dominio; SDD no deriva automáticamente a `developer`.
+Mantén planificación e implementación bajo los gates SDD, incluso si la tarea toca
+UI, datos/APIs, negocio o varias capas. Carga `data-api` y/o `ui-design` bajo demanda
+como referencias técnicas; esas skills no alteran intención, gates ni ownership de
+la ejecución. Si el usuario pide cambiar de agente, conserva decisiones y estado,
+prepara un resumen portable y detén la actividad actual hasta que elija cómo seguir.
+Consulta `references/agent-routing.md` solo cuando se solicite ese cambio; no crea
+un flujo de delegación automática.
 
 ## Artefactos
 
@@ -179,8 +180,8 @@ antes de reanudarla.
    la capa mínima antes del contexto de dominio.
 2. Detecta dominio y lee solo su `README.md` de contexto (`.architecture/`,
    `.design/`, `.data/`, `.security/`, `.quality/`). La ausencia de contexto no obliga
-   a cambiar de agente: aplica `references/agent-routing.md` si corresponde, respeta
-   la elección previa y, si el usuario continúa, captura lo imprescindible en `design.md`.
+   a cambiar de agente: usa fuentes directas, respeta la selección SDD y captura en
+   `design.md` lo imprescindible para las decisiones aprobadas.
 3. Reutiliza el alcance y los criterios acordados; registra la calificación ya
    emitida si aplica y la profundidad elegida, sin repetirla ni inferir Gate 1 aprobado.
 4. Descompón en historias de usuario.
@@ -214,9 +215,9 @@ antes de reanudarla.
 
 ### Implementación
 
-- Para una tarea especializada acotada, reutiliza la decisión de `agent-routing.md`;
-  recárgala solo si cambia el alcance. Conserva vínculo a requisitos/tareas,
-  autorización y gates pendientes.
+- Mantén la ejecución dentro de SDD y conserva vínculo a requisitos/tareas,
+  autorización y gates pendientes. Carga skills de dominio bajo demanda cuando
+  aporten estándares técnicos para el trabajo.
 - Una tarea a la vez o en waves. Estados: `[ ]` → 🔵 → `[x]`.
 - No emitas niveles por tarea/fase ni recomendaciones de modelo durante Implementación.
 - Antes de `[x]`: `references/integrity-gate.md`.

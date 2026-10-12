@@ -8,7 +8,9 @@ Covered contracts (docs/mejoras.md P0.4):
 
 * A complete install leaves every skill and agent of the manifest in place.
 * Missing or partial ``generated/`` content aborts with a non-zero exit code and
-  never prints a success line.
+  never prints a success line, including missing or altered nested references.
+* The shared preflight verifies every expected installed file and SHA-256 before
+  an installer reports success.
 * ``--dry-run`` creates and modifies nothing.
 * Re-running the installer is idempotent.
 * The backup taken before overwriting can restore the previous state.
@@ -117,6 +119,25 @@ def run_installer(
     )
 
 
+def run_check_installed(repo: Path, platform: str, skills_dest: Path, agents_dest: Path):
+    return subprocess.run(
+        [
+            sys.executable,
+            str(repo / "tools" / "install_preflight.py"),
+            "--platform",
+            platform,
+            "--check-installed",
+            "--skills-dest",
+            str(skills_dest),
+            "--agents-dest",
+            str(agents_dest),
+        ],
+        capture_output=True,
+        text=True,
+        env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+    )
+
+
 def installed_paths(home: Path, platform: str) -> tuple[Path, Path]:
     skills_rel, agents_rel, _ = PLATFORMS[platform]
     return home / skills_rel, home / agents_rel
@@ -212,6 +233,56 @@ def test_falla_si_falta_una_skill() -> None:
                 f"{platform}: no declara éxito con contenido incompleto",
                 result.stdout,
             )
+
+
+def test_origen_rechaza_referencia_anidada_incompleta_o_alterada() -> None:
+    print("\n\033[1m[3b] Preflight rechaza recursos anidados ausentes o alterados\033[0m")
+    relative = Path("skills/documentation-orchestrator/references/handoff.md")
+    for platform in PLATFORMS:
+        for mutation in ("missing", "modified"):
+            with tempfile.TemporaryDirectory() as temporary:
+                base = Path(temporary)
+                repo = build_repo(base)
+                reference = repo / "generated" / platform / relative
+                if mutation == "missing":
+                    reference.unlink()
+                else:
+                    reference.write_text("contenido alterado\n", encoding="utf-8")
+                home = (base / "home").resolve()
+                home.mkdir()
+                result = run_installer(repo, home, platform)
+                check(result.returncode != 0,
+                      f"{platform}/{mutation}: falla antes de instalar la referencia")
+                check(not claims_success(result),
+                      f"{platform}/{mutation}: no declara la instalación completa")
+                check(not entries_under(home),
+                      f"{platform}/{mutation}: no escribe contenido parcial")
+
+
+def test_destino_rechaza_referencia_anidada_ausente_o_alterada() -> None:
+    print("\n\033[1m[3c] Postflight verifica bytes de recursos anidados\033[0m")
+    relative = Path("documentation-orchestrator/references/handoff.md")
+    for platform in PLATFORMS:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            repo = build_repo(base)
+            home = (base / "home").resolve()
+            home.mkdir()
+            result = run_installer(repo, home, platform)
+            check(result.returncode == 0, f"{platform}: instala antes de probar el postflight", result.stderr)
+            skills_dest, agents_dest = installed_paths(home, platform)
+            target = skills_dest / relative
+            original = target.read_bytes()
+
+            target.unlink()
+            missing_result = run_check_installed(repo, platform, skills_dest, agents_dest)
+            check(missing_result.returncode != 0,
+                  f"{platform}: postflight rechaza referencia ausente", missing_result.stderr)
+
+            target.write_bytes(original + b"\nmodified\n")
+            modified_result = run_check_installed(repo, platform, skills_dest, agents_dest)
+            check(modified_result.returncode != 0,
+                  f"{platform}: postflight rechaza referencia alterada", modified_result.stderr)
 
 
 # ---------------------------------------------------------------------------
@@ -372,6 +443,8 @@ def main() -> int:
         test_install_completo()
         test_falla_si_falta_generated()
         test_falla_si_falta_una_skill()
+        test_origen_rechaza_referencia_anidada_incompleta_o_alterada()
+        test_destino_rechaza_referencia_anidada_ausente_o_alterada()
         test_dry_run_sin_efectos()
         test_actualizacion_idempotente()
         test_rollback_desde_backup()

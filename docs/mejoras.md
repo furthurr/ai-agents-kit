@@ -7,8 +7,9 @@ real y facilitar una adopción sostenible.
 
 ## Evaluación de partida y objetivo
 
-Revisión documental: **2026-10-09**. Catálogo vigente: seis plataformas, seis
-agentes y diez skills. Los resultados históricos de este backlog conservan sus
+Revisión documental: **2026-10-09**. En esa revisión, el catálogo tenía seis
+plataformas, seis agentes y diez skills; el inventario actual es de cinco agentes y
+once skills. Los resultados históricos de este backlog conservan sus
 fechas y cantidades; no acreditan la ejecución del working tree actual.
 
 La calificación separa la calidad de la idea de la madurez del producto que se
@@ -393,8 +394,8 @@ pero no inventa desde cero toda la estructura.
 ## Hecho
 
 Los hitos siguientes conservan su inventario y resultados históricos. El catálogo
-vigente es de seis agentes y diez skills; Navigator y Architecture siguen como
-skills separadas bajo Documentation Orchestrator.
+vigente es de cinco agentes y once skills; Navigator, Architecture, Data API y UI
+Design siguen como skills separadas, usadas por sus flujos actuales.
 
 - [x] Contrato MVP migrado a `canonical/skills/project-navigator/` y criterios
   manuales extraídos a [navigator-smoke.md](navigator-smoke.md).
@@ -421,15 +422,15 @@ skills separadas bajo Documentation Orchestrator.
   corregido: los tres instaladores bash declaraban «Instalación completada» con
   exit `0` sin haber copiado nada cuando faltaba `generated/`, y `--dry-run`
   creaba 3 directorios en Kiro y 4 en OpenCode. Nuevo `tools/install_preflight.py`
-  centraliza la definición de «instalación completa» a partir del manifest y lo
-  comparten los seis instaladores (`--check-source` antes de escribir,
-  `--check-installed` antes de declarar éxito). Artefactos no declarados se
-  informan y **nunca** se borran, por no poder distinguirlos de skills propias.
-  Corregido además `find -printf` (extensión GNU ausente en macOS) y las rutas de
-  backup de Copilot, que usaban etiquetas con espacios, paréntesis y `~`.
-  Evidencia: `tools/test_install.py` pasa 72/72 (antes 28/42 con los mismos
-  tests), `bash -n` limpio en los 6 scripts, y ambos pasos añadidos al CI.
-  Restauración y desinstalación documentadas en
+  centraliza la definición de «instalación completa» y la comparten los seis
+  instaladores (`--check-source` antes de escribir, `--check-installed` antes de
+  declarar éxito). REC-05 amplía el preflight a todos los recursos esperados y sus
+  hashes contra un render temporal, antes y después de copiar. Artefactos propios
+  del perfil se informan y **nunca** se borran. Se preservan backups y `dry-run`;
+  corregidos además `find -printf` y las rutas de backup de Copilot.
+  Evidencia actual: `tools/test_install.py` 250/250, `test_antigravity_install.py`
+  22/22 y `bash -n` limpio; PowerShell ejecutable en todos los hosts queda sujeto
+  a CI Windows. Restauración y desinstalación documentadas en
   [instalacion.md](instalacion.md).
 - [x] Mitad Bash de la comprobación de sintaxis de P0.3: `bash -n` sobre
   `scripts/install/*.sh` y `scripts/backup/*.sh` en CI. La mitad PowerShell sigue

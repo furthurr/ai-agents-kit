@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -62,10 +63,12 @@ class HandoffContractTest(unittest.TestCase):
     def test_valid_handoff(self) -> None:
         self.assertEqual(validate_handoff(self.valid_handoff(), self.workspace), [])
 
-    def test_core_targets_retired_without_authorization_transfer(self) -> None:
-        self.assertEqual(set(TARGET_SCOPES), {"data-api", "ui-design", "code-review"})
+    def test_retired_targets_rejected_without_authorization_transfer(self) -> None:
+        self.assertEqual(set(TARGET_SCOPES), {"code-review"})
         for target, scope in (("architecture", ".architecture/"),
-                              ("project-navigator", ".navigator/")):
+                              ("project-navigator", ".navigator/"),
+                              ("data-api", ".data/"),
+                              ("ui-design", ".design/")):
             with self.subTest(target=target):
                 data = self.valid_handoff(target=target, scope=scope, write_scope=scope)
                 original = dict(data)
@@ -301,8 +304,6 @@ class HandoffContractTest(unittest.TestCase):
     def test_receiver_agents_declare_the_protocol(self) -> None:
         targets = {
             "code-review": "code-review",
-            "data-api": "data-api",
-            "ui-design": "ui-design",
         }
         for filename, target in targets.items():
             with self.subTest(agent=filename):
@@ -325,12 +326,12 @@ class HandoffContractTest(unittest.TestCase):
 
     def test_skill_prevents_duplicate_execution(self) -> None:
         skill = (ORCH / "SKILL.md").read_text(encoding="utf-8")
-        self.assertIn("nunca ambas para la misma accion", skill)
+        self.assertIn("nunca ambas para la misma acción", skill)
         match = re.search(r"^## Flujo (?:de ejecución|tras Gate 0)\s*\n(.*?)(?=Orden normal|^## |\Z)",
                           skill, re.M | re.S)
         self.assertIsNotNone(match, "Falta sección del flujo de ejecución")
         flow = match.group(1)
-        self.assertLess(flow.index("handoff al agente especialista real"), flow.index("Cierra con estado"))
+        self.assertLess(flow.index("handoff a `code-review`"), flow.index("Cierra con estado"))
 
     def test_generated_contract_matches_canonical(self) -> None:
         manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
@@ -420,6 +421,67 @@ class CodeReviewScopeTest(unittest.TestCase):
                                          expected_handoff=expected), [])
         self.assertTrue(validate_result(self.result([".security/README.md"]), self.workspace,
                                         expected_handoff=expected))
+
+    def test_inspect_can_cite_code_without_documentation_directories(self) -> None:
+        for folder in (".quality", ".security"):
+            shutil.rmtree(self.workspace / folder)
+        (self.workspace / "README.md").unlink()
+        source = self.workspace / "src" / "main.py"
+        source.parent.mkdir()
+        source.write_text("VALUE = 1\n", encoding="utf-8")
+        expected = self.handoff(
+            action="inspect",
+            scope=[".quality/"],
+            context_refs=["src/main.py"],
+            write_scope="none",
+            requires_confirmation=False,
+        )
+
+        self.assertEqual(validate_handoff(expected, self.workspace), [])
+        self.assertEqual(
+            validate_result(self.result(["src/main.py"]), self.workspace,
+                            expected_handoff=expected),
+            [],
+        )
+        self.assertFalse((self.workspace / ".quality").exists())
+        self.assertFalse((self.workspace / ".security").exists())
+
+    def test_inspect_still_rejects_evidence_symlink_escaping_project(self) -> None:
+        for folder in (".quality", ".security"):
+            shutil.rmtree(self.workspace / folder)
+        outside = self.workspace.parent / "outside-inspect.py"
+        outside.write_text("VALUE = 2\n", encoding="utf-8")
+        source_dir = self.workspace / "src"
+        source_dir.mkdir()
+        link = source_dir / "outside.py"
+        link.symlink_to(outside)
+        expected = self.handoff(
+            action="inspect",
+            scope=[".quality/"],
+            context_refs=["README.md"],
+            write_scope="none",
+            requires_confirmation=False,
+        )
+        try:
+            errors = validate_result(
+                self.result(["src/outside.py"]), self.workspace,
+                expected_handoff=expected,
+            )
+            self.assertTrue(any("escapa del proyecto" in error for error in errors), errors)
+        finally:
+            link.unlink(missing_ok=True)
+            outside.unlink(missing_ok=True)
+
+    def test_write_evidence_remains_inside_selected_scope(self) -> None:
+        source = self.workspace / "src" / "main.py"
+        source.parent.mkdir()
+        source.write_text("VALUE = 1\n", encoding="utf-8")
+        expected = self.handoff(scope=[".quality/"], write_scope=[".quality/"])
+        errors = validate_result(
+            self.result(["src/main.py"]), self.workspace,
+            expected_handoff=expected,
+        )
+        self.assertTrue(any("sale del scope" in error for error in errors), errors)
 
     def test_joint_inspect_can_return_evidence_from_one_domain(self) -> None:
         expected = self.handoff(action="inspect", write_scope="none", requires_confirmation=False)

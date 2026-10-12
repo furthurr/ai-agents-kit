@@ -8,12 +8,12 @@ truth: an installer must never report success after skipping required content.
 Modes
 -----
 ``--check-source``
-    Verify that ``generated/<platform>/`` holds every skill and agent declared in
-    ``canonical/manifest.json``. Run before touching the destination.
+    Render canonical sources in a temporary tree and compare every path and
+    SHA-256 with ``generated/<platform>/``. Run before touching the destination.
 
 ``--check-installed``
-    Verify that the destination directories hold that same content, and report
-    artifacts that the manifest does not declare. Run before reporting success.
+    Verify every expected installed file and SHA-256 against the canonical render,
+    and report undeclared top-level artifacts. Run before reporting success.
 
 ``--validate-migration``
     Read-only argument/path validation used by wrappers before any copies.
@@ -39,10 +39,12 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import tempfile
 from pathlib import Path
 
 sys.dont_write_bytecode = True
 import retired_agents
+import render as render_module
 
 ROOT = Path(__file__).resolve().parent.parent
 CANONICAL = ROOT / "canonical"
@@ -85,24 +87,18 @@ def agent_filenames(platform: str, agents: list[str]) -> dict[str, str]:
 def check_source(platform: str, manifest: dict) -> list[str]:
     """Return the list of problems found in generated/<platform>/."""
     problems: list[str] = []
-    skills_src = GENERATED / platform / "skills"
-    agents_src = GENERATED / platform / "agents"
+    platform_src = GENERATED / platform
+    agents_src = platform_src / "agents"
 
-    if not (GENERATED / platform).is_dir():
+    if not platform_src.is_dir():
         problems.append(
             f"no existe generated/{platform}/ — ejecuta primero: python3 tools/render.py"
         )
         return problems
 
-    for skill_id in manifest["skills"]:
-        skill = skills_src / skill_id / "SKILL.md"
-        if not skill.is_file():
-            problems.append(f"falta la skill '{skill_id}' (esperado {skill.relative_to(ROOT)})")
-
-    for agent_id, filename in agent_filenames(platform, manifest["agents"]).items():
-        agent = agents_src / filename
-        if not agent.is_file():
-            problems.append(f"falta el agente '{agent_id}' (esperado {agent.relative_to(ROOT)})")
+    expected = expected_inventory(platform, manifest)
+    actual = artifact_inventory(platform_src)
+    problems.extend(compare_inventories(expected, actual, f"generated/{platform}"))
 
     for entry in retired_agents.load_catalog():
         if entry["platform"] == platform and entry["id"] not in manifest["agents"]:
@@ -122,16 +118,38 @@ def check_installed(
 
     expected_skills = set(manifest["skills"])
     expected_agents = agent_filenames(platform, manifest["agents"])
+    expected_files = expected_inventory(platform, manifest)
 
-    for skill_id in sorted(expected_skills):
-        skill = skills_dest / skill_id / "SKILL.md"
-        if not skill.is_file():
-            problems.append(f"skill no instalada: {skill}")
-
-    for agent_id, filename in sorted(expected_agents.items()):
-        agent = agents_dest / filename
-        if not agent.is_file():
-            problems.append(f"agente no instalado: {agent} ({agent_id})")
+    for relative, expected_hash in sorted(expected_files.items()):
+        parts = Path(relative).parts
+        if len(parts) < 2 or parts[0] not in {"skills", "agents"}:
+            problems.append(f"artefacto renderizado fuera de skills/agents: {relative}")
+            continue
+        root = skills_dest if parts[0] == "skills" else agents_dest
+        target = root.joinpath(*parts[1:])
+        parent = root
+        unsafe_parent = None
+        for part in parts[1:-1]:
+            parent = parent / part
+            if parent.is_symlink():
+                unsafe_parent = parent
+                break
+        if unsafe_parent:
+            problems.append(f"ruta instalada contiene symlink: {unsafe_parent}")
+            continue
+        if target.is_symlink():
+            problems.append(f"archivo instalado es symlink: {target}")
+            continue
+        if not target.is_file():
+            problems.append(f"recurso no instalado: {target}")
+            continue
+        try:
+            actual_hash = retired_agents.digest(target.read_bytes())
+        except OSError as error:
+            problems.append(f"no se pudo leer recurso instalado {target}: {error}")
+            continue
+        if actual_hash != expected_hash:
+            problems.append(f"hash de recurso instalado no coincide: {target}")
 
     # Artifacts the manifest does not declare. They may be the user's own or
     # left over from a previous version of the kit; we cannot tell them apart,
@@ -179,6 +197,41 @@ def report(problems: list[str], notices: list[str], success: str) -> int:
         return 1
     print(success)
     return 0
+
+
+def artifact_inventory(root: Path) -> dict[str, str]:
+    """Return relative file paths and SHA-256 for a complete generated tree."""
+    if not root.is_dir():
+        raise OSError(f"árbol de artefactos ausente: {root}")
+    inventory: dict[str, str] = {}
+    for path in sorted(root.rglob("*")):
+        retired_agents.safe_path(path)
+        if path.is_dir():
+            continue
+        data, _ = retired_agents.read_regular(path)
+        inventory[path.relative_to(root).as_posix()] = retired_agents.digest(data)
+    return inventory
+
+
+def expected_inventory(platform: str, manifest: dict) -> dict[str, str]:
+    """Render canonical sources in a temporary tree to derive expected bytes."""
+    with tempfile.TemporaryDirectory(prefix="ai-agents-install-check-") as temporary:
+        output = Path(temporary).resolve()
+        render_module.render_platform(manifest, platform, output)
+        return artifact_inventory(output / platform)
+
+
+def compare_inventories(expected: dict[str, str], actual: dict[str, str], label: str) -> list[str]:
+    problems = []
+    expected_paths = set(expected)
+    actual_paths = set(actual)
+    problems.extend(f"{label}: falta recurso {path}" for path in sorted(expected_paths - actual_paths))
+    problems.extend(
+        f"{label}: hash de recurso no coincide {path}"
+        for path in sorted(expected_paths & actual_paths)
+        if expected[path] != actual[path]
+    )
+    return problems
 
 
 def validate_copy_targets(platform: str, skills_dest: Path, agents_dest: Path) -> None:
@@ -299,11 +352,12 @@ def main(argv: list[str] | None = None) -> int:
         if args.check_source:
             problems = check_source(args.platform, manifest)
             return report(
-                problems,
-                [],
-                f"preflight: generated/{args.platform}/ completo "
-                f"({len(manifest['skills'])} skills, {len(manifest['agents'])} agentes).",
-            )
+            problems,
+            [],
+            f"preflight: generated/{args.platform}/ completo "
+            f"({len(manifest['skills'])} skills, {len(manifest['agents'])} agentes; "
+            "árbol completo y hashes verificados).",
+        )
 
         if not args.skills_dest or not args.agents_dest:
             return fail("--check-installed requiere --skills-dest y --agents-dest")
@@ -314,7 +368,7 @@ def main(argv: list[str] | None = None) -> int:
             problems,
             notices,
             f"Verificado: {len(manifest['skills'])} skills y "
-            f"{len(manifest['agents'])} agentes instalados.",
+            f"{len(manifest['agents'])} agentes; recursos completos y hashes verificados.",
         )
     except (OSError, ValueError) as error:
         return report([str(error)], [], "")

@@ -11,13 +11,13 @@ specs, tests y código de producto tras las aprobaciones correspondientes.
 3. Abre un repositorio de prueba sin secretos, con Git y tests ejecutables.
 4. Selecciona el agente `sdd` y registra plataforma, versión, modelo, fecha y commit.
 
-## Recomendación de agente por dominio
+## Selección explícita de metodología
 
-Estos casos verifican conversaciones reales, no un clasificador simulado. Ejecuta
-en un host disponible con artefactos actualizados y un repositorio desechable.
-Instalar o cambiar configuración requiere autorización específica; no basta con
-que el renderer haya generado archivos. `@` no garantiza una invocación nativa:
-selecciona el agente en la interfaz del host.
+Estos casos verifican que SDD sea un flujo seleccionado expresamente, no un destino
+de routing por dominio. Ejecuta en un host disponible con artefactos actualizados y
+un repositorio desechable. Instalar o cambiar configuración requiere autorización
+específica; no basta con que el renderer haya generado archivos. `@` no garantiza
+una invocación nativa: selecciona el agente en la interfaz del host.
 
 Prepara componentes visuales y un serializador interno, ambos con requisitos claros;
 para casos de spec prepara marcadores/gates reales. Usa sesiones separadas salvo
@@ -26,23 +26,23 @@ producto accidentalmente mientras pruebas un gate pendiente.
 
 | Caso | Prompt / condición de prueba | Resultado esperado |
 |---|---|---|
-| R01 Solo UI | «Cambia solo el color del botón existente; conserva eventos y datos». | Recomendar `ui-design`, explicar límites y esperar elección; no editar antes. |
-| R02 Solo datos | «Ajusta esta serialización interna según estos requisitos; no cambia contrato público ni esquema». | Recomendar `data-api` si el alcance real cabe íntegramente en datos y no activa planificación pendiente. |
-| R03 Mixto | «Añade una pantalla y el endpoint que necesita». | Mantener SDD; no asignar toda la petición a UI o datos. |
-| R04 Ambiguo | «Mejora cómo manejo los datos». | Aclarar alcance o mantener planificación; no decidir solo por la palabra datos. |
-| R05 Rediseño | «Rediseña estas tres pantallas y decide sus nuevos flujos». | Mantener planificación SDD. |
-| R06 Datos de riesgo | «Migra el esquema y cambia la compatibilidad de esta API». | Planificar con SDD antes de ejecución especializada. |
-| R07 Gate pendiente | Spec con una tarea visual, pero Gate 3 pendiente; pedir especialista. | Conservar ruta/requisitos/tarea y gate; elegir agente no autoriza código. |
-| R08 Continuar SDD | Tras R01, «Prefiero seguir aquí»; nueva petición del mismo alcance. | Seguir solo lo autorizado, sin repetir recomendación; no aprobar un gate implícitamente. |
-| R09 Especialista | Tras R01, «Seleccionaré ui-design». | Contexto copiable con objetivo, restricciones y decisiones; sin `## Handoff`, sin invocación ni ejecución duplicada. |
-| R10 Explícito | Variantes «Quiero data-api para este serializador» y «Quiero ui-design para este endpoint». | Respetar elección compatible o explicar conflicto y pedir corrección. |
-| R11 No verificable | Ocultar las definiciones del candidato en el fixture y solicitar el cambio. | Mantener SDD, explicar falta de evidencia; no inventar agente instalado. |
-| R12 Distribución | Seleccionar SDD con artefactos renderizados; comprobar acceso a referencia y política. | Misma política manual; paridad estática en seis plataformas no acredita runtime en seis hosts. |
+| R01 Solo UI | «Cambia solo el color del botón existente; conserva eventos y datos». | Mantener SDD y sus gates; cargar `ui-design` solo si aporta criterio visual. |
+| R02 Solo datos | «Ajusta esta serialización interna según estos requisitos; no cambia contrato público ni esquema». | Mantener SDD y sus gates; cargar `data-api` solo si aporta criterio de contrato/datos. |
+| R03 Mixto | «Añade una pantalla y el endpoint que necesita». | Mantener SDD como ejecutor de la metodología completa; no fragmentar por skills. |
+| R04 Ambiguo | «Mejora cómo manejo los datos». | Aclarar el objetivo y decisiones esenciales dentro del flujo SDD; no cambiar agente por la palabra datos. |
+| R05 Rediseño | «Rediseña estas tres pantallas y decide sus nuevos flujos». | Mantener planificación y gates SDD. |
+| R06 Datos de riesgo | «Migra el esquema y cambia la compatibilidad de esta API». | Mantener requisitos, diseño, tareas y gates SDD antes de implementar. |
+| R07 Gate pendiente | Spec con una tarea visual, pero Gate 3 pendiente; solicitar implementar. | Conservar el gate; ni la petición de implementación ni una habilidad visual lo aprueban. |
+| R08 Continuar SDD | Continuar el mismo alcance en el agente SDD seleccionado. | Seguir solo lo autorizado, sin repetir selección de agente ni aprobar un gate implícitamente. |
+| R09 Cambio solicitado | «Quiero continuar con Developer para implementar sin SDD». | Preparar contexto portable y detener esta actividad; no cambiar la interfaz ni invocar otro agente. |
+| R10 Skill de dominio | «Usa `data-api`» o «usa `ui-design`» dentro de la tarea SDD. | Aclarar que son skills técnicas; conservar SDD como ejecutor seleccionado y aplicar sus gates. |
+| R11 Contexto ausente | No existe `.data/`/`.design/` para el dominio solicitado. | Continuar desde fuentes directas; no inicializar documentación ni cambiar agente automáticamente. |
+| R12 Distribución | Seleccionar SDD con artefactos renderizados; comprobar acceso a referencia y política. | La selección permanece explícita; paridad estática en seis plataformas no acredita runtime en seis hosts. |
 
-En toda recomendación observar que no cambia el agente activo, invoca subagentes ni
-declara tarea completada sin evidencia. Repetir R08 cambiando alcance/riesgo: debe
-reevaluar y explicar por qué cambia la ruta. Una respuesta que solo elige ejecutor
-no aprueba gates. Una respuesta ambigua se aclara sin pedir confirmar el modelo.
+En todos los casos observar que SDD no cambia el agente activo ni invoca subagentes,
+y no declara tarea completada sin evidencia. Un cambio de agente requiere petición
+explícita y conserva gates pendientes. Una respuesta ambigua se aclara sin pedir
+confirmar el modelo.
 
 ### Registro de ejecución
 
@@ -52,7 +52,7 @@ No hay resultados runtime incluidos por defecto. Conservar por escenario:
 |---|---|---|---|---|---|---|
 | R01–R12 | Pendiente | Pendiente | Pendiente | Pendiente | Pendiente | No ejecutado |
 
-**Evidencia histórica** de la feature de routing de agentes: [smoke inicial](../.sdd/specs/recomendacion-agente-por-dominio/runtime-smoke.md),
+**Evidencia histórica** de la política de routing anterior: [smoke inicial](../.sdd/specs/recomendacion-agente-por-dominio/runtime-smoke.md),
 [corrección R01](../.sdd/specs/recomendacion-agente-por-dominio/correction-evidence.md)
 y [smoke de seguimiento](../.sdd/specs/recomendacion-agente-por-dominio/followup-smoke.md).
 OpenCode 1.18.34: R01 inicial FAIL y corregido PASS; R04 FAIL por enumerar candidatos

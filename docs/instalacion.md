@@ -119,7 +119,7 @@ La copia de archivos y el preflight no prueban descubrimiento ni funcionamiento
 del host. Los scripts de instalación/exportación tienen evidencia de ejecución
 con fixtures en Linux, macOS y Windows: **22/22 pruebas nativas por OS**, Python
 3.10, [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
-**Runtime Antigravity: PENDIENTE** para descubrimiento 6/10, selección UI, carga
+**Runtime Antigravity: PENDIENTE** para descubrimiento 5/11, selección UI, carga
 de referencias e `invoke_subagent`. La versión de referencia de la aplicación
 será la registrada en un smoke completo exitoso, no el build de CI del kit.
 El CLI usa otra ruta global de skills (`~/.gemini/antigravity-cli/skills/`);
@@ -176,17 +176,17 @@ separado y no equivalen a una prueba runtime del host. El run citado acredita
 22/22 en cada uno de los tres OS; el SHA y los resultados por job se detallan en
 [evidencia automatizada de CI](antigravity-smoke.md#evidencia-automatizada-de-ci).
 
-1. **No instalan de menos en silencio.** Si falta cualquier skill o agente
-   declarado en el manifest, el script aborta con código distinto de cero
-   **antes** de tocar el destino y no imprime que la instalación se completó.
+1. **No instalan de menos en silencio.** Antes de tocar el destino, el preflight
+   compara el árbol completo de `generated/<plataforma>/` con un render temporal
+   de las fuentes canónicas, incluidos recursos anidados y hashes. Si falta o
+   cambia cualquier archivo esperado, aborta antes de copiar.
    Una instalación parcial es peor que ninguna: se manifiesta como un agente que
    parece ignorar su alcance cuando en realidad falta un archivo.
 2. **`--dry-run` no escribe nada.** No crea ni modifica directorios, ni siquiera
    los de destino.
-3. **Verifican antes de declarar éxito.** Al terminar, comprueban que el destino
-   contiene lo que el manifest declara. El preflight comprueba presencia de
-   archivos principales, no YAML, hashes ni todos los recursos de referencia;
-   esas comprobaciones corresponden a validación y pruebas de copia completa.
+3. **Verifican antes de declarar éxito.** Al terminar, comprueban la presencia y
+   el hash de cada archivo esperado, incluidos todos los recursos de referencia.
+   Los elementos adicionales del perfil se informan, pero no se borran.
 
 Si el preflight aborta, casi siempre falta regenerar:
 
@@ -208,7 +208,9 @@ tras revisión. `--force` no concede retirada ni aprobación de bytes nuevos.
 
 `documentation-orchestrator` sustituye las entradas de agente `architecture` y
 `project-navigator`; **ambas skills siguen separadas y disponibles**, igual que
-`.architecture/` y `.navigator/`. El catálogo tiene seis agentes y diez skills.
+`.architecture/` y `.navigator/`. Developer reúne las entradas `data-api` y
+`ui-design`, cuyas skills y carpetas documentales permanecen disponibles. El catálogo
+tiene cinco agentes y once skills.
 Usa `inspect` para consultas sin escritura, `bootstrap-core` para proponer la
 inicialización y sync para mantenimiento autorizado. No hay aliases ejecutables.
 

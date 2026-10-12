@@ -1,0 +1,8 @@
+{
+  "filename": "developer.md",
+  "frontmatter": {
+    "description": "Implementa features completas en UI, datos/APIs y negocio. PLAN propio, contexto selectivo, pruebas y cierre documental condicional; independiente de SDD.",
+    "argument-hint": "<resultado esperado, PLAN o implementación>"
+  },
+  "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
+}

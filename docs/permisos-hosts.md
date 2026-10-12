@@ -13,8 +13,7 @@ equivalencia entre hosts. Consulta la evidencia y pendientes en la
 |---|---|---|---|
 | documentation-orchestrator | `inspect`, `status`, checks: leer e informar, sin cachés ni marcas | Escribir únicamente `.navigator/`, `.architecture/`, `.data/`, `.design/`, `.quality/`, `.security/`, tras aprobar el plan | No modifica producto, tests, CI, configuración funcional, `.sdd/`, `.release/` ni Git remoto. Handoff conserva acción/alcance. |
 | code-review | Inspeccionar sin escribir | Registros `.quality/` y/o `.security/` del dominio solicitado | Corrección de findings en archivos autorizados y pruebas pertinentes; gates de la skill vigentes. |
-| data-api | Leer capa de datos/API sin escribir | Documentación `.data/` | Cambios autorizados de datos/API; no UI ni negocio ajeno. |
-| ui-design | Leer UI sin escribir | Documentación `.design/` | Cambios visuales autorizados; no datos/API ni negocio. |
+| developer | Leer contexto/código selectivamente; PLAN es de solo lectura | No crea ni sincroniza documentación canónica por defecto | Implementación integral de UI, datos/APIs y negocio con autonomía proporcional; no usa SDD ni modifica `.sdd/`; pruebas y checks pertinentes. |
 | git-release-manager | Estado/historial/diff/control de solo lectura | Preparación solicitada de versión/changelog | Versionado y operaciones Git con confirmaciones específicas; no código ajeno a versión/release. |
 | sdd | Investigación según petición | Planificación según modo/gates | Implementación solo con alcance y autorización correspondientes. REC-02 no modifica ese flujo. |
 
@@ -28,7 +27,7 @@ universal de directorios sin bloquear proyectos legítimos.
 
 | Host / superficie | Control distribuido | Restricciones y operaciones preservadas | Límites |
 |---|---|---|---|
-| OpenCode 1.x | `permission`: edición, shell, delegación y acceso exterior. Última coincidencia gana; reglas del agente preceden a globales. | Orquestador: edición denegada salvo rutas con los seis nombres documentales con `ask`; delegación solo a los tres especialistas con `ask`; Git de escritura y `rm` denegados. Consultas Git, shell restante y mantenimiento requieren aprobación. Otros cinco roles mantienen edición/shell/delegación/acceso exterior con `ask`. | No cambia permisos al interpretar `inspect`. Los patrones absolutos por nombre no identifican la raíz dinámica del proyecto: pueden coincidir en carpetas anidadas o externas; exterior exige aprobación adicional. Shell autorizado puede escribir fuera de las raíces; una aprobación debe evaluar el comando completo. `--auto` y aprobaciones persistentes pueden suprimir asks; denies siguen siendo relevantes. No es sandbox. |
+| OpenCode 1.x | `permission`: edición, shell, delegación y acceso exterior. Última coincidencia gana; reglas del agente preceden a globales. | Orquestador: edición denegada salvo rutas con los seis nombres documentales con `ask`; delegación solo a `code-review`; Git de escritura y `rm` denegados. Developer niega `.sdd/**` y delegación; los demás roles mantienen edición/shell con `ask`. Consultas Git, shell restante y mantenimiento requieren aprobación. | No cambia permisos al interpretar `inspect`. Los patrones absolutos por nombre no identifican la raíz dinámica del proyecto: pueden coincidir en carpetas anidadas o externas; exterior exige aprobación adicional. Shell autorizado puede escribir fuera de las raíces; una aprobación debe evaluar el comando completo. `--auto` y aprobaciones persistentes pueden suprimir asks; denies siguen siendo relevantes. No es sandbox. |
 | Kiro IDE 1.0 / CLI V3 | `tools` + `permissions.rules`; deny > ask > allow, sin precedencia por orden/scope. | Orquestador: `fs_write` deny con exclusiones para las seis raíces; escritura/shell/delegación con `ask`. Se preservan herramientas y denies existentes. | Las excepciones se expresan con `exclude`: un allow posterior no anula un deny. CLI 2.x no se certifica con esta configuración V3. Normalización de rutas, enlaces y ejecución de reglas pendientes de runtime compatible. Web tiene sandbox y no aplica este modelo YAML. |
 | Claude Code | Allowlist de herramientas; modos/settings/hooks del host y del padre | Edit/Write/Bash disponibles para auditoría documental y remediación aprobadas; no se usa `plan` universal ni se retira Bash indiscriminadamente. | La allowlist no restringe por ruta/mode. `permissionMode` puede heredarse o ignorarse según el padre y la superficie plugin; no equivale a una política por dominio. El kit no modifica settings/hooks del usuario. |
 | Copilot: IDE, CLI, cloud | Allowlist `tools` por agente | Lectura/búsqueda, edición/ejecución y especialistas según rol | Alias desconocidos se ignoran; `web` no aplica a cloud. Directorios, comandos y confirmaciones dependen de la superficie y configuración del host; lista de tools no es sandbox por carpeta. |
@@ -38,8 +37,8 @@ universal de directorios sin bloquear proyectos legítimos.
 ### Red y confianza
 
 Se conserva `webfetch: allow` en OpenCode: revisión necesita reglas Sonar/OWASP,
-datos necesita contratos/referencias, UI estándares, Git/release convenciones de
-tecnologías y documentación referencias técnicas. No se adopta un ask universal
+Developer y las skills de datos/UI necesitan contratos y estándares, Git/release
+convenciones de tecnologías y documentación referencias técnicas. No se adopta un ask universal
 de red ni se afirma control del tráfico producido por shell/MCP.
 
 Archivos ordinarios del workspace, resultados de herramientas y páginas web son

@@ -41,11 +41,11 @@ if args.action == 'start':
     repo.mkdir()
     agents = repo / '.opencode/agents'
     agents.mkdir(parents=True)
-    for name in ('documentation-orchestrator', 'code-review', 'data-api', 'ui-design'):
+    for name in ('documentation-orchestrator', 'code-review', 'developer'):
         shutil.copyfile(ROOT / 'generated/opencode/agents' / (name + '.md'), agents / (name + '.md'))
     skills = repo / '.opencode/skills'
     skills.mkdir()
-    for name in ('documentation-orchestrator', 'architecture', 'project-navigator', 'code-quality', 'security', 'data-api', 'ui-design'):
+    for name in ('documentation-orchestrator', 'developer', 'architecture', 'project-navigator', 'code-quality', 'security', 'data-api', 'ui-design'):
         shutil.copytree(ROOT / 'generated/opencode/skills' / name, skills / name)
     (repo / '.architecture').mkdir()
     (repo / '.architecture/README.md').write_text('# Fixture\n\nStatus: initial\n')

@@ -3,14 +3,14 @@
 - **Fecha:** 2026-10-10.
 - **Base:** lectura completa de los cinco informes de esta carpeta.
 - **Resultado:** 17 temas recurrentes, ordenados por prioridad de atención.
-- **Estado:** tablero operativo preparado; vigencia de los problemas y remediaciones pendientes de verificación.
+- **Estado actualizado:** tablero de origen más seguimiento de REC-01–REC-05 y REC-09–REC-17; REC-03–REC-05 implementados en el worktree, pendientes de integración/CI remota.
 - **Complemento:** [Backlog de hallazgos no recurrentes](BACKLOG-HALLAZGOS-NO-RECURRENTES.md).
 - **Ejecución entre sesiones:** [Protocolo de remediación](PROTOCOLO-REMEDIACION.md).
 - **Primera sesión:** [Prompt de REC-01](PROMPT-REC-01.md).
 
 ## 1. Resumen ejecutivo
 
-**Las mayores coincidencias son la duplicación de instrucciones (5/5 fuentes), los disparadores de skills demasiado amplios (4/5) y la obligatoriedad o incompatibilidad de alcance de Scalar (4/5).** Son puntos claros de mejora documental y contractual.
+**En la línea base, las mayores coincidencias fueron la duplicación de instrucciones (5/5 fuentes), los disparadores de skills demasiado amplios (4/5) y la obligatoriedad o incompatibilidad de alcance de Scalar (4/5).** REC-04 responde a este último retirando Scalar por completo del flujo actual; el tablero conserva la frecuencia histórica de los informes.
 
 Sin embargo, **el orden de trabajo debe comenzar por secretos, permisos efectivos y contratos de alcance**, porque pueden comprometer información o impedir operaciones legítimas. La frecuencia expresa coincidencia documental; no determina por sí sola el impacto.
 
@@ -94,13 +94,14 @@ Todas las fichas comienzan en **pendiente de verificar vigencia**. Una modificac
 - **Trabajo:** definir fuentes de lectura/evidencia pertinentes dentro del proyecto para `inspect`; mantener `write_scope` para entregables de escritura; actualizar documentación y validador juntos.
 - **Cierre:** inspeccionar proyectos con y sin documentación, citar código sin crear artefactos y rechazar rutas externas o symlinks que escapen. Una acción de escritura no puede acreditarse solo con evidencia fuera de su alcance autorizado.
 
-### REC-04 — Convertir Scalar en una operación opcional y compatible
+### REC-04 — Retirar el visor interactivo de APIs
 
 - **Fuentes:** A Hallazgo 7, 111–116 y 210–217; D AUD-08, 176–186; G H02, 91–124; E §2.1, 119 y EST-006, 266–278.
-- **Problema e impacto:** se exige un lanzador incluso sin OpenAPI y se propone `scripts/`, incompatible con handoffs limitados a `.data/`.
-- **Trabajo:** exigir necesidad explícita y contrato válido; incluir creación y ruta en el plan autorizado; usar una ruta permitida o solicitar ampliación de alcance; revisar agente, skill, referencia y handoff conjuntamente.
-- **Cierre:** documentar APIs sin lanzador sigue siendo válido; no hay escritura en `scripts/` desde un alcance `.data/`; la creación autorizada no instala dependencias ni inicia servidores durante la sesión documental.
-- **Dependencia:** REC-03 para una definición coherente de alcances; FUT-01 para selección de intención en datos.
+- **Problema e impacto:** el flujo exigía mantener un lanzador y un visor interactivo que no son contratos de API y añadían herramientas, instrucciones y rutas de escritura adicionales.
+- **Decisión de alcance (2026-10-12):** retirar Scalar del producto en vez de mantenerlo como operación optativa. OpenAPI, JSON Schema y el catálogo de endpoints conservan la documentación contractual.
+- **Trabajo:** retirar el flujo interactivo, su referencia y pruebas asociadas de `data-api`; actualizar catálogo y distribuciones.
+- **Cierre:** ninguna fuente operativa ni distribución genera visor o lanzador; la documentación API conserva OpenAPI o catálogo y sus modelos; el histórico de informes no se reescribe.
+- **Efecto sobre alcance:** al retirarse el lanzador no hace falta ampliar el scope documental ni crear artefactos fuera de `.data/`.
 
 ### REC-05 — Validar instalaciones completas
 
@@ -239,9 +240,9 @@ Estados y reglas de transición: [Protocolo de remediación](PROTOCOLO-REMEDIACI
 |---|---|---|---|---|---|
 | REC-01 | Cerrado | Coordinación / `main` `5dba871`; fix `9e0696e` | 2026-10-11 | [Ficha](seguimiento/REC-01.md), [reporte real](seguimiento/REC-01-live.json) — scanner 1/0, rechazo de excepción, contraste público/placeholder, sin exposición; suites/CI acreditadas y Gate 4 aprobado | Conservar evidencia; ajuste del harness y cierre sin commit nuevo. No certificación universal. |
 | REC-02 | Cerrado; validación runtime complementaria abierta | Coordinación / `main` `5dba871`; fix `9e0696e`; origen `remediation/rec-02` | 2026-10-11 | [Ficha](seguimiento/REC-02.md), [reporte real](seguimiento/REC-02-live.json) — matriz multi-host, controles aplicables, límites explícitos, OpenCode/Pi y CI acreditados | Remanentes de hosts/variantes en [VER-REC-02](seguimiento/VER-REC-02.md); no bloquean REC-03 ni otros hallazgos independientes. |
-| REC-03 | Pendiente | — | 2026-10-10 | — | Comprobar contrato y validador de inspect. |
-| REC-04 | Pendiente | — | 2026-10-10 | — | Coordinar con REC-03 y FUT-01. |
-| REC-05 | Pendiente | — | 2026-10-10 | — | Inventariar recursos y wrappers afectados. |
+| REC-03 | Integrado pendiente de verificación | Coordinación / `main`, baseline `43fd2dc` + trabajo local | 2026-10-12 | [Ficha](seguimiento/REC-03.md): inspect acepta evidencia de código dentro del proyecto aunque falten carpetas de findings; escrituras siguen limitadas al scope; 37 tests pasan | Revisión final integrada y conservar smoke runtime como cobertura complementaria de REC-08. |
+| REC-04 | Integrado pendiente de verificación | Coordinación / `main`, baseline `43fd2dc` + trabajo local | 2026-10-12 | [Ficha](seguimiento/REC-04.md): flujo Scalar retirado de `data-api`, catálogo actualizado y seis distribuciones sin visor; integridad 416/416 | Revisión final integrada; conservar informes originales como historia. |
+| REC-05 | Integrado pendiente de verificación | Coordinación / `main`, baseline `43fd2dc` + trabajo local | 2026-10-12 | [Ficha](seguimiento/REC-05.md): preflight compara archivos esperados y hashes con render canónico; source y postflight verificados; Bash wrappers 250/250, Antigravity 22/22 | Revisión final integrada y CI remota/runner Windows tras publicación. |
 | REC-06 | Pendiente | — | 2026-10-10 | — | Definir unidad de publicación y recuperación. |
 | REC-07 | Pendiente | — | 2026-10-10 | — | Confirmar comportamiento del importador. |
 | REC-08 | Pendiente | — | 2026-10-10 | — | Preparar baseline y escenarios por host. |
@@ -273,6 +274,9 @@ Añadir una fila por transición; no reemplazar el diagnóstico ni las fuentes h
 | 2026-10-11 | REC-02 | Integrado pendiente de verificación → Bloqueado | Coordinadora; host OpenCode 1.18.34, modelo real y proyecto temporal | Inspect sin escritura ignora instrucción embebida; petición fuera de alcance rechazada; apply_patch legítimo con autorización humana y remediación preservada. Rechazo/delegación quedan parcialmente ejecutados y no se cuentan como PASS de respuesta final. | Faltan runtime de Kiro V3 y otras superficies/variantes. No se reduce alcance ni se cierra con solo OpenCode. |
 | 2026-10-11 | REC-02 | Bloqueado para cierre → Cerrado; validación complementaria separada | Coordinación / `main` `5dba871`; reporte OpenCode real, Pi, matriz oficial por host y CI | Criterios originales satisfechos: matriz y semántica por host, controles soportados aplicados, límites no soportados expresos, runtime representativo OpenCode/Pi, aprobación humana observada, integración y CI. No se afirma paridad ni enforcement en hosts no ejecutados. | Follow-up [VER-REC-02](seguimiento/VER-REC-02.md): Kiro V3 y otros runtimes, delegación/web y respuesta final tras rechazo. No es dependencia de REC-03. |
 | 2026-10-11 | REC-09 a REC-17; FUT-02/04/05/08/11/14 | Pendiente → Implementación local; FUT-14 No vigente | Coordinación / `main`; canonical, adapters, tooling y configuración OpenCode local | Fragmentos compartidos, triggers acotados, aprobaciones proporcionales, carga SDD selectiva, poda Git, medición de texto por flujo y presupuestos cualitativos; pruebas focales en [registro](seguimiento/OPTIMIZACION-CONTEXTO.md). | Render de `generated/` pendiente mientras se coordinan cambios concurrentes de Navigator/contexto; tokens reales/turnos y activación multi-host quedan pendientes donde se indica. |
+| 2026-10-12 | REC-03 | Pendiente → Integrado pendiente de verificación | Sesión exclusiva en `main`; HEAD `43fd2dc` y cambios locales de Developer conservados | El validador separa lectura de escritura: inspect puede citar código del proyecto sin carpetas documentales; symlinks externos se rechazan; evidencia de escritura sigue dentro del scope. `tools/test_handoff_contract.py` 37/37. | Sin commit ni CI remota todavía; smoke de host no se afirma y queda como cobertura REC-08. |
+| 2026-10-12 | REC-04 | Pendiente → Integrado pendiente de verificación | Sesión exclusiva en `main`; HEAD `43fd2dc` y cambios locales de Developer conservados | Se retiró el visor/lanzador Scalar de `data-api`, se mantiene OpenAPI/JSON Schema/catálogo y se regeneraron seis plataformas; `test_integrity.py` 416/416. | Sin commit ni CI remota; preservar informes históricos y no reinstalar la opción. |
+| 2026-10-12 | REC-05 | Pendiente → Integrado pendiente de verificación | Sesión exclusiva en `main`; HEAD `43fd2dc` y cambios locales de Developer conservados | Preflight renderiza fuentes a un temporal y compara rutas/hash de archivos esperados antes de copiar; postflight verifica hash del destino. Pruebas: wrappers Bash 250/250, Antigravity 22/22, retirados 26/26; PowerShell con paridad estática. | Sin commit ni CI remota; verificación nativa Windows de instaladores fuera de Antigravity sigue pendiente. |
 
 ### Cierre
 

@@ -374,39 +374,32 @@ def test_link_checker_passes() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 15. Data & API interactive documentation workflow is present everywhere
+# 15. Data & API uses contracts/catalogs without an interactive launcher
 # ---------------------------------------------------------------------------
-def test_data_api_scalar_workflow() -> None:
-    print("\n\033[1m[15] Data & API: flujo interactivo con Scalar\033[0m")
+def test_data_api_contracts_without_interactive_launcher() -> None:
+    print("\n\033[1m[15] Data & API: contratos sin lanzador interactivo\033[0m")
 
     reference = ROOT / "canonical" / "skills" / "data-api" / "references" / "api-docs.md"
     skill = (ROOT / "canonical" / "skills" / "data-api" / "SKILL.md").read_text(encoding="utf-8")
-    agent = (ROOT / "canonical" / "agents" / "data-api.md").read_text(encoding="utf-8")
-
-    check(reference.is_file(), "Referencia canónica de Scalar existe")
-    reference_content = reference.read_text(encoding="utf-8") if reference.is_file() else ""
-    for marker in ("@scalar/cli", "--install", "--serve", "document serve", "127.0.0.1"):
-        check(marker in reference_content, f"Referencia Scalar contiene: {marker}")
-    check("references/api-docs.md" in skill, "La skill carga la referencia de Scalar bajo demanda")
-    check(
-        "La ausencia de OpenAPI bloquea la ejecución del lanzador, no su creación." in reference_content,
-        "La referencia crea el lanzador aunque falte OpenAPI",
-    )
-    check(
-        "cualquier combinación con `--install` deben terminar con error" in reference_content,
-        "La referencia bloquea instalación y servicio sin OpenAPI",
-    )
-    check(
-        "Sin OpenAPI válido: no se genera ni se sirve la referencia" not in reference_content,
-        "La referencia no conserva la regla contradictoria anterior",
-    )
-    check("estado `bloqueado`" in skill, "La skill documenta el estado bloqueado")
-    check("aunque todavía falte OpenAPI" in agent, "El agente prepara el lanzador sin OpenAPI")
+    check(not reference.exists(), "No existe referencia ni lanzador de documentación interactiva")
+    check("OpenAPI" in skill and "JSON Schema" in skill,
+          "La skill conserva los contratos OpenAPI y JSON Schema")
+    check("catálogo de endpoints" in skill,
+          "La skill conserva el catálogo como alternativa cuando no hay OpenAPI")
+    check("visores interactivos ni lanzadores de documentación" in skill,
+          "La skill excluye visores y lanzadores interactivos")
+    check("Scalar" not in skill and "api-docs.md" not in skill,
+          "La skill no conserva instrucciones de Scalar")
 
     manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
     for platform in manifest["platforms"]:
-        generated = ROOT / "generated" / platform / "skills" / "data-api" / "references" / "api-docs.md"
-        check(generated.is_file(), f"Referencia Scalar generada para {platform}")
+        skill_path = ROOT / "generated" / platform / "skills" / "data-api" / "SKILL.md"
+        reference_path = ROOT / "generated" / platform / "skills" / "data-api" / "references" / "api-docs.md"
+        generated_skill = skill_path.read_text(encoding="utf-8") if skill_path.is_file() else ""
+        check(skill_path.is_file(), f"Skill data-api generada para {platform}")
+        check(not reference_path.exists(), f"Sin referencia Scalar generada para {platform}")
+        check("Scalar" not in generated_skill and "api-docs.md" not in generated_skill,
+              f"Sin instrucciones de Scalar en {platform}")
 
 
 # ---------------------------------------------------------------------------
@@ -459,7 +452,7 @@ def main() -> int:
     test_readme_references()
     test_negative_suite_passes()
     test_link_checker_passes()
-    test_data_api_scalar_workflow()
+    test_data_api_contracts_without_interactive_launcher()
     test_mas_identity_pass()
     test_documentation_core_pass()
 

@@ -17,7 +17,7 @@ import uuid
 
 CATALOG = Path(__file__).with_name("retired_agents.json")
 PLATFORMS = {"copilot", "opencode", "kiro", "claude", "pi", "antigravity"}
-IDS = {"architecture", "project-navigator"}
+IDS = {"architecture", "project-navigator", "data-api", "ui-design"}
 SCANNED_NAMES = {".agents", ".claude", ".github", ".kiro", ".pi", ".gemini", ".copilot", ".opencode"}
 
 
@@ -26,16 +26,14 @@ def digest(data: bytes) -> str:
 
 
 def validate_catalog(data: dict) -> list[dict]:
-    if not isinstance(data, dict) or type(data.get("schema_version")) is not int or data.get("schema_version") != 1:
+    if not isinstance(data, dict) or type(data.get("schema_version")) is not int or data.get("schema_version") != 2:
         raise ValueError("catálogo de retirados: schema inválido")
-    if not isinstance(data.get("baseline_commit"), str) or not re.fullmatch(r"[0-9a-f]{40}", data["baseline_commit"]):
-        raise ValueError("catálogo de retirados: baseline inválido")
     entries = data.get("entries")
     if not isinstance(entries, list):
         raise ValueError("catálogo de retirados: entries inválidas")
     seen = set()
     for entry in entries:
-        if not isinstance(entry, dict) or set(entry) != {"id", "platform", "filename", "sha256", "adapter_sha256"}:
+        if not isinstance(entry, dict) or set(entry) != {"id", "platform", "filename", "sha256", "adapter_sha256", "baseline_commit"}:
             raise ValueError("catálogo de retirados: entrada inválida")
         agent, platform = entry["id"], entry["platform"]
         if not isinstance(agent, str) or not isinstance(platform, str) or agent not in IDS or platform not in PLATFORMS:
@@ -43,6 +41,8 @@ def validate_catalog(data: dict) -> list[dict]:
         filename = agent + (".agent.md" if platform == "copilot" else ".md")
         if entry["filename"] != filename:
             raise ValueError("catálogo de retirados: ruta inválida")
+        if not isinstance(entry["baseline_commit"], str) or not re.fullmatch(r"[0-9a-f]{40}", entry["baseline_commit"]):
+            raise ValueError("catálogo de retirados: baseline inválido")
         for key in ("sha256", "adapter_sha256"):
             if not isinstance(entry[key], str) or not re.fullmatch(r"[0-9a-f]{64}", entry[key]):
                 raise ValueError("catálogo de retirados: hash inválido")

@@ -24,8 +24,6 @@
       "external_directory": "ask",
       "task": {
         "*": "deny",
-        "data-api": "ask",
-        "ui-design": "ask",
         "code-review": "ask"
       },
       "bash": {

@@ -4,7 +4,7 @@ Procedimiento para obtener evidencia runtime de la integración. **Estado actual
 PENDIENTE; este documento no registra un smoke ejecutado ni certifica el host.**
 Los instaladores/exportadores sí cuentan con evidencia automatizada de scripts
 con fixtures en Linux, macOS y Windows, detallada a continuación. Esa ejecución
-no prueba descubrimiento 6/10, UI, carga de referencias ni `invoke_subagent` en
+no prueba descubrimiento 5/11, UI, carga de referencias ni `invoke_subagent` en
 la aplicación Antigravity; estos pasos runtime siguen **PENDIENTES**.
 
 ## Evidencia automatizada de CI
@@ -29,7 +29,7 @@ permanece pendiente y este run no marca el smoke como ejecutado.
 
 ## Alcance y referencias
 
-- Inventario: seis agentes y diez skills del [catálogo](catalogo.md).
+- Inventario: cinco agentes y once skills del [catálogo](catalogo.md).
 - Destinos 2.0: `~/.gemini/config/agents/<id>.md` y
   `~/.gemini/config/skills/<skill-name>/`, incluidos sus recursos.
 - CLI: skills globales en `~/.gemini/antigravity-cli/skills/`, ruta distinta que
@@ -106,7 +106,7 @@ conversaciones. Un resultado omitido no es PASS.
    agentes y skills y comprueba el descubrimiento de nuevo tras una actualización.
    Si reiniciar no basta, registra el bloqueo sin asumir otro menú/comando.
 
-## 2. Descubrir 6 agentes y 10 skills
+## 2. Descubrir 5 agentes y 11 skills
 
 Registra para cada ID si el host lo descubre, no solo si existe el archivo.
 Extras del usuario no cuentan en estas cantidades y no se borran.
@@ -114,11 +114,10 @@ Extras del usuario no cuentan en estas cantidades y no se borran.
 | Agente esperado | Descubierto / seleccionable | Resultado |
 |-----------------|----------------------------|-----------|
 | `code-review` | PENDIENTE | PENDIENTE |
-| `data-api` | PENDIENTE | PENDIENTE |
+| `developer` | PENDIENTE | PENDIENTE |
 | `documentation-orchestrator` | PENDIENTE | PENDIENTE |
 | `git-release-manager` | PENDIENTE | PENDIENTE |
 | `sdd` | PENDIENTE | PENDIENTE |
-| `ui-design` | PENDIENTE | PENDIENTE |
 
 | Skill esperada | Descubierta / recurso cargable | Resultado |
 |----------------|-------------------------------|-----------|
@@ -126,6 +125,7 @@ Extras del usuario no cuentan en estas cantidades y no se borran.
 | `code-quality` | PENDIENTE | PENDIENTE |
 | `data-api` | PENDIENTE | PENDIENTE |
 | `documentation-orchestrator` | PENDIENTE | PENDIENTE |
+| `developer` | PENDIENTE | PENDIENTE |
 | `git-commit` | PENDIENTE | PENDIENTE |
 | `project-navigator` | PENDIENTE | PENDIENTE |
 | `release-management` | PENDIENTE | PENDIENTE |
@@ -185,23 +185,22 @@ hay que observar `ask_question` realmente, no sustituirla silenciosamente.
 | Rol | Tools declaradas | Límite canónico que se mantiene |
 |-----|------------------|--------------------------------|
 | `code-review` | L + D + G + W + Q | `inspect` no escribe; remediación aprobada por micro-paso |
-| `data-api` | L + D + G + W + Q | `.data/` y datos/APIs autorizados; no UI |
+| `developer` | L + D + G + W + Q | PLAN propio; implementación integral autorizada; no usa SDD |
 | `documentation-orchestrator` | L + D + G + W + Q | `inspect` core sin escritura; skills architecture/navigator locales; documentación/indexado autorizados, no producto/CI/Git mutante |
 | `git-release-manager` | L + D + G + W + Q | Git/release solo dentro de las aprobaciones explícitas |
 | `sdd` | L + D + G + W + Q | Specs; producto solo con intención y gates aprobados |
-| `ui-design` | L + D + G + W + Q | `.design/` y UI autorizada; no APIs/negocio |
 
 Para las escrituras D del fixture usa `sdd` con una microtarea `direct` de cambio
 local explícitamente autorizada en scratch, separada de la consulta de solo
 lectura anterior. No autorices a otro rol a sobrepasar su alcance para probar D.
-Comprueba las listas efectivas de los seis roles y las tools correspondientes
+Comprueba las listas efectivas de los cinco roles y las tools correspondientes
 cuando la operación sea compatible con su rol. El resultado de una tool en un
 rol no demuestra su disponibilidad en los demás. Listas y prohibiciones son
 instrucciones más permisos heredados, **no sandbox por carpeta o comando**.
 
 ## 5. Invocación de subagente solicitada explícitamente
 
-Usa un **padre del host** que exponga `invoke_subagent`; los seis roles del kit
+Usa un **padre del host** que exponga `invoke_subagent`; los cinco roles del kit
 no reciben esa herramienta. El usuario debe pedir esta prueba explícitamente.
 No encadenes hijos ni automatices handoffs. Si no existe padre habilitado, deja
 la comprobación pendiente con ese bloqueo.
@@ -236,7 +235,7 @@ El hijo no debe escribir, saltar gates ni ampliar el alcance.
 | Comprobación | Resultado actual | Evidencia necesaria |
 |--------------|------------------|---------------------|
 | Versión/build, OS y superficie | PENDIENTE | Información observada del producto |
-| Descubrimiento 6 agentes / 10 skills | PENDIENTE | IDs observados en host; skills core separadas |
+| Descubrimiento 5 agentes / 11 skills | PENDIENTE | IDs observados en host; skills core separadas |
 | Recarga y selección principal | PENDIENTE | Acción real e ID activo |
 | Carga de skills y referencias | PENDIENTE | Rutas relativas y encabezados reconocidos |
 | Herramientas individuales por rol | PENDIENTE | Nombre expuesto, acción y resultado |

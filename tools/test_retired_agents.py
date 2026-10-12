@@ -48,15 +48,16 @@ class MigrationTests(unittest.TestCase):
     def run_migration(self, **kwargs):
         return migration.migrate("claude", [self.dest], self.backup, **kwargs)
 
-    def test_catalog_pinned_git_evidence(self):
+    def test_catalog_historical_git_evidence(self):
         data = json.loads((ROOT / "tools/retired_agents.json").read_text())
-        self.assertEqual(data["baseline_commit"], PINNED)
-        self.assertEqual(len(self.catalog), 12)
+        self.assertEqual(data["schema_version"], 2)
+        self.assertEqual(len(self.catalog), 24)
         for entry in self.catalog:
-            adapter = subprocess.check_output(["git", "show", f'{PINNED}:adapters/{entry["platform"]}/agents/{entry["id"]}.json'], cwd=ROOT)
+            baseline = entry["baseline_commit"]
+            adapter = subprocess.check_output(["git", "show", f'{baseline}:adapters/{entry["platform"]}/agents/{entry["id"]}.json'], cwd=ROOT)
             self.assertEqual(hashlib.sha256(adapter).hexdigest(), entry["adapter_sha256"])
             self.assertEqual(json.loads(adapter)["filename"], entry["filename"])
-            artifact = subprocess.check_output(["git", "show", f'{PINNED}:generated/{entry["platform"]}/agents/{entry["filename"]}'], cwd=ROOT)
+            artifact = subprocess.check_output(["git", "show", f'{baseline}:generated/{entry["platform"]}/agents/{entry["filename"]}'], cwd=ROOT)
             self.assertEqual(hashlib.sha256(artifact).hexdigest(), entry["sha256"])
 
     def test_catalog_rejects_invalid_entries(self):
@@ -441,7 +442,8 @@ class MigrationTests(unittest.TestCase):
             common = ["python3", "-B", str(repo / "tools/install_preflight.py"), "--platform", "claude", "--skills-dest", str(skills), "--agents-dest", str(dest)]
             before = [(p, p.stat().st_mtime_ns) for p in home.rglob("*")]
             result = subprocess.run([*common, "--check-installed"], capture_output=True, text=True, env=env)
-            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.returncode, 1, result.stderr)
+            self.assertIn("hash de recurso instalado no coincide", result.stderr)
             self.assertNotIn("Migración completada", result.stdout)
             self.assertEqual(before, [(p, p.stat().st_mtime_ns) for p in home.rglob("*")])
             result = subprocess.run([*common, "--migrate-retired-agents"], capture_output=True, text=True, env=env)

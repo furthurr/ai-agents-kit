@@ -10,11 +10,11 @@ skill canónicos en `canonical/`; estas páginas sirven como orientación rápid
 |---|---|---|---|
 | Entender el repositorio, módulos o símbolos | [Documentation Orchestrator](documentation-orchestrator.md) | `project-navigator` | Consulta sin escritura; índices autorizados en `.navigator/` |
 | Documentar decisiones y estructura técnica | [Documentation Orchestrator](documentation-orchestrator.md) | `architecture` | `.architecture/` con autorización |
-| Catálogo de APIs, DTOs o persistencia | [Data & API](data-api.md) | `data-api` | `.data/` |
-| Documentar colores, componentes o temas | [UI Design](ui-design.md) | `ui-design` | `.design/` |
+| Implementar una feature en UI, datos/APIs y negocio | [Developer](developer.md) | `developer` + `data-api`/`ui-design` bajo demanda | Código y pruebas; documentación canónica solo si se solicita |
+| Documentar colores, componentes, APIs o persistencia | [Documentation Orchestrator](documentation-orchestrator.md) | `documentation-orchestrator` + skills de dominio | `.design/`, `.data/` con aprobación |
 | Revisar calidad, seguridad o ambas | [Code Review](code-review.md) | `code-quality` y/o `security` | `.quality/` y/o `.security/`; correcciones autorizadas |
-| Comprobar o sincronizar documentación | [Documentation Orchestrator](documentation-orchestrator.md) | `documentation-orchestrator` + especialistas | Carpetas documentales aplicables |
-| Definir una feature o bugfix antes de implementarlo | [SDD](sdd.md) | `sdd-spec` | `.sdd/` y código aprobado por las tareas |
+| Comprobar o sincronizar documentación | [Documentation Orchestrator](documentation-orchestrator.md) | `documentation-orchestrator` + skills locales; `code-review` si hay handoff | Carpetas documentales aplicables |
+| Trabajar con metodología SDD | [SDD](sdd.md) | `sdd-spec` | `.sdd/` y código aprobado por las tareas; solo al seleccionar SDD explícitamente |
 | Crear commits, push o preparar releases | [Git & Release Manager](git-release-manager.md) | `git-commit` + `release-management` | Git, versión, tag y CHANGELOG |
 
 ## Agente frente a skill
@@ -24,19 +24,20 @@ skill canónicos en `canonical/`; estas páginas sirven como orientación rápid
 - La **skill** define el procedimiento, los artefactos, los estándares y los
   gates de aprobación.
 - Si ambos textos difieren, manda la skill.
-- Un agente no debe recibir tareas de otro dominio solo porque pueda leer esos
-  archivos.
+- Los agentes de dominio no reciben otras responsabilidades solo porque puedan
+  leer documentación. `developer` es la excepción deliberada: implementa features
+  completas y coordina todas sus capas.
 
 ## Uso por plataforma
 
-Los seis IDs estables son los mismos en las seis plataformas; se mantienen diez skills:
+Los cinco agentes vigentes se distribuyen en las seis plataformas; se mantienen once skills:
 
 | Plataforma | Forma habitual de invocación |
 |---|---|
-| OpenCode | Selecciona el agente o menciónalo, por ejemplo `@documentation-orchestrator`, `@sdd` o `@code-review`. |
+| OpenCode | Selecciona el agente o menciónalo, por ejemplo `@developer`, `@documentation-orchestrator`, `@sdd` o `@code-review`. |
 | GitHub Copilot | Selecciona el agente personalizado instalado; los nombres salen del catálogo. |
 | Kiro | Selecciona el agente de `~/.kiro/agents/`; para una skill también puede usarse su comando, según la UI. |
-| Claude Code | Delega al subagente o menciónalo, por ejemplo `@documentation-orchestrator`, `@sdd` o `@code-review`; las skills se invocan con `/nombre`. |
+| Claude Code | Delega al subagente o menciónalo, por ejemplo `@developer`, `@documentation-orchestrator` o `@sdd`; las skills se invocan con `/nombre`. |
 | Pi | Usa `/code-review <tarea>` como plantilla de prompt; no crea un subagente aislado. |
 | Antigravity 2.0 | Usa la selección comprobada en el smoke del host; `@<agente>` es notación semántica, no sintaxis nativa verificada. |
 
@@ -60,15 +61,14 @@ funcional. Solo decisiones y gates reales requieren intervención.
 - **Skill Navigator (core local):** bootstrap y updates son explícitos; conserva el
   gate técnico de disponibilidad. Las escrituras, exportaciones y sobrescrituras
   conservan su autorización efectiva.
-- **Skill Architecture (core local), Data & API y UI Design:** no recomiendan modelos;
+- **Skill Architecture (core local), Developer, Data & API y UI Design:** no recomiendan modelos;
   la primera documentación masiva conserva sus gates de estudio, propuesta y escritura.
 - **Code Review:** no recomienda modelo. Consultas y barridos autorizados conservan
   su alcance; las auditorías documentales autorizadas
   registran todas las severidades verificadas sin pedir otro filtro; consultas sin
   escrituras y remediación con aprobación antes del primer y cada siguiente paso.
-- **Escalado a SDD:** Documentation Orchestrator, Data & API, UI Design y Code Review
-  recomiendan SDD si la mejora requiere más requisitos, diseño o coordinación;
-  explican el motivo y esperan que el usuario decida si cambia de agente.
+- **Developer:** usa PLAN propio para aclarar y planear cambios; no usa ni activa SDD.
+  SDD es una metodología independiente que se inicia solo seleccionando ese agente.
 - **SDD:** ofrece exactamente `direct`, `lite` y `standard`. Presenta y valida alcance completo,
   califica features y propone selección manual: 1–3 direct si trivial, 4–9 lite
   si elegible, 10/10+ standard para el conjunto y opción de dividir. Lite usa
@@ -86,11 +86,10 @@ funcional. Solo decisiones y gates reales requieren intervención.
 | Agente | Ficha | Skill(s) |
 |---|---|---|
 | Code Review Agent | [code-review.md](code-review.md) | `code-quality` y/o `security` |
-| Data & API Agent | [data-api.md](data-api.md) | `data-api` |
-| Documentation Orchestrator | [documentation-orchestrator.md](documentation-orchestrator.md) | `documentation-orchestrator` + especialistas aplicables |
+| Developer Agent | [developer.md](developer.md) | `developer`, `data-api` y `ui-design` bajo demanda |
+| Documentation Orchestrator | [documentation-orchestrator.md](documentation-orchestrator.md) | `documentation-orchestrator`, skills locales y handoff opcional a `code-review` |
 | Git & Release Manager | [git-release-manager.md](git-release-manager.md) | `git-commit` + `release-management` |
 | Agente SDD | [sdd.md](sdd.md) | `sdd-spec` |
-| UI Design Agent | [ui-design.md](ui-design.md) | `ui-design` |
 
 ## Fuentes canónicas
 

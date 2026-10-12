@@ -8,8 +8,8 @@ bootstrap y update de sus índices sigue perteneciendo a la skill
 Para descubrir también arquitectura, aplica el
 [contrato compartido](../../documentation-orchestrator/references/project-context.md)
 de `documentation-orchestrator`, sin cargar su workflow ni delegar la lectura.
-Esta referencia mantiene las condiciones específicas de SDD y no altera su
-routing manual a especialistas ni sus gates. Steering primero; cuando ayude al
+Esta referencia mantiene el contexto específico de SDD y no cambia la selección
+explícita de metodología ni sus gates. Steering primero; cuando ayude al
 alcance arquitectónico, entra por `.architecture/README.md` antes de escalar a
 capas Navigator, sin inventario global obligatorio.
 

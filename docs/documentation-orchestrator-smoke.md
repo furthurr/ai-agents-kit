@@ -137,6 +137,13 @@ Si la misma escritura ya está autorizada en esa sesión, no vuelve a preguntar;
 `gate_state` copiado por sí solo no acredita autorización. Para ambos dominios,
 usa `scope: [.quality/, .security/]` y exige evidencia de cada dominio al sincronizar.
 
+Para REC-03, prepara otro proyecto desechable sin `.quality/` ni `.security/`, con
+solo `src/main.py`. Solicita `action: inspect`, selecciona `scope: [.quality/]`,
+usa `write_scope: none` y referencia/cita `src/main.py`. Esperado: la inspección se
+valida sin crear carpetas ni archivos. Repite con un enlace simbólico cuya ruta
+resuelta salga del proyecto: debe rechazarse. Para `sync`, la evidencia fuera del
+scope autorizado debe seguir rechazándose.
+
 ## 8. Inspect core y selección bajo demanda
 
 En un fixture solicita por separado:
@@ -183,12 +190,12 @@ no escriben `AGENTS.md`.
 
 ## 11. IDs retirados y conservación
 
-Presenta una solicitud o handoff cuyo target sea `architecture` o
-`project-navigator` a un agente vigente. Esperado: diagnóstico de receptor
-retirado y orientación a `documentation-orchestrator`; no reescribe/ejecuta el
-handoff ni transfiere autorización. Un host que no resuelva la mención antigua
+Presenta una solicitud o handoff cuyo target sea `architecture`, `project-navigator`,
+`data-api` o `ui-design` a un agente vigente. Esperado: diagnóstico de receptor
+retirado y orientación a `documentation-orchestrator` para documentación o `developer`
+para implementación; no reescribe/ejecuta el handoff ni transfiere autorización. Un host que no resuelva la mención antigua
 requiere selección manual, sin prometer routing nativo.
-Verifica catálogo de seis agentes y diez skills y ambas carpetas separadas.
+Verifica catálogo de cinco agentes y once skills y sus carpetas separadas.
 La [migración del instalador](migracion-agentes.md) tiene sus propios fixtures;
 no se ejecuta desde documentación ni se borran skills/contexto.
 
@@ -201,7 +208,7 @@ no se ejecuta desde documentación ni se borran skills/contexto.
 | Consumo directo y seis estados de contexto | PENDIENTE | Estado/baseline, capas y fuentes directas por fixture |
 | Mixta / exportación | PENDIENTE | Lectura atendida y ausencia de escritura sin gate |
 | Targets retirados / otros targets conservados | PENDIENTE | Diagnóstico sin ejecución; handoffs vigentes válidos |
-| Catálogo y conservación | PENDIENTE | 6 agentes, 10 skills, carpetas y formatos intactos |
+| Catálogo y conservación | PENDIENTE | 5 agentes, 11 skills, carpetas y formatos intactos |
 
 Por ejecución registrar plataforma, versión/build, OS, modelo, fecha/responsable,
 commit del kit, fixture/autorización, prompt, recursos cargados, snapshots,

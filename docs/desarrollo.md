@@ -100,7 +100,7 @@ definir, `render.py` falla.
 
 ### Antigravity: contrato y evidencia
 
-El catálogo incluye seis plataformas, seis agentes y diez skills. Antigravity
+El catálogo incluye seis plataformas, cinco agentes y once skills. Antigravity
 apunta inicialmente a **2.0**: cambios del host van en
 `adapters/antigravity/`, contenido compartido en `canonical/` y salida en
 `generated/antigravity/` mediante el renderer existente, nunca edición manual.
@@ -114,15 +114,16 @@ con paths ambiguos: verifica descubrimiento global y carga de recursos.
 La referencia de [Hooks](https://antigravity.google/docs/hooks/#supported-tools)
 respalda nombres de herramientas; no demuestra su disponibilidad en cada build.
 El [smoke](antigravity-smoke.md) registra selección real, herramientas individuales,
-descubrimiento 6/10, recursos y un hijo solicitado explícitamente a un padre del
+descubrimiento 5/11, recursos y un hijo solicitado explícitamente a un padre del
 host con `invoke_subagent`. El kit no añade hooks ni delegación automática, y
 las listas de tools no son aislamiento técnico por rol.
 
 Prueba instaladores y exportación con HOME/USERPROFILE **temporales**, fuera del
 perfil real. El contrato incluye preflight antes/después, flags Bash
 `--dry-run`/`--force` y PowerShell `-DryRun`/`-Force`, copia por fusión sin borrar
-extras, respaldo previo y fallos con código no cero. Preflight comprueba archivos
-principales; validación y pruebas de copia completa cubren YAML y recursos.
+extras, respaldo previo y fallos con código no cero. El preflight compara hashes del
+árbol completo contra un render temporal antes de copiar y verifica cada archivo
+instalado antes de declarar éxito.
 Restaurar manualmente no es rollback transaccional. Exportar puede ser parcial
 con avisos y no modifica fuentes ni adapters.
 
@@ -157,7 +158,7 @@ El harness prepara el directorio de caché PowerShell del fixture y deshabilita
 comprobar escrituras de los scripts en el entorno aislado sin modificar la
 configuración global del usuario.
 
-**Runtime Antigravity: PENDIENTE** para descubrimiento 6/10, UI, referencias e
+**Runtime Antigravity: PENDIENTE** para descubrimiento 5/11, UI, referencias e
 `invoke_subagent`. El bridge `GEMINI.md` → `AGENTS.md` no está implementado.
 Crear un workflow o pasar pruebas con fixtures no acredita estos comportamientos
 de la aplicación. Registra comando, exit code, OS y entorno por ejecución.

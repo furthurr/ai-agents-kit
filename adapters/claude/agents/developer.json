@@ -1,0 +1,19 @@
+{
+  "filename": "developer.md",
+  "frontmatter": {
+    "name": "developer",
+    "description": "Implementa características completas de producto en UI, datos/APIs y negocio; usa PLAN propio, lee contexto selectivamente y verifica cambios. No usa SDD.",
+    "user-invocable": false,
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "Skill"
+    ]
+  }
+}

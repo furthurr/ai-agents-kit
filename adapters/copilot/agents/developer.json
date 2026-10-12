@@ -1,0 +1,15 @@
+{
+  "filename": "developer.agent.md",
+  "frontmatter": {
+    "name": "Developer Agent",
+    "description": "Implementa características completas en UI, datos/APIs y negocio. PLAN propio con aclaraciones e impactos; no activa SDD.",
+    "argument-hint": "Describe el resultado esperado, el alcance conocido y si quieres PLAN o implementación.",
+    "tools": [
+      "read",
+      "edit",
+      "search",
+      "execute",
+      "web"
+    ]
+  }
+}

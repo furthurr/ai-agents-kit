@@ -70,9 +70,10 @@ Evaluar cambios pequeños relacionados por su impacto conjunto; no sumar notas
 matemáticamente ni dividir garantías para forzar direct. Calificar trabajo pendiente
 e impacto relevante, no automáticamente toda la feature histórica o el proyecto.
 
-Elección de modo/ejecutor aplica al alcance aceptado. Ante cambio material,
-reevaluar compatibilidad y autorización; no repetir elecciones por retoques sin
-impacto. Respetar routing manual, límites especialistas y gates pendientes.
+La selección SDD aplica al alcance aceptado y no cambia automáticamente por dominio.
+Ante cambio material, reevaluar compatibilidad y autorización; no repetir decisiones
+por retoques sin impacto. Si el usuario solicita cambiar de agente, conserva contexto
+y gates pendientes, sin transferir autorización ni afirmar ejecución.
 Reutilizar validación vigente solo de la misma versión completa; reanudación sin
 cambios no reinicia decisiones. Ajustes invalidan aprobación del contenido modificado.
 

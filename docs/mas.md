@@ -51,11 +51,11 @@ completos y no se abrevian como `MAS`.
 La identidad completa se mantiene aquí; los agentes y skills incluyen un fragmento
 breve desde `canonical/shared/mas-identity.md`. `tools/render.py` lo inserta como texto
 autónomo en las seis distribuciones: Copilot,
-OpenCode, Kiro, Claude Code, Pi y Antigravity. El catálogo mantiene seis agentes y
-diez skills; los artefactos de `generated/` no se editan a mano. Antigravity apunta
+OpenCode, Kiro, Claude Code, Pi y Antigravity. El catálogo mantiene cinco agentes y
+once skills; los artefactos de `generated/` no se editan a mano. Antigravity apunta
 inicialmente a 2.0. Los scripts con fixtures tienen evidencia en Linux, macOS y
 Windows: **22/22 pruebas nativas por OS**, Python 3.10, en el
 [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
-El runtime (descubrimiento 6/10, UI, referencias e `invoke_subagent`) sigue
+El runtime (descubrimiento 5/11, UI, referencias e `invoke_subagent`) sigue
 **PENDIENTE** y el bridge `GEMINI.md` → `AGENTS.md` no está implementado.
 No se infiere certificación completa de los seis hosts a partir de este pipeline.

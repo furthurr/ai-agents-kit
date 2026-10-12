@@ -57,7 +57,7 @@ Fuente de verdad del inventario:
 
 El render itera estas listas. Si falta un agent adapter en una plataforma
 declarada, la validación o el render fallarán según el caso.
-El inventario compartido es de seis agentes y diez skills en seis distribuciones;
+El inventario compartido es de cinco agentes y once skills en seis distribuciones;
 la existencia de artefactos no certifica el comportamiento de los seis hosts.
 
 ## Adaptadores
@@ -134,7 +134,7 @@ El alcance inicial es 2.0. CLI usa skills globales en
 están verificados. La ejecución de scripts con fixtures está acreditada en Linux,
 macOS y Windows: **22/22 pruebas nativas por OS**, Python 3.10, en el
 [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
-**Runtime Antigravity: PENDIENTE** (descubrimiento 6/10, UI, referencias e
+**Runtime Antigravity: PENDIENTE** (descubrimiento 5/11, UI, referencias e
 `invoke_subagent`); la validación y las pruebas de scripts no certifican el host.
 
 VS Code también descubre los archivos de `~/.claude/agents/` cuando usa el
@@ -273,9 +273,9 @@ delegación nativa esté comprobada en todos los hosts.
   cierre global.
 - Cada skill especialista sigue siendo autoridad dentro de su propia carpeta y
   conserva sus gates.
-- Un handoff se usa solo cuando el usuario solicita continuar con el agente real
-  `data-api`, `ui-design` o `code-review`, o hacen falta su rol o permisos;
-  el orquestador espera resultado o evidencia. No hay handoffs a agentes core retirados.
+- Un handoff documental se usa solo para continuar con el agente real `code-review`;
+  datos y UI se documentan localmente con sus skills. El orquestador espera resultado
+  o evidencia y no emite handoffs a agentes retirados.
 - El agente no crea `.documentation/`; el estado permanece en los READMEs y
   artefactos ya definidos por cada especialista.
 - SDD, Release Management y Graphify son workflows externos de solo lectura para

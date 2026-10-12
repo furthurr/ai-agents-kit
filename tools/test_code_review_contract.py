@@ -29,7 +29,11 @@ class CodeReviewContractTest(unittest.TestCase):
             set(manifest["agents"]),
             {path.stem for path in (ROOT / "canonical" / "agents").glob("*.md")},
         )
-        self.assertEqual(len(manifest["skills"]), 10)
+        self.assertEqual(
+            set(manifest["skills"]),
+            {path.name for path in (ROOT / "canonical" / "skills").iterdir()
+             if (path / "SKILL.md").is_file()},
+        )
         self.assertIn("code-review", manifest["agents"])
         for old in ("code-quality", "security"):
             self.assertNotIn(old, manifest["agents"])

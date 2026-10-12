@@ -40,10 +40,12 @@ leer como contexto, pero esta skill nunca los crea, sincroniza ni modifica.
 
 El core se ejecuta localmente: carga `architecture` o `project-navigator` bajo
 demanda, sin handoff para consultas ni mantenimiento core. Conserva ambas skills
-y destinos separados. Cuando se activa otro dominio, elige una sola via: carga su skill o prepara la
-continuidad con el agente especialista real mediante un handoff. Si una regla de
-dominio entra en conflicto con esta coordinacion, manda la skill especialista
-dentro de su carpeta; esta skill manda sobre orden, seleccion y cierre global.
+y destinos separados. `.data/` y `.design/` también se actualizan localmente con
+`data-api` y `ui-design`: sus antiguos agentes fueron retirados y sus skills siguen
+siendo la autoridad de cada carpeta. Para quality/security, elige una sola vía:
+carga la skill localmente o prepara un handoff al agente real `code-review`. Si una
+regla de dominio entra en conflicto con esta coordinación, manda la skill especialista
+dentro de su carpeta; esta skill manda sobre orden, selección y cierre global.
 
 Los dominios quality y security conservan sus skills y carpetas, pero su agente
 receptor es `code-review`. Para la misma accion, mismo proyecto y via aprobada,
@@ -65,7 +67,8 @@ No amplias permisos ni cambias una accion para poder agruparla.
 
 Defaults: sin modo → `status` si no hay intención específica; preguntas sobre
 capas, módulos, símbolos o impacto → `inspect`; "actualiza lo que tenemos" → `sync-existing`;
-feature o bugfix → derivar a `sdd-spec`. Si pide "sincronizar todo" sin aclarar
+feature o bugfix de producto → recomienda `developer`; solicita `sdd` solo si el usuario
+elige explícitamente esa metodología. Si pide "sincronizar todo" sin aclarar
 si incluye carpetas ausentes, pregunta antes de elegir modo.
 
 ## Preflight técnico
@@ -94,10 +97,10 @@ Si el repo cambia durante una espera por decision real, repite el preflight mini
 3. Antes de escribir, espera aprobacion global del plan; reutiliza autorizacion
    efectiva de la misma operacion y alcance en la sesion, sin confundir un aviso
    o metadatos de handoff con autorizacion.
-4. Ejecuta siempre core aquí con su skill bajo demanda. Para cada otro dominio
-   aprobado elige una sola via: ejecuta aqui su skill, o emite
-   un handoff al agente especialista real si el usuario lo pide o hacen falta su
-   rol o permisos; nunca ambas para la misma accion (`references/handoff.md`).
+4. Ejecuta siempre core aquí con su skill bajo demanda. Ejecuta `.data/` y `.design/`
+   aquí con sus skills. Para quality/security elige una sola vía: ejecuta aquí su
+   skill o emite handoff a `code-review` si el usuario lo pide o hacen falta su rol
+   o permisos; nunca ambas para la misma acción (`references/handoff.md`).
 5. Tras un handoff, marca el dominio pendiente del especialista y espera su
    resultado o evidencia antes de reanudar; no ejecuta esa misma accion.
 6. Ejecuta secuencialmente solo los dominios aprobados que no fueron derivados.
@@ -109,7 +112,7 @@ Si el repo cambia durante una espera por decision real, repite el preflight mini
 9. Cierra con estado inicial/final, acciones, bloqueos y recomendaciones.
 
 Orden normal: `architecture` → `data-api` si aplica → `ui-design` si aplica →
-revision `code-review` de los dominios quality/security seleccionados (skills
+revisión `code-review` de los dominios quality/security seleccionados (skills
 locales o handoff) → `project-navigator` al final. En `bootstrap-core`, crea primero el
 Navigator aprobado, documenta arquitectura y refresca solo la capa afectada del
 Navigator al cierre **si fue creado en esa misma operacion**. Un Navigator que ya

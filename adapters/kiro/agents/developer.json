@@ -1,0 +1,23 @@
+{
+  "filename": "developer.md",
+  "frontmatter": {
+    "description": "Implementa features completas de UI, datos/APIs y negocio con PLAN propio, contexto del proyecto y verificación. SDD es independiente y no se activa automáticamente.",
+    "tools": [
+      "read",
+      "write",
+      "shell",
+      "web"
+    ],
+    "permissions": {
+      "rules": [
+        { "capability": "shell", "match": ["rm *"], "effect": "deny" },
+        { "capability": "shell", "match": ["rm -rf *"], "effect": "deny" },
+        { "capability": "shell", "match": ["git reset --hard*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git checkout -f*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git checkout --force*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git branch -D*"], "effect": "deny" },
+        { "capability": "shell", "match": ["git clean*"], "effect": "deny" }
+      ]
+    }
+  }
+}

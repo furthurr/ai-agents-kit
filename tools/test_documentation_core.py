@@ -13,7 +13,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "canonical/skills"
 DOCS = SKILLS / "documentation-orchestrator"
-AGENTS = ("documentation-orchestrator", "sdd", "data-api", "ui-design",
+AGENTS = ("documentation-orchestrator", "sdd", "developer",
           "code-review", "git-release-manager")
 
 
@@ -34,12 +34,13 @@ class DocumentationCoreContract(unittest.TestCase):
     def test_inventory_preserves_skills_without_retired_agents(self):
         manifest = json.loads(read(ROOT / "canonical/manifest.json"))
         self.assertEqual(set(manifest["agents"]), set(AGENTS))
-        for retired in ("architecture", "project-navigator"):
+        for retired in ("architecture", "project-navigator", "data-api", "ui-design"):
             self.assertIn(retired, manifest["skills"])
             self.assertTrue((SKILLS / retired / "SKILL.md").is_file())
             self.assertFalse((ROOT / f"canonical/agents/{retired}.md").exists())
             for platform in manifest["platforms"]:
                 self.assertFalse((ROOT / f"adapters/{platform}/agents/{retired}.json").exists())
+        self.assertIn("developer", manifest["skills"])
 
     def test_inspect_distinct_from_default_status(self):
         skill = read(DOCS / "SKILL.md")
@@ -54,6 +55,30 @@ class DocumentationCoreContract(unittest.TestCase):
         text = read(ROOT / "canonical/agents/documentation-orchestrator.md")
         self.require(text, "`inspect`", "core se ejecuta localmente",
                      "bajo demanda", "sin handoff", "`status`")
+
+    def test_developer_plan_scope_sdd_and_documentation_close(self):
+        agent = read(ROOT / "canonical/agents/developer.md")
+        skill = read(SKILLS / "developer/SKILL.md")
+        plan = read(SKILLS / "developer/references/plan.md")
+        self.require(agent, "**PLAN**", "conversación de solo lectura", "espera aprobación",
+                     "no carga `sdd-spec`", "no crea ni modifica `.sdd/`", "`data-api`",
+                     "`ui-design`", "pruebas focalizadas", "⚠️ ¿Quieres actualizar la documentación",
+                     "`documentation-orchestrator`")
+        self.require(skill, "### PLAN", "### IMPLEMENTACIÓN", "no carga `sdd-spec`",
+                     "No recomiendes ni cambies a `sdd`", "no inicialices ni sincronices",
+                     "fuente canónica relevante quedó desfasada")
+        self.require(plan, "## Plan de implementación", "### Impacto e implicaciones",
+                     "### Verificación", "¿Apruebas este alcance y plan")
+        self.assertNotIn("{{sdd_agent}}", agent + skill)
+        for domain_skill in ("data-api", "ui-design"):
+            self.assertNotIn("{{sdd_agent}}", read(SKILLS / domain_skill / "SKILL.md"))
+        opencode = json.loads(read(ROOT / "adapters/opencode/agents/developer.json"))
+        self.assertEqual(opencode["frontmatter"]["permission"]["task"], "deny")
+        self.assertEqual(opencode["frontmatter"]["permission"]["edit"][".sdd/**"], "deny")
+        for platform in json.loads(read(ROOT / "canonical/manifest.json"))["platforms"]:
+            adapter = json.loads(read(ROOT / f"adapters/{platform}/agents/developer.json"))
+            self.assertIn("PLAN", adapter["frontmatter"]["description"])
+            self.assertIn("developer", adapter["filename"])
 
     def test_every_agent_discovers_context_directly(self):
         context_agents = tuple(agent for agent in AGENTS if agent != "git-release-manager")
@@ -182,10 +207,11 @@ class DocumentationCoreContract(unittest.TestCase):
             with self.subTest(platform=platform):
                 output = ROOT / "generated" / platform
                 self.assertEqual(len(list((output / "agents").glob("*.md"))), len(AGENTS))
-                for retired in ("architecture", "project-navigator"):
+                for retired in ("architecture", "project-navigator", "data-api", "ui-design"):
                     self.assertFalse((output / "agents" / f"{retired}.md").exists())
                     self.assertFalse((output / "agents" / f"{retired}.agent.md").exists())
                     self.assertTrue((output / "skills" / retired / "SKILL.md").is_file())
+                self.assertTrue((output / "skills/developer/SKILL.md").is_file())
                 for name in ("project-context.md", "handoff.md", "workflows.md"):
                     self.assertEqual((output / "skills/documentation-orchestrator/references" / name).read_bytes(),
                                      (DOCS / "references" / name).read_bytes())

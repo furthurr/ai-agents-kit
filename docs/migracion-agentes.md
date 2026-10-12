@@ -1,10 +1,13 @@
 # Migración segura de agentes retirados
 
-El catálogo vigente contiene **6 agentes y 10 skills**. `documentation-orchestrator`
-asume arquitectura y navegación mediante las skills **separadas** `architecture`
-y `project-navigator`. Los IDs de agentes antiguos no son aliases ni receptores
-de handoff; una autorización antigua no se transfiere. Si el host no resuelve una
-mención retirada, selecciona el agente vigente y reformula la solicitud.
+El catálogo vigente contiene **5 agentes y 11 skills**. `developer` reúne la
+implementación de UI, datos/APIs y negocio; las skills `data-api` y `ui-design`
+permanecen disponibles bajo demanda. `documentation-orchestrator` mantiene
+arquitectura y navegación mediante las skills separadas `architecture` y
+`project-navigator`, y documenta datos/UI localmente. Los IDs retirados
+`architecture`, `project-navigator`, `data-api` y `ui-design` no son aliases ni
+receptores de handoff; una autorización antigua no se transfiere. Si el host no
+resuelve una mención retirada, selecciona el agente vigente y reformula la solicitud.
 
 Esta guía describe una operación del **instalador**, no una acción del agente
 documental. Implementar o actualizar el kit no autoriza migrar el perfil real.
@@ -84,8 +87,8 @@ se aplica al destino principal, no a cada destino adicional.
 | Extra ajeno no seleccionado | Informar y conservar. |
 
 Los hashes conocidos provienen de bytes de artefactos históricos verificados,
-con plataforma y baseline de origen, en `tools/retired_agents.json`; el catálogo
-actual fija un commit histórico, no infiere una versión de release.
+con plataforma y commit baseline por candidato, en `tools/retired_agents.json`; el
+catálogo actual fija commits históricos, no infiere una versión de release.
 Coincidir es un criterio operativo de copia conocida, no una prueba absoluta de
 autoría. **Las versiones anteriores no tenían un registro general de propiedad**:
 ni el nombre ni estar en una carpeta del host demuestran ownership del kit.
@@ -174,9 +177,11 @@ con lo requerido instalado pueden dar aviso y salida `0`, sin atribuirles propie
 Reinicia/recarga el host cuando corresponda y comprueba el catálogo descubierto;
 ver archivos copiados no demuestra funcionamiento runtime.
 
-**Nunca se borran skills, `.architecture/` ni `.navigator/` en esta migración**.
-Sus formatos, índices, ADRs y documentación permanecen intactos. El catálogo de
-retirados determina candidatos; no extiendas el alcance a otros archivos por nombre.
+**Nunca se borran skills ni carpetas documentales del proyecto** en esta migración.
+`architecture`, `project-navigator`, `data-api` y `ui-design` conservan sus skills;
+`.architecture/`, `.navigator/`, `.data/` y `.design/` permanecen intactas. El
+catálogo de retirados determina únicamente prompts de agente candidatos; no extiendas
+el alcance a otros archivos por nombre.
 
 ## Restauración segura por archivo
 

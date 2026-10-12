@@ -9,6 +9,8 @@ de entrada; aquí está el detalle por tema.
 | [mas.md](mas.md) | Todos | Identidad de MAS y convención para dirigir mensajes |
 | [catalogo.md](catalogo.md) | Usuarios | Skills, agentes y carpetas canónicas |
 | [agentes/README.md](agentes/README.md) | Usuarios y contribuidores | Qué hace cada agente, qué skill utiliza y cómo invocarlo |
+| [agentes/developer.md](agentes/developer.md) | Usuarios | Modo PLAN, implementación integral y cierre documental de Developer |
+| [developer-smoke.md](developer-smoke.md) | Usuarios y contribuidores | Escenarios manuales de PLAN, ejecución integral y aislamiento SDD |
 | [instalacion.md](instalacion.md) | Usuarios | Render, validación e instalación por plataforma |
 | [migracion-agentes.md](migracion-agentes.md) | Usuarios y contribuidores | Retirada opt-in, revisión por archivo, respaldo obligatorio, recuperación y smoke pendiente |
 | [uso.md](uso.md) | Usuarios | Cómo invocar especialistas y cuándo usar cada uno |

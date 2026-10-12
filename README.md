@@ -17,7 +17,7 @@ especializado en seis distribuciones, sin duplicar prompts por plataforma.
 La integración inicial de Antigravity apunta a **2.0**. Los scripts cuentan con
 evidencia de CI en Linux, macOS y Windows: **22/22 pruebas nativas por OS**, con
 Python 3.10, en el [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
-El runtime de la aplicación (descubrimiento 6 agentes / 10 skills, UI, referencias e
+El runtime de la aplicación (descubrimiento 5 agentes / 11 skills, UI, referencias e
 `invoke_subagent`) sigue **PENDIENTE**. El inventario de distribuciones y las
 pruebas con fixtures no certifican soporte completo en los seis hosts.
 
@@ -26,7 +26,7 @@ pruebas con fixtures no certifican soporte completo en los seis hosts.
 Un agente genérico reexplora el repo, mezcla dominios y pierde contexto entre
 sesiones. Este kit aporta:
 
-- **Especialistas con alcance fijo** (navegación, arquitectura, calidad, datos, seguridad, UI, SDD, git/release) y coordinación documental explícita.
+- **Agentes por responsabilidad**: Developer implementa producto en todas sus capas; SDD es opt-in, y documentación, assurance y Git/release conservan sus roles explícitos.
 - **Procedimientos canónicos** (skills) reutilizables y versionados.
 - **Carpetas de contexto en tu proyecto** (`.navigator/`, `.architecture/`, `.quality/`, `.data/`, …) que la IA y el equipo comparten.
 
@@ -48,8 +48,8 @@ dependen de ese host y de la evidencia de sus smoke tests.
 
 | | Cantidad | Detalle |
 |---|----------|---------|
-| Skills | 10 | architecture, code-quality, data-api, documentation-orchestrator, git-commit, project-navigator, release-management, sdd-spec, security, ui-design |
-| Agentes | 6 | code-review, data-api, documentation-orchestrator, ui-design, sdd, git-release-manager; **Documentation Orchestrator** asume arquitectura y navegación con sus skills separadas |
+| Skills | 11 | architecture, code-quality, data-api, documentation-orchestrator, developer, git-commit, project-navigator, release-management, sdd-spec, security, ui-design |
+| Agentes | 5 | code-review, developer, documentation-orchestrator, sdd, git-release-manager; **Developer** reúne implementación UI/datos/negocio y **Documentation Orchestrator** asume arquitectura/navegación con skills separadas |
 | Plataformas | 6 | copilot, opencode, kiro, claude, pi, antigravity |
 
 Catálogo completo (roles, carpetas, cuándo usar cada uno):
@@ -61,9 +61,8 @@ Catálogo completo (roles, carpetas, cuándo usar cada uno):
 |-----------|--------|
 | Entender arquitectura, localizar módulos o actualizar contexto documental | `documentation-orchestrator` |
 | Revisar calidad de código o seguridad | `code-review` |
-| Trabajar APIs, contratos, DTOs o persistencia | `data-api` |
-| Trabajar diseño visual, componentes o tokens | `ui-design` |
-| Definir una feature, corregir un bug o implementar con trazabilidad | `sdd` |
+| Implementar una feature, bugfix o cambio de producto en UI, datos/APIs y negocio | `developer` |
+| Usar metodología Spec-Driven Development con requisitos, diseño y gates | `sdd` (solo si se selecciona explícitamente) |
 | Preparar commits, push o una release | `git-release-manager` |
 
 ### SDD proporcional
@@ -153,6 +152,8 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 | [docs/mas.md](docs/mas.md) | Identidad de MAS y convención de mensajes |
 | [docs/catalogo.md](docs/catalogo.md) | Skills, agentes y carpetas canónicas |
 | [docs/agentes/README.md](docs/agentes/README.md) | Guía interna: qué hace cada agente y cómo utilizarlo |
+| [docs/agentes/developer.md](docs/agentes/developer.md) | Developer: modo PLAN, implementación integral y documentación condicional |
+| [docs/developer-smoke.md](docs/developer-smoke.md) | Escenarios manuales para validar PLAN, implementación y SDD opt-in |
 | [docs/instalacion.md](docs/instalacion.md) | Install, destinos, backup/import |
 | [docs/uso.md](docs/uso.md) | Cómo invocar y flujos recomendados |
 | [docs/navigator-smoke.md](docs/navigator-smoke.md) | Smoke test reproducible del Project Navigator |

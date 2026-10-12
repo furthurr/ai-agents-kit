@@ -124,9 +124,9 @@ y pedir aprobación para reclasificar a standard.
   Reanalizar solo cambios materiales, y no repitas selección/calificación por fase.
 - Elecciones previas se limitan al alcance aceptado, no a toda la sesión. Cambios
   relacionados requieren evaluación conjunta sin sumar notas.
-- Resolver especialista con `agent-routing.md`: solo visual/datos ejecutable claro
-  puede recomendar ui-design/data-api. Mixto/ambiguo mantiene planificación SDD.
-  Elegir especialista entrega contexto manual y detiene la actividad en SDD.
+- SDD se usa porque el usuario seleccionó explícitamente ese agente. No hagas routing
+  automático por dominio a Developer; carga skills visuales o de datos bajo demanda
+  como apoyo técnico sin cambiar el ejecutor ni los gates SDD.
 
 ## Entregas incrementales
 

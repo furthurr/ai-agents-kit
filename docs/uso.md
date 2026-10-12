@@ -19,8 +19,10 @@ Consulta la [guía de MAS](mas.md) para la terminología completa.
 | Cuándo se nota | Pasos, plantillas, gates | Selector de agente / mención `@…` |
 | Precedencia | Si hay conflicto, manda la skill | Debe cargar y seguir su skill |
 
-Para el día a día: **elige el especialista del dominio** y pide la tarea. El
-agente cargará la skill correspondiente.
+Para implementar producto, empieza con **Developer**: carga `data-api` y `ui-design`
+bajo demanda y puede coordinar la característica completa. Para trabajar con
+metodología SDD, selecciona explícitamente **SDD**; no se activa como derivación
+automática desde Developer.
 
 ## Elegir el agente según la tarea
 
@@ -29,9 +31,8 @@ agente cargará la skill correspondiente.
 | Entender capas o localizar código | `documentation-orchestrator` | `inspect`, consulta de solo lectura |
 | Actualizar el contexto ya existente | `documentation-orchestrator` | `sync-existing`, plan documental aprobado |
 | Revisar calidad o seguridad | `code-review` | Auditoría del dominio; remediación con aprobación por micro-paso |
-| Cambiar solo APIs/datos | `data-api` | Trabajo dentro de la capa de datos y contratos |
-| Cambiar solo lo visual | `ui-design` | Trabajo dentro de UI y diseño |
-| Planificar o implementar una feature/bugfix | `sdd` | Alcance completo validado y profundidad elegible |
+| Implementar una feature, API, UI, negocio o bugfix | `developer` | Plan propio proporcional; PLAN explícito espera aprobación |
+| Planificar/implementar con metodología Spec-Driven Development | `sdd` | Solo se activa al seleccionar explícitamente el agente SDD |
 | Publicar cambios o versionar | `git-release-manager` | Commit/push o release con autorización explícita |
 
 Mantener contexto también tiene un coste: las carpetas canónicas deben reflejar
@@ -47,15 +48,14 @@ IDs estables del kit:
 | ID | Nombre visible típico |
 |----|------------------------|
 | `code-review` | Code Review Agent |
-| `data-api` | Data & API Agent |
+| `developer` | Developer Agent |
 | `documentation-orchestrator` | Documentation Orchestrator |
-| `ui-design` | UI Design Agent |
 | `sdd` | Agente SDD / SDD |
 | `git-release-manager` | Git & Release Manager |
 
 ### OpenCode
 
-- Selecciona el agente (p. ej. `@documentation-orchestrator`, `@sdd`, `@code-review`).
+- Selecciona el agente (p. ej. `@developer`, `@documentation-orchestrator`, `@sdd`, `@code-review`).
 - Las skills viven en `~/.config/opencode/skills/` y pueden cargarse por
   relevancia del prompt.
 - Ejemplo: con `@sdd` — *“Planifica el login biométrico en modo standard”*.
@@ -98,7 +98,7 @@ IDs estables del kit:
   documentado es `/<skill-name>`, por ejemplo `/sdd-spec`. Comprueba además que el
   agente carga `SKILL.md` y sus referencias, tanto principal como subagente.
 - Tras instalar o actualizar, reinicia la superficie objetivo y comprueba otra
-  vez el descubrimiento 6/10; registra el mecanismo de recarga realmente observado
+  vez el descubrimiento 5/11; registra el mecanismo de recarga realmente observado
   en [antigravity-smoke.md](antigravity-smoke.md).
 - `@sdd` y `@<agente>` expresan routing del kit, **no sintaxis nativa confirmada**.
   La sustitución `{{sdd_agent}}` produce el identificador nominal `sdd`, no un
@@ -109,18 +109,18 @@ IDs estables del kit:
   verificados. Scripts con fixtures: **22/22 pruebas nativas por OS** en Linux,
   macOS y Windows, Python 3.10, en el
   [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
-  Runtime (descubrimiento 6/10, UI, referencias e `invoke_subagent`): **PENDIENTE**.
+  Runtime (descubrimiento 5/11, UI, referencias e `invoke_subagent`): **PENDIENTE**.
 - Steering admitido: `GEMINI.md`, `AGENTS.md`, `.agents/rules/*.md`; el instalador
   no crea ni sobrescribe estas reglas ni settings del usuario.
   El bridge `GEMINI.md` → `AGENTS.md` no está implementado.
-- Los seis agentes declaran `model: inherit`, `mainAgent: true`, `subagent: true`
+- Los cinco agentes declaran `model: inherit`, `mainAgent: true`, `subagent: true`
   y herramientas por rol. Esto no cambia automáticamente el modelo ni constituye
   un sandbox por carpeta/comando. Las skills se descubren globalmente: no se
   declara un campo `skills` explícito cuya resolución de rutas es ambigua.
 
 No hay delegación automática. El handoff sigue siendo explícito y portable; una
 invocación nativa de prueba requiere un padre del host con `invoke_subagent`, una
-petición explícita del usuario y contexto autorizado completo. Los seis roles
+petición explícita del usuario y contexto autorizado completo. Los cinco roles
 del kit no reciben esa herramienta para encadenar delegaciones.
 
 Si no ves un agente tras instalar, **reinicia** la herramienta y verifica la
@@ -134,10 +134,10 @@ ruta de destino en [instalacion.md](instalacion.md).
 | “¿Está actualizada la documentación?”, “actualiza lo que tenemos”, “release-check” | Documentation Orchestrator |
 | “Documenta la arquitectura”, “añade un ADR”, “bootstrap del core” | Documentation Orchestrator → mantenimiento core autorizado |
 | “Solo calidad: revisa code smells”, “baja complejidad” | Code Review — `code-quality` |
-| “Catálogo de endpoints”, “DTO de login”, “diagrama ER” | Data & API |
+| “Implementa un endpoint”, “actualiza DTO de login”, “cambia un formulario” | Developer |
 | “Solo seguridad”, “¿hay secretos en claro?”, “hardening TLS” | Code Review — `security` |
 | “Revisión completa de calidad y seguridad del módulo” | Code Review — ambas skills |
-| “Extrae el design system”, “unifica colores”, “deuda de UI” | UI Design |
+| “Actualiza catálogo de APIs”, “extrae el design system”, “deuda visual” | Documentation Orchestrator con skills `data-api`/`ui-design` |
 | “Especifica esta feature”, “bugfix estructurado”, “tasks de la spec” | SDD |
 | “Haz commit”, “pushea”, “prepara la release 1.4.0” | Git & Release Manager |
 
@@ -145,15 +145,16 @@ Catálogo completo: [catalogo.md](catalogo.md).
 
 ## Buenas prácticas
 
-1. **Respeta el alcance del agente** — no pidas al de UI que arregle la API.
-   Code Review puede revisar calidad y seguridad en la misma sesión, o solo uno.
+1. **Elige según la operación** — Developer implementa características completas;
+   Documentation Orchestrator mantiene contexto documental; Code Review audita
+   calidad/seguridad. Las skills `data-api` y `ui-design` se conservan bajo demanda.
 2. **Primera vez en un repo** — usa Documentation Orchestrator con `inspect` para
    investigar sin persistencia, o solicita `bootstrap-core` para proponer
    `.navigator/` y `.architecture/`; cada skill conserva sus gates y su carpeta.
    Ningún agente recomienda niveles o selección de modelos LLM. Las escrituras
    conservan los gates efectivos de estudio, propuesta y autorización; el Orchestrator
    no añade una pausa por modelo.
-3. **SDD antes de features grandes** — elige entre exactamente tres profundidades:
+3. **SDD solo cuando se selecciona** — elige entre exactamente tres profundidades:
    `direct`, sin spec; `lite`, para trabajo acotado con garantías verificables;
    y `standard`, fallback seguro. Primero define alcance y criterios; después
    califica y recomienda: 1–3 direct si trivial, 4–9 lite si elegible, 10/10+
@@ -184,10 +185,9 @@ Catálogo completo: [catalogo.md](catalogo.md).
    orientar la exploración. Un índice desfasado solo aporta rutas candidatas: la
    documentación aplicable y el código real confirman las decisiones. Su ausencia
    no bloquea el flujo ni provoca bootstrap/update automático.
-4. **Escalado recomendado, no automático** — Documentation Orchestrator, Code Review, Data & API
-   y UI Design evalúan si una mejora necesita más requisitos o diseño. Si
-   recomiendan SDD, explican el motivo, citan el hallazgo y se detienen antes del
-   código; tú decides si cambias de agente. SDD no amplía el alcance del especialista.
+4. **Cambio de agente manual** — Developer no deriva a SDD. Si quieres la metodología,
+   selecciona SDD; si una auditoría detecta una necesidad de especificación, revisa
+   su recomendación y elige explícitamente cómo continuar.
 5. **Git y releases** — el agente propondrá el plan; **tú confirmas** commit, push,
    tag o changelog aplicado.
 6. **Seguridad y calidad** — la remediación va en micro-pasos con confirmación;
@@ -207,8 +207,9 @@ Catálogo completo: [catalogo.md](catalogo.md).
 Elige `documentation-orchestrator` cuando la petición cruza varias carpetas. No
 crea `.documentation/`. También es la entrada para consultas y mantenimiento core:
 ejecuta localmente `architecture` y `project-navigator`, que siguen siendo skills
-separadas. Para datos, UI y calidad/seguridad carga la skill o emite un handoff al
-agente vigente; nunca ambas vías para la misma acción.
+separadas. Para datos y UI carga localmente `data-api`/`ui-design`; para
+quality/security carga la skill o emite un handoff a `code-review`, nunca ambas vías
+para la misma acción.
 
 | Intención | Modo detectado |
 |-----------|----------------|
@@ -225,8 +226,8 @@ modelos ni proveedores LLM. `status` y `release-check` inspeccionan e informan;
 las escrituras conservan la aprobación del plan global y los gates reales.
 
 Si necesitas continuar con el agente especialista real, pídelo explícitamente.
-Los receptores documentales son `data-api`, `ui-design` y `code-review`; el core
-se ejecuta localmente sin handoff ni alias a agentes retirados.
+El único receptor documental de handoff es `code-review`; el core, datos y UI se
+ejecutan localmente con sus skills, sin handoff a agentes retirados.
 El orquestador entrega un bloque `## Handoff`; cópialo al agente indicado y
 devuelve después su bloque `## Handoff Result` al orquestador. Para una misma
 acción se usa la skill local o el handoff, nunca ambos. `write_scope` es una
@@ -239,9 +240,9 @@ ambas carpetas. Solo se agrupan con la misma acción, proyecto y vía autorizada
 | Agente | Artefactos típicos |
 |--------|-------------------|
 | Code Review | `.quality/` y/o `.security/` (hallazgos, estándares, evidencia por dominio) |
-| Data & API | `.data/` (catálogo, modelos, contratos, ER) + lanzador Scalar para REST, bloqueado hasta disponer de OpenAPI válido |
+| Documentation Orchestrator / Developer | `.data/` se mantiene mediante `data-api`; Developer actualiza contratos de producto según el plan autorizado |
 | Documentation Orchestrator | `.navigator/` mediante `project-navigator`; `.architecture/` mediante `architecture`; coordina otros dominios, sin carpeta propia |
-| UI Design | `.design/` (tokens, componentes, deuda visual) |
+| Documentation Orchestrator / Developer | `.design/` se mantiene mediante `ui-design`; Developer implementa UI y ofrece sincronizar si queda desactualizada |
 | SDD | `.sdd/specs/<ruta-spec>/` plana o agrupada por módulo (requirements, design, tasks, verification) |
 | Git & Release | Commits/tags/CHANGELOG; perfil en `.release/` si aplica |
 
@@ -290,22 +291,23 @@ ilegible o desfasado, continuar con fuentes directas y declarar límites.
 Código, steering y contratos son autoridad; un índice viejo solo orienta.
 Consultar no autoriza crear, sincronizar ni exportar contexto.
 
-Las menciones `@architecture` y `@project-navigator` ya no son receptores vigentes.
-Reformula la petición a `@documentation-orchestrator`; no se transfiere ninguna
-autorización antigua. Si el host no resuelve la mención retirada, selecciona el
-agente vigente manualmente. Consulta [migración segura](migracion-agentes.md).
+Las menciones `@architecture`, `@project-navigator`, `@data-api` y `@ui-design` ya
+no son receptores vigentes. Para consultas/actualizaciones de documentación usa
+`@documentation-orchestrator`; para implementación de producto usa `@developer`.
+No se transfiere ninguna autorización antigua. Si el host no resuelve una mención
+retirada, selecciona el agente vigente manualmente. Consulta
+[migración segura](migracion-agentes.md).
 
 Los `@<agente>` siguientes identifican roles del kit; en Antigravity usa la
 selección comprobada en el smoke, sin interpretar estas líneas como comandos.
 
 ```text
-0. @documentation-orchestrator → “Inicializa la documentación core”
-1. @data-api      → “Documenta los endpoints de autenticación”
-2. @sdd           → “Spec standard para refresh token offline”
-3. (implementación con el agente/skill que corresponda a las tasks)
-4. @git-release-manager → “Prepara el commit del producto”
-5. @documentation-orchestrator → “Actualiza la documentación existente”
-6. @git-release-manager → “Prepara el commit documental”
+1. @documentation-orchestrator → “Inicializa la documentación core”
+2. @developer → “PLAN: implementa refresh token offline; analiza API, persistencia, UI y pruebas”
+3. Usuario aclara decisiones y aprueba; Developer implementa y verifica
+4. Si `.data/` o `.design/` quedó desactualizada, Developer consulta si se desea actualizar
+5. @documentation-orchestrator → “Actualiza la documentación afectada” (si se aprueba)
+6. @git-release-manager → “Prepara el commit autorizado”
 7. @documentation-orchestrator → “Ejecuta release-check”
 8. @git-release-manager → “Prepara la release patch”
 ```

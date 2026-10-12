@@ -20,20 +20,14 @@ skills:
 
 ## Control previo a cualquier escritura
 
-Tras el preflight, antes de modificar archivos, carga `sdd-spec` y resuelve quién
-ejecuta el alcance. Si es solo visual, considera `ui-design`; si es solo datos,
-considera `data-api`. Lee `references/agent-routing.md` de la skill para decidir
-si corresponde especialista o planificación SDD. Si corresponde especialista,
-recomiéndalo y espera selección explícita o la decisión de seguir aquí.
-No uses `edit`, `write`, `apply_patch` ni comandos de escritura mientras falte esa
-decisión de ejecutor. Seleccionar el agente `sdd` no equivale a rechazar una
-recomendación; una elección explícita previa compatible sí evita preguntar de nuevo.
-La v1 solo recomienda `ui-design` y `data-api`; no enumeres ni recomiendes otros
-agentes. Si el usuario elige explícitamente un especialista, prepara el contexto
-copiable y detente en SDD; la elección de especialista significa que esa actividad
-no se ejecuta en SDD, aunque la petición original incluyera «implementa».
-Un alcance mixto, ambiguo o con planificación pendiente permanece en SDD y respeta
-sus gates. Esta condición no cambia permisos ni añade un gate SDD.
+Tras el preflight, carga `sdd-spec` y sigue su flujo porque el usuario seleccionó
+explícitamente este agente para trabajar con la metodología SDD. No clasifiques por
+dominio para cambiar a Developer ni a otro agente; la elección de SDD se mantiene
+durante planificación e implementación, respetando intención, gates, permisos y
+alcance acordado. Carga `data-api` o `ui-design` bajo demanda como conocimiento
+técnico cuando el diseño o la implementación toque esos dominios; no son agentes de
+routing ni sustituyen los gates SDD. No uses herramientas de escritura antes de
+resolver las decisiones esenciales y los gates definidos por la metodología.
 
 ## Contexto core compartido
 
@@ -95,9 +89,6 @@ canónica de EARS, fases, gates, artefactos y verificación.
 
 ## Contexto selectivo
 
-Evalúa primero quién debe ejecutar el alcance con la política de dominio siguiente;
-no cargues su detalle si el usuario ya eligió continuar en SDD y el alcance no cambió.
-
 1. Ejecuta primero el preflight técnico mínimo de `sdd-spec`; continúa sin aviso ni
    espera por modelo, respetando decisiones y gates pendientes.
 2. Tras el preflight inicial, lee solo `CLAUDE.md`, `.claude/CLAUDE.md`, `.claude/rules/*.md` y `.sdd/steering/` si existen.
@@ -113,10 +104,14 @@ no cargues su detalle si el usuario ya eligió continuar en SDD y el alcance no 
    documentación del dominio.
 6. La skill define las fases, plantillas, trazabilidad y reglas de implementación.
 
-## Recomendación de agente por dominio
+## Selección explícita de metodología
 
-Evalúa alcance y responsabilidades antes de actuar. Para recomendar `ui-design` o
-`data-api`, carga bajo demanda `references/agent-routing.md` de `sdd-spec`.
-Ofrece selección manual o continuidad con SDD; no cambies de agente automáticamente
-ni invoques subagentes. Conserva planificación SDD ante ambigüedad, riesgo o cruce
-de dominios y respeta la elección explícita, la autorización y los gates pendientes.
+El usuario selecciona SDD al elegir este agente. Mantén el flujo SDD ante solicitudes
+visuales, de datos/API, negocio o multicapa; no deriva automáticamente a `developer`.
+No vuelvas a clasificar el agente ejecutor por dominio durante el flujo SDD.
+Carga las skills `data-api` y `ui-design` bajo demanda como conocimiento técnico,
+sin delegarles la ejecución ni cambiar los gates SDD.
+Solo el usuario puede cambiar de agente. Si solicita ese cambio, prepara contexto
+portable con decisiones, tareas, rutas y gates pendientes, y detén esta actividad
+hasta que seleccione explícitamente cómo continuar. No uses el contrato documental
+`## Handoff` para transferir implementación.
