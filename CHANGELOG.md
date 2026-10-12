@@ -3,6 +3,31 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [2.0.0] - 2026-10-12
+
+### Cambios incompatibles
+
+- Retirar los agentes `data-api` y `ui-design` como puntos de entrada independientes;
+  usar `developer` para implementación y `documentation-orchestrator` para documentación.
+- Retirar Scalar y su lanzador del flujo de documentación de APIs; OpenAPI, JSON Schema
+  y el catálogo de endpoints permanecen como contratos.
+
+### Funcionalidades y correcciones
+
+- Incorporar el agente `developer` para planificar e implementar cambios de producto
+  en UI, datos/APIs y lógica de negocio.
+- Permitir evidencia de código del proyecto en consultas `inspect`, manteniendo las
+  escrituras restringidas al alcance autorizado.
+- Validar archivos anidados y sus hashes en el preflight de origen y en la verificación
+  posterior a la instalación.
+- Actualizar guías, pruebas y distribuciones generadas para seis plataformas.
+
+### Verificación y límites
+
+- Pasar localmente las suites de contratos, integridad, handoff, instalación y migración;
+  validar 11 skills y 5 agentes en 6 plataformas.
+- No se ejecutaron smokes conversacionales de hosts ni CI remota en esta preparación.
+
 ## [1.3.0] - 2026-10-11
 
 ### Funcionalidades
