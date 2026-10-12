@@ -120,16 +120,17 @@ Importación segura de instalaciones locales: `scripts/backup/`.
 
 ### Instalación con tu IA (copiar y pegar)
 
-Copia este prompt en el chat de tu host y deja que la IA lo instale o actualice:
+Copia este prompt en el chat de tu herramienta de IA y deja que lo instale o actualice:
 
 ```text
 Instala o actualiza el MAS (Multi-Agent System) desde este repositorio:
 https://github.com/furthurr/ai-agents-kit
 
-Usa la última versión y sigue la documentación del repo para este host. Si ya
-había una versión anterior instalada, actualízala y retírala por completo: solo
-debe quedar activo el MAS nuevo del repositorio. No borres nada sin respaldo;
-si algo es ambiguo, pregúntame. Reinicia el host al terminar.
+Usa la última versión y sigue la documentación del repo para esta herramienta de
+IA en la que estamos ejecutando este prompt. Si ya había una versión anterior
+instalada, actualízala y retírala por completo: solo debe quedar activo el MAS
+nuevo del repositorio. No borres nada sin respaldo; si algo es ambiguo,
+pregúntame. Al terminar, reinicia esta herramienta de IA.
 ```
 
 Para actualizar agentes antiguos, revisa la [migración segura opt-in](docs/migracion-agentes.md):

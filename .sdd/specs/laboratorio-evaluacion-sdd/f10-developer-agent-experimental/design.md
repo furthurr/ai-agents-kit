@@ -29,8 +29,9 @@
 
 - El actor conserva el evento `final_answer` sanitizado. Tras congelar el snapshot
   de entrega, un clasificador conservador determina `plan_only` solo ante una
-  petición explícita de aprobación sin cambio en `feature.py`; ausencia de código
-  con respuesta ambigua queda como `no_delivery`.
+  petición explícita de aprobación sin cambio AST en los cuerpos permitidos; cambios
+  de formato/comentarios no cuentan como implementación. Ausencia de código con
+  respuesta ambigua queda como `no_delivery`.
 - Ambos estados terminales conservan respuesta y hashes, no abren contenedor
   evaluador ni ejecutan criterios F10.
 - Con implementación, aplicar `only_target_bodies_changed`, exportar únicamente

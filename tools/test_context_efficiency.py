@@ -71,11 +71,14 @@ class ContextEfficiencyTests(unittest.TestCase):
 
     def test_retired_modes_and_git_basics_are_not_repeated(self):
         agent = read("canonical/agents/sdd.md").casefold()
-        sdd = read("canonical/skills/sdd-spec/SKILL.md").casefold()
+        sdd = " ".join(read("canonical/skills/sdd-spec/SKILL.md").casefold().split())
         git = read("canonical/skills/git-commit/SKILL.md")
         self.assertIn("opciones retiradas siguen la política compacta de `sdd-spec`", agent)
         self.assertIn("`deep` no está disponible", sdd)
-        self.assertIn("ante una solicitud nueva", sdd)
+        self.assertIn(
+            "informa que fue retirado y pide elegir `direct`/`lite` o solicitar explícitamente `standard` legacy",
+            sdd,
+        )
         self.assertNotIn("## Tipos de Commit", git)
         self.assertNotIn("## Comandos de referencia", git)
         self.assertNotIn("## Solución de problemas", git)
