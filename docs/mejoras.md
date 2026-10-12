@@ -260,7 +260,8 @@ editado manualmente; el agente no presenta datos obsoletos como actuales.
 
 ### P1.5 — Coherencia del agente SDD
 
-SDD tiene exactamente tres profundidades (`direct`, `lite`, `standard`), variante
+SDD conserva los modos documentados `direct`, `lite` y `standard`, pero `standard` es
+legacy/opt-in explícito y los modos predeterminados son `direct`/`lite`; variante
 Bugfix y Quick Plan exclusivo de `lite`. Las referencias se cargan bajo demanda;
 SDD puede implementar el alcance autorizado y los especialistas pueden apoyar
 cambios dentro de sus dominios. `deep` y TDD estricto están retirados.

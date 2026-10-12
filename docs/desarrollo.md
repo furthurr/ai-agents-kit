@@ -106,8 +106,9 @@ apunta inicialmente a **2.0**: cambios del host van en
 `generated/antigravity/` mediante el renderer existente, nunca edición manual.
 
 Los agentes usan `<id>.md`, `name`, `description`, `model: inherit`,
-`mainAgent: true`, `subagent: true` y `tools` por rol. La descripción SDD conserva
-`direct`, `lite`, `standard` y `Quick Plan`. `{{sdd_agent}}` produce `sdd`
+`mainAgent: true`, `subagent: true` y `tools` por rol. La descripción SDD indica
+`direct`/`lite` como modos predeterminados y `standard` como legacy solo por solicitud
+explícita; Quick Plan es exclusivo de `lite`. `{{sdd_agent}}` produce `sdd`
 nominal, no una invocación nativa `@sdd`. No añadas un campo `skills` explícito
 con paths ambiguos: verifica descubrimiento global y carga de recursos.
 

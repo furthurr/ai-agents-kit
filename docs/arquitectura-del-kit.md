@@ -297,7 +297,7 @@ la elección pendiente antes de artefactos o código. Validación, modo, ejecuto
 autorización de implementación y gates de fase son decisiones distintas.
 
 `direct` no crea spec formal; `lite` genera Quick Plan sin Gates 1–4;
-`standard` conserva los cuatro gates. Las enmiendas preservan acuerdos e historia
+`standard` queda legacy/opt-in explícito y conserva los cuatro gates. Las enmiendas preservan acuerdos e historia
 y revalidan solo tareas/evidencias afectadas, tras aceptar el alcance completo
 actualizado. Una consulta informativa no activa esas aprobaciones.
 

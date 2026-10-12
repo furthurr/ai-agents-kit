@@ -54,7 +54,7 @@ Alcance definido: <alcance funcional completo según scope-depth.md>
 
 Esfuerzo previsto del LLM: <nota e icono>
 Atención especial: <complicación concreta, solo si aplica>
-Profundidad recomendada: <direct | lite | standard>
+Profundidad recomendada: <direct | lite>; standard solo si el usuario lo solicitó explícitamente
 
 ¿Este alcance refleja completamente lo que quieres y continuamos con <recomendada>,
 o necesitas corregir, agregar o eliminar algo? También puedes elegir <otra elegible>.
@@ -66,8 +66,10 @@ explícita del alcance y elección pendientes antes de continuar. Reutilizar ún
 validación previa de la misma versión completa vigente. Ante ajustes, presentar
 el conjunto completo actualizado; reevaluar nota solo por cambios materiales.
 
-Para 10/10+ ofrece dividir en entregas o abordar el conjunto en standard; no
-expliques rutinariamente rangos ni exclusiones. No añadas prefacios ceremoniales.
+Para 10/10+ ofrece dividir en entregas seguras; no ofrezcas `standard` como fallback.
+Si no hay división segura, detente y explica que el modo legacy `standard` requiere
+solicitud explícita del usuario. No expliques rutinariamente rangos ni exclusiones.
+No añadas prefacios ceremoniales. Un LLM local tampoco activa `standard` por inferencia.
 Si ya hay elección compatible, respetarla y preguntar solo por validación pendiente.
 Nota, validación de alcance y gates de fase son decisiones distintas.
 
@@ -101,7 +103,8 @@ Verde no habilita lite sin verificar condiciones; naranja no sustituye garantía
 Tras mostrar alcance completo de reserva/cancelación, ejemplo de bloque numérico:
 `Esfuerzo previsto del LLM: 6 🟠`, `Atención especial: reservas simultáneas; pruebas
 concurrentes`, `Profundidad recomendada: lite`, solo con garantías verificables.
-Si faltan, aclarar o standard. No rebajar la nota al dividir: evaluar cada entrega.
+Si faltan, detenerse y pedir reducción/división o solicitud explícita del modo legacy
+`standard`. No rebajar la nota al dividir: evaluar cada entrega.
 
 ## Contrastes mínimos
 

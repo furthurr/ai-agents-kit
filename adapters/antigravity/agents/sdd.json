@@ -2,7 +2,7 @@
   "filename": "sdd.md",
   "frontmatter": {
     "name": "sdd",
-    "description": "Aplica SDD proporcional con modos direct, lite y standard. Quick Plan es exclusivo de lite; standard conserva requisitos EARS, diseño, tareas y verificación con gates reales de aprobación. Solo planificación no implementa.",
+    "description": "Aplica SDD con direct y lite como modos predeterminados; standard es legacy y solo se usa por solicitud explícita. Quick Plan es exclusivo de lite. Solo planificación no implementa.",
     "model": "inherit",
     "subagent": true,
     "mainAgent": true,

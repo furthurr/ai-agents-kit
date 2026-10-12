@@ -1,7 +1,7 @@
 {
   "filename": "sdd.md",
   "frontmatter": {
-    "description": "Agente SDD — Spec-Driven Development proporcional con modos direct, lite (Quick Plan) y standard. Requisitos EARS, gates de aprobación, diseño, tareas y verificación trazable.",
+    "description": "Agente SDD: direct y lite (Quick Plan) son los modos predeterminados; standard es legacy y solo se activa por solicitud explícita. Requisitos EARS y trabajo trazable.",
     "argument-hint": "<tarea o feature>"
   },
   "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"

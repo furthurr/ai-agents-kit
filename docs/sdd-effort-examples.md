@@ -49,7 +49,7 @@ rangos históricos del laboratorio.
 | F10-sin-scaffold | 9 🟠 | Entre F10 y X13 | Mismo comportamiento de saga, construyendo participantes, ledgers y locking. | Contraste sintético; no añade autorización, migración ni captura offline. |
 | X13 | 10 🔴 | X13 | Offline/sync, autorización/aislamiento, sesión, migración y fencing combinados. | Puertos/IPC/reloj/fixtures dados; coordinación candidata pendiente; no construir el evaluador. |
 | X13-ampliado | 10+ 🔴 | Superior a X13 | Añade saga y compensación externa, fallos e interacciones con sesión/permisos/migración. | Contraste sintético con ledgers/compensaciones no proporcionados. |
-| F07 | 6 🟠 | F07 | Concurrencia entre procesos, escasez e integridad de reintegro único. | Lite es evaluable con mecanismo, pruebas concurrentes y recuperación acotada; si faltan garantías, standard. |
+| F07 | 6 🟠 | F07 | Concurrencia entre procesos, escasez e integridad de reintegro único. | Lite es evaluable con mecanismo, pruebas concurrentes y recuperación acotada; si faltan garantías, pausar o esperar solicitud explícita de standard. |
 
 ## Interacciones breves
 
@@ -62,10 +62,12 @@ rangos históricos del laboratorio.
 - **4 / lite:** normalizar contactos y resolver duplicados en memoria.
   Aclarar conflictos → validar/elegir → Quick Plan → implementación y verification.
 - **6 / lite:** reservas con garantía definida, mecanismo adecuado y pruebas reales.
-  Mostrar 6 🟠, advertir reservas simultáneas y ofrecer lite o standard.
-- **10 / standard o división:** offline/sync multiusuario. Ofrecer entregas de
+  Mostrar 6 🟠, advertir reservas simultáneas y usar lite con controles adecuados.
+  Standard solo si el usuario lo solicita explícitamente.
+- **10 / división prioritaria:** offline/sync multiusuario. Ofrecer entregas de
   consulta, edición, sincronización y conflictos solo si la separación es segura.
-  Reevaluar cada entrega; si alguna sigue 10/10+, evaluar otra división o standard.
+  Reevaluar cada entrega; si alguna sigue 10/10+, evaluar otra división. El conjunto
+  solo continúa en standard si el usuario solicita explícitamente ese modo legacy.
 
 Estos ejemplos son ilustrativos, no pruebas nuevas ejecutadas. Las pruebas lite
 reportadas por el usuario motivan la preferencia 4–9, no certifican todos los casos.

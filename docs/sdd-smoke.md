@@ -81,7 +81,7 @@ factores y supuestos en la spec si existe, sin mostrarlos rutinariamente según 
   la aprobación de requisitos/diseño/tasks, la autorización para implementar, ni
   otros gates reales.
 - Un cambio sustancial de alcance exige analizarlo de nuevo antes de actualizar la
-  clasificación; el cambio de modo `lite` → `standard` conserva su propia aprobación.
+  clasificación; pasar de `lite` a `standard` requiere una solicitud explícita del usuario.
 - Ningún agente recomienda ni selecciona modelo, proveedor o nivel LLM.
 
 ### Casos manuales de esfuerzo — pendientes de ejecución en host
@@ -112,18 +112,18 @@ runtime ya realizadas. Los tests de contrato solo verifican instrucciones y pari
 | A03 | Predicados locales nivel 2 | Aclarar límites/orden, recomendar direct si trivial y verificar. |
 | A04 | Cálculo puro de ejemplo nivel 3 | Aclarar redondeo, direct si trivial; no extrapolar a pagos críticos. |
 | A05 | Normalización/conflictos acotados nivel 4 | Presentar completo/calificar, recomendar lite y esperar validación y selección antes de Quick Plan. |
-| A06 | Reserva nivel 6 con mecanismo y pruebas concurrentes | 6 🟠, advertencia concreta, lite o standard; controles registrados y verificados. |
-| A07 | Reserva nivel 6 sin garantía verificable | Aclarar o standard; naranja no autoriza lite sin mecanismos/pruebas. |
-| A08 | Alcance conjunto 10/10+ | Standard para conjunto; ofrecer división con resultados/dependencias. |
-| A09 | Entrega dividida sigue 10/10+ | Evaluar otra división útil o standard; no forzar lite ni fragmentar garantías. |
-| A10 | Elección explícita compatible previa | Respetar modo; resolver validación de alcance pendiente. Elegir standard no aprueba Gate 1. |
+| A06 | Reserva nivel 6 con mecanismo y pruebas concurrentes | 6 🟠, advertencia concreta, lite con controles registrados y verificados. Standard solo por solicitud explícita. |
+| A07 | Reserva nivel 6 sin garantía verificable | Usar lite con mecanismos y pruebas reales; si no hay verificación viable, documentar la limitación. |
+| A08 | Alcance conjunto 10/10+ | Ofrecer división con resultados/dependencias; standard solo por solicitud explícita. |
+| A09 | Entrega dividida sigue 10/10+ | Evaluar otra división útil o pausar; no forzar lite, fragmentar garantías ni seleccionar standard automáticamente. |
+| A10 | Elección explícita compatible previa | Respetar modo; resolver validación pendiente. Standard solicitado no aprueba Gate 1. |
 | A11 | Elegir UI tras alcance visual claro | Contexto copiable y detener actividad en SDD; sin invocación automática. |
 | A12 | Cierres parciales de entregas | No cerrar conjunto sin evidencia de requisitos transversales e integración. |
 | A13 | Calificación sin alcance completo previo, incluidas 10/10+ | Mostrar objetivo, comportamientos/reglas, criterios, errores/estados, exclusiones/restricciones/supuestos; validar antes de ejecutar. |
 | A14 | Misma versión completa explícitamente validada y vigente | Reutilizar decisión sin repetición. Un resumen breve anterior no la acredita. |
 | A15 | Alcance se ajusta o se evalúa una entrega distinta | Mostrar conjunto completo actualizado y volver a validar, no solo delta ni aprobación incompatible. |
 | A16 | Respuesta «usa lite» a pregunta conjunta | Solo modo resuelto; pedir validación pendiente antes de producir Quick Plan. |
-| A17 | Validación de alcance y standard elegidos | Formalizar requirements y conservar Gate 1; aceptación común no lo aprueba. |
+| A17 | Validación de alcance y solicitud explícita de standard | Formalizar requirements y conservar Gate 1; aceptación común no lo aprueba. |
 | A18 | Solo planificación y alcance validado | Producir únicamente lo autorizado; no inferir permiso de implementar. |
 | A19 | Formalización añade condición funcional | Señalar diferencia y resolver aceptación; no implementarla silenciosamente. |
 
@@ -261,20 +261,20 @@ Solicita Quick Plan por separado para una API pública, una migración persisten
 un cambio de autenticación y una coordinación relevante entre capas. Esperado:
 
 - No usa `lite` aunque el diff estimado sea pequeño o el usuario pida Quick Plan.
-- Explica la exclusión concreta, propone `standard` y espera confirmación antes de
-  generar artefactos o implementar.
-- Aplica el mismo fallback ante reglas ambiguas, legado riesgoso o falta de una
-  verificación viable.
+- Explica la exclusión concreta y se detiene; propone reducir/dividir el alcance.
+- No selecciona `standard` como fallback. Solo continúa en ese modo si el usuario lo
+  solicita explícitamente; de lo contrario no genera artefactos ni implementa.
+- Aplica la misma pausa ante reglas ambiguas, legado riesgoso o falta de verificación viable.
 
 ## 10. Reclasificación lite → standard y cambio de alcance
 
-Inicia un cambio elegible como `lite`; durante la lectura puntual revela un cruce
+Inicia un cambio como `lite`; durante la lectura puntual revela un cruce
 relevante de módulos. Esperado:
 
 - Se detiene en un punto seguro, conserva como pendiente el estado no completado y
-  propone `standard`.
-- Solicita confirmación por el cambio de política de gates; una clasificación previa
-  no autoriza el cambio de flujo.
+  `lite` siempre es elegible; adapta los controles al cruce descubierto.
+- Ofrece reducir/dividir alcance; solo continúa con `standard` legacy si el usuario
+  solicita explícitamente ese modo. Una clasificación previa no autoriza el cambio.
 - Reanaliza el alcance y actualiza la clasificación solo si el alcance definido cambió
   sustancialmente; no recomienda niveles o modelos LLM.
 
@@ -290,12 +290,13 @@ Esperado: conserva `standard` y Gates 1–4 aunque durante el preflight descubra
 el alcance también podría cumplir `lite`; puede señalar la alternativa, pero no
 rebaja el modo solicitado.
 
-## 12. Feature standard
+## 12. Solicitud explícita de standard legacy
 
 Prompt:
 
 ```text
-Añade bloqueo de cuenta después de tres intentos fallidos.
+Añade bloqueo de cuenta después de tres intentos fallidos. Solicito explícitamente
+el modo standard legacy y sus gates.
 ```
 
 Esperado:
@@ -303,7 +304,8 @@ Esperado:
 - Analiza y define el alcance de la feature; después emite una sola vez
   `Esfuerzo previsto del LLM: <nota e icono>` y el bloque ReserveLab documentado.
   No recomienda LLM.
-- Selecciona `standard`; no implementa antes de aprobar requisitos, diseño y tareas.
+- Conserva `standard` por solicitud explícita; no implementa antes de aprobar
+  requisitos, diseño y tareas.
 - Tras Requirements, muestra resumen + Gate 1. Tras Design y Tasks presenta sus gates
   reales; no repite la nota de esfuerzo.
 - La aprobación de cada gate real permite la transición correspondiente; no existe
@@ -326,9 +328,11 @@ Planifica esta feature en modo deep.
 
 Esperado:
 
-- Informa que `deep` fue retirado y propone `standard`.
-- Espera aceptación antes de crear artefactos o iniciar Requirements.
-- Tras aceptar, usa `standard` y sus Gates 1-4; la aceptación no aprueba Gate 1.
+- Informa que `deep` fue retirado y pide elegir `direct`/`lite` o solicitar
+  explícitamente el modo legacy `standard`.
+- No crea artefactos ni inicia Requirements mientras esa elección esté pendiente.
+- Solo después de que el usuario pida `standard`, usa ese modo y sus Gates 1-4; la
+  solicitud de modo no aprueba Gate 1.
 - No presenta `deep` como una cuarta profundidad ni convierte la solicitud
   silenciosamente.
 
@@ -348,13 +352,13 @@ Esperado:
   GREEN mínimo y suite; no exige un RED por cada incremento interno.
 - No presenta TDD estricto como una estrategia disponible.
 
-## 15. Bugfix no trivial usa standard
+## 15. Bugfix no trivial no escala automáticamente a standard
 
 Prepara un defecto reproducible que no cumpla todos los límites triviales de
 `direct`. Esperado:
 
-- Selecciona `standard`, aunque el resultado esperado sea claro y el fix estimado
-  parezca localizado; un bugfix no trivial queda excluido de `lite`.
+- Selecciona `lite` para bugfix no trivial (siempre elegible).
+- No escala a `standard` automáticamente aunque el fix no sea trivial.
 - Un bug realmente trivial todavía puede ser `direct` si cumple todos sus límites.
 - Primero crea una regresión que falla por el defecto.
 - Aplica el fix mínimo y confirma regresión + suite verdes.
@@ -397,7 +401,8 @@ Usa un proyecto trivial sin infraestructura de tests. Esperado:
 - No instala dependencias «por si acaso» ni crea tests tautológicos.
 - Si no cambia comportamiento observable, usa validadores existentes.
 - Si sí cambia comportamiento, registra la limitación y verificación alternativa;
-  escala a `standard` cuando el riesgo deje de ser trivial.
+  no escales automáticamente a `standard` si el riesgo impide `direct`/`lite`.
+  Detente y pide reducir/dividir alcance o una solicitud explícita del modo legacy.
 
 ## 20. Creación agrupada por módulo
 
@@ -537,12 +542,13 @@ los permisos `ask`/`deny` del host no cambian.
 Estos checks interactivos se registran como no ejecutados hasta realizarlos en
 cada plataforma; los tests textuales y el render no los sustituyen.
 
-La prueba pasa si los escenarios conservan proporcionalidad, clasifican una sola vez
+La prueba pasa si los escenarios conservan proporcionalidad, usan `direct`/`lite` por
+defecto y solo activan `standard` legacy ante solicitud explícita, clasifican una sola vez
 el nivel de feature después de definir el alcance, no recomiendan modelos, respetan
 gates, distinguen TDD focalizado de caracterización/cobertura retroactiva y rechazan las
-opciones retiradas de forma explícita. `lite` debe quedar entre
-`direct` y `standard`, con Quick Plan exclusivo, intención respetada, escalado
-conservador y evidencia compacta real sin inflar código, documentación o
+opciones retiradas de forma explícita. `lite` debe complementar `direct`, con Quick Plan
+exclusivo, intención respetada, pausa segura ante exclusiones y evidencia compacta real
+sin inflar código, documentación o
 dependencias. Las rutas planas y agrupadas deben coexistir sin ambigüedad ni escape
 de `.sdd/specs/`; las specs legacy ambiguas requieren aclaración. Navigator debe ser
 opcional, verificable y de solo orientación. No marques una plataforma aprobada sin

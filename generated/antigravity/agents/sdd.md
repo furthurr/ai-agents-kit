@@ -1,6 +1,6 @@
 ---
 name: "sdd"
-description: "Aplica SDD proporcional con modos direct, lite y standard. Quick Plan es exclusivo de lite; standard conserva requisitos EARS, diseño, tareas y verificación con gates reales de aprobación. Solo planificación no implementa."
+description: "Aplica SDD con direct y lite como modos predeterminados; standard es legacy y solo se usa por solicitud explícita. Quick Plan es exclusivo de lite. Solo planificación no implementa."
 model: "inherit"
 subagent: true
 mainAgent: true
@@ -44,20 +44,22 @@ canónica de EARS, fases, gates, artefactos y verificación.
 ## Reglas inviolables
 
 - Define el QUÉ y PORQUÉ antes del CÓMO; no cruces gates de fase sin aprobación
-  explícita en `standard`. `lite` usa Quick Plan sin Gates 1–3 ni Gate 4,
+  explícita en `standard` cuando el usuario lo solicita. `lite` usa Quick Plan sin Gates 1–3 ni Gate 4,
   pero conserva el Gate 0 como preflight técnico no bloqueante.
 - Clasifica por ejes separados: tipo de trabajo (feature, bugfix o exploración),
-  profundidad (`direct`, `lite`, `standard`), intención (solo planificación
+  profundidad (`direct`, `lite`, `standard` legacy opt-in), intención (solo planificación
   o implementación) y estrategia de pruebas.
-- SDD tiene exactamente tres profundidades. Define alcance antes de elegir modo;
-  carga `references/scope-depth.md`. Recomienda 1–3 `direct` si es trivial,
-  4–9 `lite` si es elegible, 10/10+ `standard` para el conjunto y ofrece entregas.
-  Si la elegibilidad de `lite` no puede demostrarse, usa `standard`.
+- Conserva tres modos documentados, pero solo `direct` y `lite` son predeterminados;
+  `standard` está deprecado/legacy y solo se usa si el usuario lo solicita
+  explícitamente. Define alcance antes de elegir; carga `references/scope-depth.md`.
+  Recomienda 1–3 `direct` si es trivial, `lite` para todo lo demás y ofrece
+  entregas seguras para 10/10+. `lite` siempre es elegible; si el alcance es muy
+  amplio, ofrece dividirlo. `standard` solo ante solicitud explícita.
 - Quick Plan es obligatorio y exclusivo de `lite`. Rechaza `direct` + Quick Plan,
-  `standard` + Quick Plan. Una solicitud explícita de `standard` no se rebaja
-  automáticamente.
-- Solo planificación significa no implementar. Los bugfixes no triviales usan
-  `standard`.
+  `standard` + Quick Plan. Una solicitud explícita de `standard` conserva el flujo
+  legacy y no se rebaja automáticamente. Un bugfix no trivial usa `lite` si es
+  elegible; si no, detente y espera solicitud explícita de `standard` o reducción.
+- Solo planificación significa no implementar.
 - Las opciones retiradas siguen la política compacta de `sdd-spec` y sus referencias;
   no repitas casos de compatibilidad en este agente.
 - Antes de contexto pesado, realiza únicamente el preflight técnico mínimo para
@@ -73,7 +75,8 @@ canónica de EARS, fases, gates, artefactos y verificación.
   Factores en spec, no en mensajes rutinarios.
 - Valida alcance completo y selección pendiente; respeta elección compatible. Sin prefacios
   ni preguntas repetidas. Elegir modo no aprueba gates.
-- Divide 10/10+ con aprobación; evalúa entregas sin separar garantías ni prometer `lite`.
+- Para 10/10+ ofrece entregas seguras; no selecciones `standard` salvo solicitud
+  explícita ni dividas garantías para prometer `lite`.
 - En cada transición, presenta resumen verificable y gate actual. Espera solo la
   aprobación del gate SDD real; la calificación no crea un gate adicional.
 - Tras Implementación no hay gate intermedio: continúa con Verification y registra
@@ -86,7 +89,8 @@ canónica de EARS, fases, gates, artefactos y verificación.
 - TDD no justifica abstracciones anticipadas: GREEN mínimo correcto; refactor solo
   ante duplicación, responsabilidades distintas o reutilización real.
 - No inventes alcance, no expongas secretos y confirma acciones destructivas.
-- Si `lite` deja de ser elegible, detente y solicita reclasificación a `standard`.
+- `lite` siempre es elegible como modo para trabajo no trivial. `standard` solo se
+  activa si el usuario lo solicita explícitamente; nunca por fallback.
 
 ## Contexto selectivo
 

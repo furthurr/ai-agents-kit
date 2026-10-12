@@ -154,19 +154,23 @@ Catálogo completo: [catalogo.md](catalogo.md).
    Ningún agente recomienda niveles o selección de modelos LLM. Las escrituras
    conservan los gates efectivos de estudio, propuesta y autorización; el Orchestrator
    no añade una pausa por modelo.
-3. **SDD solo cuando se selecciona** — elige entre exactamente tres profundidades:
-   `direct`, sin spec; `lite`, para trabajo acotado con garantías verificables;
-   y `standard`, fallback seguro. Primero define alcance y criterios; después
-   califica y recomienda: 1–3 direct si trivial, 4–9 lite si elegible, 10/10+
-   standard para el conjunto y opción de dividir. El usuario elige; una elección
-   explícita compatible previa no se vuelve a preguntar.
+3. **SDD solo cuando se selecciona** — los modos operativos predeterminados son
+   `direct`, sin spec, y `lite`, para trabajo acotado con garantías verificables.
+   `standard` queda deprecado/legacy y solo se usa cuando el usuario lo solicita
+   explícitamente; no es fallback automático. Primero define alcance y criterios;
+   después califica y recomienda `direct` para cambios triviales o `lite` para trabajo
+   acotado/elegible. Para alcances grandes prioriza entregas seguras. Si no hay una
+   trabajo no trivial, usa `lite` (siempre elegible). `standard` solo a solicitud explícita. Una elección explícita compatible previa no se vuelve a preguntar.
    Presenta alcance funcional completo (comportamientos, reglas, criterios, errores,
    exclusiones y supuestos) y espera validación explícita antes de artefactos/código.
    Elegir solo modo no lo valida; ajustes requieren presentar el conjunto actualizado.
-   Validación y elección pueden resolverse juntas; no sustituyen Gate 1 de standard.
+   Validación y elección pueden resolverse juntas; no sustituyen Gate 1 de `standard`
+   cuando el usuario haya solicitado explícitamente ese modo legacy.
    Quick Plan es obligatorio y exclusivo de `lite`; no tiene Gates 1-3 ni Gate 4.
    Combinar Quick Plan con otro modo es inválido.
-   `standard` conserva los Gates 1-4; los bugfixes no triviales usan `standard`.
+   `standard` legacy conserva los Gates 1-4. Los bugfixes no triviales usan `lite` si
+   son elegibles; de lo contrario, el flujo se pausa hasta reducir/dividir alcance o
+   recibir solicitud explícita de `standard`.
    Tras definir el alcance, SDD emite una sola vez su nota de esfuerzo prevista,
    registrando referente, justificación y supuestos en la spec según la
    [rúbrica ReserveLab](../canonical/skills/sdd-spec/references/feature-level.md).
@@ -199,7 +203,7 @@ Catálogo completo: [catalogo.md](catalogo.md).
    Kiro, los agentes de SDD lo leen de forma selectiva según la plataforma.
 8. **Testing adaptativo en SDD** — una feature normal usa TDD focalizado; TDD
    estricto está retirado. Es independiente de la profundidad: `direct` puede
-   incluir un microciclo TDD y elegir `standard` no obliga a un ciclo más fuerte.
+   incluir un microciclo TDD y solicitar `standard` no obliga a un ciclo más fuerte.
    Si solicitas TDD estricto, SDD propone TDD focalizado y espera aceptación.
 
 ## Orquestación documental

@@ -34,7 +34,8 @@ niveles, modelos o proveedores LLM.
 ## Gates que se preservan
 
 - Orchestrator presenta el plan global y espera autorización antes de escribir.
-- SDD `standard` mantiene Gates 1–4; planificar no autoriza implementar.
+- SDD `standard` legacy mantiene Gates 1–4 cuando el usuario lo solicita
+  explícitamente; planificar no autoriza implementar.
 - Quality/Security mantienen la aprobación del primer y cada siguiente micro-paso.
 - Git/release mantiene sus confirmaciones operativas y las acciones destructivas,
   incluida la doble confirmación.

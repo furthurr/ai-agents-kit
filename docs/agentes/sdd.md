@@ -24,11 +24,13 @@ SDD separa el **qué y porqué** del **cómo** y deja decisiones trazables.
 Primero define y presenta el alcance funcional completo, consulta contexto técnico
 mínimo y califica features. Recomienda profundidad y espera validación del alcance
 y elección pendientes en una interacción; reutiliza decisiones vigentes.
-1–3 recomienda `direct` si es trivial; 4–9 prioriza `lite`; 10/10+ recomienda
-`standard` para el conjunto y ofrece entregas incrementales. La nota no basta:
-se comprueba elegibilidad. `standard` es el fallback seguro. No existe una
-profundidad `deep`; las solicitudes históricas o explícitas de ese modo requieren
-aceptar su sustitución por `standard`.
+Por defecto solo selecciona `direct` o `lite`: recomienda `direct` para cambios
+triviales y `lite` para todo lo demás; para 10/10+ ofrece entregas
+incrementales seguras. La nota no basta: se comprueba elegibilidad. `standard` queda
+deprecado/legacy y solo se usa si el usuario solicita explícitamente ese modo; no es
+fallback ante alcance amplio ni riesgo. `lite` siempre es elegible: adapta los
+controles al caso. No existe una profundidad `deep`; pide elegir `direct`/`lite`
+o solicitar `standard` legacy, sin conversión silenciosa.
 
 ## Esfuerzo previsto del LLM
 
@@ -88,7 +90,7 @@ Ejemplo ilustrativo, después de acordar estas condiciones:
 >
 > **Profundidad recomendada: `lite`.**
 >
-> ¿Este alcance refleja completamente lo que quieres y continuamos con `lite`, o necesitas corregir, agregar o eliminar algo? También puedes elegir `standard`.
+> ¿Este alcance refleja completamente lo que quieres y continuamos con `lite`, o necesitas corregir, agregar o eliminar algo? También puedes solicitar explícitamente el modo legacy `standard`.
 
 ## Definición de alcance y entregas
 
@@ -97,13 +99,15 @@ ni un gate numerado nuevo. Combina validación y elección cuando faltan ambas;
 si el usuario responde solo «usa lite», queda validación pendiente. Consultas
 informativas sin artefactos ni código no adquieren otra aprobación ceremonial.
 Mantiene rigor testable y reutiliza lo definido en los artefactos del modo elegido.
-Validar alcance o elegir standard no aprueba su Gate 1 formal. Lite conserva Quick
+Validar alcance o solicitar `standard` legacy no aprueba su Gate 1 formal. Lite conserva Quick
 Plan en una pasada sin otra pausa de requirements; direct no genera spec formal.
 
-Para 10/10+ ofrece dividir o abordar completo en standard. Cada entrega debe tener
+Para 10/10+ ofrece dividir en entregas seguras. Abordar el conjunto en `standard`
+requiere solicitud explícita del usuario. Cada entrega debe tener
 resultado verificable, dependencias y garantías transversales explícitas; se califica
-individualmente y puede seguir en 10/10+. Si otra separación no es segura, mantener
-standard. No prometer que todo será lite ni cerrar el conjunto sin pruebas integradas.
+individualmente y puede seguir en 10/10+. Si otra separación no es segura, detenerse
+y explicar la opción de `standard` legacy, sin seleccionarlo automáticamente. No
+prometer que todo será lite ni cerrar el conjunto sin pruebas integradas.
 Política: [alcance y profundidad](../../canonical/skills/sdd-spec/references/scope-depth.md).
 
 ## Continuidad de specs y contexto selectivo
@@ -125,7 +129,7 @@ solo ante relación o ambigüedad relevante.
 | Código y spec contradictorios | Determinar bug, documentación obsoleta o cambio funcional; aclarar si la autoridad no es evidente. |
 
 Enmiendas mantienen IDs del mismo requisito y señalan adiciones/sustituciones.
-En standard se revisan gates afectados; elegir direct no permite evitarlos. En lite
+En una spec `standard` legacy ya solicitada se revisan los gates afectados; elegir direct no permite evitarlos. En lite
 se actualiza Quick Plan autorizado sin crear gates nuevos. No desmarcar todas las
 tareas ni considerar un archivo presente como evidencia del requisito modificado.
 
@@ -158,9 +162,12 @@ Contrato: [selección de metodología](../../canonical/skills/sdd-spec/reference
 |---|---|---|
 | `direct` | Preferencia 1–3 si es trivial, localizado y reversible | Sin spec; pruebas/checks y evidencia breve |
 | `lite` | Preferencia 4–9, alcance acotado y garantías verificables | Quick Plan compacto; artefactos según se planifique o implemente |
-| `standard` | Conjunto 10/10+ o no elegible; bugfix no trivial | Requirements, design, tasks y verification; Gates 1-4 |
+| `standard` (legacy) | Solo ante solicitud explícita del usuario | Requirements, design, tasks y verification; Gates 1-4 |
 
-Estas son las tres profundidades válidas: `direct`, `lite` y `standard`.
+Se conservan tres modos documentados, pero `direct` y `lite` son los modos
+operativos predeterminados. `standard` está deprecado/legacy y no se recomienda ni
+activa automáticamente. Puede conservarse para quien lo solicite explícitamente,
+incluidos casos donde el usuario prefiera ese flujo con modelos LLM locales.
 Quick Plan es obligatorio y exclusivo de `lite`; combinarlo con cualquier otra
 profundidad es inválido.
 
@@ -169,9 +176,9 @@ TDD focalizado; TDD estricto está retirado. Si se solicita, propone TDD focaliz
 y espera aceptación. Los bugfixes usan regresión y el legado usa caracterización.
 
 `deep` y TDD estricto pueden aparecer en specs históricas, pero no son opciones
-vigentes. SDD conserva esos artefactos y evidencias, informa la retirada y espera
-aceptación antes de continuar con `standard` o TDD focalizado; no convierte la
-solicitud silenciosamente ni confunde esa aceptación con la aprobación de un gate.
+vigentes. SDD conserva esos artefactos y evidencias; para `deep`, pide elegir
+`direct`/`lite` o solicitar explícitamente `standard` legacy. No convierte la
+solicitud silenciosamente ni confunde la elección de modo con la aprobación de un gate.
 
 ## Flujo y gates
 
@@ -179,15 +186,15 @@ solicitud silenciosamente ni confunde esa aceptación con la aprobación de un g
    calificar features y recomendar profundidad. Resolver validación y elección pendientes.
    `direct` ejecuta lo autorizado, verifica y resume sin crear spec ni Quick Plan.
 1. **Requirements:** historias, criterios EARS, errores, edge cases y supuestos.
-    Gate 1: aprobar requisitos en `standard`.
+     Gate 1: aprobar requisitos en `standard` legacy solicitado explícitamente.
 2. **Design:** arquitectura, modelos, errores, pruebas y estrategia de testing.
-    Gate 2: aprobar diseño en `standard`.
+     Gate 2: aprobar diseño en `standard` legacy solicitado explícitamente.
 3. **Tasks:** tareas trazadas a requisitos, dependencias y waves.
-    Gate 3: aprobar el plan y empezar a implementar en `standard`.
+     Gate 3: aprobar el plan y empezar a implementar en `standard` legacy solicitado explícitamente.
 4. **Implementación:** ejecutar una tarea o wave, con integrity gate antes de marcarla.
 5. **Verification:** tras Implementación, ejecutar pruebas,
    registrar evidencia y revisar requisitos y RNF. Gate 4: cerrar la spec o corregir
-   huecos en `standard`; después termina el flujo.
+    huecos en `standard` legacy solicitado explícitamente; después termina el flujo.
 
 En `lite`, Quick Plan genera `requirements.md`, `design.md` y `tasks.md` en una
 pasada después de validar alcance y resolver elección, sin repetir la nota. No existen Gates 1-3
@@ -235,7 +242,8 @@ agrupador: la raíz de una spec es la carpeta que contiene `requirements.md` o
 `bugfix.md`. Al reanudar sin ruta explícita, SDD busca esos marcadores de forma
 recursiva y pregunta si encuentra varias candidatas plausibles.
 
-La estructura completa corresponde a `standard` o a un `lite` implementado.
+La estructura completa corresponde a un `standard` legacy solicitado explícitamente
+o a un `lite` implementado.
 Un `lite` solo de planificación omite `verification.md`; `direct` no crea esta
 carpeta.
 
@@ -265,7 +273,7 @@ Esta petición solicita evaluar `lite` y Quick Plan; no evita sus condiciones.
 
 ## Límites y confirmaciones
 
-- No cruza los Gates 1-4 de `standard` sin aprobación explícita.
+- No cruza los Gates 1-4 de `standard` legacy sin aprobación explícita.
 - La clasificación del esfuerzo se emite una sola vez tras analizar el alcance
   definido, con el formato `Esfuerzo previsto del LLM: <nota e icono>` (1–7 🟢 o
   🟠 con atención especial, 8–9 🟠, 10 🔴, superior a X13: `10+ 🔴`);
@@ -273,7 +281,7 @@ Esta petición solicita evaluar `lite` y Quick Plan; no evita sus condiciones.
 - Ninguna fase repite esa clasificación ni espera por modelo; `lite` inicia Quick
   Plan sin pausa por modelo, sin crear Gates 1-3 ni Gate 4.
 - La intención de solo planificación no autoriza implementar. Cambiar de `lite`
-  a `standard` requiere aprobación por el cambio de flujo, aunque la clasificación
+  a `standard` requiere que el usuario lo solicite explícitamente, aunque la clasificación
   de feature no cambie.
 - Quick Plan solo existe en `lite` y no se combina con otra profundidad.
 - No recomienda, identifica ni selecciona modelo, proveedor o nivel de LLM.

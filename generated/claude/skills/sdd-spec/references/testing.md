@@ -16,9 +16,9 @@ siempre que exista. Si no lo especifica, aplica estos valores por defecto:
 
 ## Selección de estrategia
 
-La profundidad SDD (`direct`, `lite`, `standard`) y la estrategia de pruebas son
-ejes independientes. Elige una estrategia por comportamiento, no por tamaño del
-diff:
+La profundidad SDD (`direct`, `lite` y `standard` legacy solo por solicitud
+explícita) y la estrategia de pruebas son ejes independientes. Elige una estrategia
+por comportamiento, no por tamaño del diff:
 
 | Estrategia | Cuándo | Evidencia mínima |
 |------------|--------|------------------|
@@ -34,12 +34,13 @@ Orden de decisión:
 3. Para comportamiento nuevo/modificado, usa TDD focalizado.
 4. Sin cambio observable, no añadas un test solo por ceremonia; ejecuta checks.
 5. Si debería probarse pero no existe un harness viable, registra la excepción y
-   la mejor verificación alternativa. Si el riesgo ya no es trivial, escala de
-   `direct` a `standard`.
+   evalúa la mejor verificación alternativa. Si el riesgo impide `direct`/`lite`,
+   no escales automáticamente: detente y explica cómo reducir/dividir el alcance;
+   continúa con `standard` solo ante solicitud explícita del usuario.
 
 `lite` reduce gates y documentación, no evidencia. Una implementación `lite` usa
 la misma decisión adaptativa y registra el ciclo en su `verification.md` compacto.
-Un bugfix no trivial se clasifica `standard`, aunque su diff sea pequeño.
+Un bugfix no trivial usa `lite` (siempre elegible), aunque el diff sea pequeño.
 
 Lite con atención especial exige pruebas de la garantía identificada, incluyendo
 concurrencia, reintentos o fallos pertinentes con mecanismos reales o seams

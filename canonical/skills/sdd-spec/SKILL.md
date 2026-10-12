@@ -25,35 +25,40 @@ no autoriza a mostrarla.
 |------|--------|-------------|-------------------|
 | `direct` | Cambio trivial verificable | Sin spec 4 fases | Mínima |
 | `lite` | Alcance claro y acotado, garantías verificables | Quick Plan; verificación compacta si implementa | Ligera |
-| `standard` | Fallback seguro; alcance completo 10/10+ | 4 fases, design corto, 0–5 invariantes, testing adaptativo | Moderada |
+| `standard` | Modo legacy/deprecado; solo ante solicitud explícita del usuario | 4 fases y Gates 1–4 | Moderada |
 
-SDD reconoce exactamente tres profundidades: `direct`, `lite` y `standard`. Tipo de
-trabajo (feature, bugfix o exploración), profundidad, intención
+Se conservan tres modos documentados: `direct`, `lite` y `standard`; el flujo
+operativo predeterminado usa solo `direct` y `lite`. `lite` siempre es elegible.
+`standard` queda como modo legacy/deprecado y se activa únicamente cuando el
+usuario solicita explícitamente `standard`. La complejidad, una nota alta o el
+uso de un LLM local no lo activan por inferencia.
+Tipo de trabajo (feature, bugfix o exploración), profundidad, intención
 (solo planificación o implementación) y estrategia de pruebas son ejes separados.
 
-`standard` es el fallback seguro. No existe una profundidad más pesada que debas
-activar: no rebajes una solicitud explícita de `standard`. Sus límites son design
-~≤250 líneas, máx. 5 invariantes y 1 flowchart + 1 sequence. Un glosario o un
-diagrama adicional solo se añade si el requisito lo necesita o el usuario lo pide;
-no crea una profundidad nueva.
+Si el usuario solicita explícitamente `standard`, conserva esa elección y aplica
+su flujo legacy, sin rebajarlo automáticamente. Sus límites son design ~≤250 líneas,
+máx. 5 invariantes y 1 flowchart + 1 sequence. Un glosario o un diagrama adicional
+solo se añade si el requisito lo necesita o el usuario lo pide; no crea una
+profundidad nueva.
 
 `direct` exige alcance claro, localizado y reversible, sin contrato público,
 migración, decisión arquitectónica, cruce de capas ni riesgo relevante de seguridad,
 concurrencia o integridad.
 
 Recomienda profundidad después de definir alcance e impacto: 1–3 `direct` si
-es trivial; 4–9 prioriza `lite` si es elegible; 10/10+ `standard` para el conjunto
-y ofrece división. Un 1–3 no trivial puede usar `lite`. Carga
-`references/scope-depth.md` para condiciones, atención y selección manual.
+es trivial; `lite` para un cambio no trivial acotado y verificable. Para 10/10+
+prioriza ofrecer entregas seguras. Un 1–3 no trivial también puede usar `lite`.
+Carga `references/scope-depth.md` para condiciones, atención y selección manual.
 Concurrencia/persistencia/integridad acotadas permiten evaluar `lite` con mecanismos
-adecuados y pruebas reales; no basta una advertencia. Si la elegibilidad de `lite`
-no puede demostrarse, usa `standard`. Conserva las exclusiones de la referencia
-y el tratamiento standard de bugfix no trivial.
+adecuados y pruebas reales; no basta una advertencia. `lite` siempre es elegible:
+adapta los controles al riesgo. Los bugfixes no triviales usan `lite`. `standard`
+solo se activa si el usuario lo solicita explícitamente.
 
 Quick Plan es obligatorio y exclusivo de `lite`. Rechaza `direct` + Quick Plan,
 `standard` + Quick Plan; una petición de Quick Plan solicita evaluar `lite`, pero no
-evita sus límites. Un bugfix trivial puede ser `direct`; los demás bugfixes usan
-`standard`.
+evita sus límites. Un bugfix trivial puede ser `direct`; los demás usan `lite` si
+son elegibles, y si no lo son detén el flujo hasta reducir/dividir alcance o recibir
+una solicitud explícita de `standard` legacy.
 
 Profundidad y testing son ejes independientes: sin cambio observable → sin test
 nuevo; bug o legado → regresión/caracterización; comportamiento nuevo o modificado
@@ -63,10 +68,11 @@ pruebas». TDD estricto no es una estrategia disponible. Detalle en
 
 ## Opciones retiradas y specs históricas
 
-`deep` no está disponible: ante una solicitud nueva propone `standard` y espera
-aceptación; no conviertas la solicitud silenciosamente. En una spec histórica conserva
-artefactos/evidencia y pide aceptar su sustitución antes de reanudarla. TDD estricto
-se trata en `references/testing.md`.
+`deep` no está disponible: informa que fue retirado y pide elegir `direct`/`lite` o
+solicitar explícitamente `standard` legacy; no conviertas la solicitud en `standard`
+silenciosamente. En una spec histórica conserva artefactos/evidencia y aclara el modo
+antes de reanudarla si la elección no está vigente. TDD estricto se trata en
+`references/testing.md`.
 Aceptar la sustitución no aprueba gates. Si los marcadores de modo/fase/estado/gate
 faltan o se contradicen, aclara antes de continuar; no infieras aprobación por archivos.
 
@@ -157,9 +163,10 @@ el nombre de la carpeta final por sí solo no es suficiente.
 | `tasks.md` | 3 | Tareas discretas, trazadas y secuenciadas |
 | `verification.md` | 4 | Matriz + evidencia + cierre |
 
-En `standard`, los artefactos nuevos declaran `Modo SDD`, `Fase`, `Estado` y
-el gate pendiente o aprobado que les corresponde. La reanudación usa esos marcadores
-y no infiere aprobación solo por la existencia del archivo. En `lite`, Quick Plan
+En `standard` legacy, usado solo por solicitud explícita, los artefactos nuevos
+declaran `Modo SDD`, `Fase`, `Estado` y el gate pendiente o aprobado que les
+corresponde. La reanudación usa esos marcadores y no infiere aprobación solo por la
+existencia del archivo. En `lite`, Quick Plan
 genera los tres primeros archivos en una pasada y añade `verification.md` compacto
 solo después de implementar; `requirements.md` declara `Modo SDD: lite`. Las specs
 legacy no se migran; si una spec de tres archivos sin marcador es ambigua, pregunta
@@ -167,7 +174,7 @@ antes de reanudarla.
 
 ## Flujo con gates
 
-> **En `standard`, no avances de fase sin aprobación explícita del usuario.**
+> **En `standard` legacy, solicitado explícitamente, no avances de fase sin aprobación explícita del usuario.**
 > {{gate_instruction}}La calificación de feature no es un gate ni requiere aprobación
 > separada. El preflight técnico no recomienda modelos ni añade pausas. En las
 > transiciones, espera solo la aprobación del gate SDD real. `lite` usa Quick Plan
@@ -244,8 +251,9 @@ Prerrequisito: `[x]` con artefacto real (o `[omitido: razón]`).
 - Esperado: `CUANDO <...> EL SISTEMA DEBERÁ <correcto>`
 - Inalterado: `EL SISTEMA DEBERÁ SEGUIR <...>`
 
-Usa el flujo y gates normales, salvo bug trivial `direct`. Diseño con causa raíz +
-invariantes si aplican. Primero crea una regresión que falle por el defecto; usa
+Usa regresión y causa raíz; elige `direct` solo si el bug es trivial, o `lite` para
+bugfix no trivial. `lite` siempre es elegible. `standard` solo si el usuario lo
+solicita explícitamente. Primero crea una regresión que falle por el defecto; usa
 caracterización para comportamiento legado que deba preservarse. Si no puede
 reproducirse, registra la limitación y no inventes un RED.
 
@@ -262,8 +270,9 @@ integrity-gate y testing adaptativo después del plan. Al terminar, crea un
 `verification.md` compacto con RED o baseline, GREEN, suite, excepciones y matriz
 de evidencia; cierra sin Gate 4.
 
-Si aparece una exclusión, detente en un punto seguro y propón `standard`. La
-reclasificación requiere aprobación por el cambio de flujo. Quick Plan no es
+Si aparece una exclusión, detente en un punto seguro; no cambies automáticamente a
+`standard`. Explica cómo reducir/dividir el alcance para `lite` y continúa con
+`standard` únicamente si el usuario lo solicita explícitamente. Quick Plan no es
 compatible con `direct` ni `standard`.
 
 ## Modo direct

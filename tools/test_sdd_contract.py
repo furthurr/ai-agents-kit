@@ -46,17 +46,21 @@ def test_modes_remain_proportional() -> None:
     compact = normalized(skill + " " + agent).lower()
     check("| `direct` | Cambio trivial verificable" in skill, "direct conserva criterio verificable")
     check("| `lite` |" in skill, "lite existe como profundidad intermedia")
-    check("| `standard` | Fallback seguro" in skill, "standard sigue siendo el fallback seguro")
+    check("`standard` queda como modo" in compact and "solo se usa si el usuario lo solicita explícitamente" in compact,
+          "standard permanece legacy y solo opt-in explícito")
     check("`deep` no está disponible" in compact
           and "tdd estricto no es una estrategia disponible" in compact
           and "aceptar la sustitución no aprueba gates" in compact,
           "opciones retiradas remiten a una única política de compatibilidad")
     check("sin contrato público" in skill and "cruce de capas" in skill, "direct declara límites de riesgo")
     check(
-        "exactamente tres profundidades" in compact
+        "se conservan tres modos documentados" in compact
         and all(mode in skill for mode in ("`direct`", "`lite`", "`standard`")),
-        "SDD declara exactamente tres profundidades",
+        "SDD documenta los tres modos existentes",
     )
+    check("solo `direct` y `lite` son predeterminados" in compact
+          or "solo `direct` y `lite` son los modos operativos predeterminados" in compact,
+          "direct y lite son los únicos modos predeterminados")
     check(
         "tipo de trabajo" in compact
         and "intención" in compact
@@ -64,17 +68,19 @@ def test_modes_remain_proportional() -> None:
         "tipo, profundidad, intención y testing permanecen separados",
     )
     check(
-        "si la elegibilidad de `lite` no puede demostrarse" in compact
-        and "`standard`" in compact,
-        "la incertidumbre sobre lite cae en standard",
+        "`lite` siempre es elegible" in compact
+        and "solo se activa si el usuario lo solicita" in compact,
+        "lite siempre elegible; standard solo por solicitud explícita",
     )
     check(
-        "solicitud explícita de `standard`" in compact and "no se rebaja" in compact,
-        "standard explícito no se rebaja automáticamente",
+        "solicitud explícita de `standard`" in compact
+        and "sin rebajarlo automáticamente" in compact,
+        "standard legacy explícito no se rebaja automáticamente",
     )
     check(
-        "espera aceptación" in compact and "no conviertas la solicitud silenciosamente" in compact,
-        "las opciones retiradas requieren aceptación explícita",
+        "solicitar explícitamente `standard` legacy" in compact
+        and "no conviertas la solicitud" in compact,
+        "deep retirado no se convierte automáticamente a standard",
     )
 
 
@@ -142,9 +148,9 @@ def test_scope_depth_contract() -> None:
                  "no crea un documento obligatorio", "no aprueba gate 1"):
         check(rule in common, f"alcance común: {rule}")
     rows = table_rows(policy, "Recomendación base")
-    for case, mode in (("1–3 trivial", "direct"), ("1–3 no trivial elegible", "lite"),
-                       ("4–9 elegible", "lite"), ("1–9 no elegible", "standard"),
-                       ("10 / 10+", "standard")):
+    for case, mode in (("1–3 trivial", "direct"), ("1–3 no trivial", "lite"),
+                       ("4–9", "lite"), ("1–9 no trivial", "lite"),
+                       ("10 / 10+", "Ofrecer división")):
         check(mode in " ".join(rows.get(case, [])), f"profundidad: {case} → {mode}")
     attention = normalized(section(policy, "Complicaciones controlables")).lower()
     for term in ("invariante", "mecanismo", "pruebas", "mock", "reversibilidad",
@@ -157,8 +163,9 @@ def test_scope_depth_contract() -> None:
     check("lite" in " ".join(examples.get("6-controlado", []))
           and "6 🟠" in " ".join(examples.get("6-controlado", [])),
           "alcance: 6 naranja permite lite con garantías")
-    check("standard" in " ".join(examples.get("6-sin-garantías", [])),
-          "alcance: 6 sin garantías no fuerza lite")
+    no_guarantee = " ".join(examples.get("6-sin-garantías", [])).lower()
+    check("pausar" in no_guarantee and "solicitud explícita" in no_guarantee,
+          "alcance: 6 sin garantías pausa y no fuerza standard")
     split = normalized(section(policy, "Entregas incrementales")).lower()
     for term in ("10 o 10+", "dependencias", "garantías transversales", "integración",
                  "no existe", "standard", "no garantiza", "cada entrega"):
@@ -662,8 +669,8 @@ def test_spec_paths_support_grouping() -> None:
 def test_adaptive_testing_selection() -> None:
     testing = read(SDD / "references" / "testing.md")
     check(
-        "(`direct`, `lite`, `standard`)" in testing,
-        "testing reconoce las tres profundidades SDD",
+        "`direct`, `lite` y `standard` legacy solo por solicitud explícita" in normalized(testing),
+        "testing reconoce standard como legacy opt-in",
     )
     for strategy in (
         "Sin test nuevo",

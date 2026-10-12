@@ -69,15 +69,17 @@ funcional. Solo decisiones y gates reales requieren intervención.
   escrituras y remediación con aprobación antes del primer y cada siguiente paso.
 - **Developer:** usa PLAN propio para aclarar y planear cambios; no usa ni activa SDD.
   SDD es una metodología independiente que se inicia solo seleccionando ese agente.
-- **SDD:** ofrece exactamente `direct`, `lite` y `standard`. Presenta y valida alcance completo,
-  califica features y propone selección manual: 1–3 direct si trivial, 4–9 lite
-  si elegible, 10/10+ standard para el conjunto y opción de dividir. Lite usa
-  Quick Plan sin Gates 1-4. `standard` es el fallback seguro y conserva los Gates
-  1-4. Tras definir alcance, SDD emite una sola vez la nota de esfuerzo conforme a
+- **SDD:** usa `direct` y `lite` como modos operativos predeterminados. `standard` queda
+  deprecado/legacy y solo se activa ante solicitud explícita; no es fallback automático.
+  Presenta y valida alcance completo, califica features, recomienda `direct` si es
+  trivial, `lite` para todo lo demás y ofrece dividir alcances grandes. Lite usa Quick Plan
+  sin Gates 1-4. Si no hay una ruta segura con `direct`/`lite`, se detiene y pide reducir,
+  dividir o solicitar `standard`. El flujo legacy conserva los Gates 1-4. Tras definir
+  alcance, SDD emite una sola vez la nota de esfuerzo conforme a
   la rúbrica ReserveLab; no recomienda ni
   selecciona modelos, no repite el nivel por fase ni pausa el flujo por modelo. Las
-  solicitudes de `deep` o TDD estricto informan que esas opciones fueron retiradas
-  y esperan aceptación de `standard` o TDD focalizado.
+  solicitudes de `deep` informan que fue retirado y esperan elección de `direct`/`lite`
+  o solicitud explícita de `standard`; TDD estricto espera aceptación de TDD focalizado.
 - **Git y releases:** commit, push, cambios de versión, tags y CHANGELOG requieren
   confirmación explícita; las acciones destructivas requieren doble confirmación.
 

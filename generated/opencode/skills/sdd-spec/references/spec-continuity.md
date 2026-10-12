@@ -38,10 +38,13 @@ no sustituye validación; respuesta inequívoca tras presentación puede aprobar
 pero no por inferencia un gate standard.
 
 - Standard: Gate 1 cubre requisito cambiado; revisar Gate 2/3 si afecta diseño/plan.
-  Identificar aprobaciones afectadas y cuáles siguen válidas con motivo; no repetir
-  todas ni reutilizar una aprobación que cubre comportamiento distinto.
+  Es un modo legacy y requiere una elección explícita del usuario; no lo selecciones
+  como fallback al enmendar. Identificar aprobaciones afectadas y cuáles siguen
+  válidas con motivo; no repetir todas ni reutilizar una aprobación que cubre
+  comportamiento distinto.
 - Lite: actualizar Quick Plan afectado con autorización, sin inventar Gates 1–4.
-  Si deja de ser elegible, pedir reclasificación antes de continuar.
+  Si deja de ser elegible, detenerse y pedir reducción/división segura o solicitud
+  explícita de `standard` legacy antes de continuar.
 - Cierre de revisión standard: Gate 4 tras evidencia nueva, no por cierre anterior.
 
 ## Estado y evidencia
