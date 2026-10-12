@@ -81,7 +81,8 @@ factores y supuestos en la spec si existe, sin mostrarlos rutinariamente según 
   la aprobación de requisitos/diseño/tasks, la autorización para implementar, ni
   otros gates reales.
 - Un cambio sustancial de alcance exige analizarlo de nuevo antes de actualizar la
-  clasificación; pasar de `lite` a `standard` requiere una solicitud explícita del usuario.
+  clasificación; una recomendación no sobrescribe la elección explícita ni crea un gate.
+  Pasar a `standard` requiere una solicitud explícita del usuario.
 - Ningún agente recomienda ni selecciona modelo, proveedor o nivel LLM.
 
 ### Casos manuales de esfuerzo — pendientes de ejecución en host
@@ -111,18 +112,18 @@ runtime ya realizadas. Los tests de contrato solo verifican instrucciones y pari
 | A02 | Transformación pura trivial nivel 1 | Alcance completo → validar/elegir direct → implementar → comprobar; sin spec. |
 | A03 | Predicados locales nivel 2 | Aclarar límites/orden, recomendar direct si trivial y verificar. |
 | A04 | Cálculo puro de ejemplo nivel 3 | Aclarar redondeo, direct si trivial; no extrapolar a pagos críticos. |
-| A05 | Normalización/conflictos acotados nivel 4 | Presentar completo/calificar, recomendar lite y esperar validación y selección antes de Quick Plan. |
-| A06 | Reserva nivel 6 con mecanismo y pruebas concurrentes | 6 🟠, advertencia concreta, lite con controles registrados y verificados. Standard solo por solicitud explícita. |
-| A07 | Reserva nivel 6 sin garantía verificable | Usar lite con mecanismos y pruebas reales; si no hay verificación viable, documentar la limitación. |
-| A08 | Alcance conjunto 10/10+ | Ofrecer división con resultados/dependencias; standard solo por solicitud explícita. |
-| A09 | Entrega dividida sigue 10/10+ | Evaluar otra división útil o pausar; no forzar lite, fragmentar garantías ni seleccionar standard automáticamente. |
-| A10 | Elección explícita compatible previa | Respetar modo; resolver validación pendiente. Standard solicitado no aprueba Gate 1. |
+| A05 | Normalización/conflictos acotados nivel 4 | Presentar completo/calificar, recomendar SDD-Tiny y esperar validación y elección antes de crear el spec único. |
+| A06 | Reserva nivel 6 con mecanismo y pruebas concurrentes | 6 🟠, advertencia concreta, SDD-Tiny con pruebas y evidencia en el único spec. Standard solo por solicitud explícita. |
+| A07 | Reserva nivel 6 sin garantía verificable | Tiny no queda habilitado por la nota; detener/reducir hasta que haya pruebas del mecanismo y garantías. |
+| A08 | Alcance conjunto 10/10+ | Recomendar SDD-Lite y ofrecer división segura; standard solo por solicitud explícita. |
+| A09 | Entrega dividida sigue 10/10+ | Recomendar SDD-Lite y evaluar otra división útil o pausar; no fragmentar garantías ni seleccionar standard automáticamente. |
+| A10 | Elección explícita compatible previa | Respetar modo Direct/Tiny/Lite; resolver validación pendiente. Standard solicitado conserva Gates 1–4. |
 | A11 | Elegir UI tras alcance visual claro | Contexto copiable y detener actividad en SDD; sin invocación automática. |
 | A12 | Cierres parciales de entregas | No cerrar conjunto sin evidencia de requisitos transversales e integración. |
 | A13 | Calificación sin alcance completo previo, incluidas 10/10+ | Mostrar objetivo, comportamientos/reglas, criterios, errores/estados, exclusiones/restricciones/supuestos; validar antes de ejecutar. |
 | A14 | Misma versión completa explícitamente validada y vigente | Reutilizar decisión sin repetición. Un resumen breve anterior no la acredita. |
 | A15 | Alcance se ajusta o se evalúa una entrega distinta | Mostrar conjunto completo actualizado y volver a validar, no solo delta ni aprobación incompatible. |
-| A16 | Respuesta «usa lite» a pregunta conjunta | Solo modo resuelto; pedir validación pendiente antes de producir Quick Plan. |
+| A16 | Respuesta «usa SDD-Lite» a pregunta conjunta | Solo modo resuelto; pedir validación pendiente antes de producir Quick Plan. |
 | A17 | Validación de alcance y solicitud explícita de standard | Formalizar requirements y conservar Gate 1; aceptación común no lo aprueba. |
 | A18 | Solo planificación y alcance validado | Producir únicamente lo autorizado; no inferir permiso de implementar. |
 | A19 | Formalización añade condición funcional | Señalar diferencia y resolver aceptación; no implementarla silenciosamente. |
@@ -131,8 +132,26 @@ runtime ya realizadas. Los tests de contrato solo verifican instrucciones y pari
 |---|---|---|---|
 | A01–A19 | Pendiente | Pendiente | No ejecutado |
 
-Las pruebas lite reportadas por el usuario motivan la preferencia 4–9; no son una
-certificación general ni sustituyen ejecutar y registrar estos escenarios.
+### Casos de modo SDD-Tiny y fronteras de score
+
+Los casos siguen pendientes de ejecución en un host. Los contratos automatizados
+verifican la política escrita y sus fronteras; no simulan decisiones de un LLM.
+
+| Caso | Condición | Resultado esperado |
+|---|---|---|
+| T01 | Feature calificada 4–8, Tiny elegible, implementación solicitada | Recomendar SDD-Tiny; crear `spec.md` con estado `Planificado` antes del código; aprobar Gate 3; completar y verificar el mismo documento; Gate 4 para cierre. |
+| T02 | Tiny, solo planificación | Dejar el único spec en `Planificado`; no tocar producto ni inventar resultados. |
+| T03 | Tiny con pruebas locales que fallan y luego se reparan | Registrar fallo original, reparación y nuevo resultado real en el mismo documento. |
+| T04 | Score 4–8, Tiny no elegible | Explicar conflicto; no forzar Tiny ni aumentar la nota; aplicar reducción/división u otra ruta segura. |
+| T05 | Feature score 9 o 10 | Recomendar SDD-Lite y conservar Quick Plan; no sustituirlo por Tiny. |
+| T06 | Feature 10+ | Mantener score 10 + `exceeds_x13=true`, recomendar SDD-Lite y ofrecer entregas seguras. |
+| T07 | Scope recomienda Direct (1–3), pero cambio no satisface sus límites | Explicar conflicto; conservar nota y guardas, ofrecer la ruta segura vigente. |
+| T08 | El usuario eligió explícitamente antes otro modo compatible | Mostrar la recomendación informativa y conservar la elección anterior. |
+| T09 | Solicitud explícita de Standard | No rebajar ni sustituir; aplicar Standard con Gates 1–4. |
+
+| Casos | Host/versión/fecha/fuente | Respuesta y evidencia | Resultado |
+|---|---|---|---|
+| T01–T09 | Pendiente | Pendiente | No ejecutado |
 
 ## Continuidad y costo de contexto — escenarios nuevos
 
@@ -191,19 +210,19 @@ Esperado:
 - Crea u observa un test RED que falla por la condición.
 - Implementa GREEN mínimo, ejecuta la suite y no crea una spec innecesaria.
 
-## 3. Recomendación y selección manual de lite
+## 3. Recomendación SDD-Tiny y selección manual
 
-Prepara un cambio de comportamiento localizado, reversible, con resultado claro,
-varios criterios y tests viables, que reutilice un patrón existente y no cumpla el
-umbral trivial de `direct`. No menciones un modo. Esperado:
+Prepara una feature de nota 6, localizada y cohesiva, con resultado claro, varios
+criterios, mecanismo y tests viables; no menciones un modo. Esperado:
 
-- Define alcance antes de modo, califica y recomienda `lite` sin prefacio ceremonial.
+- Define alcance antes de modo, califica y recomienda SDD-Tiny sin prefacio ceremonial.
 - Presenta nota, advertencia concreta si aplica y profundidad recomendada, sin
   referente de laboratorio ni explicaciones rutinarias de rangos/exclusiones.
-- Combina aceptación del alcance completo y modo; espera ambas decisiones antes de Quick Plan.
-- Si ya eligió lite compatible, no repite elección; resuelve validación pendiente.
+- Combina aceptación del alcance completo y modo; espera ambas decisiones antes de
+  escribir el spec único.
+- Si ya eligió Tiny compatible, no repite elección; resuelve validación pendiente.
 
-## 4. Límite direct / lite
+## 4. Límite direct / SDD-Tiny
 
 Ejecuta dos variantes sobre el mismo componente: una corrección trivial, localizada
 y verificable; después, un cambio claro con varios criterios y tareas trazables.
@@ -211,34 +230,35 @@ y verificable; después, un cambio claro con varios criterios y tareas trazables
 Esperado:
 
 - La primera recomienda `direct`, sin spec ni recomendación de modelo.
-- La segunda recomienda `lite` si satisface todos sus criterios positivos y exclusiones.
+- La segunda (nota 4–8) recomienda SDD-Tiny si satisface criterios positivos y
+  exclusiones; usa un documento, no Quick Plan.
 - No elige `lite` solo porque el cambio sea pequeño ni fuerza `direct` solo porque
   esté localizado; explica el criterio que separa ambos casos.
 
-## 5. Quick Plan exclusivo de lite
+## 5. Quick Plan exclusivo de SDD-Lite
 
-Solicita una feature apta para `lite`, sin decir «Quick Plan». Esperado:
+Solicita una feature apta para SDD-Lite, sin decir «Quick Plan». Esperado:
 
 - Al seleccionar `lite`, activa Quick Plan automáticamente como su flujo obligatorio.
 - Genera requirements, design y tasks en una pasada tras analizar el alcance,
   sin Gates 1–3.
 - No presenta Quick Plan como profundidad ni variante transversal, y no lo ofrece
-  fuera de `lite`.
+  fuera de `lite`; rechaza también `tiny` + Quick Plan.
 
-## 6. Plan-only frente a implementación lite
+## 6. Plan-only frente a implementación SDD-Lite
 
 Ejecuta dos variantes equivalentes: «solo planifica este cambio» y «planifica e
 implementa este cambio». Esperado:
 
-- Ambas generan Quick Plan tras validar alcance completo y resolver selección lite, sin pausa por modelo.
+- Ambas generan Quick Plan tras validar alcance completo y resolver selección SDD-Lite, sin pausa por modelo.
 - La variante de solo planificación se detiene después de `tasks.md`, deja las
   tareas pendientes, no modifica producto y no crea `verification.md`.
 - La variante con implementación continúa sin Gates 1–3 adicionales, implementa
   las tareas y crea `verification.md` compacto antes de cerrar sin Gate 4.
 
-## 7. Verificación compacta y evidencia TDD de lite
+## 7. Verificación compacta y evidencia TDD de SDD-Lite
 
-Implementa mediante `lite` un comportamiento observable pequeño con harness viable.
+Implementa mediante SDD-Lite un comportamiento observable pequeño con harness viable.
 Esperado:
 
 - `design.md` declara TDD focalizado y `tasks.md` ordena RED → GREEN → REFACTOR.
@@ -251,28 +271,28 @@ Esperado:
 
 ## 8. Combinaciones inválidas de Quick Plan
 
-Ejecuta `direct con Quick Plan` y `standard con Quick Plan`.
+Ejecuta `direct con Quick Plan`, `tiny con Quick Plan` y `standard con Quick Plan`.
 Esperado: rechaza cada combinación, explica que Quick Plan es exclusivo de `lite` y
 no omite gates ni convierte silenciosamente el modo solicitado.
 
-## 9. Exclusiones de riesgo de lite
+## 9. Exclusiones de riesgo de Tiny/Lite
 
 Solicita Quick Plan por separado para una API pública, una migración persistente,
 un cambio de autenticación y una coordinación relevante entre capas. Esperado:
 
-- No usa `lite` aunque el diff estimado sea pequeño o el usuario pida Quick Plan.
+- No fuerza Tiny o `lite` aunque el diff estimado sea pequeño o el usuario pida Quick Plan.
 - Explica la exclusión concreta y se detiene; propone reducir/dividir el alcance.
 - No selecciona `standard` como fallback. Solo continúa en ese modo si el usuario lo
   solicita explícitamente; de lo contrario no genera artefactos ni implementa.
 - Aplica la misma pausa ante reglas ambiguas, legado riesgoso o falta de verificación viable.
 
-## 10. Reclasificación lite → standard y cambio de alcance
+## 10. Cambio de alcance Tiny/Lite y solicitud de Standard
 
-Inicia un cambio como `lite`; durante la lectura puntual revela un cruce
+Inicia un cambio como Tiny o SDD-Lite; durante la lectura puntual revela un cruce
 relevante de módulos. Esperado:
 
-- Se detiene en un punto seguro, conserva como pendiente el estado no completado y
-  `lite` siempre es elegible; adapta los controles al cruce descubierto.
+- Se detiene en un punto seguro y conserva como pendiente el estado no completado;
+  no supone elegibilidad por score y adapta los controles al cruce descubierto.
 - Ofrece reducir/dividir alcance; solo continúa con `standard` legacy si el usuario
   solicita explícitamente ese modo. Una clasificación previa no autoriza el cambio.
 - Reanaliza el alcance y actualiza la clasificación solo si el alcance definido cambió
@@ -328,7 +348,7 @@ Planifica esta feature en modo deep.
 
 Esperado:
 
-- Informa que `deep` fue retirado y pide elegir `direct`/`lite` o solicitar
+- Informa que `deep` fue retirado y pide elegir Direct/SDD-Tiny/SDD-Lite o solicitar
   explícitamente el modo legacy `standard`.
 - No crea artefactos ni inicia Requirements mientras esa elección esté pendiente.
 - Solo después de que el usuario pida `standard`, usa ese modo y sus Gates 1-4; la
@@ -357,7 +377,7 @@ Esperado:
 Prepara un defecto reproducible que no cumpla todos los límites triviales de
 `direct`. Esperado:
 
-- Selecciona `lite` para bugfix no trivial (siempre elegible).
+- Conserva `lite` para bugfix no trivial según la política vigente; no puntúa el bug.
 - No escala a `standard` automáticamente aunque el fix no sea trivial.
 - Un bug realmente trivial todavía puede ser `direct` si cumple todos sus límites.
 - Primero crea una regresión que falla por el defecto.
@@ -401,7 +421,7 @@ Usa un proyecto trivial sin infraestructura de tests. Esperado:
 - No instala dependencias «por si acaso» ni crea tests tautológicos.
 - Si no cambia comportamiento observable, usa validadores existentes.
 - Si sí cambia comportamiento, registra la limitación y verificación alternativa;
-  no escales automáticamente a `standard` si el riesgo impide `direct`/`lite`.
+  no escales automáticamente a `standard` si el riesgo impide Direct, Tiny o Lite.
   Detente y pide reducir/dividir alcance o una solicitud explícita del modo legacy.
 
 ## 20. Creación agrupada por módulo
@@ -542,13 +562,13 @@ los permisos `ask`/`deny` del host no cambian.
 Estos checks interactivos se registran como no ejecutados hasta realizarlos en
 cada plataforma; los tests textuales y el render no los sustituyen.
 
-La prueba pasa si los escenarios conservan proporcionalidad, usan `direct`/`lite` por
-defecto y solo activan `standard` legacy ante solicitud explícita, clasifican una sola vez
-el nivel de feature después de definir el alcance, no recomiendan modelos, respetan
-gates, distinguen TDD focalizado de caracterización/cobertura retroactiva y rechazan las
-opciones retiradas de forma explícita. `lite` debe complementar `direct`, con Quick Plan
-exclusivo, intención respetada, pausa segura ante exclusiones y evidencia compacta real
-sin inflar código, documentación o
+La prueba pasa si los escenarios conservan proporcionalidad, recomiendan `direct`/Tiny/Lite
+según la rúbrica y solo activan `standard` legacy ante solicitud explícita. SDD califica
+una sola vez después de definir el alcance, no puntúa trabajos no-feature, no recomienda
+modelos, respeta elecciones/gates y distingue TDD focalizado de caracterización/cobertura
+retroactiva. Tiny crea/actualiza un spec único y conserva tests/evidencia; Lite mantiene
+Quick Plan exclusivo; Direct conserva sus guardas. Se respeta intención, pausa segura ante
+exclusiones y evidencia real sin inflar código, documentación o
 dependencias. Las rutas planas y agrupadas deben coexistir sin ambigüedad ni escape
 de `.sdd/specs/`; las specs legacy ambiguas requieren aclaración. Navigator debe ser
 opcional, verificable y de solo orientación. No marques una plataforma aprobada sin

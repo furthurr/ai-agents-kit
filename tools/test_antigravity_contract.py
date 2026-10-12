@@ -59,7 +59,7 @@ class AntigravityContract(unittest.TestCase):
                 self.assertIn("no", data["body_suffix"].lower())
                 if aid == "sdd":
                     description = fm["description"].lower()
-                    for term in ("direct", "lite", "standard", "quick plan"):
+                    for term in ("direct", "tiny", "lite", "standard", "quick plan"):
                         self.assertIn(term, description)
                     for term in ("deep", "estricto"):
                         self.assertNotIn(term, description)

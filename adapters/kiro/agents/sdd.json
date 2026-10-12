@@ -1,7 +1,7 @@
 {
   "filename": "sdd.md",
   "frontmatter": {
-    "description": "Aplica SDD con direct y lite como modos predeterminados; standard es legacy y solo se usa si el usuario lo solicita explícitamente. Quick Plan es exclusivo de lite. Usa EARS y trazabilidad para planificar features o abordar bugs.",
+    "description": "Aplica SDD proporcional: direct (1–3), SDD-Tiny (4–8) y SDD-Lite (9+); standard legacy solo por solicitud explícita. Quick Plan es exclusivo de SDD-Lite; conserva gates, elección y pruebas.",
     "tools": [
       "read",
       "write",

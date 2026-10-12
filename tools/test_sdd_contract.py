@@ -44,9 +44,11 @@ def test_modes_remain_proportional() -> None:
     skill = read(SDD / "SKILL.md")
     agent = read(SDD_AGENT)
     compact = normalized(skill + " " + agent).lower()
-    check("| `direct` | Cambio trivial verificable" in skill, "direct conserva criterio verificable")
+    check("| `direct` | Direct | Cambio trivial verificable" in skill,
+          "direct conserva criterio verificable")
     check("| `lite` |" in skill, "lite existe como profundidad intermedia")
-    check("`standard` queda como modo" in compact and "solo se usa si el usuario lo solicita explícitamente" in compact,
+    check("`standard`" in compact and "deprecado/legacy" in compact
+          and "solo se usa si el usuario lo solicita explícitamente" in compact,
           "standard permanece legacy y solo opt-in explícito")
     check("`deep` no está disponible" in compact
           and "tdd estricto no es una estrategia disponible" in compact
@@ -54,13 +56,12 @@ def test_modes_remain_proportional() -> None:
           "opciones retiradas remiten a una única política de compatibilidad")
     check("sin contrato público" in skill and "cruce de capas" in skill, "direct declara límites de riesgo")
     check(
-        "se conservan tres modos documentados" in compact
-        and all(mode in skill for mode in ("`direct`", "`lite`", "`standard`")),
-        "SDD documenta los tres modos existentes",
+        "se conservan cuatro modos documentados" in compact
+        and all(mode in skill for mode in ("`direct`", "`tiny`", "`lite`", "`standard`")),
+        "SDD documenta Direct, Tiny, Lite y Standard",
     )
-    check("solo `direct` y `lite` son predeterminados" in compact
-          or "solo `direct` y `lite` son los modos operativos predeterminados" in compact,
-          "direct y lite son los únicos modos predeterminados")
+    check(all(term in compact for term in ("1–3 `direct`", "4–8", "9–10/10+", "sdd-tiny", "sdd-lite")),
+          "las recomendaciones muestran las tres profundidades vigentes")
     check(
         "tipo de trabajo" in compact
         and "intención" in compact
@@ -69,11 +70,11 @@ def test_modes_remain_proportional() -> None:
     )
     check(
         "`lite` siempre es elegible" in compact
-        and "solo se activa si el usuario lo solicita" in compact,
-        "lite siempre elegible; standard solo por solicitud explícita",
+          and "`standard` solo se activa por solicitud explícita" in compact,
+        "lite conserva elegibilidad y standard solo se activa por solicitud explícita",
     )
     check(
-        "solicitud explícita de `standard`" in compact
+        "si el usuario solicita explícitamente `standard`" in compact
         and "sin rebajarlo automáticamente" in compact,
         "standard legacy explícito no se rebaja automáticamente",
     )
@@ -96,8 +97,10 @@ def test_lite_quick_plan_contract() -> None:
         "Quick Plan es obligatorio y exclusivo de lite",
     )
     check(
-        all(combo in compact for combo in ("`direct` + quick plan", "`standard` + quick plan")),
-        "Quick Plan rechaza combinaciones con otros modos",
+        all(combo in compact for combo in (
+            "`direct` + quick plan", "`tiny` + quick plan", "`standard` + quick plan"
+        )),
+        "Quick Plan rechaza combinaciones con Direct, Tiny y Standard",
     )
     check(
         "solo planificación" in compact and "no implementar" in compact,
@@ -126,11 +129,83 @@ def test_lite_quick_plan_contract() -> None:
         )
         description = adapter["frontmatter"]["description"].lower()
         check(
-            all(term in description for term in ("direct", "lite", "standard", "quick plan"))
+        all(term in description for term in ("direct", "tiny", "lite", "standard", "quick plan"))
             and "deep" not in description
             and "estricto" not in description,
             f"{platform}: descripción expone modos vigentes y Quick Plan",
         )
+
+
+def test_sdd_tiny_contract() -> None:
+    skill = read(SDD / "SKILL.md")
+    tiny = read(SDD / "references" / "tiny.md")
+    templates = read(SDD / "references" / "templates.md")
+    integrity = read(SDD / "references" / "integrity-gate.md")
+    quality = read(SDD / "references" / "quality-bar.md")
+    check("nombre visible: **sdd-tiny**" in normalized(tiny).lower()
+          and "identificador de modo: `tiny`" in normalized(tiny).lower()
+          and "no usa como id canónico `sdd-tiny-experimental`" in normalized(tiny).lower(),
+          "Tiny usa nombre visible y un ID canónico distinto del piloto")
+    tiny_template = templates.split("## `spec.md` (SDD-Tiny)", maxsplit=1)[-1].split(
+        "### requirements.md (lite)", maxsplit=1
+    )[0]
+    for heading in (
+        "## Alcance y aceptación", "## Enfoque técnico y estrategia de pruebas",
+        "## Checklist", "## Verificación y cierre",
+    ):
+        check(heading in tiny_template, f"Tiny: plantilla única contiene {heading}")
+    headings = [line for line in tiny_template.splitlines() if line.startswith("## ")]
+    check(headings == [
+        "## Alcance y aceptación", "## Enfoque técnico y estrategia de pruebas",
+        "## Checklist", "## Verificación y cierre",
+    ], "Tiny: el spec requiere exactamente cuatro secciones breves")
+    for term in (
+        "un único archivo `.sdd/specs/<ruta-spec>/spec.md`", "antes de modificar código",
+        "actualiza en el mismo path", "estado inicial `planificado`", "gate 3",
+        "gate 4", "comandos", "resultados realmente observados", "fallos locales previos",
+        "reparaciones", "solo planificación", "no autoriza cambios",
+    ):
+        check(term in normalized(tiny).lower() + " " + normalized(tiny_template).lower(),
+              f"Tiny: contrato de documento/evidencia incluye {term}")
+    for term in (
+        "no exige quick plan", "no exige una fase de design", "gramática ears",
+        "matriz completa de trazabilidad",
+    ):
+        check(term in normalized(tiny).lower(), f"Tiny: reducción documental preserva {term}")
+    check("no significa sin pruebas" in normalized(skill).lower()
+          and "pruebas proporcionales al riesgo" in normalized(tiny).lower()
+          and "fallos/reintentos/estados pertinentes" in normalized(tiny).lower(),
+          "Tiny conserva pruebas proporcionales y garantías de riesgo")
+    check("gate 3 existente" in normalized(tiny).lower()
+          and "gate 4 existente" in normalized(tiny).lower()
+          and "no se crean gates nuevos" in normalized(tiny).lower(),
+          "Tiny conserva gates reales sin crear gate de puntuación ni alterar Standard")
+    check("elección explícita previa compatible" in normalized(tiny).lower()
+          and "conserva `standard` y sus gates 1–4" in normalized(tiny).lower(),
+          "Tiny respeta elección previa y Standard explícito")
+    check("permiso" in normalized(tiny).lower()
+          and "si la intención incluye implementación" in normalized(tiny).lower()
+          and "bugs, consultas ni exploraciones" in normalized(tiny).lower(),
+          "Tiny mantiene permisos, intención y separación de tipo de trabajo")
+    check("tiny/lite" in normalized(quality).lower()
+          and "en el mismo `spec.md`" in normalized(quality).lower(),
+          "Tiny usa quality bar y verificación proporcional en su documento único")
+    tiny_integrity = normalized(integrity).lower()
+    check(all(term in tiny_integrity for term in (
+        "cierre sdd-tiny", "gate 3", "gate 4", "fallos iniciales",
+        "reparaciones posteriores", "estado `planificado`",
+    )), "integrity gate comprueba el spec Tiny, gates y evidencia honesta")
+
+    history = normalized(tiny).lower()
+    for fact in (
+        "lite2-experimental", "pilot-94ac27b7-36cd-4af2-81be-ffa4963fc38f",
+        "sdd-tiny-experimental", "15 pasos", "una invocación cli",
+        "278 037 tokens", "763.267 segundos", "saga.submit", "saga.step",
+        "saga.get", "esquema", "participantes", "validadores", "locks",
+        "seis criterios externos", "injectedcrash", "11 verificaciones locales",
+        "7 + 2 + 2", "post-run audit", "no demuestran superioridad universal",
+    ):
+        check(fact in history, f"Tiny: limita la evidencia histórica ({fact})")
 
 
 def test_scope_depth_contract() -> None:
@@ -145,24 +220,36 @@ def test_scope_depth_contract() -> None:
     common = normalized(section(skill, "Definición de alcance y criterios de aceptación")).lower()
     for rule in ("antes de elegir profundidad", "objetivo", "exclusiones", "criterios",
                  "preguntas esenciales", "contexto técnico mínimo", "elección explícita",
-                 "no crea un documento obligatorio", "no aprueba gate 1"):
+                 "no crea un documento obligatorio", "ni aprueba gate 1"):
         check(rule in common, f"alcance común: {rule}")
     rows = table_rows(policy, "Recomendación base")
-    for case, mode in (("1–3 trivial", "direct"), ("1–3 no trivial", "lite"),
-                       ("4–9", "lite"), ("1–9 no trivial", "lite"),
-                       ("10 / 10+", "Ofrecer división")):
-        check(mode in " ".join(rows.get(case, [])), f"profundidad: {case} → {mode}")
+    boundary_modes = {
+        "1": "`direct`", "3": "`direct`", "4": "`tiny` (SDD-Tiny)",
+        "8": "`tiny` (SDD-Tiny)", "9": "`lite` (SDD-Lite)",
+        "10": "`lite` (SDD-Lite)",
+        "10+ (`score=10`, `exceeds_x13=true`)": "`lite` (SDD-Lite)",
+    }
+    for score, expected in boundary_modes.items():
+        check(expected in " ".join(rows.get(score, [])), f"frontera score {score} → {expected}")
+    check("10+ (`score=10`, `exceeds_x13=true`)" in rows
+          and "nunca nota 11" in normalized(policy).lower(),
+          "10+ conserva score 10, indicador canónico y recomienda SDD-Lite")
+    check("4–8" in normalized(section(policy, "Recomendación base"))
+          and "9–10" in normalized(section(policy, "Recomendación base")),
+          "el mapeo cubre los intervalos completos sin huecos")
+    check("score 4–8 no exime" in normalized(policy).lower(),
+          "la nota no fuerza Tiny ni sustituye elegibilidad")
     attention = normalized(section(policy, "Complicaciones controlables")).lower()
     for term in ("invariante", "mecanismo", "pruebas", "mock", "reversibilidad",
-                 "no excluyen lite por sí solas", "standard", "autorización"):
+                  "no excluyen tiny/lite por sí solas", "standard", "autorización"):
         check(term in attention, f"lite con atención: {term}")
     examples = table_rows(policy, "Casos de decisión")
     check(all(case in examples for case in ("1", "2", "3", "4", "6-controlado",
                                             "6-sin-garantías", "10", "10+-entrega")),
           "alcance: ejemplos direct, lite, garantías y división")
-    check("lite" in " ".join(examples.get("6-controlado", []))
+    check("tiny" in " ".join(examples.get("6-controlado", [])).lower()
           and "6 🟠" in " ".join(examples.get("6-controlado", [])),
-          "alcance: 6 naranja permite lite con garantías")
+          "alcance: 6 naranja permite Tiny con garantías")
     no_guarantee = " ".join(examples.get("6-sin-garantías", [])).lower()
     check("pausar" in no_guarantee and "solicitud explícita" in no_guarantee,
           "alcance: 6 sin garantías pausa y no fuerza standard")
@@ -270,7 +357,7 @@ def test_full_scope_contract() -> None:
         "diferencias funcionales", "resolver aprobación")),
         "alcance: integridad separa selección/aprobación y revisa diferencias funcionales")
     skill = read(SDD / "SKILL.md")
-    lite = normalized(section(skill, "Modo lite y Quick Plan")).lower()
+    lite = normalized(section(skill, r"Modo lite \(SDD-Lite\) y Quick Plan")).lower()
     direct = normalized(section(skill, "Modo direct")).lower()
     check("alcance validado" in lite and "sin gates 1–3" in lite,
           "alcance: lite valida antes de Quick Plan sin gates de fase")
@@ -580,7 +667,7 @@ def test_lab_effort_rubric() -> None:
         ("10+ como nota", "exactamente 10+ 🔴", "exactamente 11 🔴", "presentación superior a x13: exactamente 10+ 🔴"),
         ("reutilización", "participantes y locks ya proporcionados", "infraestructura no especificada", "factores F10-scaffold"),
         ("exceso sin dimensiones", "Saga y compensación externa", "Cambio muy grande", "factores X13-plus-saga"),
-        ("verde habilita lite", "Verde no habilita lite", "Verde habilita lite", "independencia de lite"),
+        ("verde habilita lite", "Verde no habilita Lite", "Verde habilita Lite", "independencia de lite"),
     )
     for name, old, new, expected_error in mutations:
         check(old in reference, f"negativo/{name}: mutación alcanza el contrato real")
@@ -603,12 +690,13 @@ def test_lab_effort_rubric() -> None:
 def test_sdd_effort_context_budgets() -> None:
     paths = {
         "agente": (ROOT / "canonical/agents/sdd.md", 1066, 7580),
-        "skill": (SDD / "SKILL.md", 2357, 16378),
+        "skill": (SDD / "SKILL.md", 2900, 20000),
         "rúbrica": (SDD / "references/feature-level.md", 1774, 12303),
-        "plantillas": (SDD / "references/templates.md", 863, 5722),
+        "plantillas": (SDD / "references/templates.md", 1250, 8500),
         # New policy has its own bounded, on-demand context; original budgets remain.
-        "selección": (SDD / "references/scope-depth.md", 1400, 11000),
+        "selección": (SDD / "references/scope-depth.md", 1850, 12500),
         "continuidad": (SDD / "references/spec-continuity.md", 1200, 9000),
+        "Tiny": (SDD / "references/tiny.md", 1100, 8000),
     }
     measured: dict[str, tuple[int, int]] = {}
     for label, (path, max_words, max_chars) in paths.items():
@@ -620,13 +708,14 @@ def test_sdd_effort_context_budgets() -> None:
         check(word_ok and char_ok,
               f"eficiencia {label}: {words} palabras/{chars} caracteres bajo baseline")
     for scenario, labels, max_words, max_chars in (
-        ("inicio", ("agente", "skill"), 3423, 23958),
+        ("inicio", ("agente", "skill"), 3800, 26400),
         ("scoring", ("agente", "skill", "rúbrica"), 5197, 36261),
         ("planificación con plantillas", ("agente", "skill", "rúbrica", "plantillas"), 6060, 41983),
         ("selección con política", ("agente", "skill", "rúbrica", "selección"), 6597, 47261),
         ("spec conocida", ("agente", "skill", "continuidad"), 4623, 32958),
-        ("enmienda con plantillas", ("agente", "skill", "continuidad", "selección", "plantillas"), 6886, 49680),
+        ("enmienda con plantillas", ("agente", "skill", "continuidad", "selección", "plantillas"), 7600, 52500),
         ("candidatas múltiples", ("agente", "skill", "continuidad"), 4623, 32958),
+        ("Tiny con spec y plantilla", ("agente", "skill", "rúbrica", "Tiny", "plantillas"), 7100, 49500),
     ):
         words = sum(measured[label][0] for label in labels)
         chars = sum(measured[label][1] for label in labels)
@@ -645,8 +734,8 @@ def test_spec_paths_support_grouping() -> None:
     check("`modo-invitado/android-contactos/`" in skill, "el contrato ejemplifica agrupación por módulo")
     check("ruta relativa completa identifica la spec" in normalized_skill,
           "la identidad no depende solo del nombre final")
-    check("requirements.md` o `bugfix.md`" in normalized_skill,
-          "los marcadores distinguen una spec de un agrupador")
+    check("`requirements.md` o `bugfix.md`, o `spec.md` en sdd-tiny" in normalized_skill.lower(),
+          "los marcadores Lite/Standard/Tiny distinguen una spec de un agrupador")
     check("Al crear sin ruta explícita" in skill and "No muevas specs existentes" in normalized_skill,
           "la creación reutiliza módulos sin migrar specs previas")
     check("evita repetir su prefijo" in normalized_skill,
@@ -669,8 +758,8 @@ def test_spec_paths_support_grouping() -> None:
 def test_adaptive_testing_selection() -> None:
     testing = read(SDD / "references" / "testing.md")
     check(
-        "`direct`, `lite` y `standard` legacy solo por solicitud explícita" in normalized(testing),
-        "testing reconoce standard como legacy opt-in",
+        "`direct`, `tiny`/sdd-tiny, `lite`/sdd-lite y `standard` legacy" in normalized(testing).lower(),
+        "testing reconoce Tiny/Lite y Standard legacy opt-in",
     )
     for strategy in (
         "Sin test nuevo",
@@ -690,13 +779,20 @@ def test_variants_and_evidence() -> None:
     integrity = read(SDD / "references" / "integrity-gate.md")
 
     bugfix_parts = skill.split("## Variante Bugfix", maxsplit=1)
-    lite_parts = skill.split("## Modo lite y Quick Plan", maxsplit=1)
+    lite_parts = skill.split("## Modo lite (SDD-Lite) y Quick Plan", maxsplit=1)
     check(len(bugfix_parts) == 2, "la skill conserva la variante Bugfix")
-    check(len(lite_parts) == 2, "la skill declara el flujo lite y Quick Plan")
-    bugfix = bugfix_parts[1].split("## Modo lite y Quick Plan", maxsplit=1)[0] if len(bugfix_parts) == 2 else ""
+    check(len(lite_parts) == 2, "la skill declara SDD-Lite y Quick Plan")
+    bugfix = bugfix_parts[1].split("## Modo tiny (SDD-Tiny)", maxsplit=1)[0] if len(bugfix_parts) == 2 else ""
+    tiny_mode = skill.split("## Modo tiny (SDD-Tiny)", maxsplit=1)[1].split(
+        "## Modo lite (SDD-Lite) y Quick Plan", maxsplit=1
+    )[0] if len(lite_parts) == 2 else ""
     quick_plan = lite_parts[1].split("## Reglas de calidad", maxsplit=1)[0] if len(lite_parts) == 2 else ""
 
     check("regresión que falle" in bugfix, "bugfix exige regresión antes del fix")
+    check("un solo" in normalized(tiny_mode).lower()
+          and "gate 3" in normalized(tiny_mode).lower()
+          and "gate 4" in normalized(tiny_mode).lower(),
+          "SDD-Tiny conserva documento único y gates de implementación/cierre")
     check(
         "obligatorio y exclusivo" in normalized(quick_plan)
         and "sin Gates 1–3" in normalized(quick_plan),
@@ -912,6 +1008,7 @@ def main() -> int:
     print("Contrato SDD — calificación de feature, rutas, testing adaptativo, Navigator e integración")
     test_modes_remain_proportional()
     test_lite_quick_plan_contract()
+    test_sdd_tiny_contract()
     test_scope_depth_contract()
     test_full_scope_contract()
     test_spec_continuity_contract()

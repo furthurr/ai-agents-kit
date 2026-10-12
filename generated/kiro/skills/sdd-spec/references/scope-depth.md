@@ -59,31 +59,60 @@ Planificación aceptada no autoriza implementación. Reanudar sin cambios conser
 
 ## Recomendación base
 
-| Caso | Profundidad | Condición |
+| Nota canónica | Recomendación base | Condición |
 |---|---|---|
-| 1–3 trivial | direct | Localizado, reversible, verificable y sin exclusiones de direct. |
-| 1–3 no trivial | lite | No forzar direct por una nota baja. |
-| 4–9 | lite | Alcance definido, acotado, patrones y verificación viable. |
-| 1–9 no trivial | lite | Siempre elegible; adapta controles al riesgo y ofrece división si es muy amplio. |
-| 10 / 10+ | Ofrecer división | `standard` legacy no es fallback; solo continuar con él ante solicitud explícita. |
+| 1 | `direct` | Sujeto a todas las guardas de elegibilidad de Direct. |
+| 2 | `direct` | Sujeto a todas las guardas de elegibilidad de Direct. |
+| 3 | `direct` | Sujeto a todas las guardas de elegibilidad de Direct. |
+| 4 | `tiny` (SDD-Tiny) | Una entrega cohesiva, patrones existentes y pruebas proporcionales viables. |
+| 5 | `tiny` (SDD-Tiny) | Una entrega cohesiva, patrones existentes y pruebas proporcionales viables. |
+| 6 | `tiny` (SDD-Tiny) | Una entrega cohesiva, patrones existentes y pruebas proporcionales viables. |
+| 7 | `tiny` (SDD-Tiny) | Una entrega cohesiva, patrones existentes y pruebas proporcionales viables. |
+| 8 | `tiny` (SDD-Tiny) | Una entrega cohesiva, patrones existentes y pruebas proporcionales viables. |
+| 9 | `lite` (SDD-Lite) | Quick Plan y controles verificables según el riesgo. |
+| 10 | `lite` (SDD-Lite) | Ofrece entregas seguras conforme a la política incremental vigente. |
+| 10+ (`score=10`, `exceeds_x13=true`) | `lite` (SDD-Lite) | Conserva score 10 + indicador; ofrece entregas seguras, nunca nota 11. |
 
-`standard` es legacy/deprecado: `direct` y `lite` son los únicos modos recomendados.
-`lite` siempre es elegible. No selecciones `standard` por puntuación, complejidad
-ni LLM local. Solo el usuario puede pedirlo; entonces se aplica el flujo de 4 fases.
+Esta matriz es recomendación, no scorer ni elegibilidad. `10+` se representa con la
+nota máxima 10 e `exceeds_x13=true`; no es una nota 11. La salida visible es
+SDD-Tiny para `tiny` y SDD-Lite para `lite`.
+En rangos: 1–3 → `direct`, 4–8 → `tiny`, 9–10 y 10+ → `lite`.
 
-La nota orienta, no autoriza. Direct exige ausencia de contrato público, migración,
-decisión arquitectónica, cruce de capas y riesgos relevantes de seguridad,
-concurrencia o integridad. No produce spec formal ni Quick Plan, pero sí criterios,
-pruebas/checks pertinentes y evidencia breve en la conversación.
+`standard` es legacy/deprecado: nunca se recomienda ni selecciona por puntuación,
+complejidad o LLM local; solo se activa por solicitud explícita y conserva sus cuatro
+fases/gates. La elección explícita previa compatible prevalece sobre la recomendación.
+La recomendación no valida alcance, no cambia permisos/intención/testing, no aprueba
+gates y no crea un gate de calificación.
 
-Lite exige decisiones funcionales esenciales resueltas, alcance acotado, patrones
-existentes y reversibilidad sin migración compleja. Produce Quick Plan obligatorio
-y verification compacto si implementa. La atención no reemplaza elegibilidad.
+La nota orienta, no autoriza. Direct exige alcance claro, pequeño, localizado y
+reversible, sin contrato público, migración, decisión arquitectónica, cruce de capas
+ni riesgo relevante de seguridad, concurrencia o integridad. No crea spec formal ni
+Quick Plan, pero sí criterios, checks/pruebas pertinentes y evidencia breve.
+
+SDD-Tiny (`tiny`) exige una feature acotada y una entrega cohesiva cuya aceptación,
+errores e invariantes quepan en un único spec breve; debe haber patrones o decisiones
+técnicas suficientes y verificación viable con pruebas proporcionales al riesgo.
+Produce un `spec.md` vivo, Gate 3 antes de implementar y Gate 4 al cerrar una
+implementación verificada. No exige Quick Plan, EARS completa ni matriz de trazabilidad.
+Si Tiny no es elegible, explica el conflicto y usa solo otra ruta segura aceptada por
+el usuario; el score no fuerza Tiny.
+
+SDD-Lite (`lite`) conserva sus condiciones vigentes: alcance acotado, decisiones
+esenciales resueltas, patrones existentes y reversibilidad sin migración compleja.
+Produce Quick Plan obligatorio y `verification.md` compacto si implementa. `lite`
+siempre es elegible como flujo proporcional, pero no fuerza una solución cuando no
+hay garantías verificables. La atención no reemplaza elegibilidad.
+
+Una recomendación `direct` con alcance no elegible no altera la nota: explica el
+conflicto y aplica el manejo seguro vigente. Para una feature no trivial de nota 1–3,
+ese manejo puede recomendar SDD-Lite (`lite`) si cumple sus condiciones; de lo
+contrario, reduce/divide o detén el flujo. No cambies la recomendación a Tiny solo
+para eludir las guardas de Direct.
 
 ## Complicaciones controlables
 
-Concurrencia, persistencia e integridad no excluyen lite por sí solas. Admitir lite
-con atención naranja solo si se cumplen todas estas condiciones:
+Concurrencia, persistencia e integridad no excluyen Tiny/Lite por sí solas. Admitir
+`tiny` o `lite` con atención naranja solo si se cumplen todas estas condiciones:
 
 1. Invariante o garantía concreta definida con criterios testables.
 2. Mecanismo adecuado existente o patrón establecido: transacción, unicidad, lock,
@@ -93,31 +122,35 @@ con atención naranja solo si se cumplen todas estas condiciones:
    mock que oculta el comportamiento crítico no demuestra la garantía.
 4. Efectos, dependencias, recuperación y reversibilidad acotados; no dejar estados
    críticos inconsistentes ni separar una operación de su protección obligatoria.
-5. Controles trazados en diseño/tareas y evidencia exigida antes del cierre.
+5. Controles capturados en el artefacto del modo y evidencia exigida antes del cierre.
 
-No fuerces lite ante contrato público/API, migraciones, arquitectura nueva,
+No fuerces Tiny/Lite ante contrato público/API, migraciones, arquitectura nueva,
 integración externa significativa, cruce relevante de capas, cambios de seguridad
 o legado riesgoso. Reutilizar una API/autorización existente sin cambiarla no
-modifica ese contrato. Evaluar responsabilidades, no palabras clave. Si lite deja de ser
-elegible, detente y explica la exclusión: ofrece reducir/dividir o espera
-solicitud explícita de `standard`.
+modifica ese contrato. Evaluar responsabilidades, no palabras clave. Si un modo deja
+de ser elegible, detente y explica la exclusión: ofrece reducir/dividir o espera
+solicitud explícita de `standard`. Para Tiny, aplica además el criterio de una entrega
+cohesiva y un único spec; score 4–8 no exime esos límites.
 
 ## Selección y continuidad
 
 - Antes de recomendar modo, comprobar specs relacionadas con búsqueda localizada;
   aplicar `spec-continuity.md` bajo demanda. Una enmienda conserva modo/gates:
   nota baja no autoriza direct para sustituir un acuerdo o tarea pendiente.
-- Recomendar `direct` o `lite` y esperar validación/elección explícita. `standard`
-  solo ante solicitud explícita; no se rebaja cuando el usuario lo pide.
-- Si se pide un modo no elegible, explicar el límite y ofrecer uno elegible o
+- Recomendar según la matriz y esperar validación/elección explícita. `standard`
+  solo ante solicitud explícita; no se rebaja cuando el usuario lo pide. Si ya existe
+  elección explícita compatible, no la sobrescribas con la recomendación.
+- Si se pide un modo no elegible, explicar el límite y ofrecer otro elegible o
   reducir/dividir alcance. `standard` nunca es recomendación automática.
 - La elección no aprueba gates ni amplía permisos, alcance o intención. La
   conversación común no aprueba Gate 1: standard formaliza requisitos y lo conserva.
 - La nota no crea un gate ni requiere aprobación propia. La selección es una
   decisión esencial pendiente, no Gates 1–3 adicionales para lite.
 - Solo planificación nunca implementa. Testing es independiente de profundidad.
-  Direct no significa sin pruebas; lite reduce ceremonia, no evidencia.
-- Bugfix no trivial usa lite (siempre elegible). Bugs, consultas y exploraciones
+  Direct no significa sin pruebas; Tiny reduce documentos y Lite reduce ceremonia,
+  pero ninguno reduce la evidencia requerida por el riesgo.
+- Bugfix no trivial conserva la política lite vigente (siempre elegible); no recibe
+  score de feature. Bugs, consultas y exploraciones
   no reciben notas de feature. Trivial bugfix puede ser direct con regresión proporcional.
 - Specs históricas conservan modo, evidencia y gates; no migrar ni inferir aprobación.
   Reanalizar solo cambios materiales, y no repitas selección/calificación por fase.
@@ -129,9 +162,9 @@ solicitud explícita de `standard`.
 
 ## Entregas incrementales
 
-Para 10 o 10+ ofrecer división aunque alguna entrega siga en 10/10+. Si no existe
-división segura, detenerse; el conjunto solo sigue en `standard` si el usuario lo
-solicita explícitamente.
+Para 10 o 10+ recomendar SDD-Lite y ofrecer división segura aunque alguna entrega
+siga en 10/10+. Si no existe división segura, detenerse; el conjunto solo sigue en
+`standard` si el usuario lo solicita explícitamente.
 
 Mapa ligero: resultados verificables, límites, dependencias y garantías
 transversales. No confundir entregas con fases SDD. Evaluar cada entrega de forma
@@ -154,11 +187,12 @@ Ejemplos ilustrativos; no son resultados nuevos de laboratorio ni un scorer.
 | 1 | 1 🟢 | direct: trim de función pura localizada, con límites definidos. |
 | 2 | 2 🟢 | direct: predicados locales y orden estable, sin otros efectos. |
 | 3 | 3 🟢 | direct: cálculo puro de ejemplo, redondeo definido, sin pagos reales. |
-| 4 | 4 🟢 | lite: normalización y conflictos acotados, patrones existentes. |
-| 6-controlado | 6 🟠 | lite: reserva acotada con mecanismo adecuado y pruebas concurrentes. |
+| 4 | 4 🟢 | SDD-Tiny: normalización y conflictos acotados, patrones existentes; spec único y tests proporcionales. |
+| 6-controlado | 6 🟠 | SDD-Tiny: reserva acotada con mecanismo adecuado y pruebas concurrentes. |
 | 6-sin-garantías | 6 🟠 | Pausar: no hay verificación viable; reducir/dividir o esperar solicitud explícita de standard. |
-| 10 | 10 🔴 | Ofrecer entregas verificables; standard solo a petición explícita. |
-| 10+-entrega | 10+ 🔴 | Evaluar otra división útil; si no es segura, detenerse hasta petición explícita de standard. |
+| 10 | 10 🔴 | Recomendar SDD-Lite y ofrecer entregas verificables; standard solo a petición explícita. |
+| 10+-entrega | 10+ 🔴 | Recomendar SDD-Lite, evaluar otra división; si no es segura, detenerse hasta petición explícita de standard. |
 
-Pruebas lite descritas por el usuario motivan la preferencia 4–9, pero no certifican
-todos los alcances ni reemplazan evidencia de cada caso.
+El piloto F10 de documento único es un antecedente acotado para Tiny, no certifica
+todos los alcances ni demuestra superioridad universal. Las pruebas proporcionales y
+la evidencia real siguen siendo obligatorias.

@@ -24,7 +24,7 @@ niveles, modelos o proveedores LLM.
   [rúbrica compartida](../canonical/skills/sdd-spec/references/feature-level.md).
 - Contrasta las condiciones manuales en
   [sdd-smoke](sdd-smoke.md#esfuerzo-previsto-del-llm-referencia-reservelab) y los
-  [ejemplos opcionales](sdd-effort-examples.md). Verde no habilita lite.
+  [ejemplos opcionales](sdd-effort-examples.md). El color no habilita Tiny/Lite.
   No presentes ejemplos ni checks textuales como inferencias ejecutadas.
 - No repite la clasificación al pasar por Requirements, Design, Tasks,
   Implementación o Verification; no pausa ni pregunta por el modelo.
@@ -36,6 +36,9 @@ niveles, modelos o proveedores LLM.
 - Orchestrator presenta el plan global y espera autorización antes de escribir.
 - SDD `standard` legacy mantiene Gates 1–4 cuando el usuario lo solicita
   explícitamente; planificar no autoriza implementar.
+- SDD-Tiny conserva Gate 3 antes de implementar y Gate 4 tras verificación; score y
+  recomendación no sustituyen autorización ni crean gates. SDD-Lite conserva su
+  Quick Plan sin Gates 1–3/Gate 4.
 - Quality/Security mantienen la aprobación del primer y cada siguiente micro-paso.
 - Git/release mantiene sus confirmaciones operativas y las acciones destructivas,
   incluida la doble confirmación.

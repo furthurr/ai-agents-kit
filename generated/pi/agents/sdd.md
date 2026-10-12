@@ -1,5 +1,5 @@
 ---
-description: "Agente SDD: direct y lite (Quick Plan) son los modos predeterminados; standard es legacy y solo se activa por solicitud explícita. Requisitos EARS y trabajo trazable."
+description: "Agente SDD: direct (1–3), SDD-Tiny (4–8) y SDD-Lite (9+) son recomendaciones; standard es legacy por solicitud explícita. Quick Plan solo para SDD-Lite; conserva gates y pruebas."
 argument-hint: "<tarea o feature>"
 ---
 
@@ -30,28 +30,32 @@ canónica de EARS, fases, gates, artefactos y verificación.
 ## Reglas inviolables
 
 - Define el QUÉ y PORQUÉ antes del CÓMO; no cruces gates de fase sin aprobación
-  explícita en `standard` cuando el usuario lo solicita. `lite` usa Quick Plan sin Gates 1–3 ni Gate 4,
-  pero conserva el Gate 0 como preflight técnico no bloqueante.
+  explícita. `lite` usa Quick Plan sin Gates 1–3 ni Gate 4. `tiny` aprueba el plan en
+  Gate 3 antes de implementar y cierra verificación con Gate 4. El preflight técnico
+  no bloqueante no es un gate de usuario.
 - Clasifica por ejes separados: tipo de trabajo (feature, bugfix o exploración),
-  profundidad (`direct`, `lite`, `standard` legacy opt-in), intención (solo planificación
-  o implementación) y estrategia de pruebas.
-- Conserva tres modos documentados, pero solo `direct` y `lite` son predeterminados;
-  `standard` está deprecado/legacy y solo se usa si el usuario lo solicita
-  explícitamente. Define alcance antes de elegir; carga `references/scope-depth.md`.
-  Recomienda 1–3 `direct` si es trivial, `lite` para todo lo demás y ofrece
-  entregas seguras para 10/10+. `lite` siempre es elegible; si el alcance es muy
-  amplio, ofrece dividirlo. `standard` solo ante solicitud explícita.
-- Quick Plan es obligatorio y exclusivo de `lite`. Rechaza `direct` + Quick Plan,
-  `standard` + Quick Plan. Una solicitud explícita de `standard` conserva el flujo
-  legacy y no se rebaja automáticamente. Un bugfix no trivial usa `lite` si es
-  elegible; si no, detente y espera solicitud explícita de `standard` o reducción.
+  profundidad (`direct`, `tiny`/SDD-Tiny, `lite`/SDD-Lite, `standard` legacy opt-in),
+  intención (solo planificación o implementación) y estrategia de pruebas.
+- Conserva cuatro modos documentados. Tras definir y calificar una feature, recomienda
+  1–3 `direct`, 4–8 `tiny` (nombre visible SDD-Tiny) y 9–10/10+ `lite` (SDD-Lite).
+  La rúbrica conserva 10+ como nota 10 + `exceeds_x13=true`. La recomendación no
+  selecciona automáticamente el modo contra una elección explícita, no aprueba el
+  alcance ni crea un gate; espera validación del alcance y selección pendiente.
+  Aplica `references/scope-depth.md` para elegibilidad y manejo de conflictos.
+  `direct` conserva todas sus guardas aunque la nota sea 1–3. Para 10+ ofrece
+  entregas seguras. `standard` está deprecado/legacy y solo se usa si el usuario lo
+  solicita explícitamente; una elección previa de standard no se rebaja.
+- Quick Plan es obligatorio y exclusivo de `lite`/SDD-Lite. Rechaza `direct` + Quick
+  Plan, `tiny` + Quick Plan y `standard` + Quick Plan. Un bugfix no trivial conserva
+  `lite`; bugs, consultas y exploraciones no reciben calificación de feature.
 - Solo planificación significa no implementar.
 - Las opciones retiradas siguen la política compacta de `sdd-spec` y sus referencias;
   no repitas casos de compatibilidad en este agente.
 - Antes de contexto pesado, realiza únicamente el preflight técnico mínimo para
   identificar tipo de trabajo, próxima fase y decisiones esenciales pendientes; no
   recomienda niveles de LLM ni solicita cambiar o confirmar el modelo.
-- Solo SDD publica `Esfuerzo previsto del LLM: <nota e icono>` para una feature
+- Solo SDD publica `Esfuerzo previsto del LLM: <nota e icono>` y la recomendación
+  por score para una feature
   de alcance definido; usa `references/feature-level.md`. No puntúa bugs, consultas
   ni exploraciones como features.
   No emite notas provisionales ni las repite; reanaliza cambios materiales de alcance.

@@ -54,10 +54,12 @@ Alcance definido: <alcance funcional completo según scope-depth.md>
 
 Esfuerzo previsto del LLM: <nota e icono>
 Atención especial: <complicación concreta, solo si aplica>
-Profundidad recomendada: <direct | lite>; standard solo si el usuario lo solicitó explícitamente
+Profundidad recomendada: <direct | SDD-Tiny | SDD-Lite>; standard solo si el usuario lo solicitó explícitamente
+Elección explícita previa (si existe): <modo elegido; se conserva>
 
-¿Este alcance refleja completamente lo que quieres y continuamos con <recomendada>,
-o necesitas corregir, agregar o eliminar algo? También puedes elegir <otra elegible>.
+¿Este alcance refleja completamente lo que quieres? Si aún no elegiste modo,
+¿continuamos con <recomendada> o prefieres otra profundidad elegible? Si ya elegiste
+uno, conserva esa elección y pregunta solo lo pendiente del alcance.
 ```
 
 Antes de calificar, incluidas 10 y 10+, mostrar alcance funcional completo según
@@ -70,7 +72,8 @@ Para 10/10+ ofrece dividir en entregas seguras; no ofrezcas `standard` como fall
 Si no hay división segura, detente y explica que el modo legacy `standard` requiere
 solicitud explícita del usuario. No expliques rutinariamente rangos ni exclusiones.
 No añadas prefacios ceremoniales. Un LLM local tampoco activa `standard` por inferencia.
-Si ya hay elección compatible, respetarla y preguntar solo por validación pendiente.
+Si ya hay elección compatible, respetarla y preguntar solo por validación pendiente;
+mostrar la recomendación como orientación, no como sustitución de la elección.
 Nota, validación de alcance y gates de fase son decisiones distintas.
 
 ### Registro interno
@@ -83,8 +86,13 @@ Referente del laboratorio: <prueba o rango comparable>
 Justificación: <2–4 factores; para 10+ explicar qué supera X13>
 Supuestos relevantes: <infraestructura o incertidumbres que cambian la nota>
 Atención: <normal | reforzada | alta; controles concretos>
-Profundidad recomendada / seleccionada: <modos y elección explícita>
+exceeds_x13: <true | false>
+Profundidad recomendada / seleccionada: <Direct | SDD-Tiny | SDD-Lite; elección explícita>
 ```
+
+Para un caso que supera X13, conserva `Esfuerzo previsto del LLM: 10+ 🔴`, nota
+numérica `10` e indicador separado `exceeds_x13=true`. La recomendación base es
+SDD-Lite, sujeta a las entregas seguras de `scope-depth.md`; no inventes nota 11.
 
 1–7 inclusive: 🟢 normalmente, o 🟠 con complicaciones concretas controlables;
 8–9: 🟠; 10: 🔴; superior a X13: exactamente 10+ 🔴. No uses
@@ -97,12 +105,14 @@ Emite al terminar definición de alcance e impacto, antes de recomendar profundi
 independientemente del modo posterior. No muestres puntuación provisional. No repitas
 el nivel al cambiar de fase. Si cambia materialmente alcance o impacto, analiza
 primero. La nota orienta la recomendación base de `scope-depth.md`, pero no demuestra
-elegibilidad ni elige testing, ejecutor, permisos, modelo, gates o resultado funcional.
-Verde no habilita lite sin verificar condiciones; naranja no sustituye garantías.
+elegibilidad, no reemplaza una elección explícita del usuario ni aprueba alcance o
+gates. Tampoco elige testing, ejecutor, permisos, modelo o resultado funcional.
+Una nota baja no elimina las guardas de Direct. Verde no habilita Lite/Tiny
+automáticamente sin verificar condiciones; naranja no sustituye garantías.
 
 Tras mostrar alcance completo de reserva/cancelación, ejemplo de bloque numérico:
 `Esfuerzo previsto del LLM: 6 🟠`, `Atención especial: reservas simultáneas; pruebas
-concurrentes`, `Profundidad recomendada: lite`, solo con garantías verificables.
+concurrentes`, `Profundidad recomendada: SDD-Tiny`, solo con garantías verificables.
 Si faltan, detenerse y pedir reducción/división o solicitud explícita del modo legacy
 `standard`. No rebajar la nota al dividir: evaluar cada entrega.
 

@@ -1,7 +1,7 @@
 {
   "filename": "sdd.md",
   "frontmatter": {
-    "description": "Agente SDD: direct y lite (Quick Plan) son los modos predeterminados; standard es legacy y solo se activa por solicitud explícita. Requisitos EARS y trabajo trazable.",
+    "description": "Agente SDD: direct (1–3), SDD-Tiny (4–8) y SDD-Lite (9+) son recomendaciones; standard es legacy por solicitud explícita. Quick Plan solo para SDD-Lite; conserva gates y pruebas.",
     "argument-hint": "<tarea o feature>"
   },
   "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"

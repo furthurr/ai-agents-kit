@@ -154,41 +154,41 @@ Catálogo completo: [catalogo.md](catalogo.md).
    Ningún agente recomienda niveles o selección de modelos LLM. Las escrituras
    conservan los gates efectivos de estudio, propuesta y autorización; el Orchestrator
    no añade una pausa por modelo.
-3. **SDD solo cuando se selecciona** — los modos operativos predeterminados son
-   `direct`, sin spec, y `lite`, para trabajo acotado con garantías verificables.
-   `standard` queda deprecado/legacy y solo se usa cuando el usuario lo solicita
-   explícitamente; no es fallback automático. Primero define alcance y criterios;
-   después califica y recomienda `direct` para cambios triviales o `lite` para trabajo
-   acotado/elegible. Para alcances grandes prioriza entregas seguras. Si no hay una
-   trabajo no trivial, usa `lite` (siempre elegible). `standard` solo a solicitud explícita. Una elección explícita compatible previa no se vuelve a preguntar.
-   Presenta alcance funcional completo (comportamientos, reglas, criterios, errores,
-   exclusiones y supuestos) y espera validación explícita antes de artefactos/código.
-   Elegir solo modo no lo valida; ajustes requieren presentar el conjunto actualizado.
-   Validación y elección pueden resolverse juntas; no sustituyen Gate 1 de `standard`
-   cuando el usuario haya solicitado explícitamente ese modo legacy.
-   Quick Plan es obligatorio y exclusivo de `lite`; no tiene Gates 1-3 ni Gate 4.
-   Combinar Quick Plan con otro modo es inválido.
-   `standard` legacy conserva los Gates 1-4. Los bugfixes no triviales usan `lite` si
-   son elegibles; de lo contrario, el flujo se pausa hasta reducir/dividir alcance o
-   recibir solicitud explícita de `standard`.
-   Tras definir el alcance, SDD emite una sola vez su nota de esfuerzo prevista,
-   registrando referente, justificación y supuestos en la spec según la
-   [rúbrica ReserveLab](../canonical/skills/sdd-spec/references/feature-level.md).
-   Evalúa implementar y verificar, no predice recursos; orienta la recomendación
-   pero no demuestra elegibilidad. Puede mostrar naranja bajo 8 con complicaciones
-   concretas controlables. Entregas se evalúan individualmente, aunque sigan 10/10+.
-   No la muestra antes
-   de definir alcance ni la repite por fase; no recomienda ni selecciona LLM y no
-   pausa el flujo por modelo. Se espera solo por gates reales o decisiones pendientes,
-   y planificar no autoriza implementar.
-   Una modificación comprueba specs relacionadas localmente. Si cambia un requisito,
-   se trata como enmienda conservando modo/gates y revalidando evidencia afectada;
-   nota baja no habilita direct para evitarlos. La política de continuidad se carga
-   bajo demanda, sin auditoría completa rutinaria de `.sdd`.
-   Si hay `.navigator/`, SDD comprueba primero su disponibilidad y frescura para
-   orientar la exploración. Un índice desfasado solo aporta rutas candidatas: la
-   documentación aplicable y el código real confirman las decisiones. Su ausencia
-   no bloquea el flujo ni provoca bootstrap/update automático.
+3. **SDD solo cuando se selecciona** — para features definidas, recomienda `direct`
+    en notas 1–3, SDD-Tiny (`tiny`) en 4–8 y SDD-Lite (`lite`) en 9–10/10+. La
+    recomendación no selecciona modo contra una elección explícita ni aprueba alcance
+    o gates. Bugs, consultas y exploraciones no reciben nota de feature. Para 10+,
+    el valor es nota 10 más `exceeds_x13=true` y se ofrecen entregas seguras.
+    `standard` queda deprecado/legacy y solo se activa por solicitud explícita; una
+    elección previa compatible se conserva. No es fallback automático.
+    Presenta el alcance funcional completo y espera validación explícita y selección
+    antes de artefactos/código; elegir modo no valida alcance ni autoriza implementar.
+    Ajustes requieren presentar el conjunto actualizado. Tiny crea un único
+    `.sdd/specs/<ruta>/spec.md`, con estado inicial anterior a cambios de producto;
+    aprueba Gate 3 antes de implementar y actualiza el mismo documento con pruebas,
+    resultados reales y cierre en Gate 4. Tiny requiere pruebas proporcionales, pero
+    no Quick Plan, cuatro documentos, EARS completa ni matriz completa.
+    SDD-Lite (`lite`) conserva Quick Plan obligatorio y exclusivo, sin Gates 1–3 ni
+    Gate 4; Standard conserva sus cuatro gates. Combinar Quick Plan con Direct, Tiny
+    o Standard es inválido. Los bugfixes no triviales conservan el flujo `lite` y no
+    se califican como features; un bug trivial puede ser `direct` si es elegible.
+    `direct` mantiene sus guardas de cambio pequeño, claro, localizado, reversible y
+    sin exclusiones de riesgo: una nota 1–3 no las elimina. Si falla elegibilidad,
+    explica el conflicto y aplica la ruta segura vigente sin cambiar la nota.
+    Tras definir el alcance, solo SDD emite una vez la nota, registrando referente,
+    justificación y supuestos en la spec según la
+    [rúbrica ReserveLab](../canonical/skills/sdd-spec/references/feature-level.md).
+    La nota orienta recomendación, no predice recursos ni demuestra elegibilidad.
+    La atención puede ser naranja bajo 8 con complicaciones controlables; las
+    entregas se evalúan individualmente, aunque sigan 10/10+. No se repite por fase,
+    no recomienda ni selecciona LLM y no pausa el flujo por modelo. Se espera solo
+    por decisiones pendientes o gates reales; planificación no autoriza implementar.
+    Una modificación comprueba specs relacionadas localmente. Si cambia un requisito,
+    conserva modo/gates y revalida evidencia afectada; una nota baja no evade acuerdos.
+    La política de continuidad se carga bajo demanda, sin auditoría global rutinaria.
+    Si hay `.navigator/`, SDD comprueba su disponibilidad y frescura. Un índice
+    desfasado solo aporta rutas candidatas; documentación y código reales confirman
+    decisiones. Su ausencia no bloquea ni inicia bootstrap/update automático.
 4. **Cambio de agente manual** — Developer no deriva a SDD. Si quieres la metodología,
    selecciona SDD; si una auditoría detecta una necesidad de especificación, revisa
    su recomendación y elige explícitamente cómo continuar.
@@ -247,16 +247,17 @@ ambas carpetas. Solo se agrupan con la misma acción, proyecto y vía autorizada
 | Documentation Orchestrator / Developer | `.data/` se mantiene mediante `data-api`; Developer actualiza contratos de producto según el plan autorizado |
 | Documentation Orchestrator | `.navigator/` mediante `project-navigator`; `.architecture/` mediante `architecture`; coordina otros dominios, sin carpeta propia |
 | Documentation Orchestrator / Developer | `.design/` se mantiene mediante `ui-design`; Developer implementa UI y ofrece sincronizar si queda desactualizada |
-| SDD | `.sdd/specs/<ruta-spec>/` plana o agrupada por módulo (requirements, design, tasks, verification) |
+| SDD | `.sdd/specs/<ruta-spec>/` plana o agrupada: `spec.md` único para Tiny; requirements/design/tasks/verification para SDD-Lite o Standard |
 | Git & Release | Commits/tags/CHANGELOG; perfil en `.release/` si aplica |
 
 Estas carpetas son **del proyecto en el que trabajas**, no del repo del kit.
 Conviene versionarlas con el código para que el equipo y la IA compartan el
 mismo contexto.
 
-En SDD, `lite` solo de planificación crea `requirements.md`, `design.md` y
-`tasks.md`; si también implementa, añade un `verification.md` compacto. `direct`
-no crea spec.
+En SDD, SDD-Tiny solo de planificación deja `spec.md` en estado Planificado; al
+implementar, actualiza el mismo archivo con evidencia real. SDD-Lite solo de
+planificación crea `requirements.md`, `design.md` y `tasks.md`; si también implementa,
+añade un `verification.md` compacto. `direct` no crea spec.
 
 Project Navigator no versiona su caché local. Añade este bloque al `.gitignore`
 del proyecto que indexas:

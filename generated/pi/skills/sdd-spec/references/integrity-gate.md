@@ -49,6 +49,26 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
 4. Revisar solo los RNF declarados y aplicables; no inventar una cuota.
 5. Si solo hubo planificación, no crear evidencia ni marcar implementación hecha.
 
+## Cierre SDD-Tiny
+
+`tiny` mantiene un único `.sdd/specs/<ruta-spec>/spec.md`: creado con estado inicial
+`Planificado` antes de cambiar código y actualizado en el mismo path para el cierre.
+No crear `requirements.md`, `design.md`, `tasks.md` o `verification.md` paralelos para
+esa misma ejecución.
+
+1. Para intención de implementación, comprobar aprobación explícita de Gate 3 antes
+   del primer cambio de producto. La recomendación o validación del alcance no la
+   sustituye.
+2. Revisar cada casilla: `[x]` requiere artefacto o comando realmente ejecutado y
+   resultado verificable. Lo no ejecutado queda pendiente; no declares PASS ficticio.
+3. En el mismo `spec.md`, registrar comandos/resultados observados, limitaciones,
+   excepciones, fallos iniciales y reparaciones posteriores. No borrar un fallo local
+   porque una repetición pasó.
+4. Contrastar evidencia con criterios, errores e invariantes del spec y los riesgos
+   declarados; un test oculto detrás de un mock no acredita el mecanismo crítico.
+5. Después de verificación, solicitar Gate 4 para cerrar o tratar huecos. En solo
+   planificación, no implementar ni inventar resultados y dejar estado `Planificado`.
+
 ## Atención y entregas
 
 - Los controles de atención definidos en diseño/tareas requieren evidencia de la

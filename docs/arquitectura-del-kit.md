@@ -296,8 +296,9 @@ El flujo común presenta alcance completo y resuelve su validación explícita y
 la elección pendiente antes de artefactos o código. Validación, modo, ejecutor,
 autorización de implementación y gates de fase son decisiones distintas.
 
-`direct` no crea spec formal; `lite` genera Quick Plan sin Gates 1–4;
-`standard` queda legacy/opt-in explícito y conserva los cuatro gates. Las enmiendas preservan acuerdos e historia
+`direct` no crea spec formal; SDD-Tiny usa un `spec.md` único con Gate 3 antes de
+implementar y Gate 4 al cerrar; SDD-Lite genera Quick Plan sin Gates 1–4. `standard`
+queda legacy/opt-in explícito y conserva los cuatro gates. Las enmiendas preservan acuerdos e historia
 y revalidan solo tareas/evidencias afectadas, tras aceptar el alcance completo
 actualizado. Una consulta informativa no activa esas aprobaciones.
 

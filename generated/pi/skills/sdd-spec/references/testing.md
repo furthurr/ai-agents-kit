@@ -16,9 +16,9 @@ siempre que exista. Si no lo especifica, aplica estos valores por defecto:
 
 ## Selección de estrategia
 
-La profundidad SDD (`direct`, `lite` y `standard` legacy solo por solicitud
-explícita) y la estrategia de pruebas son ejes independientes. Elige una estrategia
-por comportamiento, no por tamaño del diff:
+La profundidad SDD (`direct`, `tiny`/SDD-Tiny, `lite`/SDD-Lite y `standard` legacy
+solo por solicitud explícita) y la estrategia de pruebas son ejes independientes.
+Elige una estrategia por comportamiento y riesgo, no por score ni tamaño del diff:
 
 | Estrategia | Cuándo | Evidencia mínima |
 |------------|--------|------------------|
@@ -34,15 +34,19 @@ Orden de decisión:
 3. Para comportamiento nuevo/modificado, usa TDD focalizado.
 4. Sin cambio observable, no añadas un test solo por ceremonia; ejecuta checks.
 5. Si debería probarse pero no existe un harness viable, registra la excepción y
-   evalúa la mejor verificación alternativa. Si el riesgo impide `direct`/`lite`,
+   evalúa la mejor verificación alternativa. Si el riesgo impide `direct`/`tiny`/`lite`,
    no escales automáticamente: detente y explica cómo reducir/dividir el alcance;
    continúa con `standard` solo ante solicitud explícita del usuario.
 
+Tiny reduce el número de documentos, no controles de comportamiento. El documento
+único `spec.md` conserva la estrategia, resultados observados, fallos y reparaciones.
+Gate 3 debe aprobar el plan antes de implementar y Gate 4 cierra tras la verificación.
+
 `lite` reduce gates y documentación, no evidencia. Una implementación `lite` usa
 la misma decisión adaptativa y registra el ciclo en su `verification.md` compacto.
-Un bugfix no trivial usa `lite` (siempre elegible), aunque el diff sea pequeño.
+Un bugfix no trivial conserva `lite` (siempre elegible), aunque el diff sea pequeño.
 
-Lite con atención especial exige pruebas de la garantía identificada, incluyendo
+Tiny/Lite con atención especial exige pruebas de la garantía identificada, incluyendo
 concurrencia, reintentos o fallos pertinentes con mecanismos reales o seams
 representativos. No sustituirlas por mocks que oculten la garantía. Si no hay
 verificación viable, no mantener lite solo por la nota; aplicar `scope-depth.md`.

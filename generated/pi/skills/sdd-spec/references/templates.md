@@ -61,6 +61,56 @@ Gate 2: pendiente
 Quick Plan usa estas versiones compactas en una pasada. El marcador de modo es
 obligatorio y una petición de solo planificación no crea evidencia de implementación.
 
+## `spec.md` (SDD-Tiny)
+
+Este único documento se crea antes de modificar código con estado `Planificado` y se
+actualiza en el mismo path después de implementar. No se generan junto a él los
+cuatro documentos de Standard ni los tres archivos de Quick Plan. Las cuatro
+secciones son breves; adapta el número de criterios y checks al riesgo, sin exigir
+EARS ni una matriz completa de trazabilidad.
+
+```markdown
+# SDD-Tiny — <feature>
+
+Modo SDD: tiny
+Estado: Planificado
+Gate 3: pendiente | no aplica (solo planificación)
+Calificación de feature (solo si corresponde): <Esfuerzo previsto del LLM; referente,
+  factores, supuestos; atención; exceeds_x13=true/false>
+Profundidad recomendada / seleccionada: <Direct | SDD-Tiny | SDD-Lite; elección explícita>
+
+## Alcance y aceptación
+- Objetivo y resultado esperado: <...>
+- Comportamientos y criterios verificables: <...>
+- Errores y casos límite: <...>
+- Invariantes: <...>
+- Exclusiones y supuestos: <confirmados / pendientes>
+
+## Enfoque técnico y estrategia de pruebas
+- Enfoque/patrones existentes: <...>
+- Riesgos e invariantes que requieren pruebas: <...>
+- Estrategia: <TDD focalizado | regresión/caracterización | sin test nuevo + razón>
+
+## Checklist
+- [ ] <resultado verificable>
+- [ ] <test/check proporcional al riesgo>
+
+## Verificación y cierre
+- Estado inicial: Planificado; spec creado antes de cambios de producto.
+- Gate 3: <pendiente | aprobado; cita de aprobación>
+- RED o baseline: <comando y resultado realmente observado | pendiente>
+- Verificación final: <comando y resultado realmente observado | no ejecutado>
+- Fallos locales y reparaciones: <secuencia observada; no omitir fallos>
+- Excepciones/limitaciones: <ninguna o explicación>
+- Gate 4: <pendiente | aprobado | no aplica (solo planificación)>
+- Estado final: <Completado | Parcial | Bloqueado | Planificado>
+```
+
+Solo una solicitud con intención de implementación puede avanzar después de aprobar
+Gate 3; una planificación aceptada no autoriza cambios. No declares pruebas pasadas
+si no se ejecutaron y no reemplaces ni elimines el historial de fallos al registrar
+reparaciones.
+
 ### requirements.md (lite)
 
 ```markdown

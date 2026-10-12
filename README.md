@@ -68,13 +68,21 @@ Catálogo completo (roles, carpetas, cuándo usar cada uno):
 ### SDD proporcional
 
 SDD presenta el alcance funcional completo y espera su validación explícita antes
-de generar artefactos o implementar. Para features, estima el esfuerzo y recomienda
-una profundidad elegible; elegir solo el modo no valida el alcance.
+de generar artefactos o implementar. Solo el agente SDD califica features: 1–3
+recomienda `direct`, 4–8 SDD-Tiny y 9–10/10+ SDD-Lite. La nota orienta la
+recomendación, no selecciona modo contra una elección explícita, no aprueba alcance
+ni crea un gate. Elegir solo el modo no valida el alcance.
 
 - **`direct`**: cambio trivial, localizado y reversible; sin spec formal.
-- **`lite`**: cambio acotado con garantías verificables; Quick Plan obligatorio
+- **SDD-Tiny (`tiny`)**: una feature cohesiva con un solo `.sdd/specs/<ruta>/spec.md`
+  vivo, pruebas proporcionales al riesgo y Gates 3/4 al implementar y cerrar.
+- **SDD-Lite (`lite`)**: cambio acotado con garantías verificables; Quick Plan obligatorio
   (`requirements.md`, `design.md`, `tasks.md`) en una pasada, sin Gates 1–4.
-- **`standard`**: requisitos, diseño, tareas y verificación con Gates 1–4.
+- **`standard`**: legacy solo por solicitud explícita; requisitos, diseño, tareas y
+  verificación con Gates 1–4.
+
+`10+` mantiene la nota 10 con `exceeds_x13=true`; se recomiendan entregas seguras.
+SDD-Tiny no significa “sin pruebas”, y SDD-Lite conserva su Quick Plan.
 
 Validar el alcance no aprueba los gates de `standard`; pedir solo planificación
 no autoriza implementación. SDD conserva los acuerdos de specs relacionadas y

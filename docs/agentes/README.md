@@ -69,16 +69,19 @@ funcional. Solo decisiones y gates reales requieren intervención.
   escrituras y remediación con aprobación antes del primer y cada siguiente paso.
 - **Developer:** usa PLAN propio para aclarar y planear cambios; no usa ni activa SDD.
   SDD es una metodología independiente que se inicia solo seleccionando ese agente.
-- **SDD:** usa `direct` y `lite` como modos operativos predeterminados. `standard` queda
-  deprecado/legacy y solo se activa ante solicitud explícita; no es fallback automático.
-  Presenta y valida alcance completo, califica features, recomienda `direct` si es
-  trivial, `lite` para todo lo demás y ofrece dividir alcances grandes. Lite usa Quick Plan
-  sin Gates 1-4. Si no hay una ruta segura con `direct`/`lite`, se detiene y pide reducir,
-  dividir o solicitar `standard`. El flujo legacy conserva los Gates 1-4. Tras definir
+- **SDD:** recomienda por score de feature `direct` (1–3), SDD-Tiny (4–8) o SDD-Lite
+  (9–10/10+), sin puntuar bugs, consultas o exploraciones. `standard` queda
+  deprecado/legacy y solo se activa ante solicitud explícita; una elección compatible
+  previa se conserva. Presenta y valida el alcance completo antes de generar artefactos.
+  Tiny mantiene un `spec.md` único, pruebas proporcionales y Gates 3/4; Lite conserva
+  Quick Plan sin Gates 1–4. Direct mantiene todas sus guardas. Si no hay una ruta
+  segura con los modos proporcionales, se detiene y pide reducir/dividir o solicitar
+  `standard`; el flujo legacy conserva los Gates 1–4. Tras definir
   alcance, SDD emite una sola vez la nota de esfuerzo conforme a
   la rúbrica ReserveLab; no recomienda ni
   selecciona modelos, no repite el nivel por fase ni pausa el flujo por modelo. Las
-  solicitudes de `deep` informan que fue retirado y esperan elección de `direct`/`lite`
+  solicitudes de `deep` informan que fue retirado y esperan elección de Direct,
+  SDD-Tiny o SDD-Lite
   o solicitud explícita de `standard`; TDD estricto espera aceptación de TDD focalizado.
 - **Git y releases:** commit, push, cambios de versión, tags y CHANGELOG requieren
   confirmación explícita; las acciones destructivas requieren doble confirmación.

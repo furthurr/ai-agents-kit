@@ -107,8 +107,9 @@ apunta inicialmente a **2.0**: cambios del host van en
 
 Los agentes usan `<id>.md`, `name`, `description`, `model: inherit`,
 `mainAgent: true`, `subagent: true` y `tools` por rol. La descripción SDD indica
-`direct`/`lite` como modos predeterminados y `standard` como legacy solo por solicitud
-explícita; Quick Plan es exclusivo de `lite`. `{{sdd_agent}}` produce `sdd`
+recomendación por esfuerzo: Direct (1–3), SDD-Tiny (4–8) y SDD-Lite (9+), con
+`standard` como legacy solo por solicitud explícita; Quick Plan es exclusivo de
+SDD-Lite. `{{sdd_agent}}` produce `sdd`
 nominal, no una invocación nativa `@sdd`. No añadas un campo `skills` explícito
 con paths ambiguos: verifica descubrimiento global y carga de recursos.
 

@@ -23,7 +23,7 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 | `developer` | Planifica e implementa características completas en UI, datos/APIs y negocio | — | PLAN conversacional propio, verificación y aviso documental condicional; no usa SDD |
 | `security` | Auditoría y remediación de seguridad guiada | `.security/` | OWASP MASVS/MASWE/MASTG y CWE |
 | `ui-design` | Sistema visual: tokens, componentes, deuda de UI | `.design/` | Agnóstica a tecnología |
-| `sdd-spec` | Spec-Driven Development con modos operativos predeterminados `direct` y `lite`; `standard` legacy solo bajo solicitud explícita | `.sdd/specs/<ruta-spec>/` | Nota ordinal de esfuerzo tras definir alcance; [rúbrica ReserveLab](../canonical/skills/sdd-spec/references/feature-level.md); `standard` explícito conserva Gates 1-4 |
+| `sdd-spec` | Spec-Driven Development: `direct`, SDD-Tiny y SDD-Lite; `standard` legacy solo bajo solicitud explícita | `.sdd/specs/<ruta-spec>/` | Recomendación de feature por nota; Tiny usa `spec.md` único y gates 3/4; SDD-Lite conserva Quick Plan; `standard` explícito conserva Gates 1-4 |
 | `git-commit` | Commits Conventional Commits en español y push con confirmación | — | No versiona ni crea tags |
 | `release-management` | SemVer, tags anotados, CHANGELOG; perfiles por tecnología | `.release/` | Android/iOS/Flutter de fábrica; resto auto-extensible |
 | `project-navigator` | Navega el repo con mínimo de tokens (capas 0–4) | `.navigator/` | Bootstrap/update asistido; solo lectura fuera de `.navigator/` |

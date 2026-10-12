@@ -76,7 +76,7 @@ class ContextEfficiencyTests(unittest.TestCase):
         self.assertIn("opciones retiradas siguen la política compacta de `sdd-spec`", agent)
         self.assertIn("`deep` no está disponible", sdd)
         self.assertIn(
-            "informa que fue retirado y pide elegir `direct`/`lite` o solicitar explícitamente `standard` legacy",
+            "informa que fue retirado y pide elegir `direct`, sdd-tiny (`tiny`) o sdd-lite (`lite`), o solicitar explícitamente `standard` legacy",
             sdd,
         )
         self.assertNotIn("## Tipos de Commit", git)

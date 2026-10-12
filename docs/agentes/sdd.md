@@ -17,20 +17,23 @@ SDD separa el **qué y porqué** del **cómo** y deja decisiones trazables.
 - Para una feature nueva o un cambio de comportamiento.
 - Para un bugfix que necesita regresión y causa raíz.
 - Para una decisión con impacto entre capas.
-- Para crear un plan rápido de trabajo acotado, claro y con garantías verificables mediante
-  `lite` y Quick Plan.
+- Para planificar una feature con un único spec breve mediante SDD-Tiny o Quick Plan
+  mediante SDD-Lite.
 - Para continuar la implementación de tareas ya aprobadas.
 
 Primero define y presenta el alcance funcional completo, consulta contexto técnico
 mínimo y califica features. Recomienda profundidad y espera validación del alcance
 y elección pendientes en una interacción; reutiliza decisiones vigentes.
-Por defecto solo selecciona `direct` o `lite`: recomienda `direct` para cambios
-triviales y `lite` para todo lo demás; para 10/10+ ofrece entregas
-incrementales seguras. La nota no basta: se comprueba elegibilidad. `standard` queda
-deprecado/legacy y solo se usa si el usuario solicita explícitamente ese modo; no es
-fallback ante alcance amplio ni riesgo. `lite` siempre es elegible: adapta los
-controles al caso. No existe una profundidad `deep`; pide elegir `direct`/`lite`
-o solicitar `standard` legacy, sin conversión silenciosa.
+Para features de alcance definido, recomienda 1–3 `direct`, 4–8 SDD-Tiny (`tiny`) y
+9–10/10+ SDD-Lite (`lite`). La nota no basta: se comprueba elegibilidad y no
+selecciona un modo contra una elección explícita. `direct` mantiene todas sus guardas;
+una nota baja no las elimina. SDD-Tiny usa un único `spec.md` breve, Gate 3 antes de
+implementar y Gate 4 al cerrar, con pruebas proporcionales. SDD-Lite conserva Quick
+Plan obligatorio y su verificación compacta. Para 10+ recomienda SDD-Lite y ofrece
+entregas seguras. `standard` queda deprecado/legacy y solo se usa si el usuario lo
+solicita explícitamente; no es fallback ante alcance amplio ni riesgo. No existe una
+profundidad `deep`; pide elegir Direct, SDD-Tiny, SDD-Lite o solicitar `standard`
+legacy, sin conversión silenciosa.
 
 ## Esfuerzo previsto del LLM
 
@@ -56,7 +59,7 @@ explícita vigente de la misma versión completa, no un resumen breve previo.
 
 Esfuerzo y atención son distintos: 1–7 normalmente 🟢, pero pueden mostrar 🟠
 con una complicación concreta; 8–9 🟠, 10/10+ 🔴. Una reserva de nivel 6 puede
-usar `lite` con atención especial si hay garantía definida, mecanismo adecuado,
+usar SDD-Tiny con atención especial si hay garantía definida, mecanismo adecuado,
 pruebas concurrentes viables y recuperación acotada. Naranja no reemplaza controles.
 
 Ejemplo ilustrativo, después de acordar estas condiciones:
@@ -88,26 +91,27 @@ Ejemplo ilustrativo, después de acordar estas condiciones:
 >
 > **Atención especial:** reservas simultáneas; se verificarán con pruebas específicas.
 >
-> **Profundidad recomendada: `lite`.**
+> **Profundidad recomendada: SDD-Tiny.**
 >
-> ¿Este alcance refleja completamente lo que quieres y continuamos con `lite`, o necesitas corregir, agregar o eliminar algo? También puedes solicitar explícitamente el modo legacy `standard`.
+> ¿Este alcance refleja completamente lo que quieres y continuamos con SDD-Tiny, o necesitas corregir, agregar o eliminar algo? También puedes elegir otra profundidad elegible o solicitar explícitamente el modo legacy `standard`.
 
 ## Definición de alcance y entregas
 
 La etapa común exige validar el contenido completo, sin imponer archivo propio
 ni un gate numerado nuevo. Combina validación y elección cuando faltan ambas;
-si el usuario responde solo «usa lite», queda validación pendiente. Consultas
+si el usuario responde solo «usa SDD-Tiny», queda validación pendiente. Consultas
 informativas sin artefactos ni código no adquieren otra aprobación ceremonial.
 Mantiene rigor testable y reutiliza lo definido en los artefactos del modo elegido.
-Validar alcance o solicitar `standard` legacy no aprueba su Gate 1 formal. Lite conserva Quick
-Plan en una pasada sin otra pausa de requirements; direct no genera spec formal.
+Validar alcance o solicitar `standard` legacy no aprueba su Gate 1 formal. SDD-Tiny
+usa Gate 3/4 en la implementación/cierre; SDD-Lite conserva Quick Plan en una pasada
+sin otra pausa de requirements; direct no genera spec formal.
 
 Para 10/10+ ofrece dividir en entregas seguras. Abordar el conjunto en `standard`
 requiere solicitud explícita del usuario. Cada entrega debe tener
 resultado verificable, dependencias y garantías transversales explícitas; se califica
 individualmente y puede seguir en 10/10+. Si otra separación no es segura, detenerse
 y explicar la opción de `standard` legacy, sin seleccionarlo automáticamente. No
-prometer que todo será lite ni cerrar el conjunto sin pruebas integradas.
+prometer que todo será SDD-Lite ni cerrar el conjunto sin pruebas integradas.
 Política: [alcance y profundidad](../../canonical/skills/sdd-spec/references/scope-depth.md).
 
 ## Continuidad de specs y contexto selectivo
@@ -160,16 +164,14 @@ Contrato: [selección de metodología](../../canonical/skills/sdd-spec/reference
 
 | Modo | Uso | Resultado |
 |---|---|---|
-| `direct` | Preferencia 1–3 si es trivial, localizado y reversible | Sin spec; pruebas/checks y evidencia breve |
-| `lite` | Preferencia 4–9, alcance acotado y garantías verificables | Quick Plan compacto; artefactos según se planifique o implemente |
+| `direct` | Recomendación 1–3; solo si es trivial, localizado y reversible | Sin spec; pruebas/checks y evidencia breve |
+| SDD-Tiny (`tiny`) | Recomendación 4–8 si es una entrega cohesiva y verificable | Un `spec.md` vivo; Gate 3 antes de implementar y Gate 4 al cerrar |
+| SDD-Lite (`lite`) | Recomendación 9–10/10+; alcance acotado y garantías verificables | Quick Plan compacto; artefactos según intención |
 | `standard` (legacy) | Solo ante solicitud explícita del usuario | Requirements, design, tasks y verification; Gates 1-4 |
 
-Se conservan tres modos documentados, pero `direct` y `lite` son los modos
-operativos predeterminados. `standard` está deprecado/legacy y no se recomienda ni
-activa automáticamente. Puede conservarse para quien lo solicite explícitamente,
-incluidos casos donde el usuario prefiera ese flujo con modelos LLM locales.
-Quick Plan es obligatorio y exclusivo de `lite`; combinarlo con cualquier otra
-profundidad es inválido.
+`standard` está deprecado/legacy y nunca se recomienda ni activa automáticamente.
+Se conserva una elección explícita previa compatible. Quick Plan es obligatorio y
+exclusivo de SDD-Lite; combinarlo con Direct, SDD-Tiny o Standard es inválido.
 
 La profundidad y el testing son decisiones independientes. Una feature normal usa
 TDD focalizado; TDD estricto está retirado. Si se solicita, propone TDD focalizado
@@ -177,7 +179,7 @@ y espera aceptación. Los bugfixes usan regresión y el legado usa caracterizaci
 
 `deep` y TDD estricto pueden aparecer en specs históricas, pero no son opciones
 vigentes. SDD conserva esos artefactos y evidencias; para `deep`, pide elegir
-`direct`/`lite` o solicitar explícitamente `standard` legacy. No convierte la
+Direct/SDD-Tiny/SDD-Lite o solicitar explícitamente `standard` legacy. No convierte la
 solicitud silenciosamente ni confunde la elección de modo con la aprobación de un gate.
 
 ## Flujo y gates
@@ -194,9 +196,16 @@ solicitud silenciosamente ni confunde la elección de modo con la aprobación de
 4. **Implementación:** ejecutar una tarea o wave, con integrity gate antes de marcarla.
 5. **Verification:** tras Implementación, ejecutar pruebas,
    registrar evidencia y revisar requisitos y RNF. Gate 4: cerrar la spec o corregir
-    huecos en `standard` legacy solicitado explícitamente; después termina el flujo.
+   huecos en `standard` legacy solicitado explícitamente; Tiny también espera Gate 4
+   al cerrar el único spec después de verificación.
 
-En `lite`, Quick Plan genera `requirements.md`, `design.md` y `tasks.md` en una
+En SDD-Tiny se crea un único `spec.md` inicial antes de cambiar código; Gate 3
+aprueba el plan antes de implementar y el mismo documento se actualiza con pruebas,
+comandos/resultados y cierre antes de Gate 4. No requiere Quick Plan, EARS completa
+ni matriz de trazabilidad. Solo planificación deja el documento Planificado y no
+implementa ni afirma resultados.
+
+En SDD-Lite, Quick Plan genera `requirements.md`, `design.md` y `tasks.md` en una
 pasada después de validar alcance y resolver elección, sin repetir la nota. No existen Gates 1-3
 ni Gate 4. Si el alcance es solo planificar, termina con esos tres archivos; si también se
 implementa, añade un `verification.md` compacto con la evidencia.
@@ -226,26 +235,27 @@ y los contratos canónicos siguen siendo las fuentes de verdad.
 ```text
 .sdd/specs/
 ├── <nombre-feature>/              # ruta plana, continúa siendo válida
-│   ├── requirements.md            # o bugfix.md
+│   ├── spec.md                     # SDD-Tiny: documento único
+│   ├── requirements.md            # o bugfix.md (SDD-Lite / Standard)
 │   ├── design.md
 │   ├── tasks.md
 │   └── verification.md
 └── <modulo>/<nombre-feature>/     # agrupación recomendada si hay varias specs
-    ├── requirements.md            # o bugfix.md
+    ├── spec.md                     # SDD-Tiny: documento único
+    ├── requirements.md            # o bugfix.md (SDD-Lite / Standard)
     ├── design.md
     ├── tasks.md
     └── verification.md
 ```
 
 La ruta relativa completa identifica la spec. Una carpeta intermedia es solo un
-agrupador: la raíz de una spec es la carpeta que contiene `requirements.md` o
-`bugfix.md`. Al reanudar sin ruta explícita, SDD busca esos marcadores de forma
+agrupador: la raíz de una spec contiene `spec.md`, `requirements.md` o `bugfix.md`.
+Al reanudar sin ruta explícita, SDD busca esos marcadores de forma
 recursiva y pregunta si encuentra varias candidatas plausibles.
 
 La estructura completa corresponde a un `standard` legacy solicitado explícitamente
-o a un `lite` implementado.
-Un `lite` solo de planificación omite `verification.md`; `direct` no crea esta
-carpeta.
+o a un SDD-Lite implementado. SDD-Tiny conserva solo `spec.md`; SDD-Lite solo de
+planificación omite `verification.md`; `direct` no crea esta carpeta.
 
 No marca una tarea `[x]` sin artefacto real o evidencia. El design debe registrar
 la estrategia de pruebas y respetar la barra de calidad de la skill.
@@ -267,9 +277,9 @@ de la suite ejecutada.
 de testing y no implementes todavía.
 ```
 
-Esta petición solicita evaluar `lite` y Quick Plan; no evita sus condiciones.
-`Quick Plan standard` y
-`Quick Plan direct` son combinaciones inválidas.
+Esta petición solicita evaluar SDD-Lite (`lite`) y Quick Plan; no evita sus
+condiciones. `Quick Plan standard`, `Quick Plan direct` y `Quick Plan SDD-Tiny` son
+combinaciones inválidas.
 
 ## Límites y confirmaciones
 
@@ -278,12 +288,12 @@ Esta petición solicita evaluar `lite` y Quick Plan; no evita sus condiciones.
   definido, con el formato `Esfuerzo previsto del LLM: <nota e icono>` (1–7 🟢 o
   🟠 con atención especial, 8–9 🟠, 10 🔴, superior a X13: `10+ 🔴`);
   no recomienda niveles ni selecciona LLM.
-- Ninguna fase repite esa clasificación ni espera por modelo; `lite` inicia Quick
+- Ninguna fase repite esa clasificación ni espera por modelo; SDD-Lite inicia Quick
   Plan sin pausa por modelo, sin crear Gates 1-3 ni Gate 4.
-- La intención de solo planificación no autoriza implementar. Cambiar de `lite`
+- La intención de solo planificación no autoriza implementar. Cambiar de SDD-Lite
   a `standard` requiere que el usuario lo solicite explícitamente, aunque la clasificación
   de feature no cambie.
-- Quick Plan solo existe en `lite` y no se combina con otra profundidad.
+- Quick Plan solo existe en SDD-Lite (`lite`) y no se combina con otra profundidad.
 - No recomienda, identifica ni selecciona modelo, proveedor o nivel de LLM.
 - No inventa requisitos, cumplimiento, resultados de tests ni evidencia.
 - No añade dependencias de testing sin un test que las use en la misma entrega.
