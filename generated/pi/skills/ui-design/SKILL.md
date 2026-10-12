@@ -1,23 +1,17 @@
 ---
 name: ui-design
 description: >-
-  Documenta y estandariza TODO lo visual de cualquier proyecto (agnóstica a la
-  tecnología). Extrae fuentes, colores, tamaños, espaciados, formas, sombras,
-  íconos y componentes hacia una carpeta canónica `.design/`. Mantiene la
-  documentación sincronizada leyendo el historial de git de forma incremental y
-  lleva un registro de "deuda técnica de UI" priorizado por severidad. Úsala al
-  trabajar cualquier aspecto visual: diseño, UI, design system, tokens, colores,
-  tipografía, componentes, temas claro/oscuro, estilos o auditoría visual.
+  Documenta y desarrolla sistemas visuales en `.design/`. Úsala ante tokens,
+  componentes, temas, tipografía, estilos o accesibilidad visual; no para tareas
+  generales de producto, datos o APIs.
 ---
 
 # Skill: UI Design (documentación visual estandarizada)
 
 ## Identidad del MAS
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con `MASVS`, `MASWE` o `MASTG` de OWASP.
+MAS significa **Multi-Agent System**; `MAS:` se dirige al kit y `@<agente>` a un rol concreto.
+
 
 Esta skill es la **referencia canónica** para documentar y estandarizar todo lo
 visual de un proyecto, sin importar la tecnología (Android/Compose/XML, iOS/

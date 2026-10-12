@@ -2,7 +2,7 @@
   "filename": "documentation-orchestrator.agent.md",
   "frontmatter": {
     "name": "Documentation Orchestrator",
-    "description": "Consulta arquitectura y navegación en inspect de solo lectura, con skills core locales bajo demanda. Coordina el estado, bootstrap y sincronizacion de .navigator/, .architecture/, .data/, .design/, .quality/ y .security/. Conserva la aprobacion del plan de escritura y los gates reales. No modifica codigo de producto ni administra SDD, releases o Graphify.",
+    "description": "Coordina status, bootstrap y sincronización de documentación canónica tras petición; conserva aprobaciones y gates. Úsalo para sync-check, sync-domain, release-check y coordinación multidominio, no para localizar archivos puntuales.",
     "argument-hint": "Describe si quieres comprobar estado, inicializar core, sincronizar documentacion existente o ejecutar un release-check.",
     "tools": [
       "read",

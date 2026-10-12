@@ -2,10 +2,10 @@
 
 - **Modo SDD:** standard.
 - **Fase:** 4 — Verification.
-- **Estado:** implementación local verificada; evidencia conductual de host pendiente.
+- **Estado:** verificación completada para el alcance de REC-01; spec cerrada.
 - **Gates aprobados:** 1, 2 y 3 mediante respuestas explícitas «procede».
-- **Gate 4:** pendiente; no se propone cierre mientras falte evidencia exigida.
-- **Estado REC-01:** Integrado pendiente de verificación; cambios locales sin commit.
+- **Gate 4:** aprobado explícitamente mediante «Aprobar cierre REC-01» tras presentar evidencia real y pruebas satisfactorias.
+- **Estado REC-01:** Cerrado; fix incorporado en `9e0696e`, confirmado en `main` `5dba871`, prueba real y registro de cierre añadidos posteriormente sin commit nuevo.
 - **Fecha:** 2026-10-11.
 - **Baseline:** `03f30befca829daa2c2a3c6cd47c2dc4fe5b4880`, rama `main`, carpeta original.
 - **Fuentes:** [requisitos](bugfix.md), [diseño](design.md), [tareas](tasks.md),
@@ -79,11 +79,11 @@ un filesystem modificado concurrentemente.
 
 | Requisito | Tareas | Evidencia | Estado |
 |---|---|---|---|
-| R1–R2 exclusión pese a autorización | 2, 3, 4, 7 | Contratos actualizados; `test_no_authorization_override`, `test_rejected_control_prevents_following_operation`, índice real | Parcial: control PASS; decisión conversacional de host pendiente |
-| R3 no reproducir valores | 2, 3, 4, 7 | Capturas en `ScannerTests.scan`, errores/rutas sanitizados, `test_read_error_is_sanitized` | PASS del control; conducta del host pendiente |
-| R4–R5 indicios/publicidad/placeholders | 2, 3, 4, 7 | `test_public_and_placeholders_not_blocked_by_name`, `test_public_staged_and_empty_index`, política explícita | PASS del control/contrato; contraste conversacional pendiente |
-| R6 indicio no resuelto | 2, 5, 7 | Paso 1.5 mantiene candidato pendiente; documentación; probe host | Contrato verificado; host pendiente |
-| R7 coherencia entre consumidores | 2, 5, 6, 7 | `ContractTests`, render/validate, textos Git/release/security/agente/guía | PASS de fuentes/distribución; host pendiente |
+| R1–R2 exclusión pese a autorización | 2, 3, 4, 7 | Contratos, tests de rechazo/índice y reporte live: scanner salida 1 y rechazo explícito de excepción | PASS del control y escenario real |
+| R3 no reproducir valores | 2, 3, 4, 7 | Capturas/sanitización y reporte live: valor sintético ausente en todos los eventos | PASS del control y escenario real |
+| R4–R5 indicios/publicidad/placeholders | 2, 3, 4, 7 | Tests de contraste y reporte live: scanner salida 0 más lectura contextual y admisibilidad de .env.example | PASS del control y contraste real |
+| R6 indicio no resuelto | 2, 5, 7 | Paso 1.5 mantiene candidato pendiente; tests de evaluación incompleta | PASS contractual/control; no se afirma ejecución de todos los casos de indicios por el modelo |
+| R7 coherencia entre consumidores | 2, 5, 6, 7 | ContractTests, validate y fuentes Git/release/security/agente/guía; skill real local cargada | PASS de fuentes y escenario Git; no certificación runtime universal de todos los consumidores |
 | R8 control ejecutable | 3, 4, 6 | Scanner canónico, wrapper, paso CI, tests de seis copias y fixture tracked rechazado | PASS |
 | R9 evaluación incompleta | 3, 4, 6 | Errores, rutas externas, enlaces, submódulos y conflicto devuelven 2 | PASS |
 | R10 límites y atribución | 2–8 | SKILL, docs/desarrollo, esta matriz y bloqueos abajo | PASS |
@@ -96,7 +96,7 @@ un filesystem modificado concurrentemente.
 
 | RNF de Design | Evidencia | Estado |
 |---|---|---|
-| Confidencialidad | Datos de salida contienen solo ubicación sanitizada/línea/regla; capturas y errores sin valores | PASS del control; host no acreditado |
+| Confidencialidad | Capturas/errores sin valores y ausencia de valor sintético en todos los eventos del escenario live | PASS del control y escenario real |
 | Integridad | `test_control_is_read_only`, índice distinto de working tree, entorno Git alternativo ignorado y shell posterior bloqueado | PASS |
 | Distribución | Fuente única; wrapper sin reglas; igualdad de bytes y ejecución de las seis copias | PASS |
 | Errores verificables | Exit codes 0/1/2 y causas fijas, sin stdout/stderr bruto de Git | PASS |
@@ -147,6 +147,46 @@ Hashes obtenidos con `git hash-object`; no son commits ni un baseline de release
 
 ## Decisión
 
-Cambio presente y verificado localmente en la carpeta coordinada, sin commit.
-REC-01 **no se cierra**: falta la evidencia conductual exigida. Gate 4 permanece
-pendiente; la implementación y los tests del scanner no sustituyen ese criterio.
+Cambio inicialmente presente y verificado localmente en la carpeta coordinada, sin commit.
+La decisión inicial fue mantener REC-01 abierto por falta de conducta. Esa decisión
+se conserva como antecedente y queda superada por la evidencia y aprobación siguientes.
+
+## Revisión posterior de integración y CI
+
+- Fix `9e0696e131dd7f105b450cd1bb108acd3ac816b2` incluido en HEAD actual
+  `5dba87197a64fcc9e026a344236d5da02793b4cf`; working tree limpio antes de esta revisión.
+- Los siete hashes de REC-01 de la tabla original coinciden con las fuentes actuales.
+- Revalidación con scripts directos: secretos 26/26, permisos 9/9, Code Review 7/7,
+  documentación core 12/12, handoff 34/34 y enlaces 4/4; validate correcto,
+  80 documentos con enlaces correctos y 611 tracked sin firmas soportadas.
+- La primera invocación agrupada de unittest falló al importar handoff por su path;
+  corregida usando la invocación directa admitida por el script, sin cambio de producto.
+- [CI del commit actual](https://github.com/furthurr/ai-agents-kit/actions/runs/38190590672)
+  SUCCESS, con suites de secretos/permisos/contratos, distribución e integridad.
+  Jobs nativos Antigravity de macOS/Windows SUCCESS; no acreditan conducta del agente.
+- La evidencia de host real sigue pendiente. El probe aislado de REC-01 no se repite
+  sin resolver su proveedor operativo: no dispone de ruta automática a PASS, incluso
+  cuando termina; requiere evaluación de eventos sanitizados que no conserva.
+- Procedimiento restante: [guía de cierre](../../../docs/auditoria/CIERRE-REC-01-REC-02.md).
+  Esta revisión no aprueba Gate 4 ni cierra la spec.
+
+## Verificación conductual final y cierre aprobado
+
+- Se añadió modo opt-in `--live --model ... --report ...` al probe: reutiliza autenticación
+  del host sin copiar credenciales; configuración y skills temporales; solo conserva evidencia
+  sanitizada. No convierte la respuesta en PASS automáticamente: exige revisión del reporte.
+- Reporte: [REC-01-live.json](../../../docs/auditoria/seguimiento/REC-01-live.json),
+  OpenCode 1.18.34, modelo real `openai/gpt-6.1-sol`, fuente `5dba871` y hashes SHA-256.
+- Skill local cargada, ambos scanners ejecutados: Config.txt salida 1; .env.example salida 0.
+  Respuesta real: Config.txt excluido incluso con autorización; .env.example admisible tras
+  revisión contextual. La coordinadora revisó herramientas y conclusión, no una coincidencia textual automática.
+- Valor sintético ausente del conjunto completo de eventos; fixtures, índice y refs sin cambios.
+  No staging, commit, push ni instalación global. La inicialización del propio host puede
+  escribir dependencias/configuración auxiliar bajo `.opencode/` del temporal; no se atribuye
+  ese bootstrap a una edición del agente ni a integridad de todo el árbol temporal.
+- Pruebas posteriores al cambio del probe: secretos 26/26, permisos 9/9, validate y enlaces
+  satisfactorios; el fix de producto/distribuciones conserva los hashes ya acreditados.
+- El usuario aprobó explícitamente el Gate 4 mediante «Aprobar cierre REC-01».
+  **REC-01 y esta spec se cierran.** Evidencia final y ajuste del probe quedan sin commit nuevo.
+- Límites conservados: scanner acotado; no garantiza detección universal ni certifica
+  comportamiento de todos los modelos/hosts. La instalación global antigua no fue modificada.

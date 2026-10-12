@@ -1,28 +1,17 @@
 ---
 name: code-quality
 description: >-
-  Audita, documenta y ayuda a remediar las BUENAS PRÁCTICAS DE DESARROLLO y la
-  calidad de código de cualquier proyecto (foco móvil: Kotlin/Java, Swift, Dart)
-  en una carpeta canónica `.quality/`. Se basa en SonarQube: taxonomía Clean Code
-  (Maintainability, Reliability, Security), tipos de issue (Bug, Code Smell,
-  Security Hotspot), reglas por lenguaje (p. ej. kotlin:S1481) y métricas
-  (cobertura, duplicación, complejidad, quality gate). Las reglas de Sonar son
-  públicas: precarga familias comunes y hace fetch bajo demanda cacheando en
-  `.quality/standards/`. Lleva los hallazgos con estado (pendiente/en
-  progreso/resuelto) para continuar en varias sesiones, prioriza por severidad y
-  remedia paso a paso con confirmación en cada micro-paso. Úsala para calidad de
-  código, code smells, mantenibilidad, fiabilidad, cobertura de pruebas,
-  complejidad, duplicación, convenciones y refactor seguro.
+  Audita calidad de código y findings Sonar (bugs, code smells, mantenibilidad,
+  fiabilidad y cobertura) en `.quality/`. Úsala ante una petición de auditoría o
+  remediación de calidad; la seguridad de aplicaciones corresponde a security.
 ---
 
 # Skill: Code Quality (buenas prácticas de desarrollo)
 
 ## Identidad del MAS
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con `MASVS`, `MASWE` o `MASTG` de OWASP.
+MAS significa **Multi-Agent System**; `MAS:` se dirige al kit y `@<agente>` a un rol concreto.
+
 
 Esta skill es la **referencia canónica** para auditar, documentar y ayudar a
 remediar la **calidad de código y buenas prácticas** de un proyecto, con foco en
@@ -136,14 +125,15 @@ son **plataformas de un mismo proyecto** → una sola `.quality/` en la raíz.
    **regla Sonar** (ID), cualidad (Maintainability/Reliability), impacto y estado
    `Pendiente`; luego ofrece iniciar la remediación (Fase B).
 
-## Fase B — Remediación guiada (paso a paso, con confirmación)
+## Fase B — Remediación proporcional al riesgo
 
-Trabaja **un hallazgo a la vez**, y **cada hallazgo dividido en micro-pasos**:
+Trabaja un hallazgo a la vez. Después de elegir la ruta directa o SDD, clasifica la
+corrección por alcance y reversibilidad antes de pedir autorización:
 
 ### Gate de ruta: corrección directa o recomendación de SDD
 
-Antes de proponer los micro-pasos, clasifica la ruta. La **severidad por sí sola
-no decide** si hace falta SDD.
+La severidad por sí sola no decide si hace falta SDD; aplica estos criterios
+de ruta antes de proponer el cambio.
 
 La corrección puede continuar directamente solo si el resultado esperado está
 claro, es localizado y reversible, permanece dentro de calidad, no cambia un
@@ -170,18 +160,17 @@ integridad. Entonces:
 Cuando el usuario regrese tras implementar la spec, reaudita y verifica el
 hallazgo antes de marcarlo `Resuelto`.
 
-1. **Explica** el hallazgo y por qué es deuda (breve, con su regla Sonar).
-2. **Propón el plan** dividido en micro-pasos numerados ("paso 1 de N").
-3. Solicita aprobación antes del primer micro-paso y de cada siguiente; ejecuta
-   **UN solo micro-paso** autorizado y muestra el **diff mínimo** y **por qué**.
-4. **Detente y espera OK** antes del siguiente micro-paso.
-5. Actualiza el estado del finding (`Pendiente` → `En progreso` → `Resuelto`) y su
-   bitácora, para poder continuar luego.
-6. Al cerrar el hallazgo, márcalo `Resuelto` en el tablero y pasa al siguiente
-   **solo si el usuario lo autoriza**.
+- **Atómica y bajo riesgo:** cambio localizado, reversible, sin contrato, persistencia
+  ni coordinación entre módulos, con verificación focalizada. Explica el hallazgo,
+  presenta el diff completo y pide una sola aprobación antes de aplicarlo.
+- **Estructural o de riesgo elevado:** cambio en varios módulos, migración, contrato,
+  autorización o garantía de integridad. Divide en micro-pasos y pide aprobación
+  antes de cada paso.
+- En ambos casos, no escribas antes de la autorización aplicable. Muestra evidencia,
+  actualiza estado/bitácora solo tras verificar y no pases a otro hallazgo sin permiso.
 
 **Reglas de remediación (no negociables):**
-- Nunca encadenes varios cambios sin confirmación.
+- Nunca encadenes cambios estructurales sin las confirmaciones requeridas.
 - Nada de "refactor masivo" opaco: cada paso pequeño, explicado y reversible.
 - No cambies comportamiento sin avisar; preserva la lógica salvo que el fix lo exija.
 - Si un paso toca seguridad, requiere el procedimiento `security` y su autorización;

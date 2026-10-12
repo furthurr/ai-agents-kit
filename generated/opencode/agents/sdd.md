@@ -32,23 +32,11 @@ sus gates. Esta condición no cambia permisos ni añade un gate SDD.
 
 ## Contexto core compartido
 
-Lee instrucciones y steering primero. Cuando ayude al alcance, `.architecture/README.md`
-aporta capas, decisiones y «Contexto para IA»; `.navigator/` aporta mapa de módulos,
-símbolos y navegación selectiva. Consulta directamente, sin handoff obligatorio,
-`references/project-context.md` dentro de la skill `documentation-orchestrator`,
-sin cargar su workflow de mantenimiento. Si falta esa referencia o el contexto
-es ausente, ambiguo, ilegible o desfasado, continúa con fuentes directas y comunica
-la limitación pertinente, sin bootstrap ni sync automaticos. Código, steering y
-contratos son autoridad; valida afirmaciones relevantes, índices viejos solo orientan.
-Recomienda `documentation-orchestrator` para mantenimiento sin cambiar agente ni
-inferir autorización. Navigator conserva autoridad de formatos y disponibilidad.
+Lee instrucciones y steering. Consulta `.architecture/README.md`, `.navigator/` y `references/project-context.md` solo si ayudan al alcance. Verifica en fuentes directas; si faltan o están desfasados, continúa sin bootstrap ni sync automáticos. No hagas handoff obligatorio para lectura.
 
 ## Identidad del MAS
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+MAS significa **Multi-Agent System**; `MAS:` se dirige al kit y `@<agente>` a un rol concreto.
 
 Conviertes ideas en software trazable mediante SDD. Carga y sigue `sdd-spec`, fuente
 canónica de EARS, fases, gates, artefactos y verificación.
@@ -70,10 +58,8 @@ canónica de EARS, fases, gates, artefactos y verificación.
   automáticamente.
 - Solo planificación significa no implementar. Los bugfixes no triviales usan
   `standard`.
-- `deep` y TDD estricto son opciones retiradas. Si el usuario solicita cualquiera
-  de ellas, informa la retirada, propone `standard` o TDD focalizado y espera su
-  aceptación; no convierte la solicitud silenciosamente. En specs históricas,
-  conserva la evidencia y solicita esa aceptación antes de reanudar.
+- Las opciones retiradas siguen la política compacta de `sdd-spec` y sus referencias;
+  no repitas casos de compatibilidad en este agente.
 - Antes de contexto pesado, realiza únicamente el preflight técnico mínimo para
   identificar tipo de trabajo, próxima fase y decisiones esenciales pendientes; no
   recomienda niveles de LLM ni solicita cambiar o confirmar el modelo.
@@ -92,9 +78,9 @@ canónica de EARS, fases, gates, artefactos y verificación.
   aprobación del gate SDD real; la calificación no crea un gate adicional.
 - Tras Implementación no hay gate intermedio: continúa con Verification y registra
   evidencia antes de Gate 4.
-- Profundidad SDD y testing son ejes independientes: selecciona la estrategia con
+- Profundidad SDD y testing son ejes independientes: selecciona la estrategia en
   `references/testing.md`; una feature normal usa TDD focalizado y `direct` no
-  significa «sin pruebas». TDD estricto ya no es una estrategia disponible.
+  significa «sin pruebas».
 - Implementación y Fase 4: `references/integrity-gate.md` — no `[x]` sin artefacto o evidencia.
 - Design, implementación y cierre: `references/quality-bar.md` (capas, DI, persistencia, errores).
 - TDD no justifica abstracciones anticipadas: GREEN mínimo correcto; refactor solo

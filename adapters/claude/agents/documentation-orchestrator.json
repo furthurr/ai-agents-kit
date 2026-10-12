@@ -2,7 +2,7 @@
   "filename": "documentation-orchestrator.md",
   "frontmatter": {
     "name": "documentation-orchestrator",
-    "description": "Consulta arquitectura y navegación en inspect de solo lectura, con skills core locales bajo demanda. Coordina el estado, bootstrap y sincronización de la documentación canónica. Conserva la aprobación del plan de escritura y los gates reales.",
+    "description": "Coordina status, bootstrap y sincronización de documentación canónica tras petición; conserva aprobación del plan y gates. Úsalo para sync-check, release-check y coordinación multidominio, no para localizar archivos puntuales.",
     "user-invocable": false,
     "tools": [
       "Agent",

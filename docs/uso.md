@@ -265,8 +265,9 @@ Si el grafo es grande o solo local, también puedes ignorar `.navigator/graph/`.
 
 ## Límites que debes esperar
 
-- La skill Project Navigator **no** implementa features ni escribe fuera de `.navigator/`
-  (salvo export opt-in a `AGENTS.md` con confirmación); no recomienda ni selecciona modelos.
+- La skill Project Navigator **no** implementa features ni escribe fuera de `.navigator/`;
+  no crea ni exporta `AGENTS.md`. La guía portable la mantiene el Documentation
+  Orchestrator dentro de un plan de escritura documental aprobado. No recomienda ni selecciona modelos.
 - Documentation Orchestrator no modifica producto, no recomienda ni selecciona
   modelos y no administra `.sdd/`, `.release/` ni `graphify-out/`.
 - La skill Architecture **no** refactoriza código de negocio.

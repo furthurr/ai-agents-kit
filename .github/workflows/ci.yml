@@ -35,6 +35,10 @@ jobs:
         run: python tools/test_model_recommendations.py
       - name: Run Code Review contract tests
         run: python tools/test_code_review_contract.py
+      - name: Run prompt context and load-efficiency tests
+        run: |
+          python tools/test_context_efficiency.py
+          python tools/test_measure_context.py
       - name: Run Antigravity distribution contract tests
         run: python tools/test_antigravity_contract.py
       - name: Run handoff contract tests

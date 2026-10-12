@@ -2,7 +2,7 @@
 
 - **Fecha:** 2026-10-10.
 - **Base:** los cinco informes originales de esta carpeta.
-- **Resultado:** 20 acciones específicas identificadas en una sola fuente.
+- **Resultado:** 20 acciones originales; FUT-14 contrastado como no vigente en la documentación operativa actual.
 - **Estado inicial:** pendiente de verificar vigencia; ninguna remediación acreditada por esta síntesis.
 - **Documento principal:** [Consolidado de hallazgos recurrentes](CONSOLIDADO-HALLAZGOS-RECURRENTES.md).
 
@@ -37,7 +37,7 @@ Prioridad de atención, no severidad Sonar/OWASP. Cada entrada tiene **1/5 fuent
 |---:|---|---|:---:|---|
 | 1 | FUT-12 | Reconciliar IDs de seguridad duplicados | E | Alta |
 | 2 | FUT-01 | Separar consulta, implementación y mantenimiento en UI/datos | G | Alta |
-| 3 | FUT-14 | Actualizar memoria documental y automatizar frescura | E | Alta |
+| — | FUT-14 | Actualizar memoria documental y automatizar frescura | E | No vigente |
 | 4 | FUT-06 | Resolver referencia a `OPENCODE.md` inexistente | M | Alta si sigue vigente |
 | 5 | FUT-13 | Concretar/versionar checklists y evidencias | E | Media-alta |
 | 6 | FUT-03 | Usar referencias de seguridad del estándar aplicable | G | Media-alta |
@@ -176,6 +176,8 @@ Prioridad de atención, no severidad Sonar/OWASP. Cada entrada tiene **1/5 fuent
 - **Cómo resolver:** identificar fuente vigente de inventario y responsabilidades; actualizar documentos operativos; separar historia de instrucciones actuales; automatizar comprobaciones de frescura, inventario e índices Navigator.
 - **Cuándo retomarlo:** antes de confiar en esos contextos para nuevas decisiones y tras modificar contratos.
 - **Cierre:** documentos operativos y fuentes coinciden; baseline verificable o límites declarados; inconsistencias detectadas automáticamente cuando sea viable. No sobrescribir historia como si hubiera sido errónea en su fecha.
+- **Verificación actual:** `.navigator/ai-context.md`, `.architecture/README.md`, `docs/catalogo.md` y `docs/uso.md` reflejan seis plataformas, tres profundidades SDD y los roles UI/Data. Las referencias discrepantes restantes pertenecen a auditorías o specs históricas y se conservan como tales.
+- **Estado:** no vigente para el contexto operativo actual; reabrir si vuelve a divergir.
 
 ### FUT-15 — Contextualizar severidad y preferencias arquitectónicas
 
@@ -258,19 +260,19 @@ Estados: **pendiente → confirmado → en curso → corregido en rama → integ
 | ID | Estado | Responsable / rama | Última actualización | Evidencia | Próxima acción |
 |---|---|---|---|---|---|
 | FUT-01 | Pendiente | — | 2026-10-10 | — | Coordinar con REC-03/04. |
-| FUT-02 | Pendiente | — | 2026-10-10 | — | Comprobar precarga efectiva de Claude. |
+| FUT-02 | Implementado y distribuido; runtime pendiente | Coordinación / `main` | 2026-10-11 | Claude adapter ya no precarga ambas skills; `Skill` sigue disponible; render/validate pasan | Probar carga dinámica en Claude Code cuando haya host/CLI disponible. |
 | FUT-03 | Pendiente | — | 2026-10-10 | — | Coordinar contrato de findings con FUT-13. |
-| FUT-04 | Pendiente | — | 2026-10-10 | — | Revisar presupuesto de navegación. |
-| FUT-05 | Pendiente | — | 2026-10-10 | — | Delimitar dependencias del orquestador. |
+| FUT-04 | Implementado y distribuido; smoke pendiente | Coordinación / `main` | 2026-10-11 | Navigator usa presupuesto inicial ampliable y criterios cualitativos; render/validate pasan | Contrastar con una consulta transversal real si se instrumenta una sesión. |
+| FUT-05 | Implementado y distribuido; smoke pendiente | Coordinación / `main` | 2026-10-11 | Workflows continúan ramas independientes ya autorizadas y mantienen resultado parcial; contrato pasa | Confirmar en smoke que pregunta solo ante cambios de alcance/dependencias/autorización. |
 | FUT-06 | Pendiente | — | 2026-10-10 | — | Confirmar ruta y carga efectiva del steering local. |
 | FUT-07 | Pendiente | — | 2026-10-10 | — | Inventariar copias y consumidores. |
-| FUT-08 | Pendiente | — | 2026-10-10 | — | Comprobar soporte de metadato y comando. |
+| FUT-08 | Implementado localmente; reinicio pendiente | Coordinación / configuración OpenCode local | 2026-10-11 | `graphify` ya no declara `trigger` y su descripción activa solo pipeline/grafos persistentes | Reiniciar OpenCode; el cambio global no se versiona en este repositorio. |
 | FUT-09 | Pendiente | — | 2026-10-10 | — | Contrastar catálogo y agente integrado. |
 | FUT-10 | Pendiente | — | 2026-10-10 | — | Verificar recuperabilidad de backups. |
-| FUT-11 | Pendiente | — | 2026-10-10 | — | Acotar investigación de nuevas tecnologías. |
+| FUT-11 | Implementado en fuentes y configuración local; reinicio pendiente | Coordinación | 2026-10-11 | Investigación limitada a caché y hasta dos fuentes oficiales para release activa | Reiniciar OpenCode; verificar en la siguiente release de tecnología no soportada. |
 | FUT-12 | Pendiente | — | 2026-10-10 | — | Inventariar IDs antes de remediar por referencia. |
 | FUT-13 | Pendiente | — | 2026-10-10 | — | Identificar cobertura real y versiones. |
-| FUT-14 | Pendiente | — | 2026-10-10 | — | Contrastar inventario y memoria vigente. |
+| FUT-14 | No vigente | Coordinación | 2026-10-11 | `.navigator/ai-context.md`, `.architecture/README.md`, `docs/catalogo.md` y `docs/uso.md` reflejan seis plataformas, tres profundidades y los roles UI/Data | Mantener los informes/specs antiguos como historia; reabrir solo si vuelve a divergir contexto operativo. |
 | FUT-15 | Pendiente | — | 2026-10-10 | — | Contextualizar ejemplos y severidad. |
 | FUT-16 | Pendiente | — | 2026-10-10 | — | Añadir casos diversos a la rúbrica. |
 | FUT-17 | Pendiente | — | 2026-10-10 | — | Coordinar con REC-15. |
@@ -283,5 +285,7 @@ Estados: **pendiente → confirmado → en curso → corregido en rama → integ
 | Fecha | ID | Transición | Responsable / baseline / rama | Resumen y evidencia | Pendientes |
 |---|---|---|---|---|---|
 | 2026-10-10 | FUT-01 a FUT-20 | Inicialización → Pendiente | Preparación documental | Tablero individual preparado, sin fixes ejecutados. | Asignación y verificación de vigencia. |
+| 2026-10-11 | FUT-14 | Pendiente → No vigente | Contraste de las fuentes operativas actuales | Navigator y arquitectura listan seis plataformas; catálogo/uso describen `direct`, `lite`, `standard` y UI/Data como especialistas implementadores. Las referencias contrarias están en documentos históricos/specs cerradas, no en el contexto operativo actual. | Ninguna corrección activa; conservar la evidencia histórica. |
+| 2026-10-11 | FUT-02/04/05/08/11 | Pendiente → Implementado localmente | Adaptador Claude, Navigator/orchestrator y skills OpenCode locales | Preload Claude eliminado; presupuestos cualitativos/ampliables; tareas independientes continúan; Graphify acotado; investigación web de release limitada a caché y dos fuentes oficiales | Render/host smoke cuando se integre; skills globales OpenCode son locales y requieren reinicio. |
 
 Al retomar una entrada: comprobar vigencia y consumidores, localizar deuda existente, acotar el cambio, ejecutar verificación proporcional y registrar resultado. La coordinadora actualiza estados e historial al recibir evidencia y verificar la integración. Actualizar ambas síntesis si una nueva auditoría convierte un punto específico en recurrente.

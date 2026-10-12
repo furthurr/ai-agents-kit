@@ -6,7 +6,7 @@
 |---|---|
 | ID | `documentation-orchestrator` |
 | Skill propia | [`documentation-orchestrator`](../../canonical/skills/documentation-orchestrator/SKILL.md) |
-| Propósito | Resolver consultas de arquitectura/navegación y coordinar estado, bootstrap y sincronización documental |
+| Propósito | Resolver consultas de arquitectura/navegación, coordinar documentación y mantener su guía portable aprobada en `AGENTS.md` |
 | Rol | Clasifica, ordena y conserva los gates de especialistas |
 | No gestiona | `.sdd/`, `.release/` ni `graphify-out/` |
 
@@ -20,7 +20,7 @@ Data & API, UI Design y Code Review, sin duplicar acciones.
 
 - Para saber si la documentación está actualizada (`status` / `sync-check`).
 - Para explicar capas, localizar módulos o investigar dependencias (`inspect`).
-- Para inicializar el core documental (`.navigator/` + `.architecture/`).
+- Para inicializar el core documental (`.navigator/` + `.architecture/`) y, dentro del plan aprobado, la guía documental en `AGENTS.md`.
 - Para sincronizar las carpetas documentales existentes.
 - Para actualizar dominios concretos, como arquitectura y seguridad.
 - Para comprobar si la documentación cumple el gate previo a una release.
@@ -34,18 +34,18 @@ una versión o un tag, redirige a Git & Release Manager.
 |---|---|
 | `status` | Solo lectura: inventario, aplicabilidad y frescura. |
 | `inspect` | Consulta e investigación core de solo lectura, sin bootstrap, sync, exportación ni handoff core. |
-| `bootstrap-core` | Propone crear únicamente `.navigator/` y `.architecture/`. |
-| `sync-core` | Actualiza el core existente y recomienda el ausente. |
-| `sync-existing` | Actualiza solo las carpetas documentales que ya existen. |
-| `sync-domain` | Actualiza los dominios solicitados explícitamente. |
+| `bootstrap-core` | Propone crear únicamente `.navigator/` y `.architecture/`; puede incluir la guía gestionada de `AGENTS.md` en el plan. |
+| `sync-core` | Actualiza el core existente, recomienda el ausente e incluye `AGENTS.md` en el plan de escritura. |
+| `sync-existing` | Actualiza solo las carpetas documentales que ya existen e incluye `AGENTS.md` en el plan de escritura. |
+| `sync-domain` | Actualiza los dominios solicitados explícitamente e incluye `AGENTS.md` en el plan de escritura. |
 | `release-check` | Comprueba documentación y riesgos existentes sin versionar ni publicar. |
 
 ## Flujo de ejecución
 
 1. Hace un preflight barato y de solo lectura, sin recomendar ni seleccionar modelos.
 2. En `inspect`, `status` y `release-check`, inspecciona e informa sin escrituras. Para modos
-   con escritura presenta el plan global de proyectos, dominios y orden, y espera
-   su aprobación antes de escribir.
+   con escritura presenta el plan global de proyectos, dominios, orden y la acción
+   sobre el `AGENTS.md` raíz, y espera su aprobación antes de escribir.
 3. Ejecuta especialistas en secuencia y conserva los gates propios de cada uno;
    una autorización efectiva del mismo alcance en la sesión puede reutilizarse.
 4. Verifica artefactos y evidencia antes de declarar un dominio completado.
@@ -104,12 +104,16 @@ afirmación de sincronización. Los IDs de agentes retirados no heredan permisos
 
 Puede coordinar escrituras en las carpetas documentales canónicas de los
 especialistas cuando el modo y los gates lo autorizan. No crea una carpeta
-`.documentation/` propia ni duplica la documentación de los especialistas.
+`.documentation/` propia ni duplica la documentación de los especialistas. En el
+`AGENTS.md` raíz solo mantiene el bloque entre los marcadores
+`ai-agents-kit:documentation:start/end`; conserva todo el texto exterior y se
+detiene si los marcadores o instrucciones existentes son ambiguos o incompatibles.
 
 ## Límites y confirmaciones
 
 - Nunca modifica código de producto, tests, CI, configuración funcional ni Git remoto.
 - No crea ni sincroniza `.sdd/`, `.release/` o `graphify-out/`.
+- No modifica `CLAUDE.md`, `GEMINI.md` ni otros archivos de instrucciones de host.
 - No recomienda ni selecciona niveles, modelos o proveedores LLM.
 - La autorización documental de Quality/Security se reutiliza para el mismo
   alcance en la sesión, sin pedir otro filtro de severidad; no autoriza remediar.

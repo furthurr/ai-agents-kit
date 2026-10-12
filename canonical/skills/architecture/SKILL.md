@@ -1,24 +1,15 @@
 ---
 name: architecture
 description: >-
-  Documenta y mantiene la ARQUITECTURA de cualquier proyecto (agnóstica a la
-  tecnología) en una carpeta canónica `.architecture/`, para dar contexto rápido
-  y confiable a la IA y al equipo. Combina, en modo ligero, la estructura arc42,
-  diagramas C4 en Mermaid y ADRs (registro de decisiones). Detecta el tamaño del
-  proyecto (modo lite/full), sincroniza con el historial de git de forma
-  incremental y lleva "deuda técnica de arquitectura" priorizada por severidad.
-  Úsala al documentar, auditar o entender la arquitectura: módulos, capas,
-  dependencias, patrones, decisiones, diagramas, contexto del sistema.
+  Documenta y audita arquitectura en `.architecture/` mediante arc42, C4 y ADRs.
+  Úsala ante límites entre módulos, patrones, decisiones o diagramas arquitectónicos;
+  para localizar archivos concretos usa project-navigator.
 ---
 
 # Skill: Architecture (documentación de arquitectura para IA y equipo)
 
-## Identidad del MAS
+{{mas_identity}}
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
 Esta skill es la **referencia canónica** para documentar y mantener la
 arquitectura de un proyecto, sin importar la tecnología. Su objetivo es que

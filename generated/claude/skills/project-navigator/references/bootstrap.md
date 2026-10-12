@@ -7,7 +7,7 @@
 3. Detectar ubicación de `.navigator/` (monorepo; ver abajo). Si es ambiguo, **preguntar**.
 4. Crear `.navigator/` si no existe.
 5. Escribir `config.yaml` mínimo desde `templates/config.template.yaml`.
-6. Generar `ai-context.md` (~500 tokens) desde `templates/ai-context.template.md`.
+6. Generar `ai-context.md` breve desde `templates/ai-context.template.md`.
 7. Generar `module-map.json` desde `templates/module-map.template.json`; si Git y
    el working tree permiten un baseline verificable, registrar `source_commit`
    tambien en `ai-context.md` y los indices generados.
@@ -19,9 +19,8 @@
 ### Lectura para Capa 0 (presupuesto)
 
 - Preferir README + "Contexto para IA" + manifests de build
-- Máx. ~3–5 docs cortos de entrada
+- Usar pocas fuentes iniciales y ampliar si el alcance lo requiere
 - No leer árboles completos
-- Total sesión bootstrap tipica: objetivo < ~30–50k tokens in+out
 - Repos enormes: acotar `project.root` o pedir subproyecto
 
 ### Generación de capas 0–1
@@ -33,7 +32,7 @@
 3. Referenciar paths de docs largas; no incrustarlas
 4. Mapa rápido = resumen; dependencias viven en `module-map.json`
 5. Listar fuentes externas detectadas; no sobrescribirlas
-6. Si supera ~700 tokens: ejecutar una pasada de compactación antes de cerrar
+6. Revisar que sea breve y no duplique el mapa ni documentos externos
 
 **module-map.json:**
 
@@ -55,22 +54,19 @@ No declarar el bootstrap terminado hasta verificar:
 3. Las capas 2–3 no se generaron sin opt-in.
 4. Ningún artefacto contiene secretos, PII ni paths absolutos de la máquina.
 5. El estado de capas coincide con `config.yaml` y el filesystem.
-6. Se estimó el tamaño con `caracteres / 4` y se registró el resultado.
+6. El contexto es conciso y referencia, no copia, documentación extensa.
 
-Presupuesto de `ai-context.md`:
+Concisión de `ai-context.md`:
 
-- Objetivo: ~500 tokens; tope blando: ~700.
-- Si supera 700, compactar al menos una vez antes de informar el resultado.
+- Mantener propósito, stack principal, mapa rápido, fuentes y restricciones.
+- Si se vuelve extenso o repetitivo, compactar antes de cerrar.
 - Recortar primero dependencias exhaustivas, convenciones de implementación y
   detalles duplicados en `module-map.json` o documentación externa.
-- Preservar propósito, stack principal, mapa rápido, fuentes y restricciones.
-- No cerrar por encima de 700 sin explicar la causa y obtener aceptación
-  explícita del usuario para conservar la excepción.
 
-Presupuesto de `module-map.json`:
+Concisión de `module-map.json`:
 
-- Objetivo: ~1–2k tokens; tope blando: ~4k.
-- Si supera 4k, reducir granularidad o acotar `project.root`; no truncar JSON.
+- Describir responsabilidades en una frase; si el mapa se vuelve extenso,
+  reducir granularidad o acotar `project.root`, sin truncar JSON.
 
 Si el gate falla, corregir solo los artefactos de `.navigator/`, repetir las
 comprobaciones antes de cerrar.
@@ -124,11 +120,15 @@ Reglas:
   baseline Git verificable; no ocultar cambios locales bajo el hash de `HEAD`
 - Si el update sería más caro que un bootstrap acotado, proponer bootstrap parcial del `root` y pedir confirmación
 
-## Export opt-in a `AGENTS.md`
+## Propiedad de `AGENTS.md`
 
-- Solo si el usuario lo confirma (`sources.export_agents_md` o petición explícita)
-- Resumen compatible; no sobrescribir `AGENTS.md` existente sin confirmación
-- No es el artefacto canónico (eso es `.navigator/ai-context.md`)
+- Navigator no crea, exporta ni sobrescribe `AGENTS.md`; su escritura se limita a
+  `.navigator/**`.
+- `documentation-orchestrator` mantiene la guía portable delimitada dentro de un
+  plan global de escritura documental aprobado.
+- `sources.export_agents_md` se conserva como campo legado ignorado. No se modifica
+  la configuración del proyecto consumidor ni se interpreta como autorización.
+- `.navigator/ai-context.md` sigue siendo el artefacto canónico de Capa 0.
 
 ## Tras bootstrap — mensaje al usuario
 

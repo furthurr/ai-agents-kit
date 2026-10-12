@@ -2,9 +2,9 @@
 
 - **Modo SDD:** standard.
 - **Fase:** 2 — Design.
-- **Estado:** diseño aprobado e implementado; verificación conductual pendiente.
+- **Estado:** diseño aprobado, implementado y verificado; spec cerrada con evidencia real de host.
 - **Gates aprobados:** Gate 1 y Gate 2, respuestas «procede» del usuario a las solicitudes correspondientes.
-- **Siguiente gate:** Gate 4 pendiente; Gate 3 aprobado, verificación registrada sin cierre.
+- **Gates posteriores:** Gate 3 aprobado; Gate 4 aprobado explícitamente mediante «Aprobar cierre REC-01» tras la verificación real.
 - **Baseline:** `03f30befca829daa2c2a3c6cd47c2dc4fe5b4880`, `main`.
 - **Requisitos:** [bugfix.md](bugfix.md).
 

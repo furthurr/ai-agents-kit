@@ -56,13 +56,19 @@ class DocumentationCoreContract(unittest.TestCase):
                      "bajo demanda", "sin handoff", "`status`")
 
     def test_every_agent_discovers_context_directly(self):
-        for agent in AGENTS:
+        context_agents = tuple(agent for agent in AGENTS if agent != "git-release-manager")
+        for agent in context_agents:
             with self.subTest(agent=agent):
                 text = read(ROOT / f"canonical/agents/{agent}.md")
-                self.require(text, "## Contexto core compartido", ".architecture/README.md",
-                             ".navigator/", "references/project-context.md",
-                             "sin handoff obligatorio", "fuentes directas",
-                             "sin bootstrap ni sync automaticos")
+                self.require(text, "{{project_context}}")
+        release_agent = read(ROOT / "canonical/agents/git-release-manager.md")
+        self.assertNotIn("{{project_context}}", release_agent)
+
+    def test_shared_context_fragment_is_compact_and_preserves_fallback(self):
+        text = read(ROOT / "canonical/shared/project-context.md")
+        self.require(text, ".architecture/README.md", ".navigator/",
+                     "references/project-context.md", "fuentes directas",
+                     "sin bootstrap ni sync automáticos", "No hagas handoff obligatorio")
 
     def test_shared_reference_portable_and_selective(self):
         path = DOCS / "references/project-context.md"
@@ -108,9 +114,41 @@ class DocumentationCoreContract(unittest.TestCase):
         self.require(architecture, "## Consultas de solo lectura", "no activa",
                      "espera confirmación", "NO modifica código de negocio")
         self.require(navigator, "sin bloquear la consulta", "solo on_request",
-                     "Export", "con confirmación", "manda esta skill")
+                     "no exporta `AGENTS.md`", "documentation-orchestrator",
+                     "manda esta skill")
         self.assertNotIn("Complementa al agente `project-navigator`", navigator)
         self.assertNotIn("Architecture\nAgent", architecture)
+
+    def test_orchestrator_manages_portable_agents_md_documentation_block(self):
+        skill = read(DOCS / "SKILL.md")
+        workflow = read(DOCS / "references/workflows.md")
+        self.require(skill, "`AGENTS.md` raíz", "bloque documental gestionado")
+        self.require(workflow,
+                     "### Gestión del bloque documental en `AGENTS.md`",
+                     "ai-agents-kit:documentation:start",
+                     "ai-agents-kit:documentation:end",
+                     "preserva", "texto exterior",
+                     "marcadores incompletos, duplicados",
+                     "enlace simbólico",
+                     "plan global",
+                     "solo lectura",
+                     "fuentes de verdad",
+                     "sin instalar el MAS")
+
+    def test_navigator_delegates_agents_md_ownership_to_orchestrator(self):
+        navigator = read(SKILLS / "project-navigator/SKILL.md")
+        bootstrap = read(SKILLS / "project-navigator/references/bootstrap.md")
+        sources = read(SKILLS / "project-navigator/references/sources.md")
+        config = read(SKILLS / "project-navigator/references/config.md")
+        shared = read(DOCS / "references/project-context.md")
+        self.require(navigator, "no exporta `AGENTS.md`",
+                     "documentation-orchestrator")
+        self.require(bootstrap, "Navigator no crea, exporta ni sobrescribe `AGENTS.md`",
+                     "documentation-orchestrator")
+        self.require(sources, "No se exporta `AGENTS.md` desde Navigator",
+                     "documentation-orchestrator")
+        self.require(config, "export_agents_md", "legado ignorado")
+        self.require(shared, "`AGENTS.md` se gestiona mediante `documentation-orchestrator`")
 
     def test_sdd_specific_freshness_preserved(self):
         text = read(SKILLS / "sdd-spec/references/navigator-context.md")
@@ -124,7 +162,8 @@ class DocumentationCoreContract(unittest.TestCase):
         for path in paths:
             with self.subTest(platform=path.parent.parent.name):
                 data = json.loads(read(path))
-                self.require(data["frontmatter"]["description"], "arquitectura", "navegación")
+                self.require(data["frontmatter"]["description"], "status", "bootstrap",
+                             "sincronización", "no para localizar")
                 self.assertNotIn("architecture", data["frontmatter"].get("skills", []))
                 self.assertNotIn("project-navigator", data["frontmatter"].get("skills", []))
 
@@ -152,8 +191,12 @@ class DocumentationCoreContract(unittest.TestCase):
                                      (DOCS / "references" / name).read_bytes())
                 for agent in AGENTS:
                     adapter = json.loads(read(ROOT / f"adapters/{platform}/agents/{agent}.json"))
-                    self.require(read(output / "agents" / adapter["filename"]),
-                                 "## Contexto core compartido", "references/project-context.md")
+                    rendered = read(output / "agents" / adapter["filename"])
+                    if agent == "git-release-manager":
+                        self.assertNotIn("## Contexto core compartido", rendered)
+                    else:
+                        self.require(rendered, "## Contexto core compartido",
+                                     "references/project-context.md")
 
 
 if __name__ == "__main__":

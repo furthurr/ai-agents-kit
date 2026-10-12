@@ -111,6 +111,32 @@ def test_baseline_valid() -> None:
         check(code == 0, "fixture base pasa validación (exit 0)")
 
 
+def test_shared_fragments_are_rendered_and_validated() -> None:
+    print("\n\033[1m[1b] Fragmentos compartidos se renderizan desde una sola fuente\033[0m")
+    with tempfile.TemporaryDirectory() as tmp:
+        root = build_fixture(Path(tmp))
+        shared = root / "canonical/shared"
+        shared.mkdir()
+        (shared / "mas-identity.md").write_text("MAS = **Multi-Agent System**.\n", encoding="utf-8")
+        agent = root / "canonical/agents/demo.md"
+        skill = root / "canonical/skills/demo/SKILL.md"
+        agent.write_text("Agent {{mas_identity}} for {{platform_name}}\n", encoding="utf-8")
+        skill.write_text("Skill {{mas_identity}} for {{platform_name}}\n", encoding="utf-8")
+        with_kit(root)
+        try:
+            render_module.render()
+            generated_agent = (root / "generated/acme/agents/demo.md").read_text(encoding="utf-8")
+            generated_skill = (root / "generated/acme/skills/demo/SKILL.md").read_text(encoding="utf-8")
+            code = validate_module.main()
+            check("MAS = **Multi-Agent System**" in generated_agent
+                  and "MAS = **Multi-Agent System**" in generated_skill
+                  and "Acme" in generated_agent and "Acme" in generated_skill,
+                  "fragmento compartido se inyecta en agente y skill")
+            check(code == 0, "fragmento compartido cuenta como sustitución válida en todos los adaptadores")
+        finally:
+            restore_modules()
+
+
 def test_unresolved_token() -> None:
     print("\n\033[1m[2] Token sin resolver\033[0m")
     with tempfile.TemporaryDirectory() as tmp:
@@ -381,6 +407,7 @@ def main() -> int:
     print(f"\033[1m{'='*60}\033[0m")
 
     test_baseline_valid()
+    test_shared_fragments_are_rendered_and_validated()
     test_unresolved_token()
     test_incomplete_adapter()
     test_path_traversal_filename()

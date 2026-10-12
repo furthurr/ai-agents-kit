@@ -55,7 +55,7 @@ Una implementadora solo asume también coordinación si trabaja de forma exclusi
 | Bloqueado | Falta autorización, dependencia, herramienta, entorno o decisión necesaria; registrar estado previo y cómo desbloquear. |
 | No vigente | La fuente actual demuestra que el problema ya no existe; registrar evidencia, sin atribuir un fix a esta sesión. |
 
-No sustituir una verificación conductual por un test de presencia de frases. Si falta runtime exigido por la ficha, registrar el avance parcial y dejar el cierre pendiente. Si un hallazgo reúne varias plataformas o variantes, registrar cada una y no cerrar el conjunto por resolver solo una.
+No sustituir una verificación conductual por un test de presencia de frases. Distinguir los criterios originales del hallazgo de cobertura adicional deseable: si los criterios exigen runtime en una superficie, el cierre sigue pendiente; si exigen matriz, límites explícitos y controles soportados, pero cierto runtime no está disponible, cerrar solo al acreditar esos criterios y registrar la cobertura adicional como follow-up separado, visible y no bloqueante. Nunca declarar PASS en hosts no ejecutados ni borrar sus limitaciones. Los hallazgos independientes pueden avanzar mientras exista ese follow-up.
 
 ## 5. Paralelismo y archivos compartidos
 

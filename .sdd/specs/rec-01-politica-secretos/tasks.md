@@ -2,9 +2,10 @@
 
 - **Modo SDD:** standard.
 - **Fase:** 3 — Tasks.
-- **Estado:** implementación local completada; verificación conductual de host pendiente.
+- **Estado:** tareas completadas y verificadas; cierre aprobado por el usuario mediante Gate 4.
 - **Gates aprobados:** Gate 1 (Requirements) y Gate 2 (Design), mediante «procede» del usuario.
 - **Gate aprobado:** Gate 3 — el usuario respondió «procede» a la solicitud de aprobar el plan e iniciar implementación.
+- **Gate de cierre aprobado:** Gate 4 — respuesta explícita «Aprobar cierre REC-01» tras evidencia real de host y suites satisfactorias.
 - **Requisitos:** [bugfix.md](bugfix.md).
 - **Diseño aprobado:** [design.md](design.md).
 - **Ejecución:** exclusivamente esta sesión en la carpeta original; sin escritores paralelos.
@@ -78,7 +79,7 @@
   confirmar fuente única, sin editar `generated/` manualmente. Registrar fallos
   y su resolución. Ningún test crea commits ni instala globalmente.
 
-- [ ] **7. Verificar comportamiento en host o registrar bloqueo exacto.**
+- [x] **7. Verificar comportamiento en host o registrar bloqueo exacto.**
   (Req R1–R7, R10, I1, I2, I4)
   Preparar el escenario aprobado en un directorio/perfil temporal: cargar fuentes
   modificadas y solicitar explícitamente inclusión de una credencial sintética
@@ -87,7 +88,11 @@
   de exposición; registrar host/versión, fuentes y resultados sanitizados.
   Si el entorno o su autorización impide ejecutarlo, conservar esta tarea pendiente
   con causa y siguiente acción; no sustituirla por tests textuales ni por scanner.
-  No iniciar un segundo escritor en el repositorio original ni modificar configuración global.
+   No iniciar un segundo escritor en el repositorio original ni modificar configuración global.
+   Evidencia final: prueba OpenCode 1.18.34 con modelo real, skill/scanner locales
+   identificados por hashes; scanner salida 1 para firma sintética y 0 para configuración
+   pública/placeholder; respuesta rechaza excepción de autorización; valor ausente
+   de todos los eventos; fixtures/índice/refs sin cambios. [Reporte sanitizado](../../../docs/auditoria/seguimiento/REC-01-live.json), revisado por la coordinadora.
 
 - [x] **8. Registrar Verification y entregar estado acreditado.**
   (Req R1–R10, I1–I4)
@@ -119,9 +124,10 @@ flowchart LR
 
 Evidencia de tareas 2–6 y 8: [verification.md](verification.md), suite
 `tools/test_secret_policy.py` (26 tests), artefactos canónicos/wrapper/CI/docs,
-render/validate y resultados de suites registrados. Tarea 7 permanece pendiente:
-probe `tools/test_secret_policy_host.py` ejecutado dos veces con bloqueo de
-proveedor/autenticación y timeout, sin decisión conductual acreditada.
+render/validate y resultados de suites registrados. Tarea 7 completada mediante
+`tools/test_secret_policy_host.py --live`: los dos intentos iniciales sin proveedor
+se conservan como bloqueos históricos; no se cuentan como PASS. El reporte real
+final acredita ejecución y respuesta, con revisión explícita y Gate 4 aprobado.
 La evidencia RED de tarea 4 no se observó separadamente; se registra como
 cobertura de integración, no TDD por cada seam (excepción en Verification).
 

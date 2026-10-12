@@ -1,16 +1,9 @@
 ---
 name: data-api
 description: >-
-  Documenta, audita y ayuda a desarrollar TODO lo relacionado con DATOS y APIs de
-  cualquier proyecto (agnóstica a la tecnología) en una carpeta canónica `.data/`.
-  Cubre catálogo de endpoints, modelos/DTOs y su mapeo, contratos (OpenAPI, JSON
-  Schema, y condicionalmente GraphQL, AsyncAPI, gRPC), esquema de datos con
-  diagramas ER en Mermaid, campos sensibles/PII y convenciones (auth, errores,
-  paginación, timeouts, reintentos, entornos). Detecta el tamaño y la persistencia
-  (modo lite/full; omite ER si no hay BD interna), sincroniza con el historial de
-  git de forma incremental y lleva "deuda técnica de datos/APIs" priorizada por
-  severidad. Úsala al trabajar datos, APIs, endpoints, DTOs, contratos, modelos,
-  repositorios, clientes de red, serialización o integración de servicios.
+  Documenta o implementa contratos de API, DTOs, serialización y persistencia.
+  Úsala ante endpoints, OpenAPI/JSON Schema, modelos, repositorios o integración
+  de servicios; no para consultas generales de arquitectura o UI.
 
 ---
 
@@ -18,10 +11,8 @@ description: >-
 
 ## Identidad del MAS
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con `MASVS`, `MASWE` o `MASTG` de OWASP.
+MAS significa **Multi-Agent System**; `MAS:` se dirige al kit y `@<agente>` a un rol concreto.
+
 
 Esta skill es la **referencia canónica** para documentar, auditar y ayudar a
 desarrollar la **capa de datos y APIs** de un proyecto, sin importar la

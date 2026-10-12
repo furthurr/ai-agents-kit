@@ -1,19 +1,17 @@
 ---
 name: project-navigator
 description: >-
-  Navega cualquier proyecto con minimo de tokens mediante capas en `.navigator/`
-  (contexto, mapa de modulos, simbolos, grafo y codigo puntual). Hace bootstrap
-  y update de indices bajo peticion. No modifica codigo de negocio.
+  Localiza archivos, módulos y símbolos mediante contexto y mapas de `.navigator/`.
+  Úsala para búsquedas puntuales y dependencias; bootstrap/update solo bajo petición.
+  No modifica código de negocio.
 ---
 
 # Skill: Project Navigator
 
 ## Identidad del MAS
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+MAS significa **Multi-Agent System**; `MAS:` se dirige al kit y `@<agente>` a un rol concreto.
+
 
 Referencia canónica de **cómo navegar e indexar** un repositorio con mínimo de
 tokens. `documentation-orchestrator` es la entrada core y la ejecuta localmente.
@@ -23,8 +21,9 @@ Si agente y skill divergen,
 Objetivo: responder con la capa más barata suficiente y citar fuentes.
 
 > **Alcance inviolable:** por defecto **solo lectura** del repo y de
-> `.navigator/`. Escritura **solo** en `.navigator/` (bootstrap/update). Export
-> opt-in a `AGENTS.md` **con confirmación**. NO modifica código de negocio, UI,
+> `.navigator/`. Escritura **solo** en `.navigator/` (bootstrap/update). No crea
+> ni exporta `AGENTS.md` y no lo sobrescribe; esa guía pertenece a
+> `documentation-orchestrator`. NO modifica código de negocio, UI,
 > tests de producto, CI ni Git remoto.
 > Si piden implementar features o refactors: **declarar límite**, aportar
 > ubicación/mapa si ayuda, y detenerse.
@@ -73,8 +72,10 @@ Detalle de capas y presupuestos: `references/layers.md`. Contratos normativos de
 Lee instrucciones/steering primero y aplica bajo demanda el
 [contrato compartido](../documentation-orchestrator/references/project-context.md).
 Esta skill conserva autoridad de formatos y disponibilidad. La consulta no
-ejecuta bootstrap, update ni export: son acciones distintas con sus gates y
-confirmación aplicables. Baselines no verificables o desfasados solo aportan
+ejecuta bootstrap ni update. Navigator no exporta `AGENTS.md` ni modifica
+instrucciones del proyecto;
+si se solicita mantener `AGENTS.md`, remite esa operación al plan de
+`documentation-orchestrator`. Baselines no verificables o desfasados solo aportan
 pistas; valida decisiones en código y contratos.
 
 - Preferir archivo + rango de líneas sobre leer directorios enteros
@@ -82,19 +83,19 @@ pistas; valida decisiones en código y contratos.
 - No inventar entradas de índices; si faltan, degradar o proponer update
 - Antes de afirmar que una capa está disponible o ausente, verificar su path
 - Reportar solo capas relevantes para la consulta; no listar todas por rutina
-- Máx. 2–3 capas distintas y 1–3 archivos de código por pregunta
+- Empieza con una capa y pocos archivos; amplía si la evidencia no basta y explica por qué.
 - Nunca “leer el repo entero” para compensar
 
 ## Bootstrap y update
 
-Contrato de pasos, monorepo y export `AGENTS.md`:
+Contrato de pasos, monorepo y propiedad de `AGENTS.md`:
 `references/bootstrap.md`.
 
 Resumen bootstrap:
 
 1. Detectar stack y fuentes externas
 2. Ubicación `.navigator/` (preguntar si ambiguo)
-3. `config.yaml` + `ai-context.md` (~500 tokens) + `module-map.json`
+3. `config.yaml` + contexto breve + `module-map.json`
 4. No bloquear si faltan symbols/grafo
 5. Respetar exclude/secretos y ejecutar el gate post-bootstrap de integridad y presupuesto
 6. Informar artefactos, gaps y presupuesto
@@ -109,7 +110,7 @@ preguntar si `ai-context.md` tiene edición manual evidente.
 | Artefacto | Tras bootstrap | Notas |
 | --- | --- | --- |
 | `config.yaml` | Obligatorio | Contrato en `references/config.md` |
-| `ai-context.md` | Obligatorio | Capa 0; ~500 tokens |
+| `ai-context.md` | Obligatorio | Capa 0; breve, con referencias a detalle |
 | `module-map.json` | Obligatorio | Capa 1 |
 | `symbols.json` | Opt-in | Capa 2 best-effort |
 | `graph/` | Opt-in | Capa 3; provider default `none` |
@@ -129,18 +130,15 @@ Referenciar; no sobrescribir. Detalle: `references/sources.md`.
   `ausente` significa habilitada pero sin artefacto; `deshabilitada`, config en false
 - No rellenar con especulación presentada como hecho indexado
 
-## Presupuesto de tokens (MVP, tope blando)
+## Criterios de concisión
 
 | Artefacto / acción | Objetivo | Si se pasa |
 | --- | --- | --- |
-| `ai-context.md` | ~500 (tope ~700) | Compactar antes de cerrar; excepción explícita |
-| `module-map.json` | ~1–2k (tope ~4k) | Menos módulos o responsibilities más cortas |
-| Respuesta típica | ~200–600 (tope ~1k) | Solo lo pedido + fuentes |
-| Hits symbols | top 5–15 (máx. 25) | Filtrar; no dump |
-| Capa 4 código | ~80–150 líneas (tope ~250) | Pedir rango más preciso |
-| Bootstrap sesión | < ~30–50k in+out | Acotar `project.root` |
-
-~4 chars ≈ 1 token. Detalle: `references/layers.md`.
+- `ai-context.md`: propósito y mapa general; referencia detalles, no los copies.
+- `module-map.json`: responsabilidades breves; no enumeres todos los archivos.
+- Respuestas: limita hits al conjunto pertinente y amplía si falta evidencia.
+- Código: empieza con el rango mínimo y extiéndelo cuando la respuesta lo requiera.
+- Bootstrap: acota `project.root` al producto o subproyecto solicitado.
 
 ## Relación con otras skills
 

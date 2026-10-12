@@ -56,5 +56,7 @@ actualiza documentación, índices o instrucciones del proyecto; no ejecuta
 bootstrap, sync, export ni instalación de herramientas. Recomendar
 `documentation-orchestrator` para mantenimiento cuando sea útil, sin invocarlo
 automáticamente ni inferir autorización. Allí core se ejecuta localmente con sus
-skills separadas y gates; Navigator mantiene export opt-in con confirmación
-específica. Los demás especialistas mantienen sus contratos de handoff.
+skills separadas y gates; `AGENTS.md` se gestiona mediante
+`documentation-orchestrator` solo dentro de un plan de escritura documental
+aprobado. Navigator no exporta ni sobrescribe ese archivo. Los demás especialistas
+mantienen sus contratos de handoff.

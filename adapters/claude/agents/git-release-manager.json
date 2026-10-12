@@ -14,10 +14,6 @@
       "WebFetch",
       "WebSearch",
       "Skill"
-    ],
-    "skills": [
-      "git-commit",
-      "release-management"
     ]
   }
 }

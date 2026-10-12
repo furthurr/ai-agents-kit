@@ -11,8 +11,7 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
 - Carpetas de tests/generators creadas vacías **no** cuentan como tarea hecha.
 - No añadir dependencias de PBT/test sin al menos un test que las use en la misma entrega.
 - TDD focalizado exige evidencia del RED esperado y del GREEN. Sin RED observado,
-  etiquetar honestamente como caracterización o cobertura retroactiva. TDD estricto
-  es una opción retirada y no puede marcarse como estrategia vigente.
+  etiquetar honestamente como caracterización o cobertura retroactiva.
 
 ## Estado de fase y transición
 

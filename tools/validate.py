@@ -111,7 +111,7 @@ def validate_adapters(manifest: dict, errors: list[str]) -> dict[str, set[str]]:
         if not isinstance(substitutions, dict):
             errors.append(f"platform.json de {platform}: 'substitutions' debe ser un objeto")
             substitutions = {}
-        platform_substitutions[platform] = set(substitutions)
+        platform_substitutions[platform] = set(substitutions) | set(render_module.shared_substitutions())
 
         for skill_id in manifest.get("skills", []):
             if not (ROOT / "canonical" / "skills" / skill_id / "SKILL.md").is_file():

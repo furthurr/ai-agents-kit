@@ -2,7 +2,7 @@
   "filename": "documentation-orchestrator.md",
   "frontmatter": {
     "name": "documentation-orchestrator",
-    "description": "Consulta arquitectura y navegación en inspect de solo lectura, con skills core locales bajo demanda. Coordina estado, bootstrap y sincronización documental mediante skills core locales o skill local/handoff portable para otros dominios. No modifica producto, administra Git ni automatiza delegación.",
+    "description": "Coordina status, bootstrap y sincronización de documentación canónica tras petición; conserva gates y alcance. Úsalo para sync-check, sync-domain, release-check y coordinación multidominio, no para localizar archivos puntuales.",
     "model": "inherit",
     "subagent": true,
     "mainAgent": true,

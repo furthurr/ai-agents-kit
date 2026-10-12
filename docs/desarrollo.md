@@ -23,7 +23,7 @@ camino oficial es `canonical` → `adapters` → `generated` → `scripts/instal
 # 2. Regenera y valida
 python3 tools/render.py
 python3 tools/validate.py
-python3 tools/measure_context.py   # opcional: coste de contexto
+python3 tools/measure_context.py   # inventario global de texto fuente (no tokens reales)
 python3 tools/check_links.py       # enlaces Markdown internos
 
 # 3. Revisa el diff en generated/
@@ -35,6 +35,18 @@ git diff generated/
 # 5. Instala en tu máquina de desarrollo y reinicia la herramienta
 ./scripts/install/opencode.sh
 ```
+
+Para comparar el texto fuente de un flujo observado, enumera solo los archivos que
+el host cargó:
+
+```bash
+python3 tools/measure_context.py --label git-commit \
+  canonical/agents/git-release-manager.md canonical/skills/git-commit/SKILL.md
+```
+
+La salida registra bytes, caracteres, líneas y palabras por archivo y en total.
+No infiere tokens ni sustituye las métricas reales del host; registra aparte los
+tokens/turnos/tiempo cuando la ejecución los exponga.
 
 ## Dónde va cada cambio
 

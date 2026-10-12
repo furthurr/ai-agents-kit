@@ -1,7 +1,7 @@
 {
   "filename": "documentation-orchestrator.md",
   "frontmatter": {
-    "description": "Consulta arquitectura y navegación en inspect de solo lectura, con skills core locales bajo demanda. Coordina la documentación canónica y sus estándares por dominio.",
+    "description": "Coordina status, bootstrap y sincronización de documentación canónica tras petición; carga estándares de dominio bajo demanda. Úsalo para sync-check, release-check y coordinación multidominio, no para localizar archivos puntuales.",
     "tools": [
       "read",
       "write",

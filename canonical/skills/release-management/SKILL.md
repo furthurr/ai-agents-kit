@@ -6,28 +6,21 @@ description: >-
   actualización del archivo de versión correspondiente, creación de tags anotados
   (vX.Y.Z) y generación de CHANGELOG a partir de Conventional Commits. Úsala cuando
   el usuario pida "preparar una release", "sacar versión", "crear un tag", "generar
-  changelog", "subir la versión" o "bump de versión". Si detecta una tecnología no
-  soportada (Node, Rust, Python, Go, .NET, etc.), investiga en la web sus
-  convenciones de versionado y genera un perfil reutilizable para darle soporte
-  automáticamente. Todas las acciones que escriben en el repo o el remoto requieren
-  confirmación explícita.
+  changelog", "subir la versión" o "bump de versión". Para tecnologías no soportadas,
+  revisa la caché y consulta hasta dos fuentes oficiales si la release lo requiere.
+  Toda escritura en el repo o el remoto requiere confirmación explícita.
 ---
 
 # Release Management (Android · iOS · Flutter · extensible)
 
-## Identidad del MAS
+{{mas_identity}}
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
 Procedimiento para preparar **releases**. La skill **detecta la tecnología** del
 repositorio y actualiza el archivo de versión correcto, crea el **tag anotado** y
 genera el **CHANGELOG**, siempre en **español** y **solo tras confirmación**.
-Soporta Android, iOS y Flutter de fábrica; para **otras tecnologías** se
-auto-extiende investigando en la web y cacheando un perfil reutilizable
-(ver Paso 1.5).
+Soporta Android, iOS y Flutter de fábrica. Para otras tecnologías, consulta la caché
+y usa la investigación acotada de Paso 1.5 solo si hace falta.
 
 ## Principios
 
@@ -143,16 +136,18 @@ Si no está ahí, revisa también `.release/technologies/<slug>.md` en el proyec
 > La tabla es orientativa. Si la señal no está aquí o hay dudas, **investiga en
 > la web** (1.5.c) antes de asumir.
 
-### 1.5.c — Investiga en la web (solo si no hay caché fiable)
-Usa `web` para consultar la **documentación oficial** del ecosistema y confirma:
+### 1.5.c — Consulta oficial acotada (solo si no hay caché fiable)
+Solo para una release solicitada, consulta como máximo **dos fuentes oficiales** y
+confirma únicamente:
 1. **Dónde vive la versión** (archivo y clave exacta).
 2. **Formato de versión** (SemVer puro, ¿hay build number/metadata?).
 3. **Cómo se hace el bump** (¿manual, `npm version`, `cargo set-version`…?).
 4. **Convención de tag** (`vX.Y.Z`, `X.Y.Z`, prefijos por paquete en monorepos).
 5. **CHANGELOG** (ubicación y convención esperada).
 
-Prioriza fuentes oficiales (docs del gestor de paquetes/lenguaje). Registra las
-URLs consultadas y la fecha.
+Prioriza documentación del lenguaje/gestor de paquetes. Registra URLs y fecha. Si dos
+fuentes no resuelven una decisión necesaria, pregunta el alcance; no abras investigación
+general ni sigas buscando indefinidamente.
 
 ### 1.5.d — Genera el perfil y confirma (GATE)
 Con lo investigado, redacta el perfil usando esta **plantilla** y muéstralo al

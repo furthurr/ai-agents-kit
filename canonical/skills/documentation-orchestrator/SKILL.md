@@ -1,29 +1,26 @@
 ---
 name: documentation-orchestrator
 description: >-
-  Consulta arquitectura y navegación y coordina la documentacion canonica de un
-  proyecto. Use when the user asks to explain architecture, locate modules,
-  inspect, docs status, sync-check, bootstrap-core, sync-core,
-  sync-existing, sync-domain, release-check, pre-release check, comprobar si la
-  documentacion esta actualizada, actualizar las carpetas existentes o verificar
-  si el proyecto esta listo para una release.
+  Coordina status, bootstrap, sincronización y comprobaciones de documentación canónica.
+  Úsala para docs status, sync-check, bootstrap-core, sync-core, sync-existing,
+  sync-domain, release-check o coordinación documental entre dominios. Para consultas
+  puntuales usa project-navigator o architecture según el resultado solicitado.
 ---
 
 # Skill: Documentation Orchestrator
 
-## Identidad del MAS
+{{mas_identity}}
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
 Referencia canonica para **coordinar** las skills documentales sin sustituirlas.
 Administra el orden, alcance, estado y gates; cada skill especialista sigue siendo
 la autoridad sobre su propia carpeta.
 
-> **Alcance inviolable:** solo coordina documentacion e indices canonicos. No
-> modifica codigo de producto, tests, CI ni Git remoto. No crea `.documentation/`.
+> **Alcance inviolable:** solo coordina documentacion e indices canonicos. Como
+> parte de una operación documental de escritura aprobada, puede crear/actualizar
+> únicamente el bloque documental gestionado y delimitado en el `AGENTS.md` raíz
+> del proyecto resuelto.
+> No modifica codigo de producto, tests, CI ni Git remoto. No crea `.documentation/`.
 
 ## Autoridad y especialistas
 
@@ -58,10 +55,10 @@ No amplias permisos ni cambias una accion para poder agruparla.
 | --- | --- |
 | `status` | Solo lectura; inventario, aplicabilidad y frescura. Alias natural: `sync-check`. |
 | `inspect` | Consulta de arquitectura o navegación, solo lectura y cero persistencia; skills core locales bajo demanda. |
-| `bootstrap-core` | Propone inicializar solo `.navigator/` y `.architecture/`; nunca sobrescribe. |
-| `sync-core` | Actualiza core existente; recomienda el core ausente sin crearlo. |
-| `sync-existing` | Actualiza solo carpetas primarias existentes; no crea ausentes. |
-| `sync-domain` | Actualiza los dominios explicitamente solicitados. |
+| `bootstrap-core` | Propone inicializar solo `.navigator/` y `.architecture/`; nunca sobrescribe. El plan puede incluir la guía gestionada en `AGENTS.md`. |
+| `sync-core` | Actualiza core existente; recomienda el core ausente sin crearlo. Incluye `AGENTS.md` solo en un plan aprobado de escritura. |
+| `sync-existing` | Actualiza solo carpetas primarias existentes; no crea ausentes. Incluye `AGENTS.md` solo en un plan aprobado de escritura. |
+| `sync-domain` | Actualiza los dominios explicitamente solicitados; incluye `AGENTS.md` solo en un plan aprobado de escritura. |
 | `release-check` | Solo lectura; gate documental y de riesgos criticos previo a release. |
 
 Defaults: sin modo → `status` si no hay intención específica; preguntas sobre
@@ -74,7 +71,8 @@ si incluye carpetas ausentes, pregunta antes de elegir modo.
 Antes de **cualquier** operacion, incluso `status`:
 
 1. Haz un preflight barato y de solo lectura: detecta proyecto(s), carpetas,
-   marcas disponibles, `git status` y nombres de archivos cambiados.
+   marcas disponibles, presencia de `AGENTS.md`, `git status` y nombres de
+   archivos cambiados.
 2. Clasifica la tarea y el alcance con `references/workflows.md`.
 3. Usa los datos del preflight para delimitar el plan y comprobar los gates aplicables.
    El preflight no acredita autorizacion de escritura.
@@ -86,7 +84,9 @@ Si el repo cambia durante una espera por decision real, repite el preflight mini
 
 1. Resuelve uno o varios proyectos independientes; pregunta si hay empate.
 2. Ejecuta un estado inicial y presenta el plan de carpetas y acciones cuando aplique.
-   `inspect`, `status` y `release-check` continuan con lectura e informe en el mismo turno.
+   Para operaciones de escritura, incluye la ruta de `AGENTS.md` raíz y si se
+   creará o actualizará su bloque gestionado. `inspect`, `status` y `release-check`
+   continuan con lectura e informe en el mismo turno y no escriben.
    En `inspect`, investiga la pregunta con contexto mínimo o fuentes directas,
    sin plan de escritura ni inventario global obligatorio.
 3. Antes de escribir, espera aprobacion global del plan; reutiliza autorizacion
@@ -127,8 +127,9 @@ existia requiere `sync-core` o alcance explicito para modificarse.
 - Nunca expongas secretos, credenciales, PII ni valores sensibles.
 - Git es solo lectura (`status`, `log`, `diff`, `show`, `rev-parse`).
 - Ejecuta un solo comando Git por llamada; no uses pipes ni separadores de shell.
-- Si un dominio falla o no tiene evidencia, marca `Bloqueado`; no lo declares
-   completado. Pregunta antes de continuar con dominios independientes.
+- Si un dominio falla, marca `Bloqueado` y no lo declares completado. Continúa con
+  dominios independientes ya autorizados; pregunta solo si cambian alcance,
+  dependencias o autorización. El informe final conserva los resultados parciales.
 - En una consulta `inspect`, ausencia, desfase o contexto ilegible no es fallo de
   ejecución documental: degrada a fuentes directas sin bloquear ni autoactualizar.
 - No instales herramientas ni ejecutes Graphify.
@@ -143,7 +144,7 @@ las skills. Navigator conserva autoridad de formatos y disponibilidad.
 
 Lee [`references/workflows.md`](references/workflows.md) al clasificar una
 operacion o ejecutar un modo. Contiene estados, gates, criterios de release y
-formato de informe.
+formato de informe, además del contrato de la guía gestionada en `AGENTS.md`.
 
 Lee [`references/handoff.md`](references/handoff.md) solo si el trabajo debe
 continuar con el agente especialista real; define el formato, los campos, las

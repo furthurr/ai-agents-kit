@@ -4,9 +4,9 @@
 - **Tipo:** bugfix no trivial de seguridad.
 - **Intención:** implementación y verificación.
 - **Fase:** 1 — Requirements.
-- **Estado:** requisitos aprobados; implementación local verificada, host pendiente.
+- **Estado:** requisitos satisfechos según Verification; spec cerrada con evidencia conductual real y aprobación del Gate 4.
 - **Gate aprobado:** Gate 1 — el usuario respondió «procede» a la solicitud de aprobación de estos requisitos.
-- **Siguiente gate:** Gate 4 pendiente; Gates 2 y 3 aprobados, falta evidencia conductual para cierre.
+- **Gates posteriores:** 2 y 3 aprobados; Gate 4 aprobado explícitamente mediante «Aprobar cierre REC-01» tras presentar evidencia real y suites satisfactorias.
 - **Ejecutor:** sesión SDD, coordinadora e implementadora exclusiva de REC-01; sin subagentes escritores.
 - **Fecha:** 2026-10-10.
 - **Baseline:** `03f30befca829daa2c2a3c6cd47c2dc4fe5b4880`, rama `main`, carpeta original.
@@ -142,7 +142,7 @@ si no puede obtenerse, el hallazgo permanecerá abierto.
 - Los tableros muestran REC-02, REC-15 y FUT-17/18 pendientes y sin asignación.
   Cualquier nueva asignación o escritura concurrente obliga a coordinar antes de editar.
 
-## Próxima fase
+## Cierre
 
-Gates 1–3 aprobados. Implementación local y verificación registradas en
-[verification.md](verification.md). El cierre queda pendiente de evidencia conductual.
+Gates 1–4 aprobados. Implementación, pruebas y evidencia conductual real registradas en
+[verification.md](verification.md). Spec cerrada tras aprobación explícita del Gate 4.

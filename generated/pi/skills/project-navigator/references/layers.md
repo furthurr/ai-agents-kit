@@ -17,7 +17,7 @@ Nunca volcar índices completos al contexto del modelo.
 ## Capa 0 — Contexto raíz
 
 - Path: `.navigator/ai-context.md`
-- Objetivo: ~500 tokens; tope blando ~700
+- Breve: propósito y mapa general; referencias para detalle
 - Plantilla: `templates/ai-context.template.md`
 - Enfoque híbrido: artefacto canónico interno + fuentes externas solo lectura/merge (ver `sources.md`)
 
@@ -31,7 +31,7 @@ Nunca volcar índices completos al contexto del modelo.
 - Opcionales: `tech`, `entrypoints`, `depends_on`, `tags`, `notes`
 - Todo `depends_on` debe apuntar a un `id` existente
 - MVP: unidades de primer nivel / features detectables; no explotar archivo-a-archivo
-- Objetivo serializado: ~1–2k tokens; tope blando ~4k
+- Responsabilidades de una frase; no enumerar archivos del módulo
 - Plantilla: `templates/module-map.template.json`
 - Contrato normativo completo: `schemas.md`
 
@@ -43,7 +43,7 @@ Nunca volcar índices completos al contexto del modelo.
 - Por símbolo: `id`, `name`, `kind`, `file`, `line` (obligatorios)
 - `kind`: `class` | `function` | `method` | `interface` | `type` | `enum` | `component` | `endpoint` | `other`
 - Preferir públicos / entrypoints; omitir si no hay confianza en `file`+`line`
-- **Nunca** volcar el JSON entero; filtrar y devolver top 5–15 hits (máx. 25)
+- **Nunca** volcar el JSON entero; filtrar los hits pertinentes
 - Tras localizar → Capa 4 en `file:line` si hace falta detalle
 - Si deshabilitada o ausente → degradar a búsqueda en código y declarar límite
 - Plantilla: `templates/symbols.template.json`
@@ -54,23 +54,23 @@ Nunca volcar índices completos al contexto del modelo.
 - Path por defecto: `.navigator/graph/graph.json` (`config.graph.path`)
 - Solo si `layers.graph: true` y `graph.provider` ≠ `none`
 - MVP: no bloquear bootstrap si falta; provider default `none`
-- Consulta: solo subgrafo / path / query acotada (~500–1.5k tokens; tope ~2.5k)
+- Consulta: solo subgrafo, path o query pertinentes
 - Nunca volcar el grafo completo
 
 ## Capa 4 — Código puntual
 
 - Leer rangos acotados (`archivo:línea`), no directorios enteros
-- Objetivo: ~80–150 líneas; tope blando ~250 líneas o ~2k tokens
-- Máx. 1–3 archivos de código por pregunta
+- Empezar por el rango mínimo; ampliarlo si hace falta evidencia
+- Empezar por pocos archivos; añadir fuentes solo si la respuesta lo requiere
 - Preferir archivo + rango sobre explorar el repo
 
 ## Reglas transversales
 
 1. Preferir archivo + rango de líneas sobre leer directorios enteros
 2. No inventar entradas de índices; si faltan, degradar o proponer update
-3. Máx. 2–3 capas distintas por pregunta (salvo que el usuario pida profundidad)
+3. Empezar por la capa mínima y subir solo si no basta para responder
 4. Dump de `module-map` / `symbols` / grafo completo: **prohibido**
-5. Tokens de artefactos: ~4 chars ≈ 1 token (aproximado; no hace falta contador exacto)
+5. No inferir tokens a partir de caracteres; medir texto/flujo cuando se necesite comparar
 6. En cada consulta, derivar disponibilidad desde `config.yaml` + filesystem
    mediante el gate de `config.md`; nunca desde memoria conversacional
 7. Resolver artefactos desde el directorio del config seleccionado; nunca crear

@@ -26,7 +26,9 @@ Las fuentes externas se detectan y referencian; **no se sobrescriben**.
 3. En `ai-context.md` § Docs: listar path + nota breve (`presente` / `ausente` / una frase)
 4. Preferir secciones "Contexto para IA" de carpetas canónicas sobre copiar READMEs enteros
 5. Si solo existen fuentes externas y no hay `.navigator/`: modo degradado Capa 0 provisional e invitar a bootstrap
-6. Export a `AGENTS.md`: solo opt-in con confirmación del usuario; no es la fuente de verdad del navigator
+6. No se exporta `AGENTS.md` desde Navigator. Si se solicita una guía portable,
+   `documentation-orchestrator` es el único responsable de su bloque
+   gestionado durante una operación de escritura documental aprobada.
 
 ## Relación con otras skills del kit
 

@@ -13,12 +13,8 @@ description: >-
 
 # Git Commit & Push
 
-## Identidad del MAS
+{{mas_identity}}
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
 Conocimiento y procedimiento para administrar Git en el repositorio actual:
 **commits ordenados y optimizados** siguiendo **Conventional Commits** con
@@ -222,21 +218,8 @@ Tras commitear, informa:
 
 Si el usuario no confirma, **no hagas push** y sugiérele el comando para hacerlo manualmente.
 
-## Tipos de Commit (Conventional Commits)
-
-| Tipo | Descripción | Ejemplo |
-|------|-------------|---------|
-| `feat` | Nueva funcionalidad | `feat(auth): agregar autenticación biométrica` |
-| `fix` | Corrección de bug | `fix(api): corregir timeout en llamadas HTTP` |
-| `docs` | Solo documentación | `docs(readme): actualizar instrucciones de instalación` |
-| `style` | Formato, espacios (sin cambio de lógica) | `style(ui): aplicar formato` |
-| `refactor` | Refactorización de código | `refactor(core): extraer lógica a caso de uso` |
-| `test` | Agregar o modificar tests | `test(auth): agregar tests de login` |
-| `chore` | Tareas de mantenimiento | `chore(deps): actualizar dependencias` |
-| `perf` | Mejora de rendimiento | `perf(list): optimizar renderizado` |
-| `ci` | Cambios en CI/CD | `ci(github): agregar workflow de deploy` |
-| `build` | Sistema de build o dependencias externas | `build(deps): actualizar versión del framework` |
-| `revert` | Revertir un commit anterior | `revert: revertir "feat(auth): agregar biometría"` |
+Aplica Conventional Commits por intención. Usa las reglas y excepciones específicas
+del repositorio; no infieras el tipo solo por la extensión del archivo.
 
 ## Ámbitos
 
@@ -248,14 +231,6 @@ El **ámbito** identifica el módulo, paquete o carpeta principal afectada. Es
 - Si los cambios abarcan **muchas áreas**, omite el ámbito o usa uno general.
 - Si el repositorio tiene una **convención de ámbitos propia**, respétala.
 - El ámbito es opcional: `feat: ...` sin ámbito también es válido.
-
-## Determinar tipo y ámbito
-
-- Archivos nuevos que aportan funcionalidad → `feat`.
-- Correcciones sobre código existente → `fix`.
-- Solo archivos `.md` → `docs`.
-- Solo formato/estilo sin cambio de lógica → `style`.
-- Cambios en dependencias o configuración de build → `build` o `chore`.
 
 ## Footer con ticket (opcional)
 
@@ -301,43 +276,3 @@ Agrégalo automáticamente al footer del commit: `Refs: ABC-123`.
 
 **Importante:** nunca presentes la falta del ticket como un error ni obligues al
 usuario a entender qué es. Es solo un dato extra y opcional.
-
-## Comandos de referencia
-
-```bash
-# Estado y cambios
-git status
-git status -s
-# Solo contenido ya revisado, sin imprimir posibles valores sensibles
-git diff
-git diff --staged
-git diff --stat
-
-# Staging
-git add <archivo>
-git add .
-git add -p
-
-# Commit
-git commit -m "mensaje"
-
-# Push
-git push origin <rama>
-git push -u origin <rama>
-
-# Información
-git log --oneline -10
-git branch -vv
-git branch --show-current
-git remote -v
-```
-
-## Solución de problemas
-
-| Problema | Solución |
-|----------|----------|
-| "nothing to commit" | No hay cambios staged, usa `git add`. |
-| "rejected - non-fast-forward" | Sugiere `git pull --rebase` antes del push. |
-| "permission denied" | Verifica credenciales / SSH. |
-| Conflictos de merge | Resuélvelos manualmente antes del commit. |
-| Mensaje muy largo | Usa el cuerpo del commit para los detalles. |

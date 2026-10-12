@@ -47,8 +47,10 @@ def test_modes_remain_proportional() -> None:
     check("| `direct` | Cambio trivial verificable" in skill, "direct conserva criterio verificable")
     check("| `lite` |" in skill, "lite existe como profundidad intermedia")
     check("| `standard` | Fallback seguro" in skill, "standard sigue siendo el fallback seguro")
-    check("`deep` y tdd estricto" in compact and "opciones retiradas" in compact,
-          "deep y TDD estricto están retirados")
+    check("`deep` no está disponible" in compact
+          and "tdd estricto no es una estrategia disponible" in compact
+          and "aceptar la sustitución no aprueba gates" in compact,
+          "opciones retiradas remiten a una única política de compatibilidad")
     check("sin contrato público" in skill and "cruce de capas" in skill, "direct declara límites de riesgo")
     check(
         "exactamente tres profundidades" in compact
@@ -71,7 +73,7 @@ def test_modes_remain_proportional() -> None:
         "standard explícito no se rebaja automáticamente",
     )
     check(
-        "espera aceptación" in compact and "no convierte la solicitud silenciosamente" in compact,
+        "espera aceptación" in compact and "no conviertas la solicitud silenciosamente" in compact,
         "las opciones retiradas requieren aceptación explícita",
     )
 
@@ -700,8 +702,8 @@ def test_variants_and_evidence() -> None:
     check("RED del comportamiento → GREEN mínimo → REFACTOR" in templates, "tasks enseña orden test-first")
     check("RED o baseline" in templates and "GREEN / suite" in templates, "verification registra el ciclo")
     check("evidencia del RED esperado y del GREEN" in integrity, "integrity gate exige evidencia TDD")
-    check("TDD estricto" in integrity and "opción retirada" in integrity,
-          "integrity gate no acredita TDD estricto")
+    check("TDD estricto" not in integrity,
+          "integrity gate no duplica la política de estrategia retirada")
 
 
 def test_navigator_context_contract() -> None:

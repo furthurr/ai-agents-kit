@@ -38,22 +38,24 @@ class CodeReviewContractTest(unittest.TestCase):
 
     def test_routing_and_evidence_contract(self) -> None:
         agent = self.text("canonical/agents/code-review.md")
+        compact_agent = " ".join(agent.split())
         for rule in ("solo calidad", "solo seguridad", "revisión completa", "QLT", "SEC",
                      "Sonar", "OWASP", "severidad original", "misma causa",
                      "no amplía", "target: code-review", "Handoff Result"):
             self.assertTrue(rule in agent, f"Falta regla del agente: {rule}")
-        self.assertIn("carga únicamente", agent)
-        self.assertIn("sin escrituras", agent)
-        self.assertIn("antes del primer", agent)
-        self.assertIn("{{sdd_agent}}", agent)
+        self.assertIn("carga únicamente", compact_agent)
+        self.assertIn("sin escrituras", compact_agent)
+        self.assertIn("una aprobación del diff completo", compact_agent)
+        self.assertIn("confirmación por micro-paso", compact_agent)
+        self.assertIn("{{sdd_agent}}", compact_agent)
 
     def test_skill_documentation_and_read_only_contract(self) -> None:
         for skill, folder, prefix in (("code-quality", ".quality/", "QLT"),
                                       ("security", ".security/", "SEC")):
-            text = self.text(f"canonical/skills/{skill}/SKILL.md")
+            text = " ".join(self.text(f"canonical/skills/{skill}/SKILL.md").split())
             for rule in ("Code Review", folder, prefix, "todas las severidades",
-                         "ocurrencias de la", "sin escrituras", "cachés", "marcas",
-                         "antes del primer", "sesión"):
+                          "ocurrencias de la", "sin escrituras", "cachés", "marcas",
+                          "una sola aprobación", "sesión"):
                 with self.subTest(skill=skill, rule=rule):
                     self.assertTrue(rule in text, f"Falta regla de {skill}: {rule}")
             self.assertNotIn("Confirma el **alcance** (todo, solo", text)
@@ -65,10 +67,11 @@ class CodeReviewContractTest(unittest.TestCase):
             compact = " ".join(text.split()).lower()
             with self.subTest(skill=skill):
                 self.assertRegex(compact, r"(?:no|ni) transfieras[^.]*autorizaci[oó]n[^.]*remediaci[oó]n")
-                self.assertIn("solicita aprobación antes del primer micro-paso y de cada siguiente", compact)
-                self.assertIn("un solo micro-paso", compact)
-                self.assertRegex(compact, r"detente y espera ok")
-                self.assertIn("nunca encadenes varios cambios sin confirmación", compact)
+                self.assertIn("atómica y bajo riesgo", compact)
+                self.assertIn("una sola aprobación", compact)
+                self.assertIn("estructural o de riesgo elevado", compact)
+                self.assertIn("pide aprobación antes de cada paso", compact)
+                self.assertIn("no escribas antes de la autorización aplicable", compact)
 
     def test_orchestrator_domain_mapping(self) -> None:
         text = self.text("canonical/skills/documentation-orchestrator/SKILL.md")

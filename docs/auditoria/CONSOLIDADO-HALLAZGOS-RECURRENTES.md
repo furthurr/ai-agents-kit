@@ -167,9 +167,9 @@ Todas las fichas comienzan en **pendiente de verificar vigencia**. Una modificac
 ### REC-13 — Reducir lecturas encadenadas en SDD
 
 - **Fuentes:** A Hallazgo 3, 68–74 y Paso 3, 164–175; D AUD-07, 159–172.
-- **Problema e impacto:** diez referencias con cargas encadenadas pueden aumentar latencia y dispersar contexto.
-- **Trabajo:** registrar qué carga realmente cada modo; evaluar cuatro módulos sugeridos (`execution`, `quality`, `templates`, `context`); consolidar por cohesión, actualizar enlaces y conservar carga selectiva.
-- **Cierre:** escenarios equivalentes requieren menos lecturas necesarias sin perder reglas; sin referencias rotas ni un documento monolítico obligatorio. El número de cuatro módulos es propuesta, no requisito demostrado.
+- **Problema e impacto:** cargar o releer referencias que no requiere la decisión actual aumenta lecturas y contexto.
+- **Trabajo aplicado:** indicar una carga por necesidad/fase y reutilizar la referencia mientras fuente y alcance no cambien. Se mantuvieron los archivos independientes bajo demanda: una fusión mecánica podría cargar material ajeno al caso y aumentar tokens.
+- **Cierre:** la política de lectura selectiva está en la skill; REC-16 debe medir archivos realmente leídos en tareas representativas antes de afirmar que bajaron lecturas/latencia. No se hizo una consolidación sin evidencia de ahorro.
 - **Dependencia:** REC-09 y REC-16 para evitar resolver duplicación mediante más lecturas o afirmar ahorros no medidos.
 
 ### REC-14 — Simplificar compatibilidad histórica
@@ -237,23 +237,23 @@ Estados y reglas de transición: [Protocolo de remediación](PROTOCOLO-REMEDIACI
 
 | ID | Estado | Responsable / rama | Última actualización | Evidencia | Próxima acción |
 |---|---|---|---|---|---|
-| REC-01 | Integrado pendiente de verificación | Sesión SDD exclusiva / `main` / HEAD `03f30be` + cambios locales | 2026-10-11 | [Ficha de sesión](seguimiento/REC-01.md) — política/control/CI/docs integrados sin commit; 26 tests y suites verdes; dos probes host incompletos | Acreditar conducta en host ante solicitud de inclusión y contrastes; no cerrado. |
-| REC-02 | Integrado pendiente de verificación | Sesión coordinadora / `main`; origen `remediation/rec-02` | 2026-10-11 | [Ficha de sesión](seguimiento/REC-02.md) — delta integrado selectivamente; render/validate, suites locales y probes OpenCode/Pi ejecutados | Probar Kiro V3 y hosts pendientes, evidencia LLM/consentimiento humano y CI remoto; no cerrar aún. |
+| REC-01 | Cerrado | Coordinación / `main` `5dba871`; fix `9e0696e` | 2026-10-11 | [Ficha](seguimiento/REC-01.md), [reporte real](seguimiento/REC-01-live.json) — scanner 1/0, rechazo de excepción, contraste público/placeholder, sin exposición; suites/CI acreditadas y Gate 4 aprobado | Conservar evidencia; ajuste del harness y cierre sin commit nuevo. No certificación universal. |
+| REC-02 | Cerrado; validación runtime complementaria abierta | Coordinación / `main` `5dba871`; fix `9e0696e`; origen `remediation/rec-02` | 2026-10-11 | [Ficha](seguimiento/REC-02.md), [reporte real](seguimiento/REC-02-live.json) — matriz multi-host, controles aplicables, límites explícitos, OpenCode/Pi y CI acreditados | Remanentes de hosts/variantes en [VER-REC-02](seguimiento/VER-REC-02.md); no bloquean REC-03 ni otros hallazgos independientes. |
 | REC-03 | Pendiente | — | 2026-10-10 | — | Comprobar contrato y validador de inspect. |
 | REC-04 | Pendiente | — | 2026-10-10 | — | Coordinar con REC-03 y FUT-01. |
 | REC-05 | Pendiente | — | 2026-10-10 | — | Inventariar recursos y wrappers afectados. |
 | REC-06 | Pendiente | — | 2026-10-10 | — | Definir unidad de publicación y recuperación. |
 | REC-07 | Pendiente | — | 2026-10-10 | — | Confirmar comportamiento del importador. |
 | REC-08 | Pendiente | — | 2026-10-10 | — | Preparar baseline y escenarios por host. |
-| REC-09 | Pendiente | — | 2026-10-10 | — | Inventariar reglas; coordinar con REC-11. |
-| REC-10 | Pendiente | — | 2026-10-10 | — | Definir responsabilidades y casos de selección. |
-| REC-11 | Pendiente | — | 2026-10-10 | — | Revisar tests antes de retirar acrónimos. |
-| REC-12 | Pendiente | — | 2026-10-10 | — | Confirmar contratos de aprobación. |
-| REC-13 | Pendiente | — | 2026-10-10 | — | Medir lecturas; coordinar con REC-09 y REC-16. |
-| REC-14 | Pendiente | — | 2026-10-10 | — | Delimitar reglas históricas y consumidores. |
-| REC-15 | Pendiente | — | 2026-10-10 | — | Coordinar con REC-01 y FUT-17/18. |
-| REC-16 | Pendiente | — | 2026-10-10 | — | Definir protocolo de medición inicial. |
-| REC-17 | Pendiente | — | 2026-10-10 | — | Revisar topes y coordinar con FUT-04. |
+| REC-09 | Cerrado | Coordinación / `main`; seis distribuciones | 2026-10-11 | Fragmentos MAS/contexto centrales, aplicación pertinente y Git/release excluido del contexto ajeno; identidad y contratos verificadas | Ninguno de la remediación; measurement real continúa en REC-16. |
+| REC-10 | Implementado; evaluación runtime pendiente | Coordinación / `main`; descriptores en seis hosts | 2026-10-11 | Descripciones con operación/objeto/límite; Graphify local acotado | Medir activaciones positivas y falsas por host; follow-up de REC-08. |
+| REC-11 | Cerrado | Coordinación / `main`; seis distribuciones | 2026-10-11 | Identidad compartida y test desacoplado; `test_mas_identity.py` 235/235 | Ninguno del contrato; runtime de triggers va en REC-08/REC-10. |
+| REC-12 | Implementado; smoke conversacional pendiente | Coordinación / `main`; seis distribuciones | 2026-10-11 | Corrección atómica: diff completo/una aprobación; estructural: micro-pasos; contract 7/7 | No medir turnos ahorrados hasta probar con agente; autorizaciones Git/release independientes permanecen. |
+| REC-13 | Política de carga implementada; medición pendiente | Coordinación / `main`; seis distribuciones | 2026-10-11 | SDD carga solo la referencia/fragmento necesario una vez y lo reutiliza; referencias permanecen bajo demanda | Medir lecturas reales con REC-16; no fusionar módulos si aumenta la carga parcial. |
+| REC-14 | Cerrado | Coordinación / `main`; seis distribuciones | 2026-10-11 | Compatibilidad histórica condensada y fuente responsable única; SDD 613/613 | Ninguno de la poda; decisiones históricas preservadas. |
+| REC-15 | Cerrado | Coordinación / `main`; seis distribuciones | 2026-10-11 | Tablas/comandos/troubleshooting genéricos retirados; `test_secret_policy.py` 26/26 y suite CI local | Ninguno de la poda; FUT-17/18 siguen como mejoras funcionales distintas. |
+| REC-16 | Parcial; medición source-volume implementada | Coordinación / `main` | 2026-10-11 | Flujos generados OpenCode: Git −493 palabras/−3.390 B; SDD scope −276 palabras/−2.147 B frente a HEAD | Estos son bytes/palabras, no tokens ni usage; tokens, turnos/tiempo/éxito requieren medición real del host. |
+| REC-17 | Cerrado | Coordinación / `main`; seis distribuciones | 2026-10-11 | Fórmula caracteres→tokens y topes no instrumentados retirados; Navigator conciso por contenido | Ninguno de heurísticas; los límites instrumentados se documentan con método. |
 
 ### Historial de cambios de estado
 
@@ -268,6 +268,11 @@ Añadir una fila por transición; no reemplazar el diagnóstico ni las fuentes h
 | 2026-10-11 | REC-01 | Confirmado → En curso | Sesión SDD exclusiva / `03f30be` / `main` | Gate 3 aprobado; baseline/exclusividad y ausencia de reservas solapadas revalidados. Inicia implementación, sin commit. | Pruebas significativas, distribución y evidencia conductual antes de cierre. |
 | 2026-10-11 | REC-01 | En curso → Integrado pendiente de verificación | Sesión SDD exclusiva / HEAD `03f30befca829daa2c2a3c6cd47c2dc4fe5b4880` + cambios sin commit / `main` | Política/control/CI/docs y seis distribuciones integrados localmente; 26 tests REC-01 y suites pertinentes verdes. [Ficha](seguimiento/REC-01.md) y Verification identifican evidencias y hashes. | Decisión conductual del host no acreditada: intento sin proveedor/autenticación disponible y segundo timeout 90 s; no cerrar. |
 | 2026-10-11 | REC-02 | En curso → Integrado pendiente de verificación | Sesión coordinadora / HEAD base `03f30be` + cambios locales / `main`; origen `remediation/rec-02` | Delta selectivo integrado, artefactos regenerados, suites locales y pruebas de host OpenCode/Pi; [ficha](seguimiento/REC-02.md) registra evidencias y limitaciones. | Runtime Kiro V3/otros hosts, evidencia con LLM y consentimiento humano, CI remoto; no cerrar. |
+| 2026-10-11 | REC-01 / REC-02 | Mismo estado; integración Git y CI remota acreditadas en revisión posterior | `main` `5dba87197a64fcc9e026a344236d5da02793b4cf`; fix `9e0696e131dd7f105b450cd1bb108acd3ac816b2` | 14 hashes originales coincidentes; suites directas y validate correctos; [CI actual SUCCESS](https://github.com/furthurr/ai-agents-kit/actions/runs/38190590672); controles OpenCode/Pi revalidados. Actualización documental, sin modificación de producto. | Conducta REC-01 y Gate 4; runtime/consentimiento/hosts pendientes de REC-02. No cerrados; no inferir PASS de Kiro ni de un LLM a partir del harness. |
+| 2026-10-11 | REC-01 | Integrado pendiente de verificación → Cerrado | Coordinadora; `5dba871` + mejora del probe/evidencia locales | Prueba real aislada revisada: skill local cargada, scanner 1/0, decisión correcta, no exposición ni cambios de fixtures/índice/refs. Usuario aprueba Gate 4 explícitamente. Spec y P0.5 política actualizados. | Sin criterios originales de cierre pendientes; cambios finales sin commit nuevo. |
+| 2026-10-11 | REC-02 | Integrado pendiente de verificación → Bloqueado | Coordinadora; host OpenCode 1.18.34, modelo real y proyecto temporal | Inspect sin escritura ignora instrucción embebida; petición fuera de alcance rechazada; apply_patch legítimo con autorización humana y remediación preservada. Rechazo/delegación quedan parcialmente ejecutados y no se cuentan como PASS de respuesta final. | Faltan runtime de Kiro V3 y otras superficies/variantes. No se reduce alcance ni se cierra con solo OpenCode. |
+| 2026-10-11 | REC-02 | Bloqueado para cierre → Cerrado; validación complementaria separada | Coordinación / `main` `5dba871`; reporte OpenCode real, Pi, matriz oficial por host y CI | Criterios originales satisfechos: matriz y semántica por host, controles soportados aplicados, límites no soportados expresos, runtime representativo OpenCode/Pi, aprobación humana observada, integración y CI. No se afirma paridad ni enforcement en hosts no ejecutados. | Follow-up [VER-REC-02](seguimiento/VER-REC-02.md): Kiro V3 y otros runtimes, delegación/web y respuesta final tras rechazo. No es dependencia de REC-03. |
+| 2026-10-11 | REC-09 a REC-17; FUT-02/04/05/08/11/14 | Pendiente → Implementación local; FUT-14 No vigente | Coordinación / `main`; canonical, adapters, tooling y configuración OpenCode local | Fragmentos compartidos, triggers acotados, aprobaciones proporcionales, carga SDD selectiva, poda Git, medición de texto por flujo y presupuestos cualitativos; pruebas focales en [registro](seguimiento/OPTIMIZACION-CONTEXTO.md). | Render de `generated/` pendiente mientras se coordinan cambios concurrentes de Navigator/contexto; tokens reales/turnos y activación multi-host quedan pendientes donde se indica. |
 
 ### Cierre
 

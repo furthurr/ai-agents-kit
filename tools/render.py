@@ -15,6 +15,20 @@ ROOT = Path(__file__).resolve().parent.parent
 CANONICAL = ROOT / "canonical"
 ADAPTERS = ROOT / "adapters"
 GENERATED = ROOT / "generated"
+SHARED_TOKENS = {
+    "{{mas_identity}}": "mas-identity.md",
+    "{{project_context}}": "project-context.md",
+}
+
+
+def shared_substitutions() -> dict[str, str]:
+    """Load short common prompt fragments once from canonical/shared/."""
+    shared_dir = CANONICAL / "shared"
+    return {
+        token: (shared_dir / filename).read_text(encoding="utf-8").rstrip("\n")
+        for token, filename in SHARED_TOKENS.items()
+        if (shared_dir / filename).is_file()
+    }
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -78,7 +92,7 @@ def render_platform(manifest: dict[str, Any], platform: str, generated_root: Pat
     if output.exists():
         shutil.rmtree(output)
 
-    global_substitutions = config.get("substitutions", {})
+    global_substitutions = {**shared_substitutions(), **config.get("substitutions", {})}
     for skill_id in manifest["skills"]:
         skill_dir = CANONICAL / "skills" / skill_id
         skill = skill_dir / "SKILL.md"

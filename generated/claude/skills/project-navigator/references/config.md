@@ -16,7 +16,7 @@ layers:
   graph: false                  # Capa 3 (opt-in MVP)
 sources:
   detect_external: true         # AGENTS.md, CLAUDE.md, Contexto para IA, etc.
-  export_agents_md: false       # opt-in
+  export_agents_md: false       # legado ignorado; AGENTS.md pertenece al orquestador
 graph:
   provider: none                # none | graphify | custom
   path: graph/graph.json
@@ -173,4 +173,4 @@ No declarar una capa como ausente sin haber comprobado su path resuelto desde
 | Puede escribir | No puede escribir |
 | --- | --- |
 | Solo `.navigator/**` en bootstrap/update | Código de negocio, UI, tests de producto, CI |
-| Export opt-in a `AGENTS.md` **con confirmación** | Git remoto, configs del host sin permiso |
+| — | `AGENTS.md` (propiedad de `documentation-orchestrator`), Git remoto, configs del host |

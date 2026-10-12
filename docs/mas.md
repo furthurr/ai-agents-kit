@@ -48,8 +48,9 @@ completos y no se abrevian como `MAS`.
 
 ## Fuente de verdad
 
-La identidad se documenta aquí y se replica de forma compacta en los agentes y
-skills canónicos. `tools/render.py` la propaga a las seis distribuciones: Copilot,
+La identidad completa se mantiene aquí; los agentes y skills incluyen un fragmento
+breve desde `canonical/shared/mas-identity.md`. `tools/render.py` lo inserta como texto
+autónomo en las seis distribuciones: Copilot,
 OpenCode, Kiro, Claude Code, Pi y Antigravity. El catálogo mantiene seis agentes y
 diez skills; los artefactos de `generated/` no se editan a mano. Antigravity apunta
 inicialmente a 2.0. Los scripts con fixtures tienen evidencia en Linux, macOS y

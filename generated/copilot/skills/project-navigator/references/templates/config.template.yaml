@@ -9,7 +9,7 @@ layers:
   graph: false                  # Capa 3 (opt-in MVP)
 sources:
   detect_external: true         # AGENTS.md, CLAUDE.md, Contexto para IA, etc.
-  export_agents_md: false       # opt-in
+  export_agents_md: false       # legado ignorado; AGENTS.md pertenece al orquestador
 graph:
   provider: none                # none | graphify | custom
   path: graph/graph.json

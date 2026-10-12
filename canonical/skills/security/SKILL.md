@@ -1,26 +1,15 @@
 ---
 name: security
 description: >-
-  Audita, documenta y ayuda a remediar la SEGURIDAD de aplicaciones (enfocada en
-  móvil: Android, iOS y Flutter) en una carpeta canónica `.security/`. Se basa en
-  estándares abiertos: OWASP MASVS, MASWE, MASTG y OWASP Mobile Top 10, con
-  referencias CWE (sin depender de herramientas propietarias). Para móvil trae el
-  checklist precargado por plataforma; para otras tecnologías busca el estándar en
-  la web y lo cachea. Lleva la lista de hallazgos con estado (pendiente/en
-  progreso/resuelto) para continuar en varias sesiones, prioriza por severidad y
-  remedia paso a paso con confirmación del usuario en cada micro-paso. Úsala para
-  seguridad, auditoría, buenas prácticas, PII/secretos, cifrado, red/TLS,
-  almacenamiento, autenticación, permisos, dependencias vulnerables y hardening.
+  Audita seguridad de aplicaciones y registra findings OWASP/CWE en `.security/`.
+  Úsala ante peticiones de revisar autenticación, red/TLS, almacenamiento, PII,
+  secretos, permisos o vulnerabilidades; la calidad general corresponde a code-quality.
 ---
 
 # Skill: Security (auditoría y remediación guiada)
 
-## Identidad del MAS
+{{mas_identity}}
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con `MASVS`, `MASWE` o `MASTG` de OWASP.
 
 Esta skill es la **referencia canónica** para auditar, documentar y ayudar a
 remediar la seguridad de un proyecto, con foco en **móvil (Android, iOS,
@@ -130,14 +119,15 @@ son **plataformas de un mismo proyecto** → una sola `.security/` en la raíz.
    (MASVS/MASWE/CWE), impacto y estado `Pendiente`; luego ofrece iniciar la
    remediación (Fase B).
 
-## Fase B — Remediación guiada (paso a paso, con confirmación)
+## Fase B — Remediación proporcional al riesgo
 
-Trabaja **un hallazgo a la vez**, y **cada hallazgo dividido en micro-pasos**:
+Trabaja un hallazgo a la vez. Después de elegir la ruta directa o SDD, clasifica la
+corrección por alcance y reversibilidad antes de pedir autorización:
 
 ### Gate de ruta: corrección directa o recomendación de SDD
 
-Antes de proponer los micro-pasos, clasifica la ruta. La **severidad por sí sola
-no decide** si hace falta SDD.
+La **severidad por sí sola no decide** si hace falta SDD; aplica estos criterios
+de ruta antes de proponer el cambio.
 
 La corrección puede continuar directamente si el resultado seguro esperado está
 claro, es localizado y reversible, permanece dentro de seguridad, no rediseña
@@ -162,18 +152,18 @@ riesgos relevantes de regresión, disponibilidad o integridad. Entonces:
 Cuando el usuario regrese tras implementar la spec, reaudita y verifica el
 hallazgo antes de marcarlo `Resuelto`.
 
-1. **Explica** el hallazgo y por qué es riesgo (breve, con su ref MASVS/CWE).
-2. **Propón el plan** dividido en micro-pasos numerados (ej. "paso 1 de 4").
-3. Solicita aprobación antes del primer micro-paso y de cada siguiente; ejecuta
-   **UN solo micro-paso** autorizado y muestra el **diff mínimo** y **por qué**.
-4. **Detente y espera OK** del usuario antes del siguiente micro-paso.
-5. Actualiza el estado del finding (`Pendiente` → `En progreso` → `Resuelto`) y su
-   bitácora de micro-pasos, para poder continuar luego.
-6. Al cerrar el hallazgo, márcalo `Resuelto` en el tablero y pasa al siguiente
-   **solo si el usuario lo autoriza**.
+- **Atómica y bajo riesgo:** corrección localizada, reversible, sin contrato,
+  migración ni cambio de frontera de seguridad, y verificable con pruebas focalizadas.
+  Explica el hallazgo, presenta el diff completo y pide una sola aprobación antes
+  de aplicarlo.
+- **Estructural o de riesgo elevado:** varios módulos, credenciales/PII, auth/sesión,
+  criptografía, red, persistencia o garantías de integridad. Divide en micro-pasos
+  y pide aprobación antes de cada paso.
+- No escribas antes de la autorización aplicable. Verifica, actualiza estado/bitácora
+  después de la evidencia y no pases a otro hallazgo sin permiso.
 
 **Reglas de remediación (no negociables):**
-- Nunca encadenes varios cambios sin confirmación.
+- Nunca encadenes cambios estructurales sin las confirmaciones requeridas.
 - Nada de "fix masivo" opaco: cada paso es pequeño, explicado y reversible.
 - Si un paso toca algo fuera de seguridad, avisa antes.
 - Nunca escribas secretos reales; usa placeholders.

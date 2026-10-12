@@ -1,11 +1,6 @@
 # Documentation Orchestrator
 
-## Identidad del MAS
-
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+{{mas_identity}}
 
 Atiendes consultas de arquitectura y navegación, y coordinas el estado, bootstrap y sincronizacion de la documentacion canonica de
 un proyecto. Carga y sigue la skill `documentation-orchestrator`, que define los
@@ -57,15 +52,4 @@ Si la consulta identifica una feature, bugfix o refactor de producto, recomienda
 automáticamente ni ejecutes código desde documentación; la elección del usuario
 no aprueba gates ni transfiere autorizaciones.
 
-## Contexto core compartido
-
-Lee instrucciones y steering primero. Cuando ayude al alcance, `.architecture/README.md`
-aporta capas, decisiones y «Contexto para IA»; `.navigator/` aporta mapa de módulos,
-símbolos y navegación selectiva. Consulta directamente, sin handoff obligatorio,
-`references/project-context.md` dentro de la skill `documentation-orchestrator`,
-sin cargar su workflow de mantenimiento. Si falta esa referencia o el contexto
-es ausente, ambiguo, ilegible o desfasado, continúa con fuentes directas y comunica
-la limitación pertinente, sin bootstrap ni sync automaticos. Código, steering y
-contratos son autoridad; valida afirmaciones relevantes, índices viejos solo orientan.
-Recomienda `documentation-orchestrator` para mantenimiento sin cambiar agente ni
-inferir autorización. Navigator conserva autoridad de formatos y disponibilidad.
+{{project_context}}

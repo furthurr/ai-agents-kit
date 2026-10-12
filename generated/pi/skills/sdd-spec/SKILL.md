@@ -3,20 +3,17 @@ name: sdd-spec
 description: >-
   Aplica la metodología Spec-Driven Development (SDD) estilo Kiro: genera y
   refina specs (requirements.md, design.md, tasks.md, verification.md) con modos
-  proporcionales, gates de aprobación, notación EARS y trazabilidad. Úsala al
-  planificar una feature, escribir requisitos, diseñar arquitectura, desglosar
-  tareas o corregir un bug de forma estructurada (bugfix). Palabras clave: spec,
-  SDD, especificación, EARS, requirements, design, tasks, bugfix, Kiro.
+  proporcionales, gates de aprobación, notación EARS y trazabilidad. Úsala para
+  planificar o implementar una feature/bugfix mediante spec, requisitos, tareas y
+  verificación; no para explicar arquitectura sin diseñar una feature.
 ---
 
 # Skill: SDD Spec
 
 ## Identidad del MAS
 
-En este kit, `MAS` significa **Multi-Agent System** (sistema multiagente): agentes,
-skills, orquestación, handoffs, adaptadores y artefactos generados. `MAS:` dirige
-una instrucción al sistema completo; `@<agente>` dirige a un agente concreto. No
-confundas `MAS` con un modelo/proveedor LLM ni con `MASVS`, `MASWE` o `MASTG` de OWASP.
+MAS significa **Multi-Agent System**; `MAS:` se dirige al kit y `@<agente>` a un rol concreto.
+
 
 Flujo SDD proporcional con gates, EARS y trazabilidad. La calificación de feature
 solo puede emitirla el agente `/sdd`; cargar esta skill desde otro agente
@@ -68,21 +65,12 @@ pruebas». TDD estricto no es una estrategia disponible. Detalle en
 
 ## Opciones retiradas y specs históricas
 
-`deep` y TDD estricto ya no forman parte del contrato operativo. No deben
-seleccionarse ni presentarse como alternativas vigentes, incluso si el usuario los
-solicita explícitamente.
-
-- Si una solicitud nueva pide `deep`, informa que la profundidad se retiró, propone
-  `standard` y espera aceptación antes de iniciar el flujo.
-- Si una solicitud nueva pide TDD estricto, informa que la estrategia se retiró,
-  propone TDD focalizado y espera aceptación antes de iniciar el flujo.
-- Si una spec existente declara cualquiera de esas opciones, conserva sus
-  artefactos, evidencias y decisiones históricas; solicita aceptación de la
-  sustitución antes de modificarla o reanudarla.
-- La aceptación de la alternativa solo autoriza la sustitución de la opción. No
-  aprueba Requirements, Design, Tasks ni ningún gate pendiente.
-- Si faltan o se contradicen los marcadores de modo, fase, estado o gate, pide
-  aclaración y no infiere aprobación por la existencia de archivos.
+`deep` no está disponible: ante una solicitud nueva propone `standard` y espera
+aceptación; no conviertas la solicitud silenciosamente. En una spec histórica conserva
+artefactos/evidencia y pide aceptar su sustitución antes de reanudarla. TDD estricto
+se trata en `references/testing.md`.
+Aceptar la sustitución no aprueba gates. Si los marcadores de modo/fase/estado/gate
+faltan o se contradicen, aclara antes de continuar; no infieras aprobación por archivos.
 
 ## Preflight técnico y calificación de feature
 
@@ -117,6 +105,11 @@ respeta la previa compatible. Solo planificación nunca implementa.
 
 ## Contexto selectivo
 
+Carga únicamente la referencia necesaria para la decisión/fase actual. Lee el
+fragmento pertinente y reutilízalo durante la tarea; no vuelvas a cargar el mismo
+archivo en cada fase si alcance y fuente no cambiaron. No cargues todas las
+referencias por defecto.
+
 Antes de consumir `.navigator/`, carga
 `references/navigator-context.md`. Aplica su preflight y orden de fuentes en
 exploración y en cada fase que necesite contexto nuevo. Navigator es auxiliar: su
@@ -125,23 +118,14 @@ aprobación explícita.
 
 ## Recomendación de agente por dominio
 
-Resuelve la decisión de ejecutor antes de la primera modificación: no uses
-herramientas de escritura ni comandos que modifiquen archivos mientras falte una
-elección esencial entre especialista y SDD. Cargar esta skill y, ante UI/datos,
-leer `references/agent-routing.md` precede a esa escritura; no basta con descubrir
-la skill en el catálogo. Abrir SDD no es una decisión de rechazar al especialista.
-La lista v1 es cerrada a `ui-design` y `data-api`; no enumeres otros agentes como
-alternativas; no enumeres ni recomiendes otros agentes. Si el usuario elige
-explícitamente un especialista, entrega el contexto manual y detente en SDD; la
-elección de especialista significa que esa actividad no se ejecuta en SDD, aunque
-la petición original incluyera «implementa».
-
-Antes de editar o ejecutar una actividad, evalúa si corresponde íntegramente a
-`ui-design` o `data-api`. Carga `references/agent-routing.md` bajo demanda para
-criterios, precedencias y contexto copiable. Ofrece selección manual o continuidad
-con SDD; no cambies de agente automáticamente ni invoques subagentes. La elección
-explícita compatible evita una pregunta redundante. Conserva planificación SDD
-ante ambigüedad, riesgo o cruce de dominios, sin cambiar profundidad, testing ni gates.
+Antes de escribir, resuelve el ejecutor. Solo ante un alcance íntegramente visual o
+de datos, carga una vez `references/agent-routing.md` y ofrece selección manual entre
+el especialista aplicable y SDD. No uses herramientas de escritura sin decisión de
+ejecutor. La lista v1 es cerrada a `ui-design` y `data-api`; no enumeres ni recomiendes
+otros agentes. No cambies de agente automáticamente. Si el usuario elige especialista,
+la elección de especialista significa que esa actividad no se ejecuta en SDD; entrega
+contexto y detente aunque la petición original incluyera «implementa». Reutiliza decisión
+y referencia si no cambia el alcance.
 
 ## Artefactos
 
@@ -227,14 +211,14 @@ antes de reanudarla.
 2. Secuencia por dependencias; marca `[P]` (paralelo) y `[opcional]`.
 3. Para TDD focalizado, cada tarea de comportamiento explicita el orden
    interno RED → GREEN → REFACTOR, sin crear tareas ceremoniales por cada paso.
-4. Incluye grafo de waves. Consulta `references/templates.md` para formato.
+4. Incluye grafo de waves. Consulta solo la sección `tasks.md` de `references/templates.md`.
 5. **GATE 3**: "¿Apruebas el plan y empiezo a implementar?"
 
 ### Implementación
 
-- Para una tarea especializada acotada, aplica `references/agent-routing.md` antes
-  de ejecutarla: conserva vínculo a requisitos/tareas, autorización y gates pendientes.
-  La selección de ejecutor no aprueba gates ni amplía alcance.
+- Para una tarea especializada acotada, reutiliza la decisión de `agent-routing.md`;
+  recárgala solo si cambia el alcance. Conserva vínculo a requisitos/tareas,
+  autorización y gates pendientes.
 - Una tarea a la vez o en waves. Estados: `[ ]` → 🔵 → `[x]`.
 - No emitas niveles por tarea/fase ni recomendaciones de modelo durante Implementación.
 - Antes de `[x]`: `references/integrity-gate.md`.
@@ -250,7 +234,7 @@ Prerrequisito: `[x]` con artefacto real (o `[omitido: razón]`).
    modelo; no emitas nivel de tarea/fase. Conserva los controles de integridad.
 2. `references/integrity-gate.md`: validar cada `[x]` ↔ disco/evidencia.
 3. Suite de tests + spot-check `quality-bar` y 3–5 RNF del spec.
-4. `verification.md` con columna Evidencia (`templates.md`). No cerrar con huérfanos.
+4. Usa la sección `verification.md` de `templates.md` y la matriz de evidencia. No cerrar con huérfanos.
 5. **GATE 4**: "¿Cierro la spec o cubrimos los huecos?" Después de Verification,
    no repitas la calificación de feature.
 
@@ -299,4 +283,4 @@ Si deja de ser trivial, detente y solicita reclasificación antes de ampliar el 
 - Sujeto siempre "EL SISTEMA".
 - Implementación → `design.md`, no `requirements.md`.
 - Cada requisito ≥1 tarea. Respeta steering. Sin cumplimiento inventado.
-- Consulta `references/ears-reference.md` para patrones EARS.
+- Los patrones EARS mínimos ya están en esta skill; abre `ears-reference.md` solo si hace falta una forma no cubierta.

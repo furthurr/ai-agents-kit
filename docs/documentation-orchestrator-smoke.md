@@ -163,16 +163,23 @@ steering y contratos confirman decisiones. Índices viejos solo orientan; ante
 fallos se usan fuentes directas y se comunica el límite. No hay bootstrap/sync
 automático ni escrituras del consumidor.
 
-## 10. Petición mixta y exportación
+## 10. Petición mixta y guía portable
 
 ```text
 Explica las capas ahora y actualiza después los índices; no he aprobado escrituras.
 ```
 
 Esperado: atiende lectura separable, propone mantenimiento y espera aprobación
-aplicable antes de escribir. Solicitar exportación de Navigator a `AGENTS.md`
-conserva confirmación específica; una consulta, handoff antiguo o `gate_state` no
-autoriza exportar ni sobrescribir.
+aplicable antes de escribir. El plan incluye crear/actualizar el bloque gestionado
+del `AGENTS.md` raíz; una consulta, handoff antiguo o `gate_state` no autoriza esa
+escritura.
+
+Para una operación aprobada, comprobar `AGENTS.md` ausente, existente sin bloque,
+con un par válido y con marcadores duplicados/incompletos. Esperado: crear si falta;
+añadir el bloque sin alterar texto manual; actualizar solo su interior y no escribir
+si no hay cambios; ante marcadores ambiguos o instrucciones incompatibles, detenerse
+y pedir una decisión. `inspect`, `status`, `release-check` y Navigator bootstrap/update
+no escriben `AGENTS.md`.
 
 ## 11. IDs retirados y conservación
 

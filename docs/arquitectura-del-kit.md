@@ -178,7 +178,7 @@ Ejecutar siempre antes de instalar o de commitear cambios de prompts.
 
 | Script | Función |
 |--------|---------|
-| `tools/measure_context.py` | Palabras en agentes, skills y references (coste de contexto) |
+| `tools/measure_context.py` | Inventario de texto y volumen por conjunto observado de archivos; no estima tokens del host |
 | `tools/import_installed.py` | Apoyo a importar lo instalado hacia `imports/` |
 | `tools/check_links.py` | Enlaces Markdown internos de docs y fuentes canónicas |
 | `tools/test_integrity.py` | Tests de integridad del repo/pipeline |

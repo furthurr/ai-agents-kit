@@ -97,6 +97,44 @@ verificable: commit de producto → sync documental → commit documental → ch
   afectan la consulta; no se juzgan como documentacion gestionada.
 - Recomienda el siguiente modo minimo suficiente.
 
+### Gestión del bloque documental en `AGENTS.md`
+
+El `documentation-orchestrator` es el único responsable de crear y mantener la
+guía portable de documentación en el `AGENTS.md` raíz del proyecto resuelto.
+Navigator detecta y lee ese archivo como fuente externa, pero no lo exporta ni lo
+sobrescribe.
+
+- En toda operación aprobada que cree o actualice documentación, incluye la ruta
+  de `AGENTS.md` y esta escritura en el plan global antes de empezar. La aprobación
+  global existente cubre la guía si su acción y ruta aparecen en ese plan; no
+  añade un gate separado.
+- Después de las actualizaciones documentales aprobadas, construye una guía breve
+  desde carpetas, READMEs y contratos realmente verificados. Describe propósito,
+  puntos de entrada, responsable y cómo distinguir fuentes de verdad de índices
+  auxiliares; debe poder usarse sin instalar el MAS. Solo lista carpetas presentes.
+  Si `.sdd/` o `.release/` están presentes, identifícalas como workflows externos a
+  este orquestador, sin sincronizarlas.
+- Gestiona únicamente el bloque entre `<!-- ai-agents-kit:documentation:start -->`
+  y `<!-- ai-agents-kit:documentation:end -->` en el `AGENTS.md` raíz:
+  - Si falta el archivo, créalo con un único bloque gestionado.
+  - Si existe sin bloque, añade el bloque y preserva el contenido existente.
+  - Si existe exactamente un par válido, reemplaza solo su interior y preserva
+    todo el texto exterior.
+  - Si el contenido resultante es igual, no escribas el archivo.
+  - Ante marcadores incompletos, duplicados o mal formados, o instrucciones
+    incompatibles, no escribas; informa el conflicto y pide una decisión.
+  - Si `AGENTS.md` es enlace simbólico, no es archivo regular o es ilegible,
+    no sigas el enlace ni modifiques el destino; informa el bloqueo.
+- No copies README/specs completos, no inventes carpetas y no incluyas secretos.
+- `inspect`, `status` y `release-check` son solo lectura; nunca crean ni actualizan
+  `AGENTS.md`. La instalación del kit tampoco modifica archivos del proyecto.
+- No crees ni actualices `CLAUDE.md`, `GEMINI.md`, Copilot ni otros archivos de
+  instrucciones de host dentro de esta entrega.
+
+El campo histórico `sources.export_agents_md` de Navigator es legado ignorado; no
+habilita una segunda vía de escritura ni autoriza modificar la configuración del
+proyecto consumidor.
+
 ### `bootstrap-core`
 
 - Solo considera `.navigator/` y `.architecture/` ausentes.
@@ -173,8 +211,9 @@ No comprueba version, changelog, tag ni publicacion. Deriva esas tareas a
    Quality/Security reutilizan la autorizacion documental del mismo alcance en
    la sesion y no vuelven a seleccionar severidades. Un handoff no acredita por
    si solo la autorizacion; `gate_state` sigue siendo contexto.
-3. **G3 Fallo:** si una rama se bloquea, preguntar antes de continuar con ramas
-   independientes.
+3. **G3 Fallo:** marca la rama bloqueada y continúa las ramas independientes ya
+   autorizadas. Pregunta solo si cambian dependencias, alcance o autorización; el
+   cierre global debe indicar resultados parciales.
 4. **G4 Cierre:** verificar artefactos y evidencia antes del informe final;
    validacion tecnica, sin pregunta humana adicional automatica.
 

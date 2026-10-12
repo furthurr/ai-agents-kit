@@ -70,7 +70,8 @@ el alcance, las fuentes, el presupuesto y el plan de escritura.
 
 ```text
 @documentation-orchestrator sync-domain project-navigator: actualiza solo los índices existentes.
-Presenta las capas afectadas y conserva las autorizaciones de escritura/exportación.
+Presenta las capas afectadas y conserva las autorizaciones de escritura. Navigator
+no exporta a `AGENTS.md`; la guía portable pertenece al plan de documentación.
 ```
 
 `inspect` no crea ni actualiza índices. Si faltan, están desfasados, no son
@@ -82,7 +83,8 @@ Para instalaciones anteriores, consulta [migración segura](../migracion-agentes
 ## Límites y confirmaciones
 
 - Por defecto es de solo lectura.
-- Solo escribe en `.navigator/`; la exportación opt-in a `AGENTS.md` requiere confirmación.
+- Solo escribe en `.navigator/`; no crea, exporta ni sobrescribe `AGENTS.md`.
+  `documentation-orchestrator` mantiene su bloque documental con un plan aprobado.
 - No implementa features, refactors, tests, CI ni cambios en Git remoto.
 - No recomienda ni selecciona niveles, modelos o proveedores LLM.
   Crear, actualizar, exportar o sobrescribir índices conserva su autorización efectiva.
