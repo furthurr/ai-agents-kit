@@ -5,18 +5,38 @@
     "mode": "all",
     "temperature": 0.2,
     "permission": {
-      "edit": "ask",
+      "edit": {
+        "*": "deny",
+        ".navigator/*": "ask",
+        ".architecture/*": "ask",
+        ".data/*": "ask",
+        ".design/*": "ask",
+        ".quality/*": "ask",
+        ".security/*": "ask",
+        "*/.navigator/*": "ask",
+        "*/.architecture/*": "ask",
+        "*/.data/*": "ask",
+        "*/.design/*": "ask",
+        "*/.quality/*": "ask",
+        "*/.security/*": "ask"
+      },
       "webfetch": "allow",
+      "external_directory": "ask",
+      "task": {
+        "*": "deny",
+        "data-api": "ask",
+        "ui-design": "ask",
+        "code-review": "ask"
+      },
       "bash": {
         "*": "ask",
         "git *": "deny",
-        "git status*": "allow",
-        "git log*": "allow",
-        "git diff*": "allow",
-        "git show*": "allow",
-        "git rev-parse*": "allow",
+        "git status*": "ask",
+        "git log*": "ask",
+        "git diff*": "ask",
+        "git show*": "ask",
+        "git rev-parse*": "ask",
         "rm *": "deny",
-        "rm -rf *": "deny",
         "git clean*": "deny"
       }
     }

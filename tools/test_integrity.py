@@ -250,10 +250,10 @@ def test_generated_artifacts() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 9. Kiro agents frontmatter: match field is array (the fix we applied)
+# 9. Kiro agents: optional match/exclude fields must be arrays when present
 # ---------------------------------------------------------------------------
 def test_kiro_frontmatter_match_is_array() -> None:
-    print("\n\033[1m[9] Kiro: permissions.rules[].match es array\033[0m")
+    print("\n\033[1m[9] Kiro: match/exclude ausentes o arrays\033[0m")
 
     manifest = json.loads((ROOT / "canonical" / "manifest.json").read_text(encoding="utf-8"))
 
@@ -261,8 +261,11 @@ def test_kiro_frontmatter_match_is_array() -> None:
         adapter_path = ROOT / "adapters" / "kiro" / "agents" / f"{agent_id}.json"
         adapter = json.loads(adapter_path.read_text(encoding="utf-8"))
         rules = adapter.get("frontmatter", {}).get("permissions", {}).get("rules", [])
-        all_arrays = all(isinstance(rule.get("match"), list) for rule in rules)
-        check(all_arrays, f"adapters/kiro/agents/{agent_id}.json: match es array")
+        all_arrays = all(
+            key not in rule or (isinstance(rule[key], list) and all(isinstance(item, str) for item in rule[key]))
+            for rule in rules for key in ("match", "exclude")
+        )
+        check(all_arrays, f"adapters/kiro/agents/{agent_id}.json: match/exclude ausentes o arrays")
 
         # Also check the generated artifact
         gen_path = ROOT / "generated" / "kiro" / "agents" / adapter["filename"]
@@ -270,7 +273,7 @@ def test_kiro_frontmatter_match_is_array() -> None:
             content = gen_path.read_text(encoding="utf-8")
             # In YAML, match as string would look like: match: "something"
             # match as array would look like: match:\n        - "something"
-            bad_match = re.findall(r'^\s+match: "', content, re.MULTILINE)
+            bad_match = re.findall(r'^\s+(?:match|exclude): "', content, re.MULTILINE)
             check(len(bad_match) == 0, f"generated/kiro/agents/{adapter['filename']}: match YAML es lista")
 
 

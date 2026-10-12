@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Presentación breve del AI Agents Kit: seis agentes, responsabilidades e interacción del sistema multiagente.">
+<title>Nuestro MAS · De la idea a la entrega</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* === THEME: change these variables to customize the blueprint === */
+:root{--stage-bg:#070e13;--slide-bg:#101e27;--paper:#e9efe9;--signal:#ffb76b;--muted:#b7cbd0;--line:#7897a755;--grid:#d8e5e50c;--display:'Barlow Condensed',sans-serif;--body:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace}
+*{box-sizing:border-box}body{font-family:var(--body);color:var(--paper)}h1,h2,h3,p{margin:0}button{font-family:var(--mono);cursor:pointer}button:focus-visible{outline:2px solid var(--signal);outline-offset:4px}
+/* === FIXED 16:9 STAGE: mandatory viewport-base.css in full === */
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+/* === SLIDE CHROME AND TYPOGRAPHY: fixed stage measurements === */
+.slide{background:radial-gradient(ellipse at 83% 40%,#27435266,transparent 55%),linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),var(--slide-bg);background-size:auto,60px 60px,60px 60px,auto}
+.mast{position:absolute;left:95px;right:95px;top:66px;display:flex;justify-content:space-between;font:23px var(--mono);letter-spacing:2px;color:#acc2c9}
+.footer{position:absolute;left:95px;right:95px;bottom:70px;border-top:1px solid var(--line);padding-top:27px;display:flex;justify-content:space-between;font:23px var(--mono);color:var(--muted)}
+.heading{position:absolute;left:95px;top:154px;right:95px}.eyebrow{font:24px var(--mono);letter-spacing:3px;color:var(--signal);margin-bottom:18px}h2{font:700 102px/1.05 var(--display);letter-spacing:-1px}h3{font:600 54px/1.1 var(--display)}.subheading{font-size:31px;color:var(--muted);margin-top:20px;line-height:1.4}
+.body-region{position:absolute;left:95px;right:95px;top:385px;bottom:175px}.accent{color:var(--signal)}.mono{font-family:var(--mono)}.small{font-size:25px;line-height:1.5;color:var(--muted)}.rule{height:1px;background:var(--line)}
+/* === COVER: large title and a conceptual context network === */
+.hero{position:absolute;left:95px;top:244px;width:950px}h1{font:700 183px/.95 var(--display);letter-spacing:-3px;margin:30px 0}.hero p{font-size:42px;line-height:1.4;max-width:870px;color:var(--muted)}
+.network{position:absolute;left:1080px;top:235px;width:740px;height:620px}.network text{font:24px var(--mono);fill:var(--paper)}.network .center{font-size:44px;fill:var(--signal)}.network path{stroke:#7b9da7;stroke-width:2;stroke-dasharray:7 9;fill:none}.network circle{fill:var(--slide-bg);stroke:var(--signal);stroke-width:2}
+/* === ROLE MAP: six concise responsibilities, split into two lanes === */
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:0 90px}.role{height:165px;border-top:1px solid var(--line);padding-top:25px;display:grid;grid-template-columns:55px 1fr;gap:18px}.index{font:26px var(--mono);color:var(--signal);padding-top:8px}.role h3{font-size:44px}.role p{font-size:29px;color:var(--muted);margin-top:13px;line-height:1.3}
+/* === SDD: horizontal process and proportional execution depths === */
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:25px}.step{border-top:3px solid var(--signal);padding-top:25px;min-height:160px}.step .small{margin-top:13px}.step h3{font-size:46px}.step span{font:23px var(--mono);color:var(--signal);display:block;margin-bottom:14px}.depths{display:grid;grid-template-columns:repeat(3,1fr);gap:38px;margin-top:55px}.depth{padding:26px 30px;border:1px solid var(--line);background:#101e27cc}.depth h3{font:500 31px var(--mono);color:var(--signal)}.depth p{font-size:27px;line-height:1.4;color:var(--muted);margin-top:18px}
+/* === SPECIALISTS: three domain columns, without broad claims === */
+.specialists{display:grid;grid-template-columns:repeat(3,1fr);gap:55px}.specialist{border-left:2px solid var(--signal);padding:5px 0 0 30px}.specialist .label{font:24px var(--mono);color:var(--signal);margin-bottom:28px}.specialist h3{font-size:66px}.specialist p{font-size:33px;line-height:1.45;margin-top:24px;color:var(--muted)}.specialist .artifact{margin-top:42px;font:28px var(--mono);color:var(--paper)}.strip{position:absolute;left:0;right:0;bottom:8px;border-top:1px solid var(--line);padding-top:28px;font-size:31px}
+/* === SHARED MEMORY: architecture/navigation, domains and specs === */
+.memory{display:grid;grid-template-columns:1fr 1fr;gap:75px}.core{border:1px solid var(--signal);padding:34px 40px;background:#101e27cc}.core h3{margin-bottom:23px}.path{font:30px var(--mono);color:var(--signal);margin-top:25px}.core p{font-size:29px;color:var(--muted);margin-top:10px;line-height:1.4}.domain-list{display:grid;grid-template-columns:1fr 1fr;gap:28px 25px;margin-top:30px}.domain-list div{border-top:1px solid var(--line);padding-top:20px}.domain-list b{font:27px var(--mono);color:var(--signal)}.domain-list p{font-size:27px;color:var(--muted);margin-top:12px;line-height:1.4}.memory-foot{position:absolute;bottom:0;left:0;right:0;font-size:30px;border-top:1px solid var(--line);padding-top:26px}
+/* === EXAMPLE FLOW: user-approved transitions and separate documentation lane === */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:38px;margin-top:34px}.flow-node{position:relative;border:1px solid var(--line);padding:28px;min-height:235px;background:#101e27cc}.flow-node:not(:last-child)::after{content:'→';position:absolute;right:-33px;top:80px;font-size:35px;color:var(--signal)}.flow-node .small{margin-top:22px;font-size:27px}.flow-node h3{font-size:44px}.flow-node .index{display:block;margin-bottom:20px}.lane{margin-top:55px;border:1px dashed var(--signal);padding:27px 32px;display:flex;justify-content:space-between;gap:35px;align-items:center}.lane h3{font-size:40px;width:560px}.lane p{font-size:28px;line-height:1.4;color:var(--muted);width:900px}.legend{margin-top:26px;font:23px var(--mono);color:var(--muted)}
+/* === CLOSE: release responsibilities and one memorable statement === */
+.closing{display:grid;grid-template-columns:1fr 1fr;gap:85px}.release{border-top:3px solid var(--signal);padding-top:30px}.release h3{font-size:61px}.release p{font-size:33px;color:var(--muted);line-height:1.5;margin-top:25px}.release .small{font-size:26px;margin-top:30px}.thesis{font:600 85px/1.05 var(--display);border-left:1px solid var(--line);padding-left:60px}.closing-bottom{position:absolute;bottom:5px;left:0;right:0;border-top:1px solid var(--line);padding-top:34px;font-size:36px;display:flex;justify-content:space-between}
+/* === MOTION: restrained, staggered entrances === */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}.slide.visible .reveal{opacity:1;transform:translateY(0)}.delay{transition-delay:.14s}.delay-more{transition-delay:.28s}
+/* === OUTSIDE-STAGE CONTROLS: navigation, notes and editing === */
+.deck-controls{display:flex;align-items:center;gap:10px;padding:7px 10px;background:#070e13ed;border:1px solid var(--line);border-radius:8px;color:var(--paper)}.deck-controls button,.edit-toggle{background:transparent;color:var(--paper);border:1px solid var(--line);padding:8px 12px;border-radius:4px;font-size:14px}.deck-controls button:disabled{opacity:.35;cursor:default}#pageCount{font:13px var(--mono);min-width:48px;text-align:center}.edit-hotzone{position:fixed;top:0;left:0;width:80px;height:80px;z-index:10000;cursor:pointer}.edit-toggle{position:fixed;left:15px;top:15px;z-index:10001;opacity:0;pointer-events:none;background:#070e13;transition:opacity .3s}.edit-toggle.show,.edit-toggle.active{opacity:1;pointer-events:auto}.editing [data-edit]{outline:1px dashed var(--signal);outline-offset:5px;cursor:text}.notice{position:fixed;right:20px;top:20px;background:#070e13;border:1px solid var(--line);padding:12px 18px;font-size:14px;z-index:10002;max-width:300px}.notice:empty{display:none}.notes{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);width:min(850px,90vw);padding:24px;background:#070e13f5;border:1px solid var(--signal);font-size:18px;line-height:1.5;z-index:1001}.notes[hidden]{display:none}.notes h4{margin:0 0 12px;color:var(--signal)}
+@media print{@page{size:1920px 1080px;margin:0}.edit-hotzone,.edit-toggle,.notice,.notes{display:none!important}.reveal{opacity:1!important;transform:none!important}.slide{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+/* Keep the navigation below footer text when the stage fills a desktop viewport. */
+.deck-controls{bottom:5px;padding:5px 8px}.deck-controls button{padding:6px 10px;font-size:12px}#pageCount{font-size:12px}
+</style>
+</head>
+<body>
+<main class="deck-viewport" aria-label="Presentación del sistema multiagente">
+<div class="deck-stage" id="deckStage">
+<!-- === 01 / COVER: conceptual network, not automatic delegation === -->
+<section class="slide active" aria-label="Nuestro MAS" data-notes="MAS significa Multi-Agent System. Son seis roles especializados apoyados por skills y archivos compartidos. La red de la portada representa acceso a contexto; no implica ejecución paralela ni cambios de agente automáticos. Duración sugerida: 35 segundos.">
+<header class="mast"><span>AI AGENTS KIT</span><span>SISTEMA MULTIAGENTE / 01</span></header>
+<div class="hero reveal"><div class="eyebrow" data-edit>DE LA IDEA A LA ENTREGA</div><h1 data-edit>Nuestro MAS.</h1><p data-edit>Seis agentes.<br>Un contexto compartido.<br>Decisiones y resultados trazables.</p></div>
+<svg class="network reveal delay" viewBox="0 0 740 620" role="img" aria-label="Seis agentes consultan el contexto del proyecto"><path d="M370 310 L370 60 M370 310 L620 190 M370 310 L620 440 M370 310 L370 560 M370 310 L120 440 M370 310 L120 190"/><circle cx="370" cy="310" r="112"/><text class="center" x="370" y="325" text-anchor="middle">CONTEXTO</text><circle cx="370" cy="60" r="10"/><text x="370" y="25" text-anchor="middle">SDD</text><circle cx="620" cy="190" r="10"/><text x="620" y="155" text-anchor="middle">UI</text><circle cx="620" cy="440" r="10"/><text x="620" y="485" text-anchor="middle">DATA / API</text><circle cx="370" cy="560" r="10"/><text x="370" y="607" text-anchor="middle">REVIEW</text><circle cx="120" cy="440" r="10"/><text x="120" y="485" text-anchor="middle">DOCS</text><circle cx="120" cy="190" r="10"/><text x="120" y="155" text-anchor="middle">GIT / RELEASE</text></svg>
+<footer class="footer"><span>ESPECIALIZACIÓN · EVIDENCIA · CONTINUIDAD</span><span>EL USUARIO CONSERVA EL CONTROL</span></footer>
+</section>
+<!-- === 02 / AGENTS: all six canonical agents, skills are procedures === -->
+<section class="slide" aria-label="Los seis agentes" data-notes="El agente define el rol y los límites; las skills detallan el procedimiento. No hay que pasar por los seis agentes para cada cambio. Podemos entrar directamente por el rol que corresponda. Documentation Orchestrator coordina documentación, no es un supervisor universal de implementación. Duración: 60 segundos.">
+<header class="mast"><span>AI AGENTS KIT</span><span>ROLES / 02</span></header>
+<div class="heading reveal"><div class="eyebrow">QUIÉN HACE QUÉ</div><h2 data-edit>Seis agentes. Responsabilidades claras.</h2><p class="subheading" data-edit>El agente aporta el rol; sus skills establecen el procedimiento.</p></div>
+<div class="body-region roles reveal delay">
+<article class="role"><span class="index">01</span><div><h3 data-edit>sdd</h3><p data-edit>Define, planifica e implementa trabajo verificable.</p></div></article>
+<article class="role"><span class="index">02</span><div><h3 data-edit>ui-design</h3><p data-edit>Desarrolla UI y mantiene el sistema visual.</p></div></article>
+<article class="role"><span class="index">03</span><div><h3 data-edit>data-api</h3><p data-edit>Desarrolla datos, APIs y sus contratos.</p></div></article>
+<article class="role"><span class="index">04</span><div><h3 data-edit>code-review</h3><p data-edit>Audita calidad y seguridad; guía correcciones.</p></div></article>
+<article class="role"><span class="index">05</span><div><h3 data-edit>documentation-orchestrator</h3><p data-edit>Consulta y coordina documentación e índices.</p></div></article>
+<article class="role"><span class="index">06</span><div><h3 data-edit>git-release-manager</h3><p data-edit>Gestiona commits, push, versiones y tags.</p></div></article>
+</div>
+<footer class="footer"><span>ENTRA POR EL ROL QUE NECESITA TU TAREA</span><span>02 / 07</span></footer>
+</section>
+<!-- === 03 / SDD: scope agreement precedes artifacts; gates depend on mode === -->
+<section class="slide" aria-label="El proceso SDD" data-notes="El alcance ya acuerda comportamientos, criterios de aceptación, errores y exclusiones. Requirements formaliza el QUÉ; Design decide el CÓMO. El esquema muestra funciones del proceso, no cuatro gates obligatorios para todo modo. Standard conserva aprobaciones de fase; lite genera Quick Plan sin Gates 1–3 ni Gate 4; direct no crea spec. La calificación de esfuerzo no crea una aprobación adicional. Duración: 60 segundos.">
+<header class="mast"><span>AI AGENTS KIT</span><span>PLANIFICACIÓN / 03</span></header>
+<div class="heading reveal"><div class="eyebrow">SDD · DEL ACUERDO A LA EVIDENCIA</div><h2 data-edit>Primero el qué. Después el cómo.</h2></div>
+<div class="body-region"><div class="process reveal delay">
+<article class="step"><span>01 →</span><h3 data-edit>Acordar alcance</h3><p class="small" data-edit>Resultados, comportamientos,<br>criterios y exclusiones.</p></article>
+<article class="step"><span>02 →</span><h3 data-edit>Elegir profundidad</h3><p class="small" data-edit>Según impacto, claridad<br>y garantías verificables.</p></article>
+<article class="step"><span>03 →</span><h3 data-edit>Planificar y ejecutar</h3><p class="small" data-edit>Requerimientos, diseño y tareas<br>cuando el modo los exige.</p></article>
+<article class="step"><span>04</span><h3 data-edit>Verificar</h3><p class="small" data-edit>Pruebas y evidencia real<br>antes de dar por terminado.</p></article>
+</div><div class="depths reveal delay-more">
+<article class="depth"><h3 data-edit>direct</h3><p data-edit>Cambio trivial y reversible.<br>Sin spec nueva; mantiene documentación afectada.</p></article>
+<article class="depth"><h3 data-edit>lite</h3><p data-edit>Alcance claro y acotado.<br>Quick Plan y verificación compacta al implementar.</p></article>
+<article class="depth"><h3 data-edit>standard</h3><p data-edit>Planificación por fases.<br>Requerimientos, diseño, tareas y verificación con gates.</p></article>
+</div></div>
+<footer class="footer"><span>LA PROFUNDIDAD REDUCE CEREMONIA, NO EVIDENCIA</span><span>03 / 07</span></footer>
+</section>
+<!-- === 04 / SPECIALISTS: documented domains and approval-bound remediation === -->
+<section class="slide" aria-label="Especialistas de desarrollo y revisión" data-notes="UI no implementa APIs ni negocio; Data/API no toca UI. Ambos pueden realizar cambios localizados dentro de sus reglas y recomiendan SDD cuando falta planificación o hay impacto amplio. Code Review aplica code-quality y security, con registros separados y remediación aprobada por micro-paso. Primera documentación de UI o datos exige estudio y confirmar qué generar, no una extracción masiva automática. Duración: 60 segundos.">
+<header class="mast"><span>AI AGENTS KIT</span><span>DESARROLLO Y REVISIÓN / 04</span></header>
+<div class="heading reveal"><div class="eyebrow">ESPECIALIZACIÓN POR DOMINIO</div><h2 data-edit>Construir con foco. Revisar con criterios.</h2></div>
+<div class="body-region"><div class="specialists reveal delay">
+<article class="specialist"><div class="label">UI-DESIGN</div><h3 data-edit>Sistema visual</h3><p data-edit>Tokens, temas, componentes<br>y accesibilidad visual.</p><div class="artifact" data-edit>.design/</div></article>
+<article class="specialist"><div class="label">DATA-API</div><h3 data-edit>Datos y contratos</h3><p data-edit>DTOs, endpoints, mapeos,<br>persistencia e integraciones.</p><div class="artifact" data-edit>.data/</div></article>
+<article class="specialist"><div class="label">CODE-REVIEW</div><h3 data-edit>Calidad y seguridad</h3><p data-edit>Hallazgos verificados<br>y correcciones aprobadas.</p><div class="artifact" data-edit>.quality/ · .security/</div></article>
+</div><div class="strip reveal delay-more" data-edit><span class="accent">Si el trabajo necesita requisitos, diseño o coordinación amplia:</span> recomendar SDD.</div></div>
+<footer class="footer"><span>CADA ESPECIALISTA CONSERVA LOS LÍMITES DE SU DOMINIO</span><span>04 / 07</span></footer>
+</section>
+<!-- === 05 / MEMORY: consuming documentation does not mean synchronizing it === -->
+<section class="slide" aria-label="Documentación y contexto compartido" data-notes="Todos los agentes conocen el core y lo consultan selectivamente. Código, contratos y steering tienen autoridad sobre documentación vieja. Documentation Orchestrator usa architecture y project-navigator localmente para mantener el core, y skills de dominio o handoffs autorizados para otras carpetas. No modifica producto ni administra .sdd/. Si falta el contexto, se trabaja con fuentes directas; SDD captura lo imprescindible en la spec si el modo la genera, sin inicializar carpetas de dominio. Duración: 70 segundos.">
+<header class="mast"><span>AI AGENTS KIT</span><span>CONTEXTO / 05</span></header>
+<div class="heading reveal"><div class="eyebrow">LA MEMORIA DEL PROYECTO</div><h2 data-edit>Consultar contexto ≠ mantenerlo actualizado.</h2></div>
+<div class="body-region"><div class="memory reveal delay">
+<article class="core"><h3 data-edit>Contexto compartido</h3><div class="path" data-edit>.architecture/</div><p data-edit>Capas, dependencias y decisiones.</p><div class="path" data-edit>.navigator/</div><p data-edit>Mapa de módulos, símbolos y rutas al código.</p></article>
+<article><h3 data-edit>Conocimiento por dominio</h3><div class="domain-list"><div><b data-edit>.design/ · .data/</b><p data-edit>Sistemas visuales, datos y contratos.</p></div><div><b data-edit>.quality/ · .security/</b><p data-edit>Hallazgos, evidencia y deuda.</p></div><div><b data-edit>.sdd/specs/</b><p data-edit>Acuerdos y verificación de cada feature.</p></div><div><b data-edit>documentation-orchestrator</b><p data-edit>Coordina bootstrap y sincronización autorizados.</p></div></div></article>
+</div><div class="memory-foot reveal delay-more" data-edit><span class="accent">Todos consultan el core.</span> Su mantenimiento es una operación explícita.</div></div>
+<footer class="footer"><span>SI FALTA CONTEXTO, SE CONSULTAN CÓDIGO Y CONTRATOS</span><span>05 / 07</span></footer>
+</section>
+<!-- === 06 / EXAMPLE: an illustrative path, not a mandatory automated pipeline === -->
+<section class="slide" aria-label="Ejemplo de interacción" data-notes="Ejemplo: incorporar una pantalla que consume una API. SDD acuerda el conjunto y planifica porque cruza dominios. El usuario puede elegir al especialista para una actividad acotada, con contexto copiable y requisitos/tareas aplicables. SDD se detiene en esa actividad si se elige al especialista. Review y mantenimiento documental se realizan cuando están solicitados/autorizados. No es una cadena obligatoria ni un dispatch automático de workers. Duración: 70 segundos.">
+<header class="mast"><span>AI AGENTS KIT</span><span>INTERACCIÓN / 06</span></header>
+<div class="heading reveal"><div class="eyebrow">EJEMPLO · UNA PANTALLA QUE CONSUME UNA API</div><h2 data-edit>Un recorrido posible, elegido por el usuario.</h2></div>
+<div class="body-region"><div class="flow reveal delay">
+<article class="flow-node"><span class="index">01</span><h3 data-edit>SDD</h3><p class="small" data-edit>Acordar la feature,<br>diseñar y trazar tareas.</p></article>
+<article class="flow-node"><span class="index">02</span><h3 data-edit>UI + Data/API</h3><p class="small" data-edit>Ejecutar actividades<br>acotadas con contexto.</p></article>
+<article class="flow-node"><span class="index">03</span><h3 data-edit>Code Review</h3><p class="small" data-edit>Revisar calidad y seguridad<br>dentro del alcance pedido.</p></article>
+<article class="flow-node"><span class="index">04</span><h3 data-edit>Git / Release</h3><p class="small" data-edit>Preparar la entrega<br>y ejecutar lo aprobado.</p></article>
+</div><div class="lane reveal delay-more"><h3 data-edit>Documentation Orchestrator</h3><p data-edit>Consultar estado y sincronizar la documentación afectada<br>con las skills responsables y autorización de escritura.</p></div><div class="legend" data-edit>→ TRANSICIÓN ELEGIDA POR EL USUARIO · NO ES EJECUCIÓN AUTOMÁTICA</div></div>
+<footer class="footer"><span>EL TRASPASO CONSERVA ALCANCE, CONTEXTO Y GATES PENDIENTES</span><span>06 / 07</span></footer>
+</section>
+<!-- === 07 / DELIVERY: exact release ownership and user control === -->
+<section class="slide" aria-label="Entrega y cierre" data-notes="Git/Release usa git-commit y release-management: Conventional Commits, SemVer, changelog y tags según el proyecto. Commit, push y tag requieren confirmación explícita. Documentation Orchestrator puede comprobar estado documental previo a release, pero no publica versiones. El sistema aporta especialización y trazabilidad; no promete que toda la documentación se sincronice sola. Duración: 45 segundos.">
+<header class="mast"><span>AI AGENTS KIT</span><span>ENTREGA / 07</span></header>
+<div class="heading reveal"><div class="eyebrow">CERRAR CON EVIDENCIA Y CONTROL</div><h2 data-edit>Especialización y decisiones explícitas.</h2></div>
+<div class="body-region"><div class="closing reveal delay"><article class="release"><h3 data-edit>git-release-manager</h3><p data-edit>Commits ordenados.<br>Versionado, changelog y tags.<br>Push y entrega confirmados.</p><p class="small" data-edit>Revisa estado, diff e historial<br>antes de proponer operaciones.</p></article><div class="thesis" data-edit>El agente aporta<br><span class="accent">especialización.</span><br>El usuario conserva<br><span class="accent">la decisión.</span></div></div><div class="closing-bottom reveal delay-more"><span data-edit>Contexto compartido.</span><span data-edit>Trabajo verificable.</span><span class="accent" data-edit>Continuidad deliberada.</span></div></div>
+<footer class="footer"><span>AI AGENTS KIT · NUESTRO MAS</span><span>07 / 07</span></footer>
+</section>
+</div>
+</main>
+<!-- === PRESENTATION CONTROLS: outside stage, do not affect 16:9 layout === -->
+<nav class="deck-controls" aria-label="Controles de presentación"><button id="prev" aria-label="Diapositiva anterior">←</button><span id="pageCount" aria-live="polite">1 / 7</span><button id="next" aria-label="Diapositiva siguiente">→</button><button id="notesToggle" title="Notas del presentador (N)" aria-pressed="false">Notas</button><button id="save" title="Guardar HTML (Ctrl/Cmd+S)">Guardar</button></nav>
+<div class="edit-hotzone" aria-hidden="true"></div><button class="edit-toggle" id="editToggle" aria-pressed="false" title="Editar textos (E)">Editar · E</button>
+<aside class="notes" id="notes" hidden aria-label="Notas del presentador"><h4>Notas del presentador</h4><p id="noteText"></p></aside><div class="notice" id="notice" role="status"></div>
+<script>
+/* === EDITOR: plain-text edits, local persistence and export without dependencies === */
+class InlineEditor {
+  constructor(){
+    this.isActive=false;this.key='ai-agents-kit-mas-blueprint-v1';this.texts=[...document.querySelectorAll('[data-edit]')];
+    this.texts.forEach((el,i)=>{el.dataset.editId=String(i);el.addEventListener('input',()=>this.persist());});
+    try{const saved=JSON.parse(localStorage.getItem(this.key)||'null');if(saved&&typeof saved==='object')this.texts.forEach(el=>{if(typeof saved[el.dataset.editId]==='string')el.innerText=saved[el.dataset.editId]});}catch{/* Storage may be unavailable for file URLs. Export still works. */}
+    document.getElementById('editToggle').addEventListener('click',()=>this.toggle());
+    const hotzone=document.querySelector('.edit-hotzone'),button=document.getElementById('editToggle');let hideTimeout;
+    const show=()=>{clearTimeout(hideTimeout);button.classList.add('show')};const hide=()=>{hideTimeout=setTimeout(()=>{if(!this.isActive)button.classList.remove('show')},400)};
+    hotzone.addEventListener('mouseenter',show);hotzone.addEventListener('mouseleave',hide);button.addEventListener('mouseenter',show);button.addEventListener('mouseleave',hide);hotzone.addEventListener('click',()=>this.toggle());
+  }
+  toggle(){this.isActive=!this.isActive;document.body.classList.toggle('editing',this.isActive);this.texts.forEach(el=>{if(this.isActive)el.setAttribute('contenteditable','plaintext-only');else el.removeAttribute('contenteditable')});const b=document.getElementById('editToggle');b.classList.toggle('active',this.isActive);b.setAttribute('aria-pressed',String(this.isActive));b.textContent=this.isActive?'Terminar edición · E':'Editar · E';if(!this.isActive){document.activeElement?.blur();this.persist()}this.message(this.isActive?'Edición activa. Haz clic en un texto.':'Edición terminada. Usa Guardar para exportar el HTML.');}
+  persist(){try{localStorage.setItem(this.key,JSON.stringify(Object.fromEntries(this.texts.map(el=>[el.dataset.editId,el.innerText]))))}catch{this.message('Usa Guardar para conservar los cambios en un archivo.')}}
+  message(text){const box=document.getElementById('notice');box.textContent=text;clearTimeout(this.timer);this.timer=setTimeout(()=>{box.textContent=''},4500)}
+  save(){const copy=document.documentElement.cloneNode(true);copy.querySelector('body').classList.remove('editing');copy.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));copy.querySelectorAll('.slide').forEach((el,i)=>{el.classList.toggle('active',i===0);el.classList.remove('visible');el.setAttribute('aria-hidden',String(i!==0))});copy.querySelector('.deck-stage').style.removeProperty('transform');const button=copy.querySelector('#editToggle');button.classList.remove('active','show');button.textContent='Editar · E';button.setAttribute('aria-pressed','false');copy.querySelector('#notes').hidden=true;copy.querySelector('#notesToggle').setAttribute('aria-pressed','false');copy.querySelector('#notice').textContent='';const blob=new Blob(['<!doctype html>\n'+copy.outerHTML],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='nuestro-mas.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);this.message('Presentación exportada como nuestro-mas.html.');}
+}
+/* === CONTROLLER: uniform scaling and keyboard / swipe / wheel navigation === */
+class SlidePresentation {
+  constructor(editor){this.editor=editor;this.slides=[...document.querySelectorAll('.slide')];this.currentSlide=0;this.stage=document.getElementById('deckStage');this.notes=document.getElementById('notes');this.setupStageScale();this.setupKeyboardNav();this.setupTouchNav();this.setupWheelNav();document.getElementById('prev').onclick=()=>this.showSlide(this.currentSlide-1);document.getElementById('next').onclick=()=>this.showSlide(this.currentSlide+1);document.getElementById('notesToggle').onclick=()=>this.toggleNotes();document.getElementById('save').onclick=()=>this.editor.save();this.showSlide(0);}
+  setupStageScale(){const fit=()=>{const factor=Math.min(innerWidth/1920,innerHeight/1080);this.stage.style.transform=`translate(${(innerWidth-1920*factor)/2}px,${(innerHeight-1080*factor)/2}px) scale(${factor})`};fit();addEventListener('resize',fit);}
+  showSlide(index){this.currentSlide=Math.max(0,Math.min(index,this.slides.length-1));this.slides.forEach((slide,i)=>{const active=i===this.currentSlide;slide.classList.toggle('active',active);slide.classList.remove('visible');slide.setAttribute('aria-hidden',String(!active))});const selected=this.slides[this.currentSlide];requestAnimationFrame(()=>{if(selected.classList.contains('active'))selected.classList.add('visible')});document.getElementById('pageCount').textContent=`${this.currentSlide+1} / ${this.slides.length}`;document.getElementById('prev').disabled=this.currentSlide===0;document.getElementById('next').disabled=this.currentSlide===this.slides.length-1;document.getElementById('noteText').textContent=selected.dataset.notes;}
+  toggleNotes(){this.notes.hidden=!this.notes.hidden;document.getElementById('notesToggle').setAttribute('aria-pressed',String(!this.notes.hidden));}
+  setupKeyboardNav(){document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();this.editor.save();return}if(e.target.isContentEditable)return;if(e.ctrlKey||e.metaKey||e.altKey)return;const k=e.key.toLowerCase();if(k==='e'){e.preventDefault();this.editor.toggle();return}if(k==='n'){this.toggleNotes();return}if(k==='escape'){this.notes.hidden=true;document.getElementById('notesToggle').setAttribute('aria-pressed','false');if(this.editor.isActive)this.editor.toggle();return}if(this.editor.isActive)return;if(['arrowright','arrowdown','pagedown',' '].includes(k)){e.preventDefault();this.showSlide(this.currentSlide+1)}if(['arrowleft','arrowup','pageup'].includes(k)){e.preventDefault();this.showSlide(this.currentSlide-1)}if(k==='home')this.showSlide(0);if(k==='end')this.showSlide(this.slides.length-1);});}
+  setupTouchNav(){let start=null;this.stage.addEventListener('touchstart',e=>{if(!this.editor.isActive&&e.touches.length===1)start={x:e.touches[0].clientX,y:e.touches[0].clientY};else start=null},{passive:true});this.stage.addEventListener('touchend',e=>{if(!start||this.editor.isActive)return;const dx=e.changedTouches[0].clientX-start.x,dy=e.changedTouches[0].clientY-start.y;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy))this.showSlide(this.currentSlide+(dx<0?1:-1));start=null},{passive:true});}
+  setupWheelNav(){let last=0;this.stage.addEventListener('wheel',e=>{if(this.editor.isActive||Math.abs(e.deltaY)<15)return;const now=Date.now();if(now-last>800){last=now;this.showSlide(this.currentSlide+(e.deltaY>0?1:-1))}},{passive:true});}
+}
+const editor=new InlineEditor();const presentation=new SlidePresentation(editor);
+/* === CONTENT SOURCES: repository paths; no automated dispatch is implied ===
+canonical/agents/{sdd,ui-design,data-api,code-review,documentation-orchestrator,git-release-manager}.md
+canonical/skills/sdd-spec/SKILL.md and references/scope-depth.md
+canonical/skills/{ui-design,data-api}/SKILL.md
+The deck summarizes the existing workflow; it does not change its gates or permissions.
+*/
+</script>
+</body>
+</html>

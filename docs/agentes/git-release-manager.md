@@ -33,7 +33,8 @@ Este agente reúne dos procedimientos relacionados, pero no idénticos:
 
 1. Inspecciona `status`, diff, historial, rama y archivos sensibles.
 2. Resume los cambios y propone un mensaje Conventional Commits en español.
-3. Detecta posibles secretos por nombre y contenido del diff.
+3. Distingue indicios por nombre de secretos confirmados, configuración pública y
+   placeholders; aplica el control distribuido a candidatos y staging sin mostrar valores.
 4. Espera confirmación antes de hacer `git commit`.
 5. Pregunta por separado antes de hacer push.
 
@@ -75,6 +76,8 @@ el bump y genera el CHANGELOG antes de modificar archivos.
 - Nunca hace commit, push, tag, release ni cambios de versión sin confirmación explícita.
 - Las acciones destructivas requieren doble confirmación.
 - No modifica UI, lógica de negocio, datos ni código ajeno a versionado.
-- No incluye archivos sensibles sin autorización inequívoca; recomienda excluirlos.
+- Excluye secretos confirmados sin excepción de autorización. Para configuración
+  pública/placeholders sin secreto confirmado conserva una decisión contextual;
+  el nombre no basta. Una evaluación incompleta impide continuar la publicación.
 - No usa `release-management` para un commit cotidiano ni `git-commit` para decidir
   una versión.

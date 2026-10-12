@@ -314,13 +314,21 @@ raíz; respeta la ubicación/convención del perfil o de `.release/config.md`).
 Antes de commitear, aplica la verificación de archivos sensibles de la skill
 `git-commit` (Paso 1.5). Este commit solo agrega el archivo de versión y el
 CHANGELOG; mantén el mismo criterio si añades otros archivos.
+Los **secretos confirmados quedan excluidos sin excepción de autorización**.
+Un nombre sospechoso, configuración pública o placeholder no confirma un secreto;
+usa la decisión contextual de Git. Ejecuta su control distribuido sobre candidatos
+y sobre el índice completo después de staging, no solo sobre versión/CHANGELOG.
+Si el control rechaza o no puede evaluar, no hagas commit ni publiques la release;
+informa ubicación/motivo sin valores. Mantén las confirmaciones de commit/tag/push.
 
 ```bash
 # Commit del bump y changelog
-git add <archivo-version> <changelog>   # <changelog> = CHANGELOG.md por defecto (o el del perfil)
+# <changelog> = CHANGELOG.md por defecto (o el del perfil)
+git add <archivo-version> <changelog> &&
+python3 "<ruta-de-la-skill-git-commit>/scripts/check_secrets.py" --repo "<raíz-del-proyecto>" --staged &&
 git commit -m "chore(release): preparar versión vX.Y.Z"
 
-# Tag anotado
+# Tag anotado: solo tras éxito del paso previo y su confirmación independiente
 git tag -a vX.Y.Z -m "Release vX.Y.Z"
 
 # Push (rama + tag) — solo si el usuario confirma
@@ -329,6 +337,8 @@ git push origin vX.Y.Z
 ```
 
 - Pregunta por separado antes de hacer push de la rama y del tag.
+- No ejecutes tag/push después de un commit rechazado o una evaluación incompleta;
+  los ejemplos no sustituyen las confirmaciones ni permiten ignorar fallos con `;`.
 - En **monorepos** donde versionas un paquete concreto, usa el prefijo de tag que
   indique el perfil/convención (p. ej. `paquete-vX.Y.Z`) en lugar de `vX.Y.Z`.
 - Si el push del tag falla, explica el motivo; **no** uses `--force`.

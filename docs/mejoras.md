@@ -139,7 +139,14 @@ temporal, de modo que la instalación real del desarrollador nunca se toca.
 
 - [ ] **Unificar la política de secretos**: un secreto real no puede incluirse en
   un commit aunque exista autorización conversacional.
-- [ ] Añadir secret scanning automatizado en CI y una opción local documentada.
+  REC-01 implementa exclusión no exceptuable y contraste público/placeholders;
+  el cierre conductual se acredita en [su ficha](auditoria/seguimiento/REC-01.md),
+  no mediante presencia de frases. Este punto permanece abierto hasta esa evidencia.
+- [x] Añadir secret scanning automatizado en CI y una opción local documentada.
+  REC-01 incorpora `tools/check_secrets.py` (fuente distribuida en git-commit),
+  `--tracked` en CI y negativos con fixtures; control integrado y ejecución local
+  del mismo entrypoint acreditados en su ficha. No promete detección universal ni
+  acredita un run remoto de CI, que no se ha ejecutado en esta sesión sin push.
 - [ ] Ampliar `.gitignore` con patrones locales razonables sin ocultar fixtures de
   prueba deliberados.
 - [ ] Reducir permisos efectivos por agente donde cada host lo permita.

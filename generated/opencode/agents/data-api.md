@@ -5,16 +5,10 @@ temperature: 0.2
 permission:
   edit: "ask"
   webfetch: "allow"
+  external_directory: "ask"
+  task: "ask"
   bash:
     "*": "ask"
-    "rm *": "ask"
-    "rm -rf *": "ask"
-    "git push*": "ask"
-    "git reset --hard*": "ask"
-    "git checkout -f*": "ask"
-    "git checkout --force*": "ask"
-    "git branch -D*": "ask"
-    "git clean*": "ask"
 ---
 
 # Data & API Agent

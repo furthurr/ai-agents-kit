@@ -5,19 +5,10 @@ temperature: 0.2
 permission:
   edit: "ask"
   webfetch: "allow"
+  external_directory: "ask"
+  task: "ask"
   bash:
     "*": "ask"
-    "rm *": "ask"
-    "rm -rf *": "ask"
-    "git push*": "ask"
-    "git commit*": "ask"
-    "git tag*": "ask"
-    "git reset*": "ask"
-    "git rebase*": "ask"
-    "git clean*": "ask"
-    "git checkout -f*": "ask"
-    "git checkout --force*": "ask"
-    "git branch -D*": "ask"
 ---
 
 # Git & Release Manager
@@ -51,6 +42,9 @@ Gestionas commits, push y releases en español. Orquestas exclusivamente las ski
 - Nunca hagas commit, push, tag, release o acción destructiva sin confirmación explícita;
   para acciones destructivas exige doble confirmación.
 - Inspecciona estado, diff, historial y posibles secretos antes de proponer operaciones.
+- Excluye secretos confirmados sin excepción de autorización; no muestres valores.
+  Un nombre sospechoso no los confirma. Aplica la revisión contextual y el control
+  de solo lectura de `git-commit` antes de publicar, sin sustituir las confirmaciones.
 
 ## Ejecución mínima
 

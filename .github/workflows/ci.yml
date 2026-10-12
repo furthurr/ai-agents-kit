@@ -19,8 +19,12 @@ jobs:
           python-version: "3.10"
       - name: Validate repository
         run: python tools/validate.py
+      - name: Check supported secret signatures (read-only)
+        run: python tools/check_secrets.py --tracked
       - name: Render generated artifacts
         run: python tools/render.py
+      - name: Run secret-policy and negative scanner tests
+        run: python tools/test_secret_policy.py
       - name: Check Markdown links
         run: python tools/check_links.py
       - name: Run negative validation tests
@@ -43,6 +47,8 @@ jobs:
         run: python tools/test_links.py
       - name: Run integrity tests
         run: python tools/test_integrity.py
+      - name: Run host-permission contract tests
+        run: python tools/test_permissions.py
       - name: Check shell script syntax
         run: |
           for script in scripts/install/*.sh scripts/backup/*.sh; do

@@ -155,6 +155,56 @@ haber copiado archivos en las rutas 2.0 (`~/.gemini/config/{skills,agents}`).
 
 ## Checklist antes de merge / release del kit
 
+### Control acotado de secretos (REC-01)
+
+Los secretos confirmados quedan excluidos incluso con autorización conversacional;
+un nombre sospechoso no basta para confirmar una credencial. Configuración pública
+y placeholders conservan una decisión contextual de inclusión, independiente de
+las autorizaciones de commit/push/release. No mostrar valores sensibles ni diffs
+brutos como método inicial de detección.
+
+En este kit, la fuente única es
+[`check_secrets.py` de git-commit](../canonical/skills/git-commit/scripts/check_secrets.py);
+[`tools/check_secrets.py`](../tools/check_secrets.py) solo la ejecuta:
+
+```bash
+# Candidatos explícitos antes de staging, incluidos untracked
+python3 tools/check_secrets.py --repo . -- ruta/candidato
+# Contenido exacto del índice completo antes de un commit autorizado
+python3 tools/check_secrets.py --repo . --staged
+# Working tree de archivos tracked; es el modo invocado por CI
+python3 tools/check_secrets.py --repo . --tracked
+python3 tools/test_secret_policy.py
+```
+
+En otro proyecto, resolver la ruta real de la skill cargada y ejecutar
+`python3 "<ruta-skill-git-commit>/scripts/check_secrets.py" --repo "<raíz-proyecto>" --staged`.
+No depende del directorio `tools/` del proyecto objetivo. Python 3.10+ y Git son
+requisitos; no se instalan automáticamente.
+
+Códigos: **0** evaluación completa sin coincidencias soportadas, **1** contenido
+rechazado, **2** evaluación incompleta (incluye enlaces, submódulos, conflictos,
+rutas no admitidas o fallos de Git/lectura). No hay override de autorización.
+El control es de solo lectura: no desstagea, sanea ni crea commits. Sus salidas
+solo muestran ubicación sanitizada/línea/regla. Repetir tras cambios en candidatos
+o índice; una comprobación puntual no garantiza un índice que cambió después.
+
+Reglas soportadas: cabeceras de claves privadas PEM/OpenSSH y formatos completos
+conocidos de tokens GitHub. Una firma no demuestra que una credencial esté activa;
+también se rechazan fixtures deliberadamente detectables. No cubre todos los
+proveedores, contraseñas arbitrarias, ofuscación, historial, configuración externa
+ni archivos fuera del modo/rutas evaluados. Salida 0 no significa «sin secretos»;
+la revisión contextual sigue siendo necesaria. No imprimir Git stderr ni valores
+si la evaluación falla.
+
+CI invoca `--tracked` y la suite negativa sobre fixtures temporales, sin commits.
+No es un hook obligatorio para `git commit`, una protección universal del host
+ni una garantía de comportamiento del modelo. Una ejecución local del mismo
+entrypoint tampoco acredita un run remoto de GitHub Actions ni runtime de agentes.
+Evidencia y pendientes: [seguimiento REC-01](auditoria/seguimiento/REC-01.md).
+
+### Checklist
+
 - [ ] Cambios solo donde corresponde (`canonical` / `adapters` / tools / docs)
 - [ ] `python3 tools/render.py` sin errores
 - [ ] `python3 tools/validate.py` OK (paridad y reproducibilidad)
@@ -168,6 +218,7 @@ haber copiado archivos en las rutas 2.0 (`~/.gemini/config/{skills,agents}`).
 
 ```bash
 python3 tools/test_integrity.py
+python3 tools/test_secret_policy.py
 python3 tools/test_links.py
 python3 tools/test_model_recommendations.py
 python3 tools/test_sdd_contract.py

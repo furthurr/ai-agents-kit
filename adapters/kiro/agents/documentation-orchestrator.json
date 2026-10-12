@@ -10,6 +10,10 @@
     ],
     "permissions": {
       "rules": [
+        { "capability": "fs_write", "match": ["**"], "exclude": [".navigator/**", ".architecture/**", ".data/**", ".design/**", ".quality/**", ".security/**"], "effect": "deny" },
+        { "capability": "fs_write", "effect": "ask" },
+        { "capability": "shell", "effect": "ask" },
+        { "capability": "subagent", "effect": "ask" },
         { "capability": "shell", "match": ["rm *"], "effect": "deny" },
         { "capability": "shell", "match": ["rm -rf *"], "effect": "deny" },
         { "capability": "shell", "match": ["git push*"], "effect": "deny" },

@@ -177,6 +177,11 @@ hallazgo antes de marcarlo `Resuelto`.
 - Nada de "fix masivo" opaco: cada paso es pequeño, explicado y reversible.
 - Si un paso toca algo fuera de seguridad, avisa antes.
 - Nunca escribas secretos reales; usa placeholders.
+- Al publicar, los secretos confirmados quedan excluidos sin excepción de
+  autorización; informa ubicación y motivo, nunca valores. Un nombre sospechoso
+  no equivale a una credencial: distingue configuración pública y placeholders.
+  Para Git/release, aplica la política y el control acotado de
+  [git-commit](../git-commit/SKILL.md), sin afirmar detección universal.
 
 ## Severidad
 

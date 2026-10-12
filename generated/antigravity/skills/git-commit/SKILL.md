@@ -6,8 +6,8 @@ description: >-
   "commit", "commitear", "preparar un commit", "subir/pushear cambios", "revisar
   el estado del repo" o generar un mensaje de commit.
   Infiere el ámbito del módulo/carpeta afectada del repositorio actual, agrega
-  opcionalmente la referencia al ticket si la rama lo incluye y avisa antes de
-  incluir archivos con datos sensibles. Para versionado/tags/CHANGELOG usa la
+  opcionalmente la referencia al ticket si la rama lo incluye y excluye secretos
+  confirmados sin excepción de autorización. Para versionado/tags/CHANGELOG usa la
   skill `release-management`, no esta.
 ---
 
@@ -31,7 +31,7 @@ del usuario.
 - **Nunca** ejecutes `git commit` ni `git push` sin confirmación explícita del usuario.
 - **Siempre** muestra un resumen de los cambios antes de proponer un commit.
 - Usa **un solo commit** por defecto. Si hay muchos cambios de áreas distintas, estructura el cuerpo del mensaje con secciones `##` en lugar de dividir en varios commits.
-- Si detectas archivos sensibles, **advierte al usuario** y pide autorización explícita antes de incluirlos (ver "Paso 1.5 — Detección de archivos sensibles"). Nunca bloquees el flujo: el usuario decide.
+- Los **secretos confirmados quedan excluidos**, aunque exista autorización del usuario. Un nombre sospechoso no confirma un secreto: aplica la revisión contextual del Paso 1.5 sin mostrar valores.
 - **Alcance:** esta skill cubre commits y push. El **versionado, tags y CHANGELOG**
   son de la skill `release-management`; si la petición es de release, usa esa.
 - Los comandos son **de referencia para bash/zsh**; adáptalos al shell/SO del
@@ -42,23 +42,23 @@ del usuario.
 
 ### Paso 1 — Analizar el estado del repositorio
 
-Ejecuta estos comandos para obtener el contexto completo:
+Empieza por metadatos, sin imprimir contenido potencialmente sensible:
 
 ```bash
 git status
-git diff
-git diff --staged
+git diff --stat
+git diff --staged --stat
 git log --oneline -5
 git branch --show-current
 ```
 
 Si el comando indica que no es un repositorio Git, avísale al usuario y detente.
 
-### Paso 1.5 — Detección de archivos sensibles
+### Paso 1.5 — Política de secretos y revisión contextual
 
-Antes de proponer el commit, **revisa la lista de archivos** (staged y sin seguimiento)
-y detecta los que puedan **exponer datos peligrosos** (credenciales, llaves, secretos,
-configuración privada). Compara nombres y rutas contra estos patrones:
+Antes de proponer el commit, revisa candidatos, staged y sin seguimiento. Separa
+**indicio por nombre**, **configuración pública**, **placeholder** y **secreto confirmado**.
+Estos patrones son pistas para revisar, nunca prueba suficiente de un secreto:
 
 | Patrón | Ejemplos |
 |--------|----------|
@@ -68,46 +68,55 @@ configuración privada). Compara nombres y rutas contra estos patrones:
 | Config de servicios | `google-services.json`, `GoogleService-Info.plist`, `*-firebase-*.json` |
 | Tokens / API keys | archivos con `token`, `apikey`, `api_key`, `password` en el nombre |
 
-> Es una lista orientativa, no exhaustiva. Si un archivo **parece** contener secretos
-> por su nombre, contenido o extensión, trátalo también como sensible.
+#### Control ejecutable de solo lectura
 
-> ⚠️ **Limitación:** esta detección se basa en **nombres/rutas**, no garantiza
-> detectar secretos **incrustados dentro** de archivos normales (p. ej. una API key
-> hardcodeada en `Config.kt`). Si al revisar el `git diff` ves valores que parezcan
-> credenciales, tokens, contraseñas o claves privadas en el contenido, **avísalo
-> igual** aunque el nombre del archivo no sea sospechoso.
+Usa [scripts/check_secrets.py](scripts/check_secrets.py) de **esta skill cargada**;
+resuelve su ubicación real, no supongas que el proyecto objetivo tiene `tools/`.
+Python 3.10+ y Git son requisitos, no instales nada automáticamente.
 
-#### Si NO se detectan archivos sensibles
-Continúa normalmente al Paso 2. No menciones nada.
-
-#### Si SÍ se detectan archivos sensibles
-**No bloquees ni canceles el commit.** Muestra un aviso **claro pero sin alarmar** y
-deja la decisión en manos del usuario:
-
-```markdown
-⚠️ Aviso de seguridad
-
-Detecté archivo(s) que podrían contener datos sensibles y que, por lo general,
-NO se recomienda subir al repositorio:
-
-- `ruta/google-services.json`  (configuración de servicios)
-
-¿Cómo deseas continuar?
-  1. Excluirlo del commit (recomendado) — hago el commit sin ese archivo.
-  2. Incluirlo de todas formas — necesito tu autorización explícita.
+```bash
+# Antes de staging: solo los candidatos explícitos, incluidos untracked
+python3 "<ruta-de-la-skill>/scripts/check_secrets.py" --repo "<raíz-del-proyecto>" -- "ruta/candidato"
+# Antes de un commit autorizado: contenido exacto del índice completo
+python3 "<ruta-de-la-skill>/scripts/check_secrets.py" --repo "<raíz-del-proyecto>" --staged
 ```
 
-Reglas:
+- Salida **1**: firmas detectables rechazadas; no las agregues ni hagas commit
+  con ese contenido, aunque el usuario solicite incluirlo. La firma no acredita
+  que la credencial esté activa; se excluye también un fixture detectable.
+- Salida **2** o control no disponible: evaluación incompleta; detén la operación
+  de publicación y explica el pendiente. Nunca equivale a aprobación.
+- Salida **0**: sin coincidencias de las reglas soportadas, **no** ausencia de
+  secretos. Continúa la revisión contextual antes de permitir la inclusión.
 
-1. **Por defecto, recomienda excluirlo.** Si el usuario elige excluir (o no responde con
-   claridad), haz el commit **sin** ese archivo: retíralo del staging con
-   `git restore --staged <archivo>` y continúa.
-2. **Incluirlo requiere autorización explícita.** Solo agrégalo al commit si el usuario
-   confirma de forma inequívoca que desea incluirlo (ej. "sí, inclúyelo").
-3. Si el archivo **debería ignorarse siempre**, sugiere (sin ejecutarlo sin permiso)
-   añadirlo a `.gitignore`.
-4. Mantén el mensaje **breve y en lenguaje sencillo**; explica el riesgo sin tecnicismos
-   y sin asustar. El objetivo es informar, no frenar el trabajo del usuario.
+El control detecta cabeceras de claves privadas y formatos completos conocidos
+de tokens GitHub por contenido, también en archivos de nombre normal. No cubre
+contraseñas arbitrarias, todos los proveedores, ofuscación, historial ni rutas
+no evaluadas. `--tracked` revisa el working tree tracked, no el índice.
+Enlaces, submódulos y conflictos no cubiertos producen evaluación incompleta.
+No tiene excepciones de autorización ni modifica archivos, staging o refs.
+
+#### Decisión según evidencia
+
+1. **Secretos confirmados:** exclúyelos sin excepción de autorización. Informa
+   solamente `ruta:línea` y motivo; nunca el valor, fragmentos ni un diff bruto.
+   Ofrece excluir o sanear mediante placeholders/referencias con la autorización
+   de edición pertinente; **no** ofrezcas incluir el secreto de todas formas.
+2. **Indicio no resuelto:** explica qué falta revisar; no declares el archivo seguro
+   ni continúes con ese candidato hasta resolverlo o acordar su exclusión.
+3. **Configuración pública o placeholders sin secretos confirmados:** un `.env`,
+   `google-services.json` o nombre similar no basta para bloquearlo como secreto.
+   Explica la clasificación y permite inclusión/exclusión contextual explícita;
+   esto no sustituye la confirmación de commit o push.
+4. **Sin indicios:** continúa al resumen, conservando las comprobaciones anteriores.
+
+Revisa contenido/diffs sin emitir posibles valores sensibles a mensajes o logs;
+no uses un diff bruto como primera detección. Si confirmas un secreto fuera de
+las reglas automatizadas, aplica igualmente la exclusión. No desstagees ni edites
+trabajo ajeno sin autorización; si hay que modificar staging, acuerda los archivos.
+Después de saneamiento/staging vuelve a comprobar el índice. La comprobación es
+puntual: si cambia el contenido antes del commit, repítela. El procedimiento y
+CI no son un hook universal ni impiden un `git commit` manual que los omita.
 
 ### Paso 2 — Presentar un resumen de cambios
 
@@ -181,11 +190,15 @@ Espera la respuesta. **No commitees** hasta recibir confirmación.
 Solo si el usuario acepta:
 
 ```bash
-git add <archivos>
+git add <archivos> &&
+# Repite Paso 1.5 sobre el índice; salida 1/2 impide continuar
+python3 "<ruta-de-la-skill>/scripts/check_secrets.py" --repo "<raíz-del-proyecto>" --staged &&
 git commit -m "<mensaje>"
 ```
 
 Para mensajes con cuerpo de varias líneas, usa varios `-m` o un archivo temporal, evitando saltos de línea problemáticos en la terminal.
+Conserva la cadena `&&`: no ejecutes el commit si falla staging o el control ni
+uses `;` para ignorar el fallo. La confirmación no permite publicar un secreto.
 
 Tras commitear, informa:
 
@@ -295,6 +308,7 @@ usuario a entender qué es. Es solo un dato extra y opcional.
 # Estado y cambios
 git status
 git status -s
+# Solo contenido ya revisado, sin imprimir posibles valores sensibles
 git diff
 git diff --staged
 git diff --stat

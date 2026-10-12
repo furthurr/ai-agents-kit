@@ -7,20 +7,9 @@
     "permission": {
       "edit": "ask",
       "webfetch": "allow",
-      "bash": {
-        "*": "ask",
-        "rm *": "ask",
-        "rm -rf *": "ask",
-        "git push*": "ask",
-        "git commit*": "ask",
-        "git tag*": "ask",
-        "git reset*": "ask",
-        "git rebase*": "ask",
-        "git clean*": "ask",
-        "git checkout -f*": "ask",
-        "git checkout --force*": "ask",
-        "git branch -D*": "ask"
-      }
+      "external_directory": "ask",
+      "task": "ask",
+      "bash": { "*": "ask" }
     }
   }
 }
