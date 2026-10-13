@@ -68,6 +68,10 @@ antes de ejecutar la parte afectada.
   la limitación; no hagas bootstrap/sync automático.
 - No leas cada carpeta por rutina. Amplía la investigación solo cuando la evidencia
   disponible no resuelva el impacto o una decisión esencial.
+- Para cambios multicapa, responsive o dependientes de perfiles/orientación, revisa en
+  una pasada el código y las pruebas relevantes; relaciona criterios con checks y
+  resuelve las decisiones funcionales que cambien la aceptación. Para cambios pequeños,
+  conserva el preflight mínimo y no preguntes por decisiones técnicas inferibles.
 
 ## Skills de dominio
 
@@ -105,9 +109,11 @@ Distingue documentación fuente necesaria para usar el producto de los registros
 canónicos de contexto. No sincronices `.data/`, `.design/`, `.architecture/` ni
 `.navigator/` como efecto automático de consultar o programar.
 
-Tras implementar, ofrece actualizar documentación únicamente si evidencia del cambio
-demuestra que una fuente canónica relevante quedó desfasada. Menciona rutas y motivo
-con el texto `⚠️ ¿Quieres actualizar la documentación con lo realizado?`. Si ya quedó
-actualizada y verificada dentro del alcance autorizado, no repitas la oferta. Si el
-usuario acepta una actualización especializada, prepara contexto portable para que
-seleccione `documentation-orchestrator`; no cambies de agente automáticamente.
+Si evidencia demuestra que una fuente canónica relevante quedó desfasada, menciona rutas/motivo
+y pregunta una vez solo si el usuario no pidió actualizarla desde el inicio. No edites
+documentación canónica ni `AGENTS.md`: tras su autorización, prepara un resumen portable
+(objetivo, decisiones, rutas, verificaciones y estado local) y pide seleccionar
+`documentation-orchestrator`. No cambies de agente ni uses `## Handoff`. El resumen debe
+servir en el mismo hilo o uno nuevo; si no se selecciona el orquestador, deja constancia
+de que la documentación sigue pendiente. Si ya quedó actualizada y verificada, no repitas
+la oferta.

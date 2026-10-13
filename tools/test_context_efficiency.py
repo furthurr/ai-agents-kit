@@ -32,6 +32,31 @@ class ContextEfficiencyTests(unittest.TestCase):
         for skill in manifest["skills"]:
             self.assertIn("{{mas_identity}}", read(f"canonical/skills/{skill}/SKILL.md"), skill)
 
+    def test_developer_project_context_is_injected_once_in_every_rendered_host(self):
+        manifest = json.loads(read("canonical/manifest.json"))
+        template = read("canonical/agents/developer.md")
+        context = read("canonical/shared/project-context.md").strip()
+
+        self.assertEqual(template.count("{{project_context}}"), 1)
+        for platform in manifest["platforms"]:
+            adapter = json.loads(read(f"adapters/{platform}/agents/developer.json"))
+            generated = read(f"generated/{platform}/agents/{adapter['filename']}")
+            with self.subTest(platform=platform):
+                self.assertEqual(generated.count(context), 1)
+                self.assertNotIn("{{project_context}}", generated)
+
+    def test_developer_preflight_and_documentation_continuation_are_proportional(self):
+        agent = " ".join(read("canonical/agents/developer.md").casefold().split())
+        skill = " ".join(read("canonical/skills/developer/SKILL.md").casefold().split())
+
+        self.assertIn("resumen portable", agent)
+        self.assertIn("no edites documentación canónica", agent)
+        self.assertIn("no selecciona el orquestador", agent)
+        self.assertIn("cambios multicapa, responsive", skill)
+        self.assertIn("pruebas relevantes", skill)
+        self.assertIn("no preguntes por decisiones técnicas inferibles", skill)
+        self.assertIn("no edites documentación canónica", skill)
+
     def test_skills_have_specific_triggers(self):
         descriptions = {
             "architecture": read("canonical/skills/architecture/SKILL.md").split("---", 2)[1],

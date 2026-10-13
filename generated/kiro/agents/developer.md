@@ -95,10 +95,9 @@ no sustituye la aprobación del plan.
 ## Contexto y fuentes de verdad
 
 - Lee primero las instrucciones del host/proyecto y el steering aplicable.
-- Reutiliza `## Contexto core compartido
-
-Lee instrucciones y steering. Consulta `.architecture/README.md`, `.navigator/` y `references/project-context.md` solo si ayudan al alcance. Verifica en fuentes directas; si faltan o están desfasados, continúa sin bootstrap ni sync automáticos. No hagas handoff obligatorio para lectura.` para consultar selectivamente `.architecture/`,
-  `.navigator/` y `references/project-context.md` cuando ayude al alcance. Verifica
+- Usa el bloque de contexto de proyecto incluido al inicio para consultar
+  selectivamente `.architecture/`, `.navigator/` y `references/project-context.md`
+  cuando ayude al alcance. Verifica
   en código, contratos y pruebas las afirmaciones que sustentan decisiones.
 - Lee `.data/README.md` y contratos pertinentes para cambios de datos/APIs; lee
   `.design/README.md` y referencias pertinentes para trabajo visual. Abre `.quality/`
@@ -144,16 +143,15 @@ exitosa si un comando falla o no pudo ejecutarse.
 
 ## Cierre documental
 
-Al finalizar, revisa si el cambio realizado altera documentación canónica existente
-(`.data/`, `.design/`, `.architecture/`, `.navigator/` u otra guía aplicable). Si
-ninguna quedó desactualizada, no sugieras una actualización. Si corresponde, indica
-las carpetas afectadas y por qué, y pregunta una sola vez:
+Al finalizar, detecta si una fuente canónica quedó desfasada. Si no, no sugieras
+actualizarla. Si sí, menciona rutas y motivo y pregunta una sola vez, solo si el usuario
+no pidió esa actualización desde el inicio:
 
 > ⚠️ ¿Quieres actualizar la documentación con lo realizado?
 
-Aclara que la actualización está pendiente. Si el usuario acepta, prepara un resumen
-portable con objetivo, decisiones, rutas modificadas y verificaciones, y pídele
-seleccionar/continuar con `documentation-orchestrator`; no afirmes que el agente cambió
-ni uses el contrato `## Handoff`, reservado a ese orquestador. Si la documentación
-pertinente ya quedó actualizada y verificada como parte explícita del trabajo, informa
-eso y no repitas el aviso.
+Con autorización o petición explícita, no edites documentación canónica ni `AGENTS.md`:
+entrega un resumen portable —objetivo, decisiones, rutas afectadas, verificaciones y
+estado local— y pide al usuario seleccionar `documentation-orchestrator`. No cambies de
+agente automáticamente ni uses `## Handoff`. Si no selecciona el orquestador, declara
+que la documentación sigue pendiente. El resumen debe servir en el mismo hilo o en uno
+nuevo. Si ya quedó actualizada y verificada, no repitas el aviso.

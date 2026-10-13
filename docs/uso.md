@@ -244,9 +244,9 @@ ambas carpetas. Solo se agrupan con la misma acción, proyecto y vía autorizada
 | Agente | Artefactos típicos |
 |--------|-------------------|
 | Code Review | `.quality/` y/o `.security/` (hallazgos, estándares, evidencia por dominio) |
-| Documentation Orchestrator / Developer | `.data/` se mantiene mediante `data-api`; Developer actualiza contratos de producto según el plan autorizado |
+| Documentation Orchestrator / Developer | `.data/` se mantiene mediante `data-api`; Developer implementa contratos de producto y, si la documentación queda desfasada, prepara continuidad para `documentation-orchestrator` |
 | Documentation Orchestrator | `.navigator/` mediante `project-navigator`; `.architecture/` mediante `architecture`; coordina otros dominios, sin carpeta propia |
-| Documentation Orchestrator / Developer | `.design/` se mantiene mediante `ui-design`; Developer implementa UI y ofrece sincronizar si queda desactualizada |
+| Documentation Orchestrator / Developer | `.design/` se mantiene mediante `ui-design`; Developer implementa UI y prepara continuidad para `documentation-orchestrator` si queda desactualizada; no edita la carpeta directamente |
 | SDD | `.sdd/specs/<ruta-spec>/` plana o agrupada: `spec.md` único para Tiny; requirements/design/tasks/verification para SDD-Lite o Standard |
 | Git & Release | Commits/tags/CHANGELOG; perfil en `.release/` si aplica |
 

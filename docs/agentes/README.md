@@ -10,7 +10,7 @@ skill canónicos en `canonical/`; estas páginas sirven como orientación rápid
 |---|---|---|---|
 | Entender el repositorio, módulos o símbolos | [Documentation Orchestrator](documentation-orchestrator.md) | `project-navigator` | Consulta sin escritura; índices autorizados en `.navigator/` |
 | Documentar decisiones y estructura técnica | [Documentation Orchestrator](documentation-orchestrator.md) | `architecture` | `.architecture/` con autorización |
-| Implementar una feature en UI, datos/APIs y negocio | [Developer](developer.md) | `developer` + `data-api`/`ui-design` bajo demanda | Código y pruebas; documentación canónica solo si se solicita |
+| Implementar una feature en UI, datos/APIs y negocio | [Developer](developer.md) | `developer` + `data-api`/`ui-design` bajo demanda | Código y pruebas; si la documentación canónica queda desfasada, prepara continuidad para `documentation-orchestrator` |
 | Documentar colores, componentes, APIs o persistencia | [Documentation Orchestrator](documentation-orchestrator.md) | `documentation-orchestrator` + skills de dominio | `.design/`, `.data/` con aprobación |
 | Revisar calidad, seguridad o ambas | [Code Review](code-review.md) | `code-quality` y/o `security` | `.quality/` y/o `.security/`; correcciones autorizadas |
 | Comprobar o sincronizar documentación | [Documentation Orchestrator](documentation-orchestrator.md) | `documentation-orchestrator` + skills locales; `code-review` si hay handoff | Carpetas documentales aplicables |

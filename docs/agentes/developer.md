@@ -6,7 +6,7 @@
 | Skill propia | [`developer`](../../canonical/skills/developer/SKILL.md) |
 | Skills de dominio | `data-api` y `ui-design`, bajo demanda |
 | Propósito | Planear e implementar características de producto completas en UI, datos/APIs y lógica de negocio |
-| Documentación canónica | `.data/`, `.design/`, `.architecture/` y `.navigator/` se consultan según el impacto; actualizar requiere decisión del usuario |
+| Documentación canónica | Se consulta según el impacto; si queda desactualizada, la actualización la realiza `documentation-orchestrator` tras selección y aprobación del usuario |
 
 ## Modos
 
@@ -38,14 +38,24 @@ lectura que controle el host.
 
 ## Documentación al finalizar
 
-Developer revisa el diff y pregunta si corresponde actualizar documentación solo
-cuando una fuente canónica existente quedó desfasada. Indica la ruta y el motivo con:
+Developer revisa el diff y ofrece actualizar documentación solo cuando una fuente
+canónica existente quedó desfasada. Si el usuario no pidió hacerlo desde el inicio,
+indica la ruta y el motivo con:
 
 > ⚠️ ¿Quieres actualizar la documentación con lo realizado?
 
-Si acepta, prepara contexto portable para continuar manualmente con Documentation
-Orchestrator. No repite el aviso si la documentación afectada ya quedó actualizada y
-verificada dentro de la tarea.
+Si acepta —o lo pidió desde el inicio— prepara un resumen portable con objetivo,
+decisiones, rutas afectadas, cambios de código, verificaciones y estado local para
+continuar manualmente con `documentation-orchestrator`. Developer no edita
+documentación canónica ni el bloque gestionado de `AGENTS.md`, no cambia de agente
+automáticamente y deja la documentación pendiente si el usuario no selecciona al
+orquestador. El resumen debe servir tanto en el mismo hilo como en uno nuevo. No repite
+el aviso si la documentación afectada ya quedó actualizada y verificada dentro de la tarea.
+
+Para cambios multicapa, responsive o dependientes de perfiles/orientación, revisa en
+una pasada los entrypoints y las pruebas existentes, relaciona los criterios observables
+con sus verificaciones y pregunta antes de editar solo por decisiones funcionales que
+cambien la aceptación. Los cambios pequeños conservan el preflight mínimo.
 
 ## Ejemplos
 

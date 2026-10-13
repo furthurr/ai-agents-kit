@@ -13,7 +13,7 @@ equivalencia entre hosts. Consulta la evidencia y pendientes en la
 |---|---|---|---|
 | documentation-orchestrator | `inspect`, `status`, checks: leer e informar, sin cachés ni marcas | Escribir únicamente `.navigator/`, `.architecture/`, `.data/`, `.design/`, `.quality/`, `.security/`, tras aprobar el plan | No modifica producto, tests, CI, configuración funcional, `.sdd/`, `.release/` ni Git remoto. Handoff conserva acción/alcance. |
 | code-review | Inspeccionar sin escribir | Registros `.quality/` y/o `.security/` del dominio solicitado | Corrección de findings en archivos autorizados y pruebas pertinentes; gates de la skill vigentes. |
-| developer | Leer contexto/código selectivamente; PLAN es de solo lectura | No crea ni sincroniza documentación canónica por defecto | Implementación integral de UI, datos/APIs y negocio con autonomía proporcional; no usa SDD ni modifica `.sdd/`; pruebas y checks pertinentes. |
+| developer | Leer contexto/código selectivamente; PLAN es de solo lectura | No escribe documentación canónica; si queda desfasada, entrega resumen portable para que el usuario continúe con `documentation-orchestrator` | Implementación integral de UI, datos/APIs y negocio con autonomía proporcional; no usa SDD ni modifica `.sdd/`; pruebas y checks pertinentes. |
 | git-release-manager | Estado/historial/diff/control de solo lectura | Preparación solicitada de versión/changelog | Versionado y operaciones Git con confirmaciones específicas; no código ajeno a versión/release. |
 | sdd | Investigación según petición | Planificación según modo/gates | Implementación solo con alcance y autorización correspondientes. REC-02 no modifica ese flujo. |
 
