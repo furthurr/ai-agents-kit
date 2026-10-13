@@ -3,6 +3,27 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.2.0] - 2026-10-12
+
+### Funcionalidades
+
+- Acotar el preflight de Developer para cambios multicapa y responsive, revisando
+  código y pruebas relevantes en una pasada y resolviendo decisiones de aceptación
+  antes de editar.
+- Enrutar las actualizaciones de documentación canónica mediante un resumen portable
+  hacia Documentation Orchestrator, con selección manual del usuario.
+
+### Correcciones
+
+- Evitar la doble inyección del contexto compartido en el agente Developer generado.
+
+### Verificación y distribución
+
+- Añadir pruebas de inyección única y contratos de preflight/documentación en las seis
+  plataformas generadas.
+- Añadir D11 al smoke manual con registro de baseline/post y costo total reportado;
+  la ejecución conversacional en hosts reales permanece pendiente.
+
 ## [3.1.0] - 2026-10-12
 
 ### Funcionalidades
