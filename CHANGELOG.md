@@ -3,6 +3,30 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.3.0] - 2026-10-14
+
+### Funcionalidades
+
+- Separar los flujos de consulta, implementación y documentación persistente en
+  UI/Data.
+- Aceptar peticiones en lenguaje natural para el orquestador documental.
+- Definir límites de confianza y capacidades por operación para SDD y Code Review.
+
+### Seguridad y correcciones
+
+- Rechazar enlaces y archivos especiales al importar artefactos instalados.
+- Fijar las acciones de CI a SHA completos y habilitar revisiones mensuales con
+  Dependabot.
+- Eliminar expresiones redundantes de las pruebas de integridad.
+
+### Documentación y verificación
+
+- Actualizar documentación, seguimiento de auditorías y distribuciones para seis
+  plataformas.
+- Añadir pruebas del importador seguro y registrar límites de validación por host.
+- Validar localmente render, contratos, integridad, importación, permisos e
+  instaladores; la verificación dinámica de LLM y hosts adicionales queda pendiente.
+
 ## [3.2.0] - 2026-10-12
 
 ### Funcionalidades
