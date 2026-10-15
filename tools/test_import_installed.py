@@ -98,6 +98,12 @@ class ImportInstalledTest(unittest.TestCase):
                     self.skills = original
                     alias.unlink()
 
+    def test_windows_short_path_canonicalization_is_not_mistaken_for_link(self):
+        with patch("import_installed.safe_directory", return_value=self.skills) as safe_directory, \
+             patch.object(Path, "resolve", side_effect=AssertionError("must inspect the supplied path")):
+            self.assertEqual(import_installed.source_directory(self.skills, windows=True), self.skills)
+        safe_directory.assert_called_once()
+
     def test_dry_run_rejects_links_too(self):
         (self.skills / "sample/link").symlink_to(self.external)
         self.assertNotEqual(self.run_import("--dry-run"), 0)

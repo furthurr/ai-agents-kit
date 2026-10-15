@@ -418,7 +418,7 @@ Herramienta relacionada: `tools/import_installed.py` (usada por el flujo de
 importación).
 
 El importador acepta únicamente archivos y directorios regulares del inventario.
-Rechaza symlinks (internos o externos), puntos de reanálisis y archivos especiales
+Rechaza symlinks (internos o externos), junctions/puntos de reanálisis y archivos especiales
 en los artefactos y sus rutas de origen; usa una ruta real sin enlaces ni `..`.
 Valida y lee todos los artefactos antes de crear la instantánea, también en
 `--dry-run`. Requiere un origen estable durante la lectura; no es un sandbox frente

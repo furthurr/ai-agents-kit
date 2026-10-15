@@ -13,7 +13,7 @@ para trazabilidad y se desambiguan por alcance y archivo; citar siempre ambos.
 |---|---|---|---|---|
 | SEC-0005 (kit) | 🟡 Media | Instrucciones del workspace en SDD | [Finding](findings/SEC-0005-inyeccion-contexto-sdd.md) | Política implementada; validación LLM/otros hosts pendiente |
 | SEC-0001 (kit) | 🟡 Media | Capacidades de Code Review | [Finding](findings/SEC-0001-capacidades-amplias-code-review.md) | Mitigación implementada; validación LLM/otros hosts pendiente |
-| SEC-0003 (kit) | 🟢 Baja | Importador sigue enlaces | [Finding](findings/SEC-0003-importador-sigue-enlaces.md) | Resuelto para orígenes estables; 9 tests OK |
+| SEC-0003 (kit) | 🟢 Baja | Importador sigue enlaces | [Finding](findings/SEC-0003-importador-sigue-enlaces.md) | Fix multiplataforma; 10 tests locales OK; CI Windows pendiente |
 | SEC-0002 (kit) | 🟢 Baja | Tags mutables de CI | [Finding](findings/SEC-0002-acciones-ci-tags-mutables.md) | Resuelto en workflows; ejecución remota pendiente |
 | SEC-0004 (kit) | 🟢 Baja | Persistencia de agentes obsoletos | [Finding](findings/SEC-0004-agentes-obsoletos-en-instalaciones.md) | Política opt-in verificada; 26 tests OK; instalaciones reales no migradas |
 

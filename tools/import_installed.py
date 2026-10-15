@@ -35,7 +35,7 @@ def snapshot(source: Path, target: Path, directories: list[Path], files: list[tu
         files.append((target, data, stat.S_IMODE(info.st_mode)))
 
 
-def source_directory(path: Path) -> Path | None:
+def source_directory(path: Path, *, windows: bool | None = None) -> Path | None:
     """Validate the selected root itself, then canonicalize trusted OS parents.
 
     macOS exposes temporary files through `/var -> /private/var`; that system alias
@@ -43,6 +43,8 @@ def source_directory(path: Path) -> Path | None:
     link below it, while using the resolved parent to avoid treating OS aliases as
     content links.
     """
+    if windows is None:
+        windows = os.name == "nt"
     if ".." in path.parts:
         raise OSError(f"ruta de origen con '..' no permitida: {path}")
     raw = Path(os.path.abspath(path))
@@ -54,6 +56,11 @@ def source_directory(path: Path) -> Path | None:
         raise OSError(f"raíz de origen enlazada: {raw}")
     if not stat.S_ISDIR(info.st_mode):
         raise OSError(f"raíz de origen no es directorio: {raw}")
+    if windows:
+        # Windows may canonicalize a valid 8.3 short path (e.g. RUNNER~1) to its
+        # long name. Inspect supplied components directly; safe_directory rejects
+        # actual symlinks, junctions and reparse points.
+        return safe_directory(raw)
     canonical = raw.resolve(strict=True)
     if raw != canonical:
         # `/var` is a documented macOS system alias for `/private/var`; permit

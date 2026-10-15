@@ -62,6 +62,12 @@ con finally para limpiar fixtures aun tras una aserción fallida. Cobertura fina
 importación regular, ajenos, dry-run, enlaces internos/externos/rotos, raíces y
 rutas inseguras, FIFO y orígenes ausentes. Todos usan perfiles temporales.
 
+CI de v3.3.0 reveló que Windows normaliza paths cortos 8.3 (`RUNNER~1`) a su
+forma larga. El importador ahora usa inspección por componentes de `safe_directory`
+en Windows, sin comparar las dos representaciones. Añadido contrato Windows
+simulado; importador 10/10 y Antigravity 22/22 en macOS. Reejecutar workflow Windows
+tras integrar el fix para completar evidencia multiplataforma.
+
 ## SEC-0002 — CI inmutable
 
 Todos los `uses:` de `.github/workflows/ci.yml` fijados a SHA completos verificados

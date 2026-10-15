@@ -1,6 +1,6 @@
 # SEC-0003: El importador sigue enlaces simbólicos del origen
 
-- Estado: Resuelto en importación de orígenes estables; sin garantía contra sustitución concurrente de directorios
+- Estado: Corrección multiplataforma integrada localmente; CI Windows pendiente
 - Severidad: 🟢 Baja
 - Referencia: CWE-59 (Improper Link Resolution Before File Access)
 - Ubicación: `tools/import_installed.py:32-53`
@@ -40,5 +40,11 @@ contenga un enlace preparado; no se verificó ninguna instalación de host.
   el fallo del importador anterior ante enlaces preparados. Suite añadida a CI.
   No se inspeccionaron perfiles reales. Se exige árbol estable: no se acredita
   aislamiento contra sustitución concurrente de directorios por otro proceso.
+- 2026-10-15: CI remoto de v3.3.0 encontró que Windows normaliza rutas cortas 8.3
+  (`RUNNER~1`) a su forma larga. `source_directory` ahora inspecciona el path
+  suministrado mediante `safe_directory` en Windows, comprobando symlinks, junctions
+  y reparse points sin tratar aliases 8.3 como enlaces. Contrato Windows simulado;
+  importador 10/10 y Antigravity 22/22 pasan en macOS. Reejecutar CI Windows antes
+  de cerrar la validación multiplataforma.
 
 - 2026-10-05: hallazgo estático registrado; no se ejecutó el importador.
