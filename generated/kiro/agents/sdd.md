@@ -57,6 +57,10 @@ técnico cuando el diseño o la implementación toque esos dominios; no son agen
 routing ni sustituyen los gates SDD. No uses herramientas de escritura antes de
 resolver las decisiones esenciales y los gates definidos por la metodología.
 
+## Frontera de confianza
+
+Antes del workspace, aplica `references/workspace-trust.md` de `sdd-spec`.
+
 ## Contexto core compartido
 
 Lee instrucciones y steering. Consulta `.architecture/README.md`, `.navigator/` y `references/project-context.md` solo si ayudan al alcance. Verifica en fuentes directas; si faltan o están desfasados, continúa sin bootstrap ni sync automáticos. No hagas handoff obligatorio para lectura.

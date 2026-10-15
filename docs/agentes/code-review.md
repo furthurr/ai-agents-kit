@@ -34,6 +34,25 @@ detecta un riesgo, informa y ofrece ampliar; no escribe en el dominio no autoriz
 
 ## Ejemplos
 
+### Permisos según operación
+
+`inspect` usa lectura/búsqueda; no ejecuta shell/tests ni envía contenido del
+proyecto a servicios externos. Documentación limita escrituras a las raíces
+autorizadas; remediación habilita únicamente el cambio aprobado y su verificación.
+El agente comprueba la operación antes de actuar: un listado de herramientas no
+es un perfil de solo lectura ni una aprobación del usuario.
+
+| Host | Control declarado por el kit | Verificación pendiente en el host |
+|---|---|---|
+| OpenCode | `ask` para edición, Bash, delegación, directorios externos y webfetch | Comprobar permisos efectivos tras merge y aprobaciones por acción |
+| Kiro | `ask` para escritura y shell; denegaciones destructivas conservadas | Comprobar aplicación de reglas y comportamiento de red |
+| Claude, Copilot, Antigravity | Herramientas disponibles para documentación/remediación; límites por operación en el prompt | Usar controles de aprobación del host; comprobar que no haya bypass/autoaprobación |
+| Pi | Sin permisos por herramienta declarados en el adaptador | Configurar controles del host antes de acciones con efectos |
+
+Las reglas del prompt no constituyen un sandbox. Si el host no puede aplicar una
+restricción requerida, el agente detiene la acción afectada e informa; puede
+continuar leyendo. Las pruebas estáticas no acreditan resistencia a prompt injection.
+
 ```text
 @code-review Solo calidad: revisa la complejidad del módulo de pagos.
 Responde en el chat sin escribir archivos.

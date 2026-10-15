@@ -10,6 +10,8 @@
     ],
     "permissions": {
       "rules": [
+        { "capability": "fs_write", "effect": "ask" },
+        { "capability": "shell", "effect": "ask" },
         { "capability": "shell", "match": ["rm *"], "effect": "deny" },
         { "capability": "shell", "match": ["rm -rf *"], "effect": "deny" },
         { "capability": "shell", "match": ["git reset --hard*"], "effect": "deny" },

@@ -1,8 +1,13 @@
 # Backlog de hallazgos específicos no recurrentes
 
 - **Fecha:** 2026-10-10.
+- **Revisión de vigencia/estado:** 2026-10-13, contraste de fuentes canónicas, CI v3.2.0, historial Git y configuración local OpenCode.
+- **Alcance MAS:** 19 acciones FUT aplicables; FUT-07 queda excluido por corresponder a skills de terceros en la configuración local de OpenCode.
+- **Estado FUT aplicable al MAS:** 4 cerrados (FUT-08/10/14/17); 7 implementados parcial o íntegramente con validación pendiente (FUT-01/02/04/05/09/11/20); 8 confirmados abiertos (FUT-03/06/12/13/15/16/18/19).
+- **Revalidación base:** `main` HEAD `10373b3` (v3.2.0), CI SUCCESS [run 38352143368](https://github.com/furthurr/ai-agents-kit/actions/runs/38352143368); `test_documentation_core.py` 17/17 y `validate.py` correctos antes del cambio FUT-01 actual.
+- **Revalidación FUT-01 local:** `test_context_efficiency.py` 12/12, `test_integrity.py` 416/416, `validate.py` correcto y enlaces 91/91. Cambios de FUT-01 están locales, sin CI remota ni smoke conductual.
 - **Base:** los cinco informes originales de esta carpeta.
-- **Resultado:** 20 acciones originales; FUT-14 contrastado como no vigente en la documentación operativa actual.
+- **Resultado:** 20 acciones originales; FUT-14 se reabrió y corrigió el 2026-10-12; FUT-17 se cerró tras validar ejemplos reales del historial.
 - **Estado inicial:** pendiente de verificar vigencia; ninguna remediación acreditada por esta síntesis.
 - **Documento principal:** [Consolidado de hallazgos recurrentes](CONSOLIDADO-HALLAZGOS-RECURRENTES.md).
 
@@ -37,7 +42,7 @@ Prioridad de atención, no severidad Sonar/OWASP. Cada entrada tiene **1/5 fuent
 |---:|---|---|:---:|---|
 | 1 | FUT-12 | Reconciliar IDs de seguridad duplicados | E | Alta |
 | 2 | FUT-01 | Separar consulta, implementación y mantenimiento en UI/datos | G | Alta |
-| — | FUT-14 | Actualizar memoria documental y automatizar frescura | E | No vigente |
+| — | FUT-14 | Actualizar memoria documental y automatizar frescura | E | Cerrado tras corrección |
 | 4 | FUT-06 | Resolver referencia a `OPENCODE.md` inexistente | M | Alta si sigue vigente |
 | 5 | FUT-13 | Concretar/versionar checklists y evidencias | E | Media-alta |
 | 6 | FUT-03 | Usar referencias de seguridad del estándar aplicable | G | Media-alta |
@@ -50,11 +55,22 @@ Prioridad de atención, no severidad Sonar/OWASP. Cada entrada tiene **1/5 fuent
 | 13 | FUT-09 | Completar catálogo `/skill` y comprobar `build` | M | Media |
 | 14 | FUT-08 | Resolver metadato/comando específico de Graphify | M | Media |
 | 15 | FUT-11 | Acotar investigación web de releases | M | Media |
-| 16 | FUT-07 | Reconciliar copias de `frontend-slides` | M | Media |
-| 17 | FUT-19 | Incorporar evidencia visual y accesibilidad | E | Media |
-| 18 | FUT-20 | Ampliar evidencia nativa de instaladores PowerShell | E | Media |
-| 19 | FUT-16 | Ampliar calibración de esfuerzo SDD | E | Media-baja |
-| 20 | FUT-10 | Gestionar backups obsoletos fuera del catálogo activo | M | Baja |
+| 16 | FUT-19 | Incorporar evidencia visual y accesibilidad | E | Media |
+| 17 | FUT-20 | Ampliar evidencia nativa de instaladores PowerShell | E | Media |
+| 18 | FUT-16 | Ampliar calibración de esfuerzo SDD | E | Media-baja |
+| 19 | FUT-10 | Gestionar backups obsoletos fuera del catálogo activo | M | Baja |
+
+FUT-07 queda conservado en el anexo local de abajo y no participa en este orden del MAS.
+
+### Aplicabilidad al MAS desarrollado — revisión 2026-10-13
+
+| ID | ¿Aplica? | Alcance y motivo |
+|---|---|---|
+| REC-16 | Sí | Evalúa utilidad/coste del MAS en tareas reales. `developer-smoke.md` prescribe comparar baseline/post con consumo/tiempo del host, pero no hay ejecuciones/resultados; bytes/palabras siguen siendo solo proxy. |
+| FUT-09 | Parcial: entorno local | Afecta el comando `/skill` de `~/.config/opencode/commands/skill.md`, no los artefactos distribuidos del MAS. Importa al usar el MAS junto a skills instaladas en `~/.agents/skills/`; el agente `build` sí existe. |
+| FUT-07 | No; fuera de alcance del MAS | Es una skill de terceros en configuración local de OpenCode; no pertenece a `canonical/`, adapters ni generated del kit. Se retira de los totales/prioridades del MAS y se conserva solo como anexo local. |
+| FUT-17 | Sí; cerrado | Cambios de comportamiento del MAS viven en prompts Markdown; el contrato y los commits `f432f4a` (`feat` de prompt) / `6f6f10d` (`docs` descriptivo) demuestran la clasificación por intención. |
+| FUT-20 | Sí | Los instaladores PowerShell distribuyen el MAS en Windows; la cobertura nativa actual solo prueba Antigravity, no todos los wrappers del kit. |
 
 ## 3. Fichas de trabajo futuro
 
@@ -66,6 +82,8 @@ Prioridad de atención, no severidad Sonar/OWASP. Cada entrada tiene **1/5 fuent
 - **Cómo resolver:** definir tres ramas breves: consulta sin persistencia; implementación localizada y verificación proporcional; documentación/sync autorizados. Condicionar creación de carpetas a la intención real y requisitos del proyecto.
 - **Cuándo retomarlo:** junto a REC-03/REC-04 o antes de ampliar workflows de esos especialistas.
 - **Cierre:** explicar DTOs y estilos sin crear carpetas; implementar un cambio puntual sin extracción global; inicializar documentación cuando se solicite explícitamente.
+- **Implementación local 2026-10-13:** `ui-design` y `data-api` ahora separan consulta sin persistencia, implementación de producto mediante Developer y documentación/auditoría explícitamente solicitada; crear `.design/`/`.data/` requiere plan y aprobación documental. Se propagó a seis hosts.
+- **Verificación:** `test_context_efficiency.py` 12/12; `test_integrity.py` 416/416; `validate.py` correcto; enlaces 94/94. **Estado:** implementado en fuente/distribuciones, runtime smoke pendiente; no cerrar hasta probar consulta sin escritura, implementación localizada y documentación solicitada en host real.
 
 ### FUT-02 — Corregir precarga de skills en Claude
 
@@ -113,13 +131,14 @@ Prioridad de atención, no severidad Sonar/OWASP. Cada entrada tiene **1/5 fuent
 - **Cuándo retomarlo:** antes de depender de ese steering o centralizar allí instrucciones.
 - **Cierre:** prueba de carga efectiva del archivo o eliminación de la dependencia; precedencias e identidad no se asumen por accidente.
 
-### FUT-07 — Reconciliar copias de `frontend-slides`
+### FUT-07 — Fuera de alcance del MAS: copias locales de `frontend-slides`
 
 - **Fuente:** M H2, 51–67.
 - **Hallazgo:** tres copias locales, una de ellas embebida como distribución plugin, crean riesgo de divergencia y posible ambigüedad de descubrimiento.
 - **Cómo resolver:** inventariar contenido, versiones y consumidores; verificar qué directorios descubre el runtime; escoger fuente mantenida y separar exportes de distribución del catálogo activo.
 - **Cuándo retomarlo:** en mantenimiento de instalación local o ante selección duplicada.
 - **Cierre:** no hay copias activas competidoras sin justificación; exportes conservados donde sus consumidores los necesiten. No borrar una copia solo porque coincida el nombre.
+- **Decisión de alcance (2026-10-13):** no pertenece al MAS distribuido; es una skill de terceros en configuración local de OpenCode. El usuario la excluye del plan de trabajo del MAS. No se movió ni borró copia; al revalidar, ya no existía en ninguno de los roots ni en backups. Una restauración requiere solicitud independiente y fuente/version aprobada.
 
 ### FUT-08 — Resolver `trigger` y comando de Graphify
 
@@ -176,8 +195,8 @@ Prioridad de atención, no severidad Sonar/OWASP. Cada entrada tiene **1/5 fuent
 - **Cómo resolver:** identificar fuente vigente de inventario y responsabilidades; actualizar documentos operativos; separar historia de instrucciones actuales; automatizar comprobaciones de frescura, inventario e índices Navigator.
 - **Cuándo retomarlo:** antes de confiar en esos contextos para nuevas decisiones y tras modificar contratos.
 - **Cierre:** documentos operativos y fuentes coinciden; baseline verificable o límites declarados; inconsistencias detectadas automáticamente cuando sea viable. No sobrescribir historia como si hubiera sido errónea en su fecha.
-- **Verificación actual:** `.navigator/ai-context.md`, `.architecture/README.md`, `docs/catalogo.md` y `docs/uso.md` reflejan seis plataformas, tres profundidades SDD y los roles UI/Data. Las referencias discrepantes restantes pertenecen a auditorías o specs históricas y se conservan como tales.
-- **Estado:** no vigente para el contexto operativo actual; reabrir si vuelve a divergir.
+- **Revisión 2026-10-13:** se corrigió la deriva de `.navigator/ai-context.md` y `.architecture/07-crosscutting.md` contra manifest, `scope-depth.md`, catálogo y guía de uso. El cambio de Developer en v3.2 no altera el inventario ni los modos.
+- **Estado:** cerrado tras corregir la deriva; baseline de fuentes `10373b3`. `test_documentation_core.py` detecta desajustes de inventario/modos; la regeneración general de mapas sigue manual (`update.strategy: manual`). CI v3.2 SUCCESS.
 
 ### FUT-15 — Contextualizar severidad y preferencias arquitectónicas
 
@@ -202,6 +221,7 @@ Prioridad de atención, no severidad Sonar/OWASP. Cada entrada tiene **1/5 fuent
 - **Cómo resolver:** elegir tipo por intención y efecto, no extensión; incluir ejemplos de cambios de instrucciones, documentación y correcciones de comportamiento.
 - **Cuándo retomarlo:** junto a REC-15 o antes de automatizar changelog.
 - **Cierre:** cambios funcionales en prompts reciben `feat`/`fix` cuando corresponda; documentación puramente descriptiva sigue usando `docs`.
+- **Verificación actual:** `canonical/skills/git-commit/SKILL.md:221-222` ordena clasificar por intención. `f432f4a feat(developer)` aporta un cambio de comportamiento en prompts y `6f6f10d docs(readme)` modifica solo el README. Estado **Cerrado**.
 
 ### FUT-18 — Detectar cambios incompatibles en mensajes completos
 
@@ -259,26 +279,26 @@ Estados: **pendiente → confirmado → en curso → corregido en rama → integ
 
 | ID | Estado | Responsable / rama | Última actualización | Evidencia | Próxima acción |
 |---|---|---|---|---|---|
-| FUT-01 | Pendiente | — | 2026-10-10 | — | Coordinar con REC-03/04. |
-| FUT-02 | Implementado y distribuido; runtime pendiente | Coordinación / `main` | 2026-10-11 | Claude adapter ya no precarga ambas skills; `Skill` sigue disponible; render/validate pasan | Probar carga dinámica en Claude Code cuando haya host/CLI disponible. |
-| FUT-03 | Pendiente | — | 2026-10-10 | — | Coordinar contrato de findings con FUT-13. |
-| FUT-04 | Implementado y distribuido; smoke pendiente | Coordinación / `main` | 2026-10-11 | Navigator usa presupuesto inicial ampliable y criterios cualitativos; render/validate pasan | Contrastar con una consulta transversal real si se instrumenta una sesión. |
-| FUT-05 | Implementado y distribuido; smoke pendiente | Coordinación / `main` | 2026-10-11 | Workflows continúan ramas independientes ya autorizadas y mantienen resultado parcial; contrato pasa | Confirmar en smoke que pregunta solo ante cambios de alcance/dependencias/autorización. |
-| FUT-06 | Pendiente | — | 2026-10-10 | — | Confirmar ruta y carga efectiva del steering local. |
-| FUT-07 | Pendiente | — | 2026-10-10 | — | Inventariar copias y consumidores. |
-| FUT-08 | Implementado localmente; reinicio pendiente | Coordinación / configuración OpenCode local | 2026-10-11 | `graphify` ya no declara `trigger` y su descripción activa solo pipeline/grafos persistentes | Reiniciar OpenCode; el cambio global no se versiona en este repositorio. |
-| FUT-09 | Pendiente | — | 2026-10-10 | — | Contrastar catálogo y agente integrado. |
-| FUT-10 | Pendiente | — | 2026-10-10 | — | Verificar recuperabilidad de backups. |
-| FUT-11 | Implementado en fuentes y configuración local; reinicio pendiente | Coordinación | 2026-10-11 | Investigación limitada a caché y hasta dos fuentes oficiales para release activa | Reiniciar OpenCode; verificar en la siguiente release de tecnología no soportada. |
-| FUT-12 | Pendiente | — | 2026-10-10 | — | Inventariar IDs antes de remediar por referencia. |
-| FUT-13 | Pendiente | — | 2026-10-10 | — | Identificar cobertura real y versiones. |
-| FUT-14 | No vigente | Coordinación | 2026-10-11 | `.navigator/ai-context.md`, `.architecture/README.md`, `docs/catalogo.md` y `docs/uso.md` reflejan seis plataformas, tres profundidades y los roles UI/Data | Mantener los informes/specs antiguos como historia; reabrir solo si vuelve a divergir contexto operativo. |
-| FUT-15 | Pendiente | — | 2026-10-10 | — | Contextualizar ejemplos y severidad. |
-| FUT-16 | Pendiente | — | 2026-10-10 | — | Añadir casos diversos a la rúbrica. |
-| FUT-17 | Pendiente | — | 2026-10-10 | — | Coordinar con REC-15. |
-| FUT-18 | Pendiente | — | 2026-10-10 | — | Revisar lectura del rango de release. |
-| FUT-19 | Pendiente | — | 2026-10-10 | — | Seleccionar controles visuales aplicables. |
-| FUT-20 | Pendiente | — | 2026-10-10 | — | Inventariar evidencia nativa por instalador. |
+| FUT-01 | Implementado; smoke pendiente | Coordinación / `main` worktree | 2026-10-13 | UI/Data separan consulta, implementación y documentación aprobada; propagado a seis hosts. Tests estáticos 12/12, integrity 416/416, validate y links 94/94 pasan | Ejecutar los tres escenarios de cierre en host; CI remota posterior al cambio aún no disponible. |
+| FUT-02 | Implementado y distribuido; runtime pendiente | Coordinación / `main` | 2026-10-12 | Claude adapter no precarga ambas skills; `Skill` sigue disponible; contrato de carga bajo demanda incluido en `test_context_efficiency.py` (11/11). `shutil.which("claude")` da `None` en este entorno | Probar carga dinámica cuando haya host/CLI Claude disponible. |
+| FUT-03 | Confirmado | Coordinación / `main` | 2026-10-12 | La plantilla de findings sigue usando una referencia móvil como forma principal y no fija claramente estándar aplicable, versión y mapeo no disponible | Coordinar contrato de findings con FUT-13; permitir mapeos aplicables/no aplicables sustentados. |
+| FUT-04 | Implementado y distribuido; smoke pendiente | Coordinación / `main` | 2026-10-12 | Navigator tiene presupuesto inicial ampliable; suite contractual actual `test_context_efficiency.py` 11/11. No se ejecutó una consulta real de más de tres archivos | Contrastar con una consulta transversal real instrumentada. |
+| FUT-05 | Implementado y distribuido; smoke pendiente | Coordinación / `main` | 2026-10-12 | Workflows preservan ramas independientes autorizadas; contrato `test_context_efficiency.py` 11/11. No se ejecutó un flujo conversacional bloqueado/independiente | Confirmar en smoke que pregunta solo ante cambios de alcance, dependencias o autorización. |
+| FUT-06 | Confirmado | Coordinación / configuración OpenCode local | 2026-10-12 | `~/.config/opencode/opencode.json` todavía referencia `OPENCODE.md`; no se encontró ese archivo en la configuración ni en el workspace actual | Confirmar resolución efectiva de ruta y retirar o satisfacer la referencia local. |
+| FUT-07 | Fuera de alcance del MAS (local) | Configuración OpenCode, no `main` | 2026-10-13 | Skill de terceros; su ausencia actual en `.agents` y `.config/opencode` corresponde al entorno local, no a los artefactos distribuidos del kit | Mantenerla fuera del plan MAS; restaurarla solo en una tarea separada y con fuente/version aprobada. |
+| FUT-08 | Cerrado localmente | Coordinación / configuración OpenCode local | 2026-10-12 | Skill Graphify cargada en la sesión actual; frontmatter no contiene `trigger`; la descripción está limitada a solicitudes explícitas | Ninguno para el hallazgo del metadato; configuración local, no artefacto versionado del kit. |
+| FUT-09 | Implementado parcialmente; catálogo pendiente | Coordinación / configuración OpenCode local | 2026-10-12 | `opencode agent list` confirma `build (primary)`; `commands/skill.md` cataloga `~/.config/opencode/skills/` y `.opencode/skills/`, pero omite `~/.agents/skills/` | Añadir origen `.agents` con procedencia/deduplicación si el catálogo debe cubrir todas las skills disponibles. |
+| FUT-10 | Cerrado localmente | Coordinación / configuración OpenCode local | 2026-10-12 | Backups fechados permanecen en `skills-backup/` con sus `SKILL.md`; separados de `skills/` y del catálogo activo. Se conserva recuperación, sin borrar archivos | Ninguno; mantener separados del catálogo activo. |
+| FUT-11 | Implementado y cargado; prueba de flujo pendiente | Coordinación / `main` y configuración local | 2026-10-12 | Fuentes canónica/global limitan búsqueda a caché y hasta dos fuentes oficiales; la skill está cargada en la sesión actual. No se ha ejecutado una release real no soportada | Probar el flujo en un proyecto fixture y registrar perfil/fuentes sin exceder alcance ni aplicar escrituras. |
+| FUT-12 | Confirmado | Coordinación / `main` | 2026-10-12 | `.security/findings/` aún contiene dos archivos `SEC-0001` y dos `SEC-0002`; el tablero maestro solo cubre F07 y no indexa todos los findings | Inventariar referencias, asignar IDs únicos/aliases e incluir validación de duplicados y estados; requiere aprobación de remediación de seguridad. |
+| FUT-13 | Confirmado | Coordinación / `main` | 2026-10-12 | Las fuentes actuales no distribuyen checklists concretos y versionados para toda la cobertura anunciada de auditoría/Code Review | Identificar controles, versiones, aplicabilidad y evidencia antes de afirmar cobertura reproducible. |
+| FUT-14 | Cerrado tras corrección de deriva | Coordinación / baseline `10373b3` | 2026-10-13 | `.navigator/ai-context.md` actualizado a 11/5/6 y `direct`/`tiny`/`lite` + `standard` legacy; `.architecture/07-crosscutting.md` actualizado; `test_documentation_core.py` 17/17; CI v3.2 SUCCESS | Regeneración general Navigator sigue manual; reabrir si aparece otra deriva; conservar documentos históricos. |
+| FUT-15 | Confirmado | Coordinación / `main` | 2026-10-12 | Criterios de severidad actuales describen niveles generales, sin resolver explícitamente preferencias arquitectónicas frente a riesgos/contexto como dominio público | Contextualizar ejemplos, severidad e impacto por exposición verificable. |
+| FUT-16 | Confirmado | Coordinación / `main` | 2026-10-12 | La rúbrica de esfuerzo conserva contrastes concentrados en F10/X13; no aparecen ejemplos de UI, accesibilidad, rendimiento y contratos | Añadir casos diversos y comprobar recomendaciones consistentes, sin convertir la nota en predicción de coste/tiempo. |
+| FUT-17 | Cerrado | Coordinación / `main` `10373b3` | 2026-10-13 | `git-commit` clasifica por intención; `f432f4a feat(developer)` incluye cambios funcionales de prompts y `6f6f10d docs(readme)` modifica solo README | Ninguna; reabrir si reaparece la clasificación basada solo en extensión. |
+| FUT-18 | Confirmado | Coordinación / `main` | 2026-10-12 | `release-management` aún ejemplifica `git log --oneline` y no exige leer cuerpos/footer completos aunque su tabla menciona `BREAKING CHANGE` | Leer mensajes completos del rango y validar fixture con footer breaking sin `!` en el título. |
+| FUT-19 | Confirmado | Coordinación / `main` | 2026-10-12 | UI define WCAG y accesibilidad pertinente, pero no un protocolo de controles observados/evidencia visual por plataforma | Seleccionar controles aplicables y registrar entorno, capturas/resultados y límites. |
+| FUT-20 | Implementado parcialmente; PowerShell nativo pendiente | Coordinación / CI `main` | 2026-10-13 | Tests locales instaladores 250/250 y Antigravity 22/22; CI v3.2 (run 38352143368) prueba Windows Antigravity, pero no los demás wrappers PowerShell de Copilot/OpenCode/Kiro/Claude/Pi | Añadir/ejecutar los demás instaladores en PowerShell Windows, o registrar bloqueos por wrapper. |
 
 ### Historial de cambios de estado
 
@@ -286,6 +306,19 @@ Estados: **pendiente → confirmado → en curso → corregido en rama → integ
 |---|---|---|---|---|---|
 | 2026-10-10 | FUT-01 a FUT-20 | Inicialización → Pendiente | Preparación documental | Tablero individual preparado, sin fixes ejecutados. | Asignación y verificación de vigencia. |
 | 2026-10-11 | FUT-14 | Pendiente → No vigente | Contraste de las fuentes operativas actuales | Navigator y arquitectura listan seis plataformas; catálogo/uso describen `direct`, `lite`, `standard` y UI/Data como especialistas implementadores. Las referencias contrarias están en documentos históricos/specs cerradas, no en el contexto operativo actual. | Ninguna corrección activa; conservar la evidencia histórica. |
+| 2026-10-12 | FUT-14 | No vigente → Confirmado → Cerrado | Revalidación y actualización documental coordinada; baseline fuentes `8fea7bb` | Se detectó deriva nueva en `.navigator/ai-context.md` (10/6 skills-agentes y sin Tiny) y `.architecture/07-crosscutting.md`; ambos corregidos contra manifest, contratos SDD y catálogo vigente. Aserción enfocada 1/1; enlaces 91/91. | No hay corrección activa para esta deriva; la regeneración general de mapas sigue manual y el test verifica inventario/modos, no toda frescura. La suite documental completa falla por un diff local posterior de Developer. |
 | 2026-10-11 | FUT-02/04/05/08/11 | Pendiente → Implementado localmente | Adaptador Claude, Navigator/orchestrator y skills OpenCode locales | Preload Claude eliminado; presupuestos cualitativos/ampliables; tareas independientes continúan; Graphify acotado; investigación web de release limitada a caché y dos fuentes oficiales | Render/host smoke cuando se integre; skills globales OpenCode son locales y requieren reinicio. |
+| 2026-10-12 | FUT-01/03/06/07/12/13/15/16/18/19 | Pendiente → Confirmado | Revisión coordinadora sobre `main` `8fea7bb` y configuración local | Se comprobó vigencia en skills/plantillas, presencia de IDs duplicados, referencia OPENCODE.md ausente, copias frontend-slides y cobertura/evidencia que falta; CI actual SUCCESS | Siguen abiertos; ejecutar las acciones descritas en el tablero. FUT-12 requiere gate de remediación de seguridad. |
+| 2026-10-12 | FUT-08 | Implementado localmente; reinicio pendiente → Cerrado localmente | Configuración OpenCode global actual | Skill Graphify disponible en la sesión y metadato `trigger` ausente; descripción acotada | Ninguno para retirar el metadato; sigue siendo una configuración personal no versionada. |
+| 2026-10-12 | FUT-09 | Pendiente → Implementado parcialmente | Configuración OpenCode actual | `build` aparece como agente primary; comando `/skill` aún omite `~/.agents/skills/` | Corregir el catálogo si debe enumerar también ese origen. |
+| 2026-10-12 | FUT-10 | Pendiente → Cerrado localmente | `~/.config/opencode/skills-backup/` | Backups fechados y recuperables están fuera de `skills/` y del catálogo `/skill`; no se eliminó contenido | Ninguno; conservar la separación. |
+| 2026-10-12 | FUT-11 | Implementado; reinicio pendiente → Cargado; prueba pendiente | Skill local activa y fuente canónica | Límite de dos fuentes oficiales presente; skill visible/cargada en la sesión actual | Probar el flujo en la siguiente release de tecnología no soportada. |
+| 2026-10-12 | FUT-17 | Pendiente → Implementado en fuente; verificación pendiente | `canonical/skills/git-commit/SKILL.md` | Regla por intención/no extensión está presente. | Verificar ejemplos contrastados en el historial antes de cerrar. |
+| 2026-10-12 | FUT-17 | Implementado en fuente; verificación pendiente → Cerrado | `main` `10373b3`; historial `f432f4a` y `6f6f10d` | Cambio funcional de prompts clasificado `feat(developer)` y cambio solo documental clasificado `docs(readme)`; ambos coinciden con el criterio. | Ninguno; reabrir si reaparece clasificación basada en extensión. |
+| 2026-10-12 | FUT-20 | Pendiente → Implementado parcialmente | CI actual `38323348763` | Job nativo Windows valida Antigravity; los demás wrappers PowerShell no tienen ejecución nativa demostrada | Completar evidencia nativa por wrapper. |
+| 2026-10-13 | FUT-01 | Confirmado → Implementado en fuentes/distribuciones; smoke pendiente | `main` worktree, cambio coordinado con REC-01 | Skills UI/Data separan consulta read-only, implementación por Developer y documentación solicitada; `test_context_efficiency.py` 12/12, integrity 416/416, validate y links pasan | Ejecutar consulta, cambio localizado y documentación explícita en host real antes de cerrar. |
+| 2026-10-13 | FUT-07 | Confirmado → Inventario completado; decisión de consolidación pendiente | Configuración local OpenCode y `~/.agents/skills/` | Los dos árboles son idénticos (163 archivos, sin Git); incluyen bundles plugin idénticos; OpenCode 1.18.34 advierte skills duplicadas | Acordar fuente raíz y tratamiento del bundle antes de mover o archivar copias. |
+| 2026-10-13 | FUT-07 | Inventario duplicado → Bloqueado por ausencia de la copia elegida | Revisión posterior de `~/.agents`, `~/.config/opencode/skills`, `skills-backup` y `.skill-lock.json` | Ya no se encuentra ningún árbol frontend-slides en esas rutas; no hay copia de respaldo ni origen/version fijados en el lockfile | Confirmar restauración desde una fuente/version acordada o declarar que el skill fue retirado. |
+| 2026-10-13 | FUT-07 | Bloqueado local → Excluido del alcance MAS | Decisión del usuario | `frontend-slides` es una skill de terceros del entorno OpenCode local, no artefacto distribuido por el MAS | No incluir en el plan ni en los totales del MAS; mantenimiento local queda fuera de este alcance. |
 
 Al retomar una entrada: comprobar vigencia y consumidores, localizar deuda existente, acotar el cambio, ejecutar verificación proporcional y registrar resultado. La coordinadora actualiza estados e historial al recibir evidencia y verificar la integración. Actualizar ambas síntesis si una nueva auditoría convierte un punto específico en recurrente.

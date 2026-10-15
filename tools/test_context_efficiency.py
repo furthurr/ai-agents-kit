@@ -72,6 +72,30 @@ class ContextEfficiencyTests(unittest.TestCase):
         self.assertIn("endpoints", descriptions["data"].casefold())
         self.assertIn("tokens", descriptions["ui"].casefold())
 
+    def test_ui_and_data_skills_gate_documentation_on_explicit_intent(self):
+        manifest = json.loads(read("canonical/manifest.json"))
+        for skill, folder in (("ui-design", ".design/"), ("data-api", ".data/")):
+            source = " ".join(read(f"canonical/skills/{skill}/SKILL.md").casefold().split())
+            required = (
+                "consulta sin persistencia",
+                f"no crees `{folder}`",
+                "implementación de producto",
+                "developer coordina",
+                "documentación con persistencia",
+                "solo cuando el usuario solicite",
+                "espera su aprobación",
+            )
+            with self.subTest(skill=skill, target="canonical"):
+                for clause in required:
+                    self.assertIn(clause, source)
+            for platform in manifest["platforms"]:
+                rendered = " ".join(
+                    read(f"generated/{platform}/skills/{skill}/SKILL.md").casefold().split()
+                )
+                with self.subTest(skill=skill, platform=platform):
+                    for clause in required:
+                        self.assertIn(clause, rendered)
+
     def test_claude_git_agent_loads_skills_on_demand(self):
         adapter = json.loads(read("adapters/claude/agents/git-release-manager.json"))
         tools = adapter["frontmatter"]["tools"]

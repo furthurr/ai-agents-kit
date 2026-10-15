@@ -1,6 +1,6 @@
 # SEC-0002: Acciones de CI referenciadas por tags mutables
 
-- Estado: Pendiente
+- Estado: Resuelto en los workflows versionados; ejecución remota pendiente
 - Severidad: 🟢 Baja
 - Referencia: GitHub Actions Security Hardening · CWE-829
 - Ubicación: `.github/workflows/ci.yml:7-8,14-16`
@@ -25,10 +25,18 @@ protección configurados en GitHub.
 
 ## Plan de remediación (no ejecutado)
 
-- [ ] Revisar y fijar `checkout` y `setup-python` a SHA completos de sus
+- [x] Revisar y fijar `checkout` y `setup-python` a SHA completos de sus
   repositorios oficiales.
-- [ ] Añadir una rutina de actualización y revisión de acciones.
+- [x] Añadir una rutina de actualización y revisión de acciones.
 
 ## Bitácora
+
+- 2026-10-14: los cuatro usos en los dos jobs de CI quedan fijados a SHA completos.
+  `git ls-remote` contra los repositorios oficiales verifica checkout v4.4.0
+  (`11d5960a326750d5838078e36cf38b85af677262`) y setup-python v5.6.0
+  (`a26af69be951a213d495a4c3e4e4022e16d87065`), coincidentes con los majors previos
+  en el momento de revisión. Se conservan majors y permisos `contents: read`.
+  Dependabot propone actualizaciones mensuales, sin automerge; revisar procedencia,
+  diff y CI antes de aprobar. No se ejecutó GitHub Actions remotamente.
 
 - 2026-10-05: hallazgo estático registrado; no se modificó el workflow.

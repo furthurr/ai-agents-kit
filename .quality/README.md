@@ -10,6 +10,8 @@ o iniciar una remediación.
 - Snapshot: working tree local observado el 2026-10-05, incluidos sus cambios
   locales; no se declara `HEAD` como baseline ni como fuente de esos cambios.
 - Última actualización: 2026-10-05.
+- Revalidación puntual QLT-0001: 2026-10-14 sobre MAS 3.2.0 y cambios locales;
+  remediado y verificado. No equivale a una nueva auditoría completa.
 - Estado: auditoría inicial; no hay marca basada en commit.
 
 ## Contexto para IA
@@ -20,7 +22,8 @@ o iniciar una remediación.
   reporte de SonarQube.
 - **Métricas:** sin reporte de cobertura, duplicación o complejidad; ver
   [`metrics.md`](metrics.md).
-- **Hallazgos abiertos:** 1 Low — [`QLT-0001`](findings/QLT-0001-expresiones-duplicadas-en-integridad.md).
+- **Hallazgos abiertos registrados:** 0; [`QLT-0001`](findings/QLT-0001-expresiones-duplicadas-en-integridad.md)
+  resuelto. La suite general mantiene un fallo de enlace local documentado en el finding.
 - **Reglas Sonar de referencia:** Python, regla `python:S1764`, cacheada en
   [`standards/python.md`](standards/python.md).
 - **Límite de evidencia:** las pruebas y comprobaciones describen el snapshot

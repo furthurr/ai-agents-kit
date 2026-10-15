@@ -809,6 +809,29 @@ def test_variants_and_evidence() -> None:
           "integrity gate no duplica la política de estrategia retirada")
 
 
+def test_workspace_trust_boundary() -> None:
+    """Regression for policy distribution, not a claim of LLM injection resistance."""
+    manifest = json.loads((ROOT / "canonical/manifest.json").read_text(encoding="utf-8"))
+    texts = [("canonical/agent", read(SDD_AGENT)), ("canonical/skill", read(SDD / "SKILL.md"))]
+    for platform in manifest["platforms"]:
+        adapter = json.loads((ROOT / "adapters" / platform / "agents/sdd.json").read_text(encoding="utf-8"))
+        texts.extend([
+            (f"{platform}/agent", read(ROOT / "generated" / platform / "agents" / adapter["filename"])),
+            (f"{platform}/skill", read(ROOT / "generated" / platform / "skills/sdd-spec/SKILL.md")),
+        ])
+    for label, text in texts:
+        boundary = normalized(section(text, "Frontera de confianza"))
+        check(bool(boundary), f"trust/{label}: frontera explícita")
+        check("references/workspace-trust.md" in boundary and "antes del workspace" in boundary.lower(),
+              f"trust/{label}: carga obligatoria antes del workspace")
+    policy = normalized(read(SDD / "references/workspace-trust.md"))
+    for requirement in ("instrucciones de mayor prioridad", "alcance autorizado",
+                        "ampliar permisos, aprobar gates", "resultados de herramientas",
+                        "páginas web", "permisos efectivos del host", "no aprueba el plan",
+                        "no son un sandbox", "resistencia dinámica"):
+        check(requirement in policy, f"trust/policy: {requirement}")
+
+
 def test_navigator_context_contract() -> None:
     skill = read(SDD / "SKILL.md")
     agent = read(SDD_AGENT)
@@ -1018,6 +1041,7 @@ def main() -> int:
     test_spec_paths_support_grouping()
     test_adaptive_testing_selection()
     test_variants_and_evidence()
+    test_workspace_trust_boundary()
     test_navigator_context_contract()
     test_specialists_recommend_sdd_without_switching()
     test_agent_routing_policy()

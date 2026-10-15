@@ -2,8 +2,8 @@
   "filename": "documentation-orchestrator.agent.md",
   "frontmatter": {
     "name": "Documentation Orchestrator",
-    "description": "Coordina status, bootstrap y sincronización de documentación canónica tras petición; conserva aprobaciones y gates. Úsalo para sync-check, sync-domain, release-check y coordinación multidominio, no para localizar archivos puntuales.",
-    "argument-hint": "Describe si quieres comprobar estado, inicializar core, sincronizar documentacion existente o ejecutar un release-check.",
+    "description": "Ayuda a entender el proyecto, localizar código y revisar, iniciar o actualizar su documentación. También comprueba si está lista para publicar; pide lo que necesitas en lenguaje natural.",
+    "argument-hint": "Describe lo que quieres entender o documentar; no necesitas indicar un modo.",
     "tools": [
       "read",
       "edit",

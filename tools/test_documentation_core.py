@@ -42,6 +42,24 @@ class DocumentationCoreContract(unittest.TestCase):
                 self.assertFalse((ROOT / f"adapters/{platform}/agents/{retired}.json").exists())
         self.assertIn("developer", manifest["skills"])
 
+    def test_operational_context_inventory_and_sdd_depths_match_sources(self):
+        manifest = json.loads(read(ROOT / "canonical/manifest.json"))
+        summary = (
+            f"{len(manifest['skills'])} skills, {len(manifest['agents'])} agentes "
+            f"y {len(manifest['platforms'])} plataformas"
+        )
+        contexts = (
+            read(ROOT / ".navigator/ai-context.md"),
+            read(ROOT / ".architecture/07-crosscutting.md"),
+        )
+        for context in contexts:
+            with self.subTest(context=context[:80]):
+                self.assertIn(summary, context)
+                for depth in ("`direct`", "`tiny`", "`lite`", "`standard`"):
+                    self.assertIn(depth, context)
+                self.assertIn("legacy", context)
+                self.assertIn("solicitud explícita", context)
+
     def test_inspect_distinct_from_default_status(self):
         skill = read(DOCS / "SKILL.md")
         workflow = read(DOCS / "references/workflows.md")
@@ -54,7 +72,9 @@ class DocumentationCoreContract(unittest.TestCase):
     def test_documentation_agent_local_core(self):
         text = read(ROOT / "canonical/agents/documentation-orchestrator.md")
         self.require(text, "`inspect`", "core se ejecuta localmente",
-                     "bajo demanda", "sin handoff", "`status`")
+                     "bajo demanda", "sin handoff", "`status`",
+                     "peticiones en lenguaje natural", "no pidas al\nusuario que nombre modos o skills",
+                     "pide solo la aprobación que\nya exige el flujo")
 
     def test_developer_plan_scope_sdd_and_documentation_close(self):
         agent = read(ROOT / "canonical/agents/developer.md")
@@ -187,8 +207,10 @@ class DocumentationCoreContract(unittest.TestCase):
         for path in paths:
             with self.subTest(platform=path.parent.parent.name):
                 data = json.loads(read(path))
-                self.require(data["frontmatter"]["description"], "status", "bootstrap",
-                             "sincronización", "no para localizar")
+                description = data["frontmatter"]["description"]
+                self.require(description, "entender el proyecto", "localizar código",
+                             "documentación", "lenguaje natural")
+                self.assertNotIn("no para localizar", description)
                 self.assertNotIn("architecture", data["frontmatter"].get("skills", []))
                 self.assertNotIn("project-navigator", data["frontmatter"].get("skills", []))
 

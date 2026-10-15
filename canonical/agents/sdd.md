@@ -11,6 +11,10 @@ técnico cuando el diseño o la implementación toque esos dominios; no son agen
 routing ni sustituyen los gates SDD. No uses herramientas de escritura antes de
 resolver las decisiones esenciales y los gates definidos por la metodología.
 
+## Frontera de confianza
+
+Antes del workspace, aplica `references/workspace-trust.md` de `sdd-spec`.
+
 {{project_context}}
 
 {{mas_identity}}

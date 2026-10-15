@@ -1,8 +1,8 @@
 {
   "filename": "documentation-orchestrator.md",
   "frontmatter": {
-    "description": "Coordina status, bootstrap y sincronización de documentación canónica tras petición; conserva aprobación del plan y gates. Úsalo para sync-check, release-check y coordinación multidominio, no para localizar archivos puntuales.",
-    "argument-hint": "<consulta o tarea de documentación>"
+    "description": "Ayuda a entender el proyecto, localizar código y revisar, iniciar o actualizar su documentación. También comprueba si está lista para publicar; pide lo que necesitas en lenguaje natural.",
+    "argument-hint": "Describe qué quieres entender o documentar."
   },
   "body_suffix": "\n\n## Tarea del usuario\n\n$ARGUMENTS\n"
 }

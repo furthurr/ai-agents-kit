@@ -6,7 +6,7 @@
     "temperature": 0.2,
     "permission": {
       "edit": "ask",
-      "webfetch": "allow",
+      "webfetch": "ask",
       "external_directory": "ask",
       "task": "ask",
       "bash": { "*": "ask" }

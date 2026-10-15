@@ -41,11 +41,13 @@ Los cinco agentes vigentes se distribuyen en las seis plataformas; se mantienen 
 | Pi | Usa `/code-review <tarea>` como plantilla de prompt; no crea un subagente aislado. |
 | Antigravity 2.0 | Usa la selección comprobada en el smoke del host; `@<agente>` es notación semántica, no sintaxis nativa verificada. |
 
-Una petición útil indica el resultado, el alcance y el nivel de autonomía esperado:
+No hace falta conocer los modos internos ni elegir skills: describe en lenguaje
+natural qué quieres conseguir. Por ejemplo:
 
 ```text
-@documentation-orchestrator sync-domain: documenta la arquitectura del módulo de autenticación.
-Solo analiza ese módulo, cita archivo y línea, y propón primero el plan.
+@documentation-orchestrator Explícame cómo está organizado el módulo de autenticación.
+@documentation-orchestrator Revisa y actualiza la documentación existente de autenticación.
+@documentation-orchestrator Comprueba si la documentación está lista para publicar.
 ```
 
 ## Gates que debes esperar

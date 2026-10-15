@@ -20,6 +20,10 @@ no autoriza a mostrarla.
 
 > **Precedencia:** si el agente `/sdd` y esta skill divergen, manda esta skill.
 
+## Frontera de confianza
+
+Antes del workspace, aplica `references/workspace-trust.md`.
+
 ## Modos de profundidad
 
 | Modo técnico | Nombre visible | Cuándo | Qué produce |

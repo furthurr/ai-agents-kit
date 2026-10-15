@@ -19,7 +19,7 @@ import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -28,6 +28,12 @@ ROOT = Path(__file__).resolve().parent.parent
 class Provider(BaseHTTPRequestHandler):
     def log_message(self, *_):
         pass
+
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"public local permission fixture\n")
 
     def do_POST(self):
         body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
@@ -96,7 +102,7 @@ def main():
             (repo / domain).mkdir()
         agents = repo / ".opencode/agents"
         agents.mkdir(parents=True)
-        for agent in ("documentation-orchestrator", "code-review"):
+        for agent in ("documentation-orchestrator", "code-review", "sdd"):
             shutil.copyfile(ROOT / "generated/opencode/agents" / f"{agent}.md", agents / f"{agent}.md")
         provider = ThreadingHTTPServer(("127.0.0.1", 0), Provider)
         provider.missing_tools = set()
@@ -133,9 +139,14 @@ def main():
         def request(path, body=None):
             data = None if body is None else json.dumps(body).encode()
             req = Request(url + path, data=data, headers={"Content-Type": "application/json"})
-            with urlopen(req, timeout=20) as response:
-                value = response.read()
-                return json.loads(value) if value else None
+            try:
+                with urlopen(req, timeout=20) as response:
+                    value = response.read()
+                    return json.loads(value) if value else None
+            except HTTPError as error:
+                # Isolated fixture API only; no user credentials or project content.
+                detail = error.read().decode(errors="replace").replace(str(base), "<fixture>")
+                raise AssertionError(f"fixture API {path}: HTTP {error.code}: {detail[:800]}") from error
 
         try:
             deadline = time.monotonic() + 60
@@ -227,8 +238,18 @@ def main():
             scenario("consulta-git-aprobada", "bash", {"command": "git status --short", "description": "fixture query"},
                      "once", "completed")
             scenario("catchall-especialista-sobre-allow-global-especifico", "bash", {
-                     "command": "git status --short", "description": "fixture agent precedence"},
-                     "once", "completed", agent="code-review")
+                      "command": "git status --short", "description": "fixture agent precedence"},
+                      "once", "completed", agent="code-review")
+            for specialist in ("code-review", "sdd"):
+                write(specialist + "-escritura-rechazada", "src/" + specialist + "-rejected.txt",
+                      "reject", "error", specialist)
+                scenario(specialist + "-shell-rechazado", "bash", {
+                         "command": "git status --short", "description": "fixture approval rejection"},
+                         "reject", "error", agent=specialist)
+                for decision, expected in (("reject", "error"), ("once", "completed")):
+                    scenario(specialist + "-webfetch-" + decision, "webfetch", {
+                             "url": f"http://127.0.0.1:{provider.server_port}/fixture", "format": "text", "timeout": 10},
+                             decision, expected, agent=specialist)
             scenario("git-escritura-denegada", "bash", {"command": "git add --dry-run src", "description": "fixture dry-run"},
                      "once", "error")
             scenario("rm-denegado", "bash", {"command": "rm nonexistent-rec02-fixture", "description": "fixture missing path"},
@@ -248,7 +269,7 @@ def main():
                      "description": "fixture documenting residual boundary"}, "once", "completed", repo / "src/approved-shell.txt")
             (repo / ".architecture/link").symlink_to(repo / "src", target_is_directory=True)
             write("limitacion-enlace-dentro-de-workspace", ".architecture/link/symlink.txt", "once", "completed")
-            print("PASS: 14 escenarios de controles + 2 limitaciones observadas; no acredita conducta LLM ni consentimiento humano.")
+            print("PASS: 22 escenarios de controles + 2 limitaciones observadas; no acredita conducta LLM ni consentimiento humano.")
             return 0
         except (AssertionError, OSError, ValueError, KeyError) as error:
             print("FAIL/BLOCKED: " + str(error))

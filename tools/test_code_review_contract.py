@@ -97,8 +97,12 @@ class CodeReviewContractTest(unittest.TestCase):
             if platform == "opencode":
                 self.assertEqual(front["permission"]["edit"], "ask")
                 self.assertEqual(front["permission"]["bash"]["*"], "ask")
+                self.assertEqual(front["permission"]["webfetch"], "ask")
             elif platform == "kiro":
-                self.assertTrue(all(rule["effect"] == "deny" for rule in front["permissions"]["rules"]))
+                rules = front["permissions"]["rules"]
+                self.assertIn({"capability": "fs_write", "effect": "ask"}, rules)
+                self.assertIn({"capability": "shell", "effect": "ask"}, rules)
+                self.assertIn({"capability": "shell", "match": ["rm *"], "effect": "deny"}, rules)
             elif platform == "claude":
                 self.assertFalse(front["user-invocable"])
                 self.assertIn("Skill", front["tools"])
@@ -119,6 +123,10 @@ class CodeReviewContractTest(unittest.TestCase):
             body = self.text(f"generated/{platform}/agents/{adapter['filename']}")
             self.assertIn("# Code Review Agent", body)
             self.assertIn("sin escrituras", body)
+            for rule in ("## Capacidades por operación", "no edites, ejecutes shell/tests",
+                         "auditar/documentar no autoriza remediar", "no aprueba el plan",
+                         "No presentes el prompt como sandbox"):
+                self.assertIn(rule, " ".join(body.split()))
             self.assertIn("severidad original", body)
             self.assertNotIn("{{", body)
             self.assertIn("## Recepción de handoff", canonical)

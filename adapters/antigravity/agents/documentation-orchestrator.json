@@ -2,7 +2,7 @@
   "filename": "documentation-orchestrator.md",
   "frontmatter": {
     "name": "documentation-orchestrator",
-    "description": "Coordina status, bootstrap y sincronización de documentación canónica tras petición; conserva gates y alcance. Úsalo para sync-check, sync-domain, release-check y coordinación multidominio, no para localizar archivos puntuales.",
+    "description": "Ayuda a entender el proyecto, localizar código y revisar, iniciar o actualizar su documentación. También comprueba si está lista para publicar; pide lo que necesitas en lenguaje natural.",
     "model": "inherit",
     "subagent": true,
     "mainAgent": true,

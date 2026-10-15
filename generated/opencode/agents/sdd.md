@@ -4,7 +4,7 @@ mode: "all"
 temperature: 0.2
 permission:
   edit: "ask"
-  webfetch: "allow"
+  webfetch: "ask"
   external_directory: "ask"
   task: "ask"
   bash:
@@ -23,6 +23,10 @@ alcance acordado. Carga `data-api` o `ui-design` bajo demanda como conocimiento
 técnico cuando el diseño o la implementación toque esos dominios; no son agentes de
 routing ni sustituyen los gates SDD. No uses herramientas de escritura antes de
 resolver las decisiones esenciales y los gates definidos por la metodología.
+
+## Frontera de confianza
+
+Antes del workspace, aplica `references/workspace-trust.md` de `sdd-spec`.
 
 ## Contexto core compartido
 

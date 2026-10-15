@@ -2,7 +2,7 @@
 
 ## Identificación
 
-- **Estado local:** implementado y verificado estáticamente; integrado pendiente de commit/CI.
+- **Estado actual:** Cerrado sobre `main` HEAD `8fea7bb`. **Estado en la entrega original:** implementado y verificado estáticamente, aún sin commit/CI.
 - **Sesión:** coordinadora e implementadora exclusiva en el worktree principal.
 - **Fecha:** 2026-10-12.
 - **Rama / baseline:** `main`, HEAD `43fd2dc` (`v1.3.0`) más cambios locales preexistentes de Developer y esta tanda. Staging vacío al iniciar.
@@ -30,4 +30,12 @@ No se ejecutó un smoke conversacional de host. La conducta runtime queda como e
 - Consulta de código sin `.quality/`/`.security/`, sin escrituras: **verificado por el validador**.
 - Escritura con evidencia fuera del scope: **rechazada por regresión**.
 - Ruta/symlink exterior: **rechazado por regresión**.
-- No hay commit ni CI remota todavía. Estado propuesto: **Integrado pendiente de verificación** hasta preparar y revisar el commit de publicación.
+- En la entrega original no había commit ni CI remota; el estado propuesto era **Integrado pendiente de verificación**.
+
+## Revalidación integrada — 2026-10-13
+
+- **Baseline actual:** `main` HEAD `10373b3e9510cc71049eb37c5393b4e18415e40d` (`v3.2.0`).
+- **Verificación focalizada local:** `python3 -B tools/test_handoff_contract.py` 37/37; `python3 -B tools/check_links.py` 91 archivos; `git diff --check` correcto.
+- **CI integrada actual:** [run 38352143368](https://github.com/furthurr/ai-agents-kit/actions/runs/38352143368), SUCCESS para el mismo HEAD; incluye handoff, validate y verificación de artefactos.
+- **Criterios:** lectura de código del proyecto sin carpetas documentales, escrituras limitadas al scope y rechazo de symlinks/rutas externas continúan cubiertos por los 37 tests.
+- **Cierre:** REC-03 **Cerrado**. El smoke conversacional no se presenta como PASS y permanece como cobertura complementaria de REC-08, no como criterio bloqueante de este hallazgo.

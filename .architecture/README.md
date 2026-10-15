@@ -7,10 +7,9 @@ cambiar sus fuentes, adaptadores, renderer o distribución.
 
 - Tecnología detectada: Markdown, JSON, Python 3, Bash y PowerShell.
 - Modo: `full`.
-- Último commit documentado: **omitido**. No se declara `HEAD` como baseline:
-  esta revisión se realizó con modificaciones locales presentes.
-- Última actualización: 2026-10-09.
-- Marca: revisión documental por fecha; no representa un snapshot Git limpio.
+- Último commit documentado: `10373b3e9510cc71049eb37c5393b4e18415e40d` (fuentes verificadas; los cambios locales de esta sesión son documentales).
+- Última actualización: 2026-10-13.
+- Marca: revisión focalizada de inventario y modos operativos; no representa una sincronización completa de diagramas.
 
 ## Contexto para IA
 
@@ -56,13 +55,17 @@ presentes; no forman parte del pipeline canónico (`../docs/desarrollo.md:15-17`
 
 ## Alcance de esta revisión
 
-La sincronización del 2026-10-09 incorpora seis distribuciones, el contrato SDD de
-alcance completo/continuidad y la evidencia CI documentada para Antigravity.
-Fuentes: `../canonical/manifest.json:1-30`,
+La revisión del 2026-10-12 confirma once skills, cinco agentes y seis distribuciones;
+SDD ofrece `direct`, SDD-Tiny y SDD-Lite, mientras `standard` queda como legacy
+opt-in. El contexto del orquestador asigna documentación UI/Data a sus skills y la
+implementación de producto a Developer.
+Fuentes: `../canonical/manifest.json:1-31`, `../docs/catalogo.md:6, 22-39`,
+`../docs/uso.md:22-35`,
 `../canonical/skills/sdd-spec/references/scope-depth.md:16-59`,
 `../canonical/skills/sdd-spec/references/spec-continuity.md:22-77` y
 `../.github/workflows/ci.yml:10-73`.
-El working tree tiene cambios locales; esta revisión queda pendiente de baseline
-Git verificable. La revisión documenta arquitectura, no certifica una
+El working tree contiene cambios locales sin integrar; el baseline documentado es
+`10373b3`. Los cambios fuera de los apartados citados no se presumen reflejados en
+esta revisión. No se sincronizaron diagramas. La documentación no certifica una
 auditoría de seguridad, la compatibilidad efectiva de cada host ni la ejecución
-de las pruebas del proyecto.
+conversacional de los agentes.

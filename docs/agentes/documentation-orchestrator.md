@@ -19,18 +19,20 @@ el agente vigente `code-review`, sin duplicar acciones.
 
 ## Cuándo usarlo
 
-- Para saber si la documentación está actualizada (`status` / `sync-check`).
-- Para explicar capas, localizar módulos o investigar dependencias (`inspect`).
-- Para inicializar el core documental (`.navigator/` + `.architecture/`) y, dentro del plan aprobado, la guía documental en `AGENTS.md`.
-- Para sincronizar las carpetas documentales existentes.
-- Para actualizar dominios concretos, como arquitectura y seguridad.
-- Para comprobar si la documentación cumple el gate previo a una release.
+- Para saber si la documentación está actualizada.
+- Para entender la arquitectura, localizar código o investigar dependencias.
+- Para preparar la documentación base del proyecto.
+- Para revisar o actualizar la documentación existente, completa o de un tema concreto.
+- Para comprobar si la documentación está lista para publicar.
 
 Si la petición es una feature o un bugfix de producto, recomienda Developer. SDD se
 usa únicamente cuando el usuario selecciona explícitamente esa metodología. Si es un
 commit, una versión o un tag, recomienda Git & Release Manager.
 
-## Modos
+## Referencia de modos (opcional)
+
+No necesitas elegir ni escribir estos nombres: describe lo que quieres y el agente
+selecciona el modo adecuado.
 
 | Modo | Qué hace |
 |---|---|
@@ -73,16 +75,15 @@ lista de una o ambas carpetas y la evidencia debe respetar esa selección.
 ## Ejemplos de uso
 
 ```text
-@documentation-orchestrator inspect: explica las capas y localiza autenticación.
-Cita fuentes, confianza y límites; no crees índices ni documentación.
+@documentation-orchestrator Explícame las capas del proyecto y dónde se gestiona autenticación.
 ```
 
 ```text
-@documentation-orchestrator bootstrap-core: presenta el plan para inicializar el core.
+@documentation-orchestrator Prepara la documentación base de este proyecto.
 ```
 
 ```text
-@documentation-orchestrator sync-core: actualiza solo el core existente.
+@documentation-orchestrator Revisa y actualiza la documentación existente que afecta a autenticación.
 ```
 
 ```text
@@ -90,8 +91,7 @@ Cita fuentes, confianza y límites; no crees índices ni documentación.
 ```
 
 ```text
-@documentation-orchestrator Actualiza solo arquitectura y seguridad. Presenta
-primero el estado, el plan y las escrituras previstas.
+@documentation-orchestrator Comprueba si la documentación está lista para publicar.
 ```
 
 ## Qué puede modificar

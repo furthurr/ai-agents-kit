@@ -11,10 +11,10 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0 # Retired-agent provenance tests use a pinned historical commit.
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: "3.10"
       - name: Validate repository
@@ -47,6 +47,8 @@ jobs:
         run: python tools/test_documentation_core.py
       - name: Run safe retired-agent migration tests
         run: python tools/test_retired_agents.py
+      - name: Run safe installed-artifact importer tests
+        run: python tools/test_import_installed.py
       - name: Run link checker tests
         run: python tools/test_links.py
       - name: Run integrity tests
@@ -73,8 +75,8 @@ jobs:
         os: [macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: "3.10"
       - name: Validate distribution

@@ -1,6 +1,6 @@
 # SEC-0003: El importador sigue enlaces simbólicos del origen
 
-- Estado: Pendiente
+- Estado: Resuelto en importación de orígenes estables; sin garantía contra sustitución concurrente de directorios
 - Severidad: 🟢 Baja
 - Referencia: CWE-59 (Improper Link Resolution Before File Access)
 - Ubicación: `tools/import_installed.py:32-53`
@@ -26,11 +26,19 @@ contenga un enlace preparado; no se verificó ninguna instalación de host.
 
 ## Plan de remediación (no ejecutado)
 
-- [ ] Definir el comportamiento permitido para enlaces en los orígenes de
+- [x] Definir el comportamiento permitido para enlaces en los orígenes de
   importación.
-- [ ] Validar las rutas resueltas y probar enlaces a destinos internos y
+- [x] Validar las rutas y probar enlaces a destinos internos y
   externos con datos ficticios.
 
 ## Bitácora
+
+- 2026-10-14: se rechazan enlaces internos/externos, raíces/padres enlazados,
+  puntos de reanálisis y archivos especiales usando los helpers existentes de
+  lectura segura. Se valida/lee antes de escribir; `--dry-run` aplica la misma
+  política. `python3 -B tools/test_import_installed.py`: 9 tests OK, tras observar
+  el fallo del importador anterior ante enlaces preparados. Suite añadida a CI.
+  No se inspeccionaron perfiles reales. Se exige árbol estable: no se acredita
+  aislamiento contra sustitución concurrente de directorios por otro proceso.
 
 - 2026-10-05: hallazgo estático registrado; no se ejecutó el importador.

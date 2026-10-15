@@ -2,7 +2,7 @@
 
 ## Identificación
 
-- **Estado local:** implementado y verificado en fixtures; integrado pendiente de commit/CI.
+- **Estado actual:** Cerrado sobre `main` HEAD `8fea7bb`. **Estado en la entrega original:** implementado y verificado en fixtures, aún sin commit/CI.
 - **Sesión:** coordinadora e implementadora exclusiva en el worktree principal.
 - **Fecha:** 2026-10-12.
 - **Rama / baseline:** `main`, HEAD `43fd2dc` (`v1.3.0`) más cambios locales preexistentes de Developer y esta tanda. Staging vacío al iniciar.
@@ -27,4 +27,13 @@ Los seis wrappers siguen usando el mismo preflight. Se mantienen el backup previ
 
 - Pruebas de instalación en perfiles temporales; no se escribió en perfiles reales.
 - La paridad PowerShell está verificada estáticamente en los seis wrappers; no se ejecutaron nativamente todos en Windows en esta sesión.
-- No hay commit ni CI remota todavía. Estado propuesto: **Integrado pendiente de verificación** hasta preparar y revisar el commit de publicación.
+- En la entrega original no había commit ni CI remota; el estado propuesto era **Integrado pendiente de verificación**.
+
+## Revalidación integrada — 2026-10-13
+
+- **Baseline actual:** `main` HEAD `10373b3e9510cc71049eb37c5393b4e18415e40d` (`v3.2.0`).
+- **Verificación focalizada local:** `python3 -B tools/test_install.py` 250/250; `python3 -B tools/test_antigravity_install.py` 22/22; `git diff --check` correcto.
+- **CI integrada actual:** [run 38352143368](https://github.com/furthurr/ai-agents-kit/actions/runs/38352143368), SUCCESS para el mismo HEAD. Incluye tests generales de instaladores y job nativo `windows-latest` para Antigravity.
+- **Criterios:** los seis wrappers usan el preflight común que compara rutas/hashes de fuente y destino; pruebas temporales rechazan recursos ausentes/alterados antes de declarar éxito.
+- **Límite separado:** la evidencia nativa de todos los demás wrappers PowerShell sigue abierta en FUT-20; no invalida el cierre de REC-05 sobre los criterios integrados de integridad.
+- **Cierre:** REC-05 **Cerrado**.

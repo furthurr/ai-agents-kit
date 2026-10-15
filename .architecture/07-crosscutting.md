@@ -32,15 +32,19 @@ La separación y prohibición de editar salida se documentan en
 
 ## Consistencia y diagnóstico
 
-El catálogo conserva diez skills y seis agentes. `documentation-orchestrator`
-ejecuta las skills core Architecture/Navigator localmente; cada una conserva
-su carpeta y autoridad (`../canonical/manifest.json:2-29`).
+El catálogo vigente en el manifiesto conserva 11 skills, 5 agentes y 6 plataformas.
+`documentation-orchestrator`
+ejecuta Architecture/Navigator para contexto core y `data-api`/`ui-design` para
+documentación; Developer implementa producto completo y Code Review atiende
+calidad/seguridad por la vía autorizada. Cada skill conserva su carpeta y
+autoridad (`../canonical/manifest.json:2-31`; `../docs/catalogo.md:22-39`).
 
 SDD presenta y valida alcance completo antes de artefactos/implementación, separa
 esa decisión de modo/ejecutor/gates y conserva continuidad con specs relacionadas.
-Direct no genera spec formal; lite exige Quick Plan sin Gates 1–4; standard
-conserva gates. Los ajustes revalidan el conjunto actualizado y las evidencias
-afectadas, sin borrar historia ni reutilizar aprobaciones incompatibles
+`direct` no genera spec formal; `tiny` usa un único `spec.md` con Gates 3/4;
+`lite` exige Quick Plan sin Gates 1–4; `standard` es legacy y solo se activa por
+solicitud explícita, conservando sus gates. Los ajustes revalidan el conjunto
+actualizado y las evidencias afectadas, sin borrar historia ni reutilizar aprobaciones incompatibles
 (`../canonical/skills/sdd-spec/references/scope-depth.md:16-59`;
 `../canonical/skills/sdd-spec/references/spec-continuity.md:22-77`).
 Estos controles son instrucciones del flujo; los tests de contrato no prueban

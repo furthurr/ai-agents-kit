@@ -98,7 +98,8 @@ class PermissionContracts(unittest.TestCase):
 
     def test_network_is_available_for_standards_and_release_research(self):
         for agent in (*SPECIALISTS, "documentation-orchestrator"):
-            self.assertEqual(adapter("opencode", agent)["permission"]["webfetch"], "allow")
+            self.assertEqual(adapter("opencode", agent)["permission"]["webfetch"],
+                             "ask" if agent in ("code-review", "sdd") else "allow")
         for host, required in (("claude", {"Edit", "Write", "Bash", "WebFetch"}),
                                ("copilot", {"edit", "execute", "web"}),
                                ("kiro", {"write", "shell", "web"}),

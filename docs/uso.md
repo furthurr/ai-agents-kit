@@ -130,9 +130,9 @@ ruta de destino en [instalacion.md](instalacion.md).
 
 | Dices algo como… | Agente |
 |------------------|--------|
-| “¿Qué es este repo?”, “¿dónde está X?” | Documentation Orchestrator → `inspect` |
-| “¿Está actualizada la documentación?”, “actualiza lo que tenemos”, “release-check” | Documentation Orchestrator |
-| “Documenta la arquitectura”, “añade un ADR”, “bootstrap del core” | Documentation Orchestrator → mantenimiento core autorizado |
+| “¿Cómo está organizado este proyecto?”, “¿dónde se gestiona autenticación?” | Documentation Orchestrator |
+| “¿Está actualizada la documentación?”, “actualiza la documentación existente” | Documentation Orchestrator |
+| “Prepara la documentación base”, “documenta la arquitectura” | Documentation Orchestrator |
 | “Solo calidad: revisa code smells”, “baja complejidad” | Code Review — `code-quality` |
 | “Implementa un endpoint”, “actualiza DTO de login”, “cambia un formulario” | Developer |
 | “Solo seguridad”, “¿hay secretos en claro?”, “hardening TLS” | Code Review — `security` |
@@ -208,36 +208,17 @@ Catálogo completo: [catalogo.md](catalogo.md).
 
 ## Orquestación documental
 
-Elige `documentation-orchestrator` cuando la petición cruza varias carpetas. No
-crea `.documentation/`. También es la entrada para consultas y mantenimiento core:
-ejecuta localmente `architecture` y `project-navigator`, que siguen siendo skills
-separadas. Para datos y UI carga localmente `data-api`/`ui-design`; para
-quality/security carga la skill o emite un handoff a `code-review`, nunca ambas vías
-para la misma acción.
+No necesitas aprender comandos ni nombres de modos: selecciona el agente y pídele el
+resultado con tus propias palabras. Por ejemplo:
 
-| Intención | Modo detectado |
-|-----------|----------------|
-| “Estado de la documentación” / `sync-check` | `status` |
-| “Explica las capas” / “Localiza autenticación” | `inspect` (solo lectura core) |
-| “Inicializa el core” | `bootstrap-core` (`.navigator/` + `.architecture/`) |
-| “Actualiza el core existente” | `sync-core` |
-| “Actualiza las carpetas que ya tenemos” | `sync-existing` |
-| “Actualiza solo datos y seguridad” | `sync-domain` |
-| “¿Está listo para release?” | `release-check` |
+- “Explícame cómo está organizado este proyecto y dónde se gestiona autenticación”.
+- “Revisa si la documentación está al día y actualiza lo que esté desactualizado”.
+- “Prepara la documentación base de este proyecto”.
+- “Comprueba si la documentación está lista para publicar”.
 
-Antes de cualquier modo, el agente hace un preflight mínimo sin recomendar niveles,
-modelos ni proveedores LLM. `status` y `release-check` inspeccionan e informan;
-las escrituras conservan la aprobación del plan global y los gates reales.
-
-Si necesitas continuar con el agente especialista real, pídelo explícitamente.
-El único receptor documental de handoff es `code-review`; el core, datos y UI se
-ejecutan localmente con sus skills, sin handoff a agentes retirados.
-El orquestador entrega un bloque `## Handoff`; cópialo al agente indicado y
-devuelve después su bloque `## Handoff Result` al orquestador. Para una misma
-acción se usa la skill local o el handoff, nunca ambos. `write_scope` es una
-restricción lógica: no sustituye los permisos efectivos de la plataforma.
-Calidad y seguridad se derivan a `code-review`; `scope` es una lista con una o
-ambas carpetas. Solo se agrupan con la misma acción, proyecto y vía autorizada.
+Las consultas informativas no modifican archivos. Si una petición requiere cambios,
+el agente te resumirá qué documentación tocará y pedirá la aprobación necesaria antes
+de escribir. Solo te preguntará cuando una decisión o una ambigüedad cambie el alcance.
 
 ## Qué deja cada especialista en tu repo
 

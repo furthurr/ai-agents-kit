@@ -33,12 +33,26 @@ La skill mantiene autoridad sobre sus estándares visuales.
   mágicos, inconsistencias, duplicados, falta de estandarización).
 - Sincronizar la documentación tras cambios de diseño en el repositorio.
 
+## Elegir el flujo según la intención
+
+- **Consulta sin persistencia:** responde con las fuentes existentes. No crees
+  `.design/`, archivos ni índices, y no inicies un inventario documental completo
+  por una pregunta sobre un token, componente o patrón visual.
+- **Implementación de producto:** Developer coordina la implementación completa;
+  esta skill aporta criterios visuales bajo demanda. No inicialices ni sincronices
+  `.design/` como efecto de implementar una pantalla o componente.
+- **Documentación con persistencia:** trabaja en `.design/` solo cuando el usuario
+  solicite documentar, inicializar, sincronizar o registrar hallazgos. Una auditoría
+  puede limitarse a informar sin escribir. Si falta `.design/`, presenta primero el
+  estudio y el alcance propuesto; espera su aprobación antes de crearla.
+
 ## Carpeta canónica: `.design/`
 
 Toda la documentación visual vive en una carpeta `.design/` (oculta, estilo
 `.github/`). Su **ubicación depende de cuántos proyectos hay** (ver "Ubicación:
 uno o varios proyectos"): una `.design/` en la **raíz** si es un solo proyecto, o
-**una por proyecto** si hay varios independientes. Si no existe, **créala**.
+**una por proyecto** si hay varios independientes. Créala solo dentro de una
+operación documental aprobada.
 
 ```
 .design/
@@ -100,8 +114,9 @@ proyectos independientes** (busca marcadores en carpetas distintas:
 ## Flujo de trabajo
 
 ### 0. Estudio y propuesta (antes de escribir en masa)
-Al invocarse por primera vez en un proyecto (o cuando el usuario pida un
-estudio), NO generes toda la documentación de golpe. Primero:
+Solo para una operación documental solicitada (o un estudio pedido), NO generes
+toda la documentación de golpe. Una consulta puntual y una implementación de
+producto siguen las reglas de intención anteriores. Primero:
 1. Escanea las fuentes visuales y detecta la tecnología.
 2. Entrega un **resumen** de lo que encontraste (qué hay estandarizado, qué no)
    y una **lista de recomendaciones priorizadas** de qué documentar primero.
@@ -109,7 +124,8 @@ estudio), NO generes toda la documentación de golpe. Primero:
    luego tipografía, etc.). **Espera su confirmación** antes de escribir en masa.
 
 ### 1. Localizar / crear `.design/`
-Si no existe, créala con la estructura de arriba y un `README.md` inicial.
+Si el plan documental aprobado incluye crearla y no existe, créala con la
+estructura de arriba y un `README.md` inicial.
 `.design/` **se versiona con el repositorio** (es documentación). No coloques
 dentro binarios pesados ni copias de assets: referencia su ruta original.
 

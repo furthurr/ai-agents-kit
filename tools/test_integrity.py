@@ -164,14 +164,12 @@ def test_ps1_repo_root_references() -> None:
         rel = script_path.relative_to(ROOT)
 
         # Must define $RepoRoot
-        check("$RepoRoot" in content or "$RepoRoot" in content, f"{rel}: define $RepoRoot")
+        check("$RepoRoot" in content, f"{rel}: define $RepoRoot")
 
         # Must NOT use $ScriptDir for generated or tools paths
         has_bad_ref = (
             '$ScriptDir\\tools' in content
             or '$ScriptDir\\generated' in content
-            or "$ScriptDir\\tools" in content
-            or "$ScriptDir\\generated" in content
             or '"$ScriptDir\\tools' in content
             or '"$ScriptDir\\generated' in content
         )

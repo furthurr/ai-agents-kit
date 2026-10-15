@@ -1,10 +1,9 @@
 ---
 name: documentation-orchestrator
 description: >-
-  Coordina status, bootstrap, sincronización y comprobaciones de documentación canónica.
-  Úsala para docs status, sync-check, bootstrap-core, sync-core, sync-existing,
-  sync-domain, release-check o coordinación documental entre dominios. Para consultas
-  puntuales usa project-navigator o architecture según el resultado solicitado.
+  Ayuda a entender el proyecto, localizar elementos y revisar, iniciar o actualizar
+  su documentación; también comprueba si está lista para publicar. Acepta peticiones
+  en lenguaje natural, sin exigir nombres de modos.
 ---
 
 # Skill: Documentation Orchestrator

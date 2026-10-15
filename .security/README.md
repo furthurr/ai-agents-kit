@@ -1,9 +1,23 @@
 # Seguridad — ai-agents-kit / laboratorio SDD
 
-Registro de revisión puntual de seguridad del circuito experimental F07. No es una
-certificación del repositorio completo ni del sandbox.
+Registro de hallazgos del kit y revisión puntual del circuito experimental F07.
+No es una certificación del repositorio completo ni del sandbox.
 
-## Estado de sincronización
+## Revalidación del kit MAS 3.2.0 — 2026-10-14
+
+- Alcance: los cinco findings históricos del kit, sobre `10373b3` y cambios locales.
+- SEC-0005/SEC-0001: políticas y mitigaciones distribuidas; comprobación del motor
+  de permisos en OpenCode 1.18.34 con proveedor local simulado. Pendiente resistencia
+  dinámica de LLM y controles efectivos de los otros hosts.
+- SEC-0003: importación sin enlaces en orígenes estables, 9 tests OK.
+- SEC-0002: cuatro referencias de Actions fijadas a SHA oficiales y Dependabot mensual.
+- SEC-0004: migración opt-in ya implementada, revalidada con 26 tests; no se han
+  migrado perfiles reales ni ejecutado los instaladores nativamente en Windows.
+- Los IDs SEC-0001/SEC-0002 están repetidos entre kit y F07; se conservan y
+  desambiguan por archivo en el tablero. No confundir sus estados.
+- Evidencia y límites: [`reviews/remediacion-mas-3.2.0.md`](reviews/remediacion-mas-3.2.0.md).
+
+## Estado de sincronización F07
 
 - Plataforma/tecnología: Python, pytest, SQLite, Docker y OpenCode; runner local de laboratorio.
 - Estándar aplicado: OWASP ASVS 5.0.0 (controles generales de límite de confianza e integridad) + CWE.

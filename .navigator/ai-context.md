@@ -1,7 +1,7 @@
 # AI Agents Kit
 
 ## Propósito
-- Qué es: fuentes de diez skills y seis agentes MAS para Copilot, OpenCode, Kiro, Claude Code, Pi y Antigravity 2.0 (runtime pendiente).
+- Qué es: kit con 11 skills, 5 agentes y 6 plataformas MAS para Copilot, OpenCode, Kiro, Claude Code, Pi y Antigravity 2.0 (runtime pendiente).
 - Alcance: define contenido compartido en `canonical/`, diferencias en `adapters/`, artefactos en `generated/` y herramientas/scripts de render e instalación.
 - Fuera de alcance: no es una aplicación runtime; `generated/` es salida del pipeline, no se edita a mano.
 
@@ -21,7 +21,7 @@
 ## Convenciones
 - Flujo principal: `canonical/` + `adapters/` → `tools/render.py` → `generated/` → `scripts/install/`.
 - Consultar `docs/arquitectura-del-kit.md` antes de navegar el pipeline; detalle y dependencias en `module-map.json`.
-- SDD: alcance completo validado antes de artefactos/código; direct sin spec, lite con Quick Plan, standard con Gates 1–4. Continuidad en `canonical/skills/sdd-spec/references/spec-continuity.md`.
+- SDD: alcance completo validado antes de artefactos/código; `direct` sin spec, `tiny` con `spec.md` único y Gates 3/4, `lite` con Quick Plan sin Gates 1–4 y `standard` legacy solo por solicitud explícita con Gates 1–4. Continuidad en `canonical/skills/sdd-spec/references/spec-continuity.md`.
 
 ## Docs y contexto externo
 - `README.md`, `docs/README.md` y `docs/arquitectura-del-kit.md` — presentes.
@@ -35,10 +35,11 @@
 
 ## Riesgos y restricciones
 - No indexar secretos ni archivos de credenciales; patrones excluidos en `config.yaml`.
-- El working tree sigue modificado; se omite `source_commit` y no se declara `HEAD` como baseline.
+- Contexto de inventario y SDD contrastado con las fuentes de `HEAD` `10373b3e9510cc71049eb37c5393b4e18415e40d`; los cambios locales actuales son de seguimiento documental.
 - `.agent-lab/` es experimental y local; no pertenece al render ni a la distribución.
 
 ## Meta
-- Actualizado: 2026-10-09
+- Actualizado: 2026-10-13
+- Source commit: `10373b3e9510cc71049eb37c5393b4e18415e40d`
 - Navigator root: `.`
-- Generado por: project-navigator sync (Context + Module Map)
+- Generado por: revisión focalizada de frescura FUT-14 (Capa 0; el mapa de módulos no requirió cambios)

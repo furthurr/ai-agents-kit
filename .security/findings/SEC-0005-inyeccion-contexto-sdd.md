@@ -1,6 +1,6 @@
 # SEC-0005: Instrucciones del workspace entran en contexto SDD con herramientas de escritura/ejecución
 
-- Estado: Pendiente
+- Estado: Mitigación de instrucciones implementada; pendiente validación dinámica por host
 - Severidad: 🟡 Media
 - Referencia: OWASP LLM01:2025 (Prompt Injection) · LLM06:2025 (Excessive Agency) · CWE-1427 · CWE-250
 - Ubicación: `canonical/agents/sdd.md:62-70`; `canonical/skills/sdd-spec/SKILL.md:177-182`; `generated/copilot/agents/sdd.agent.md:5-10,74-83`; `generated/claude/agents/sdd.md:5-14,80-90`; `generated/kiro/agents/sdd.md:3-7,8-44,108-117`
@@ -43,6 +43,16 @@ operación; esa configuración no se inspeccionó ni se hizo una prueba dinámic
   instrumentadas en los hosts admitidos.
 
 ## Bitácora
+
+- 2026-10-14: política aprobada por el usuario aplicada mediante carga obligatoria de
+  `sdd-spec/references/workspace-trust.md` antes del workspace, en agente y skill.
+  Distribuida a seis plataformas. `python3 -B tools/test_sdd_contract.py`: 653/653.
+  Se explicitan precedencia, límites de autorización y casos de abuso inocuos.
+  No se acredita resistencia dinámica ni permisos efectivos de hosts por estos tests.
+  Seguimiento: `../reviews/remediacion-mas-3.2.0.md`.
+  OpenCode solicita ahora aprobación de webfetch. Probe de OpenCode 1.18.34:
+  edición/Bash rechazados y webfetch con aprobación/rechazo verificados con
+  proveedor simulado; no acredita resistencia de LLM a instrucciones maliciosas.
 
 - 2026-10-05: hallazgo diferencial aprobado y registrado. No se modificaron los
   agentes ni sus adaptadores.

@@ -36,6 +36,19 @@ mantiene autoridad sobre sus estándares de dominio.
 - Auditar y registrar **deuda técnica** de datos/APIs.
 - Sincronizar la documentación tras cambios en la capa de datos.
 
+## Elegir el flujo según la intención
+
+- **Consulta sin persistencia:** responde con el código y los contratos existentes.
+  No crees `.data/`, archivos ni índices, y no inicies una extracción documental
+  completa por una pregunta sobre un endpoint, DTO o modelo.
+- **Implementación de producto:** Developer coordina la característica completa;
+  esta skill aporta criterios de datos/API bajo demanda. No inicialices ni
+  sincronices `.data/` como efecto de implementar un endpoint, modelo o repositorio.
+- **Documentación con persistencia:** trabaja en `.data/` solo cuando el usuario
+  solicite documentar, inicializar, sincronizar o registrar hallazgos. Una auditoría
+  puede limitarse a informar sin escribir. Si falta `.data/`, presenta primero el
+  estudio, modo y alcance propuestos; espera su aprobación antes de crearla.
+
 ## Estándares que reconoce
 
 **Núcleo (siempre que aplique):**
@@ -52,10 +65,11 @@ mantiene autoridad sobre sus estándares de dominio.
 
 ## Carpeta canónica: `.data/`
 
-Toda la documentación de datos/APIs vive en una carpeta `.data/` (oculta, estilo
-`.github/`) que **se versiona** con el repo. La skill SIEMPRE trabaja aquí; si no
-existe, **créala**. **Nunca** incluyas secretos, tokens, credenciales ni dominios
-productivos reales: usa **placeholders**.
+Toda la documentación de datos/APIs autorizada vive en una carpeta `.data/`
+(oculta, estilo `.github/`) que **se versiona** con el repo. Las consultas y las
+implementaciones de producto no requieren crearla. Créala solo si está incluida
+en el plan documental aprobado. **Nunca** incluyas secretos, tokens, credenciales ni
+dominios productivos reales: usa **placeholders**.
 
 ### Ubicación: uno o varios proyectos
 
@@ -130,7 +144,9 @@ código, decláralo.
 ## Flujo de trabajo
 
 ### 0. Estudio y propuesta (antes de escribir en masa)
-Al invocarse por primera vez (o si no existe `.data/`), NO generes todo de golpe:
+Solo para una operación documental solicitada (o un estudio pedido). Una consulta
+puntual o una implementación de producto no inicia este preflight de escritura.
+NO generes toda la documentación de golpe:
 1. Escanea la capa de datos, detecta tecnología, contratos presentes, si hay **BD
    interna** y el tamaño → **propón modo lite/full**.
 2. Entrega un **resumen** (qué APIs consume/expone, modelos, fuentes de datos,
@@ -139,8 +155,9 @@ Al invocarse por primera vez (o si no existe `.data/`), NO generes todo de golpe
 3. Pregunta qué generar y **espera confirmación**.
 
 ### 1. Localizar / crear `.data/`
-Créala en la ubicación resultante de *"Ubicación: uno o varios proyectos"* (raíz o
-una por proyecto) y según el modo confirmado. Versionada, sin secretos.
+Si el plan documental aprobado incluye crearla y no existe, créala en la ubicación
+resultante de *"Ubicación: uno o varios proyectos"* (raíz o una por proyecto) y
+según el modo confirmado. Versionada, sin secretos.
 
 ### 2. Leer el estado de sincronización
 En `.data/README.md`, sección **"Estado de sincronización"** (último commit
