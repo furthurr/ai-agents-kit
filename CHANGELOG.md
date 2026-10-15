@@ -3,6 +3,14 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.3.1] - 2026-10-14
+
+### Correcciones
+
+- Aceptar rutas cortas válidas de Windows al importar artefactos, manteniendo el
+  rechazo de symlinks, junctions y reparse points.
+- Añadir cobertura de regresión para la normalización de rutas de Windows.
+
 ## [3.3.0] - 2026-10-14
 
 ### Funcionalidades
