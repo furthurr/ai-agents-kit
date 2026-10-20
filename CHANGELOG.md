@@ -3,6 +3,16 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.3.2] - 2026-10-19
+
+### Correcciones
+
+- Integrar explícitamente el mantenimiento del bloque documental de AGENTS.md
+  en la planificación, ejecución y cierre del orquestador documental.
+- Exigir informar su resultado y conservar la aprobación, el texto exterior
+  y las restricciones del host.
+- Añadir cobertura de regresión y regenerar las seis distribuciones.
+
 ## [3.3.1] - 2026-10-14
 
 ### Correcciones
