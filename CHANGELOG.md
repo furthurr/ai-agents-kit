@@ -3,6 +3,27 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.3.3] - 2026-10-19
+
+### Correcciones
+
+- Corregir los permisos distribuidos del orquestador documental para editar
+  AGENTS.md tras aprobación: Kiro lo excluye del deny general y conserva ask;
+  OpenCode solicita aprobación para AGENTS.md y */AGENTS.md.
+- Añadir regresiones de límites de escritura, actualización de agentes, skills y
+  referencias mediante instaladores, y autorización/rechazo en el probe de OpenCode.
+
+### Actualización y verificación
+
+- Reinstalar agentes y skills mediante el instalador de la plataforma y reiniciar
+  el host. Los perfiles locales antiguos pueden prevalecer sobre la instalación
+  global y requieren revisión y actualización autorizada por separado.
+- Validar instalación (334/334), integridad (416/416), descubrimiento unittest
+  (183), permisos (10), contratos documentales (18) y Antigravity en macOS (22).
+- Registrar evidencia previa de OpenCode real con proveedor simulado: escritura
+  autorizada y rechazada de AGENTS.md y denegación de CLAUDE.md. No certifica
+  conducta LLM; Kiro runtime y PowerShell/Windows no se certificaron en esta sesión.
+
 ## [3.3.2] - 2026-10-19
 
 ### Correcciones
