@@ -12,6 +12,7 @@ permissions:
       match:
         - "**"
       exclude:
+        - "AGENTS.md"
         - ".navigator/**"
         - ".architecture/**"
         - ".data/**"

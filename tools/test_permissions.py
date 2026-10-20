@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import re
 import unittest
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parent.parent
 DOMAINS = (".navigator", ".architecture", ".data", ".design", ".quality", ".security")
@@ -31,6 +31,8 @@ def opencode_rule(rules: str | dict, value: str) -> str:
 class PermissionContracts(unittest.TestCase):
     def test_documentation_edits_have_positive_and_negative_boundaries(self):
         rules = adapter("opencode", "documentation-orchestrator")["permission"]["edit"]
+        for path in ("AGENTS.md", "/fixture/repo/AGENTS.md", "C:/fixture/repo/AGENTS.md"):
+            self.assertEqual(opencode_rule(rules, path), "ask", path)
         for domain in DOMAINS:
             for path in (f"{domain}/README.md", f"{domain}/nested/report.md",
                          f"/fixture/repo/{domain}/nested/report.md"):
@@ -38,7 +40,9 @@ class PermissionContracts(unittest.TestCase):
                     self.assertEqual(opencode_rule(rules, path), "ask")
         for path in ("src/app.py", "tests/test_app.py", ".github/workflows/ci.yml",
                      "docs/report.md", ".sdd/specs/x/tasks.md", ".release/state.json",
-                     "graphify-out/graph.json", "/fixture/repo/src/report.md", "/fixture/outside.txt"):
+                     "graphify-out/graph.json", "/fixture/repo/src/report.md", "/fixture/outside.txt",
+                     "CLAUDE.md", "GEMINI.md", "AGENTS.md.bak", "my-AGENTS.md",
+                     "/fixture/repo/CLAUDE.md", "/fixture/repo/AGENTS.md.bak"):
             with self.subTest(path=path):
                 self.assertEqual(opencode_rule(rules, path), "deny")
 
@@ -113,11 +117,28 @@ class PermissionContracts(unittest.TestCase):
         self.assertEqual(len(boundaries), 1)
         boundary = boundaries[0]
         self.assertEqual(boundary["match"], ["**"])
-        self.assertEqual(set(boundary["exclude"]), {f"{domain}/**" for domain in DOMAINS})
+        self.assertEqual(set(boundary["exclude"]), {"AGENTS.md", *(f"{domain}/**" for domain in DOMAINS)})
+        # Static root-relative boundary contract, not an emulator of Kiro's runtime.
+        for path in ("AGENTS.md", *(f"{domain}/README.md" for domain in DOMAINS)):
+            self.assertTrue(any(PurePosixPath(path).match(pattern) for pattern in boundary["exclude"]), path)
+        for path in ("src/app.py", "tests/test_app.py", ".github/workflows/ci.yml",
+                     "CLAUDE.md", "GEMINI.md", "AGENTS.md.bak", "my-AGENTS.md",
+                     ".sdd/spec.md", ".release/config.md", "graphify-out/graph.json"):
+            self.assertFalse(any(PurePosixPath(path).match(pattern) for pattern in boundary["exclude"]), path)
         # A broad deny plus an allow would block legitimate maintenance in Kiro.
         self.assertIn({"capability": "fs_write", "effect": "ask"}, rules)
         self.assertIn({"capability": "shell", "effect": "ask"}, rules)
         self.assertIn({"capability": "subagent", "effect": "ask"}, rules)
+
+    def test_documentation_write_capabilities_on_other_hosts(self):
+        for host, required in (("claude", {"Edit", "Write"}),
+                               ("copilot", {"edit"}),
+                               ("antigravity", {"write_to_file", "replace_file_content"})):
+            self.assertTrue(required <= set(adapter(host, "documentation-orchestrator")["tools"]), host)
+        # Pi distributes a prompt, not an enforceable filesystem permission profile.
+        pi = adapter("pi", "documentation-orchestrator")
+        self.assertNotIn("permissions", pi)
+        self.assertNotIn("permission", pi)
 
     def test_trust_and_mode_limits_are_explicit(self):
         text = (ROOT / "canonical/agents/documentation-orchestrator.md").read_text()

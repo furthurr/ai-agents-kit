@@ -328,6 +328,51 @@ def test_actualizacion_idempotente() -> None:
             )
 
 
+def test_actualiza_orquestador_y_referencias_anteriores() -> None:
+    """Update stale installed profiles without touching the real user's HOME."""
+    print("\n[5b] Actualiza agente documental, skill y referencias con backup")
+    for platform in PLATFORMS:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            repo = build_repo(base)
+            home = base / "home"
+            home.mkdir()
+            skills_dest, agents_dest = installed_paths(home, platform)
+            agent_name = agent_filenames(platform, ["documentation-orchestrator"])[0]
+            artifacts = [(agents_dest / agent_name,
+                          repo / "generated" / platform / "agents" / agent_name)]
+            source_skill = repo / "generated" / platform / "skills/documentation-orchestrator"
+            artifacts.extend((skills_dest / "documentation-orchestrator" / path.relative_to(source_skill), path)
+                             for path in source_skill.rglob("*") if path.is_file())
+            previous = b"PERFIL ANTERIOR: AGENTS.md bloqueado\n"
+            for target, _ in artifacts:
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(previous)
+            # A consumer project may have its own profile. Global install must not overwrite it.
+            local_profile = home / "consumer-project" / f".{platform}" / "agents" / agent_name
+            local_profile.parent.mkdir(parents=True)
+            local_profile.write_bytes(b"PERFIL LOCAL PERSONALIZADO\n")
+            result = run_installer(repo, home, platform)
+            check(result.returncode == 0 and claims_success(result),
+                  f"{platform}: actualiza instalación anterior", result.stdout + result.stderr)
+            for target, source in artifacts:
+                check(target.read_bytes() == source.read_bytes(),
+                      f"{platform}: actualiza bytes de {target.name}")
+            postflight = run_check_installed(repo, platform, skills_dest, agents_dest)
+            check(postflight.returncode == 0,
+                  f"{platform}: postflight verifica hashes del destino", postflight.stderr)
+            backup_root = home / PLATFORMS[platform][2]
+            for target, _ in artifacts:
+                check(any(path.read_bytes() == previous for path in backup_root.rglob(target.name) if path.is_file()),
+                      f"{platform}: backup conserva {target.name}")
+            result = run_installer(repo, home, platform)
+            check(result.returncode == 0 and all(target.read_bytes() == source.read_bytes()
+                                               for target, source in artifacts),
+                  f"{platform}: actualización idempotente", result.stderr)
+            check(local_profile.read_bytes() == b"PERFIL LOCAL PERSONALIZADO\n",
+                  f"{platform}: no sobrescribe perfil de proyecto ajeno al destino")
+
+
 # ---------------------------------------------------------------------------
 # 6. The backup restores the previous state
 # ---------------------------------------------------------------------------
@@ -447,6 +492,7 @@ def main() -> int:
         test_destino_rechaza_referencia_anidada_ausente_o_alterada()
         test_dry_run_sin_efectos()
         test_actualizacion_idempotente()
+        test_actualiza_orquestador_y_referencias_anteriores()
         test_rollback_desde_backup()
         test_claude_config_dir()
     test_paridad_bash_powershell()

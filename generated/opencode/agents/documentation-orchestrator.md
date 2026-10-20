@@ -5,6 +5,8 @@ temperature: 0.2
 permission:
   edit:
     "*": "deny"
+    "AGENTS.md": "ask"
+    "*/AGENTS.md": "ask"
     ".navigator/*": "ask"
     ".architecture/*": "ask"
     ".data/*": "ask"

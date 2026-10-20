@@ -231,6 +231,9 @@ def main():
 
             write("documentacion-aprobada", ".architecture/approved.txt", "once", "completed")
             write("documentacion-rechazada", ".data/rejected.txt", "reject", "error")
+            write("agents-guia-rechazada", "AGENTS.md", "reject", "error")
+            write("agents-guia-aprobada", "AGENTS.md", "once", "completed")
+            write("otras-instrucciones-denegadas", "CLAUDE.md", "once", "error")
             write("producto-fuera-de-alcance", "src/denied.txt", "once", "error")
             write("spec-fuera-de-alcance", ".sdd/denied.txt", "once", "error")
             write("externo-fuera-de-alcance", "../outside.txt", "once", "error")
@@ -269,7 +272,7 @@ def main():
                      "description": "fixture documenting residual boundary"}, "once", "completed", repo / "src/approved-shell.txt")
             (repo / ".architecture/link").symlink_to(repo / "src", target_is_directory=True)
             write("limitacion-enlace-dentro-de-workspace", ".architecture/link/symlink.txt", "once", "completed")
-            print("PASS: 22 escenarios de controles + 2 limitaciones observadas; no acredita conducta LLM ni consentimiento humano.")
+            print("PASS: 25 escenarios de controles + 2 limitaciones observadas; no acredita conducta LLM ni consentimiento humano.")
             return 0
         except (AssertionError, OSError, ValueError, KeyError) as error:
             print("FAIL/BLOCKED: " + str(error))
