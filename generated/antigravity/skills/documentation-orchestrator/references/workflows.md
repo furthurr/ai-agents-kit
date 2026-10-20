@@ -108,6 +108,9 @@ sobrescribe.
   de `AGENTS.md` y esta escritura en el plan global antes de empezar. La aprobación
   global existente cubre la guía si su acción y ruta aparecen en ese plan; no
   añade un gate separado.
+- Si un plan ya aprobado omitió esa ruta o acción, solicita ampliar su aprobación
+  antes de escribir el archivo; no interpretes la aprobación de carpetas como
+  autorización implícita ni cierres omitiendo la guía en silencio.
 - Después de las actualizaciones documentales aprobadas, construye una guía breve
   desde carpetas, READMEs y contratos realmente verificados. Describe propósito,
   puntos de entrada, responsable y cómo distinguir fuentes de verdad de índices
@@ -125,6 +128,9 @@ sobrescribe.
     incompatibles, no escribas; informa el conflicto y pide una decisión.
   - Si `AGENTS.md` es enlace simbólico, no es archivo regular o es ilegible,
     no sigas el enlace ni modifiques el destino; informa el bloqueo.
+- Verifica al cierre el contenido resultante, un único par válido de marcadores
+  y la preservación del texto exterior existente. Si los permisos del host impiden
+  editarlo, informa el bloqueo; no eludas la restricción mediante otras herramientas.
 - No copies README/specs completos, no inventes carpetas y no incluyas secretos.
 - `inspect`, `status` y `release-check` son solo lectura; nunca crean ni actualizan
   `AGENTS.md`. La instalación del kit tampoco modifica archivos del proyecto.
@@ -215,7 +221,10 @@ No comprueba version, changelog, tag ni publicacion. Deriva esas tareas a
    autorizadas. Pregunta solo si cambian dependencias, alcance o autorización; el
    cierre global debe indicar resultados parciales.
 4. **G4 Cierre:** verificar artefactos y evidencia antes del informe final;
-   validacion tecnica, sin pregunta humana adicional automatica.
+   en operaciones de escritura incluye el resultado del bloque de `AGENTS.md`,
+   sus marcadores y la preservación del texto exterior. No declares la operación
+   completamente entregada si la guía sigue pendiente o bloqueada.
+   Validacion tecnica, sin pregunta humana adicional automatica.
 
 El preflight técnico no sustituye estos controles ni acredita autorizacion.
 
@@ -225,6 +234,11 @@ Usa una tabla por proyecto:
 
 | Carpeta | Estado inicial | Accion | Estado final | Evidencia/nota |
 | --- | --- | --- | --- | --- |
+
+En operaciones de escritura añade siempre una fila para `AGENTS.md`: creado,
+actualizado, sin cambios, pendiente de autorización o bloqueado, con evidencia
+o motivo. La tabla puede incluir archivos además de carpetas. No fuerces una
+escritura si la guía ya coincide con las fuentes verificadas.
 
 Despues incluye solo si aplica:
 

@@ -180,6 +180,24 @@ class DocumentationCoreContract(unittest.TestCase):
                      "fuentes de verdad",
                      "sin instalar el MAS")
 
+    def test_agents_md_is_an_explicit_execution_and_close_step(self):
+        agent = read(ROOT / "canonical/agents/documentation-orchestrator.md")
+        skill = read(DOCS / "SKILL.md")
+        workflow = read(DOCS / "references/workflows.md")
+        self.require(agent, "bloque documental gestionado del `AGENTS.md` raíz",
+                     "Tras los especialistas", "No eludas permisos del host",
+                     "informa el resultado de `AGENTS.md`")
+        self.assertNotIn("El plan puede incluir la guía", skill)
+        self.require(skill, "Incluye la guía gestionada en `AGENTS.md` en el plan de escritura",
+                     "Tras los especialistas", "no omitas la guía en silencio",
+                     "marcadores y la preservación del texto exterior",
+                     "creado, actualizado, sin cambios o bloqueado")
+        self.require(workflow, "solicita ampliar su aprobación",
+                     "no eludas la restricción mediante otras herramientas",
+                     "No declares la operación completamente entregada",
+                     "añade siempre una fila para `AGENTS.md`",
+                     "No fuerces una escritura")
+
     def test_navigator_delegates_agents_md_ownership_to_orchestrator(self):
         navigator = read(SKILLS / "project-navigator/SKILL.md")
         bootstrap = read(SKILLS / "project-navigator/references/bootstrap.md")

@@ -58,7 +58,7 @@ No amplias permisos ni cambias una accion para poder agruparla.
 | --- | --- |
 | `status` | Solo lectura; inventario, aplicabilidad y frescura. Alias natural: `sync-check`. |
 | `inspect` | Consulta de arquitectura o navegación, solo lectura y cero persistencia; skills core locales bajo demanda. |
-| `bootstrap-core` | Propone inicializar solo `.navigator/` y `.architecture/`; nunca sobrescribe. El plan puede incluir la guía gestionada en `AGENTS.md`. |
+| `bootstrap-core` | Propone inicializar solo `.navigator/` y `.architecture/`; nunca sobrescribe. Incluye la guía gestionada en `AGENTS.md` en el plan de escritura. |
 | `sync-core` | Actualiza core existente; recomienda el core ausente sin crearlo. Incluye `AGENTS.md` solo en un plan aprobado de escritura. |
 | `sync-existing` | Actualiza solo carpetas primarias existentes; no crea ausentes. Incluye `AGENTS.md` solo en un plan aprobado de escritura. |
 | `sync-domain` | Actualiza los dominios explicitamente solicitados; incluye `AGENTS.md` solo en un plan aprobado de escritura. |
@@ -107,8 +107,15 @@ Si el repo cambia durante una espera por decision real, repite el preflight mini
    `security`, el plan autorizado cubre todos los findings verificados del alcance:
    no pide un filtro por severidad ni repite esa aprobacion en la misma sesion;
    no entres en remediacion de codigo. `gate_state` no concede autorizacion.
-8. Verifica artefactos y evidencia antes de marcar un dominio completado.
-9. Cierra con estado inicial/final, acciones, bloqueos y recomendaciones.
+8. Tras los especialistas, verifica el bloque documental de `AGENTS.md` contra las
+   fuentes resultantes y créalo o actualízalo cuando sea necesario, solo dentro
+   del plan aprobado y según `references/workflows.md`. Si falta esa ruta o acción
+   en la aprobación, solicita ampliarla antes de escribir; no omitas la guía en silencio.
+9. Verifica artefactos y evidencia antes de marcar un dominio completado; comprueba
+   también los marcadores y la preservación del texto exterior de `AGENTS.md`.
+10. Cierra con estado inicial/final, acciones, bloqueos y recomendaciones. Informa
+    siempre el resultado de `AGENTS.md` en operaciones de escritura: creado,
+    actualizado, sin cambios o bloqueado; si falta autorización, indícalo como pendiente.
 
 Orden normal: `architecture` → `data-api` si aplica → `ui-design` si aplica →
 revisión `code-review` de los dominios quality/security seleccionados (skills

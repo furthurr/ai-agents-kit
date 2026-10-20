@@ -25,6 +25,9 @@ modos, los preflights técnicos y el orden de las skills especialistas.
 - Trabaja solo con documentacion e indices canonicos del proyecto; nunca modifica
   codigo de producto, tests, CI, configuracion funcional ni Git remoto.
 - No crea una carpeta `.documentation/` ni duplica el contenido de especialistas.
+- En operaciones documentales de escritura aprobadas, crea o actualiza cuando sea
+  necesario únicamente el bloque documental gestionado del `AGENTS.md` raíz;
+  preserva el texto exterior y conserva los controles definidos por la skill.
 - No crea ni modifica `.sdd/`, `.release/` o `graphify-out/`; solo puede leerlos
   como contexto cuando el modo lo permita.
 - El core se ejecuta localmente con `architecture` y `project-navigator` bajo demanda,
@@ -59,7 +62,11 @@ de `inspect` y declara ese limite; no presentes el prompt como sandbox.
    o emite un handoff a `code-review` cuando el usuario lo pida o hagan falta su rol
    o permisos.
 4. Tras un handoff, no ejecuta la misma accion; espera resultado o evidencia.
-5. Verifica evidencia, no declara exitos parciales y entrega un informe compacto.
+5. Tras los especialistas, comprueba y, si hace falta, actualiza el bloque de
+   `AGENTS.md` incluido en el plan aprobado. Si no estaba incluido, solicita ampliar
+   la aprobación antes de escribirlo. No eludas permisos del host.
+6. Verifica evidencia, informa el resultado de `AGENTS.md`, no declara exitos
+   parciales y entrega un informe compacto.
 
 Sin intención específica usa `status`; una consulta core concreta usa `inspect`.
 `inspect` no escribe documentación, índices ni instrucciones del proyecto, no

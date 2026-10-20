@@ -38,7 +38,7 @@ selecciona el modo adecuado.
 |---|---|
 | `status` | Solo lectura: inventario, aplicabilidad y frescura. |
 | `inspect` | Consulta e investigación core de solo lectura, sin bootstrap, sync, exportación ni handoff core. |
-| `bootstrap-core` | Propone crear únicamente `.navigator/` y `.architecture/`; puede incluir la guía gestionada de `AGENTS.md` en el plan. |
+| `bootstrap-core` | Propone crear únicamente `.navigator/` y `.architecture/`; incluye la guía gestionada de `AGENTS.md` en el plan de escritura. |
 | `sync-core` | Actualiza el core existente, recomienda el ausente e incluye `AGENTS.md` en el plan de escritura. |
 | `sync-existing` | Actualiza solo las carpetas documentales que ya existen e incluye `AGENTS.md` en el plan de escritura. |
 | `sync-domain` | Actualiza los dominios solicitados explícitamente e incluye `AGENTS.md` en el plan de escritura. |
@@ -52,7 +52,13 @@ selecciona el modo adecuado.
    sobre el `AGENTS.md` raíz, y espera su aprobación antes de escribir.
 3. Ejecuta especialistas en secuencia y conserva los gates propios de cada uno;
    una autorización efectiva del mismo alcance en la sesión puede reutilizarse.
-4. Verifica artefactos y evidencia antes de declarar un dominio completado.
+4. Tras los especialistas, comprueba y actualiza cuando sea necesario el bloque
+   aprobado de `AGENTS.md`, preservando el texto exterior. Si el plan lo omitió,
+   pide ampliar la aprobación antes de escribir; no elude permisos del host.
+5. Verifica artefactos y evidencia antes de declarar un dominio completado. En
+   operaciones de escritura informa siempre el resultado de `AGENTS.md`: creado,
+   actualizado, sin cambios, pendiente de autorización o bloqueado. No declara la
+   operación completamente entregada si la guía sigue pendiente o bloqueada.
 
 El orden normal es skill Architecture local, Data API/UI local si aplica, Code Review
 para calidad/seguridad seleccionadas y skill Project Navigator local al final. El
