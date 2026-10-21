@@ -3,6 +3,22 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.3.4] - 2026-10-21
+
+### Correcciones
+
+- Eliminar la obligación de TDD/test-first en todos los modos SDD y adoptar
+  verificación focalizada según criterios y riesgos; conservar regresión para bugs,
+  caracterización para legado y PBT condicional.
+- Actualizar instrucciones, plantillas, guía de uso y smoke tests; regenerar agentes
+  y skills para las seis plataformas. Se preservan las specs históricas.
+
+### Verificación
+
+- Validación y enlaces correctos; contrato SDD 762/762, integridad 416/416,
+  instalación 334/334, descubrimiento unittest 183 pruebas y contrato nativo
+  Antigravity en macOS 22/22.
+
 ## [3.3.3] - 2026-10-19
 
 ### Correcciones
