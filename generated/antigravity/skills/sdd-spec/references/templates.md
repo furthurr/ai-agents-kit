@@ -49,7 +49,7 @@ Gate 2: pendiente
 ## Requisitos no funcionales (RNF)
 - RNF-1: <medible y verificable; se audita en Fase 4>
 ## Estrategia de pruebas
-- Nivel: <sin test nuevo | caracterización/regresión | TDD focalizado>
+- Nivel: <sin test nuevo | caracterización/regresión | verificación focalizada>
 - Justificación / excepción: <por qué>
 ## Invariantes críticos (0–5, opcionales)
 ## Excepciones al quality-bar
@@ -89,7 +89,7 @@ Profundidad recomendada / seleccionada: <Direct | SDD-Tiny | SDD-Lite; elección
 ## Enfoque técnico y estrategia de pruebas
 - Enfoque/patrones existentes: <...>
 - Riesgos e invariantes que requieren pruebas: <...>
-- Estrategia: <TDD focalizado | regresión/caracterización | sin test nuevo + razón>
+- Estrategia: <verificación focalizada | regresión/caracterización | sin test nuevo + razón>
 
 ## Checklist
 - [ ] <resultado verificable>
@@ -98,7 +98,7 @@ Profundidad recomendada / seleccionada: <Direct | SDD-Tiny | SDD-Lite; elección
 ## Verificación y cierre
 - Estado inicial: Planificado; spec creado antes de cambios de producto.
 - Gate 3: <pendiente | aprobado; cita de aprobación>
-- RED o baseline: <comando y resultado realmente observado | pendiente>
+- Baseline o comprobación inicial: <comando y resultado realmente observado | pendiente>
 - Verificación final: <comando y resultado realmente observado | no ejecutado>
 - Fallos locales y reparaciones: <secuencia observada; no omitir fallos>
 - Excepciones/limitaciones: <ninguna o explicación>
@@ -159,7 +159,7 @@ Modo SDD: lite
 Fase: Quick Plan
 Estado: en progreso
 
-- [ ] 1.1 [TDD focalizado] RED → GREEN mínimo → REFACTOR si aporta valor (Req 1.1)
+- [ ] 1.1 [Verificación focalizada] Implementar el comportamiento y cubrir el criterio con un test/check (Req 1.1)
 ```
 
 ## tasks.md (con trazabilidad y waves)
@@ -174,7 +174,7 @@ Gate 3: pendiente
 
 - [ ] 1.1 Crear modelo de datos (Req 1.1)
 - [ ] 1.2 [P] Implementar repositorio (Req 1.1)
-- [ ] 2.1 [TDD focalizado] Servicio de dominio: RED del comportamiento → GREEN mínimo → REFACTOR si aporta valor (Req 1.1, 1.2)
+- [ ] 2.1 [Verificación focalizada] Servicio de dominio: implementar y comprobar los criterios observables (Req 1.1, 1.2)
 - [ ] 3.1 [P] Tests complementarios de integración/contrato (Req 1.1, 1.2)
 - [ ] 3.2 [opcional] PBT de invariantes algebraicos (Req 1.1)
 - [ ] 3.3 [opcional] Telemetría
@@ -214,10 +214,10 @@ Fase: Verification
 Estado: en progreso
 Gate 4: pendiente
 
-## Ciclo de pruebas
+## Evidencia de verificación
 - Estrategia: <nivel>
-- RED o baseline: <test/comando + resultado observado>
-- GREEN / suite: <comando + resultado>
+- Baseline o comprobación inicial: <test/comando + resultado observado>
+- Verificación focalizada / suite: <comando + resultado>
 - Excepciones: <ninguna o razón>
 
 | Requisito | Tarea(s) | Test(s) | Evidencia (path o cmd) | Estado |
@@ -243,10 +243,10 @@ Solo se crea después de implementar; no abre Fase 4 ni Gate 4.
 
 Modo SDD: lite
 
-## Ciclo de pruebas
+## Evidencia de verificación
 - Estrategia: <nivel>
-- RED o baseline: <comando + resultado observado>
-- GREEN: <comando + resultado>
+- Baseline o comprobación inicial: <comando + resultado observado>
+- Verificación focalizada: <comando + resultado>
 - Suite final: <comando + resultado>
 - Excepciones: <ninguna o razón>
 

@@ -201,10 +201,11 @@ Catálogo completo: [catalogo.md](catalogo.md).
    remediación. `.quality/` y `.security/` conservan sus IDs y estándares.
 7. **Contexto del proyecto** — si existe `CLAUDE.md`, `AGENTS.md` o steering de
    Kiro, los agentes de SDD lo leen de forma selectiva según la plataforma.
-8. **Testing adaptativo en SDD** — una feature normal usa TDD focalizado; TDD
-   estricto está retirado. Es independiente de la profundidad: `direct` puede
-   incluir un microciclo TDD y solicitar `standard` no obliga a un ciclo más fuerte.
-   Si solicitas TDD estricto, SDD propone TDD focalizado y espera aceptación.
+8. **Verificación adaptativa en SDD** — una feature normal usa pruebas o checks
+   focalizados en sus criterios y riesgos, sin imponer que los tests precedan al
+   código. Los bugs usan regresión y el legado usa caracterización. Es independiente
+   de la profundidad: `direct` conserva pruebas/checks y `standard` no exige una
+   estrategia más fuerte. Los resultados y limitaciones deben ser reales.
 
 ## Orquestación documental
 

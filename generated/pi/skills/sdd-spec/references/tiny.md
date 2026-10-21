@@ -71,10 +71,10 @@ varias specs plausibles, pide la ruta sin elegir solo por nombre final.
 
 Tiny reduce documentos, no controles de comportamiento:
 
-- Comportamiento observable nuevo o modificado: TDD focalizado conforme a
-  `testing.md`, salvo excepción justificada; no declares RED sin observar que falla
-  por la razón esperada.
-- Bugfix: regresión que falla por el defecto antes del fix. Legado/refactor:
+- Comportamiento observable nuevo o modificado: verificación focalizada conforme a
+  `testing.md`, salvo excepción justificada; cubre los criterios y riesgos relevantes
+  con tests o checks adecuados.
+- Bugfix: regresión del caso afectado y verificación del arreglo. Legado/refactor:
   caracterización del comportamiento que debe preservarse.
 - Sin cambio observable: no agregues tests por ceremonia; registra check existente o
   razón y ejecuta la verificación pertinente.

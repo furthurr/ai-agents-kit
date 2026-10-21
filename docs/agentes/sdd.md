@@ -173,12 +173,13 @@ Contrato: [selección de metodología](../../canonical/skills/sdd-spec/reference
 Se conserva una elección explícita previa compatible. Quick Plan es obligatorio y
 exclusivo de SDD-Lite; combinarlo con Direct, SDD-Tiny o Standard es inválido.
 
-La profundidad y el testing son decisiones independientes. Una feature normal usa
-TDD focalizado; TDD estricto está retirado. Si se solicita, propone TDD focalizado
-y espera aceptación. Los bugfixes usan regresión y el legado usa caracterización.
+La profundidad y la verificación son decisiones independientes. Una feature normal
+usa pruebas o checks focalizados en sus criterios y riesgos, sin imponer que los
+tests se escriban antes del código. Los bugfixes usan regresión y el legado usa
+caracterización. Se conservan comandos, resultados y limitaciones reales.
 
-`deep` y TDD estricto pueden aparecer en specs históricas, pero no son opciones
-vigentes. SDD conserva esos artefactos y evidencias; para `deep`, pide elegir
+`deep` puede aparecer en specs históricas, pero no es una opción vigente.
+SDD conserva esos artefactos y evidencias; para `deep`, pide elegir
 Direct/SDD-Tiny/SDD-Lite o solicitar explícitamente `standard` legacy. No convierte la
 solicitud silenciosamente ni confunde la elección de modo con la aprobación de un gate.
 

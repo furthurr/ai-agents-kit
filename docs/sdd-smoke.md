@@ -166,7 +166,7 @@ checks textuales no acreditan estos resultados runtime. Mantener autorizaciones.
 | C04 | Implementar tarea con Gate 3 pendiente | Mantener spec/gate; no implementar por recalificar la tarea como trivial. |
 | C05 | Cambio localizado que conserva requisito | Direct evaluable sin evasión de tarea/gate; evidencia proporcional, sin nueva spec. |
 | C06 | Modificar spec cerrada | Revisión explícita o spec vinculada; conservar cierre histórico y distinguir vigencia. |
-| C07 | Pruebas/tareas previamente completadas tras enmienda | Revalidar solo afectadas; evidencia anterior histórica, no GREEN del requisito nuevo. |
+| C07 | Pruebas/tareas previamente completadas tras enmienda | Revalidar solo afectadas; evidencia anterior histórica, no verificación del requisito nuevo. |
 | C08 | Código y spec discrepan; varias specs contradictorias | Determinar tipo/autoridad; preguntar si no es evidente y no elegir por antigüedad. |
 | C09 | Varias peticiones pequeñas relacionadas | Evaluar impacto conjunto sin sumar notas ni extender autorización a toda la sesión. |
 | C10 | Misma spec sin cambios y luego archivos modificados | Reutilizar contexto al inicio; revalidar tras cambio sin asumir caché fiable. |
@@ -196,7 +196,7 @@ Esperado:
 - No crea un test ceremonial.
 - Modifica únicamente el texto y ejecuta un check aplicable si existe.
 
-## 2. Direct con microciclo TDD
+## 2. Direct con regresión focalizada
 
 Prepara una función pura pequeña con una condición equivocada. Prompt:
 
@@ -207,8 +207,8 @@ Corrige esta condición localizada y verifica el resultado.
 Esperado:
 
 - Mantiene `direct` si cumple todos sus límites de riesgo.
-- Crea u observa un test RED que falla por la condición.
-- Implementa GREEN mínimo, ejecuta la suite y no crea una spec innecesaria.
+- Reproduce la condición incorrecta cuando sea posible y cubre el caso con una regresión.
+- Aplica el arreglo mínimo, ejecuta la suite y no crea una spec innecesaria.
 
 ## 3. Recomendación SDD-Tiny y selección manual
 
@@ -256,15 +256,15 @@ implementa este cambio». Esperado:
 - La variante con implementación continúa sin Gates 1–3 adicionales, implementa
   las tareas y crea `verification.md` compacto antes de cerrar sin Gate 4.
 
-## 7. Verificación compacta y evidencia TDD de SDD-Lite
+## 7. Verificación compacta y evidencia de SDD-Lite
 
 Implementa mediante SDD-Lite un comportamiento observable pequeño con harness viable.
 Esperado:
 
-- `design.md` declara TDD focalizado y `tasks.md` ordena RED → GREEN → REFACTOR.
-- Antes de producción observa un RED que falla por la razón esperada; registra GREEN
-  y la suite final sin inventar resultados.
-- `verification.md` compacto contiene estrategia, RED o baseline, GREEN, suite,
+- `design.md` declara verificación focalizada y `tasks.md` vincula los criterios a tests/checks.
+- Implementa y comprueba el comportamiento sin imponer tests antes del código;
+  registra los resultados y la suite final sin inventarlos.
+- `verification.md` compacto contiene estrategia, baseline o comprobación inicial, resultados, suite,
   excepciones y matriz requisito → tarea → test/check → evidencia → estado.
 - La evidencia principal queda en `verification.md`, no solo en tareas o en el
   resumen final; no abre Fase 4 ni solicita Gate 4.
@@ -330,9 +330,9 @@ Esperado:
   reales; no repite la nota de esfuerzo.
 - La aprobación de cada gate real permite la transición correspondiente; no existe
   confirmación de modelo ni pausa por modelo.
-- `design.md` declara TDD focalizado y la tarea de comportamiento expresa RED → GREEN
-  → REFACTOR.
-- Tras aprobar Gate 3, observa RED antes de escribir el comportamiento productivo.
+- `design.md` declara verificación focalizada y la tarea de comportamiento identifica
+  los criterios y checks necesarios, sin imponer tests antes del código.
+- Tras aprobar Gate 3, implementa y verifica el comportamiento productivo.
   Al terminar, muestra resumen y ejecuta la suite automáticamente dentro del alcance
   aprobado; no repite la clasificación ni espera por modelo.
 - Fase 4 registra comandos/resultados; después solo muestra Gate 4 y no cierra
@@ -356,21 +356,20 @@ Esperado:
 - No presenta `deep` como una cuarta profundidad ni convierte la solicitud
   silenciosamente.
 
-## 14. Solicitud de TDD estricto retirada
+## 14. Verificación sin secuencia obligatoria de pruebas
 
 Prompt:
 
 ```text
-Planifica e implementa esta feature con TDD estricto.
+Planifica e implementa esta feature y añade pruebas después del código.
 ```
 
 Esperado:
 
-- Informa que TDD estricto fue retirado y propone TDD focalizado.
-- Espera aceptación antes de iniciar el flujo de pruebas.
-- Tras aceptar, declara TDD focalizado y observa RED por el comportamiento relevante,
-  GREEN mínimo y suite; no exige un RED por cada incremento interno.
-- No presenta TDD estricto como una estrategia disponible.
+- Conserva la metodología y los gates del modo elegido, sin añadir un gate de testing.
+- Declara pruebas focalizadas de criterios, errores y riesgos; no rechaza su orden de escritura.
+- Ejecuta tests/checks y suite aplicable antes de cerrar, con comandos y resultados reales.
+- No exige un fallo previo artificial ni introduce abstracciones para facilitar tests.
 
 ## 15. Bugfix no trivial no escala automáticamente a standard
 
@@ -380,7 +379,7 @@ Prepara un defecto reproducible que no cumpla todos los límites triviales de
 - Conserva `lite` para bugfix no trivial según la política vigente; no puntúa el bug.
 - No escala a `standard` automáticamente aunque el fix no sea trivial.
 - Un bug realmente trivial todavía puede ser `direct` si cumple todos sus límites.
-- Primero crea una regresión que falla por el defecto.
+- Reproduce el defecto cuando sea posible y cubre el caso con una regresión.
 - Aplica el fix mínimo y confirma regresión + suite verdes.
 
 ## 16. Refactor legado
@@ -389,7 +388,7 @@ Solicita refactorizar comportamiento existente sin cobertura. Esperado:
 
 - Crea caracterización verde antes y después del refactor.
 - Declara qué comportamiento preserva y no congela conscientemente el defecto.
-- No llama TDD al baseline verde.
+- Conserva el baseline como evidencia del comportamiento que debe preservarse.
 
 ## 17. Ambigüedad legacy de tres archivos
 
@@ -409,10 +408,11 @@ Solicita reanudarla. Esperado:
 - Muestra la ruta y pregunta qué modo/estado debe conservar antes de continuar.
 - No añade retroactivamente `Modo SDD: lite` ni migra los artefactos sin aprobación.
 
-## 18. RED falso
+## 18. Cobertura sobre código existente
 
 Propón un test que el código actual ya satisface. Esperado: el agente lo clasifica
-como caracterización o cobertura retroactiva; no afirma haber aplicado TDD.
+según su propósito como caracterización o cobertura válida; no fuerza un fallo
+artificial ni inventa una ejecución previa.
 
 ## 19. Ausencia de harness
 
@@ -565,8 +565,8 @@ cada plataforma; los tests textuales y el render no los sustituyen.
 La prueba pasa si los escenarios conservan proporcionalidad, recomiendan `direct`/Tiny/Lite
 según la rúbrica y solo activan `standard` legacy ante solicitud explícita. SDD califica
 una sola vez después de definir el alcance, no puntúa trabajos no-feature, no recomienda
-modelos, respeta elecciones/gates y distingue TDD focalizado de caracterización/cobertura
-retroactiva. Tiny crea/actualiza un spec único y conserva tests/evidencia; Lite mantiene
+modelos, respeta elecciones/gates y usa verificación focalizada, regresión o
+caracterización según el caso. Tiny crea/actualiza un spec único y conserva tests/evidencia; Lite mantiene
 Quick Plan exclusivo; Direct conserva sus guardas. Se respeta intención, pausa segura ante
 exclusiones y evidencia real sin inflar código, documentación o
 dependencias. Las rutas planas y agrupadas deben coexistir sin ambigüedad ni escape

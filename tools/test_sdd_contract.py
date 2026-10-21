@@ -51,7 +51,6 @@ def test_modes_remain_proportional() -> None:
           and "solo se usa si el usuario lo solicita explícitamente" in compact,
           "standard permanece legacy y solo opt-in explícito")
     check("`deep` no está disponible" in compact
-          and "tdd estricto no es una estrategia disponible" in compact
           and "aceptar la sustitución no aprueba gates" in compact,
           "opciones retiradas remiten a una única política de compatibilidad")
     check("sin contrato público" in skill and "cruce de capas" in skill, "direct declara límites de riesgo")
@@ -764,13 +763,42 @@ def test_adaptive_testing_selection() -> None:
     for strategy in (
         "Sin test nuevo",
         "Caracterización / regresión",
-        "TDD focalizado",
+        "Verificación focalizada",
     ):
         check(strategy in testing, f"testing declara estrategia: {strategy}")
-    check("Default para comportamiento nuevo o modificado" in testing, "feature normal selecciona TDD focalizado")
-    check("Si el usuario pide TDD estricto" in testing and "se retiró" in testing,
-          "TDD estricto se rechaza como opción retirada")
-    check("no evidencia TDD" in testing, "un test retroactivo no se presenta como TDD")
+    check("Comportamiento nuevo o modificado" in testing,
+          "feature normal conserva verificación de comportamiento")
+    check("no impongas una secuencia previa de pruebas" in normalized(testing),
+          "la verificación no impone tests antes del código")
+    check("cobertura válida" in testing and "resultado relevante" in testing,
+          "cobertura sobre código existente conserva valor y evidencia real")
+    check("harness viable" in testing and "verificación alternativa" in testing,
+          "ausencia de harness exige excepción y alternativa")
+    check("PBT condicional" in testing and "invariante claro" in testing.lower(),
+          "PBT sigue siendo condicional a propiedades útiles")
+
+
+def forbidden_testing_terms(text: str) -> list[str]:
+    """Catch retired methodology in active instructions, not historical specs."""
+    return re.findall(r"\b(?:RED|GREEN|REFACTOR)\b|(?i:\bTDD\b|test[- ]first|microciclo)", text)
+
+
+def test_sdd_has_no_test_first_contract() -> None:
+    paths = [SDD_AGENT, *sorted(SDD.rglob("*.md"))]
+    for platform_dir in sorted((ROOT / "generated").iterdir()):
+        if not platform_dir.is_dir():
+            continue
+        paths.extend(sorted((platform_dir / "skills" / "sdd-spec").rglob("*.md")))
+        adapter = json.loads(read(ROOT / "adapters" / platform_dir.name / "agents" / "sdd.json"))
+        paths.append(platform_dir / "agents" / adapter["filename"])
+    paths.extend(ROOT / relative for relative in (
+        "docs/agentes/sdd.md", "docs/agentes/README.md", "docs/uso.md", "docs/sdd-smoke.md",
+    ))
+    for path in paths:
+        matches = forbidden_testing_terms(read(path))
+        check(not matches, f"sin test-first: {path.relative_to(ROOT)} ({matches})")
+    for mutation in ("TDD focalizado", "TDD estricto", "RED → GREEN → REFACTOR", "test-first", "microciclo"):
+        check(bool(forbidden_testing_terms(mutation)), f"sin test-first/negativo: detecta {mutation}")
 
 
 def test_variants_and_evidence() -> None:
@@ -788,7 +816,8 @@ def test_variants_and_evidence() -> None:
     )[0] if len(lite_parts) == 2 else ""
     quick_plan = lite_parts[1].split("## Reglas de calidad", maxsplit=1)[0] if len(lite_parts) == 2 else ""
 
-    check("regresión que falle" in bugfix, "bugfix exige regresión antes del fix")
+    check("Reproduce el defecto" in bugfix and "mejor verificación alternativa" in bugfix,
+          "bugfix conserva reproducción y alternativa honesta si no es reproducible")
     check("un solo" in normalized(tiny_mode).lower()
           and "gate 3" in normalized(tiny_mode).lower()
           and "gate 4" in normalized(tiny_mode).lower(),
@@ -802,11 +831,14 @@ def test_variants_and_evidence() -> None:
         "verification.md" in quick_plan and "sin Gate 4" in quick_plan,
         "lite implementado conserva evidencia sin fase de cierre completa",
     )
-    check("RED del comportamiento → GREEN mínimo → REFACTOR" in templates, "tasks enseña orden test-first")
-    check("RED o baseline" in templates and "GREEN / suite" in templates, "verification registra el ciclo")
-    check("evidencia del RED esperado y del GREEN" in integrity, "integrity gate exige evidencia TDD")
-    check("TDD estricto" not in integrity,
-          "integrity gate no duplica la política de estrategia retirada")
+    check("[Verificación focalizada]" in templates and "criterios observables" in templates,
+          "tasks vincula implementación y comprobaciones observables")
+    check("Baseline o comprobación inicial" in templates and "Verificación focalizada / suite" in templates,
+          "verification registra comandos y resultados sin ciclo obligatorio")
+    check("evidencia del criterio comprobado y del resultado" in normalized(integrity),
+          "integrity gate exige evidencia real del criterio")
+    check("excepción" in integrity and "alternativa aplicada" in integrity,
+          "integrity gate conserva limitaciones y alternativa verificable")
 
 
 def test_workspace_trust_boundary() -> None:
@@ -1040,6 +1072,7 @@ def main() -> int:
     test_sdd_effort_context_budgets()
     test_spec_paths_support_grouping()
     test_adaptive_testing_selection()
+    test_sdd_has_no_test_first_contract()
     test_variants_and_evidence()
     test_workspace_trust_boundary()
     test_navigator_context_contract()

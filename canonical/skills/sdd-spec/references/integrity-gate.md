@@ -10,8 +10,9 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
 - Dependencia en manifest/build sin uso en código/tests → quitar o declarar como deuda explícita en `verification.md`.
 - Carpetas de tests/generators creadas vacías **no** cuentan como tarea hecha.
 - No añadir dependencias de PBT/test sin al menos un test que las use en la misma entrega.
-- TDD focalizado exige evidencia del RED esperado y del GREEN. Sin RED observado,
-  etiquetar honestamente como caracterización o cobertura retroactiva.
+- La verificación focalizada exige evidencia del criterio comprobado y del resultado
+  observado. Si no existe un harness viable, registrar honestamente la excepción y la
+  alternativa aplicada.
 
 ## Estado de fase y transición
 
@@ -44,7 +45,8 @@ Cargar en **Implementación** y **Fase 4**. Objetivo: integridad > teatro.
 `verification.md` compacto:
 
 1. Recorrer `tasks.md`; cada `[x]` debe tener artefacto o comando verificable.
-2. Registrar RED o baseline, GREEN, suite final y excepciones honestas.
+2. Registrar baseline o comprobación inicial, resultados focalizados, suite final y
+   excepciones honestas.
 3. Mapear requisito, tarea, test/check, evidencia y estado.
 4. Revisar solo los RNF declarados y aplicables; no inventar una cuota.
 5. Si solo hubo planificación, no crear evidencia ni marcar implementación hecha.

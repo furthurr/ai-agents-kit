@@ -82,13 +82,14 @@ canónica de EARS, fases, gates, artefactos y verificación.
   aprobación del gate SDD real; la calificación no crea un gate adicional.
 - Tras Implementación no hay gate intermedio: continúa con Verification y registra
   evidencia antes de Gate 4.
-- Profundidad SDD y testing son ejes independientes: selecciona la estrategia en
-  `references/testing.md`; una feature normal usa TDD focalizado y `direct` no
-  significa «sin pruebas».
+- Profundidad SDD y verificación son ejes independientes: selecciona la estrategia en
+  `references/testing.md`; una feature normal usa comprobaciones focalizadas y `direct`
+  no significa «sin pruebas».
 - Implementación y Fase 4: `references/integrity-gate.md` — no `[x]` sin artefacto o evidencia.
 - Design, implementación y cierre: `references/quality-bar.md` (capas, DI, persistencia, errores).
-- TDD no justifica abstracciones anticipadas: GREEN mínimo correcto; refactor solo
-  ante duplicación, responsabilidades distintas o reutilización real.
+- No justifiques abstracciones anticipadas para aumentar la cobertura: implementa lo
+  mínimo correcto y refactoriza solo ante duplicación, responsabilidades distintas o
+  reutilización real.
 - No inventes alcance, no expongas secretos y confirma acciones destructivas.
 - `lite` siempre es elegible como modo para trabajo no trivial. `standard` solo se
   activa si el usuario lo solicita explícitamente; nunca por fallback.

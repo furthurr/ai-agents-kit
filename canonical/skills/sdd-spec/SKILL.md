@@ -70,10 +70,9 @@ Un bugfix trivial puede ser `direct`; los demás conservan el flujo bugfix con `
 salvo que el usuario elija explícitamente otro modo elegible. `standard` solo se
 activa por solicitud explícita.
 
-Profundidad y testing son ejes independientes: sin cambio observable → sin test
+Profundidad y verificación son ejes independientes: sin cambio observable → sin test
 nuevo; bug o legado → regresión/caracterización; comportamiento nuevo o modificado
-→ TDD focalizado. `direct` puede incluir un microciclo TDD, pero no significa «sin
-pruebas». TDD estricto no es una estrategia disponible. Detalle en
+→ comprobaciones focalizadas. `direct` no significa «sin pruebas». Detalle en
 `references/testing.md`.
 
 ## Opciones retiradas y specs históricas
@@ -81,8 +80,7 @@ pruebas». TDD estricto no es una estrategia disponible. Detalle en
 `deep` no está disponible: informa que fue retirado y pide elegir `direct`, SDD-Tiny
 (`tiny`) o SDD-Lite (`lite`), o solicitar explícitamente `standard` legacy; no
 conviertas la solicitud en `standard` silenciosamente. En una spec histórica conserva artefactos/evidencia y aclara el modo
-antes de reanudarla si la elección no está vigente. TDD estricto se trata en
-`references/testing.md`.
+antes de reanudarla si la elección no está vigente.
 Aceptar la sustitución no aprueba gates. Si los marcadores de modo/fase/estado/gate
 faltan o se contradicen, aclara antes de continuar; no infieras aprobación por archivos.
 
@@ -235,8 +233,8 @@ es ambigua, pregunta antes de reanudarla.
 
 1. Tareas discretas, numeradas, trazadas a requisitos `(Req X)`.
 2. Secuencia por dependencias; marca `[P]` (paralelo) y `[opcional]`.
-3. Para TDD focalizado, cada tarea de comportamiento explicita el orden
-   interno RED → GREEN → REFACTOR, sin crear tareas ceremoniales por cada paso.
+3. Cada tarea de comportamiento explicita la comprobación y evidencia esperadas,
+   sin crear tareas ceremoniales de prueba que no aporten valor.
 4. Incluye grafo de waves. Consulta solo la sección `tasks.md` de `references/templates.md`.
 5. **GATE 3**: "¿Apruebas el plan y empiezo a implementar?"
 
@@ -248,8 +246,8 @@ es ambigua, pregunta antes de reanudarla.
 - Una tarea a la vez o en waves. Estados: `[ ]` → 🔵 → `[x]`.
 - No emitas niveles por tarea/fase ni recomendaciones de modelo durante Implementación.
 - Antes de `[x]`: `references/integrity-gate.md`.
-- Ejecuta el ciclo elegido en `references/testing.md`; no declares TDD sin haber
-  observado un RED que falle por la razón esperada.
+- Ejecuta la estrategia elegida en `references/testing.md` y registra resultados
+  realmente observados; no inventes fallos, éxitos ni cobertura.
 - Waves UI/datos: revisar `references/quality-bar.md`.
 - Si existe carpeta canónica del dominio y creas algo reutilizable, documéntalo con la skill del especialista.
 
@@ -275,9 +273,10 @@ Usa regresión y causa raíz; elige `direct` solo si el bug es trivial, o `lite`
 bugfix no trivial según la política vigente. No puntúes bugs como features. Tiny no
 se recomienda a bugs por score; solo aplícalo si el usuario lo elige explícitamente
 y el bug queda cubierto por su spec breve y gates. `standard` solo si el usuario lo
-solicita explícitamente. Primero crea una regresión que falle por el defecto; usa
-caracterización para comportamiento legado que deba preservarse. Si no puede
-reproducirse, registra la limitación y no inventes un RED.
+solicita explícitamente. Reproduce el defecto y verifica el caso afectado antes y
+después del arreglo cuando el harness lo permita; usa caracterización para
+comportamiento legado que deba preservarse. Si no puede reproducirse, registra la
+limitación y aplica la mejor verificación alternativa disponible.
 
 ## Modo tiny (SDD-Tiny)
 
@@ -306,8 +305,8 @@ publicarla. El preflight técnico no recomienda modelos ni pausa por modelo.
 Si la intención es solo planificación, termina después de `tasks.md` y no
 implementar código. Si la solicitud original incluye implementación, aplica
 integrity-gate y testing adaptativo después del plan. Al terminar, crea un
-`verification.md` compacto con RED o baseline, GREEN, suite, excepciones y matriz
-de evidencia; cierra sin Gate 4.
+`verification.md` compacto con baseline o comprobación inicial, resultados focalizados,
+suite, excepciones y matriz de evidencia; cierra sin Gate 4.
 
 Si aparece una exclusión, detente en un punto seguro; no cambies automáticamente a
 `tiny` o `standard`. Explica cómo reducir/dividir el alcance o elegir Tiny solo si es

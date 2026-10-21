@@ -84,7 +84,8 @@ funcional. Solo decisiones y gates reales requieren intervención.
   selecciona modelos, no repite el nivel por fase ni pausa el flujo por modelo. Las
   solicitudes de `deep` informan que fue retirado y esperan elección de Direct,
   SDD-Tiny o SDD-Lite
-  o solicitud explícita de `standard`; TDD estricto espera aceptación de TDD focalizado.
+  o solicitud explícita de `standard`. Las pruebas son proporcionales a criterios y
+  riesgos, sin imponer un orden de escritura de tests y código.
 - **Git y releases:** commit, push, cambios de versión, tags y CHANGELOG requieren
   confirmación explícita; las acciones destructivas requieren doble confirmación.
 

@@ -264,8 +264,8 @@ SDD conserva los modos documentados `direct`, `lite` y `standard`, pero `standar
 legacy/opt-in explícito y los modos predeterminados son `direct`/`lite`; variante
 Bugfix y Quick Plan exclusivo de `lite`. Las referencias se cargan bajo demanda;
 SDD puede implementar el alcance autorizado y los especialistas pueden apoyar
-cambios dentro de sus dominios. `deep` y TDD estricto están retirados.
-P0.6 ya está cerrado y el contrato TDD junto con el smoke test base ya están
+cambios dentro de sus dominios. `deep` está retirado.
+P0.6 ya está cerrado y el contrato de verificación junto con el smoke test base ya están
 implementados; quedan pendientes de estado, reanudación y evidencia manual.
 
 - [x] **Definir lectura de estado y continuidad:** `spec-continuity.md` indica
@@ -292,7 +292,7 @@ implementados; quedan pendientes de estado, reanudación y evidencia manual.
   reversible; sin contrato público, migración, decisión arquitectónica, cruce de
   capas ni riesgo relevante. Evidencia: `SKILL.md` y `tools/test_sdd_contract.py`.
 - [x] **Completar los flujos especiales**: Bugfix declara gates normales salvo el
-  caso trivial, regresión antes del fix y manejo honesto de un defecto no
+  caso trivial, regresión del caso afectado y manejo honesto de un defecto no
   reproducible; Quick Plan es obligatorio y exclusivo de `lite`, y una
   implementación deja la evidencia principal en `verification.md` compacto sin
   abrir Fase 4 ni Gate 4.
@@ -317,12 +317,13 @@ reordenado de historias y existe una tabla fechada de smoke por plataforma y ver
 #### Extensión implementada: testing adaptativo
 
 - [x] Separar profundidad SDD de estrategia de pruebas.
-- [x] Aplicar TDD focalizado por defecto a comportamiento nuevo/modificado.
-  TDD estricto está retirado; si se solicita, se propone TDD focalizado y se espera
-  aceptación. Los cambios sin comportamiento observable no exigen tests ceremoniales.
+- [x] Aplicar verificación focalizada a comportamiento nuevo/modificado, sin imponer
+  tests antes del código. Los cambios sin comportamiento observable no exigen tests
+  ceremoniales.
 - [x] Definir regresión para bugfix, caracterización para legado y excepción
   verificable cuando no cambia comportamiento observable o falta un harness viable.
-- [x] Evitar test-after en plantillas y exigir evidencia RED/GREEN en el integrity gate.
+- [x] Exigir evidencia real de criterios y resultados en plantillas e integrity gate,
+  sin imponer un ciclo de escritura de tests y código.
 - [x] Añadir contrato automatizado (`tools/test_sdd_contract.py`) y el documento
   base [sdd-smoke.md](sdd-smoke.md).
 - [x] Presentar y validar alcance completo antes de artefactos/código, distinguir
@@ -450,8 +451,9 @@ Design siguen como skills separadas, usadas por sus flujos actuales.
   verde. Coste medido: **0 tokens por turno** (`SKILL.md` varía entre −2 y +1
   caracteres) y **+56 tokens netos** en referencias bajo demanda, concentrados en
   `templates.md`.
-- [x] Commit `67b76fc` (2026-09-01): testing adaptativo integrado en SDD. Una
-  feature normal usa TDD focalizado; TDD estricto queda bajo petición explícita;
+- [x] Commit `67b76fc` (2026-09-01): testing adaptativo integrado en SDD. Históricamente,
+  una feature normal usaba TDD focalizado; TDD estricto quedaba bajo petición explícita
+  (política sustituida por verificación proporcional sin test-first);
   bugfix usa regresión y legado usa caracterización. Evidencia: contrato SDD
   `tools/test_sdd_contract.py` en 46/46, `tools/test_validate.py` en 14/14,
   `tools/test_integrity.py` en 252/252 y `tools/test_install.py` en 72/72.
