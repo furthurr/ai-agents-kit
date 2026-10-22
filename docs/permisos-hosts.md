@@ -11,7 +11,7 @@ equivalencia entre hosts. Consulta la evidencia y pendientes en la
 
 | Agente | Consulta | Auditoría / documentación autorizada | Remediación / ejecución autorizada |
 |---|---|---|---|
-| documentation-orchestrator | `inspect`, `status`, checks: leer e informar, sin cachés ni marcas | Escribir `.navigator/`, `.architecture/`, `.data/`, `.design/`, `.quality/`, `.security/` y únicamente el bloque documental gestionado del `AGENTS.md` raíz, tras aprobar el plan con sus rutas y acciones | No modifica producto, tests, CI, configuración funcional, `.sdd/`, `.release/` ni Git remoto. Preserva el texto exterior de `AGENTS.md`. Handoff conserva acción/alcance. |
+| documentation-orchestrator | `inspect`, `status`, checks: leer e informar, sin cachés ni marcas | Escribir `.navigator/`, `.architecture/`, `.data/`, `.design/`, `.quality/`, `.security/`, mantener documentación Markdown bajo `docs/` y únicamente el bloque documental gestionado del `AGENTS.md` raíz, tras aprobar el plan con sus rutas y acciones | No modifica producto, tests, CI, configuración funcional (tampoco dentro de `docs/`), `.sdd/`, `.release/` ni Git remoto. Preserva el texto exterior de `AGENTS.md`. Handoff conserva acción/alcance. |
 | code-review | Inspeccionar sin escribir | Registros `.quality/` y/o `.security/` del dominio solicitado | Corrección de findings en archivos autorizados y pruebas pertinentes; gates de la skill vigentes. |
 | developer | Leer contexto/código selectivamente; PLAN es de solo lectura | No escribe documentación canónica; si queda desfasada, entrega resumen portable para que el usuario continúe con `documentation-orchestrator` | Implementación integral de UI, datos/APIs y negocio con autonomía proporcional; no usa SDD ni modifica `.sdd/`; pruebas y checks pertinentes. |
 | git-release-manager | Estado/historial/diff/control de solo lectura | Preparación solicitada de versión/changelog | Versionado y operaciones Git con confirmaciones específicas; no código ajeno a versión/release. |
@@ -27,8 +27,8 @@ universal de directorios sin bloquear proyectos legítimos.
 
 | Host / superficie | Control distribuido | Restricciones y operaciones preservadas | Límites |
 |---|---|---|---|
-| OpenCode 1.x | `permission`: edición, shell, delegación y acceso exterior. Última coincidencia gana; reglas del agente preceden a globales. | Orquestador: edición denegada salvo rutas con los seis nombres documentales y patrones `AGENTS.md` y `*/AGENTS.md`, con `ask`; delegación solo a `code-review`; Git de escritura y `rm` denegados. Developer niega `.sdd/**` y delegación; los demás roles mantienen edición/shell con `ask`. Consultas Git, shell restante y mantenimiento requieren aprobación. | No cambia permisos al interpretar `inspect`. Los patrones absolutos por nombre no identifican la raíz dinámica del proyecto: pueden coincidir en carpetas anidadas o externas; exterior exige aprobación adicional. El alcance aprobado sigue limitado al bloque del `AGENTS.md` raíz resuelto. Shell autorizado puede escribir fuera de las raíces; una aprobación debe evaluar el comando completo. `--auto` y aprobaciones persistentes pueden suprimir asks; denies siguen siendo relevantes. No es sandbox. |
-| Kiro IDE 1.0 / CLI V3 | `tools` + `permissions.rules`; deny > ask > allow, sin precedencia por orden/scope. | Orquestador: `fs_write` deny con exclusiones para las seis raíces y `AGENTS.md`; escritura/shell/delegación con `ask`. Se preservan herramientas y denies existentes. | Las excepciones se expresan con `exclude`: un allow posterior no anula un deny. La excepción de `AGENTS.md` se declara relativa a la raíz. CLI 2.x no se certifica con esta configuración V3. Normalización de rutas, enlaces y ejecución de reglas pendientes de runtime compatible. Web tiene sandbox y no aplica este modelo YAML. |
+| OpenCode 1.x | `permission`: edición, shell, delegación y acceso exterior. Última coincidencia gana; reglas del agente preceden a globales. | Orquestador: edición denegada salvo las seis raíces documentales, Markdown bajo `docs/` y patrones `AGENTS.md` y `*/AGENTS.md`, con `ask`; delegación solo a `code-review`; Git de escritura y `rm` denegados. Developer niega `.sdd/**` y delegación; los demás roles mantienen edición/shell con `ask`. Consultas Git, shell restante y mantenimiento requieren aprobación. | No cambia permisos al interpretar `inspect`. Los patrones absolutos por nombre no identifican la raíz dinámica del proyecto: pueden coincidir en carpetas anidadas o externas; exterior exige aprobación adicional. La excepción de `AGENTS.md` sigue limitada al bloque del archivo raíz resuelto. Shell autorizado puede escribir fuera de las raíces; una aprobación debe evaluar el comando completo. `--auto` y aprobaciones persistentes pueden suprimir asks; denies siguen siendo relevantes. No es sandbox. |
+| Kiro IDE 1.0 / CLI V3 | `tools` + `permissions.rules`; deny > ask > allow, sin precedencia por orden/scope. | Orquestador: `fs_write` deny con exclusiones para las seis raíces, Markdown bajo `docs/` y `AGENTS.md`; escritura/shell/delegación con `ask`. Se preservan herramientas y denies existentes. | Las excepciones se expresan con `exclude`: un allow posterior no anula un deny. La excepción de `AGENTS.md` se declara relativa a la raíz. CLI 2.x no se certifica con esta configuración V3. Normalización de rutas, enlaces y ejecución de reglas pendientes de runtime compatible. Web tiene sandbox y no aplica este modelo YAML. |
 | Claude Code | Allowlist de herramientas; modos/settings/hooks del host y del padre | Edit/Write/Bash disponibles para auditoría documental y remediación aprobadas; no se usa `plan` universal ni se retira Bash indiscriminadamente. | La allowlist no restringe por ruta/mode. `permissionMode` puede heredarse o ignorarse según el padre y la superficie plugin; no equivale a una política por dominio. El kit no modifica settings/hooks del usuario. |
 | Copilot: IDE, CLI, cloud | Allowlist `tools` por agente | Lectura/búsqueda, edición/ejecución y especialistas según rol | Alias desconocidos se ignoran; `web` no aplica a cloud. Directorios, comandos y confirmaciones dependen de la superficie y configuración del host; lista de tools no es sandbox por carpeta. |
 | Antigravity 2.0 / CLI | Lista de tools por rol; scopes, sandbox y aprobaciones heredados del padre | Herramientas de escritura/comandos conservadas para operaciones autorizadas | El kit no configura scopes del padre. `commandExecutionPolicy` no establece por sí solo el alcance documental; no se añade un campo sin prueba del efecto. IDE standalone y smoke completo siguen pendientes. |
@@ -61,7 +61,9 @@ No se podan reglas Kiro o configuraciones locales por analogía con OpenCode.
 
 OpenCode 1.18.34 evalúa `write` con rutas absolutas en el probe. Por eso se
 conservan patrones relativos y se añaden `*/.<dominio>/*` para la entrada absoluta.
-Para la guía documental se distribuyen `AGENTS.md` y `*/AGENTS.md` con `ask`.
+Para la guía documental se distribuyen `AGENTS.md` y `*/AGENTS.md` con `ask`;
+las guías Markdown usan además `docs/*.md` y `*/docs/*.md`. Kiro conserva sus
+exclusiones `docs/*.md` y `docs/**/*.md` junto con las seis raíces y `AGENTS.md`.
 El wildcard cruza separadores: no acredita que esa carpeta sea la raíz canónica
 del workspace ni resuelve enlaces. Se exige comprobar el destino resuelto y el
 alcance antes de aprobar; no retirar `external_directory: ask` por tener permiso
@@ -127,6 +129,29 @@ CLI 2.29.1 devuelve exit 1 para el Markdown V3; no afirmar que aplicó sus regla
   nativamente en esta sesión. La paridad estática no sustituye esos pendientes.
 
 ### Actualizar agentes y skills instalados
+
+#### Corrección de guías bajo `docs/`
+
+La excepción de `AGENTS.md` no basta para una operación que también modifica una
+guía como `docs/extra-tools/README.md`. OpenCode distribuye `docs/*.md` y
+`*/docs/*.md` con `ask` (su wildcard cruza separadores); Kiro excluye `docs/*.md`
+y `docs/**/*.md` del deny de escritura, manteniendo el `ask`. No se habilitan
+scripts ni configuración por estar dentro de `docs/`. Los patrones no comprueban
+el significado del contenido ni garantizan aislamiento del workspace.
+
+Claude, Copilot y Antigravity conservan sus herramientas de escritura; Pi conserva
+su plantilla sin imponer un perfil técnico por rol. Las seis distribuciones
+incluyen el contrato actualizado de guías Markdown y del bloque de `AGENTS.md`.
+Los permisos del padre, la instalación activa y los gates del host siguen vigentes.
+
+Verificación de esta corrección: 12 contratos estáticos, paridad de agente/skill/
+workflow para seis plataformas y probe OpenCode 1.18.34 con 33 escenarios,
+incluidas dos limitaciones conocidas. El probe comprueba creación, edición,
+rechazo y denegación de archivos no documentales. Su perfil no expone
+`apply_patch`: el parche combinado se comprueba solo por resolución estática de
+todas sus rutas. Pi ejecuta escritura en `docs/` y `AGENTS.md`, sin gate técnico
+por rol. Kiro CLI 2.x rechaza el formato V3 del kit; su runtime sigue pendiente,
+igual que Claude, Copilot y Antigravity. No se afirma éxito runtime universal.
 
 Actualizar solo la skill no corrige un bloqueo del perfil: hay que instalar también
 el agente generado. Desde un checkout que contenga el fix, ejecuta el instalador de

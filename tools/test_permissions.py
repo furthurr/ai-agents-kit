@@ -33,13 +33,18 @@ class PermissionContracts(unittest.TestCase):
         rules = adapter("opencode", "documentation-orchestrator")["permission"]["edit"]
         for path in ("AGENTS.md", "/fixture/repo/AGENTS.md", "C:/fixture/repo/AGENTS.md"):
             self.assertEqual(opencode_rule(rules, path), "ask", path)
+        for path in ("docs/report.md", "docs/extra-tools/README.md",
+                     "/fixture/repo/docs/extra-tools/README.md",
+                     "C:/fixture/repo/docs/extra-tools/README.md"):
+            self.assertEqual(opencode_rule(rules, path), "ask", path)
         for domain in DOMAINS:
             for path in (f"{domain}/README.md", f"{domain}/nested/report.md",
                          f"/fixture/repo/{domain}/nested/report.md"):
                 with self.subTest(path=path):
                     self.assertEqual(opencode_rule(rules, path), "ask")
         for path in ("src/app.py", "tests/test_app.py", ".github/workflows/ci.yml",
-                     "docs/report.md", ".sdd/specs/x/tasks.md", ".release/state.json",
+                     "docs/script.py", "docs/config.json", "docs/report.md.bak",
+                     "/fixture/repo/docs/script.py", ".sdd/specs/x/tasks.md", ".release/state.json",
                      "graphify-out/graph.json", "/fixture/repo/src/report.md", "/fixture/outside.txt",
                      "CLAUDE.md", "GEMINI.md", "AGENTS.md.bak", "my-AGENTS.md",
                      "/fixture/repo/CLAUDE.md", "/fixture/repo/AGENTS.md.bak"):
@@ -117,11 +122,14 @@ class PermissionContracts(unittest.TestCase):
         self.assertEqual(len(boundaries), 1)
         boundary = boundaries[0]
         self.assertEqual(boundary["match"], ["**"])
-        self.assertEqual(set(boundary["exclude"]), {"AGENTS.md", *(f"{domain}/**" for domain in DOMAINS)})
+        self.assertEqual(set(boundary["exclude"]), {
+            "AGENTS.md", "docs/*.md", "docs/**/*.md", *(f"{domain}/**" for domain in DOMAINS)})
         # Static root-relative boundary contract, not an emulator of Kiro's runtime.
-        for path in ("AGENTS.md", *(f"{domain}/README.md" for domain in DOMAINS)):
+        for path in ("AGENTS.md", "docs/report.md", "docs/extra-tools/README.md",
+                     *(f"{domain}/README.md" for domain in DOMAINS)):
             self.assertTrue(any(PurePosixPath(path).match(pattern) for pattern in boundary["exclude"]), path)
         for path in ("src/app.py", "tests/test_app.py", ".github/workflows/ci.yml",
+                     "docs/script.py", "docs/config.json", "docs/report.md.bak",
                      "CLAUDE.md", "GEMINI.md", "AGENTS.md.bak", "my-AGENTS.md",
                      ".sdd/spec.md", ".release/config.md", "graphify-out/graph.json"):
             self.assertFalse(any(PurePosixPath(path).match(pattern) for pattern in boundary["exclude"]), path)
@@ -139,6 +147,26 @@ class PermissionContracts(unittest.TestCase):
         pi = adapter("pi", "documentation-orchestrator")
         self.assertNotIn("permissions", pi)
         self.assertNotIn("permission", pi)
+
+    def test_documentation_guides_and_agents_can_share_an_approved_patch(self):
+        rules = adapter("opencode", "documentation-orchestrator")["permission"]["edit"]
+        # Every path in a multi-file operation must pass; AGENTS alone is insufficient.
+        paths = ("/fixture/repo/AGENTS.md", "/fixture/repo/docs/extra-tools/README.md")
+        self.assertEqual([opencode_rule(rules, path) for path in paths], ["ask", "ask"])
+
+    def test_documentation_scope_is_shared_by_all_six_generated_agents(self):
+        manifest = json.loads((ROOT / "canonical/manifest.json").read_text())
+        for host in manifest["platforms"]:
+            config = json.loads((ROOT / "adapters" / host / "agents/documentation-orchestrator.json").read_text())
+            text = (ROOT / "generated" / host / "agents" / config["filename"]).read_text()
+            with self.subTest(host=host):
+                self.assertIn("documentación Markdown bajo `docs/` dentro del plan aprobado", text)
+                self.assertIn("bloque documental gestionado del `AGENTS.md` raíz", text)
+                self.assertIn("No edita código ni configuración", text)
+                skill = (ROOT / "generated" / host / "skills/documentation-orchestrator/SKILL.md").read_text()
+                workflow = (ROOT / "generated" / host / "skills/documentation-orchestrator/references/workflows.md").read_text()
+                self.assertIn("documentación Markdown bajo `docs/` dentro del plan aprobado", skill)
+                self.assertIn("permiso para todas, no basta con comprobar únicamente `AGENTS.md`", workflow)
 
     def test_trust_and_mode_limits_are_explicit(self):
         text = (ROOT / "canonical/agents/documentation-orchestrator.md").read_text()

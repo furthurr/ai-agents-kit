@@ -38,6 +38,7 @@ class Provider(BaseHTTPRequestHandler):
     def do_POST(self):
         body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
         self.server.requests += 1
+        self.server.available_tools = {tool["name"] for tool in body.get("tools", [])}
         messages = body.get("messages", [])
         scenario = None
         for message in messages:
@@ -107,6 +108,7 @@ def main():
         provider = ThreadingHTTPServer(("127.0.0.1", 0), Provider)
         provider.missing_tools = set()
         provider.requests = 0
+        provider.available_tools = set()
         thread = threading.Thread(target=provider.serve_forever, daemon=True)
         thread.start()
         config = {"$schema": "https://opencode.ai/config.json", "autoupdate": False,
@@ -160,8 +162,11 @@ def main():
                         return 2
                     time.sleep(0.2)
             print("HOST: OpenCode " + health["version"] + "; perfil temporal; proveedor local simulado.")
+            scenario_count = 0
 
             def scenario(label, tool, args, decision, expected, target=None, agent="documentation-orchestrator"):
+                nonlocal scenario_count
+                scenario_count += 1
                 session = request("/session", {"title": "REC02 " + label})["id"]
                 request(f"/session/{session}/prompt_async", {"agent": agent,
                         "parts": [{"type": "text", "text": "REC02_CASE " + json.dumps({"tool": tool, "args": args})}]})
@@ -233,6 +238,28 @@ def main():
             write("documentacion-rechazada", ".data/rejected.txt", "reject", "error")
             write("agents-guia-rechazada", "AGENTS.md", "reject", "error")
             write("agents-guia-aprobada", "AGENTS.md", "once", "completed")
+            write("docs-guia-rechazada", "docs/extra-tools/rejected.md", "reject", "error")
+            write("docs-guia-aprobada", "docs/extra-tools/README.md", "once", "completed")
+            write("docs-codigo-denegado", "docs/script.py", "once", "error")
+            write("docs-configuracion-denegada", "docs/config.json", "once", "error")
+            scenario("docs-edicion-aprobada", "edit", {
+                "filePath": str(repo / "docs/extra-tools/README.md"),
+                "oldString": "rec02-fixture", "newString": "rec02-fixture-edited"}, "once", "completed")
+            assert (repo / "docs/extra-tools/README.md").read_text() == "rec02-fixture-edited\n"
+            scenario("agents-edicion-aprobada", "edit", {
+                "filePath": str(repo / "AGENTS.md"),
+                "oldString": "rec02-fixture", "newString": "rec02-fixture-edited"}, "once", "completed")
+            assert (repo / "AGENTS.md").read_text() == "rec02-fixture-edited\n"
+            if "apply_patch" in provider.available_tools:
+                patch = ("*** Begin Patch\n*** Update File: " + str(repo / "AGENTS.md") +
+                         "\n@@\n-rec02-fixture-edited\n+rec02-combined\n*** Update File: " +
+                         str(repo / "docs/extra-tools/README.md") +
+                         "\n@@\n-rec02-fixture-edited\n+rec02-combined\n*** End Patch")
+                scenario("docs-agents-parche-combinado", "apply_patch", {"patchText": patch}, "once", "completed")
+                for relative in ("AGENTS.md", "docs/extra-tools/README.md"):
+                    assert (repo / relative).read_text() == "rec02-combined\n", relative
+            else:
+                print("NOT VERIFIED: apply_patch no expuesta por este perfil/modelo; parche combinado cubierto solo estáticamente.")
             write("otras-instrucciones-denegadas", "CLAUDE.md", "once", "error")
             write("producto-fuera-de-alcance", "src/denied.txt", "once", "error")
             write("spec-fuera-de-alcance", ".sdd/denied.txt", "once", "error")
@@ -272,7 +299,7 @@ def main():
                      "description": "fixture documenting residual boundary"}, "once", "completed", repo / "src/approved-shell.txt")
             (repo / ".architecture/link").symlink_to(repo / "src", target_is_directory=True)
             write("limitacion-enlace-dentro-de-workspace", ".architecture/link/symlink.txt", "once", "completed")
-            print("PASS: 25 escenarios de controles + 2 limitaciones observadas; no acredita conducta LLM ni consentimiento humano.")
+            print(f"PASS: {scenario_count} escenarios (incluidas 2 limitaciones observadas); no acredita conducta LLM ni consentimiento humano.")
             return 0
         except (AssertionError, OSError, ValueError, KeyError) as error:
             print("FAIL/BLOCKED: " + str(error))
@@ -336,6 +363,8 @@ def available_host_probe(host):
                   "--thinking", "off", "--prompt-template", str(template), "--mode", "json", "--print"]
         try:
             for label, relative, tools in (("documentacion", ".architecture/fixture.txt", None),
+                                           ("guia-docs", "docs/extra-tools/README.md", None),
+                                           ("guia-agents", "AGENTS.md", None),
                                            ("producto", "src/fixture.txt", None),
                                            ("exterior", "../outside.txt", None),
                                            ("consulta-sin-write", "src/blocked.txt", "read")):
@@ -354,7 +383,7 @@ def available_host_probe(host):
                     assert target.exists() and target.read_text() == "rec02-fixture\n", label + ": escritura no acreditada"
                     assert "tool_execution_end" in output, label + ": evento de ejecución ausente"
                     print("LIMITATION observada Pi: " + label + "; plantilla cargada; write ejecutada sin gate por rol.")
-            print("PASS probe Pi: 3 limitaciones observadas + exclusión explícita de write; no conducta de LLM real.")
+            print("PASS probe Pi: guías docs/ y AGENTS.md escribibles; 5 escrituras sin gate por rol + exclusión explícita de write; no conducta de LLM real.")
             return 0
         except (AssertionError, OSError, ValueError, subprocess.TimeoutExpired) as error:
             print("FAIL/BLOCKED Pi: " + str(error))

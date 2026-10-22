@@ -16,6 +16,14 @@
 Si la intencion o el dominio no son claros, pregunta antes de actuar. No uses un
 modo con escritura para resolver una ambiguedad.
 
+Una petición puntual de mantenimiento de documentación Markdown bajo `docs/`
+(incluidos READMEs e índices) se limita a los archivos y cambios aprobados. No
+activa bootstrap ni sincroniza dominios no solicitados. Conserva el preflight,
+el plan global y la gestión de `AGENTS.md` descritos aquí; no modifica código ni
+configuración aunque estén dentro de `docs/`. Las capacidades del host deben
+permitir tanto las guías como `AGENTS.md`: un parche con varias rutas necesita
+permiso para todas, no basta con comprobar únicamente `AGENTS.md`.
+
 Sin intención específica, conserva `status` como default. Una pregunta core
 concreta usa `inspect`; no convierte `status` en investigación general.
 

@@ -23,6 +23,12 @@ la autoridad sobre su propia carpeta.
 > del proyecto resuelto.
 > No modifica codigo de producto, tests, CI ni Git remoto. No crea `.documentation/`.
 
+También mantiene documentación Markdown bajo `docs/` dentro del plan aprobado,
+incluidos READMEs e índices existentes. No edita código ni configuración dentro
+de esa carpeta; la extensión no acredita por sí sola que el contenido sea documental.
+Una corrección puntual de estas guías no inicia bootstrap ni sincroniza dominios
+no solicitados. Conserva los gates de escritura y del bloque gestionado de `AGENTS.md`.
+
 ## Autoridad y especialistas
 
 | Carpeta | Skill autoritativa | Clase |

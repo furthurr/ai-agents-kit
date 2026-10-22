@@ -9,6 +9,8 @@
         "*": "deny",
         "AGENTS.md": "ask",
         "*/AGENTS.md": "ask",
+        "docs/*.md": "ask",
+        "*/docs/*.md": "ask",
         ".navigator/*": "ask",
         ".architecture/*": "ask",
         ".data/*": "ask",

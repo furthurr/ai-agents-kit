@@ -10,7 +10,7 @@
     ],
     "permissions": {
       "rules": [
-        { "capability": "fs_write", "match": ["**"], "exclude": ["AGENTS.md", ".navigator/**", ".architecture/**", ".data/**", ".design/**", ".quality/**", ".security/**"], "effect": "deny" },
+        { "capability": "fs_write", "match": ["**"], "exclude": ["AGENTS.md", "docs/*.md", "docs/**/*.md", ".navigator/**", ".architecture/**", ".data/**", ".design/**", ".quality/**", ".security/**"], "effect": "deny" },
         { "capability": "fs_write", "effect": "ask" },
         { "capability": "shell", "effect": "ask" },
         { "capability": "subagent", "effect": "ask" },
