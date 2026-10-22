@@ -55,6 +55,8 @@ jobs:
         run: python tools/test_integrity.py
       - name: Run host-permission contract tests
         run: python tools/test_permissions.py
+      - name: Run autonomy configurator tests (isolated profiles)
+        run: python -B tools/test_configure_autonomy.py
       - name: Check shell script syntax
         run: |
           for script in scripts/install/*.sh scripts/backup/*.sh; do
