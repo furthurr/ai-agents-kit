@@ -3,6 +3,27 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.3.5] - 2026-10-21
+
+### Correcciones
+
+- Permitir al orquestador mantener Markdown bajo `docs/` con aprobación,
+  preservando los permisos de `AGENTS.md` y las restricciones del rol.
+- Alinear agentes, skills y workflows en las seis plataformas.
+- Añadir regresiones de escritura, edición, rechazo y límites de permisos.
+
+### Documentación
+
+- Incorporar el prompt YOLO y trasladarlo a `docs/extra-tools/`.
+- Documentar la actualización de perfiles y los límites de verificación.
+
+### Verificación
+
+- 185 pruebas unitarias, 334 comprobaciones de instalación y 416 de integridad.
+- Validación y enlaces correctos.
+- Runtime comprobado en OpenCode y Pi; las demás plataformas mantienen
+  los pendientes indicados en la documentación.
+
 ## [3.3.4] - 2026-10-21
 
 ### Correcciones
