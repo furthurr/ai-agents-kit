@@ -3,6 +3,70 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.4.0] - 2026-10-22
+
+### Funcionalidades
+
+- Añadir `tools/configure_autonomy.py` como utilidad experimental y optativa para
+  preparar perfiles locales de autonomía sin lanzar un prompt en el host.
+- Incorporar adaptaciones para OpenCode, Claude Code, Copilot CLI, Kiro,
+  Antigravity CLI/App/IDE y Pi, con cobertura parcial según la superficie.
+- Usar vista previa por defecto; aplicar cambios solo con `--apply`, creando
+  respaldos previos y ofreciendo `--restore` con comprobación del contenido
+  posterior para no sobrescribir ediciones más recientes.
+- Añadir 19 pruebas aisladas del configurador y su ejecución en CI.
+
+### Documentación
+
+- Sustituir el prompt YOLO por seis prompts independientes de autonomía,
+  optimizados por host, y retirar `docs/extra-tools/modo-yolo.md`.
+- Incorporar en el `AGENTS.md` raíz únicamente la guía documental gestionada;
+  este archivo no activa el perfil autónomo ni concede permisos técnicos.
+
+### Activación voluntaria
+
+- Publicar o instalar el kit no ejecuta el configurador. No se modifican las
+  fuentes `canonical/`, los adaptadores, `generated/` ni los instaladores normales
+  por esta funcionalidad.
+- Consultar la ayuda con `python3 -B tools/configure_autonomy.py --help`.
+  Para OpenCode, `python3 -B tools/configure_autonomy.py --host opencode` muestra
+  la vista previa; añadir `--apply` autoriza la escritura del perfil seleccionado.
+- No existe una opción `--dry-run` en el configurador: la vista previa es el
+  comportamiento predeterminado. Los cambios aplicados pueden ser globales
+  para el host y afectar sesiones futuras; no se limitan a la carpeta de ejecución.
+
+### Verificación
+
+- 204 pruebas unitarias correctas, incluidas las 19 del configurador.
+- 334 comprobaciones de instalación y 416 de integridad correctas.
+- 22 pruebas de integración del instalador/exportador Antigravity correctas en
+  macOS; no acreditan la ejecución del configurador dentro de ese host.
+- Render, validación, enlaces, contratos y comprobación de diferencias correctos;
+  el render no introduce cambios en `generated/`.
+- Escaneo acotado de firmas de secretos y revisión contextual antes de publicar;
+  no equivale a una auditoría universal de credenciales.
+
+### Límites y pendientes
+
+- Las pruebas del configurador usan perfiles temporales. No se certifica su
+  aceptación runtime en todas las versiones, variantes o sistemas operativos.
+  Permitir shell no crea un sandbox ni protege todo secreto frente a subprocesos.
+- El configurador procesa JSON estricto y formas concretas de YAML/frontmatter;
+  no resuelve todos los archivos, esquemas, hooks ni políticas efectivas del host.
+- En OpenCode, `--project` también modifica configuración global. En un perfil
+  nuevo debe prepararse primero el global sin `--project` para crear el archivo
+  de instrucciones referenciado. La selección `bash`/`shell` no migra por sí sola
+  todo el frontmatter de los agentes entre versiones.
+- En Kiro, `--network` se añade al insertar inicialmente el bloque de reglas;
+  volver a ejecutarlo sobre un bloque existente no agrega ni revoca esa regla.
+- Copilot CLI solo persiste escritura y comandos suministrados. Antigravity
+  App/IDE requieren ajustes de permisos en la interfaz; Pi recibe instrucciones,
+  no un sistema de permisos por acción. Los modos de revisión y las políticas
+  del host pueden conservar confirmaciones.
+- Queda pendiente documentar el uso del script y actualizar la matriz en
+  `docs/extra-tools/modo-autonomo.md` y `docs/permisos-hosts.md`; esta release no
+  presenta esas guías como actualizadas para el configurador.
+
 ## [3.3.5] - 2026-10-21
 
 ### Correcciones
