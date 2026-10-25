@@ -11,7 +11,7 @@ Las fuentes externas se detectan y referencian; **no se sobrescriben**.
 | `CLAUDE.md` | Contexto/reglas de Claude Code |
 | `.cursorrules`, `.cursor/rules/` | Reglas de Cursor |
 | `README.md` (raíz) | Propósito y onboarding humano |
-| `.architecture/` — sección "Contexto para IA" | Arquitectura del kit |
+| `.architecture/` — sección "Contexto para IA" | Arquitectura del proyecto analizado |
 | `.data/` — "Contexto para IA" | Datos y APIs |
 | `.quality/` — "Contexto para IA" | Calidad de código |
 | `.security/` — "Contexto para IA" | Seguridad |

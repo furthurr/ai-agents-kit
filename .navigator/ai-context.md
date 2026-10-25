@@ -31,15 +31,16 @@
 - `.security/` — revisión puntual F07 del laboratorio del 2026-10-07; no certifica el kit completo.
 - `.data/` y `.design/` — no presentes; `.sdd/steering/` no presente (`.sdd/`
   contiene `specs/`).
-- `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `.cursor/rules/` — no detectados.
+- `AGENTS.md` — presente; `CLAUDE.md`, `.cursorrules`, `.cursor/rules/` — no detectados.
 
 ## Riesgos y restricciones
 - No indexar secretos ni archivos de credenciales; patrones excluidos en `config.yaml`.
-- Contexto de inventario y SDD contrastado con las fuentes de `HEAD` `10373b3e9510cc71049eb37c5393b4e18415e40d`; los cambios locales actuales son de seguimiento documental.
+- Esta actualización focalizada contrasta Capa 0 con fuentes directas del
+  worktree; se omite `source_commit` hasta que los cambios documentales estén
+  incluidos en un commit verificable.
 - `.agent-lab/` es experimental y local; no pertenece al render ni a la distribución.
 
 ## Meta
-- Actualizado: 2026-10-13
-- Source commit: `10373b3e9510cc71049eb37c5393b4e18415e40d`
+- Actualizado: 2026-10-24
 - Navigator root: `.`
-- Generado por: revisión focalizada de frescura FUT-14 (Capa 0; el mapa de módulos no requirió cambios)
+- Generado por: sincronización focalizada de Capa 0; mapa de módulos sin cambios
