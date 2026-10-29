@@ -3,6 +3,28 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [3.4.1] - 2026-10-28
+
+### Correcciones
+
+- Permitir que Documentation Orchestrator cree o actualice el `README.md` raíz,
+  también si se llama `readme.md`, dentro del alcance documental aprobado.
+- Incluir ambas variantes en los permisos de edición de OpenCode con nivel `ask`,
+  igual que las guías bajo `docs/`, sin habilitar edición general de producto.
+- Reconocer «documenta el README.md» como mantenimiento documental de escritura,
+  conservando el preflight, el plan y la gestión del bloque documental de `AGENTS.md`.
+
+### Documentación
+
+- Aclarar el contexto del proyecto en Project Navigator.
+- Actualizar la guía de Documentation Orchestrator y regenerar sus instrucciones
+  compartidas para las seis plataformas.
+
+### Pruebas
+
+- Añadir una prueba de regresión del alcance README y del orden de los permisos
+  de edición de OpenCode. Es una comprobación de contrato, no un smoke del host.
+
 ## [3.4.0] - 2026-10-22
 
 ### Funcionalidades
