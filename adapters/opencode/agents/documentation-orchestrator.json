@@ -7,6 +7,10 @@
     "permission": {
       "edit": {
         "*": "deny",
+        "README.md": "ask",
+        "*/README.md": "ask",
+        "readme.md": "ask",
+        "*/readme.md": "ask",
         "AGENTS.md": "ask",
         "*/AGENTS.md": "ask",
         "docs/*.md": "ask",

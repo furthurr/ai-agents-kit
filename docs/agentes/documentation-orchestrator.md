@@ -23,6 +23,7 @@ el agente vigente `code-review`, sin duplicar acciones.
 - Para entender la arquitectura, localizar código o investigar dependencias.
 - Para preparar la documentación base del proyecto.
 - Para revisar o actualizar la documentación existente, completa o de un tema concreto.
+- Para crear o actualizar el `README.md` raíz, también si se llama `readme.md`.
 - Para comprobar si la documentación está lista para publicar.
 
 Si la petición es una feature o un bugfix de producto, recomienda Developer. SDD se
@@ -101,6 +102,13 @@ lista de una o ambas carpetas y la evidencia debe respetar esa selección.
 ```
 
 ## Qué puede modificar
+
+Puede crear o actualizar el `README.md` raíz (también `readme.md`) y documentación
+Markdown bajo `docs/`, incluidos READMEs e índices, dentro del alcance aprobado.
+Por ejemplo: `@documentation-orchestrator Documenta el README.md con la instalación
+y el uso verificados del proyecto`. Es una petición de escritura documental;
+conserva el preflight, el plan y la gestión del bloque documental de `AGENTS.md`.
+En OpenCode, estas rutas tienen permiso `ask`, igual que las guías bajo `docs/`.
 
 Los agentes pueden leer directamente contexto relevante: arquitectura entra
 por `.architecture/README.md`; Navigator resuelve instancia/config y empieza por

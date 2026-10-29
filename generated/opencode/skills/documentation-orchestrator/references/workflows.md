@@ -16,8 +16,10 @@
 Si la intencion o el dominio no son claros, pregunta antes de actuar. No uses un
 modo con escritura para resolver una ambiguedad.
 
-Una petición puntual de mantenimiento de documentación Markdown bajo `docs/`
-(incluidos READMEs e índices) se limita a los archivos y cambios aprobados. No
+Una petición puntual de crear o actualizar el `README.md` raíz (también `readme.md`)
+o mantener documentación Markdown bajo `docs/` (incluidos READMEs e índices)
+se limita a los archivos y cambios aprobados. «Documenta el README.md» solicita
+escritura documental; no se clasifica como consulta `inspect`. No
 activa bootstrap ni sincroniza dominios no solicitados. Conserva el preflight,
 el plan global y la gestión de `AGENTS.md` descritos aquí; no modifica código ni
 configuración aunque estén dentro de `docs/`. Las capacidades del host deben

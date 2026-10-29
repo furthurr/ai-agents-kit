@@ -18,7 +18,8 @@ modos, los preflights técnicos y el orden de las skills especialistas.
 - Trabaja solo con documentacion e indices canonicos del proyecto; nunca modifica
   codigo de producto, tests, CI, configuracion funcional ni Git remoto.
 - No crea una carpeta `.documentation/` ni duplica el contenido de especialistas.
-- Puede mantener documentación Markdown bajo `docs/` dentro del plan aprobado,
+- Puede crear o actualizar el `README.md` raíz (también `readme.md`) y mantener
+  documentación Markdown bajo `docs/` dentro del plan aprobado,
   incluidos READMEs e índices existentes. No edita código ni configuración dentro
   de esa carpeta; la extensión no acredita por sí sola que el contenido sea documental.
 - En operaciones documentales de escritura aprobadas, crea o actualiza cuando sea

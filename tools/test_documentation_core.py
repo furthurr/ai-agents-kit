@@ -5,6 +5,7 @@ Generated parity belongs to the render/integrity suite after coordinated render.
 """
 
 import json
+from fnmatch import fnmatchcase
 from pathlib import Path
 import re
 import unittest
@@ -30,6 +31,28 @@ def missing(text, clauses):
 class DocumentationCoreContract(unittest.TestCase):
     def require(self, text, *clauses):
         self.assertEqual(missing(text, clauses), [])
+
+    def test_readme_write_scope_and_opencode_permission_order(self):
+        for path in (ROOT / "canonical/agents/documentation-orchestrator.md",
+                     DOCS / "SKILL.md", DOCS / "references/workflows.md"):
+            with self.subTest(source=path):
+                self.require(read(path), "`README.md` raíz (también `readme.md`)")
+        adapter = json.loads(read(ROOT / "adapters/opencode/agents/documentation-orchestrator.json"))
+        rules = adapter["frontmatter"]["permission"]["edit"]
+
+        def permission(path):
+            # OpenCode resolves ordered glob rules using the last match.
+            return [action for pattern, action in rules.items()
+                    if fnmatchcase(path, pattern)][-1]
+
+        for path in ("README.md", "readme.md", "/workspace/project/README.md",
+                     "/workspace/project/readme.md", "docs/usage.md", "AGENTS.md"):
+            with self.subTest(allowed=path):
+                self.assertEqual(permission(path), "ask")
+        for path in ("src/main.py", "package.json", ".github/workflows/ci.yml",
+                     "CONTRIBUTING.md", "opencode.json"):
+            with self.subTest(denied=path):
+                self.assertEqual(permission(path), "deny")
 
     def test_inventory_preserves_skills_without_retired_agents(self):
         manifest = json.loads(read(ROOT / "canonical/manifest.json"))
