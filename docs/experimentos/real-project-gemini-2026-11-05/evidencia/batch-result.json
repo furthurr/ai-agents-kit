@@ -1,0 +1,23 @@
+{
+  "wall_seconds": 4566.367,
+  "results": [
+    {
+      "repeat": 1,
+      "returncode": 0,
+      "stdout": "Executing 9 cells, bounded blocks of 3...\nCompleted TASK-1-ODD-r1: functional=True, seconds=263.645\nCompleted TASK-1-DEVELOPER-r1: functional=True, seconds=326.21\nCompleted TASK-1-SDD-r1: functional=True, seconds=373.05\nCompleted TASK-2-DEVELOPER-r1: functional=True, seconds=242.472\nCompleted TASK-2-SDD-r1: functional=True, seconds=270.559\nCompleted TASK-2-ODD-r1: functional=True, seconds=351.098\nCompleted TASK-3-DEVELOPER-r1: functional=False, seconds=456.093\nCompleted TASK-3-ODD-r1: functional=False, seconds=409.022\nCompleted TASK-3-SDD-r1: functional=False, seconds=378.586\n",
+      "stderr": ""
+    },
+    {
+      "repeat": 2,
+      "returncode": 0,
+      "stdout": "Executing 9 cells, bounded blocks of 3...\nCompleted TASK-1-ODD-r2: functional=True, seconds=323.794\nCompleted TASK-1-SDD-r2: functional=True, seconds=324.371\nCompleted TASK-1-DEVELOPER-r2: functional=True, seconds=351.241\nCompleted TASK-2-DEVELOPER-r2: functional=True, seconds=229.964\nCompleted TASK-2-ODD-r2: functional=True, seconds=232.337\nCompleted TASK-2-SDD-r2: functional=True, seconds=340.365\nCompleted TASK-3-SDD-r2: functional=False, seconds=319.643\nCompleted TASK-3-ODD-r2: functional=False, seconds=363.177\nCompleted TASK-3-DEVELOPER-r2: functional=False, seconds=369.808\n",
+      "stderr": ""
+    },
+    {
+      "repeat": 3,
+      "returncode": 0,
+      "stdout": "Executing 9 cells, bounded blocks of 3...\nCompleted TASK-1-ODD-r3: functional=True, seconds=231.602\nCompleted TASK-1-DEVELOPER-r3: functional=True, seconds=265.711\nCompleted TASK-1-SDD-r3: functional=True, seconds=365.349\nCompleted TASK-2-SDD-r3: functional=True, seconds=310.958\nCompleted TASK-2-ODD-r3: functional=True, seconds=368.513\nCompleted TASK-2-DEVELOPER-r3: functional=True, seconds=413.797\nCompleted TASK-3-DEVELOPER-r3: functional=False, seconds=241.085\nCompleted TASK-3-ODD-r3: functional=False, seconds=341.012\nCompleted TASK-3-SDD-r3: functional=False, seconds=383.556\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,401 @@
+{
+  "summary": {
+    "cells": 6,
+    "input_differences": {},
+    "profile_treatment_differences": [
+      "opencode/agents/sdd.md",
+      "opencode/opencode.json",
+      "opencode/skills/sdd-spec/SKILL.md",
+      "opencode/skills/sdd-spec/references/agent-routing.md",
+      "opencode/skills/sdd-spec/references/ears-reference.md",
+      "opencode/skills/sdd-spec/references/feature-level.md",
+      "opencode/skills/sdd-spec/references/integrity-gate.md",
+      "opencode/skills/sdd-spec/references/navigator-context.md",
+      "opencode/skills/sdd-spec/references/quality-bar.md",
+      "opencode/skills/sdd-spec/references/scope-depth.md",
+      "opencode/skills/sdd-spec/references/spec-continuity.md",
+      "opencode/skills/sdd-spec/references/templates.md",
+      "opencode/skills/sdd-spec/references/testing.md",
+      "opencode/skills/sdd-spec/references/tiny.md",
+      "opencode/skills/sdd-spec/references/workspace-trust.md"
+    ],
+    "unexpected_profile_differences": [],
+    "trace_hashes_match": true,
+    "suspicious_accesses": 0,
+    "original_assertions_syntactic_match_cells": 6,
+    "original_tests_pass_unchanged_cells": 6,
+    "original_suites_executed": 2,
+    "read_search_calls": 40,
+    "check_failures": {},
+    "red_green_cells": {
+      "A": {
+        "red_before_product": 0,
+        "red": 0,
+        "green": 1
+      },
+      "B": {
+        "red_before_product": 1,
+        "red": 1,
+        "green": 1
+      }
+    },
+    "artifact_documents": {
+      "A": 2,
+      "B": 1
+    },
+    "nonzero_process_codes": {},
+    "duplicate_cells": [],
+    "complete_repetitions_only": {
+      "repetitions": [],
+      "decision_use": "descriptive only; full protocol incomplete",
+      "arms": {
+        "A": {
+          "cells": 0,
+          "tokens": 0,
+          "seconds": 0,
+          "tools": 0,
+          "steps": 0,
+          "simulated_user_replies": 0
+        },
+        "B": {
+          "cells": 0,
+          "tokens": 0,
+          "seconds": 0,
+          "tools": 0,
+          "steps": 0,
+          "simulated_user_replies": 0
+        }
+      }
+    },
+    "error_sanitation": [],
+    "metrics_missing_cells": [],
+    "by_selected_A_mode": {
+      "direct": {
+        "A": {
+          "cells": 0,
+          "tokens": 0,
+          "seconds": 0
+        },
+        "B": {
+          "cells": 0,
+          "tokens": 0,
+          "seconds": 0
+        }
+      },
+      "tiny": {
+        "A": {
+          "cells": 2,
+          "tokens": 492766,
+          "seconds": 159.605
+        },
+        "B": {
+          "cells": 2,
+          "tokens": 133658,
+          "seconds": 93.462
+        }
+      },
+      "lite": {
+        "A": {
+          "cells": 0,
+          "tokens": 0,
+          "seconds": 0
+        },
+        "B": {
+          "cells": 0,
+          "tokens": 0,
+          "seconds": 0
+        }
+      },
+      "read": {
+        "A": {
+          "cells": 1,
+          "tokens": 72778,
+          "seconds": 26.167
+        },
+        "B": {
+          "cells": 1,
+          "tokens": 32504,
+          "seconds": 23.787
+        }
+      }
+    },
+    "delta_B_vs_A_percent": {
+      "tokens": -70.619,
+      "seconds": -36.886
+    },
+    "favorable_scenarios_B": {
+      "tokens": [
+        "S08",
+        "S09",
+        "S10"
+      ],
+      "seconds": [
+        "S08",
+        "S09",
+        "S10"
+      ]
+    },
+    "favorable_repetitions_B": {
+      "tokens": [
+        4
+      ],
+      "seconds": [
+        4
+      ]
+    }
+  },
+  "cells": [
+    {
+      "cell": "S08-A-r4",
+      "checks": {
+        "trace_hash_matches": true,
+        "no_visible_out_of_scope_access": true,
+        "original_tests_pass_unchanged": true,
+        "skill_loaded": true,
+        "functional_pass": true,
+        "correct_treatment_loaded": true,
+        "no_gate3_violation": true,
+        "no_premature_gate4_marker": true,
+        "no_forbidden_tools": true,
+        "no_timeout": true,
+        "tiny_single_document": true
+      },
+      "original_assertions": {
+        "test_slug.py": true
+      },
+      "suspicious_accesses": [],
+      "read_search_calls": 14,
+      "commands": [
+        {
+          "tool_index": 13,
+          "command": "git status --short && git diff",
+          "status": "completed",
+          "red_observed": false,
+          "green_observed": false,
+          "output": "?? .sdd/\n?? AGENTS.md\n?? TASK.md\n?? slug.py\n?? test_slug.py\n"
+        },
+        {
+          "tool_index": 15,
+          "command": "python3 -m unittest discover",
+          "status": "completed",
+          "red_observed": false,
+          "green_observed": true,
+          "output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+        },
+        {
+          "tool_index": 18,
+          "command": "python3 -m unittest discover && python3 -m py_compile slug.py test_slug.py",
+          "status": "completed",
+          "red_observed": false,
+          "green_observed": true,
+          "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n"
+        },
+        {
+          "tool_index": 22,
+          "command": "git status --short && git diff -- slug.py test_slug.py .sdd/specs/slug/spec.md",
+          "status": "completed",
+          "red_observed": false,
+          "green_observed": false,
+          "output": "?? .sdd/\n?? AGENTS.md\n?? TASK.md\n?? __pycache__/\n?? slug.py\n?? test_slug.py\n"
+        }
+      ],
+      "artifact_paths": [
+        ".sdd/specs/slug/spec.md"
+      ],
+      "original_test_runs": {
+        "test_slug.py": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+        }
+      },
+      "red_before_product_write": false,
+      "product_write_tool_indices": [
+        17
+      ],
+      "flow_violations": [],
+      "premature_gate4_markers": []
+    },
+    {
+      "cell": "S08-B-r4",
+      "checks": {
+        "trace_hash_matches": true,
+        "no_visible_out_of_scope_access": true,
+        "original_tests_pass_unchanged": true,
+        "skill_loaded": true,
+        "functional_pass": true,
+        "correct_treatment_loaded": true,
+        "no_gate3_violation": true,
+        "no_premature_gate4_marker": true,
+        "no_forbidden_tools": true,
+        "no_timeout": true
+      },
+      "original_assertions": {
+        "test_slug.py": true
+      },
+      "suspicious_accesses": [],
+      "read_search_calls": 5,
+      "commands": [
+        {
+          "tool_index": 7,
+          "command": "git status --short && git diff",
+          "status": "completed",
+          "red_observed": false,
+          "green_observed": false,
+          "output": "?? AGENTS.md\n?? TASK.md\n?? odd/\n?? slug.py\n?? test_slug.py\n"
+        },
+        {
+          "tool_index": 8,
+          "command": "python3 -m unittest discover",
+          "status": "completed",
+          "red_observed": false,
+          "green_observed": true,
+          "output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+        },
+        {
+          "tool_index": 10,
+          "command": "python3 -m unittest discover",
+          "status": "completed",
+          "red_observed": true,
+          "green_observed": false,
+          "output": ".EEEE\n======================================================================\nERROR: test_slug_empty_fallback (test_slug.Tests.test_slug_empty_fallback)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mas-odd-suplemento-20261104/runs/S08-B-r4/test_slug.py\", line 13, in test_slug_empty_fallback\n    self.assertEqual(slug(\"\"), \"n-a\")\n                     ^^^^^^^^\n  File \"/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mas-odd-suplemento-20261104/runs/S08-B-r4/slug.py\", line 5, in slug\n    raise NotImplementedError\nNotImplementedError\n\n======================================================================\nERROR: test_slug_normalizes_whitespace_and_case (test_slug.Tests.test_slug_normalizes_whitespace_and_case)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mas-odd-suplemento-20261104/runs/S08-B-r4/test_slug.py\", line 10, in test_slug_normalizes_whitespace_and_case\n    self.assertEqual(slug(\" A\\t B\\n C \"), \"a-b-c\")\n                     ^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mas-odd-suplemento-20261104/runs/S08-B-r4/slug.py\", line 5, in slug\n    raise NotImplementedError\nNotImplementedError\n\n======================================================================\nERROR: test_slug_preserves_unicode (test_slug.Tests.test_slug_preserves_unicode)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mas-odd-suplemento-20261104/runs/S08-B-r4/test_slug.py\", line 17, in test_slug_preserves_unicode\n    self.assertEqual(slug(\" CAFÉ 東京 Straße \"), \"café-東京-strasse\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mas-odd-suplemento-20261104/runs/S08-B-r4/slug.py\", line 5, in slug\n    raise NotImplementedError\nNotImplementedError\n\n======================================================================\nERROR: test_slug_reuses_clean (test_slug.Tests.test_slug_reuses_clean)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mas-odd-suplemento-20261104/runs/S08-B-r4/test_slug.py\", line 21, in test_slug_reuses_clean\n    self.assertEqual(slug(\"original\"), \"normalized-text\")\n                     ^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mas-odd-suplemento-20261104/runs/S08-B-r4/slug.py\", line 5, in slug\n    raise NotImplementedError\nNotImplementedError\n\n----------------------------------------------------------------------\nRan 5 tests in 0.002s\n\nFAILED (errors=4)\n"
+        },
+        {
+          "tool_index": 12,
+          "command": "python3 -m unittest discover && python3 -m py_compile slug.py test_slug.py",
+          "status": "completed",
+          "red_observed": false,
+          "green_observed": true,
+          "output": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.001s\n\nOK\n"
+        },
+        {
+          "tool_index": 14,
+          "command": "git status --short && git diff -- slug.py test_slug.py odd/tasks/slug.md",
+          "status": "completed",
+          "red_observed": false,
+          "green_observed": false,
+          "output": "?? AGENTS.md\n?? TASK.md\n?? __pycache__/\n?? odd/\n?? slug.py\n?? test_slug.py\n"
+        }
+      ],
+      "artifact_paths": [
+        "odd/tasks/slug.md"
+      ],
+      "original_test_runs": {
+        "test_slug.py": {
+          "returncode": 0,
+          "stdout": "",
+          "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n"
+        }
+      },
+      "red_before_product_write": true,
+      "product_write_tool_indices": [
+        11
+      ],
+      "flow_violations": [],
+      "premature_gate4_markers": []
+    },
+    {
+      "cell": "S09-A-r4",
+      "checks": {
+        "trace_hash_matches": true,
+        "no_visible_out_of_scope_access": true,
+        "original_tests_pass_unchanged": true,
+        "skill_loaded": true,
+        "functional_pass": true,
+        "correct_treatment_loaded": true,
+        "no_gate3_violation": true,
+        "no_premature_gate4_marker": true,
+        "no_forbidden_tools": true,
+        "no_timeout": true,
+        "tiny_single_document": true
+      },
+      "original_assertions": {},
+      "suspicious_accesses": [],
+      "read_search_calls": 7,
+      "commands": [],
+      "artifact_paths": [
+        ".sdd/specs/normalize-ids/spec.md"
+      ],
+      "original_test_runs": {},
+      "red_before_product_write": false,
+      "product_write_tool_indices": [],
+      "flow_violations": [],
+      "premature_gate4_markers": []
+    },
+    {
+      "cell": "S09-B-r4",
+      "checks": {
+        "trace_hash_matches": true,
+        "no_visible_out_of_scope_access": true,
+        "original_tests_pass_unchanged": true,
+        "skill_loaded": true,
+        "functional_pass": true,
+        "correct_treatment_loaded": true,
+        "no_gate3_violation": true,
+        "no_premature_gate4_marker": true,
+        "no_forbidden_tools": true,
+        "no_timeout": true
+      },
+      "original_assertions": {},
+      "suspicious_accesses": [],
+      "read_search_calls": 4,
+      "commands": [],
+      "artifact_paths": [],
+      "original_test_runs": {},
+      "red_before_product_write": false,
+      "product_write_tool_indices": [],
+      "flow_violations": [],
+      "premature_gate4_markers": []
+    },
+    {
+      "cell": "S10-A-r4",
+      "checks": {
+        "trace_hash_matches": true,
+        "no_visible_out_of_scope_access": true,
+        "original_tests_pass_unchanged": true,
+        "skill_loaded": true,
+        "functional_pass": true,
+        "correct_treatment_loaded": true,
+        "no_gate3_violation": true,
+        "no_premature_gate4_marker": true,
+        "no_forbidden_tools": true,
+        "no_timeout": true
+      },
+      "original_assertions": {},
+      "suspicious_accesses": [],
+      "read_search_calls": 5,
+      "commands": [],
+      "artifact_paths": [],
+      "original_test_runs": {},
+      "red_before_product_write": false,
+      "product_write_tool_indices": [],
+      "flow_violations": [],
+      "premature_gate4_markers": []
+    },
+    {
+      "cell": "S10-B-r4",
+      "checks": {
+        "trace_hash_matches": true,
+        "no_visible_out_of_scope_access": true,
+        "original_tests_pass_unchanged": true,
+        "skill_loaded": true,
+        "functional_pass": true,
+        "correct_treatment_loaded": true,
+        "no_gate3_violation": true,
+        "no_premature_gate4_marker": true,
+        "no_forbidden_tools": true,
+        "no_timeout": true
+      },
+      "original_assertions": {},
+      "suspicious_accesses": [],
+      "read_search_calls": 5,
+      "commands": [],
+      "artifact_paths": [],
+      "original_test_runs": {},
+      "red_before_product_write": false,
+      "product_write_tool_indices": [],
+      "flow_violations": [],
+      "premature_gate4_markers": []
+    }
+  ]
+}

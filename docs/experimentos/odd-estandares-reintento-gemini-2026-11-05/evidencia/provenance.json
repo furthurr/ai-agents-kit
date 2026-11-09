@@ -1,0 +1,62 @@
+{
+  "repository": {
+    "name": "mdn/django-locallibrary-tutorial",
+    "url": "https://github.com/mdn/django-locallibrary-tutorial",
+    "commit_sha": "3120b4302bf87a1b8c84d06662c2b8787f7da5f8",
+    "license": "CC0-1.0 Universal",
+    "snapshot_file": "snapshot.tar.gz",
+    "snapshot_sha256": "0c3c512899a83fdb40d9a9ab876b7bc9b32255854871d5bfb268b15df20e4893"
+  },
+  "extraction_security_policy": {
+    "excluded_patterns": [
+      "dot-env-files",
+      "pem-key-p12-certificates",
+      "dot-git-directory",
+      "credentials-and-auth-tokens"
+    ],
+    "path_traversal_rejection": true,
+    "symlink_rejection": true
+  },
+  "environment": {
+    "python_version": "3.12.4",
+    "virtualenv_path": ".venv",
+    "installed_dependencies": {
+      "Django": "6.1.1",
+      "dj-database-url": "3.1.2",
+      "gunicorn": "26.2.0",
+      "psycopg": "3.3.6",
+      "psycopg-binary": "3.3.6",
+      "whitenoise": "6.12.0",
+      "python-dotenv": "1.2.3",
+      "asgiref": "3.13.0",
+      "sqlparse": "0.6.1",
+      "typing_extensions": "4.16.0"
+    }
+  },
+  "preparation_patches_and_actions": [
+    {
+      "action": "offline_staticfiles_generation",
+      "reason": "Django test suite with CompressedManifestStaticFilesStorage requires staticfiles manifest for static assets (styles.css). Without pre-collecting staticfiles, 24 view tests raise ValueError('Missing staticfiles manifest entry').",
+      "command": ".venv/bin/python baseline/manage.py collectstatic --noinput",
+      "effect": "Populated baseline/staticfiles with manifest for offline test runner without requiring online CDNs or network assets."
+    },
+    {
+      "action": "lab_context_documentation",
+      "path": "baseline/docs/lab-context.md",
+      "reason": "Provide purely descriptive codebase facts (modules, startup, database, models, and test runner) to experimental agents without task solutions."
+    }
+  ],
+  "baseline_verification": {
+    "test_command": ".venv/bin/python baseline/manage.py test catalog",
+    "total_tests": 43,
+    "passed": 43,
+    "failed": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "raw_summary": "Ran 43 tests in 10.422s - OK"
+  },
+  "recorded_interruption": {
+    "reference_file": "preparation-01-interruption.json",
+    "reason": "Terminal tool timeout at 120s on previous run; preserved historical state, resumed without re-downloading existing valid artifacts."
+  }
+}

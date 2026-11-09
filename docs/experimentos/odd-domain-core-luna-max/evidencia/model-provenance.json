@@ -1,0 +1,7 @@
+{
+  "model": "openai/gpt-6-luna",
+  "variant": "max",
+  "selection": "explicit CLI --model and --variant on every invoke",
+  "temperature": "omitted: model capability false",
+  "not_pooled_with_gemini": true
+}

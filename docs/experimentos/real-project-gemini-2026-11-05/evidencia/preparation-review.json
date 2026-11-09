@@ -1,0 +1,30 @@
+{
+  "comparison_cells_started": false,
+  "preparation_incidents": [
+    "preparation-01 terminal parent lost at 120s; collector missing; owned child terminated; partial files preserved",
+    "build-01 drafts had incomplete transport/probe, altered agents, and insufficient migration/concurrency oracles; not used",
+    "build-02 corrected profiles and reference code but still delegated invoke to historical config; fixed before comparison",
+    "oracle-review-01 reached 900s timeout after all nine validations were written; summary incomplete; not a comparison attempt"
+  ],
+  "coordinator_verifications": {
+    "upstream_commit_exists": true,
+    "license_file_read": "CC0-1.0",
+    "baseline_original_tests": 43,
+    "baseline_original_pass": true,
+    "offline_runner_tests": {"count": 10, "passed": true},
+    "real_runtime_preflights": ["developer", "sdd", "odd"],
+    "new_transport_reference_evaluation": {
+      "TASK-1": {"original": 43, "oracle": 7, "pass": true},
+      "TASK-2": {"original": 43, "oracle": 9, "pass": true},
+      "TASK-3-stage1": {"original": 43, "oracle": 6, "pass": true},
+      "TASK-3-final": {"original": 43, "oracle": 10, "pass": true}
+    }
+  },
+  "limits": [
+    "T3 stage1 skips additional stage1-to-final upgrade check because there is no later schema phase; legacy migration still tested",
+    "New Django Client in replay unit test does not prove a new DB connection; concurrent requests do use separate thread-local connections",
+    "No OS sandbox or network isolation certification",
+    "Automated checks do not exhaustively validate UI accessibility, CSRF, security or every canonical-agent responsibility",
+    "Preparation cost and time are separate from comparative task metrics"
+  ]
+}

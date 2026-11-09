@@ -1,0 +1,17 @@
+{
+  "stage": "before_freeze_before_inference",
+  "model_calls": 0,
+  "host_cli_version_observed": "1.18.34",
+  "python_version_observed": "3.12.4",
+  "checks": [
+    {"command": "python3 -B -m unittest discover -s tools -p 'test_odd*.py' -v", "tests": 56, "passed": true},
+    {"workdir": "tools", "command": "python3 -B -m unittest test_real_project_report test_real_project_gemini_lab test_gemini_three_way test_developer_v2_domains_build", "tests": 21, "passed": true},
+    {"command": "python3 -B tools/odd_batching.py <new-root> offline-preflight", "passed": true, "kind": "offline_no_model"},
+    {"command": "python3 -B tools/odd_batching.py <new-root> reference", "passed": true, "reference_tests": "43 original + 9 external + 43 separate diagnostic"}
+  ],
+  "preparation_revision": "Before freeze, added invalid stdout object/JSON rejection and process-exit race handling; tests rerun. No inference or historical freeze changed.",
+  "earlier_checks": [
+    {"tests": 17, "passed": true, "scope": "initial new unit tests"},
+    {"tests": 55, "passed": true, "scope": "initial odd regression set before one additional test"}
+  ]
+}

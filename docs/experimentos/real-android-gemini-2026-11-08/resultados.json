@@ -1,0 +1,619 @@
+{
+  "1": {
+    "metadata": {
+      "id": "[REDACTED_MOBILE_EVIDENCE]",
+      "title": "[REDACTED_MOBILE_EVIDENCE]",
+      "complexity": "[REDACTED_MOBILE_EVIDENCE]",
+      "file": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_source": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_target": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_oracle_task": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_original_task": "[REDACTED_MOBILE_EVIDENCE]"
+    },
+    "arms": {
+      "build_sin_mas": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_sin_mas",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 30,
+        "tools_called": 29,
+        "tokens": {
+          "total": 1339081,
+          "input": 217807,
+          "output": 5275,
+          "reasoning": 0,
+          "cache_read": 1115999,
+          "cache_write": 0
+        },
+        "duration_seconds": 269.832,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-08T19:06:35.311666+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "v2_reforzado": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2_reforzado",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 19,
+        "tools_called": 18,
+        "tokens": {
+          "total": 387767,
+          "input": 92806,
+          "output": 5397,
+          "reasoning": 0,
+          "cache_read": 289564,
+          "cache_write": 0
+        },
+        "duration_seconds": 141.734,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-08T18:55:24.697049+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "developer_actual": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "developer_actual",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 38,
+        "tools_called": 37,
+        "tokens": {
+          "total": 1692816,
+          "input": 213535,
+          "output": 7488,
+          "reasoning": 0,
+          "cache_read": 1471793,
+          "cache_write": 0
+        },
+        "duration_seconds": 278.245,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T00:22:37.902866+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "build_mas": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_mas",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 9,
+        "tools_called": 8,
+        "tokens": {
+          "total": 118698,
+          "input": 39402,
+          "output": 4552,
+          "reasoning": 0,
+          "cache_read": 74744,
+          "cache_write": 0
+        },
+        "duration_seconds": 45.496,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-08T19:01:52.944838+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "v2": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 35,
+        "tools_called": 34,
+        "tokens": {
+          "total": 1111135,
+          "input": 213329,
+          "output": 7015,
+          "reasoning": 0,
+          "cache_read": 890791,
+          "cache_write": 0
+        },
+        "duration_seconds": 207.828,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-08T18:59:22.075127+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      }
+    }
+  },
+  "2": {
+    "metadata": {
+      "id": "[REDACTED_MOBILE_EVIDENCE]",
+      "title": "[REDACTED_MOBILE_EVIDENCE]",
+      "complexity": "[REDACTED_MOBILE_EVIDENCE]",
+      "file": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_source": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_target": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_oracle_task": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_original_task": "[REDACTED_MOBILE_EVIDENCE]"
+    },
+    "arms": {
+      "build_sin_mas": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_sin_mas",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 59,
+        "tools_called": 62,
+        "tokens": {
+          "total": 4447790,
+          "input": 335919,
+          "output": 7691,
+          "reasoning": 0,
+          "cache_read": 4104180,
+          "cache_write": 0
+        },
+        "duration_seconds": 625.064,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": {
+          "name": "[REDACTED_MOBILE_EVIDENCE]",
+          "data": {
+            "message": "[REDACTED_MOBILE_EVIDENCE]",
+            "statusCode": 400,
+            "isRetryable": false,
+            "responseHeaders": {
+              "cache-control": "[REDACTED_MOBILE_EVIDENCE]",
+              "content-security-policy": "[REDACTED_MOBILE_EVIDENCE]",
+              "content-type": "[REDACTED_MOBILE_EVIDENCE]",
+              "date": "[REDACTED_MOBILE_EVIDENCE]",
+              "server": "[REDACTED_MOBILE_EVIDENCE]",
+              "strict-transport-security": "[REDACTED_MOBILE_EVIDENCE]",
+              "transfer-encoding": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-content-type-options": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-copilot-service-request-id": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-github-copilot-request-te": "false",
+              "x-github-edge-region": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-github-request-id": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-request-id": "[REDACTED_MOBILE_EVIDENCE]"
+            },
+            "responseBody": "[REDACTED_MOBILE_EVIDENCE]",
+            "metadata": {
+              "url": "[REDACTED_MOBILE_EVIDENCE]"
+            }
+          }
+        },
+        "exit_code": 1,
+        "completed_at": "2026-11-08T19:18:36.916605+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "v2_reforzado": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2_reforzado",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 59,
+        "tools_called": 59,
+        "tokens": {
+          "total": 3823826,
+          "input": 306444,
+          "output": 11650,
+          "reasoning": 0,
+          "cache_read": 3505732,
+          "cache_write": 0
+        },
+        "duration_seconds": 528.458,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": {
+          "name": "[REDACTED_MOBILE_EVIDENCE]",
+          "data": {
+            "message": "[REDACTED_MOBILE_EVIDENCE]",
+            "statusCode": 400,
+            "isRetryable": false,
+            "responseHeaders": {
+              "cache-control": "[REDACTED_MOBILE_EVIDENCE]",
+              "content-security-policy": "[REDACTED_MOBILE_EVIDENCE]",
+              "content-type": "[REDACTED_MOBILE_EVIDENCE]",
+              "date": "[REDACTED_MOBILE_EVIDENCE]",
+              "server": "[REDACTED_MOBILE_EVIDENCE]",
+              "strict-transport-security": "[REDACTED_MOBILE_EVIDENCE]",
+              "transfer-encoding": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-content-type-options": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-copilot-service-request-id": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-github-copilot-request-te": "false",
+              "x-github-edge-region": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-github-request-id": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-request-id": "[REDACTED_MOBILE_EVIDENCE]"
+            },
+            "responseBody": "[REDACTED_MOBILE_EVIDENCE]",
+            "metadata": {
+              "url": "[REDACTED_MOBILE_EVIDENCE]"
+            }
+          }
+        },
+        "exit_code": 1,
+        "completed_at": "2026-11-08T19:27:33.252428+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 2,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "developer_actual": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "developer_actual",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 57,
+        "tools_called": 59,
+        "tokens": {
+          "total": 4225059,
+          "input": 316727,
+          "output": 12593,
+          "reasoning": 0,
+          "cache_read": 3895739,
+          "cache_write": 0
+        },
+        "duration_seconds": 432.505,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T00:30:10.853716+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 2,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "build_mas": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_mas",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 59,
+        "tools_called": 61,
+        "tokens": {
+          "total": 2573968,
+          "input": 299847,
+          "output": 2780,
+          "reasoning": 0,
+          "cache_read": 2271341,
+          "cache_write": 0
+        },
+        "duration_seconds": 136.149,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": {
+          "name": "[REDACTED_MOBILE_EVIDENCE]",
+          "data": {
+            "message": "[REDACTED_MOBILE_EVIDENCE]",
+            "statusCode": 400,
+            "isRetryable": false,
+            "responseHeaders": {
+              "cache-control": "[REDACTED_MOBILE_EVIDENCE]",
+              "content-security-policy": "[REDACTED_MOBILE_EVIDENCE]",
+              "content-type": "[REDACTED_MOBILE_EVIDENCE]",
+              "date": "[REDACTED_MOBILE_EVIDENCE]",
+              "server": "[REDACTED_MOBILE_EVIDENCE]",
+              "strict-transport-security": "[REDACTED_MOBILE_EVIDENCE]",
+              "transfer-encoding": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-content-type-options": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-copilot-service-request-id": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-github-copilot-request-te": "false",
+              "x-github-edge-region": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-github-request-id": "[REDACTED_MOBILE_EVIDENCE]",
+              "x-request-id": "[REDACTED_MOBILE_EVIDENCE]"
+            },
+            "responseBody": "[REDACTED_MOBILE_EVIDENCE]",
+            "metadata": {
+              "url": "[REDACTED_MOBILE_EVIDENCE]"
+            }
+          }
+        },
+        "exit_code": 1,
+        "completed_at": "2026-11-08T19:34:21.913532+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 0,
+        "diff_summary": [],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "v2": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 51,
+        "tools_called": 50,
+        "tokens": {
+          "total": 3607095,
+          "input": 293068,
+          "output": 8664,
+          "reasoning": 0,
+          "cache_read": 3305363,
+          "cache_write": 0
+        },
+        "duration_seconds": 658.289,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-08T19:45:36.285835+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 2,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      }
+    }
+  },
+  "3": {
+    "metadata": {
+      "id": "[REDACTED_MOBILE_EVIDENCE]",
+      "title": "[REDACTED_MOBILE_EVIDENCE]",
+      "complexity": "[REDACTED_MOBILE_EVIDENCE]",
+      "file": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_source": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_target": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_oracle_task": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_original_task": "[REDACTED_MOBILE_EVIDENCE]"
+    },
+    "arms": {
+      "build_sin_mas": {
+        "task_id": "3",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_sin_mas",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 40,
+        "tools_called": 39,
+        "tokens": {
+          "total": 2375254,
+          "input": 369719,
+          "output": 8477,
+          "reasoning": 0,
+          "cache_read": 1997058,
+          "cache_write": 0
+        },
+        "duration_seconds": 633.496,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-08T19:56:21.760398+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "v2_reforzado": {
+        "task_id": "3",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2_reforzado",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 49,
+        "tools_called": 48,
+        "tokens": {
+          "total": 2400982,
+          "input": 258857,
+          "output": 10266,
+          "reasoning": 0,
+          "cache_read": 2131859,
+          "cache_write": 0
+        },
+        "duration_seconds": 715.107,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-08T20:08:30.574612+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "developer_actual": {
+        "task_id": "3",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "developer_actual",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 56,
+        "tools_called": 55,
+        "tokens": {
+          "total": 3711444,
+          "input": 340836,
+          "output": 9960,
+          "reasoning": 0,
+          "cache_read": 3360648,
+          "cache_write": 0
+        },
+        "duration_seconds": 652.335,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T00:41:30.559557+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "build_mas": {
+        "task_id": "3",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_mas",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 51,
+        "tools_called": 50,
+        "tokens": {
+          "total": 2820290,
+          "input": 394843,
+          "output": 8082,
+          "reasoning": 0,
+          "cache_read": 2417365,
+          "cache_write": 0
+        },
+        "duration_seconds": 548.305,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-08T20:25:43.922475+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "v2": {
+        "task_id": "3",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2",
+        "model": "github-copilot/gemini-3.8-flash",
+        "steps": 53,
+        "tools_called": 52,
+        "tokens": {
+          "total": 5153025,
+          "input": 372038,
+          "output": 9477,
+          "reasoning": 0,
+          "cache_read": 4771510,
+          "cache_write": 0
+        },
+        "duration_seconds": 611.436,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-08T20:36:07.499817+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      }
+    }
+  }
+}

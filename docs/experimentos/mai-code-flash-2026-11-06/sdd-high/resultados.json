@@ -1,0 +1,91 @@
+{
+  "model": "github-copilot/mai-code-1.1-flash",
+  "root": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-high",
+  "rows": [
+    {
+      "arm": "sdd_trial",
+      "status": "awaiting_user_gate_or_mode_review",
+      "tokens": {
+        "input": 45828,
+        "output": 6560,
+        "reasoning": 24384,
+        "cache_read": 1075072,
+        "cache_write": 0,
+        "total": 1127460
+      },
+      "metrics_complete": true,
+      "seconds": 163.058,
+      "steps": 39,
+      "tool_counts": {
+        "read": 24,
+        "todowrite": 2,
+        "glob": 6,
+        "bash": 15,
+        "grep": 2,
+        "write": 1
+      },
+      "skills_invoked": [],
+      "skills_loaded_by_content": [],
+      "files_read": [
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-high/profiles/sdd_trial/skills/sdd-spec/SKILL.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-high/profiles/sdd_trial/skills/sdd-spec/references/workspace-trust.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/manage.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104",
+        "/",
+        "/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/catalog/tests.py",
+        "/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/manage.py"
+      ],
+      "errors": [],
+      "acceptance": null,
+      "functional_pass": false,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 52,
+      "joint_pass": false,
+      "changed": [],
+      "final_text": "No pude continuar con la implementación ni verificar el código porque la sesión actual está restringida por permisos del entorno y no permite acceder al workspace real ni escribir/leer el proyecto Django objetivo.\n\nLo observado:\n- El proyecto real apuntado por tu instrucción está en:\n  /private/var/folders/d7/.../real-project-gemini-20261104\n- Pero el entorno de herramientas bloquea:\n  - lectura del proyecto real fuera de directorios permitidos,\n  - cualquier bash no listado explícitamente,\n  - y todas las operaciones de edición/lectura de archivos fuera de los paths autorizados.\n- El resultado de cada intento es una denegación por política del entorno y no por un error del código.\n\nPor eso, no tengo evidencia válida del repositorio, ni puedo crear la migración, ni implementar el endpoint ni ejecutar los tests requeridos sin quebrar la restricción del host.\n\nSi quieres, te dejo una propuesta de implementación exacta para aplicar en el proyecto real, lista para pegar en el repositorio cuando el acceso al workspace esté permitido. También puedo ayudarte a preparar:\n- el modelo Reservation,\n- la vista API con idempotencia y concurrencia bajo SQLite,\n- la UI con CSRF e idempotency_key,\n- y la migración Django necesaria.\n\nSi habilitas el acceso al directorio del proyecto o me pasas el código relevante en este mismo chat, puedo continuar de inmediato con la implementación y verificación.",
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": false,
+      "edges5_pass": false,
+      "migration_check_pass": true
+    }
+  ],
+  "batch": {
+    "finished": "2026-11-07T01:05:40.185705+00:00",
+    "wall_seconds": 183.638,
+    "calls": 1,
+    "halted": false
+  },
+  "halt": null,
+  "comparison_valid": false,
+  "limits": [
+    "One repetition; no statistical or causal performance conclusion.",
+    "SDD requires manual operator; missing runs are not zero cost.",
+    "Single-session pilot does not evaluate resumption.",
+    "Researcher/preparation tokens unknown, not zero.",
+    "Tool permissions, not OS sandbox. Native provider internal retries are not independently observable."
+  ],
+  "cohort": "sdd-high",
+  "temperature": "unsupported; provider default",
+  "comparison_note": "Descriptive n=1 replication; functional acceptance is not procedural certification."
+}

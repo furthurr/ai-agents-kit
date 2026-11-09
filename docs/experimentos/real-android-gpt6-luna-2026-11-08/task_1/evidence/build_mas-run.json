@@ -1,0 +1,21 @@
+{
+  "task_id": "1",
+  "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+  "arm": "build_mas",
+  "model": "openai/gpt-6-luna",
+  "steps": 11,
+  "tools_called": 12,
+  "tokens": {
+    "total": 111091,
+    "input": 20044,
+    "output": 2777,
+    "reasoning": 78,
+    "cache_read": 88192,
+    "cache_write": 0
+  },
+  "duration_seconds": 82.454,
+  "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+  "error": null,
+  "exit_code": 0,
+  "completed_at": "2026-11-09T03:49:44.169973+00:00"
+}

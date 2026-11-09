@@ -1,0 +1,22 @@
+{
+  "files": {
+    "revision/RESULTADOS.md": "401ec99fdd7c0b107f68788262cb8caf117bc103cb021dc839c9d6cba7fc12db",
+    "revision/resultados.json": "037defd20c09312a8e794e154fe4ccb942e58da8236d505001b4b10932d7b2da",
+    "high/audits/build_mas.json": "3a44e51a7f5e0266305de47d9632a7a41e1c2622f50c77576fd21369215e5d9e",
+    "high/audits/build_sin_mas.json": "3a44e51a7f5e0266305de47d9632a7a41e1c2622f50c77576fd21369215e5d9e",
+    "high/audits/developer_actual.json": "ee7e464fefd2bf77d1afe0ad6bf6b8f616158f6dab671876f34fc32594a3258c",
+    "high/audits/v2.json": "3a44e51a7f5e0266305de47d9632a7a41e1c2622f50c77576fd21369215e5d9e",
+    "high/audits/v2_reforzado.json": "797dbfbfa9e9adcca5cd4335aea0a39e4fc5f3bdb646eedf085338abc0418b83",
+    "sdd-high/audits/sdd_trial.json": "a5fe39770a2babf08ed15edabf40f47493df84d2a6aecebba23fa900bd64f8f4"
+  },
+  "original_archives": {
+    "high": {
+      "members_verified_sha256": 838,
+      "archive_sha256": "42af50d8395e1e8a544d6294d73195aff2ce3c5793fbe5c90c7f3018553e28ac"
+    },
+    "sdd-high": {
+      "members_verified_sha256": 367,
+      "archive_sha256": "5eef31378a0f2ed94a3fc74277210363dc1691948f4ec3378a859d4a414ca0d3"
+    }
+  }
+}

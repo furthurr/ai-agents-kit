@@ -1,0 +1,7 @@
+{
+  "name": "build",
+  "description": "The default agent. Executes tools based on configured permissions.",
+  "mode": "primary",
+  "native": true,
+  "prompt_present": false
+}

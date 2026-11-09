@@ -1,0 +1,13 @@
+{
+  "task_id": "1",
+  "arm": "v2_reforzado",
+  "oracle_pass": true,
+  "original_suite_pass": true,
+  "functional_acceptance": true,
+  "new_tests_found": 1,
+  "diff_summary": [
+    "[REDACTED_MOBILE_EVIDENCE]",
+    "[REDACTED_MOBILE_EVIDENCE]",
+    "[REDACTED_MOBILE_EVIDENCE]"
+  ]
+}

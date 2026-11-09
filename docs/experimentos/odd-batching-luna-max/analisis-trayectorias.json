@@ -1,0 +1,10 @@
+{
+  "method": "Temporal windows over observable step_finish events. Pre-product ends before the first completed product write. Middle ends at the step containing the last completed code/test/note write or non-dry-run makemigrations. Remaining steps are verification/close. These windows do not attribute causal cost to a tool or expose private reasoning.",
+  "cells": [
+    {"cell": "TASK-2-ODD-r1", "pre_product": {"steps": 9, "tokens": 225274}, "product_through_last_write": {"steps": 19, "tokens": 1477280}, "verification_close": {"steps": 5, "tokens": 497654}, "note_only_step_tokens": 0, "final_step_output_tokens": 400},
+    {"cell": "TASK-2-ADJUSTED-r1", "pre_product": {"steps": 14, "tokens": 513891}, "product_through_last_write": {"steps": 21, "tokens": 1858091}, "verification_close": {"steps": 3, "tokens": 352932}, "note_only_step_tokens": 583649, "final_step_output_tokens": 346},
+    {"cell": "TASK-2-ODD-r2", "pre_product": {"steps": 14, "tokens": 552142}, "product_through_last_write": {"steps": 32, "tokens": 2780534}, "verification_close": {"steps": 3, "tokens": 353457}, "note_only_step_tokens": 548642, "final_step_output_tokens": 352},
+    {"cell": "TASK-2-ADJUSTED-r2", "pre_product": {"steps": 13, "tokens": 397050}, "product_through_last_write": {"steps": 9, "tokens": 588940}, "verification_close": {"steps": 6, "tokens": 481549}, "note_only_step_tokens": 0, "final_step_output_tokens": 354}
+  ],
+  "interpretation": "The lower-token member of each pair had no durable ODD note; each arm created one note in total. This association is not proof that notes caused the difference or should be prohibited. Test decisions, product fragmentation, post-green changes and grouping also varied. Note-only step totals include prior context and are not removable-cost estimates."
+}

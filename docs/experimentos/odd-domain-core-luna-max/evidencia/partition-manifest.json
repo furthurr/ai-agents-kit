@@ -1,0 +1,176 @@
+{
+  "data-api": {
+    "source_sha256": "e617e821d407c694626f4a8dfb17871d2450e9ce0ef845c202f243db7aa0d435",
+    "original_bytes": 12395,
+    "core_bytes": 1494,
+    "implementation_bytes": 6004,
+    "documentation_bytes": 6120,
+    "sections_in_original_order": [
+      {
+        "heading": "__preamble__",
+        "target": "implementation.md",
+        "sha256": "e69d386000825345032348e18fb8ca1706f97259bda45bcc2e5e8ff333313dfd",
+        "bytes": 49
+      },
+      {
+        "heading": "Identidad del MAS",
+        "target": "implementation.md",
+        "sha256": "b97a2dc042b0569c690dbb110558c28a4b8c033718a25492ba4efcb1e90d5b73",
+        "bytes": 1065
+      },
+      {
+        "heading": "Cuándo usar esta skill",
+        "target": "implementation.md",
+        "sha256": "ecca89ed200a30761f64c380e3887eba449df76f4ab737e1cfafedd3bbcd3007",
+        "bytes": 475
+      },
+      {
+        "heading": "Elegir el flujo según la intención",
+        "target": "implementation.md",
+        "sha256": "e96b25917f24d839211664478d463c4ba45fd422cbe4ca797fc251b0c3bfd753",
+        "bytes": 842
+      },
+      {
+        "heading": "Estándares que reconoce",
+        "target": "implementation.md",
+        "sha256": "a94924c2eda11ad068fb4f7d804cf085a354350a2c35ee5010cc1e5f45aa9bfb",
+        "bytes": 675
+      },
+      {
+        "heading": "Carpeta canónica: `.data/`",
+        "target": "documentation.md",
+        "sha256": "eeab611243b4d23d10e203924aef31c08c2e3f35ba571b51416e9805ae81ce4f",
+        "bytes": 1839
+      },
+      {
+        "heading": "Dos modos según tamaño y persistencia",
+        "target": "documentation.md",
+        "sha256": "c5dbdf7125c7195dc3e8bd73f345559c57fcb651d7146833ee1f14d8797d2c2d",
+        "bytes": 1677
+      },
+      {
+        "heading": "Detección de tecnología (dónde vive la capa de datos)",
+        "target": "implementation.md",
+        "sha256": "ff70e839ceac2041fdb1e72477e4119a8f88230390622cdf72179b0d68eb5b41",
+        "bytes": 879
+      },
+      {
+        "heading": "Flujo de trabajo",
+        "target": "documentation.md",
+        "sha256": "4bc056cb3641a18d193175ac6826719c7b3c460ac9c21057a89db6b3225f9ae4",
+        "bytes": 2331
+      },
+      {
+        "heading": "Uso durante implementación de producto",
+        "target": "implementation.md",
+        "sha256": "299973de065681e84b47ea3ee433b9d440f18020c1b0551ab2a79f8f3b2427d9",
+        "bytes": 800
+      },
+      {
+        "heading": "Índice de contexto para otros agentes",
+        "target": "implementation.md",
+        "sha256": "0b1119ffce343113c16f3ddfadaeeaf133e0a692fd7b42ac6bcfb2a0b612ecc0",
+        "bytes": 278
+      },
+      {
+        "heading": "Referencias bajo demanda",
+        "target": "documentation.md",
+        "sha256": "94e60e5647e0ee06f35fbf12d4da0ea430ba816965196d0f74f5884fbea5c990",
+        "bytes": 273
+      },
+      {
+        "heading": "Reglas",
+        "target": "implementation.md",
+        "sha256": "70fa46c40c0becbcf64aa840f2e0fb68be19a9d0715df306047811631459914a",
+        "bytes": 941
+      }
+    ]
+  },
+  "ui-design": {
+    "source_sha256": "9da980ac2ad22982043a883ab0775a02256e46e5bbaac146079206ccc83c4c38",
+    "original_bytes": 11270,
+    "core_bytes": 1464,
+    "implementation_bytes": 5638,
+    "documentation_bytes": 5391,
+    "sections_in_original_order": [
+      {
+        "heading": "__preamble__",
+        "target": "implementation.md",
+        "sha256": "11cb9364ff509b20b8aa2ab3be725846e00226677397e733bdab012a1dd4161a",
+        "bytes": 60
+      },
+      {
+        "heading": "Identidad del MAS",
+        "target": "implementation.md",
+        "sha256": "e8a5c7854a4afb1e628b932b8338d8fd954e132a6b79e33ba02b95815460bab7",
+        "bytes": 913
+      },
+      {
+        "heading": "Cuándo usar esta skill",
+        "target": "implementation.md",
+        "sha256": "8f729b628bc1d9a5acdf3f8acb5e23817b17526ff3b9f9e49592677b80e1a821",
+        "bytes": 495
+      },
+      {
+        "heading": "Elegir el flujo según la intención",
+        "target": "implementation.md",
+        "sha256": "58513b496876cadeb2b357ff389cd13ff1d974a711fe72711e94ff2441f02efe",
+        "bytes": 829
+      },
+      {
+        "heading": "Carpeta canónica: `.design/`",
+        "target": "documentation.md",
+        "sha256": "3bbd214d582fe94799893df12b8714a64b10c77fbadb4ceeea0e137c0053fbb0",
+        "bytes": 1407
+      },
+      {
+        "heading": "Detección de tecnología (dónde viven los tokens)",
+        "target": "implementation.md",
+        "sha256": "ef15a879d6a0605a0e445602ffdb48464c440772b045953c083500171f5343f8",
+        "bytes": 1047
+      },
+      {
+        "heading": "Ubicación: uno o varios proyectos",
+        "target": "documentation.md",
+        "sha256": "758b843c228e83ebca890980e249da8fcbb3bd899cca150f0da5cf4d4a91b5bc",
+        "bytes": 1248
+      },
+      {
+        "heading": "Flujo de trabajo",
+        "target": "documentation.md",
+        "sha256": "ca940cf0a0adab502de5e5ba79036a328a24701c07196f6a2bc48386162f8a9e",
+        "bytes": 2463
+      },
+      {
+        "heading": "Uso durante implementación de producto",
+        "target": "implementation.md",
+        "sha256": "b395a90c38203f40458aa04e90ee59f51d77a043988ee6a1374db075f95fed7d",
+        "bytes": 766
+      },
+      {
+        "heading": "Qué documentar (checklist visual)",
+        "target": "implementation.md",
+        "sha256": "ed896bd9f5d2ed9bd20c493d3c498c51cdc56166d2567cfc9ee62a1f7d516002",
+        "bytes": 718
+      },
+      {
+        "heading": "Índice de contexto para otros agentes",
+        "target": "implementation.md",
+        "sha256": "286be9883162daa17e633a86a4a48fcac846843c4255f80b87790bcda876611c",
+        "bytes": 283
+      },
+      {
+        "heading": "Referencias bajo demanda",
+        "target": "documentation.md",
+        "sha256": "94e60e5647e0ee06f35fbf12d4da0ea430ba816965196d0f74f5884fbea5c990",
+        "bytes": 273
+      },
+      {
+        "heading": "Reglas",
+        "target": "implementation.md",
+        "sha256": "5ded171a58b4e0b866c55a7c402c3c031d93d49773e62d13c303ed4e302fbacf",
+        "bytes": 527
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "files": {
+    "revision-sdd-phase2/RESULTADOS.md": "e7c904acb2517a32916c1cf76924b6bc0b53703adec9359700e9e00366a8fb77",
+    "revision-sdd-phase2/resultados.json": "7e2ab74acd4b586c8a54d5cc45e4eba50c2b384f08dc8ae513af6d70ac892200",
+    "sdd-low-phase2/laboratorio-fase2.tar.gz": "3240313c01a63f34d038fe7f5f4a109f846d11df95e0eb4a67eb513c2130898d",
+    "sdd-low-phase2/manifest.json": "f2cd0930f0c4073c6540a75b7f55fdae7dd3b2bbf7bf1c7e273e41d5f9160cfb"
+  },
+  "phase1_archive": {
+    "members_verified_sha256": 363,
+    "archive_sha256": "28d2c60ff42672813cbaa8332321af4e7b895e0c63daf751bd6767f1006a505e"
+  },
+  "scene": "phase-2 appendix; original revision untouched"
+}

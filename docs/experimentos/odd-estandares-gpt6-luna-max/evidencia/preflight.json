@@ -1,0 +1,2242 @@
+{
+  "odd": {
+    "agent": "odd-standards-odd",
+    "skill": "oa-odd-workflow",
+    "prompt_sha256": "1d260a6e71e034d6c6d4c8a8ec58042041acd5617710fcc49b9dc778289accae",
+    "tools": {
+      "invalid": true,
+      "question": false,
+      "bash": true,
+      "read": true,
+      "glob": true,
+      "grep": true,
+      "task": false,
+      "webfetch": false,
+      "todowrite": true,
+      "skill": true,
+      "apply_patch": true,
+      "google_search": false,
+      "antigravity_quota": false
+    },
+    "permission": [
+      {
+        "permission": "*",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "doom_loop",
+        "action": "ask",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "ask"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.local/share/opencode/tool-output/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/graphify/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/code-quality/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/project-navigator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/architecture/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/security/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/documentation-orchestrator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/opencode-project-icon/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/git-commit/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/data-api/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/sdd-spec/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/ui-design/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/release-management/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/odd/skills/oa-odd-workflow/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/odd/skills/oa-data-api/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/odd/skills/oa-ui-design/*",
+        "action": "allow"
+      },
+      {
+        "permission": "question",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "plan_enter",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "plan_exit",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env",
+        "action": "ask"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.*",
+        "action": "ask"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*credentials*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*credential*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.secret",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.secrets",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env.*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*credentials*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*credential*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.secret",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.secrets",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env.example*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pem*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.key*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.p12*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pfx*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.jks*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.keystore*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "glob",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "grep",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "list",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "task",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "skill",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "lsp",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "webfetch",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "websearch",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "todowrite",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "question",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "doom_loop",
+        "action": "ask",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/odd",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/odd/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/odd/skills",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/odd/skills/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/baseline/docs",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/baseline/docs/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/oracles",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/oracles/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/references",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/references/*",
+        "action": "deny"
+      },
+      {
+        "permission": "glob",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "grep",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "list",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/odd/*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/odd/skills/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/baseline/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/oracles/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/references/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "AGENTS.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "TASK.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/odd/AGENTS.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/odd/TASK.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py check*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py makemigrations*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py migrate*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py collectstatic*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python -m unittest discover*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python manage.py test*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 manage.py test*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python manage.py check*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 manage.py check*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python manage.py makemigrations*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 manage.py makemigrations*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python manage.py migrate*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 manage.py migrate*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "git status*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "git diff*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "skill",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "skill",
+        "pattern": "oa-odd-workflow",
+        "action": "allow"
+      },
+      {
+        "permission": "skill",
+        "pattern": "oa-data-api",
+        "action": "allow"
+      },
+      {
+        "permission": "skill",
+        "pattern": "oa-ui-design",
+        "action": "allow"
+      },
+      {
+        "permission": "task",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "question",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "webfetch",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "websearch",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "google_search",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "antigravity_quota",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "todowrite",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "lsp",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/odd",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/odd/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/odd/skills",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/odd/skills/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.local/share/opencode/tool-output/*",
+        "action": "allow"
+      }
+    ],
+    "resolved_bytes_verified": true,
+    "runtime_skill_content_verified": true,
+    "runtime_seconds": 32.306
+  },
+  "adjusted": {
+    "agent": "odd-standards-adjusted",
+    "skill": "ob-odd-workflow",
+    "prompt_sha256": "b5bc4c387d400f6d4d3609825deaec2ea1d30eb66406a35cc2e5d2c4846d0d73",
+    "tools": {
+      "invalid": true,
+      "question": false,
+      "bash": true,
+      "read": true,
+      "glob": true,
+      "grep": true,
+      "task": false,
+      "webfetch": false,
+      "todowrite": true,
+      "skill": true,
+      "apply_patch": true,
+      "google_search": false,
+      "antigravity_quota": false
+    },
+    "permission": [
+      {
+        "permission": "*",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "doom_loop",
+        "action": "ask",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "ask"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.local/share/opencode/tool-output/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/code-quality/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/graphify/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/project-navigator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/architecture/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/data-api/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/documentation-orchestrator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/security/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/opencode-project-icon/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/release-management/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/git-commit/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/ui-design/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/opencode/skills/sdd-spec/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/adjusted/skills/ob-data-api/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/adjusted/skills/ob-ui-design/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/adjusted/skills/ob-odd-workflow/*",
+        "action": "allow"
+      },
+      {
+        "permission": "question",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "plan_enter",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "plan_exit",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env",
+        "action": "ask"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.*",
+        "action": "ask"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*credentials*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*credential*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.secret",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.secrets",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/Users/pedrogomezvasquez/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env.*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/Users/pedrogomezvasquez/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*credentials*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*credential*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.secret",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.secrets",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env.example*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pem*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.key*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.p12*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pfx*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.jks*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.keystore*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/Users/pedrogomezvasquez/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "glob",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "grep",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "list",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "task",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "skill",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "lsp",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "webfetch",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "websearch",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "todowrite",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "question",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "doom_loop",
+        "action": "ask",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/adjusted",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/adjusted/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/adjusted/skills",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/adjusted/skills/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/baseline/docs",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/baseline/docs/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/oracles",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/oracles/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/references",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/references/*",
+        "action": "deny"
+      },
+      {
+        "permission": "glob",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "grep",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "list",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/adjusted/*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/adjusted/skills/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/baseline/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/oracles/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/references/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "AGENTS.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "TASK.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/adjusted/AGENTS.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/adjusted/TASK.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py check*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py makemigrations*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py migrate*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py collectstatic*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python -m unittest discover*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python manage.py test*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 manage.py test*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python manage.py check*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 manage.py check*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python manage.py makemigrations*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 manage.py makemigrations*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python manage.py migrate*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 manage.py migrate*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "git status*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "git diff*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "skill",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "skill",
+        "pattern": "ob-odd-workflow",
+        "action": "allow"
+      },
+      {
+        "permission": "skill",
+        "pattern": "ob-data-api",
+        "action": "allow"
+      },
+      {
+        "permission": "skill",
+        "pattern": "ob-ui-design",
+        "action": "allow"
+      },
+      {
+        "permission": "task",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "question",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "webfetch",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "websearch",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "google_search",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "antigravity_quota",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "todowrite",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "lsp",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/adjusted",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/probes/adjusted/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/adjusted/skills",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/profiles-v2/adjusted/skills/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/Users/pedrogomezvasquez/.local/share/opencode/tool-output/*",
+        "action": "allow"
+      }
+    ],
+    "resolved_bytes_verified": true,
+    "runtime_skill_content_verified": true,
+    "runtime_seconds": 37.119
+  }
+}

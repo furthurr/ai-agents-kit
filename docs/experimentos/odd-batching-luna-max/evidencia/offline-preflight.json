@@ -1,0 +1,16 @@
+{
+  "kind": "offline_only_no_model_calls",
+  "checks": {
+    "control_normalized_equal": true,
+    "only_scheduling_delta": true,
+    "data-api_all_references_equal": true,
+    "ui-design_all_references_equal": true,
+    "odd_config": true,
+    "adjusted_config": true,
+    "single_call_kernel": true,
+    "no_maps_added": true,
+    "python_exists": true,
+    "cli_exists": true
+  },
+  "passed": true
+}

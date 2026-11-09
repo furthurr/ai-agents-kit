@@ -1,0 +1,604 @@
+{
+  "protocol": "odd-vs-sdd-v2-20261104",
+  "created": "2026-11-04T18:56:27.403571+00:00",
+  "cells": 6,
+  "freeze_unchanged": true,
+  "arms": {
+    "A": {
+      "cells": 3,
+      "functional_pass": 3,
+      "skill_loaded": 3,
+      "seconds": 185.772,
+      "tool_count": 47,
+      "steps": 31,
+      "invocations": 4,
+      "simulated_user_replies": 1,
+      "flow_violations": 0,
+      "metrics": {
+        "input": 56586,
+        "output": 5534,
+        "cache_read": 503424,
+        "cache_write": 0,
+        "reasoning": 95,
+        "reported_cost": 0,
+        "comparable_tokens": 565544
+      }
+    },
+    "B": {
+      "cells": 3,
+      "functional_pass": 3,
+      "skill_loaded": 3,
+      "seconds": 117.249,
+      "tool_count": 26,
+      "steps": 22,
+      "invocations": 3,
+      "simulated_user_replies": 0,
+      "flow_violations": 0,
+      "metrics": {
+        "input": 28943,
+        "output": 3203,
+        "cache_read": 134016,
+        "cache_write": 0,
+        "reasoning": 87,
+        "reported_cost": 0,
+        "comparable_tokens": 166162
+      }
+    }
+  },
+  "scenarios": {
+    "S01": {
+      "A": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      },
+      "B": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      }
+    },
+    "S02": {
+      "A": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      },
+      "B": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      }
+    },
+    "S03": {
+      "A": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      },
+      "B": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      }
+    },
+    "S04": {
+      "A": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      },
+      "B": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      }
+    },
+    "S05": {
+      "A": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      },
+      "B": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      }
+    },
+    "S06": {
+      "A": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      },
+      "B": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      }
+    },
+    "S07": {
+      "A": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      },
+      "B": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      }
+    },
+    "S08": {
+      "A": {
+        "cells": 1,
+        "functional_pass": 1,
+        "skill_loaded": 1,
+        "seconds": 104.747,
+        "tool_count": 27,
+        "steps": 18,
+        "invocations": 2,
+        "simulated_user_replies": 1,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 24353,
+          "output": 3061,
+          "cache_read": 338560,
+          "cache_write": 0,
+          "reasoning": 21,
+          "reported_cost": 0,
+          "comparable_tokens": 365974
+        }
+      },
+      "B": {
+        "cells": 1,
+        "functional_pass": 1,
+        "skill_loaded": 1,
+        "seconds": 69.544,
+        "tool_count": 15,
+        "steps": 13,
+        "invocations": 1,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 7387,
+          "output": 1899,
+          "cache_read": 98816,
+          "cache_write": 0,
+          "reasoning": 77,
+          "reported_cost": 0,
+          "comparable_tokens": 108102
+        }
+      }
+    },
+    "S09": {
+      "A": {
+        "cells": 1,
+        "functional_pass": 1,
+        "skill_loaded": 1,
+        "seconds": 54.858,
+        "tool_count": 14,
+        "steps": 7,
+        "invocations": 1,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 20854,
+          "output": 1874,
+          "cache_read": 104064,
+          "cache_write": 0,
+          "reasoning": 74,
+          "reported_cost": 0,
+          "comparable_tokens": 126792
+        }
+      },
+      "B": {
+        "cells": 1,
+        "functional_pass": 1,
+        "skill_loaded": 1,
+        "seconds": 23.918,
+        "tool_count": 5,
+        "steps": 4,
+        "invocations": 1,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 7171,
+          "output": 721,
+          "cache_read": 17664,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 25556
+        }
+      }
+    },
+    "S10": {
+      "A": {
+        "cells": 1,
+        "functional_pass": 1,
+        "skill_loaded": 1,
+        "seconds": 26.167,
+        "tool_count": 6,
+        "steps": 6,
+        "invocations": 1,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 11379,
+          "output": 599,
+          "cache_read": 60800,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 72778
+        }
+      },
+      "B": {
+        "cells": 1,
+        "functional_pass": 1,
+        "skill_loaded": 1,
+        "seconds": 23.787,
+        "tool_count": 6,
+        "steps": 5,
+        "invocations": 1,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 14385,
+          "output": 583,
+          "cache_read": 17536,
+          "cache_write": 0,
+          "reasoning": 10,
+          "reported_cost": 0,
+          "comparable_tokens": 32504
+        }
+      }
+    }
+  },
+  "repetitions": {
+    "1": {
+      "A": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      },
+      "B": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      }
+    },
+    "2": {
+      "A": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      },
+      "B": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      }
+    },
+    "3": {
+      "A": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      },
+      "B": {
+        "cells": 0,
+        "functional_pass": 0,
+        "skill_loaded": 0,
+        "seconds": 0,
+        "tool_count": 0,
+        "steps": 0,
+        "invocations": 0,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0,
+          "reasoning": 0,
+          "reported_cost": 0,
+          "comparable_tokens": 0
+        }
+      }
+    }
+  },
+  "coverage": {
+    "metrics_missing_cells": [],
+    "execution_error_cells": [],
+    "aggregation": "Observed counters only; null cell metrics are unknown, not zero. Do not use all-attempt totals for a complete-workload efficiency claim.",
+    "decision": "Full protocol incomplete; descriptive complete repetitions in auditoria.json."
+  }
+}

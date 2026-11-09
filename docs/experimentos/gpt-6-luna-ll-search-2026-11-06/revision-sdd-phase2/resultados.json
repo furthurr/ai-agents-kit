@@ -1,0 +1,100 @@
+{
+  "model": "github-copilot/gpt-6-luna",
+  "task": "LL-SEARCH (media-baja)",
+  "phase": 2,
+  "row": {
+    "arm": "sdd_trial",
+    "phase": 2,
+    "session": "ses_e4c5772edffe0nveWbqx2SoFSV",
+    "tokens": 316476,
+    "seconds": 36.095,
+    "steps": 7,
+    "stop_reason": null,
+    "original43": {
+      "passed": true,
+      "executed": 43,
+      "discovered": 43,
+      "failure_count": 0,
+      "error_count": 0,
+      "failure_names": [],
+      "error_names": []
+    },
+    "joint": {
+      "passed": false,
+      "executed": 56,
+      "discovered": 56,
+      "failure_count": 8,
+      "error_count": 0,
+      "failure_names": [
+        "test_author_first_name (bench_oracles.test_search.SearchOracle.test_author_first_name)",
+        "test_author_last_name (bench_oracles.test_search.SearchOracle.test_author_last_name)",
+        "test_form_accessible_escaped_and_reset (bench_oracles.test_search.SearchOracle.test_form_accessible_escaped_and_reset)",
+        "test_no_results_and_empty_library_messages (bench_oracles.test_search.SearchOracle.test_no_results_and_empty_library_messages)",
+        "test_no_summary_match (bench_oracles.test_search.SearchOracle.test_no_summary_match)",
+        "test_query_not_split_and_special_characters (bench_oracles.test_search.SearchOracle.test_query_not_split_and_special_characters)",
+        "test_title_case_insensitive_trim (bench_oracles.test_search.SearchOracle.test_title_case_insensitive_trim)",
+        "test_title_without_author (bench_oracles.test_search.SearchOracle.test_title_without_author)"
+      ],
+      "error_names": []
+    },
+    "oracle13": {
+      "passed": false,
+      "executed": 13,
+      "discovered": 13,
+      "failure_count": 8,
+      "error_count": 0,
+      "failure_names": [
+        "test_author_first_name (bench_oracles.test_search.SearchOracle.test_author_first_name)",
+        "test_author_last_name (bench_oracles.test_search.SearchOracle.test_author_last_name)",
+        "test_form_accessible_escaped_and_reset (bench_oracles.test_search.SearchOracle.test_form_accessible_escaped_and_reset)",
+        "test_no_results_and_empty_library_messages (bench_oracles.test_search.SearchOracle.test_no_results_and_empty_library_messages)",
+        "test_no_summary_match (bench_oracles.test_search.SearchOracle.test_no_summary_match)",
+        "test_query_not_split_and_special_characters (bench_oracles.test_search.SearchOracle.test_query_not_split_and_special_characters)",
+        "test_title_case_insensitive_trim (bench_oracles.test_search.SearchOracle.test_title_case_insensitive_trim)",
+        "test_title_without_author (bench_oracles.test_search.SearchOracle.test_title_without_author)"
+      ],
+      "error_names": []
+    },
+    "check": {
+      "returncode": 0,
+      "stdout": "System check identified no issues (0 silenced).\n",
+      "stderr": ""
+    },
+    "changed": [
+      ".sdd/specs/catalog-search/spec.md"
+    ],
+    "product_changes": [],
+    "tests_changed": [],
+    "primary_acceptance": false,
+    "complete_acceptance": false,
+    "outcome": "Spec preparado; Gate 3 pendiente",
+    "final_text": "He creado el spec/plan SDD-Tiny en `.sdd/specs/catalog-search/spec.md`. Incluye los criterios acordados, el enfoque y las pruebas previstas; el estado sigue `Planificado` y el **Gate 3 está pendiente**.\n\n**No he modificado código de producto.** Espero tu aprobación explícita del Gate 3 para empezar la implementación.",
+    "simulated_approvals": 0,
+    "procedure_fidelity_certified": false
+  },
+  "totals": {
+    "phase1_pause_tokens": 161046,
+    "phase1_pause_seconds": 54.895,
+    "phase1_pause_steps": 8,
+    "phase2_tokens": 316476,
+    "phase2_seconds": 36.095,
+    "phase2_steps": 7,
+    "sdd_flow_tokens": 477522,
+    "sdd_flow_seconds": 90.99,
+    "sdd_flow_steps": 15
+  },
+  "phase1_archive": {
+    "members_verified_sha256": 363,
+    "archive_sha256": "28d2c60ff42672813cbaa8332321af4e7b895e0c63daf751bd6767f1006a505e"
+  },
+  "confirmation": {
+    "source": "Real user reply in the same conversation",
+    "scope": [
+      "definitive scope",
+      "SDD-Tiny",
+      "prepare spec/plan",
+      "wait for Gate 3"
+    ],
+    "simulated_approvals": 0
+  }
+}

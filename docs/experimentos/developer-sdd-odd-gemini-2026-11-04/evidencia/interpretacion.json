@@ -1,0 +1,22 @@
+{
+  "protocol": "gemini-three-way-v1-20261104",
+  "stage": "post-run interpretation; no original cell or frozen input changed",
+  "functional_acceptance": "90/90 on the frozen synthetic criteria; not exhaustive correctness",
+  "automatic_delivery_fields": "successful_delivery/conforming_delivery indicate runner mechanical checks, not complete semantic methodology certification",
+  "sdd_direct_eligibility_review": ["S05-sdd-r1", "S05-sdd-r2", "S05-sdd-r3", "S07-sdd-r1", "S07-sdd-r2", "S07-sdd-r3"],
+  "sdd_bug_effort_score_alerts": ["S04-sdd-r1", "S04-sdd-r2", "S04-sdd-r3"],
+  "odd_missing_final_risk_line_alerts": ["S04-odd-r1", "S05-odd-r2", "S06-odd-r2", "S07-odd-r3", "S08-odd-r2"],
+  "developer_plan_bytecode_side_effect_alerts": ["S09-developer-r1", "S09-developer-r3"],
+  "new_tiny_or_lite_authoring_evaluated": false,
+  "reason": "SDD selected Direct in all 24 new choices; three historical Tiny resumptions and three read-only consultations remained",
+  "inherited_custom_tools": {"exposed": ["google_search", "antigravity_quota"], "calls_observed": 0},
+  "token_accounting": {
+    "predefined_comparable_sum": 15707763,
+    "sdk_total_sum": 15710523,
+    "difference": 2760,
+    "reasoning_counters_sum": 2760,
+    "steps_with_difference": 17,
+    "interpretation": "Aggregate difference equals separately reported reasoning counters; the predeclared input+cache+output formula is unchanged. Do not claim a monetary invoice or independent private-reasoning visibility."
+  },
+  "recommendation_scope": "Descriptive, n=3 per scenario/arm; differences below 10% not treated as robust performance preferences; no global methodology promotion"
+}

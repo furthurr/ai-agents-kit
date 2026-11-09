@@ -1,0 +1,508 @@
+{
+  "expected_cells": 2,
+  "observed_cells": 2,
+  "conversations_complete": true,
+  "scenario": "TASK-2 Alta; one repetition per arm, exploratory",
+  "arms": [
+    {
+      "arm": "adjusted",
+      "label": "ODD ajustado + navegación selectiva",
+      "cell": "TASK-2-ADJUSTED-r1",
+      "functional_pass": true,
+      "oracle_suite_pass": true,
+      "combined_catalog_suite_pass": true,
+      "healthy": true,
+      "identity_verified": true,
+      "seconds": 1091.775,
+      "metrics": {
+        "input": 151107,
+        "output": 14387,
+        "cache_read": 2608896,
+        "cache_write": 0,
+        "reasoning": 35271,
+        "reported_cost": 0,
+        "comparable_tokens": 2774390
+      },
+      "tools": 63,
+      "steps": 41,
+      "read_calls": 16,
+      "read_output_bytes": 82904,
+      "search_calls": 8,
+      "search_output_bytes": 27474,
+      "skill_output_bytes": 32311,
+      "navigator_reads": [
+        ".navigator/ai-context.md"
+      ],
+      "architecture_reads": [
+        ".architecture/README.md",
+        ".architecture/flows.md"
+      ],
+      "changed_map_files": [],
+      "changed_markdown": [],
+      "doc_close_mentions": [],
+      "domains_loaded": [
+        "data-api",
+        "ui-design"
+      ],
+      "both_domains_before_product": true
+    },
+    {
+      "arm": "odd",
+      "label": "ODD ajustado (control)",
+      "cell": "TASK-2-ODD-r1",
+      "functional_pass": true,
+      "oracle_suite_pass": true,
+      "combined_catalog_suite_pass": true,
+      "healthy": true,
+      "identity_verified": true,
+      "seconds": 741.973,
+      "metrics": {
+        "input": 92130,
+        "output": 12077,
+        "cache_read": 1676928,
+        "cache_write": 0,
+        "reasoning": 21353,
+        "reported_cost": 0,
+        "comparable_tokens": 1781135
+      },
+      "tools": 60,
+      "steps": 32,
+      "read_calls": 17,
+      "read_output_bytes": 84759,
+      "search_calls": 5,
+      "search_output_bytes": 26431,
+      "skill_output_bytes": 31344,
+      "navigator_reads": [],
+      "architecture_reads": [],
+      "changed_map_files": [],
+      "changed_markdown": [],
+      "doc_close_mentions": [
+        "Nota documental: `README.md` enumera las funciones principales pero no menciona las reservas; no lo actualicé para respetar el alcance y no cambiar de agente automáticamente. ¿Quieres solicitar esa actualización mediante `documentation-orchestrator` en una sesión seleccionada manualmente?"
+      ],
+      "domains_loaded": [
+        "data-api",
+        "ui-design"
+      ],
+      "both_domains_before_product": true
+    }
+  ],
+  "comparison": {
+    "routed_token_delta_pct": 55.76528449556042,
+    "routed_time_delta_pct": 47.14484219776194,
+    "both_functional": true,
+    "favorable_exploratory_signal": false
+  },
+  "underlying": {
+    "expected_cells": 6,
+    "observed_cells": 2,
+    "complete": false,
+    "arms": {
+      "odd": {
+        "cells": 1,
+        "expected": 3,
+        "functional_pass": 1,
+        "original_suites_pass": 1,
+        "identity_and_process_ok": true,
+        "comparable_tokens": 1781135,
+        "seconds": 741.973,
+        "tools": 60,
+        "steps": 32,
+        "user_turns": 0,
+        "tool_errors": 1,
+        "data_api_loaded": 1,
+        "ui_design_loaded": 1,
+        "both_before_product": 1,
+        "bootstrap_change_cells": 0
+      },
+      "adjusted": {
+        "cells": 1,
+        "expected": 3,
+        "functional_pass": 1,
+        "original_suites_pass": 1,
+        "identity_and_process_ok": true,
+        "comparable_tokens": 2774390,
+        "seconds": 1091.775,
+        "tools": 63,
+        "steps": 41,
+        "user_turns": 0,
+        "tool_errors": 1,
+        "data_api_loaded": 1,
+        "ui_design_loaded": 1,
+        "both_before_product": 1,
+        "bootstrap_change_cells": 0
+      }
+    },
+    "comparison": null,
+    "cells": [
+      {
+        "task": "TASK-2",
+        "arm": "adjusted",
+        "repeat": 1,
+        "phases": [
+          "TASK-2-ADJUSTED-r1"
+        ],
+        "complete": true,
+        "trajectory_functional_pass": true,
+        "final_functional_pass": true,
+        "all_original_suites_pass": true,
+        "healthy": true,
+        "primary_loaded_by_content": true,
+        "flow_alerts_mechanical": [],
+        "outside_attempts": [],
+        "foreign_skill_attempts": [],
+        "forbidden_tool_attempts": [],
+        "seconds": 1091.775,
+        "metrics": {
+          "input": 151107,
+          "output": 14387,
+          "cache_read": 2608896,
+          "cache_write": 0,
+          "reasoning": 35271,
+          "comparable_tokens": 2774390
+        },
+        "tools": 63,
+        "steps": 41,
+        "user_turns": 0,
+        "selected_modes": [
+          null
+        ],
+        "phase_diagnostics": [
+          {
+            "phase": "TASK-2-ADJUSTED-r1",
+            "functional_pass": true,
+            "original_pass": true,
+            "oracle_count": 9,
+            "failed_external_tests": [],
+            "external_summary": [
+              "Ran 9 tests in 1.503s",
+              "OK"
+            ]
+          }
+        ],
+        "sessions": [
+          "ses_e51748dd4ffeNKMwQdjDMtHJ8v"
+        ],
+        "documentation_reads": [
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-context-routing-luna-max-v1/runs/TASK-2-ADJUSTED-r1/.navigator/ai-context.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-context-routing-luna-max-v1/runs/TASK-2-ADJUSTED-r1/AGENTS.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-context-routing-luna-max-v1/runs/TASK-2-ADJUSTED-r1/README.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-context-routing-luna-max-v1/runs/TASK-2-ADJUSTED-r1/.architecture/README.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-context-routing-luna-max-v1/runs/TASK-2-ADJUSTED-r1/TASK.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-context-routing-luna-max-v1/runs/TASK-2-ADJUSTED-r1/.architecture/flows.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-context-routing-luna-max-v1/runs/TASK-2-ADJUSTED-r1/docs/lab-context.md",
+            "status": "completed"
+          }
+        ],
+        "skill_calls": [
+          {
+            "name": "ob-odd-workflow",
+            "status": "completed"
+          },
+          {
+            "name": "ob-data-api",
+            "status": "completed"
+          },
+          {
+            "name": "ob-ui-design",
+            "status": "completed"
+          }
+        ],
+        "agent_test_commands": [
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": false,
+            "red_text": true
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": false,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations.ReservationFlowTests.test_concurrent_retries_with_the_same_key_replay_one_reservation catalog.tests.test_reservations.ReservationFlowTests.test_concurrent_users_can_only_reserve_an_available_copy_once",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations.ReservationFlowTests.test_api_requires_auth_and_only_accepts_post catalog.tests.test_reservations.ReservationFlowTests.test_api_success_replays_from_a_new_session_without_duplicate_rows",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": false,
+            "red_text": true
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations.ReservationFlowTests.test_concurrent_users_can_only_reserve_an_available_copy_once catalog.tests.test_reservations.ReservationFlowTests.test_concurrent_retries_with_the_same_key_replay_one_reservation catalog.tests.test_reservations.ReservationFlowTests.test_api_returns_not_found_for_unknown_instance_without_mutation",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "for run in 1 2 3; do /private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations.ReservationFlowTests.test_concurrent_users_can_only_reserve_an_available_copy_once catalog.tests.test_reservations.ReservationFlowTests.test_concurrent_retries_with_the_same_key_replay_one_reservation || exit; done",
+            "status": "error",
+            "green_text": false,
+            "red_text": false
+          }
+        ],
+        "tool_errors": [
+          {
+            "tool": "bash",
+            "category": "permission"
+          }
+        ]
+      },
+      {
+        "task": "TASK-2",
+        "arm": "odd",
+        "repeat": 1,
+        "phases": [
+          "TASK-2-ODD-r1"
+        ],
+        "complete": true,
+        "trajectory_functional_pass": true,
+        "final_functional_pass": true,
+        "all_original_suites_pass": true,
+        "healthy": true,
+        "primary_loaded_by_content": true,
+        "flow_alerts_mechanical": [],
+        "outside_attempts": [],
+        "foreign_skill_attempts": [],
+        "forbidden_tool_attempts": [],
+        "seconds": 741.973,
+        "metrics": {
+          "input": 92130,
+          "output": 12077,
+          "cache_read": 1676928,
+          "cache_write": 0,
+          "reasoning": 21353,
+          "comparable_tokens": 1781135
+        },
+        "tools": 60,
+        "steps": 32,
+        "user_turns": 0,
+        "selected_modes": [
+          null
+        ],
+        "phase_diagnostics": [
+          {
+            "phase": "TASK-2-ODD-r1",
+            "functional_pass": true,
+            "original_pass": true,
+            "oracle_count": 9,
+            "failed_external_tests": [],
+            "external_summary": [
+              "Ran 9 tests in 1.461s",
+              "OK"
+            ]
+          }
+        ],
+        "sessions": [
+          "ses_e51748dddffeiCoJoCfp4EfVnd"
+        ],
+        "documentation_reads": [
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-context-routing-luna-max-v1/runs/TASK-2-ODD-r1/AGENTS.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-context-routing-luna-max-v1/runs/TASK-2-ODD-r1/README.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-context-routing-luna-max-v1/runs/TASK-2-ODD-r1/TASK.md",
+            "status": "completed"
+          }
+        ],
+        "skill_calls": [
+          {
+            "name": "oa-odd-workflow",
+            "status": "completed"
+          },
+          {
+            "name": "oa-data-api",
+            "status": "completed"
+          },
+          {
+            "name": "oa-ui-design",
+            "status": "completed"
+          }
+        ],
+        "agent_test_commands": [
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": false,
+            "red_text": true
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": false,
+            "red_text": true
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": false,
+            "red_text": true
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations.ReservationConcurrencyTests",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          }
+        ],
+        "tool_errors": [
+          {
+            "tool": "bash",
+            "category": "permission"
+          }
+        ]
+      }
+    ],
+    "behavior": [
+      {
+        "cell": "TASK-2-ADJUSTED-r1",
+        "arm": "adjusted",
+        "repeat": 1,
+        "domains_loaded_by_content": [
+          "data-api",
+          "ui-design"
+        ],
+        "domain_call_counts": {
+          "data-api": 1,
+          "ui-design": 1
+        },
+        "both_loaded_before_product": true,
+        "project_doc_reads": [
+          ".navigator/ai-context.md",
+          "AGENTS.md",
+          "README.md",
+          ".architecture/README.md",
+          "TASK.md",
+          ".architecture/flows.md",
+          "docs/lab-context.md"
+        ],
+        "markdown_changes": [],
+        "bootstrap_changes": [],
+        "red_before_first_product_write_mechanical": true,
+        "final_doc_mentions": []
+      },
+      {
+        "cell": "TASK-2-ODD-r1",
+        "arm": "odd",
+        "repeat": 1,
+        "domains_loaded_by_content": [
+          "data-api",
+          "ui-design"
+        ],
+        "domain_call_counts": {
+          "data-api": 1,
+          "ui-design": 1
+        },
+        "both_loaded_before_product": true,
+        "project_doc_reads": [
+          "AGENTS.md",
+          "README.md",
+          "TASK.md"
+        ],
+        "markdown_changes": [],
+        "bootstrap_changes": [],
+        "red_before_first_product_write_mechanical": true,
+        "final_doc_mentions": [
+          "Nota documental: `README.md` enumera las funciones principales pero no menciona las reservas; no lo actualicé para respetar el alcance y no cambiar de agente automáticamente. ¿Quieres solicitar esa actualización mediante `documentation-orchestrator` en una sesión seleccionada manualmente?"
+        ]
+      }
+    ],
+    "focused_checks": null,
+    "execution_errors": []
+  },
+  "bytes_note": "Observed tool output bytes, not estimated tokens; SDK token counters kept separately"
+}

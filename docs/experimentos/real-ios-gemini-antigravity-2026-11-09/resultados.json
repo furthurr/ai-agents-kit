@@ -1,0 +1,481 @@
+{
+  "1": {
+    "metadata": {
+      "id": "[REDACTED_MOBILE_EVIDENCE]",
+      "title": "[REDACTED_MOBILE_EVIDENCE]",
+      "complexity": "[REDACTED_MOBILE_EVIDENCE]",
+      "file": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_source": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_target": "[REDACTED_MOBILE_EVIDENCE]",
+      "xcode_oracle_test": "[REDACTED_MOBILE_EVIDENCE]",
+      "xcode_original_test": "[REDACTED_MOBILE_EVIDENCE]"
+    },
+    "arms": {
+      "v2_reforzado": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2_reforzado",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 30,
+        "tools_called": 29,
+        "tokens": {
+          "total": 132768,
+          "input": 124867,
+          "output": 7901,
+          "cache_read": 950249
+        },
+        "duration_seconds": 145.453,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T06:17:45.132742+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 0,
+        "loc_added_prod": 197,
+        "loc_added_test": 360,
+        "diff_summary": [],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "developer_actual": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "developer_actual",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 73,
+        "tools_called": 72,
+        "tokens": {
+          "total": 272178,
+          "input": 236099,
+          "output": 36079,
+          "cache_read": 4739500
+        },
+        "duration_seconds": 491.142,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T06:27:58.637221+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 0,
+        "loc_added_prod": 101,
+        "loc_added_test": 296,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "v2": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 17,
+        "tools_called": 16,
+        "tokens": {
+          "total": 99112,
+          "input": 96282,
+          "output": 2830,
+          "cache_read": 322046
+        },
+        "duration_seconds": 75.332,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T06:31:04.735324+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": false,
+        "functional_acceptance": false,
+        "new_tests_found": 0,
+        "loc_added_prod": 111,
+        "loc_added_test": 370,
+        "diff_summary": [],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]",
+        "original_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "build_mas": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_mas",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 21,
+        "tools_called": 20,
+        "tokens": {
+          "total": 100297,
+          "input": 96340,
+          "output": 3957,
+          "cache_read": 583969
+        },
+        "duration_seconds": 105.35,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T06:33:16.534136+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": false,
+        "functional_acceptance": false,
+        "new_tests_found": 0,
+        "loc_added_prod": 181,
+        "loc_added_test": 344,
+        "diff_summary": [],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]",
+        "original_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "build_sin_mas": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_sin_mas",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 101,
+        "tools_called": 100,
+        "tokens": {
+          "total": 361936,
+          "input": 321592,
+          "output": 40344,
+          "cache_read": 7875796
+        },
+        "duration_seconds": 1127.269,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T06:52:30.661456+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 0,
+        "loc_added_prod": 107,
+        "loc_added_test": 306,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      }
+    }
+  },
+  "2": {
+    "metadata": {
+      "id": "[REDACTED_MOBILE_EVIDENCE]",
+      "title": "[REDACTED_MOBILE_EVIDENCE]",
+      "complexity": "[REDACTED_MOBILE_EVIDENCE]",
+      "file": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_source": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_target": "[REDACTED_MOBILE_EVIDENCE]",
+      "xcode_oracle_test": "[REDACTED_MOBILE_EVIDENCE]",
+      "xcode_original_test": "[REDACTED_MOBILE_EVIDENCE]"
+    },
+    "arms": {
+      "v2_reforzado": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2_reforzado",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 55,
+        "tools_called": 54,
+        "tokens": {
+          "total": 224074,
+          "input": 194983,
+          "output": 29091,
+          "cache_read": 2597822
+        },
+        "duration_seconds": 340.82,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T06:59:57.147240+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 0,
+        "loc_added_prod": 85,
+        "loc_added_test": 255,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "developer_actual": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "developer_actual",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 60,
+        "tools_called": 59,
+        "tokens": {
+          "total": 224104,
+          "input": 195405,
+          "output": 28699,
+          "cache_read": 2984897
+        },
+        "duration_seconds": 405.922,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T07:08:24.973792+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 0,
+        "loc_added_prod": 93,
+        "loc_added_test": 252,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "v2": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 111,
+        "tools_called": 110,
+        "tokens": {
+          "total": 386745,
+          "input": 341358,
+          "output": 45387,
+          "cache_read": 8723738
+        },
+        "duration_seconds": 676.415,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T07:21:24.248323+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 0,
+        "loc_added_prod": 269,
+        "loc_added_test": 253,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "build_mas": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_mas",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 58,
+        "tools_called": 57,
+        "tokens": {
+          "total": 228442,
+          "input": 199950,
+          "output": 28492,
+          "cache_read": 2708866
+        },
+        "duration_seconds": 410.923,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T07:29:49.360823+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 0,
+        "loc_added_prod": 87,
+        "loc_added_test": 287,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "build_sin_mas": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_sin_mas",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 46,
+        "tools_called": 45,
+        "tokens": {
+          "total": 183152,
+          "input": 163920,
+          "output": 19232,
+          "cache_read": 1704839
+        },
+        "duration_seconds": 320.759,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T07:37:03.626864+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 0,
+        "loc_added_prod": 89,
+        "loc_added_test": 162,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      }
+    }
+  },
+  "3": {
+    "metadata": {
+      "id": "[REDACTED_MOBILE_EVIDENCE]",
+      "title": "[REDACTED_MOBILE_EVIDENCE]",
+      "complexity": "[REDACTED_MOBILE_EVIDENCE]",
+      "file": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_source": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_target": "[REDACTED_MOBILE_EVIDENCE]",
+      "xcode_oracle_test": "[REDACTED_MOBILE_EVIDENCE]",
+      "xcode_original_test": "[REDACTED_MOBILE_EVIDENCE]"
+    },
+    "arms": {
+      "v2_reforzado": {
+        "task_id": "3",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2_reforzado",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 18,
+        "tools_called": 17,
+        "tokens": {
+          "total": 100333,
+          "input": 95771,
+          "output": 4562,
+          "cache_read": 324227
+        },
+        "duration_seconds": 140.433,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T07:41:00.451422+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 0,
+        "loc_added_prod": 145,
+        "loc_added_test": 385,
+        "diff_summary": [],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "developer_actual": {
+        "task_id": "3",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "developer_actual",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 56,
+        "tools_called": 55,
+        "tokens": {
+          "total": 375695,
+          "input": 329118,
+          "output": 46577,
+          "cache_read": 2920803
+        },
+        "duration_seconds": 571.358,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T07:52:07.269881+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "loc_added_prod": 186,
+        "loc_added_test": 346,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "v2": {
+        "task_id": "3",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 11,
+        "tools_called": 10,
+        "tokens": {
+          "total": 62847,
+          "input": 60806,
+          "output": 2041,
+          "cache_read": 150779
+        },
+        "duration_seconds": 55.282,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T07:54:43.261931+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 0,
+        "loc_added_prod": 262,
+        "loc_added_test": 296,
+        "diff_summary": [],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "build_mas": {
+        "task_id": "3",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_mas",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 12,
+        "tools_called": 11,
+        "tokens": {
+          "total": 59902,
+          "input": 56795,
+          "output": 3107,
+          "cache_read": 228323
+        },
+        "duration_seconds": 80.302,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T07:57:42.407210+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 0,
+        "loc_added_prod": 0,
+        "loc_added_test": 11,
+        "diff_summary": [],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "build_sin_mas": {
+        "task_id": "3",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_sin_mas",
+        "model": "[REDACTED_MOBILE_EVIDENCE]",
+        "conversation_id": "[REDACTED_MOBILE_EVIDENCE]",
+        "steps": 6,
+        "tools_called": 5,
+        "tokens": {
+          "total": 75112,
+          "input": 74076,
+          "output": 1036,
+          "cache_read": 15277
+        },
+        "duration_seconds": 35.167,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "exit_code": 0,
+        "completed_at": "2026-11-09T08:00:11.148769+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 0,
+        "loc_added_prod": 0,
+        "loc_added_test": 0,
+        "diff_summary": [],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      }
+    }
+  }
+}

@@ -1,0 +1,1066 @@
+{
+  "A": {
+    "resolved": {
+      "name": "sdd",
+      "mode": "all",
+      "permission": [
+        {
+          "permission": "*",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "doom_loop",
+          "action": "ask",
+          "pattern": "*"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "*",
+          "action": "ask"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "/Users/pedrogomezvasquez/.local/share/opencode/tool-output/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/architecture/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/documentation-orchestrator/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/security/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/code-quality/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/sdd-spec/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/data-api/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/developer/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/project-navigator/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/git-commit/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/ui-design/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/skills/release-management/*",
+          "action": "allow"
+        },
+        {
+          "permission": "question",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "plan_enter",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "plan_exit",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "read",
+          "pattern": "*",
+          "action": "allow"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.env",
+          "action": "ask"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.env.*",
+          "action": "ask"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.env.example",
+          "action": "allow"
+        },
+        {
+          "permission": "*",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "read",
+          "pattern": "*",
+          "action": "allow"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.env*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.pem",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.key",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.p12",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.pfx",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.jks",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.keystore",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.ssh/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.aws/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.config/gh/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*auth.json",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.npmrc",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.netrc",
+          "action": "deny"
+        },
+        {
+          "permission": "glob",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "grep",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "list",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "skill",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "todowrite",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "edit",
+          "pattern": "*",
+          "action": "allow"
+        },
+        {
+          "permission": "edit",
+          "pattern": "AGENTS.md",
+          "action": "deny"
+        },
+        {
+          "permission": "edit",
+          "pattern": "TASK.md",
+          "action": "deny"
+        },
+        {
+          "permission": "bash",
+          "pattern": "*",
+          "action": "deny"
+        },
+        {
+          "permission": "bash",
+          "pattern": "python3 -m unittest*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "python3 -m py_compile*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "git status*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "git diff*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "*",
+          "action": "deny"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/*",
+          "action": "allow"
+        },
+        {
+          "permission": "task",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "question",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "webfetch",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "websearch",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "*",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "read",
+          "pattern": "*",
+          "action": "allow"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.env*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.pem",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.key",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.p12",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.pfx",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.jks",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.keystore",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.ssh/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.aws/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.config/gh/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*auth.json",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.npmrc",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.netrc",
+          "action": "deny"
+        },
+        {
+          "permission": "glob",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "grep",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "list",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "skill",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "todowrite",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "edit",
+          "pattern": "*",
+          "action": "allow"
+        },
+        {
+          "permission": "edit",
+          "pattern": "AGENTS.md",
+          "action": "deny"
+        },
+        {
+          "permission": "edit",
+          "pattern": "TASK.md",
+          "action": "deny"
+        },
+        {
+          "permission": "bash",
+          "pattern": "*",
+          "action": "deny"
+        },
+        {
+          "permission": "bash",
+          "pattern": "python3 -m unittest*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "python3 -m py_compile*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "git status*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "git diff*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "*",
+          "action": "deny"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/A/opencode/*",
+          "action": "allow"
+        },
+        {
+          "permission": "task",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "question",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "webfetch",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "websearch",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "/Users/pedrogomezvasquez/.local/share/opencode/tool-output/*",
+          "action": "allow"
+        }
+      ],
+      "options": {},
+      "native": false,
+      "prompt": "# Agente SDD — Spec-Driven Development\n\n## Control previo a cualquier escritura\n\nTras el preflight, carga `sdd-spec` y sigue su flujo porque el usuario seleccionó\nexplícitamente este agente para trabajar con la metodología SDD. No clasifiques por\ndominio para cambiar a Developer ni a otro agente; la elección de SDD se mantiene\ndurante planificación e implementación, respetando intención, gates, permisos y\nalcance acordado. Carga `data-api` o `ui-design` bajo demanda como conocimiento\ntécnico cuando el diseño o la implementación toque esos dominios; no son agentes de\nrouting ni sustituyen los gates SDD. No uses herramientas de escritura antes de\nresolver las decisiones esenciales y los gates definidos por la metodología.\n\n## Frontera de confianza\n\nAntes del workspace, aplica `references/workspace-trust.md` de `sdd-spec`.\n\n## Contexto core compartido\n\nLee instrucciones y steering. Consulta `.architecture/README.md`, `.navigator/` y `references/project-context.md` solo si ayudan al alcance. Verifica en fuentes directas; si faltan o están desfasados, continúa sin bootstrap ni sync automáticos. No hagas handoff obligatorio para lectura.\n\n## Identidad del MAS\n\nMAS significa **Multi-Agent System**; `MAS:` se dirige al kit y `@<agente>` a un rol concreto.\n\nConviertes ideas en software trazable mediante SDD. Carga y sigue `sdd-spec`, fuente\ncanónica de EARS, fases, gates, artefactos y verificación.\n\n## Reglas inviolables\n\n- Define el QUÉ y PORQUÉ antes del CÓMO; no cruces gates de fase sin aprobación\n  explícita. `lite` usa Quick Plan sin Gates 1–3 ni Gate 4. `tiny` aprueba el plan en\n  Gate 3 antes de implementar y cierra verificación con Gate 4. El preflight técnico\n  no bloqueante no es un gate de usuario.\n- Clasifica por ejes separados: tipo de trabajo (feature, bugfix o exploración),\n  profundidad (`direct`, `tiny`/SDD-Tiny, `lite`/SDD-Lite, `standard` legacy opt-in),\n  intención (solo planificación o implementación) y estrategia de pruebas.\n- Conserva cuatro modos documentados. Tras definir y calificar una feature, recomienda\n  1–3 `direct`, 4–8 `tiny` (nombre visible SDD-Tiny) y 9–10/10+ `lite` (SDD-Lite).\n  La rúbrica conserva 10+ como nota 10 + `exceeds_x13=true`. La recomendación no\n  selecciona automáticamente el modo contra una elección explícita, no aprueba el\n  alcance ni crea un gate; espera validación del alcance y selección pendiente.\n  Aplica `references/scope-depth.md` para elegibilidad y manejo de conflictos.\n  `direct` conserva todas sus guardas aunque la nota sea 1–3. Para 10+ ofrece\n  entregas seguras. `standard` está deprecado/legacy y solo se usa si el usuario lo\n  solicita explícitamente; una elección previa de standard no se rebaja.\n- Quick Plan es obligatorio y exclusivo de `lite`/SDD-Lite. Rechaza `direct` + Quick\n  Plan, `tiny` + Quick Plan y `standard` + Quick Plan. Un bugfix no trivial conserva\n  `lite`; bugs, consultas y exploraciones no reciben calificación de feature.\n- Solo planificación significa no implementar.\n- Las opciones retiradas siguen la política compacta de `sdd-spec` y sus referencias;\n  no repitas casos de compatibilidad en este agente.\n- Antes de contexto pesado, realiza únicamente el preflight técnico mínimo para\n  identificar tipo de trabajo, próxima fase y decisiones esenciales pendientes; no\n  recomienda niveles de LLM ni solicita cambiar o confirmar el modelo.\n- Solo SDD publica `Esfuerzo previsto del LLM: <nota e icono>` y la recomendación\n  por score para una feature\n  de alcance definido; usa `references/feature-level.md`. No puntúa bugs, consultas\n  ni exploraciones como features.\n  No emite notas provisionales ni las repite; reanaliza cambios materiales de alcance.\n- Antes de recomendar, busca specs relacionadas; carga\n  `references/spec-continuity.md` solo ante relación o ambigüedad relevante.\n- Califica tras alcance/impacto; separa esfuerzo y atención.\n  Factores en spec, no en mensajes rutinarios.\n- Valida alcance completo y selección pendiente; respeta elección compatible. Sin prefacios\n  ni preguntas repetidas. Elegir modo no aprueba gates.\n- Para 10/10+ ofrece entregas seguras; no selecciones `standard` salvo solicitud\n  explícita ni dividas garantías para prometer `lite`.\n- En cada transición, presenta resumen verificable y gate actual. Espera solo la\n  aprobación del gate SDD real; la calificación no crea un gate adicional.\n- Tras Implementación no hay gate intermedio: continúa con Verification y registra\n  evidencia antes de Gate 4.\n- Profundidad SDD y verificación son ejes independientes: selecciona la estrategia en\n  `references/testing.md`; una feature normal usa comprobaciones focalizadas y `direct`\n  no significa «sin pruebas».\n- Implementación y Fase 4: `references/integrity-gate.md` — no `[x]` sin artefacto o evidencia.\n- Design, implementación y cierre: `references/quality-bar.md` (capas, DI, persistencia, errores).\n- No justifiques abstracciones anticipadas para aumentar la cobertura: implementa lo\n  mínimo correcto y refactoriza solo ante duplicación, responsabilidades distintas o\n  reutilización real.\n- No inventes alcance, no expongas secretos y confirma acciones destructivas.\n- `lite` siempre es elegible como modo para trabajo no trivial. `standard` solo se\n  activa si el usuario lo solicita explícitamente; nunca por fallback.\n\n## Contexto selectivo\n\n1. Ejecuta primero el preflight técnico mínimo de `sdd-spec`; continúa sin aviso ni\n   espera por modelo, respetando decisiones y gates pendientes.\n2. Tras el preflight inicial, lee solo `AGENTS.md` y `.sdd/steering/` si existen.\n3. Antes de usar `.navigator/`, carga\n   `references/navigator-context.md` desde `sdd-spec`: aplica su preflight, usa\n   solo la capa mínima como contexto auxiliar y degrada sin bloquear ni escribir\n   índices cuando esté ausente o no sea confiable.\n4. Detecta el dominio de la petición y lee únicamente su `README.md` de contexto\n   (`.architecture/`, `.design/`, `.data/`, `.security/` o `.quality/`) cuando exista.\n5. Abre documentación adicional solo si el requisito lo necesita. Si falta el contexto\n   del dominio, aplica la política de selección de ejecutor sin imponer cambio de agente;\n   si el usuario continúa, documenta lo imprescindible dentro de la spec, sin crear\n   documentación del dominio.\n6. La skill define las fases, plantillas, trazabilidad y reglas de implementación.\n\n## Selección explícita de metodología\n\nEl usuario selecciona SDD al elegir este agente. Mantén el flujo SDD ante solicitudes\nvisuales, de datos/API, negocio o multicapa; no deriva automáticamente a `developer`.\nNo vuelvas a clasificar el agente ejecutor por dominio durante el flujo SDD.\nCarga las skills `data-api` y `ui-design` bajo demanda como conocimiento técnico,\nsin delegarles la ejecución ni cambiar los gates SDD.\nSolo el usuario puede cambiar de agente. Si solicita ese cambio, prepara contexto\nportable con decisiones, tareas, rutas y gates pendientes, y detén esta actividad\nhasta que seleccione explícitamente cómo continuar. No uses el contrato documental\n`## Handoff` para transferir implementación.",
+      "description": "Aplica SDD proporcional: direct (1–3), SDD-Tiny (4–8) y SDD-Lite (9+); standard legacy solo por solicitud explícita. Quick Plan es exclusivo de SDD-Lite; conserva gates, elección y pruebas.",
+      "temperature": 0.2,
+      "steps": 32,
+      "tools": {
+        "invalid": false,
+        "question": false,
+        "bash": true,
+        "read": true,
+        "glob": true,
+        "grep": true,
+        "edit": true,
+        "write": true,
+        "task": false,
+        "webfetch": false,
+        "todowrite": true,
+        "skill": true
+      }
+    },
+    "skill_debug_bytes": 65536,
+    "skill_debug_sha256": "4be9587408d8641ab6379a139d55fee73f29e70dfa86acad2f9e85782031bf88",
+    "profile_hashes": {
+      "AGENTS.md": "62f04685138991705dfe6354fd983dd62ebebf9eaf7eb6a085fbbdf2ca4f95fe",
+      "agents/code-review.md": "3f2eb7a5f6b464c54ff2692d660c6de50e104ea2868c8e707a67307072f8ef60",
+      "agents/developer.md": "9d77ba5d02eb92008f2db7f1dd0456b44bba53210a75ca5eb27b99826a7ce17a",
+      "agents/documentation-orchestrator.md": "3bcb1c8f89b2ecca79356f3f209ae7edcc3f06cc1d90dd7d8cd3a7b41945c7e6",
+      "agents/git-release-manager.md": "9a793565f492f3f091cb0b8ba483db8db29686588c30c2c6d8c687dc4e76aa1d",
+      "agents/sdd.md": "b24e3e4d8c2ec75be1d427459b4e8bd3f0e8cb07f60ccf3f7608b77984d090c5",
+      "opencode.json": "f1fc78b32f4faa909ffdce1e5f4ae51a6124b2acf41db8c98e7e1eb8d534014b",
+      "skills/architecture/SKILL.md": "c8ca3a168e56b704efc7dc4363922f7b58ff1c1ab8209be2ea9c12d68e107512",
+      "skills/architecture/references/templates.md": "a64ac8bdf521fdb79c4d15358e6392910e7fd881576c501037757d4edbf2eecf",
+      "skills/code-quality/SKILL.md": "9f060fec01e33d21897d59577f46d8f50da37f85c6f1d1c91d057042034167fa",
+      "skills/code-quality/references/templates.md": "3ea858f368065ad32fa7b1b075b14f8cf1bf3bc1ec20589b33e161ec27b3ca80",
+      "skills/data-api/SKILL.md": "dd25b2fa37d105e7df01641ea0a5d1eb5761d39a268ca0ab07ed4f8dc9b24a08",
+      "skills/data-api/references/templates.md": "9660a807dee4ccb7cffe913a7a3c5b15d2aeee87e4718676ef4c828d606d1b0c",
+      "skills/developer/SKILL.md": "c78ca3d523390a4743a82a003b2c964324e4d40164b9cf666de952a10d9ce615",
+      "skills/developer/references/plan.md": "931ec9d55adaed7248611a74496b851452110f0298c214fdfe48a70eaa89a322",
+      "skills/documentation-orchestrator/SKILL.md": "498f91b50e62d5b9b4c6c96821922b87ec33f8ab8bb3f114104b3cd6de1cfe9d",
+      "skills/documentation-orchestrator/references/handoff.md": "bf1de3ab1b47c6b118203990b231eee41a75e6a5c754f6a4a957d04dcc8dc84a",
+      "skills/documentation-orchestrator/references/project-context.md": "a49541af19bb03551e3de83f64e93b5e9e35017aba4c21a397cc3b90481d0deb",
+      "skills/documentation-orchestrator/references/workflows.md": "e0529ff1ef879b6a7f69f6e8bdbdd2cbe4fb46a03213e387ea4647c05562ce24",
+      "skills/git-commit/SKILL.md": "f819cb8ac891a5436b102c5e8dbbe803cec71d527d81c73c4489a7c0b73e6606",
+      "skills/project-navigator/SKILL.md": "0e68b799ca6ec0b5df1384bc151442a8f20e1687a89d710522f00a1f576cb5e0",
+      "skills/project-navigator/references/bootstrap.md": "960cd3bd1d254e69ceae43f399298c973f31e51bae5bf40e15d566f63a1374f5",
+      "skills/project-navigator/references/config.md": "71d4e9fcac17e2dfde50508d134ee53022097a282763c751e1dbaf2107511e82",
+      "skills/project-navigator/references/layers.md": "c7e86e5a9d1bac19cc68e583fbc32c93556ba535f0b2c278e33cb57906900091",
+      "skills/project-navigator/references/schemas.md": "f844ce123323e2147688f8c26cc537b4710d1a750f5d23aa63d7172966540756",
+      "skills/project-navigator/references/sources.md": "4ec6c54910b371388a4a900dc9868903c3b0119a4ef8945df60a8330be865994",
+      "skills/project-navigator/references/templates/ai-context.template.md": "cbe2a7379b59aefcddaab97fcfb912250162390e0c0925d7721f1967846db241",
+      "skills/release-management/SKILL.md": "d891eb4c007ffeb91d249d910d30e25f0dcc210076931503218fdfdababe0df3",
+      "skills/release-management/technologies/README.md": "a182cee07fd66d91eb949b7e1a46376c359ab62d17872ccbd32b045099f77408",
+      "skills/sdd-spec/SKILL.md": "d362723c5dc87e308feabd084e404a0c536bb950088bdacc76c293888da7de83",
+      "skills/sdd-spec/references/agent-routing.md": "594e938adfd292aaed5a9f69710dc9e4004e26230b757a2fa8f507cfb8e18c40",
+      "skills/sdd-spec/references/ears-reference.md": "6b146341ed25eb16f22618dd2687aba974a761f8dd3bad6d2878dfbd41a47c2f",
+      "skills/sdd-spec/references/feature-level.md": "8d2044160dd155d6d1ca109d386c184767ae20a8cc53a96330d0d4ae9fa731f5",
+      "skills/sdd-spec/references/integrity-gate.md": "7df9f79c785cbea6d90434044fee9eea279b6e27b36ee7355c19977be3ee362d",
+      "skills/sdd-spec/references/navigator-context.md": "a0ecf6990557b12e3d42b9be5b94fd09474df7d2ce414896dda480464f4e326f",
+      "skills/sdd-spec/references/quality-bar.md": "b726bee2600efe2958f9a64ef1e34206454f1bd949979a88ef2a6b3309e6a47a",
+      "skills/sdd-spec/references/scope-depth.md": "34dbcb18282f12952256c437089223d6f9981d91cdbadb6ad7a3f3700bef5206",
+      "skills/sdd-spec/references/spec-continuity.md": "43c341e03659a6e0d926dec09d842d4f478710eb13e02484cbe1899b2bc86024",
+      "skills/sdd-spec/references/templates.md": "434df22cdb86c081531a1752692e40f04897dbc4b04b914191cdc167807f699e",
+      "skills/sdd-spec/references/testing.md": "9d48fdd375ad38bdd0c72c143ec710d9d6963a61f027c37508b82b2b0be0c4f4",
+      "skills/sdd-spec/references/tiny.md": "a9259cb6c68653e62569cfbd3d5465d3ecd83172ee66c3e33f79a4e9e1689755",
+      "skills/sdd-spec/references/workspace-trust.md": "c247f20f6d95d96a0ea7bbdd3ea58704b313330a091f94de36d445a3c0989ac4",
+      "skills/security/SKILL.md": "509420fad2b421a288fc0f74b099b0eeb44d3d7fb4d8bda224fd440c07e0ff6d",
+      "skills/security/references/templates.md": "6b4998160c0a83d271327e6f3a5c74ecf688c9cef40dbe11f68bd3c48a81502e",
+      "skills/ui-design/SKILL.md": "9bb0ecba7dad14d1c49809a028322febf6164a13de304d382a4a75fad41ad28c",
+      "skills/ui-design/references/templates.md": "de2fadebc83e29f12c0ab4c1011e150f19d605c2594a57d4f2b4347e5c2b174a"
+    }
+  },
+  "B": {
+    "resolved": {
+      "name": "sdd",
+      "mode": "all",
+      "permission": [
+        {
+          "permission": "*",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "doom_loop",
+          "action": "ask",
+          "pattern": "*"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "*",
+          "action": "ask"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "/Users/pedrogomezvasquez/.local/share/opencode/tool-output/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/project-navigator/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/code-quality/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/documentation-orchestrator/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/architecture/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/git-commit/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/ui-design/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/sdd-spec/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/data-api/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/security/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/developer/*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/skills/release-management/*",
+          "action": "allow"
+        },
+        {
+          "permission": "question",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "plan_enter",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "plan_exit",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "read",
+          "pattern": "*",
+          "action": "allow"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.env",
+          "action": "ask"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.env.*",
+          "action": "ask"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.env.example",
+          "action": "allow"
+        },
+        {
+          "permission": "*",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "read",
+          "pattern": "*",
+          "action": "allow"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.env*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.pem",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.key",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.p12",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.pfx",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.jks",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.keystore",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.ssh/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.aws/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.config/gh/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*auth.json",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.npmrc",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.netrc",
+          "action": "deny"
+        },
+        {
+          "permission": "glob",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "grep",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "list",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "skill",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "todowrite",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "edit",
+          "pattern": "*",
+          "action": "allow"
+        },
+        {
+          "permission": "edit",
+          "pattern": "AGENTS.md",
+          "action": "deny"
+        },
+        {
+          "permission": "edit",
+          "pattern": "TASK.md",
+          "action": "deny"
+        },
+        {
+          "permission": "bash",
+          "pattern": "*",
+          "action": "deny"
+        },
+        {
+          "permission": "bash",
+          "pattern": "python3 -m unittest*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "python3 -m py_compile*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "git status*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "git diff*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "*",
+          "action": "deny"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/*",
+          "action": "allow"
+        },
+        {
+          "permission": "task",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "question",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "webfetch",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "websearch",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "*",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "read",
+          "pattern": "*",
+          "action": "allow"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.env*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.pem",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.key",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.p12",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.pfx",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.jks",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*.keystore",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.ssh/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.aws/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.config/gh/*",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*auth.json",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.npmrc",
+          "action": "deny"
+        },
+        {
+          "permission": "read",
+          "pattern": "*/.netrc",
+          "action": "deny"
+        },
+        {
+          "permission": "glob",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "grep",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "list",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "skill",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "todowrite",
+          "action": "allow",
+          "pattern": "*"
+        },
+        {
+          "permission": "edit",
+          "pattern": "*",
+          "action": "allow"
+        },
+        {
+          "permission": "edit",
+          "pattern": "AGENTS.md",
+          "action": "deny"
+        },
+        {
+          "permission": "edit",
+          "pattern": "TASK.md",
+          "action": "deny"
+        },
+        {
+          "permission": "bash",
+          "pattern": "*",
+          "action": "deny"
+        },
+        {
+          "permission": "bash",
+          "pattern": "python3 -m unittest*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "python3 -m py_compile*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "git status*",
+          "action": "allow"
+        },
+        {
+          "permission": "bash",
+          "pattern": "git diff*",
+          "action": "allow"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "*",
+          "action": "deny"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "<EXPERIMENT_ROOT>/profiles/B/opencode/*",
+          "action": "allow"
+        },
+        {
+          "permission": "task",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "question",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "webfetch",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "websearch",
+          "action": "deny",
+          "pattern": "*"
+        },
+        {
+          "permission": "external_directory",
+          "pattern": "/Users/pedrogomezvasquez/.local/share/opencode/tool-output/*",
+          "action": "allow"
+        }
+      ],
+      "options": {},
+      "native": false,
+      "prompt": "Carga sdd-spec antes de actuar y sigue su flujo ODD adaptado. El nombre del agente es solo una interfaz del experimento. No apliques el flujo SDD anterior.",
+      "description": "Ejecuta ODD adaptado al MAS experimental.",
+      "temperature": 0.2,
+      "steps": 32,
+      "tools": {
+        "invalid": false,
+        "question": false,
+        "bash": true,
+        "read": true,
+        "glob": true,
+        "grep": true,
+        "edit": true,
+        "write": true,
+        "task": false,
+        "webfetch": false,
+        "todowrite": true,
+        "skill": true
+      }
+    },
+    "skill_debug_bytes": 65536,
+    "skill_debug_sha256": "48c64458ed2d95788fadc4870b9de1b17bf8a5eff9fe830596ca607d96531c02",
+    "profile_hashes": {
+      "AGENTS.md": "62f04685138991705dfe6354fd983dd62ebebf9eaf7eb6a085fbbdf2ca4f95fe",
+      "agents/code-review.md": "3f2eb7a5f6b464c54ff2692d660c6de50e104ea2868c8e707a67307072f8ef60",
+      "agents/developer.md": "9d77ba5d02eb92008f2db7f1dd0456b44bba53210a75ca5eb27b99826a7ce17a",
+      "agents/documentation-orchestrator.md": "3bcb1c8f89b2ecca79356f3f209ae7edcc3f06cc1d90dd7d8cd3a7b41945c7e6",
+      "agents/git-release-manager.md": "9a793565f492f3f091cb0b8ba483db8db29686588c30c2c6d8c687dc4e76aa1d",
+      "agents/sdd.md": "0ce7947fec4f47d1afb9868aa4418cfbaa3b8746d104023b1f603f110290c5e8",
+      "opencode.json": "3879caa99e4fa742dad8996c4277a795191bb13cbc8a1224a7bf603b589e5820",
+      "skills/architecture/SKILL.md": "c8ca3a168e56b704efc7dc4363922f7b58ff1c1ab8209be2ea9c12d68e107512",
+      "skills/architecture/references/templates.md": "a64ac8bdf521fdb79c4d15358e6392910e7fd881576c501037757d4edbf2eecf",
+      "skills/code-quality/SKILL.md": "9f060fec01e33d21897d59577f46d8f50da37f85c6f1d1c91d057042034167fa",
+      "skills/code-quality/references/templates.md": "3ea858f368065ad32fa7b1b075b14f8cf1bf3bc1ec20589b33e161ec27b3ca80",
+      "skills/data-api/SKILL.md": "dd25b2fa37d105e7df01641ea0a5d1eb5761d39a268ca0ab07ed4f8dc9b24a08",
+      "skills/data-api/references/templates.md": "9660a807dee4ccb7cffe913a7a3c5b15d2aeee87e4718676ef4c828d606d1b0c",
+      "skills/developer/SKILL.md": "c78ca3d523390a4743a82a003b2c964324e4d40164b9cf666de952a10d9ce615",
+      "skills/developer/references/plan.md": "931ec9d55adaed7248611a74496b851452110f0298c214fdfe48a70eaa89a322",
+      "skills/documentation-orchestrator/SKILL.md": "498f91b50e62d5b9b4c6c96821922b87ec33f8ab8bb3f114104b3cd6de1cfe9d",
+      "skills/documentation-orchestrator/references/handoff.md": "bf1de3ab1b47c6b118203990b231eee41a75e6a5c754f6a4a957d04dcc8dc84a",
+      "skills/documentation-orchestrator/references/project-context.md": "a49541af19bb03551e3de83f64e93b5e9e35017aba4c21a397cc3b90481d0deb",
+      "skills/documentation-orchestrator/references/workflows.md": "e0529ff1ef879b6a7f69f6e8bdbdd2cbe4fb46a03213e387ea4647c05562ce24",
+      "skills/git-commit/SKILL.md": "f819cb8ac891a5436b102c5e8dbbe803cec71d527d81c73c4489a7c0b73e6606",
+      "skills/project-navigator/SKILL.md": "0e68b799ca6ec0b5df1384bc151442a8f20e1687a89d710522f00a1f576cb5e0",
+      "skills/project-navigator/references/bootstrap.md": "960cd3bd1d254e69ceae43f399298c973f31e51bae5bf40e15d566f63a1374f5",
+      "skills/project-navigator/references/config.md": "71d4e9fcac17e2dfde50508d134ee53022097a282763c751e1dbaf2107511e82",
+      "skills/project-navigator/references/layers.md": "c7e86e5a9d1bac19cc68e583fbc32c93556ba535f0b2c278e33cb57906900091",
+      "skills/project-navigator/references/schemas.md": "f844ce123323e2147688f8c26cc537b4710d1a750f5d23aa63d7172966540756",
+      "skills/project-navigator/references/sources.md": "4ec6c54910b371388a4a900dc9868903c3b0119a4ef8945df60a8330be865994",
+      "skills/project-navigator/references/templates/ai-context.template.md": "cbe2a7379b59aefcddaab97fcfb912250162390e0c0925d7721f1967846db241",
+      "skills/release-management/SKILL.md": "d891eb4c007ffeb91d249d910d30e25f0dcc210076931503218fdfdababe0df3",
+      "skills/release-management/technologies/README.md": "a182cee07fd66d91eb949b7e1a46376c359ab62d17872ccbd32b045099f77408",
+      "skills/sdd-spec/SKILL.md": "0584ce1879d1cacf0edb511aa6165596e8d7212779d4ebf4ae598f5d51273c1b",
+      "skills/security/SKILL.md": "509420fad2b421a288fc0f74b099b0eeb44d3d7fb4d8bda224fd440c07e0ff6d",
+      "skills/security/references/templates.md": "6b4998160c0a83d271327e6f3a5c74ecf688c9cef40dbe11f68bd3c48a81502e",
+      "skills/ui-design/SKILL.md": "9bb0ecba7dad14d1c49809a028322febf6164a13de304d382a4a75fad41ad28c",
+      "skills/ui-design/references/templates.md": "de2fadebc83e29f12c0ab4c1011e150f19d605c2594a57d4f2b4347e5c2b174a"
+    }
+  }
+}

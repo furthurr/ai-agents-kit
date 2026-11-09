@@ -1,0 +1,696 @@
+{
+  "model": "github-copilot/gpt-6-luna",
+  "task": "TASK-2 Alta",
+  "rows": [
+    {
+      "arm": "build_sin_mas",
+      "status": "finished",
+      "tokens": {
+        "input": 43059,
+        "output": 8696,
+        "reasoning": 12129,
+        "cache_read": 673711,
+        "cache_write": 0,
+        "total": 725466
+      },
+      "metrics_complete": true,
+      "seconds": 262.163,
+      "steps": 22,
+      "tool_counts": {
+        "todowrite": 4,
+        "glob": 1,
+        "read": 14,
+        "grep": 1,
+        "apply_patch": 6,
+        "bash": 11
+      },
+      "skills_invoked": [],
+      "skills_loaded_by_content": [],
+      "files_read": [
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/locallibrary/settings.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/tests/test_views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/templates/catalog/book_detail.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/locallibrary/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/apps.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/migrations/0029_alter_genre_options_alter_language_options.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/templates/base_generic.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/templates/catalog/book_detail.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_sin_mas/catalog/migrations/0030_reservation.py"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 58,
+      "joint_pass": false,
+      "changed": [
+        "catalog/migrations/0030_reservation.py",
+        "catalog/models.py",
+        "catalog/templates/catalog/book_detail.html",
+        "catalog/tests/test_reservations.py",
+        "catalog/urls.py",
+        "catalog/views.py",
+        "db.sqlite3"
+      ],
+      "final_text": "Voy a revisar la estructura de `catalog`, sus rutas, vistas, modelos y pruebas; después implementaré la persistencia, los endpoints y la interfaz, añadiré una migración y ejecutaré las comprobaciones indicadas.\nEl modelo ya usa UUID para las copias y el proyecto tiene mensajes flash habilitados. Implementaré la reserva mediante un `UPDATE` condicional dentro de una transacción, con unicidad de clave por usuario y reintentos acotados para bloqueos de SQLite; así la copia y el registro se confirman juntos.\nLa migración `0030_reservation` ya está generada, dejando intactas las anteriores. Ahora estoy verificando los contratos del API y la UI; también revisaré el resultado de la suite y del chequeo de Django antes de cerrar.\nLas 43 pruebas originales se ejecutaron y `manage.py check` no detectó problemas. Añadiré pruebas focalizadas para la nueva API y la ruta web, para comprobar respuesta, replay, conflictos y protecciones sin alterar las pruebas existentes.\nLas pruebas nuevas también pasan: ya hay cobertura para autenticación, claves inválidas, reserva/replay, reutilización conflictiva, copia no disponible o inexistente, método HTTP, CSRF y confirmación web. Hice un ajuste adicional para que la página detalle entregue las claves de formulario por copia y evitar una etiqueta de template inexistente.\nImplementé el flujo completo de reservas:\n\n- Añadí `Reservation` con clave única por usuario y la migración `0030_reservation`.\n- Incorporé el endpoint API con respuestas JSON para autenticación, validación, disponibilidad e idempotencia. La reserva usa una actualización condicional y reintentos ante bloqueos de SQLite.\n- Añadí el formulario web con CSRF, clave de idempotencia y confirmación visible.\n- Agregué pruebas para la API y la interfaz, sin modificar las pruebas existentes.\n\nVerificación: **49 pruebas de `catalog` pasan**, `manage.py check` no detecta problemas y `makemigrations --check --dry-run` no encuentra cambios pendientes.",
+      "new_test_methods": 6,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": true,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "primary_acceptance": false,
+      "extended_contract_pass": false,
+      "task": "high",
+      "joint_reviewed": {
+        "passed": false,
+        "executed": 58,
+        "discovered": 58,
+        "failure_count": 1,
+        "error_count": 0,
+        "failure_names": [
+          "test_web_form_has_csrf_and_idempotency_key_and_confirms (catalog.tests.test_reservations.ReservationApiTest.test_web_form_has_csrf_and_idempotency_key_and_confirms)"
+        ],
+        "error_names": []
+      },
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 2,
+        "error_count": 0,
+        "failure_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)",
+          "test_ui_real_csrf_and_visible_confirmation (bench_oracles.test_edges.ReservationEdges.test_ui_real_csrf_and_visible_confirmation)"
+        ],
+        "error_names": []
+      },
+      "reviewed_outcome": "No aceptado: bordes",
+      "no_product_delivery": false
+    },
+    {
+      "arm": "v2_reforzado",
+      "status": "finished",
+      "tokens": {
+        "input": 70958,
+        "output": 11467,
+        "reasoning": 13149,
+        "cache_read": 1204033,
+        "cache_write": 0,
+        "total": 1286458
+      },
+      "metrics_complete": true,
+      "seconds": 301.894,
+      "steps": 28,
+      "tool_counts": {
+        "skill": 3,
+        "todowrite": 4,
+        "read": 23,
+        "glob": 2,
+        "apply_patch": 8,
+        "bash": 18
+      },
+      "skills_invoked": [
+        "developer-v2",
+        "data-api",
+        "ui-design"
+      ],
+      "skills_loaded_by_content": [
+        "data-api",
+        "developer-v2",
+        "ui-design"
+      ],
+      "files_read": [
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/.navigator/ai-context.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/.architecture/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/.data/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/.quality/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/.design/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/.security/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/locallibrary/settings.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/migrations/0029_alter_genre_options_alter_language_options.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/tests/test_views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/templates/catalog/book_detail.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/locallibrary/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/apps.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/templates/base_generic.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/tests/test_models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/migrations/0030_reservation.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/.gitignore",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/tests/test_reservations.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2_reforzado/catalog/templates/catalog/book_detail.html"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 59,
+      "joint_pass": false,
+      "changed": [
+        "catalog/migrations/0030_reservation.py",
+        "catalog/models.py",
+        "catalog/templates/catalog/book_detail.html",
+        "catalog/tests/test_reservations.py",
+        "catalog/urls.py",
+        "catalog/views.py",
+        "db.sqlite3"
+      ],
+      "final_text": "Implementé el flujo de reserva con el modelo persistente `Reservation`, una migración nueva, los endpoints API y web, y el formulario con CSRF, clave de idempotencia y confirmación visible. La reserva usa una actualización condicional y reintentos acotados ante bloqueos de SQLite.\n\nVerificación: **50 pruebas de `catalog` pasan**, incluida una prueba concurrente con dos usuarios; `manage.py check` y `makemigrations --check --dry-run` también pasan. La primera ejecución concurrente detectó una lectura fuera del bloque de reintento; se corrigió y la suite completa pasó después.\n\nNo pude revisar el diff de Git: este workspace no contiene un directorio `.git`. La documentación `.data/README.md` y `.design/README.md` no se actualizó, así que ahora no refleja el nuevo modelo ni el formulario. Si quieres, puedo preparar esa actualización documental aparte.",
+      "new_test_methods": 7,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": true,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "primary_acceptance": false,
+      "extended_contract_pass": false,
+      "task": "high",
+      "joint_reviewed": {
+        "passed": false,
+        "executed": 59,
+        "discovered": 59,
+        "failure_count": 0,
+        "error_count": 4,
+        "failure_names": [],
+        "error_names": [
+          "test_reserves_and_replays_after_database_connection_is_reopened (catalog.tests.test_reservations.ReservationApiTest.test_reserves_and_replays_after_database_connection_is_reopened)",
+          "test_reused_key_for_another_instance_conflicts_without_mutation (catalog.tests.test_reservations.ReservationApiTest.test_reused_key_for_another_instance_conflicts_without_mutation)",
+          "test_same_key_is_independent_between_users (catalog.tests.test_reservations.ReservationApiTest.test_same_key_is_independent_between_users)",
+          "test_unavailable_and_not_found_do_not_create_reservations (catalog.tests.test_reservations.ReservationApiTest.test_unavailable_and_not_found_do_not_create_reservations)"
+        ]
+      },
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 1,
+        "error_count": 0,
+        "failure_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)"
+        ],
+        "error_names": []
+      },
+      "reviewed_outcome": "No aceptado: bordes",
+      "no_product_delivery": false
+    },
+    {
+      "arm": "developer_actual",
+      "status": "finished",
+      "tokens": {
+        "input": 79139,
+        "output": 13557,
+        "reasoning": 14199,
+        "cache_read": 1876020,
+        "cache_write": 0,
+        "total": 1968716
+      },
+      "metrics_complete": true,
+      "seconds": 304.169,
+      "steps": 36,
+      "tool_counts": {
+        "skill": 3,
+        "todowrite": 5,
+        "read": 19,
+        "glob": 3,
+        "bash": 27,
+        "apply_patch": 10
+      },
+      "skills_invoked": [
+        "developer",
+        "ui-design",
+        "data-api"
+      ],
+      "skills_loaded_by_content": [
+        "data-api",
+        "developer",
+        "ui-design"
+      ],
+      "files_read": [
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/AGENTS.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/.architecture/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/.navigator/ai-context.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/.data/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/templates/catalog/book_detail.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/locallibrary/settings.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/locallibrary/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/tests/test_views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/tests/test_models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/migrations/0029_alter_genre_options_alter_language_options.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/templates/base_generic.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/migrations/0030_reservation.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/.gitignore",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/tests/test_reservations.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/developer_actual/catalog/views.py"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": true,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 60,
+      "joint_pass": true,
+      "changed": [
+        "catalog/migrations/0030_reservation.py",
+        "catalog/models.py",
+        "catalog/templates/catalog/book_detail.html",
+        "catalog/tests/test_reservations.py",
+        "catalog/urls.py",
+        "catalog/views.py",
+        "db.sqlite3"
+      ],
+      "final_text": "Implementé el flujo de reserva solicitado.\n\n- Añadí `Reservation` y la migración `catalog/migrations/0030_reservation.py`, con unicidad por usuario y clave.\n- Incorporé el endpoint JSON con autenticación, validación de clave, replay idempotente y conflictos con los códigos y payloads acordados.\n- La reserva usa una actualización condicional del ejemplar y reintentos acotados para errores de bloqueo SQLite.\n- Añadí el formulario web con CSRF, clave por copia, login requerido y mensaje de confirmación.\n- Agregué pruebas para contratos, persistencia, conflictos, interfaz y dos solicitudes concurrentes.\n\n**Verificación:** `python manage.py test catalog` pasó (51 tests); `python manage.py check` no detectó problemas; `python manage.py makemigrations --check --dry-run` indicó que no hay cambios de migración pendientes. Preparé estáticos con `collectstatic --noinput`.\n\nEl workspace no es un repositorio Git, así que no pude revisar el diff mediante Git. La documentación canónica `.data/README.md` aún describe el modelo anterior y no menciona `Reservation` ni el nuevo endpoint. ⚠️ ¿Quieres actualizar la documentación con lo realizado?",
+      "new_test_methods": 8,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": true,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "primary_acceptance": true,
+      "extended_contract_pass": false,
+      "task": "high",
+      "joint_reviewed": {
+        "passed": true,
+        "executed": 60,
+        "discovered": 60,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 1,
+        "error_count": 0,
+        "failure_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)"
+        ],
+        "error_names": []
+      },
+      "reviewed_outcome": "No aceptado: bordes",
+      "no_product_delivery": false
+    },
+    {
+      "arm": "build_mas",
+      "status": "finished",
+      "tokens": {
+        "input": 58243,
+        "output": 11253,
+        "reasoning": 14086,
+        "cache_read": 1530729,
+        "cache_write": 0,
+        "total": 1600225
+      },
+      "metrics_complete": true,
+      "seconds": 311.863,
+      "steps": 37,
+      "tool_counts": {
+        "todowrite": 4,
+        "glob": 2,
+        "read": 18,
+        "skill": 1,
+        "apply_patch": 17,
+        "bash": 11,
+        "grep": 1
+      },
+      "skills_invoked": [
+        "data-api"
+      ],
+      "skills_loaded_by_content": [
+        "data-api"
+      ],
+      "files_read": [
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/AGENTS.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/.architecture/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/.navigator/ai-context.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/.security/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/.data/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/.quality/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/locallibrary/settings.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/locallibrary/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/docs/lab-context.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/catalog/tests/test_views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/catalog/migrations/0029_alter_genre_options_alter_language_options.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/catalog/templates/catalog/book_detail.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/catalog/templates/base_generic.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/catalog/migrations/0030_reservation.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/build_mas/catalog/templates/base_generic.html"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": true,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 58,
+      "joint_pass": true,
+      "changed": [
+        "catalog/migrations/0030_reservation.py",
+        "catalog/models.py",
+        "catalog/templates/base_generic.html",
+        "catalog/templates/catalog/book_detail.html",
+        "catalog/tests/test_reservations.py",
+        "catalog/urls.py",
+        "catalog/views.py",
+        "db.sqlite3"
+      ],
+      "final_text": "Voy a revisar los patrones actuales de modelos, vistas, rutas y plantillas; después implementaré la persistencia y los dos flujos, y ejecutaré las comprobaciones indicadas.\nEl modelo ya usa UUID para las copias y expone el estado `Reserved`. Separaré la respuesta JSON del endpoint API y el formulario HTML, compartiendo la operación transaccional: una actualización condicional de `a` a `r`, con reintentos acotados de bloqueos SQLite y unicidad de clave por usuario.\nLa migración y el formulario ya están añadidos. También incorporé pruebas para los contratos JSON, el replay persistido, la vista HTML y dos peticiones concurrentes con conexiones separadas. Voy a ejecutar primero estas pruebas para detectar problemas de implementación antes de correr la suite completa.\nLas pruebas iniciales encontraron dos detalles de entorno: la plantilla requiere preparar el manifest de estáticos, y el ensayo concurrente usaba escrituras de sesión simultáneas que interferían con el propio SQLite de pruebas. Voy a aislar la concurrencia del mecanismo de sesión y ampliar el reintento para cubrir también lecturas ocupadas, no solo el `UPDATE`.\nEl flujo nuevo ya pasa sus seis pruebas, incluida la carrera concurrente sobre SQLite. La confirmación del formulario se muestra al regresar al detalle; ahora ejecuto la suite completa heredada junto con `check` para verificar compatibilidad y configuración del proyecto.\nImplementé el flujo completo de reservas:\n\n- Añadí `Reservation` con clave única por usuario y la migración `0030_reservation.py`.\n- Incorporé el endpoint JSON y el formulario autenticado con CSRF e idempotencia. La reserva usa una actualización condicional y reintentos acotados ante bloqueos de SQLite.\n- Añadí pruebas para validaciones, replay, conflictos, formulario y concurrencia.\n\nVerificación: **49 pruebas pasan** (`catalog`), `manage.py check` no detecta problemas y `makemigrations --check --dry-run` no encuentra cambios pendientes. También preparé los estáticos.",
+      "new_test_methods": 6,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": true,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "primary_acceptance": true,
+      "extended_contract_pass": false,
+      "task": "high",
+      "joint_reviewed": {
+        "passed": true,
+        "executed": 58,
+        "discovered": 58,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 2,
+        "error_count": 0,
+        "failure_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)",
+          "test_ui_real_csrf_and_visible_confirmation (bench_oracles.test_edges.ReservationEdges.test_ui_real_csrf_and_visible_confirmation)"
+        ],
+        "error_names": []
+      },
+      "reviewed_outcome": "No aceptado: bordes",
+      "no_product_delivery": false
+    },
+    {
+      "arm": "v2",
+      "status": "finished",
+      "tokens": {
+        "input": 60236,
+        "output": 10861,
+        "reasoning": 12255,
+        "cache_read": 1294720,
+        "cache_write": 0,
+        "total": 1365817
+      },
+      "metrics_complete": true,
+      "seconds": 889.118,
+      "steps": 31,
+      "tool_counts": {
+        "skill": 3,
+        "todowrite": 4,
+        "glob": 3,
+        "read": 18,
+        "grep": 1,
+        "bash": 16,
+        "apply_patch": 10
+      },
+      "skills_invoked": [
+        "developer-v2",
+        "data-api",
+        "ui-design"
+      ],
+      "skills_loaded_by_content": [
+        "data-api",
+        "developer-v2",
+        "ui-design"
+      ],
+      "files_read": [
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/AGENTS.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/.architecture/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/.navigator/ai-context.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/.data/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/.design/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/.quality/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/docs/lab-context.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/locallibrary/settings.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/catalog/templates/base_generic.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/catalog/templates/catalog/book_detail.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/catalog/tests/test_views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/catalog/migrations/0029_alter_genre_options_alter_language_options.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/catalog/tests/test_models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/high/runs/v2/catalog/migrations/0030_reservation.py"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": true,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 58,
+      "joint_pass": true,
+      "changed": [
+        "catalog/migrations/0030_reservation.py",
+        "catalog/models.py",
+        "catalog/templates/catalog/book_detail.html",
+        "catalog/tests/test_reservations.py",
+        "catalog/urls.py",
+        "catalog/views.py",
+        "db.sqlite3"
+      ],
+      "final_text": "Implementé el flujo de reservas con persistencia e idempotencia:\n\n- Añadí `Reservation` y la migración `0030_reservation.py`, con unicidad por usuario y clave.\n- Implementé el endpoint JSON y la reserva web con autenticación, validación de clave, replay y conflicto de idempotencia.\n- La actualización condicional del estado y los reintentos ante bloqueos de SQLite evitan conceder dos reservas para la misma copia.\n- Añadí el formulario CSRF con clave generada y confirmación visible en el detalle del libro.\n- Incorporé pruebas para los contratos, la persistencia, la interfaz y una carrera concurrente.\n\n**Verificación:** `manage.py test catalog` pasó (49 pruebas: las 43 existentes y 6 nuevas); `manage.py check` y `makemigrations --check --dry-run` también pasaron. Preparé estáticos con `collectstatic --noinput`.\n\nLa documentación `.data/README.md` todavía describe el contrato previo y no refleja las reservas. No la actualicé, conforme al alcance; ¿quieres solicitar su actualización mediante `documentation-orchestrator`?",
+      "new_test_methods": 6,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": true,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "primary_acceptance": true,
+      "extended_contract_pass": false,
+      "task": "high",
+      "joint_reviewed": {
+        "passed": true,
+        "executed": 58,
+        "discovered": 58,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 1,
+        "error_count": 0,
+        "failure_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)"
+        ],
+        "error_names": []
+      },
+      "reviewed_outcome": "No aceptado: bordes",
+      "no_product_delivery": false
+    },
+    {
+      "arm": "sdd_trial",
+      "status": "awaiting_operator_review",
+      "tokens": {
+        "input": 39683,
+        "output": 2103,
+        "reasoning": 3055,
+        "cache_read": 76603,
+        "cache_write": 0,
+        "total": 118389
+      },
+      "metrics_complete": true,
+      "seconds": 67.211,
+      "steps": 6,
+      "tool_counts": {
+        "skill": 1,
+        "read": 12,
+        "glob": 4
+      },
+      "skills_invoked": [
+        "sdd-spec"
+      ],
+      "skills_loaded_by_content": [
+        "sdd-spec"
+      ],
+      "files_read": [
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/profiles/sdd_trial/skills/sdd-spec/references/workspace-trust.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/profiles/sdd_trial/skills/sdd-spec/references/scope-depth.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/profiles/sdd_trial/skills/sdd-spec/references/feature-level.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/.data/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/.security/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/.design/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/.quality/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/catalog/tests/test_views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/catalog/templates/catalog/book_detail.html"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 52,
+      "joint_pass": false,
+      "changed": [],
+      "final_text": "Preflight: es una **feature** con alcance declarado y autorización para implementar; la siguiente fase SDD es definir/validar el plan. Queda pendiente seleccionar la profundidad SDD (la autorización de implementación no aprueba los gates). Ahora aplicaré el flujo y la política de confianza de `sdd-spec` antes de inspeccionar el workspace.\n## Alcance definido\n\n**Objetivo y resultado esperado:** permitir que usuarios autenticados reserven ejemplares disponibles, con reserva persistente e idempotencia por usuario, y ofrecer el mismo flujo desde la API y la interfaz web.\n\n**Comportamientos y criterios de aceptación:**\n\n1. **Persistencia de reservas.** El sistema deberá exponer `Reservation` en `catalog.models`, con `user` referido a `settings.AUTH_USER_MODEL`, `instance` referido a `BookInstance`, `key` de hasta 100 caracteres y `created_at` automático. La combinación `[user, key]` deberá ser única en la base de datos. Se añadirá una migración nueva, sin reescribir migraciones históricas.\n\n2. **API de reserva.** En `POST /catalog/api/bookinstance/<uuid:pk>/reserve/`, el sistema deberá aceptar solo POST. Una petición a otro método responderá 405. Para solicitudes POST, una persona no autenticada recibirá 401 con `{\"error\":\"unauthorized\"}`. La clave `Idempotency-Key` —también disponible como `HTTP_IDEMPOTENCY_KEY`— deberá existir, no quedar vacía tras `strip` y tener como máximo 100 caracteres; si no, se responderá 400 con `{\"error\":\"invalid_key\"}`. Si el ejemplar no existe, se responderá 404 con `{\"error\":\"not_found\"}`.\n\n3. **Reserva y replay.** Para la misma persona y clave:\n   - Si la clave ya corresponde al mismo ejemplar, el sistema responderá 201 con `{\"instance_id\": str(pk), \"user_id\": request.user.id, \"status\": \"r\"}`, sin crear otra reserva ni alterar el estado.\n   - Si la clave ya corresponde a otro ejemplar, responderá 409 con `{\"error\":\"idempotency_conflict\"}`.\n   - Si no existe reserva previa para esa clave y el ejemplar no tiene `status='a'`, responderá 409 con `{\"error\":\"unavailable\"}`.\n   - Si está disponible, el sistema deberá cambiar su estado a `'r'`, asignar el usuario actual como `borrower`, persistir la reserva y responder 201 con el mismo formato de éxito.\n\n   La reserva persistida deberá permitir que un replay posterior, incluso en otra conexión o sesión HTTP, dé el mismo resultado. El replay de una reserva existente tendrá precedencia sobre comprobar la disponibilidad actual del ejemplar.\n\n4. **Concurrencia e integridad.** Bajo SQLite en disco, solicitudes concurrentes de distintos usuarios por un mismo ejemplar disponible deberán producir exactamente una respuesta 201 y una respuesta 409 con `{\"error\":\"unavailable\"}`; no deberán devolver 500 por bloqueo de base de datos. Las respuestas fallidas 400, 401, 404, 405 y 409 no deberán cambiar ejemplares ni dejar reservas espurias. La verificación deberá ejercitar concurrencia real con conexiones independientes, no ocultar el caso crítico con mocks.\n\n5. **Interfaz web.** En `/catalog/book/<int:pk>`, cada copia disponible deberá mostrar un formulario con CSRF, un campo oculto `idempotency_key` generado para evitar envíos duplicados accidentales y destino `/catalog/book/<uuid:instance_pk>/reserve/`. El POST web requerirá autenticación y redirigirá a login a usuarios anónimos. Una reserva exitosa mostrará una confirmación visible, por mensaje y redirección al detalle o mediante otra presentación equivalente.\n\n**Restricciones, exclusiones y supuestos:** conservar intactos los 43 tests originales y el comando de renovación para bibliotecarios; no alterar configuración de despliegue, añadir dependencias, ampliar el alcance, ni hacer bootstrap/sync documental, delegación o publicación. No se incluyen cancelar reservas ni otros cambios de negocio. Para solicitudes POST, asumiré este orden de validación: autenticación, clave, existencia del ejemplar y, después, replay/conflicto/disponibilidad. El flujo web usará su campo oculto de clave y no cambia el contrato de clave de la API.\n\n**Esfuerzo previsto del LLM: 9 🟠**  \n**Atención especial:** concurrencia real de SQLite, idempotencia persistente y pruebas de regresión entre API y UI.  \n**Profundidad recomendada: SDD-Lite**, por el contrato API, la migración y el cruce de capas. La autorización para implementar no selecciona modo ni aprueba gates.\n\n¿Confirmas este alcance completo y eliges SDD-Lite para continuar? No escribiré artefactos ni código hasta resolver esa selección y validación.",
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": false,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "primary_acceptance": false,
+      "extended_contract_pass": false,
+      "task": "high",
+      "joint_reviewed": {
+        "passed": false,
+        "executed": 52,
+        "discovered": 52,
+        "failure_count": 9,
+        "error_count": 0,
+        "failure_names": [
+          "test_api_auth_required (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_auth_required)",
+          "test_api_key_validation (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_key_validation)",
+          "test_api_method_get_not_allowed (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_method_get_not_allowed)",
+          "test_api_not_found (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_not_found)",
+          "test_api_successful_reserve_and_replay_idempotency (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_successful_reserve_and_replay_idempotency)",
+          "test_api_unavailable_copy (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_unavailable_copy)",
+          "test_reservation_model_fields_and_uniqueness (bench_oracles.test_high.Task2OracleModelAndApiTest.test_reservation_model_fields_and_uniqueness)",
+          "test_ui_reserve_page (bench_oracles.test_high.Task2OracleModelAndApiTest.test_ui_reserve_page)",
+          "test_concurrency_barrier_three_trials (bench_oracles.test_high.Task2OracleConcurrencyRealDbTest.test_concurrency_barrier_three_trials)"
+        ],
+        "error_names": []
+      },
+      "oracle_reviewed": {
+        "passed": false,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 9,
+        "error_count": 0,
+        "failure_names": [
+          "test_api_auth_required (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_auth_required)",
+          "test_api_key_validation (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_key_validation)",
+          "test_api_method_get_not_allowed (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_method_get_not_allowed)",
+          "test_api_not_found (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_not_found)",
+          "test_api_successful_reserve_and_replay_idempotency (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_successful_reserve_and_replay_idempotency)",
+          "test_api_unavailable_copy (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_unavailable_copy)",
+          "test_reservation_model_fields_and_uniqueness (bench_oracles.test_high.Task2OracleModelAndApiTest.test_reservation_model_fields_and_uniqueness)",
+          "test_ui_reserve_page (bench_oracles.test_high.Task2OracleModelAndApiTest.test_ui_reserve_page)",
+          "test_concurrency_barrier_three_trials (bench_oracles.test_high.Task2OracleConcurrencyRealDbTest.test_concurrency_barrier_three_trials)"
+        ],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 0,
+        "error_count": 5,
+        "failure_names": [],
+        "error_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)",
+          "test_anonymous_ui_cannot_reserve (bench_oracles.test_edges.ReservationEdges.test_anonymous_ui_cannot_reserve)",
+          "test_api_all_other_methods_405 (bench_oracles.test_edges.ReservationEdges.test_api_all_other_methods_405)",
+          "test_database_unique_user_key (bench_oracles.test_edges.ReservationEdges.test_database_unique_user_key)",
+          "test_ui_real_csrf_and_visible_confirmation (bench_oracles.test_edges.ReservationEdges.test_ui_real_csrf_and_visible_confirmation)"
+        ]
+      },
+      "reviewed_outcome": "Pausa real; sin entrega",
+      "no_product_delivery": true
+    }
+  ],
+  "totals": {
+    "tokens": 7065071,
+    "seconds": 2136.418,
+    "steps": 160,
+    "invocations": 6
+  },
+  "accepted_deliveries": 0,
+  "archive_verification": {
+    "high": {
+      "members_verified_sha256": 838,
+      "archive_sha256": "42af50d8395e1e8a544d6294d73195aff2ce3c5793fbe5c90c7f3018553e28ac"
+    },
+    "sdd-high": {
+      "members_verified_sha256": 367,
+      "archive_sha256": "5eef31378a0f2ed94a3fc74277210363dc1691948f4ec3378a859d4a414ca0d3"
+    }
+  },
+  "post_analysis_inference_calls": 0,
+  "procedure_fidelity_certified": false
+}

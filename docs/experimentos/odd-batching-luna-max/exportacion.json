@@ -1,0 +1,12 @@
+{
+  "files": {
+    "evidencia/offline-preflight.json": "33ce5a8bd747e3a47ecbd44ed2c52d4447212f1da977af464d861def2eb64205",
+    "evidencia/preparation-verifications.json": "bd20e32338c2ab2c3f5cba7e0aec28890f04e6f0a6c6e51bc04f3914459feb58",
+    "evidencia/diagnostico-http.json": "4b17ae47857ae4339e7906d91b3c1ed201d243f2f521411034ca16a6a40b85a5",
+    "evidencia/diagnostico-http-corregido.json": "52826e236f973efcc0de6f7097a92ec96e60ca931a8511853dc9d6e315242138",
+    "evidencia/batch-start.json": "6c8264c144b6045aa37e246a6a2d74cd1a768952403337b029e2f3a0a4ac2bb3",
+    "evidencia/repetition-1.json": "cf1a35b1de2fc13d02839dd6971ff8d0cfbef0500f85548ff16d39eadb2aba7c",
+    "evidencia/repetition-2.json": "8b0dd5d7fa83a7313d44fba0887d4655c347808c8bf7de10996bcda1e6497c7b"
+  },
+  "verified_against_archive_manifest": true
+}

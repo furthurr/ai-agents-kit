@@ -1,0 +1,35 @@
+{
+  "benchmark": "MDN LocalLibrary - 3 Tasks Benchmark (Developer / SDD / ODD)",
+  "framework": "Django 6.1.1 / Python 3.12",
+  "base_repo": "mdn/django-locallibrary-tutorial (commit 3120b4302bf87a1b8c84d06662c2b8787f7da5f8)",
+  "tasks": [
+    {
+      "id": "TASK-2",
+      "name": "Reservas idempotentes y concurrentes con persistencia, UI y API",
+      "complexity": "alta",
+      "task": "Implementar flujo de reserva de ejemplares disponibles (BookInstance con status='a') para usuarios autenticados, con persistencia de reservas, garantía de idempotencia en reintentos y tolerancia a concurrencia real bajo SQLite.\n\nCONTRATOS EXACTOS:\n1. Modelo público de persistencia:\n   Definir modelo Reservation en catalog.models (o exponerlo públicamente allí) con los siguientes campos:\n   - user: ForeignKey a settings.AUTH_USER_MODEL (on_delete=CASCADE u obligatorio).\n   - instance: ForeignKey a BookInstance (o OneToOneField / ForeignKey, on_delete=CASCADE).\n   - key: CharField(max_length=100) para la clave de idempotencia.\n   - created_at: DateTimeField(auto_now_add=True).\n   - Constraint de unicidad: [user, key] único (UniqueConstraint o unique_together), de modo que claves entre distintos usuarios sean independientes.\n2. API Endpoint: POST /catalog/api/bookinstance/<uuid:pk>/reserve/\n   - Autenticación: Requiere usuario autenticado. Si no está autenticado, responder 401 Unauthorized con JSON {'error': 'unauthorized'}.\n   - Método HTTP: Solo POST permitido. GET o cualquier otro método responde 405 Method Not Allowed.\n   - Header de Idempotencia: Obligatorio 'Idempotency-Key' en encabezados HTTP (o 'HTTP_IDEMPOTENCY_KEY'). Debe ser no vacío tras strip y de longitud <= 100 caracteres. Si falta, está vacío o supera 100 caracteres, responder 400 Bad Request con JSON {'error': 'invalid_key'}.\n   - Instancia inexistente: Si pk no corresponde a ningún BookInstance existente, responder 404 Not Found con JSON {'error': 'not_found'}.\n   - Ejemplar no disponible: Si la copia no tiene status='a', responder 409 Conflict con JSON exacto {'error': 'unavailable'}.\n   - Éxito (primera reserva): Transicionar BookInstance.status a 'r' (Reserved), asignar BookInstance.borrower al usuario actual, registrar la Reservation con la clave provista. Responder 201 Created con JSON exacto:\n     {\"instance_id\": str(pk), \"user_id\": request.user.id, \"status\": \"r\"}\n   - Replay / Idempotencia exacta: Si el MISMO usuario realiza POST con la MISMA clave 'Idempotency-Key' para la MISMA instancia que ya reservó con esa clave, responder exactamente 201 Created con el mismo JSON {\"instance_id\": str(pk), \"user_id\": request.user.id, \"status\": \"r\"}, sin duplicar registros de Reservation ni alterar el estado.\n   - Conflicto de Idempotencia: Si el MISMO usuario intenta reutilizar una 'Idempotency-Key' previamente usada para reservar OTRA instancia diferente, responder 409 Conflict con JSON exacto {'error': 'idempotency_conflict'}.\n   - Persistencia de idempotencia: La clave debe persistir en la base de datos de modo que un replay en una nueva conexión o sesión HTTP siga retornando 201 Created con el mismo payload.\n3. Garantía de concurrencia bajo SQLite en disco:\n   - Dos solicitudes concurrentes de distintos usuarios sobre la misma copia 'a' deben resultar en exactamente un 201 Created y un 409 Conflict (con {'error': 'unavailable'}).\n   - SQLite no bloquea filas con select_for_update(); la implementación debe asegurar el resultado concurrente real (ej. mediante conditional UPDATE / atomic con verificación de rows_updated, o reintento acotado ante busy/lock) sin devolver 500 'database locked' al cliente.\n   - Ninguna petición fallida (400, 401, 404, 405, 409) debe mutar el estado de BookInstance ni dejar reservas espurias.\n4. Interfaz Web (UI):\n   - En /catalog/book/<int:pk>, para cada copia con status='a', incluir botón/formulario de reserva apuntando a /catalog/book/<uuid:instance_pk>/reserve/.\n   - POST a /catalog/book/<uuid:instance_pk>/reserve/ debe requerir autenticación (redirigiendo a login si es anónimo).\n   - Debe incluir token CSRF y un campo hidden con idempotency_key generada para prevenir doble envío accidental en el navegador.\n   - Al completarse con éxito, mostrar mensaje de confirmación visible en la interfaz (o redirigir al detalle con mensaje flash de éxito).\n5. Suite original (43 tests) debe seguir pasando intacta. No modificar el comando renew de bibliotecarios ni violar retrocompatibilidad.",
+      "acceptance_criteria": [
+        {
+          "id": "CRIT-2.1",
+          "desc": "POST /catalog/api/bookinstance/<pk>/reserve/ exige autenticación (401 si anónimo) y header Idempotency-Key válido (400 invalid_key si falta o excede 100 caracteres). GET responde 405."
+        },
+        {
+          "id": "CRIT-2.2",
+          "desc": "Reserva exitosa responde 201 con {instance_id, user_id, status: 'r'}, BookInstance pasa a status='r' con borrower asignado y se crea Reservation persistida."
+        },
+        {
+          "id": "CRIT-2.3",
+          "desc": "Replay de la misma clave por el mismo usuario para la misma copia retorna exactamente 201 y mismo payload; misma clave para otra copia retorna 409 idempotency_conflict; intento sobre copia no disponible retorna 409 unavailable."
+        },
+        {
+          "id": "CRIT-2.4",
+          "desc": "Concurrencia real con SQLite en disco: peticiones paralelas de usuarios distintos sobre la misma copia resultan exactamente en un 201 y un 409 unavailable sin lanzar 500 database locked ni crear doble reserva."
+        },
+        {
+          "id": "CRIT-2.5",
+          "desc": "UI de reserva en detalle de libro con CSRF y confirmación visible para usuarios autenticados; 43 tests originales intactos."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "labels": {
+    "odd": "ODD ajustado con estándares (control)",
+    "adjusted": "ODD ajustado + ruta selectiva de contexto"
+  },
+  "delta": "ruta-contexto.md only; same standard skills and mapped project input",
+  "sizes": {
+    "odd": {
+      "agent_bytes": 297,
+      "primary_skill_bytes": 6763
+    },
+    "adjusted": {
+      "agent_bytes": 302,
+      "primary_skill_bytes": 7705
+    }
+  }
+}

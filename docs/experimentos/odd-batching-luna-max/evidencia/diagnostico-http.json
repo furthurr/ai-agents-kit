@@ -1,0 +1,66 @@
+{
+  "kind": "post_run_supplemental_contract_diagnostic",
+  "model_calls": 0,
+  "frozen_suite_grades_changed": false,
+  "feedback_to_agents": false,
+  "seconds": 0.721,
+  "results": [
+    {
+      "cell": "TASK-2-ADJUSTED-r1",
+      "returncode": 0,
+      "anonymous_post": {
+        "False": {
+          "status": 400,
+          "content_type": "text/html"
+        },
+        "True": {
+          "status": 400,
+          "content_type": "text/html"
+        }
+      }
+    },
+    {
+      "cell": "TASK-2-ADJUSTED-r2",
+      "returncode": 0,
+      "anonymous_post": {
+        "False": {
+          "status": 400,
+          "content_type": "text/html"
+        },
+        "True": {
+          "status": 400,
+          "content_type": "text/html"
+        }
+      }
+    },
+    {
+      "cell": "TASK-2-ODD-r1",
+      "returncode": 0,
+      "anonymous_post": {
+        "False": {
+          "status": 400,
+          "content_type": "text/html"
+        },
+        "True": {
+          "status": 400,
+          "content_type": "text/html"
+        }
+      }
+    },
+    {
+      "cell": "TASK-2-ODD-r2",
+      "returncode": 0,
+      "anonymous_post": {
+        "False": {
+          "status": 400,
+          "content_type": "text/html"
+        },
+        "True": {
+          "status": 400,
+          "content_type": "text/html"
+        }
+      }
+    }
+  ],
+  "interpretation": "Application HTTP status, not provider API status. Explicit CSRF enforcement probes coverage beyond the nine frozen oracles."
+}

@@ -1,0 +1,23 @@
+{
+  "cohort": "odd-standards-retry-v1-20261105",
+  "status": "blocked-provider-403-partial",
+  "planned_cells": 6,
+  "attempted_cells": 4,
+  "healthy_completed_cells": 2,
+  "inference_api_errors": [{"arm": "odd", "repeat": 2, "statusCode": 403}, {"arm": "adjusted", "repeat": 2, "statusCode": 403}],
+  "timeouts_in_this_retry": 0,
+  "provider_availability_probe": "Antigravity quota tool: fetchAvailableModels failed (403); quota/access cause unknown",
+  "remaining_cells_not_started": 2,
+  "new_preflights": "2/2 passed",
+  "new_reference": "original43 + external9 passed",
+  "offline_tests_at_close": {"odd_standards_including_retry": 14, "developer_v2_regression": 19, "real_project_regression": 7, "transport_regression": 7, "all_passed": true},
+  "preservation": "1203 files archived; every member re-read and SHA256 verified",
+  "prior_focused_checks": "Referenced, not executed again, not counted as retry data",
+  "corpus_profiles_config_equivalence": "Byte equality and normalized configuration tests passed",
+  "retry_and_prior_freezes_unchanged": true,
+  "selective_retries": 0,
+  "aggregate_efficiency_conclusion": null,
+  "account_provider_or_model_changed": false,
+  "installed_or_canonical_agents_changed": false,
+  "git": "No commits/push"
+}

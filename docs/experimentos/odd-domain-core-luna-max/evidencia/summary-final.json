@@ -1,0 +1,559 @@
+{
+  "expected_cells": 2,
+  "observed_cells": 2,
+  "conversations_complete": true,
+  "scenario": "TASK-2 Alta; one fresh pair; primary standards ODD identical",
+  "arms": [
+    {
+      "arm": "adjusted",
+      "label": "Mismo ODD + núcleo/referencias de dominio",
+      "cell": "TASK-2-ADJUSTED-r1",
+      "functional_pass": true,
+      "oracle_suite_pass": true,
+      "combined_catalog_suite_pass": true,
+      "healthy": true,
+      "identity_verified": true,
+      "seconds": 1158.198,
+      "metrics": {
+        "input": 107574,
+        "output": 16205,
+        "cache_read": 3132416,
+        "cache_write": 0,
+        "reasoning": 37306,
+        "reported_cost": 0,
+        "comparable_tokens": 3256195
+      },
+      "tools": 77,
+      "steps": 45,
+      "read_calls": 20,
+      "read_output_bytes": 111968,
+      "search_calls": 11,
+      "search_output_bytes": 23060,
+      "skill_output_bytes": 11639,
+      "navigator_reads": [],
+      "architecture_reads": [],
+      "changed_map_files": [],
+      "changed_markdown": [
+        "odd/tasks/reservation-flow.md"
+      ],
+      "doc_close_mentions": [
+        "Como seguimiento documental fuera del alcance, `README.md` enumera funciones implementadas pero no menciona las reservas. No lo edité. ¿Quieres seleccionar manualmente a `documentation-orchestrator` para actualizarlo? No cambié de agente automáticamente."
+      ],
+      "explicit_documentation_orchestrator": true,
+      "domains_loaded": [
+        "data-api",
+        "ui-design"
+      ],
+      "both_domains_before_product": true,
+      "domain_criteria_audit": {
+        "data-api": {
+          "skill_loaded_by_content": true,
+          "skill_loaded_event_indices": [
+            5
+          ],
+          "implementation.md": {
+            "attempts": 1,
+            "completed_reads": 1,
+            "full_content_verified": true,
+            "verified_event_index": 10,
+            "observed_output_bytes": 6682
+          },
+          "documentation.md": {
+            "attempts": 0,
+            "completed_reads": 0,
+            "full_content_verified": false,
+            "verified_event_index": null,
+            "observed_output_bytes": 0
+          },
+          "original-contract.md": {
+            "attempts": 0,
+            "completed_reads": 0,
+            "full_content_verified": false,
+            "verified_event_index": null,
+            "observed_output_bytes": 0
+          },
+          "technical_criteria_verified": true,
+          "criteria_before_product": true,
+          "delivery": "core + technical reference or original fallback"
+        },
+        "ui-design": {
+          "skill_loaded_by_content": true,
+          "skill_loaded_event_indices": [
+            4
+          ],
+          "implementation.md": {
+            "attempts": 1,
+            "completed_reads": 1,
+            "full_content_verified": true,
+            "verified_event_index": 11,
+            "observed_output_bytes": 6287
+          },
+          "documentation.md": {
+            "attempts": 0,
+            "completed_reads": 0,
+            "full_content_verified": false,
+            "verified_event_index": null,
+            "observed_output_bytes": 0
+          },
+          "original-contract.md": {
+            "attempts": 0,
+            "completed_reads": 0,
+            "full_content_verified": false,
+            "verified_event_index": null,
+            "observed_output_bytes": 0
+          },
+          "technical_criteria_verified": true,
+          "criteria_before_product": true,
+          "delivery": "core + technical reference or original fallback"
+        }
+      },
+      "criteria_preserved_in_context_before_product": true,
+      "bootstrap_changes": [],
+      "first_product_write_index": 53
+    },
+    {
+      "arm": "odd",
+      "label": "ODD ajustado + skills completas",
+      "cell": "TASK-2-ODD-r1",
+      "functional_pass": true,
+      "oracle_suite_pass": true,
+      "combined_catalog_suite_pass": true,
+      "healthy": true,
+      "identity_verified": true,
+      "seconds": 631.329,
+      "metrics": {
+        "input": 88183,
+        "output": 10112,
+        "cache_read": 1127808,
+        "cache_write": 0,
+        "reasoning": 19604,
+        "reported_cost": 0,
+        "comparable_tokens": 1226103
+      },
+      "tools": 48,
+      "steps": 22,
+      "read_calls": 19,
+      "read_output_bytes": 92399,
+      "search_calls": 2,
+      "search_output_bytes": 18172,
+      "skill_output_bytes": 31324,
+      "navigator_reads": [],
+      "architecture_reads": [],
+      "changed_map_files": [],
+      "changed_markdown": [],
+      "doc_close_mentions": [
+        "El `README.md` (líneas 11–16) aún no enumera esta función. No lo actualicé porque la documentación canónica queda fuera del alcance; ¿quieres solicitar esa actualización en una tarea aparte mediante `documentation-orchestrator`? No cambié de agente."
+      ],
+      "explicit_documentation_orchestrator": true,
+      "domains_loaded": [
+        "data-api",
+        "ui-design"
+      ],
+      "both_domains_before_product": true,
+      "domain_criteria_audit": {
+        "data-api": {
+          "skill_loaded_by_content": true,
+          "skill_loaded_event_indices": [
+            4
+          ],
+          "technical_criteria_verified": true,
+          "criteria_before_product": true,
+          "delivery": "full skill body"
+        },
+        "ui-design": {
+          "skill_loaded_by_content": true,
+          "skill_loaded_event_indices": [
+            5
+          ],
+          "technical_criteria_verified": true,
+          "criteria_before_product": true,
+          "delivery": "full skill body"
+        }
+      },
+      "criteria_preserved_in_context_before_product": true,
+      "bootstrap_changes": [],
+      "first_product_write_index": 38
+    }
+  ],
+  "comparison": {
+    "both_functional": true,
+    "core_token_delta_pct": 165.57271289606174,
+    "core_time_delta_pct": 83.45395190146503,
+    "criteria_references_verified_before_product": true,
+    "favorable_exploratory_signal": false
+  },
+  "underlying": {
+    "expected_cells": 6,
+    "observed_cells": 2,
+    "complete": false,
+    "arms": {
+      "odd": {
+        "cells": 1,
+        "expected": 3,
+        "functional_pass": 1,
+        "original_suites_pass": 1,
+        "identity_and_process_ok": true,
+        "comparable_tokens": 1226103,
+        "seconds": 631.329,
+        "tools": 48,
+        "steps": 22,
+        "user_turns": 0,
+        "tool_errors": 0,
+        "data_api_loaded": 1,
+        "ui_design_loaded": 1,
+        "both_before_product": 1,
+        "bootstrap_change_cells": 0
+      },
+      "adjusted": {
+        "cells": 1,
+        "expected": 3,
+        "functional_pass": 1,
+        "original_suites_pass": 1,
+        "identity_and_process_ok": true,
+        "comparable_tokens": 3256195,
+        "seconds": 1158.198,
+        "tools": 77,
+        "steps": 45,
+        "user_turns": 0,
+        "tool_errors": 1,
+        "data_api_loaded": 1,
+        "ui_design_loaded": 1,
+        "both_before_product": 1,
+        "bootstrap_change_cells": 0
+      }
+    },
+    "comparison": null,
+    "cells": [
+      {
+        "task": "TASK-2",
+        "arm": "adjusted",
+        "repeat": 1,
+        "phases": [
+          "TASK-2-ADJUSTED-r1"
+        ],
+        "complete": true,
+        "trajectory_functional_pass": true,
+        "final_functional_pass": true,
+        "all_original_suites_pass": true,
+        "healthy": true,
+        "primary_loaded_by_content": true,
+        "flow_alerts_mechanical": [],
+        "outside_attempts": [],
+        "foreign_skill_attempts": [],
+        "forbidden_tool_attempts": [],
+        "seconds": 1158.198,
+        "metrics": {
+          "input": 107574,
+          "output": 16205,
+          "cache_read": 3132416,
+          "cache_write": 0,
+          "reasoning": 37306,
+          "comparable_tokens": 3256195
+        },
+        "tools": 77,
+        "steps": 45,
+        "user_turns": 0,
+        "selected_modes": [
+          null
+        ],
+        "phase_diagnostics": [
+          {
+            "phase": "TASK-2-ADJUSTED-r1",
+            "functional_pass": true,
+            "original_pass": true,
+            "oracle_count": 9,
+            "failed_external_tests": [],
+            "external_summary": [
+              "Ran 9 tests in 1.394s",
+              "OK"
+            ]
+          }
+        ],
+        "sessions": [
+          "ses_e510f2eabffe7ps9MbwYDpoy5u"
+        ],
+        "documentation_reads": [
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/runs/TASK-2-ADJUSTED-r1/README.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/profiles-v2/adjusted/skills/ob-data-api/implementation.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/profiles-v2/adjusted/skills/ob-ui-design/implementation.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/runs/TASK-2-ADJUSTED-r1/AGENTS.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/runs/TASK-2-ADJUSTED-r1/docs/lab-context.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/runs/TASK-2-ADJUSTED-r1/TASK.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/runs/TASK-2-ADJUSTED-r1/odd/tasks/reservation-flow.md",
+            "status": "completed"
+          }
+        ],
+        "skill_calls": [
+          {
+            "name": "ob-odd-workflow",
+            "status": "completed"
+          },
+          {
+            "name": "ob-ui-design",
+            "status": "completed"
+          },
+          {
+            "name": "ob-data-api",
+            "status": "completed"
+          }
+        ],
+        "agent_test_commands": [
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": false,
+            "red_text": true
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": false,
+            "red_text": true
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          }
+        ],
+        "tool_errors": [
+          {
+            "tool": "bash",
+            "category": "permission"
+          }
+        ]
+      },
+      {
+        "task": "TASK-2",
+        "arm": "odd",
+        "repeat": 1,
+        "phases": [
+          "TASK-2-ODD-r1"
+        ],
+        "complete": true,
+        "trajectory_functional_pass": true,
+        "final_functional_pass": true,
+        "all_original_suites_pass": true,
+        "healthy": true,
+        "primary_loaded_by_content": true,
+        "flow_alerts_mechanical": [],
+        "outside_attempts": [],
+        "foreign_skill_attempts": [],
+        "forbidden_tool_attempts": [],
+        "seconds": 631.329,
+        "metrics": {
+          "input": 88183,
+          "output": 10112,
+          "cache_read": 1127808,
+          "cache_write": 0,
+          "reasoning": 19604,
+          "comparable_tokens": 1226103
+        },
+        "tools": 48,
+        "steps": 22,
+        "user_turns": 0,
+        "selected_modes": [
+          null
+        ],
+        "phase_diagnostics": [
+          {
+            "phase": "TASK-2-ODD-r1",
+            "functional_pass": true,
+            "original_pass": true,
+            "oracle_count": 9,
+            "failed_external_tests": [],
+            "external_summary": [
+              "Ran 9 tests in 1.415s",
+              "OK"
+            ]
+          }
+        ],
+        "sessions": [
+          "ses_e510f2eadffejJ9K1DkA2vxlgH"
+        ],
+        "documentation_reads": [
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/runs/TASK-2-ODD-r1/TASK.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/runs/TASK-2-ODD-r1/AGENTS.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/runs/TASK-2-ODD-r1/README.md",
+            "status": "completed"
+          },
+          {
+            "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-domain-core-luna-max-v1/runs/TASK-2-ODD-r1/docs/lab-context.md",
+            "status": "completed"
+          }
+        ],
+        "skill_calls": [
+          {
+            "name": "oa-odd-workflow",
+            "status": "completed"
+          },
+          {
+            "name": "oa-data-api",
+            "status": "completed"
+          },
+          {
+            "name": "oa-ui-design",
+            "status": "completed"
+          }
+        ],
+        "agent_test_commands": [
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": false,
+            "red_text": true
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          },
+          {
+            "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+            "status": "completed",
+            "green_text": true,
+            "red_text": false
+          }
+        ],
+        "tool_errors": []
+      }
+    ],
+    "behavior": [
+      {
+        "cell": "TASK-2-ADJUSTED-r1",
+        "arm": "adjusted",
+        "repeat": 1,
+        "domains_loaded_by_content": [
+          "data-api",
+          "ui-design"
+        ],
+        "domain_call_counts": {
+          "data-api": 1,
+          "ui-design": 1
+        },
+        "both_loaded_before_product": true,
+        "project_doc_reads": [
+          "README.md",
+          "AGENTS.md",
+          "docs/lab-context.md",
+          "TASK.md",
+          "odd/tasks/reservation-flow.md"
+        ],
+        "markdown_changes": [
+          "odd/tasks/reservation-flow.md"
+        ],
+        "bootstrap_changes": [],
+        "red_before_first_product_write_mechanical": true,
+        "final_doc_mentions": [
+          "Como seguimiento documental fuera del alcance, `README.md` enumera funciones implementadas pero no menciona las reservas. No lo edité. ¿Quieres seleccionar manualmente a `documentation-orchestrator` para actualizarlo? No cambié de agente automáticamente."
+        ]
+      },
+      {
+        "cell": "TASK-2-ODD-r1",
+        "arm": "odd",
+        "repeat": 1,
+        "domains_loaded_by_content": [
+          "data-api",
+          "ui-design"
+        ],
+        "domain_call_counts": {
+          "data-api": 1,
+          "ui-design": 1
+        },
+        "both_loaded_before_product": true,
+        "project_doc_reads": [
+          "TASK.md",
+          "AGENTS.md",
+          "README.md",
+          "docs/lab-context.md"
+        ],
+        "markdown_changes": [],
+        "bootstrap_changes": [],
+        "red_before_first_product_write_mechanical": true,
+        "final_doc_mentions": [
+          "El `README.md` (líneas 11–16) aún no enumera esta función. No lo actualicé porque la documentación canónica queda fuera del alcance; ¿quieres solicitar esa actualización en una tarea aparte mediante `documentation-orchestrator`? No cambié de agente."
+        ]
+      }
+    ],
+    "focused_checks": null,
+    "execution_errors": []
+  },
+  "bytes_note": "Observed tool output bytes, not estimated tokens; SDK token counters kept separately",
+  "experiment": "Short domain core + lossless technical/documentary references"
+}

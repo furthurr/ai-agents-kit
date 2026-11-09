@@ -1,0 +1,15 @@
+{
+  "task_id": "2",
+  "arm": "developer_actual",
+  "oracle_pass": false,
+  "original_suite_pass": true,
+  "functional_acceptance": false,
+  "new_tests_found": 2,
+  "diff_summary": [
+    "[REDACTED_MOBILE_EVIDENCE]",
+    "[REDACTED_MOBILE_EVIDENCE]",
+    "[REDACTED_MOBILE_EVIDENCE]",
+    "[REDACTED_MOBILE_EVIDENCE]"
+  ],
+  "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+}

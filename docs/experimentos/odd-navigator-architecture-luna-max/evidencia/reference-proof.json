@@ -1,0 +1,17 @@
+{
+  "original_suite": {
+    "returncode": 0,
+    "count": 43,
+    "passed": true,
+    "stdout": "Found 43 test(s).\nSystem check identified no issues (0 silenced).\n",
+    "stderr": "Creating test database for alias 'default'...\nDestroying old test database for alias 'default'...\n...........................................\n----------------------------------------------------------------------\nRan 43 tests in 9.611s\n\nOK\nDestroying test database for alias 'default'...\n"
+  },
+  "oracle_suite": {
+    "returncode": 0,
+    "count": 9,
+    "passed": true,
+    "stdout": "Found 9 test(s).\nSystem check identified no issues (0 silenced).\n",
+    "stderr": "Creating test database for alias 'default'...\nDestroying old test database for alias 'default'...\n.........\n----------------------------------------------------------------------\nRan 9 tests in 1.388s\n\nOK\nDestroying test database for alias 'default'...\n"
+  },
+  "functional_pass": true
+}

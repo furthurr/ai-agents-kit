@@ -1,0 +1,21 @@
+{
+  "task_id": "1",
+  "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+  "arm": "developer_actual",
+  "model": "github-copilot/mai-code-1.1-flash",
+  "steps": 8,
+  "tools_called": 13,
+  "tokens": {
+    "total": 154009,
+    "input": 23554,
+    "output": 3415,
+    "reasoning": 2752,
+    "cache_read": 124288,
+    "cache_write": 0
+  },
+  "duration_seconds": 46.351,
+  "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+  "error": null,
+  "exit_code": 0,
+  "completed_at": "2026-11-09T01:44:45.167052+00:00"
+}

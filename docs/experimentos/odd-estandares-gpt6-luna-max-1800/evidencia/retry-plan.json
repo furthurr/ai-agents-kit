@@ -1,0 +1,10 @@
+{
+  "protocol": "odd-standards-retry-v1-20261105",
+  "prior_root": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-gemini-20261105",
+  "prior_freeze_sha256": "c2b20b5885cc67d37a56a25e6067716857afa6d100b3f0f9ac923ffae4fb44f5",
+  "prior_batch_sha256": "6c4175d7977e0d8455fa16a686ca4206f33bd098e004b2a550507d4f2576f08d",
+  "prior_status": "partial; ODD original R2 timed out, snapshot functional",
+  "strategy": "six NEW cells, no substitution or pooling with partial cohort",
+  "focused_checks": "previous evidence only; not repeated",
+  "same_timeouts_and_treatment": true
+}

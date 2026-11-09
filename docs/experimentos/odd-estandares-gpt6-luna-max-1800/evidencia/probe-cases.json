@@ -1,0 +1,41 @@
+[
+  {
+    "id": "api-plan",
+    "baseline": true,
+    "intent": "plan",
+    "expected": [
+      "data-api"
+    ],
+    "task": "PLAN de solo lectura: añadir un endpoint JSON de catálogo de libros en esta aplicación Django. Estudia las fuentes existentes y propone contrato y comprobaciones. No cambiar plantillas ni estilos. No escribas archivos ni implementes."
+  },
+  {
+    "id": "visual-plan",
+    "baseline": true,
+    "intent": "plan",
+    "expected": [
+      "ui-design"
+    ],
+    "task": "PLAN de solo lectura: cambiar el color de fondo de la barra lateral a #e8eef5 reutilizando los estilos existentes. Identifica CSS/componente y comprobación de contraste. No tocar endpoints, modelos ni persistencia. No escribas archivos ni implementes."
+  },
+  {
+    "id": "pure-plan",
+    "baseline": false,
+    "intent": "plan",
+    "expected": [],
+    "task": "PLAN de solo lectura: cambiar el literal devuelto por core.greet() de Hola a Hola, mundo. Es una función pura sin UI, API ni almacenamiento. Identifica cambio y prueba pertinentes, sin escribir archivos ni implementar."
+  },
+  {
+    "id": "stale-doc",
+    "baseline": false,
+    "intent": "implement",
+    "expected": [],
+    "task": "Cambia core.greet() para devolver exactamente Hola, mundo en vez de Hola, y ajusta la prueba al nuevo requisito. Implementación de ese alcance autorizada; no cambies otros comportamientos."
+  },
+  {
+    "id": "current-doc",
+    "baseline": false,
+    "intent": "implement",
+    "expected": [],
+    "task": "Añade una prueba adicional de caracterización que compruebe que core.greet() devuelve str. No cambies su comportamiento actual, el código de core.py ni la documentación."
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "recorded_utc": "2026-11-06",
+  "purpose": "Portable experimental continuity; stop inference now, resume investigation next session",
+  "objective": "ODD with consistent relevant domain/project-context consultation and lower TOTAL tokens without omitted standards",
+  "repo": "/Users/pedrogomezvasquez/Documents/Repositorios/GITHUBREPOS/ai-agents-kit",
+  "head_observed": "f3b58d58e0fd690d31c99131bbe5c85bc8ea2fcd",
+  "local_untracked_evidence": true,
+  "installed_odd": false,
+  "developer_migration_executed": false,
+  "developer_design_decision": "Candidate2 to become public Developer with developer IDs, old implementation deprecated in future; no install/disable performed",
+  "last_model_requested": "openai/gpt-6-luna",
+  "last_variant_requested": "max",
+  "last_timeout_seconds": 1800,
+  "gemini_status_observed": "HTTP403 in inference and model-availability probe; ban/reason not established",
+  "pending_acceptance_of_efficient_odd": true,
+  "recent_results": [
+    {"folder": "odd-estandares-gpt6-luna-max-1800", "scenario_repetitions_per_arm": 3, "conversations_complete": 6, "global_acceptance": {"original": "2/3", "adjusted": "3/3"}, "external_oracles": "3/3 both", "adjusted_tokens_delta_pct": 36.780567176925, "adjusted_time_delta_pct": 23.25251090595515, "limits": "Original R2 extra test closed SQLite; original43 alone pass. Not fixed price of documentation."},
+    {"folder": "odd-navigator-architecture-luna-max", "scenario_repetitions_per_arm": 1, "both_functional": true, "tokens_delta_pct": 55.76528449556042, "time_delta_pct": 47.14484219776194, "decision": "Do not integrate as validated optimization; user explicitly discarded variant; preserve evidence"},
+    {"folder": "odd-domain-core-luna-max", "scenario_repetitions_per_arm": 1, "both_functional": true, "technical_content_preserved_and_consulted": true, "tokens_delta_pct": 165.57271289606174, "time_delta_pct": 83.45395190146503, "decision": "No observed efficiency benefit; not approved for production; local payload reduction did not reduce total trajectory"}
+  ],
+  "next_step": "Read-only existing trace analysis, then propose discriminating minimal experiment and await approval",
+  "new_inference_authorized_by_this_package": false,
+  "active_experiment_processes_expected": 0,
+  "git_actions": "No commits/push; prior changes preserved",
+  "canonical_index_sync": "Pending documentation-orchestrator manual selection; prior index/continuity not overwritten"
+}

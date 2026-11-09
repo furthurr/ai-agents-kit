@@ -1,0 +1,27 @@
+{
+  "archive_sha256": "3240313c01a63f34d038fe7f5f4a109f846d11df95e0eb4a67eb513c2130898d",
+  "files": {
+    "freeze.json": "04aff3b72a962e31a5a176554fcce3f9591aa5280c99125aaa8313d3bdd58047",
+    "sources.json": "406621199faf9e00ce51f7918f96be9dc810e73c6781edfafaceb08d0a23560d",
+    "initial/sdd_trial.json": "90e398edf16864343ca644b4be0c25d032b643ffda94fc6a64f176f5d85fd1ea",
+    "evaluation/sdd_trial-phase2-joint.json": "8bc915180379fd326573f147b07c2c473e4d07f7d5ea0b37cc0110d84e9605e4",
+    "evaluation/sdd_trial-phase2-oracle13.json": "95f107ffb76a0fdb72c92dccbb6b5a9b1a216486397e552e20fa384ee4d6ac34",
+    "evaluation/sdd_trial-phase2-original43.json": "d878f7add8fa5324764de5d20e6c54203a3b15d212c487734090b237c413e7e8",
+    "runs/sdd_trial/.sdd/specs/catalog-search/spec.md": "b66cfb609accc543f714eafc9ac092cea9fa2aa9083e5502e292e7f32fb60305",
+    "operator-state-phase2.json": "ceadfab630bc915523dddfcdfc8c58725670be62c3488d3313cc1942e2e72f49",
+    "records/sdd_trial-phase2.json": "5f64a132726c2acd76fe6c2bd05181b179f3cbb409455c3f56fa1143a88b76a3",
+    "budget.json": "cc33db75fc8c47f88f61a02920038e99db5f653109a227b072affc79dc1cdd89",
+    "requests/sdd_trial-phase2.json": "81928bc10a75bebfe5a68386b2029c2d1ad8bd5c88b8b62b5f5730df6af37fc6",
+    "configs/sdd_trial.json": "0f188fe3f08afe3d9aafc1e14f1a1ea9c2df79859651bcd1da596d5c200c6b42",
+    "offline.json": "10deb0f44bdaa13d688bbc3d0ddc6f890b14259c72254ef403ac242b0f9b9462",
+    "calls/sdd_trial-phase2.json": "aa7fb566ccfdbecb571ae688c5b39659a54d235aa284806a4c64e1c1c0ae1703",
+    "traces/sdd_trial-phase2.json": "98afc62b207263f5bcb2faf235929e62534c2f760176e470109567c2ecf687ee"
+  },
+  "root": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low",
+  "excluded": [
+    "phase-1 files remain in sdd-low/ and revision/",
+    "hosts",
+    "SQLite",
+    "evaluation staged copies"
+  ]
+}

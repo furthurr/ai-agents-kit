@@ -1,0 +1,48 @@
+{
+  "recorded_utc": "2026-11-06",
+  "purpose": "Continuity only; create and evaluate a separate Developer v2 candidate2 derivative in a future session",
+  "repo": "/Users/pedrogomezvasquez/Documents/Repositorios/GITHUBREPOS/ai-agents-kit",
+  "head_observed": "f3b58d58e0fd690d31c99131bbe5c85bc8ea2fcd",
+  "base": {
+    "agent": "docs/experimentos/developer-v2-dominios-build-gemini-2026-11-05/candidato/agent.md",
+    "skill": "docs/experimentos/developer-v2-dominios-build-gemini-2026-11-05/candidato/SKILL.md",
+    "agent_sha256": "67d8173d21000004496be59c5990b6d843ae5a956a4cfa06ff317562dc0de1d9",
+    "skill_sha256": "2b06d8950e791cf911d5aea455b4e9bf9d404452da48239cc290872efc744d78",
+    "literal_backups": ["fuentes/agent-candidato2.md", "fuentes/SKILL-candidato2.md"]
+  },
+  "selected_future_delta": [
+    "Trazabilidad de comprobación y preservación del comportamiento compartido",
+    "Reanudación reconciliada con código y evidencia vigente"
+  ],
+  "delta_wording_status": "Proposed exact clauses in CONTINUAR-AQUI.md; not yet implemented or frozen",
+  "modified_candidate_created": false,
+  "modified_candidate_performance_measured": false,
+  "current_task_authorizes": "Experimental continuity documentation only; candidate creation/tests belong to the next session",
+  "new_model_calls_in_this_documentation_task": 0,
+  "new_inference_budget_approved": false,
+  "future_pilot_budget": {"status": "proposal_only", "scenarios": 2, "model_calls": 6, "nominal_tokens": 30000000, "timeout_seconds_per_call": 1800, "steps_per_call": 60, "tokens_boundary_per_call": 5000000},
+  "last_operational_model": "openai/gpt-6-luna",
+  "last_variant": "max",
+  "gemini_status": "Provider HTTP403 observed historically; reason or ban not established; no account/provider circumvention",
+  "developer_public_design": "Developer name and developer agent/skill IDs; old implementation deprecated only upon future authorized migration",
+  "developer_migration_executed": false,
+  "desktop_plan_includes_new_delta": false,
+  "desktop_plan_modified": false,
+  "efficient_odd_accepted": false,
+  "latest_odd_batching": {
+    "folder": "docs/experimentos/odd-batching-luna-max",
+    "conversations": 4,
+    "control_acceptance": "1/2",
+    "treatment_acceptance": "1/2",
+    "raw_token_delta_pct": -28.77658633776059,
+    "raw_time_delta_pct": -9.528264566315015,
+    "total_observed_main_tokens": 10078794,
+    "accepted_optimization": false,
+    "limits": "R1 treatment more expensive; bothR2 added tests close SQLite under TestCase; external9 and separate43 pass all four; additional enforced-CSRF contract issue in treatedR1"
+  },
+  "local_untracked_evidence": true,
+  "preexisting_tracked_change": "docs/README.md: 5 inserted lines; preserved",
+  "git_actions": "No commits/push/releases/reset/clean",
+  "canonical_index_sync": "Not performed; documentation-orchestrator only with manual user selection",
+  "next_step": "Read continuity and exact sources, create separate two-clause derivative in future session, validate offline, agree/freeze experimental budget before inference"
+}

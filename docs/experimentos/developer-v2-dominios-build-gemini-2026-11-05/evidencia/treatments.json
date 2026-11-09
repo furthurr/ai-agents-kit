@@ -1,0 +1,34 @@
+{
+  "arms": [
+    "developer",
+    "odd",
+    "v2",
+    "build"
+  ],
+  "native_build": {
+    "name": "build",
+    "description": "The default agent. Executes tools based on configured permissions.",
+    "mode": "primary",
+    "native": true,
+    "prompt_present": false
+  },
+  "build_scope": "Native OpenCode procedure; same lab limits and optional domain skills, no primary MAS skill",
+  "specialized_sizes": {
+    "developer": {
+      "agent_bytes": 6775,
+      "primary_skill_bytes": 6624
+    },
+    "odd": {
+      "agent_bytes": 292,
+      "primary_skill_bytes": 4749
+    },
+    "v2": {
+      "agent_bytes": 342,
+      "primary_skill_bytes": 3584
+    }
+  },
+  "shared_runner_patch": {
+    "before": "f\"Trabaja solo en este workspace. Carga `{skill_name(arm)}` antes de actuar y conserva tu metodología. \"",
+    "after": "f\"Trabaja solo en este workspace. {'' if arm == 'build' else 'Carga `' + skill_name(arm) + '` antes de actuar y conserva tu metodología. '}\""
+  }
+}

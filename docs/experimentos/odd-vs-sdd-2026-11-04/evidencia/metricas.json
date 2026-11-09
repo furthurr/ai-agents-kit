@@ -1,0 +1,611 @@
+{
+  "protocol": "odd-vs-sdd-v2-20261104",
+  "created": "2026-11-04T18:40:10.048214+00:00",
+  "cells": 60,
+  "freeze_unchanged": true,
+  "arms": {
+    "A": {
+      "cells": 30,
+      "functional_pass": 29,
+      "skill_loaded": 29,
+      "seconds": 3627.768,
+      "tool_count": 621,
+      "steps": 458,
+      "invocations": 45,
+      "simulated_user_replies": 15,
+      "flow_violations": 0,
+      "metrics": {
+        "input": 886952,
+        "output": 99087,
+        "cache_read": 9123456,
+        "cache_write": 0,
+        "reasoning": 2046,
+        "reported_cost": 0,
+        "comparable_tokens": 10109495
+      }
+    },
+    "B": {
+      "cells": 30,
+      "functional_pass": 29,
+      "skill_loaded": 30,
+      "seconds": 1876.593,
+      "tool_count": 356,
+      "steps": 314,
+      "invocations": 30,
+      "simulated_user_replies": 0,
+      "flow_violations": 0,
+      "metrics": {
+        "input": 492946,
+        "output": 45338,
+        "cache_read": 2197504,
+        "cache_write": 0,
+        "reasoning": 1978,
+        "reported_cost": 0,
+        "comparable_tokens": 2735788
+      }
+    }
+  },
+  "scenarios": {
+    "S01": {
+      "A": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 130.034,
+        "tool_count": 32,
+        "steps": 30,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 77935,
+          "output": 2394,
+          "cache_read": 326784,
+          "cache_write": 0,
+          "reasoning": 110,
+          "reported_cost": 0,
+          "comparable_tokens": 407113
+        }
+      },
+      "B": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 96.26,
+        "tool_count": 15,
+        "steps": 17,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 33241,
+          "output": 1404,
+          "cache_read": 73984,
+          "cache_write": 0,
+          "reasoning": 85,
+          "reported_cost": 0,
+          "comparable_tokens": 108629
+        }
+      }
+    },
+    "S02": {
+      "A": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 175.753,
+        "tool_count": 48,
+        "steps": 28,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 68622,
+          "output": 4810,
+          "cache_read": 438912,
+          "cache_write": 0,
+          "reasoning": 123,
+          "reported_cost": 0,
+          "comparable_tokens": 512344
+        }
+      },
+      "B": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 154.099,
+        "tool_count": 35,
+        "steps": 36,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 49233,
+          "output": 3498,
+          "cache_read": 222080,
+          "cache_write": 0,
+          "reasoning": 33,
+          "reported_cost": 0,
+          "comparable_tokens": 274811
+        }
+      }
+    },
+    "S03": {
+      "A": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 515.276,
+        "tool_count": 85,
+        "steps": 66,
+        "invocations": 9,
+        "simulated_user_replies": 6,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 122913,
+          "output": 16044,
+          "cache_read": 1609856,
+          "cache_write": 0,
+          "reasoning": 229,
+          "reported_cost": 0,
+          "comparable_tokens": 1748813
+        }
+      },
+      "B": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 165.988,
+        "tool_count": 35,
+        "steps": 31,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 54807,
+          "output": 4448,
+          "cache_read": 205184,
+          "cache_write": 0,
+          "reasoning": 109,
+          "reported_cost": 0,
+          "comparable_tokens": 264439
+        }
+      }
+    },
+    "S04": {
+      "A": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 380.624,
+        "tool_count": 75,
+        "steps": 62,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 97133,
+          "output": 11043,
+          "cache_read": 1098240,
+          "cache_write": 0,
+          "reasoning": 202,
+          "reported_cost": 0,
+          "comparable_tokens": 1206416
+        }
+      },
+      "B": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 155.293,
+        "tool_count": 38,
+        "steps": 31,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 35840,
+          "output": 3799,
+          "cache_read": 195840,
+          "cache_write": 0,
+          "reasoning": 54,
+          "reported_cost": 0,
+          "comparable_tokens": 235479
+        }
+      }
+    },
+    "S05": {
+      "A": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 432.024,
+        "tool_count": 82,
+        "steps": 51,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 99974,
+          "output": 14686,
+          "cache_read": 1118464,
+          "cache_write": 0,
+          "reasoning": 125,
+          "reported_cost": 0,
+          "comparable_tokens": 1233124
+        }
+      },
+      "B": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 268.083,
+        "tool_count": 51,
+        "steps": 42,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 55447,
+          "output": 7257,
+          "cache_read": 308480,
+          "cache_write": 0,
+          "reasoning": 439,
+          "reported_cost": 0,
+          "comparable_tokens": 371184
+        }
+      }
+    },
+    "S06": {
+      "A": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 568.876,
+        "tool_count": 85,
+        "steps": 65,
+        "invocations": 9,
+        "simulated_user_replies": 6,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 105729,
+          "output": 18728,
+          "cache_read": 1646592,
+          "cache_write": 0,
+          "reasoning": 284,
+          "reported_cost": 0,
+          "comparable_tokens": 1771049
+        }
+      },
+      "B": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 250.816,
+        "tool_count": 46,
+        "steps": 36,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 60515,
+          "output": 7783,
+          "cache_read": 341504,
+          "cache_write": 0,
+          "reasoning": 211,
+          "reported_cost": 0,
+          "comparable_tokens": 409802
+        }
+      }
+    },
+    "S07": {
+      "A": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 499.975,
+        "tool_count": 82,
+        "steps": 60,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 130308,
+          "output": 14737,
+          "cache_read": 1293824,
+          "cache_write": 0,
+          "reasoning": 770,
+          "reported_cost": 0,
+          "comparable_tokens": 1438869
+        }
+      },
+      "B": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 289.192,
+        "tool_count": 55,
+        "steps": 50,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 80065,
+          "output": 6901,
+          "cache_read": 427264,
+          "cache_write": 0,
+          "reasoning": 443,
+          "reported_cost": 0,
+          "comparable_tokens": 514230
+        }
+      }
+    },
+    "S08": {
+      "A": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 528.357,
+        "tool_count": 76,
+        "steps": 61,
+        "invocations": 6,
+        "simulated_user_replies": 3,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 83852,
+          "output": 9126,
+          "cache_read": 1112960,
+          "cache_write": 0,
+          "reasoning": 103,
+          "reported_cost": 0,
+          "comparable_tokens": 1205938
+        }
+      },
+      "B": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 267.195,
+        "tool_count": 49,
+        "steps": 46,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 68047,
+          "output": 6366,
+          "cache_read": 321536,
+          "cache_write": 0,
+          "reasoning": 269,
+          "reported_cost": 0,
+          "comparable_tokens": 395949
+        }
+      }
+    },
+    "S09": {
+      "A": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 256.882,
+        "tool_count": 42,
+        "steps": 23,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 76850,
+          "output": 6157,
+          "cache_read": 355072,
+          "cache_write": 0,
+          "reasoning": 89,
+          "reported_cost": 0,
+          "comparable_tokens": 438079
+        }
+      },
+      "B": {
+        "cells": 3,
+        "functional_pass": 3,
+        "skill_loaded": 3,
+        "seconds": 88.473,
+        "tool_count": 15,
+        "steps": 12,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 30582,
+          "output": 2356,
+          "cache_read": 44544,
+          "cache_write": 0,
+          "reasoning": 273,
+          "reported_cost": 0,
+          "comparable_tokens": 77482
+        }
+      }
+    },
+    "S10": {
+      "A": {
+        "cells": 3,
+        "functional_pass": 2,
+        "skill_loaded": 2,
+        "seconds": 139.967,
+        "tool_count": 14,
+        "steps": 12,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 23636,
+          "output": 1362,
+          "cache_read": 122752,
+          "cache_write": 0,
+          "reasoning": 11,
+          "reported_cost": 0,
+          "comparable_tokens": 147750
+        }
+      },
+      "B": {
+        "cells": 3,
+        "functional_pass": 2,
+        "skill_loaded": 3,
+        "seconds": 141.194,
+        "tool_count": 17,
+        "steps": 13,
+        "invocations": 3,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 25169,
+          "output": 1526,
+          "cache_read": 57088,
+          "cache_write": 0,
+          "reasoning": 62,
+          "reported_cost": 0,
+          "comparable_tokens": 83783
+        }
+      }
+    }
+  },
+  "repetitions": {
+    "1": {
+      "A": {
+        "cells": 10,
+        "functional_pass": 10,
+        "skill_loaded": 10,
+        "seconds": 1165.168,
+        "tool_count": 217,
+        "steps": 157,
+        "invocations": 15,
+        "simulated_user_replies": 5,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 337594,
+          "output": 33804,
+          "cache_read": 3074816,
+          "cache_write": 0,
+          "reasoning": 704,
+          "reported_cost": 0,
+          "comparable_tokens": 3446214
+        }
+      },
+      "B": {
+        "cells": 10,
+        "functional_pass": 10,
+        "skill_loaded": 10,
+        "seconds": 631.933,
+        "tool_count": 121,
+        "steps": 108,
+        "invocations": 10,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 161934,
+          "output": 14974,
+          "cache_read": 790272,
+          "cache_write": 0,
+          "reasoning": 525,
+          "reported_cost": 0,
+          "comparable_tokens": 967180
+        }
+      }
+    },
+    "2": {
+      "A": {
+        "cells": 10,
+        "functional_pass": 10,
+        "skill_loaded": 10,
+        "seconds": 1129.144,
+        "tool_count": 206,
+        "steps": 159,
+        "invocations": 15,
+        "simulated_user_replies": 5,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 286100,
+          "output": 33295,
+          "cache_read": 3147520,
+          "cache_write": 0,
+          "reasoning": 658,
+          "reported_cost": 0,
+          "comparable_tokens": 3466915
+        }
+      },
+      "B": {
+        "cells": 10,
+        "functional_pass": 10,
+        "skill_loaded": 10,
+        "seconds": 601.62,
+        "tool_count": 120,
+        "steps": 108,
+        "invocations": 10,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 166403,
+          "output": 15562,
+          "cache_read": 763264,
+          "cache_write": 0,
+          "reasoning": 764,
+          "reported_cost": 0,
+          "comparable_tokens": 945229
+        }
+      }
+    },
+    "3": {
+      "A": {
+        "cells": 10,
+        "functional_pass": 9,
+        "skill_loaded": 9,
+        "seconds": 1333.456,
+        "tool_count": 198,
+        "steps": 142,
+        "invocations": 15,
+        "simulated_user_replies": 5,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 263258,
+          "output": 31988,
+          "cache_read": 2901120,
+          "cache_write": 0,
+          "reasoning": 684,
+          "reported_cost": 0,
+          "comparable_tokens": 3196366
+        }
+      },
+      "B": {
+        "cells": 10,
+        "functional_pass": 9,
+        "skill_loaded": 10,
+        "seconds": 643.04,
+        "tool_count": 115,
+        "steps": 98,
+        "invocations": 10,
+        "simulated_user_replies": 0,
+        "flow_violations": 0,
+        "metrics": {
+          "input": 164609,
+          "output": 14802,
+          "cache_read": 643968,
+          "cache_write": 0,
+          "reasoning": 689,
+          "reported_cost": 0,
+          "comparable_tokens": 823379
+        }
+      }
+    }
+  },
+  "coverage": {
+    "metrics_missing_cells": [
+      "S10-A-r3"
+    ],
+    "execution_error_cells": [
+      "S08-A-r3",
+      "S09-A-r3",
+      "S10-A-r3",
+      "S10-B-r3"
+    ],
+    "aggregation": "Observed counters only; null cell metrics are unknown, not zero. Do not use all-attempt totals for a complete-workload efficiency claim.",
+    "decision": "Full protocol incomplete; descriptive complete repetitions in auditoria.json."
+  }
+}

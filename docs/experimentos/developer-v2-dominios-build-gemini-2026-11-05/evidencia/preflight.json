@@ -1,0 +1,98 @@
+{
+  "developer": {
+    "agent": "high-developer",
+    "native": false,
+    "prompt_present": true,
+    "tools": {
+      "invalid": true,
+      "question": false,
+      "bash": true,
+      "read": true,
+      "glob": true,
+      "grep": true,
+      "edit": true,
+      "write": true,
+      "task": false,
+      "webfetch": false,
+      "todowrite": true,
+      "skill": true,
+      "google_search": false,
+      "antigravity_quota": false
+    },
+    "primary_loaded_by_content": true,
+    "config_sha256": "037747fe2c37802f5923c1706bcf2f15b4fee3208679443952bd55d7c009f61e",
+    "runtime_seconds": 24.765
+  },
+  "odd": {
+    "agent": "high-odd",
+    "native": false,
+    "prompt_present": true,
+    "tools": {
+      "invalid": true,
+      "question": false,
+      "bash": true,
+      "read": true,
+      "glob": true,
+      "grep": true,
+      "edit": true,
+      "write": true,
+      "task": false,
+      "webfetch": false,
+      "todowrite": true,
+      "skill": true,
+      "google_search": false,
+      "antigravity_quota": false
+    },
+    "primary_loaded_by_content": true,
+    "config_sha256": "fbe62a19e2f5ee6ba5a10e051885c375f74acb4234a03a9250648656b4433949",
+    "runtime_seconds": 15.74
+  },
+  "v2": {
+    "agent": "high-v2",
+    "native": false,
+    "prompt_present": true,
+    "tools": {
+      "invalid": true,
+      "question": false,
+      "bash": true,
+      "read": true,
+      "glob": true,
+      "grep": true,
+      "edit": true,
+      "write": true,
+      "task": false,
+      "webfetch": false,
+      "todowrite": true,
+      "skill": true,
+      "google_search": false,
+      "antigravity_quota": false
+    },
+    "primary_loaded_by_content": true,
+    "config_sha256": "808bc7d3e798d7fe01315e45c38bfe5a8d1494e91164633052d9845c358855b2",
+    "runtime_seconds": 17.794
+  },
+  "build": {
+    "agent": "build",
+    "native": true,
+    "prompt_present": false,
+    "tools": {
+      "invalid": true,
+      "question": false,
+      "bash": true,
+      "read": true,
+      "glob": true,
+      "grep": true,
+      "edit": true,
+      "write": true,
+      "task": false,
+      "webfetch": false,
+      "todowrite": true,
+      "skill": true,
+      "google_search": false,
+      "antigravity_quota": false
+    },
+    "primary_loaded_by_content": null,
+    "config_sha256": "cb3c22642fc82e04e95f3625d70327e6f3264c8428c1f0d40dd2d220ce0cbcb1",
+    "runtime_seconds": 14.202
+  }
+}

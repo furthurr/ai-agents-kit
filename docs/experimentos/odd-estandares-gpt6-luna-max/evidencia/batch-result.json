@@ -1,0 +1,18 @@
+{
+  "wall_seconds": 614.615,
+  "completed": [],
+  "errors": [
+    {
+      "arm": "odd",
+      "repeat": 1,
+      "type": "RuntimeError",
+      "message": "Integration/API/timeout failure; record preserved: TASK-2-ODD-r1"
+    },
+    {
+      "arm": "adjusted",
+      "repeat": 1,
+      "type": "RuntimeError",
+      "message": "Integration/API/timeout failure; record preserved: TASK-2-ADJUSTED-r1"
+    }
+  ]
+}

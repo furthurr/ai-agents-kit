@@ -1,0 +1,96 @@
+{
+  "benchmark": "MDN LocalLibrary - 3 Tasks Benchmark (Developer / SDD / ODD)",
+  "framework": "Django 6.1.1 / Python 3.12",
+  "base_repo": "mdn/django-locallibrary-tutorial (commit 3120b4302bf87a1b8c84d06662c2b8787f7da5f8)",
+  "tasks": [
+    {
+      "id": "TASK-1",
+      "name": "Búsqueda, filtros facetados y paginación en UI y API JSON pública",
+      "complexity": "media-alta",
+      "task": "Implementar búsqueda y filtros facetados con paginación tanto en la vista UI (/catalog/books/) como en un endpoint API JSON público de lectura (GET /catalog/api/books/).\n\nCONTRATOS EXACTOS:\n1. Endpoint API: GET /catalog/api/books/ (público, no requiere autenticación).\n2. Parámetros de consulta (query params):\n   - q: cadena de texto. Si no está vacía tras trim (.strip()), filtrar libros donde Book.title o Book.summary contenga el texto (icontains). Si tras trim queda vacía, ignorar filtro.\n   - status: cadena de texto de un solo caracter. Valores válidos exactos: 'a', 'r', 'o', 'm'. Filtra libros que posean al menos una copia (BookInstance) con status igual al valor. Si se pasa cualquier otro valor (o longitud != 1), la API debe responder 400 con JSON exacto {'error': 'invalid_query'}. En UI, responder 200 mostrando mensaje amigable de error sin traceback.\n   - genre: entero positivo (ID de Genre). Filtra libros que tengan asociado ese Genre (Book.genre). Si no es entero positivo convertible (ej. texto no numérico, <= 0), API responde 400 {'error': 'invalid_query'}, UI 200 con mensaje de error sin traceback.\n   - language: entero positivo (ID de Language). Filtra libros que tengan Book.language_id igual a ese entero. Si no es entero positivo convertible, API responde 400 {'error': 'invalid_query'}, UI 200 con mensaje de error sin traceback.\n   - page: entero positivo >= 1. Paginación fija de 10 resultados por página. Si page no es entero >= 1 o está fuera de rango (ej. excede el total de páginas num_pages), API responde 400 con {'error': 'invalid_query'}, UI responde 200 con mensaje de error o página vacía sin traceback.\n   - Combinación de filtros: los filtros provistos deben combinarse con lógica AND.\n   - Ordenamiento determinista: los libros deben ordenarse siempre por ('title', 'id') ascendente, sin duplicados en resultados (usar .distinct()).\n3. Estructura de respuesta API (200 OK, application/json):\n   {\n     \"count\": <total_libros_coincidentes_int>,\n     \"page\": <pagina_actual_int>,\n     \"num_pages\": <total_paginas_int>,\n     \"results\": [\n       {\n         \"id\": <book_id_int>,\n         \"title\": <book_title_str>,\n         \"author\": <author_display_name_str_o_null>,\n         \"isbn\": <book_isbn_str>,\n         \"genre\": [<lista_de_nombres_de_genero_str_ordenados_alfabeticamente>]\n       }\n     ]\n   }\n   Nota: Si no hay libros en la base o tras filtrar el resultado es 0, count=0, page=1, num_pages=1, results=[].\n   author debe ser el nombre del autor (f'{author.last_name}, {author.first_name}' o author.__str__()) si existe, o null si author es null.\n   genre debe ser la lista de nombres de género ordenados alfabéticamente.\n4. Comportamiento UI (/catalog/books/):\n   - Template catalog/book_list.html debe incluir un formulario GET con inputs etiquetados para 'q' (input text), 'genre' (select u opciones), 'language' (select u opciones) y 'status' (select u opciones).\n   - La paginación (enlaces anterior/siguiente) debe preservar todos los query params activos.\n   - Si la búsqueda no arroja resultados, mostrar mensaje visible de lista vacía.\n   - Si los parámetros son inválidos, responder HTTP 200 renderizando mensaje de error comprensible en el HTML sin producir traceback 500.\n5. Suite original (43 tests) debe seguir pasando intacta. No usar librerías externas pesadas (como DRF o Haystack); usar Django nativo y JsonResponse/views.",
+      "acceptance_criteria": [
+        {
+          "id": "CRIT-1.1",
+          "desc": "GET /catalog/api/books/ responde 200 OK con Content-Type application/json y esquema exacto count, page, num_pages, results (con id, title, author, isbn, genre) y paginación de 10 por página."
+        },
+        {
+          "id": "CRIT-1.2",
+          "desc": "Filtros q (title/summary icontains trim), status ('a','r','o','m'), genre (id entero positivo) y language (id entero positivo) funcionan en combinación AND con orden title, id y sin duplicados."
+        },
+        {
+          "id": "CRIT-1.3",
+          "desc": "Parámetros inválidos o page fuera de rango devuelven 400 con JSON exacto {'error': 'invalid_query'} en API, y HTTP 200 con mensaje de error en UI sin 500."
+        },
+        {
+          "id": "CRIT-1.4",
+          "desc": "UI /catalog/books/ contiene formulario GET etiquetado, preserva query params en enlaces de paginación y muestra estado vacío si no hay coincidencias."
+        },
+        {
+          "id": "CRIT-1.5",
+          "desc": "Los 43 tests originales de catalog siguen pasando OK sin regresión."
+        }
+      ]
+    },
+    {
+      "id": "TASK-2",
+      "name": "Reservas idempotentes y concurrentes con persistencia, UI y API",
+      "complexity": "alta",
+      "task": "Implementar flujo de reserva de ejemplares disponibles (BookInstance con status='a') para usuarios autenticados, con persistencia de reservas, garantía de idempotencia en reintentos y tolerancia a concurrencia real bajo SQLite.\n\nCONTRATOS EXACTOS:\n1. Modelo público de persistencia:\n   Definir modelo Reservation en catalog.models (o exponerlo públicamente allí) con los siguientes campos:\n   - user: ForeignKey a settings.AUTH_USER_MODEL (on_delete=CASCADE u obligatorio).\n   - instance: ForeignKey a BookInstance (o OneToOneField / ForeignKey, on_delete=CASCADE).\n   - key: CharField(max_length=100) para la clave de idempotencia.\n   - created_at: DateTimeField(auto_now_add=True).\n   - Constraint de unicidad: [user, key] único (UniqueConstraint o unique_together), de modo que claves entre distintos usuarios sean independientes.\n2. API Endpoint: POST /catalog/api/bookinstance/<uuid:pk>/reserve/\n   - Autenticación: Requiere usuario autenticado. Si no está autenticado, responder 401 Unauthorized con JSON {'error': 'unauthorized'}.\n   - Método HTTP: Solo POST permitido. GET o cualquier otro método responde 405 Method Not Allowed.\n   - Header de Idempotencia: Obligatorio 'Idempotency-Key' en encabezados HTTP (o 'HTTP_IDEMPOTENCY_KEY'). Debe ser no vacío tras strip y de longitud <= 100 caracteres. Si falta, está vacío o supera 100 caracteres, responder 400 Bad Request con JSON {'error': 'invalid_key'}.\n   - Instancia inexistente: Si pk no corresponde a ningún BookInstance existente, responder 404 Not Found con JSON {'error': 'not_found'}.\n   - Ejemplar no disponible: Si la copia no tiene status='a', responder 409 Conflict con JSON exacto {'error': 'unavailable'}.\n   - Éxito (primera reserva): Transicionar BookInstance.status a 'r' (Reserved), asignar BookInstance.borrower al usuario actual, registrar la Reservation con la clave provista. Responder 201 Created con JSON exacto:\n     {\"instance_id\": str(pk), \"user_id\": request.user.id, \"status\": \"r\"}\n   - Replay / Idempotencia exacta: Si el MISMO usuario realiza POST con la MISMA clave 'Idempotency-Key' para la MISMA instancia que ya reservó con esa clave, responder exactamente 201 Created con el mismo JSON {\"instance_id\": str(pk), \"user_id\": request.user.id, \"status\": \"r\"}, sin duplicar registros de Reservation ni alterar el estado.\n   - Conflicto de Idempotencia: Si el MISMO usuario intenta reutilizar una 'Idempotency-Key' previamente usada para reservar OTRA instancia diferente, responder 409 Conflict con JSON exacto {'error': 'idempotency_conflict'}.\n   - Persistencia de idempotencia: La clave debe persistir en la base de datos de modo que un replay en una nueva conexión o sesión HTTP siga retornando 201 Created con el mismo payload.\n3. Garantía de concurrencia bajo SQLite en disco:\n   - Dos solicitudes concurrentes de distintos usuarios sobre la misma copia 'a' deben resultar en exactamente un 201 Created y un 409 Conflict (con {'error': 'unavailable'}).\n   - SQLite no bloquea filas con select_for_update(); la implementación debe asegurar el resultado concurrente real (ej. mediante conditional UPDATE / atomic con verificación de rows_updated, o reintento acotado ante busy/lock) sin devolver 500 'database locked' al cliente.\n   - Ninguna petición fallida (400, 401, 404, 405, 409) debe mutar el estado de BookInstance ni dejar reservas espurias.\n4. Interfaz Web (UI):\n   - En /catalog/book/<int:pk>, para cada copia con status='a', incluir botón/formulario de reserva apuntando a /catalog/book/<uuid:instance_pk>/reserve/.\n   - POST a /catalog/book/<uuid:instance_pk>/reserve/ debe requerir autenticación (redirigiendo a login si es anónimo).\n   - Debe incluir token CSRF y un campo hidden con idempotency_key generada para prevenir doble envío accidental en el navegador.\n   - Al completarse con éxito, mostrar mensaje de confirmación visible en la interfaz (o redirigir al detalle con mensaje flash de éxito).\n5. Suite original (43 tests) debe seguir pasando intacta. No modificar el comando renew de bibliotecarios ni violar retrocompatibilidad.",
+      "acceptance_criteria": [
+        {
+          "id": "CRIT-2.1",
+          "desc": "POST /catalog/api/bookinstance/<pk>/reserve/ exige autenticación (401 si anónimo) y header Idempotency-Key válido (400 invalid_key si falta o excede 100 caracteres). GET responde 405."
+        },
+        {
+          "id": "CRIT-2.2",
+          "desc": "Reserva exitosa responde 201 con {instance_id, user_id, status: 'r'}, BookInstance pasa a status='r' con borrower asignado y se crea Reservation persistida."
+        },
+        {
+          "id": "CRIT-2.3",
+          "desc": "Replay de la misma clave por el mismo usuario para la misma copia retorna exactamente 201 y mismo payload; misma clave para otra copia retorna 409 idempotency_conflict; intento sobre copia no disponible retorna 409 unavailable."
+        },
+        {
+          "id": "CRIT-2.4",
+          "desc": "Concurrencia real con SQLite en disco: peticiones paralelas de usuarios distintos sobre la misma copia resultan exactamente en un 201 y un 409 unavailable sin lanzar 500 database locked ni crear doble reserva."
+        },
+        {
+          "id": "CRIT-2.5",
+          "desc": "UI de reserva en detalle de libro con CSRF y confirmación visible para usuarios autenticados; 43 tests originales intactos."
+        }
+      ]
+    },
+    {
+      "id": "TASK-3",
+      "name": "Aislamiento por sucursal con migración retrocompatible y transferencias interbibliotecarias",
+      "complexity": "muy alta",
+      "task": "Implementar arquitectura multitenant por sucursal (Branch) con aislamiento de inventario físico y gestión administrativa, garantizando migración sin pérdida de datos en una base preexistente y compatibilidad legacy total.\n\nCONTRATOS EXACTOS (FASE 1):\n1. Catálogo bibliográfico vs Inventario físico:\n   - El catálogo bibliográfico público (Book, Author, Genre, Language) permanece GLOBAL y público para todos los usuarios.\n   - El inventario físico (BookInstance) y la gestión de préstamos se aíslan por sucursal.\n2. Modelos públicos explícitos:\n   - Modelo Branch en catalog.models:\n       code: CharField(max_length=20, unique=True)\n       name: CharField(max_length=200)\n       address: TextField(blank=True)\n   - Modelo BranchMembership en catalog.models:\n       user: ForeignKey a settings.AUTH_USER_MODEL\n       branch: ForeignKey a Branch\n       is_staff: BooleanField(default=False) -- indica rol de gestión en la sucursal\n       UniqueConstraint o unique_together sobre [user, branch]\n   - BookInstance debe asociarse a sucursal mediante campo 'branch' (ForeignKey a Branch).\n     En Fase 1, origin_branch debe coincidir con branch (o definirse origin_branch = ForeignKey(Branch, null=True, blank=True)).\n3. Migración de datos retrocompatible:\n   - Debe existir una migración que cree Branch con code='CENTRAL', name='Central Library', address='' si no existe.\n   - Todas las instancias previas de BookInstance deben asignarse a la sucursal 'CENTRAL'.\n   - Ni la migración ni los cambios pueden romper la suite preexistente de 43 tests.\n4. Reglas de autorización y compatibilidad legacy:\n   - Superusuario (is_superuser=True): tiene acceso a todas las sucursales.\n   - Usuario autenticado SIN memberships: opera en la sucursal 'CENTRAL' por compatibilidad legacy.\n   - Usuario autenticado CON memberships: solo puede operar en las sucursales que tiene explícitamente asignadas (NO tiene fallback a Central salvo que tenga membership en Central).\n   - Staff de sucursal: para gestionar libros o préstamos en una sucursal, el usuario debe tener is_staff global o BranchMembership.is_staff=True en dicha sucursal, y además el permiso 'catalog.can_mark_returned'.\n   - La vista de renovación existente (views.renew_book_librarian) debe seguir funcionando para copias de la sucursal autorizada (y legacy Central).\n5. Endpoints de Fase 1:\n   - POST /catalog/branches/select/: Requiere autenticación. Payload JSON o POST form {'branch_code': '...'}.\n     Si el usuario no está autorizado para esa sucursal, responder 403 Forbidden sin alterar la sesión.\n     Si está autorizado, guardar el branch_code activo en la sesión (request.session['active_branch_code'] = branch_code) y responder 200 OK con JSON {'active_branch': branch_code} (o redirección si es form UI).\n   - GET /catalog/api/inventory/: Requiere autenticación (401 si anónimo). Devuelve JSON con el inventario físico de la sucursal activa del usuario:\n     {\"branch\": <active_branch_code>, \"instances\": [{\"id\": str(copy.id), \"book_title\": copy.book.title, \"status\": copy.status, \"imprint\": copy.imprint}]}\n     Solo lista BookInstances cuya branch coincida con la sucursal activa.\n6. Suite de 43 tests originales debe pasar íntegramente.",
+      "stage2_task": "CAMBIO DE REQUISITO EN REANUDACIÓN (FASE 2):\nConservando el catálogo bibliográfico público global y el aislamiento de inventario de Fase 1, implementar transferencias interbibliotecarias inmediatas entre sucursales.\n\nCONTRATOS EXACTOS (FASE 2):\n1. Modelo BookInstance y trazabilidad:\n   - BookInstance conserva su sucursal de origen inmutable (origin_branch) y su sucursal de custodia actual (branch).\n   - Si se define modelo BranchTransfer para auditoría (o tracking):\n       instance: ForeignKey a BookInstance\n       from_branch: ForeignKey a Branch (related_name='transfers_sent')\n       to_branch: ForeignKey a Branch (related_name='transfers_received')\n       performed_by: ForeignKey a settings.AUTH_USER_MODEL\n       timestamp: DateTimeField(auto_now_add=True)\n2. Endpoint de Transferencia:\n   POST /catalog/api/branch-transfer/\n   - Payload JSON: {'instance_id': '<uuid>', 'target_branch_code': '<code>'}\n   - Autorización: Solo usuarios staff que tengan permisos de gestión tanto en la sucursal de ORIGEN (custodia actual de la copia) como en la sucursal DESTINO (target_branch_code). Si falta permiso en alguna de las dos sedes, responder 403 Forbidden con JSON {'error': 'permission_denied'} sin mutar la base de datos.\n   - Disponibilidad: El ejemplar solo puede transferirse si BookInstance.status == 'a' (disponible) y no tiene prestatario asignado (borrower is None). Si no está disponible, responder 409 Conflict con JSON {'error': 'not_available'} sin mutar nada.\n   - Ejecución exitosa (201 Created): Traslado inmediato. BookInstance.branch pasa a ser la sucursal destino; BookInstance.origin_branch permanece inalterado (origen original). Registrar auditoría de BranchTransfer. Responder 201 Created con JSON exacto:\n     {\"instance_id\": str(instance.id), \"origin_branch\": instance.origin_branch.code, \"current_branch\": instance.branch.code, \"status\": \"a\"}\n   - Errores de validación: 404 Not Found si la copia o el target_branch_code no existen. 400 Bad Request si faltan campos.\n   - Ninguna llamada fallida (400, 403, 404, 409) debe mutar el estado ni cambiar la custodia de la copia.\n3. Compatibilidad continua:\n   - Todas las migraciones y datos de Fase 1 deben preservarse.\n   - Los 43 tests originales deben seguir pasando OK sin excepción.",
+      "acceptance_criteria": [
+        {
+          "id": "CRIT-3.1",
+          "desc": "Fase 1: Modelos Branch, BranchMembership y campos en BookInstance migrados sin pérdida; copias legacy asignadas a Central; 43 tests originales pasan."
+        },
+        {
+          "id": "CRIT-3.2",
+          "desc": "Fase 1: Catálogo bibliográfico sigue público y global; POST /catalog/branches/select/ valida permisos (403 si denegado, 200 y sesión si autorizado); compatibilidad legacy para usuarios sin membership."
+        },
+        {
+          "id": "CRIT-3.3",
+          "desc": "Fase 1: GET /catalog/api/inventory/ exige autenticación (401 si anónimo) y devuelve únicamente el inventario de la sucursal activa con payload exacto."
+        },
+        {
+          "id": "CRIT-3.4",
+          "desc": "Fase 2: POST /catalog/api/branch-transfer/ permite transferencias inmediatas de copias disponibles ('a') solo a staff con permisos en origen y destino (201 con payload exacto)."
+        },
+        {
+          "id": "CRIT-3.5",
+          "desc": "Fase 2: Transferencias deniegan con 403 si falta permiso en origen o destino, 409 si la copia no está disponible, sin mutaciones espurias; origen inmutable y custodia actualizada."
+        },
+        {
+          "id": "CRIT-3.6",
+          "desc": "Suite de 43 tests originales continúa pasando OK tanto en Fase 1 como en Fase 2."
+        }
+      ]
+    }
+  ]
+}

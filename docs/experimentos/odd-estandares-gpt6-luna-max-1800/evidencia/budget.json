@@ -1,0 +1,8 @@
+{
+  "timeout_per_invocation_seconds": 1800,
+  "prior_timeout_seconds": 600,
+  "model": "openai/gpt-6-luna",
+  "variant": "max",
+  "prior_freeze_sha256": "07c63cacfbd96b7f86b1a11f52d1f4057a2c4d56d67c35dbc56755c5e579ffd3",
+  "cohort": "odd-standards-luna-max-1800-v1"
+}

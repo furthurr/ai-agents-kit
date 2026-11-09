@@ -1,0 +1,10 @@
+{
+  "model": "openai/gpt-6-luna",
+  "variant": "max",
+  "timeout_seconds": 1800,
+  "steps": 60,
+  "tokens_per_conversation": 5000000,
+  "max_invocations": 4,
+  "nominal_total_tokens": 20000000,
+  "boundary_overshoot_possible": true
+}

@@ -1,0 +1,42 @@
+{
+  "files": {
+    "low/audits/build_mas.json": "a5fe39770a2babf08ed15edabf40f47493df84d2a6aecebba23fa900bd64f8f4",
+    "low/audits/build_sin_mas.json": "85ef905593b1189a71fdd3e6092bfd093461e294b12f8677a0720c7a26dc8ee7",
+    "low/audits/developer_actual.json": "86a028d65c706ae8eba5f3203e807a9191c75e4092b3bd21198ee482e70c6aee",
+    "low/audits/v2.json": "3a44e51a7f5e0266305de47d9632a7a41e1c2622f50c77576fd21369215e5d9e",
+    "low/audits/v2_reforzado.json": "85ef905593b1189a71fdd3e6092bfd093461e294b12f8677a0720c7a26dc8ee7",
+    "high/audits/build_mas.json": "a5fe39770a2babf08ed15edabf40f47493df84d2a6aecebba23fa900bd64f8f4",
+    "high/audits/build_sin_mas.json": "a5fe39770a2babf08ed15edabf40f47493df84d2a6aecebba23fa900bd64f8f4",
+    "high/audits/developer_actual.json": "a5fe39770a2babf08ed15edabf40f47493df84d2a6aecebba23fa900bd64f8f4",
+    "high/audits/v2.json": "a5fe39770a2babf08ed15edabf40f47493df84d2a6aecebba23fa900bd64f8f4",
+    "high/audits/v2_reforzado.json": "a5fe39770a2babf08ed15edabf40f47493df84d2a6aecebba23fa900bd64f8f4",
+    "sdd-low/audits/sdd_trial.json": "85ef905593b1189a71fdd3e6092bfd093461e294b12f8677a0720c7a26dc8ee7",
+    "sdd-high/audits/sdd_trial.json": "a5fe39770a2babf08ed15edabf40f47493df84d2a6aecebba23fa900bd64f8f4",
+    "revision-posterior/RESULTADOS.md": "0e0f6de63ef4c26dbd4c8d06a96a30c7f175871fa3be19827bb5a5792e2ddff2",
+    "revision-posterior/low/build_mas-oracle13.json": "547de57aa90deef1d36d7f28bbf64bee1c0b0f07dc349095b500e68c516afe1c",
+    "revision-posterior/low/build_sin_mas-oracle13.json": "fa48a01e4b202a7fbb08de99f1ab91c5958c03b94a91951bcf1cbec92ee39a24",
+    "revision-posterior/low/developer_actual-oracle13.json": "2efd287c3b1960b0c5d223cfbcc72756cbdb4a4ec827e00ba6dc568650c90d16",
+    "revision-posterior/low/v2-oracle13.json": "234e04825e8f5abb2043e96f77ba663f6a02067262128661723d794218939501",
+    "revision-posterior/low/v2_reforzado-oracle13.json": "ec317ae2d9314e20946251baae845e4aa32fa5b9cbb021c8ffef98043623758b",
+    "revision-posterior/resultados-revisados.json": "c724dbdeef4509058eaa94c97f23d02e5f8b57f2cf43042ede5c8facaba5e2d0",
+    "revision-posterior/sdd-low/sdd_trial-oracle13.json": "43ca9cc37ee07e247f49ea8ae255d33a7c06a80fe1f96a162e7b543a4d3facfb"
+  },
+  "original_archives": {
+    "low": {
+      "members_verified_sha256": 812,
+      "archive_sha256": "737d369427edc7fc92ef8b25dd0538f74635fa9c61d74c7fd07b7875f2b5d9f0"
+    },
+    "high": {
+      "members_verified_sha256": 827,
+      "archive_sha256": "1ae23ba54309ab4c25b377f5ef725bfa7fa631de033d054bdb5f196cabab725d"
+    },
+    "sdd-low": {
+      "members_verified_sha256": 359,
+      "archive_sha256": "5bc94900c4470019be39ea41841a5f8081c426da33d75dae7e7ac2b1e14157c6"
+    },
+    "sdd-high": {
+      "members_verified_sha256": 363,
+      "archive_sha256": "c1347f07d39c77abe42ca7da563a9984866aa81ceffa4a56e27530eadbbecc20"
+    }
+  }
+}

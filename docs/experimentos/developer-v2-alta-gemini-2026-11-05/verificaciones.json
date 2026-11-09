@@ -1,0 +1,24 @@
+{
+  "cohort": "v2-high-v1-20261105",
+  "candidate": "Developer v2 candidato1, isolated, not installed",
+  "comparative_cells": 9,
+  "functional_acceptance": {"developer": "3/3", "odd": "3/3", "v2": "3/3"},
+  "reference": {"original_tests": 43, "external_tests": 9, "passed": true},
+  "real_preflights": {"count": 3, "passed": true},
+  "offline_harness_tests": 8,
+  "offline_analysis_tests": 2,
+  "frozen_inputs_unchanged": true,
+  "api_errors": 0,
+  "comparative_timeouts": 0,
+  "selective_retries": 0,
+  "source_baseline_and_historical_runner_unchanged": true,
+  "controls": "Equal model, permissions, limits, task and baseline; independent new executions, three rotated concurrent blocks",
+  "limits": [
+    "Only one task, three repetitions; no complete-agent equivalence",
+    "Domain skill use differs: data-api 3/3 developer vs 1/3 ODD and v2; ui-design 2/3 developer vs0/3 others",
+    "ODD observed RED before first product edit only1/3, not perfect workflow fidelity",
+    "ODD R3 emitted63 step_finish events with steps60 configured; hard cap not accredited",
+    "No complete documentation-update, PLAN, long continuity, visual accessibility or security verification"
+  ],
+  "git": "No commits/push; installed and canonical agents unchanged"
+}

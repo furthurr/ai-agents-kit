@@ -1,0 +1,82 @@
+{
+  "model": "github-copilot/gpt-6-luna",
+  "root": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high",
+  "rows": [
+    {
+      "arm": "sdd_trial",
+      "status": "awaiting_operator_review",
+      "tokens": {
+        "input": 39683,
+        "output": 2103,
+        "reasoning": 3055,
+        "cache_read": 76603,
+        "cache_write": 0,
+        "total": 118389
+      },
+      "metrics_complete": true,
+      "seconds": 67.211,
+      "steps": 6,
+      "tool_counts": {
+        "skill": 1,
+        "read": 12,
+        "glob": 4
+      },
+      "skills_invoked": [
+        "sdd-spec"
+      ],
+      "skills_loaded_by_content": [
+        "sdd-spec"
+      ],
+      "files_read": [
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/profiles/sdd_trial/skills/sdd-spec/references/workspace-trust.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/profiles/sdd_trial/skills/sdd-spec/references/scope-depth.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/profiles/sdd_trial/skills/sdd-spec/references/feature-level.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/.data/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/.security/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/.design/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/.quality/README.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/catalog/tests/test_views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-task2-high-20261106-v1/sdd-high/runs/sdd_trial/catalog/templates/catalog/book_detail.html"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 52,
+      "joint_pass": false,
+      "changed": [],
+      "final_text": "Preflight: es una **feature** con alcance declarado y autorización para implementar; la siguiente fase SDD es definir/validar el plan. Queda pendiente seleccionar la profundidad SDD (la autorización de implementación no aprueba los gates). Ahora aplicaré el flujo y la política de confianza de `sdd-spec` antes de inspeccionar el workspace.\n## Alcance definido\n\n**Objetivo y resultado esperado:** permitir que usuarios autenticados reserven ejemplares disponibles, con reserva persistente e idempotencia por usuario, y ofrecer el mismo flujo desde la API y la interfaz web.\n\n**Comportamientos y criterios de aceptación:**\n\n1. **Persistencia de reservas.** El sistema deberá exponer `Reservation` en `catalog.models`, con `user` referido a `settings.AUTH_USER_MODEL`, `instance` referido a `BookInstance`, `key` de hasta 100 caracteres y `created_at` automático. La combinación `[user, key]` deberá ser única en la base de datos. Se añadirá una migración nueva, sin reescribir migraciones históricas.\n\n2. **API de reserva.** En `POST /catalog/api/bookinstance/<uuid:pk>/reserve/`, el sistema deberá aceptar solo POST. Una petición a otro método responderá 405. Para solicitudes POST, una persona no autenticada recibirá 401 con `{\"error\":\"unauthorized\"}`. La clave `Idempotency-Key` —también disponible como `HTTP_IDEMPOTENCY_KEY`— deberá existir, no quedar vacía tras `strip` y tener como máximo 100 caracteres; si no, se responderá 400 con `{\"error\":\"invalid_key\"}`. Si el ejemplar no existe, se responderá 404 con `{\"error\":\"not_found\"}`.\n\n3. **Reserva y replay.** Para la misma persona y clave:\n   - Si la clave ya corresponde al mismo ejemplar, el sistema responderá 201 con `{\"instance_id\": str(pk), \"user_id\": request.user.id, \"status\": \"r\"}`, sin crear otra reserva ni alterar el estado.\n   - Si la clave ya corresponde a otro ejemplar, responderá 409 con `{\"error\":\"idempotency_conflict\"}`.\n   - Si no existe reserva previa para esa clave y el ejemplar no tiene `status='a'`, responderá 409 con `{\"error\":\"unavailable\"}`.\n   - Si está disponible, el sistema deberá cambiar su estado a `'r'`, asignar el usuario actual como `borrower`, persistir la reserva y responder 201 con el mismo formato de éxito.\n\n   La reserva persistida deberá permitir que un replay posterior, incluso en otra conexión o sesión HTTP, dé el mismo resultado. El replay de una reserva existente tendrá precedencia sobre comprobar la disponibilidad actual del ejemplar.\n\n4. **Concurrencia e integridad.** Bajo SQLite en disco, solicitudes concurrentes de distintos usuarios por un mismo ejemplar disponible deberán producir exactamente una respuesta 201 y una respuesta 409 con `{\"error\":\"unavailable\"}`; no deberán devolver 500 por bloqueo de base de datos. Las respuestas fallidas 400, 401, 404, 405 y 409 no deberán cambiar ejemplares ni dejar reservas espurias. La verificación deberá ejercitar concurrencia real con conexiones independientes, no ocultar el caso crítico con mocks.\n\n5. **Interfaz web.** En `/catalog/book/<int:pk>`, cada copia disponible deberá mostrar un formulario con CSRF, un campo oculto `idempotency_key` generado para evitar envíos duplicados accidentales y destino `/catalog/book/<uuid:instance_pk>/reserve/`. El POST web requerirá autenticación y redirigirá a login a usuarios anónimos. Una reserva exitosa mostrará una confirmación visible, por mensaje y redirección al detalle o mediante otra presentación equivalente.\n\n**Restricciones, exclusiones y supuestos:** conservar intactos los 43 tests originales y el comando de renovación para bibliotecarios; no alterar configuración de despliegue, añadir dependencias, ampliar el alcance, ni hacer bootstrap/sync documental, delegación o publicación. No se incluyen cancelar reservas ni otros cambios de negocio. Para solicitudes POST, asumiré este orden de validación: autenticación, clave, existencia del ejemplar y, después, replay/conflicto/disponibilidad. El flujo web usará su campo oculto de clave y no cambia el contrato de clave de la API.\n\n**Esfuerzo previsto del LLM: 9 🟠**  \n**Atención especial:** concurrencia real de SQLite, idempotencia persistente y pruebas de regresión entre API y UI.  \n**Profundidad recomendada: SDD-Lite**, por el contrato API, la migración y el cruce de capas. La autorización para implementar no selecciona modo ni aprueba gates.\n\n¿Confirmas este alcance completo y eliges SDD-Lite para continuar? No escribiré artefactos ni código hasta resolver esa selección y validación.",
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": false,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "primary_acceptance": false,
+      "extended_contract_pass": false
+    }
+  ],
+  "batch": {
+    "finished": "2026-11-07T02:27:20.701328+00:00",
+    "wall_seconds": 88.364,
+    "calls": 1,
+    "halted": false
+  },
+  "halt": null,
+  "comparison_valid": false,
+  "limits": [
+    "One repetition; no statistical or causal performance conclusion.",
+    "SDD requires manual operator; missing runs are not zero cost.",
+    "Single-session pilot does not evaluate resumption.",
+    "Researcher/preparation tokens unknown, not zero.",
+    "Tool permissions, not OS sandbox. Native provider internal retries are not independently observable."
+  ],
+  "cohort": "sdd-high",
+  "temperature": "unsupported; provider default",
+  "comparison_note": "Descriptive n=1 replication; functional acceptance is not procedural certification."
+}

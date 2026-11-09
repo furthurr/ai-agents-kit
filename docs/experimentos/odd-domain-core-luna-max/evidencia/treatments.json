@@ -1,0 +1,12 @@
+{
+  "labels": {
+    "odd": "Standards ODD + full domain skills",
+    "adjusted": "Same standards ODD + core/reference domain skills"
+  },
+  "delta": "Only the delivery of data-api and ui-design context is changed",
+  "no_navigation_maps_added": true,
+  "same_primary_odd_normalized": true,
+  "full_original_contract_preserved": true,
+  "original_references_unchanged": true,
+  "prior_freeze_sha256": "5dfeda5d1e68b7347d6974c46871715ba8f1ed0d28fb7d584bce07c5c4c94979"
+}

@@ -23,3 +23,11 @@ de entrada; aquí está el detalle por tema.
 | [desarrollo.md](desarrollo.md) | Contribuidores | Editar `canonical/`, `adapters/` y flujo de trabajo |
 | [arquitectura-del-kit.md](arquitectura-del-kit.md) | Contribuidores | Pipeline de render y herramientas |
 | [mejoras.md](mejoras.md) | Contribuidores | Backlog priorizado (impacto → esfuerzo) para subir calidad del kit |
+| [Índice de experimentos del MAS](experimentos/README.md) | Contribuidores | Catálogo completo de benchmarks, comparativas y resultados empíricos |
+| [Continuar experimentos en otra sesión](experimentos/CONTINUAR-AQUI.md) | Contribuidores | Contexto al día, decisiones pendientes, resultados consolidados y evidencia |
+| [ODD con estándares — Gemini 3.8 Flash](experimentos/odd-estandares-gemini-38-v3-2026-11-08/README.md) | Contribuidores | Benchmark de ODD con `data-api`/`ui-design`, balanceo R1+R2 y análisis arquitectónico |
+| [Proyecto Real Android CRM — Gemini 3.8](experimentos/real-android-gemini-2026-11-08/README.md) | Contribuidores | Benchmark en proyecto Android real (15 celdas): Developer v1 vs v2 vs v2 reforzado vs Build |
+| [Developer vs SDD vs ODD — Gemini](experimentos/developer-sdd-odd-gemini-2026-11-04/README.md) | Contribuidores | Experimento independiente de tres flujos con Gemini: profundidad natural, calidad, herramientas, velocidad y tokens |
+| [Developer actual vs compacto — Gemini](experimentos/developer-compacto-gemini-2026-11-04/README.md) | Contribuidores | Prueba del prompt compacto con skill idéntica, control vigente y ODD de referencia |
+| [Experimento Ponytail — 2026-11-04](experimentos/ponytail-2026-11-04/README.md) | Contribuidores | Evidencia A/B, protocolo, resultados y decisión de conservar el MAS actual |
+| [Experimento ODD vs SDD — 2026-11-04](experimentos/odd-vs-sdd-2026-11-04/README.md) | Contribuidores | Registro histórico: evidencia GPT, suplemento, rectificación de Gemini y límites |

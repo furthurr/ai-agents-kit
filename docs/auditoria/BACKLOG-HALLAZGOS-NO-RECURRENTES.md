@@ -29,7 +29,6 @@ Algunos puntos pertenecen a familias recurrentes, pero tienen una acci√≥n espec√
 | Clave | Informe |
 |---|---|
 | A | [Antigravity](AUDITORIA-MAS-ANTIGRAVITY.md) |
-| D | [DeepSeek](AUDITORIA-MAS-DEEPSEEK.MD) |
 | G | [GPT](AUDITORIA-MAS-GPT.md) |
 | M | [MiMo](AUDITORIA-MAS-MIMO.MD) |
 | E | [Estudio de agentes y skills](Estudio-agentes-y-skills-ai-agents-kit.md) |

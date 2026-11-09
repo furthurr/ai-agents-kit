@@ -1,0 +1,369 @@
+{
+  "1": {
+    "metadata": {
+      "id": "[REDACTED_MOBILE_EVIDENCE]",
+      "title": "[REDACTED_MOBILE_EVIDENCE]",
+      "complexity": "[REDACTED_MOBILE_EVIDENCE]",
+      "file": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_source": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_target": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_oracle_task": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_original_task": "[REDACTED_MOBILE_EVIDENCE]"
+    },
+    "arms": {
+      "v2_reforzado": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2_reforzado",
+        "model": "openai/gpt-6.1-terra",
+        "steps": 8,
+        "tools_called": 11,
+        "tokens": {
+          "total": 100708,
+          "input": 15392,
+          "output": 2465,
+          "reasoning": 163,
+          "cache_read": 82688,
+          "cache_write": 0
+        },
+        "duration_seconds": 79.924,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:05:06.546852+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "developer_actual": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "developer_actual",
+        "model": "openai/gpt-6.1-terra",
+        "steps": 8,
+        "tools_called": 11,
+        "tokens": {
+          "total": 142905,
+          "input": 30097,
+          "output": 2465,
+          "reasoning": 135,
+          "cache_read": 110208,
+          "cache_write": 0
+        },
+        "duration_seconds": 77.939,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:06:37.473102+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "v2": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2",
+        "model": "openai/gpt-6.1-terra",
+        "steps": 8,
+        "tools_called": 11,
+        "tokens": {
+          "total": 99880,
+          "input": 16028,
+          "output": 2348,
+          "reasoning": 96,
+          "cache_read": 81408,
+          "cache_write": 0
+        },
+        "duration_seconds": 72.553,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:08:01.965247+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "build_mas": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_mas",
+        "model": "openai/gpt-6.1-terra",
+        "steps": 10,
+        "tools_called": 13,
+        "tokens": {
+          "total": 114643,
+          "input": 12816,
+          "output": 2978,
+          "reasoning": 161,
+          "cache_read": 98688,
+          "cache_write": 0
+        },
+        "duration_seconds": 84.648,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:09:38.620891+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "build_sin_mas": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_sin_mas",
+        "model": "openai/gpt-6.1-terra",
+        "steps": 9,
+        "tools_called": 12,
+        "tokens": {
+          "total": 140601,
+          "input": 19644,
+          "output": 2824,
+          "reasoning": 117,
+          "cache_read": 118016,
+          "cache_write": 0
+        },
+        "duration_seconds": 79.383,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:11:08.641336+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      }
+    }
+  },
+  "2": {
+    "metadata": {
+      "id": "[REDACTED_MOBILE_EVIDENCE]",
+      "title": "[REDACTED_MOBILE_EVIDENCE]",
+      "complexity": "[REDACTED_MOBILE_EVIDENCE]",
+      "file": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_source": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_target": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_oracle_task": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_original_task": "[REDACTED_MOBILE_EVIDENCE]"
+    },
+    "arms": {
+      "v2_reforzado": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2_reforzado",
+        "model": "openai/gpt-6.1-terra",
+        "steps": 14,
+        "tools_called": 22,
+        "tokens": {
+          "total": 405893,
+          "input": 37254,
+          "output": 3450,
+          "reasoning": 261,
+          "cache_read": 364928,
+          "cache_write": 0
+        },
+        "duration_seconds": 164.253,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:14:04.962115+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "developer_actual": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "developer_actual",
+        "model": "openai/gpt-6.1-terra",
+        "steps": 25,
+        "tools_called": 39,
+        "tokens": {
+          "total": 1012225,
+          "input": 49998,
+          "output": 4461,
+          "reasoning": 326,
+          "cache_read": 957440,
+          "cache_write": 0
+        },
+        "duration_seconds": 209.737,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:17:48.844649+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "v2": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2",
+        "model": "openai/gpt-6.1-terra",
+        "steps": 13,
+        "tools_called": 22,
+        "tokens": {
+          "total": 378214,
+          "input": 71908,
+          "output": 3261,
+          "reasoning": 197,
+          "cache_read": 302848,
+          "cache_write": 0
+        },
+        "duration_seconds": 161.614,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:20:44.143727+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "build_mas": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_mas",
+        "model": "openai/gpt-6.1-terra",
+        "steps": 20,
+        "tools_called": 28,
+        "tokens": {
+          "total": 636228,
+          "input": 48516,
+          "output": 4100,
+          "reasoning": 188,
+          "cache_read": 583424,
+          "cache_write": 0
+        },
+        "duration_seconds": 213.631,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:24:31.903476+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "build_sin_mas": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_sin_mas",
+        "model": "openai/gpt-6.1-terra",
+        "steps": 22,
+        "tools_called": 31,
+        "tokens": {
+          "total": 847860,
+          "input": 52781,
+          "output": 4106,
+          "reasoning": 189,
+          "cache_read": 790784,
+          "cache_write": 0
+        },
+        "duration_seconds": 199.1,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:28:05.202093+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      }
+    }
+  }
+}

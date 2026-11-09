@@ -1,0 +1,2887 @@
+{
+  "developer": {
+    "agent": "g3-developer",
+    "skill": "g3d-developer",
+    "prompt_sha256": "df71b65bfe57660a98c651124c87d6b80cfb766df6b541051af4da034c0d7996",
+    "tools": {
+      "invalid": true,
+      "question": false,
+      "bash": true,
+      "read": true,
+      "glob": true,
+      "grep": true,
+      "edit": true,
+      "write": true,
+      "task": false,
+      "webfetch": false,
+      "todowrite": true,
+      "skill": true,
+      "google_search": true,
+      "antigravity_quota": true
+    },
+    "permission": [
+      {
+        "permission": "*",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "doom_loop",
+        "action": "ask",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "ask"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.local/share/opencode/tool-output/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/project-navigator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/graphify/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/documentation-orchestrator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/architecture/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/code-quality/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/data-api/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/security/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/opencode-project-icon/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/release-management/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/ui-design/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/git-commit/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/sdd-spec/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-documentation-orchestrator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-git-commit/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-data-api/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-architecture/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-security/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-release-management/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-project-navigator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-code-quality/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-sdd-spec/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/g3d-ui-design/*",
+        "action": "allow"
+      },
+      {
+        "permission": "question",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "plan_enter",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "plan_exit",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env",
+        "action": "ask"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.*",
+        "action": "ask"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*credentials*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*credential*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.secret",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.secrets",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env.*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*credentials*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*credential*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.secret",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.secrets",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env.example*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pem*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.key*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.p12*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pfx*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.jks*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.keystore*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "glob",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "grep",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "list",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "task",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "skill",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "lsp",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "webfetch",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "websearch",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "todowrite",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "question",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "doom_loop",
+        "action": "ask",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/probes/developer",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/probes/developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "glob",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "grep",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "list",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/probes/developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/profiles/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "AGENTS.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "TASK.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/probes/developer/AGENTS.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/probes/developer/TASK.md",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 -m unittest*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 -m py_compile*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "git status*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "git diff*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "skill",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "skill",
+        "pattern": "g3d-developer",
+        "action": "allow"
+      },
+      {
+        "permission": "skill",
+        "pattern": "g3d-data-api",
+        "action": "allow"
+      },
+      {
+        "permission": "skill",
+        "pattern": "g3d-ui-design",
+        "action": "allow"
+      },
+      {
+        "permission": "task",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "question",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "webfetch",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "websearch",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "todowrite",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "lsp",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/developer/skills/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/probes/developer",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/probes/developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.local/share/opencode/tool-output/*",
+        "action": "allow"
+      }
+    ],
+    "correct_treatment_loaded": true,
+    "runtime_seconds": 11.893
+  },
+  "sdd": {
+    "agent": "g3-sdd",
+    "skill": "g3s-sdd-spec",
+    "prompt_sha256": "6e6cf9d81e6932170cdd47aae76e3621f8b8e67187b676d3acc162136f3f8b1c",
+    "tools": {
+      "invalid": true,
+      "question": false,
+      "bash": true,
+      "read": true,
+      "glob": true,
+      "grep": true,
+      "edit": true,
+      "write": true,
+      "task": false,
+      "webfetch": false,
+      "todowrite": true,
+      "skill": true,
+      "google_search": true,
+      "antigravity_quota": true
+    },
+    "permission": [
+      {
+        "permission": "*",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "doom_loop",
+        "action": "ask",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "ask"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.local/share/opencode/tool-output/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/graphify/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/code-quality/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/architecture/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/data-api/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/project-navigator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/security/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/documentation-orchestrator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/release-management/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/opencode-project-icon/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/git-commit/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/sdd-spec/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/ui-design/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-project-navigator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-documentation-orchestrator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-security/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-architecture/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-sdd-spec/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-data-api/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-code-quality/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-release-management/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-git-commit/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-ui-design/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/g3s-developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "question",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "plan_enter",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "plan_exit",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env",
+        "action": "ask"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.*",
+        "action": "ask"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*credentials*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*credential*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.secret",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.secrets",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env.*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*credentials*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*credential*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.secret",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.secrets",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env.example*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pem*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.key*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.p12*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pfx*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.jks*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.keystore*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "glob",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "grep",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "list",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "task",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "skill",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "lsp",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "webfetch",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "websearch",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "todowrite",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "question",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "doom_loop",
+        "action": "ask",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/probes/sdd",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/probes/sdd/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "glob",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "grep",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "list",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/probes/sdd/*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/profiles/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "AGENTS.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "TASK.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/probes/sdd/AGENTS.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/probes/sdd/TASK.md",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 -m unittest*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 -m py_compile*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "git status*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "git diff*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "skill",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "skill",
+        "pattern": "g3s-sdd-spec",
+        "action": "allow"
+      },
+      {
+        "permission": "skill",
+        "pattern": "g3s-data-api",
+        "action": "allow"
+      },
+      {
+        "permission": "skill",
+        "pattern": "g3s-ui-design",
+        "action": "allow"
+      },
+      {
+        "permission": "task",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "question",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "webfetch",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "websearch",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "todowrite",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "lsp",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/sdd/skills/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/probes/sdd",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/probes/sdd/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.local/share/opencode/tool-output/*",
+        "action": "allow"
+      }
+    ],
+    "correct_treatment_loaded": true,
+    "runtime_seconds": 11.807
+  },
+  "odd": {
+    "agent": "g3-odd",
+    "skill": "g3o-odd-workflow",
+    "prompt_sha256": "5bc759aa170b3781adfb8829066e7efcf02315b2605567b591cf9abb03b991dd",
+    "tools": {
+      "invalid": true,
+      "question": false,
+      "bash": true,
+      "read": true,
+      "glob": true,
+      "grep": true,
+      "edit": true,
+      "write": true,
+      "task": false,
+      "webfetch": false,
+      "todowrite": true,
+      "skill": true,
+      "google_search": true,
+      "antigravity_quota": true
+    },
+    "permission": [
+      {
+        "permission": "*",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "doom_loop",
+        "action": "ask",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "ask"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.local/share/opencode/tool-output/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/graphify/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/project-navigator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/code-quality/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/architecture/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/release-management/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/security/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/documentation-orchestrator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/data-api/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/ui-design/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/sdd-spec/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/opencode-project-icon/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/opencode/skills/git-commit/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-release-management/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-documentation-orchestrator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-project-navigator/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-odd-workflow/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-git-commit/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-security/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-ui-design/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-data-api/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-code-quality/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-developer/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-architecture/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/g3o-sdd-spec/*",
+        "action": "allow"
+      },
+      {
+        "permission": "question",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "plan_enter",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "plan_exit",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env",
+        "action": "ask"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.*",
+        "action": "ask"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*credentials*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*credential*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.secret",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.secrets",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "<HOST_HOME>/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env.*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.env.example",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<HOST_HOME>/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*credentials*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*credential*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.secret",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*.secrets",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env.example*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pem*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.key*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.p12*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pfx*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.jks*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.keystore*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*~/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*$HOME/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.ssh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.aws*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.config/gh*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.netrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.npmrc*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*<HOST_HOME>/.pypirc*",
+        "action": "deny"
+      },
+      {
+        "permission": "glob",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "grep",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "list",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "task",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "skill",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "lsp",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "webfetch",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "websearch",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "todowrite",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "question",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "doom_loop",
+        "action": "ask",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.ssh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.aws/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.config/gh/**",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/probes/odd",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/probes/odd/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/*",
+        "action": "allow"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "read",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "glob",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "grep",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "list",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/probes/odd/*",
+        "action": "allow"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "*/profiles/*",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "AGENTS.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "TASK.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/probes/odd/AGENTS.md",
+        "action": "deny"
+      },
+      {
+        "permission": "edit",
+        "pattern": "<EXPERIMENT_ROOT>/probes/odd/TASK.md",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 -m unittest*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "python3 -m py_compile*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "git status*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "git diff*",
+        "action": "allow"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.env*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pem",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.key",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.p12",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.pfx",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.jks",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*.keystore",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.ssh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.aws/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.config/gh/*",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/auth.json",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.npmrc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.netrc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*/.pypirc",
+        "action": "deny"
+      },
+      {
+        "permission": "bash",
+        "pattern": "*antigravity-accounts*",
+        "action": "deny"
+      },
+      {
+        "permission": "skill",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "skill",
+        "pattern": "g3o-odd-workflow",
+        "action": "allow"
+      },
+      {
+        "permission": "skill",
+        "pattern": "g3o-data-api",
+        "action": "allow"
+      },
+      {
+        "permission": "skill",
+        "pattern": "g3o-ui-design",
+        "action": "allow"
+      },
+      {
+        "permission": "task",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "question",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "webfetch",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "websearch",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "todowrite",
+        "action": "allow",
+        "pattern": "*"
+      },
+      {
+        "permission": "lsp",
+        "action": "deny",
+        "pattern": "*"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/profiles/odd/skills/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/probes/odd",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<EXPERIMENT_ROOT>/probes/odd/*",
+        "action": "allow"
+      },
+      {
+        "permission": "external_directory",
+        "pattern": "<HOST_HOME>/.local/share/opencode/tool-output/*",
+        "action": "allow"
+      }
+    ],
+    "correct_treatment_loaded": true,
+    "runtime_seconds": 11.964
+  }
+}

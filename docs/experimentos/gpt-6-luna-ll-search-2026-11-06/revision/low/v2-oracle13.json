@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "passed": true,
+  "tests": 13,
+  "stdout": "Found 13 test(s).\nSystem check identified no issues (0 silenced).\n",
+  "stderr": "Creating test database for alias 'default'...\nDestroying old test database for alias 'default'...\n/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/lib/python3.12/site-packages/django/core/handlers/base.py:63: UserWarning: No directory at: /private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/low/evaluation/v2-post-oracle13/staticfiles/\n  mw_instance = middleware(adapted_handler)\n.............\n----------------------------------------------------------------------\nRan 13 tests in 0.043s\n\nOK\nDestroying test database for alias 'default'...\n",
+  "seconds": 0.427
+}

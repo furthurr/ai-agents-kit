@@ -21,7 +21,7 @@
 ## Diagnóstico actual
 
 - **Vigencia:** contradicción confirmada al inicio y corregida; dos probes iniciales incompletos conservados como historia. La ejecución live final acredita el escenario conductual de cierre.
-- **Evidencia histórica:** DeepSeek AUD-01; GPT H04; Estudio EST-001, según la ficha del consolidado.
+- **Evidencia histórica:** GPT H04; Estudio EST-001, según la ficha del consolidado.
 - **Evidencia de diagnóstico en baseline `ruta:línea`:** `canonical/skills/git-commit/SKILL.md:34,83–106` permitía incluir sensibles con autorización sin separar secretos confirmados; `canonical/skills/release-management/SKILL.md:314–316` heredaba el Paso 1.5; `README.md:174` prohíbe commits de secretos. Estas líneas describen el baseline, no la redacción corregida. Resultado local identificado por hashes en Verification.
 - **Deuda existente vinculada:** [Mejoras, sección P0.5 — Seguridad mínima exigible](../../mejoras.md). Punto de política cerrado con evidencia real y aprobación; control local/CI acreditado. Los demás puntos P0.5 no se cierran por REC-01.
 - **Diferencias respecto de los informes:** contradicción corregida en fuentes/copias; escenario real acreditado, sin afirmar conducta universal ni filtración histórica. `.security/` documenta F07, no este flujo; arquitectura/Navigator solo orientan.

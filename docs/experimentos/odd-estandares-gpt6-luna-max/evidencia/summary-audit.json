@@ -1,0 +1,311 @@
+{
+  "expected_cells": 6,
+  "observed_cells": 2,
+  "complete": false,
+  "arms": {
+    "odd": {
+      "cells": 1,
+      "expected": 3,
+      "functional_pass": 0,
+      "original_suites_pass": 0,
+      "identity_and_process_ok": false,
+      "comparable_tokens": 1076576,
+      "seconds": 600.257,
+      "tools": 33,
+      "steps": 23,
+      "user_turns": 0,
+      "tool_errors": 0,
+      "data_api_loaded": 0,
+      "ui_design_loaded": 0,
+      "both_before_product": 0,
+      "bootstrap_change_cells": 0
+    },
+    "adjusted": {
+      "cells": 1,
+      "expected": 3,
+      "functional_pass": 0,
+      "original_suites_pass": 0,
+      "identity_and_process_ok": false,
+      "comparable_tokens": 523574,
+      "seconds": 600.256,
+      "tools": 28,
+      "steps": 13,
+      "user_turns": 0,
+      "tool_errors": 0,
+      "data_api_loaded": 1,
+      "ui_design_loaded": 1,
+      "both_before_product": 0,
+      "bootstrap_change_cells": 0
+    }
+  },
+  "comparison": null,
+  "cells": [
+    {
+      "task": "TASK-2",
+      "arm": "adjusted",
+      "repeat": 1,
+      "phases": [
+        "TASK-2-ADJUSTED-r1"
+      ],
+      "complete": true,
+      "trajectory_functional_pass": false,
+      "final_functional_pass": false,
+      "all_original_suites_pass": false,
+      "healthy": false,
+      "primary_loaded_by_content": true,
+      "flow_alerts_mechanical": [],
+      "outside_attempts": [],
+      "foreign_skill_attempts": [],
+      "forbidden_tool_attempts": [],
+      "seconds": 600.256,
+      "metrics": {
+        "input": 75398,
+        "output": 8496,
+        "cache_read": 439680,
+        "cache_write": 0,
+        "reasoning": 20664,
+        "comparable_tokens": 523574
+      },
+      "tools": 28,
+      "steps": 13,
+      "user_turns": 0,
+      "selected_modes": [
+        null
+      ],
+      "phase_diagnostics": [
+        {
+          "phase": "TASK-2-ADJUSTED-r1",
+          "functional_pass": false,
+          "original_pass": false,
+          "oracle_count": 9,
+          "failed_external_tests": [
+            "test_api_auth_required (oracles.test_oracle_task2.Task2OracleModelAndApiTest.test_api_auth_required)",
+            "test_api_key_validation (oracles.test_oracle_task2.Task2OracleModelAndApiTest.test_api_key_validation)",
+            "test_api_method_get_not_allowed (oracles.test_oracle_task2.Task2OracleModelAndApiTest.test_api_method_get_not_allowed)",
+            "test_api_not_found (oracles.test_oracle_task2.Task2OracleModelAndApiTest.test_api_not_found)",
+            "test_api_successful_reserve_and_replay_idempotency (oracles.test_oracle_task2.Task2OracleModelAndApiTest.test_api_successful_reserve_and_replay_idempotency)",
+            "test_api_unavailable_copy (oracles.test_oracle_task2.Task2OracleModelAndApiTest.test_api_unavailable_copy)",
+            "test_reservation_model_fields_and_uniqueness (oracles.test_oracle_task2.Task2OracleModelAndApiTest.test_reservation_model_fields_and_uniqueness)",
+            "test_ui_reserve_page (oracles.test_oracle_task2.Task2OracleModelAndApiTest.test_ui_reserve_page)",
+            "test_concurrency_barrier_three_trials (oracles.test_oracle_task2.Task2OracleConcurrencyRealDbTest.test_concurrency_barrier_three_trials)"
+          ],
+          "external_summary": [
+            "Ran 9 tests in 0.393s",
+            "FAILED (failures=9)"
+          ]
+        }
+      ],
+      "sessions": [
+        "ses_e51fa0c96ffeIXks1GJQjTbBno"
+      ],
+      "documentation_reads": [
+        {
+          "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/runs/TASK-2-ADJUSTED-r1/README.md",
+          "status": "completed"
+        },
+        {
+          "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/runs/TASK-2-ADJUSTED-r1/AGENTS.md",
+          "status": "completed"
+        },
+        {
+          "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/runs/TASK-2-ADJUSTED-r1/TASK.md",
+          "status": "completed"
+        }
+      ],
+      "skill_calls": [
+        {
+          "name": "ob-odd-workflow",
+          "status": "completed"
+        },
+        {
+          "name": "ob-data-api",
+          "status": "completed"
+        },
+        {
+          "name": "ob-ui-design",
+          "status": "completed"
+        }
+      ],
+      "agent_test_commands": [
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        }
+      ],
+      "tool_errors": []
+    },
+    {
+      "task": "TASK-2",
+      "arm": "odd",
+      "repeat": 1,
+      "phases": [
+        "TASK-2-ODD-r1"
+      ],
+      "complete": true,
+      "trajectory_functional_pass": false,
+      "final_functional_pass": false,
+      "all_original_suites_pass": false,
+      "healthy": false,
+      "primary_loaded_by_content": true,
+      "flow_alerts_mechanical": [],
+      "outside_attempts": [],
+      "foreign_skill_attempts": [],
+      "forbidden_tool_attempts": [],
+      "seconds": 600.257,
+      "metrics": {
+        "input": 72523,
+        "output": 9237,
+        "cache_read": 994816,
+        "cache_write": 0,
+        "reasoning": 20789,
+        "comparable_tokens": 1076576
+      },
+      "tools": 33,
+      "steps": 23,
+      "user_turns": 0,
+      "selected_modes": [
+        null
+      ],
+      "phase_diagnostics": [
+        {
+          "phase": "TASK-2-ODD-r1",
+          "functional_pass": false,
+          "original_pass": false,
+          "oracle_count": 9,
+          "failed_external_tests": [],
+          "external_summary": [
+            "Ran 9 tests in 1.464s",
+            "OK"
+          ]
+        }
+      ],
+      "sessions": [
+        "ses_e51fa0c98ffeDXjKxfnN817Wa8"
+      ],
+      "documentation_reads": [
+        {
+          "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/runs/TASK-2-ODD-r1/AGENTS.md",
+          "status": "completed"
+        },
+        {
+          "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-luna-max-20261105-v3/runs/TASK-2-ODD-r1/TASK.md",
+          "status": "completed"
+        }
+      ],
+      "skill_calls": [
+        {
+          "name": "oa-odd-workflow",
+          "status": "completed"
+        }
+      ],
+      "agent_test_commands": [
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations.ReservationConcurrencyTests",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations.ReservationConcurrencyTests",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations.ReservationConcurrencyTests",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        }
+      ],
+      "tool_errors": []
+    }
+  ],
+  "behavior": [
+    {
+      "cell": "TASK-2-ADJUSTED-r1",
+      "arm": "adjusted",
+      "repeat": 1,
+      "domains_loaded_by_content": [
+        "data-api",
+        "ui-design"
+      ],
+      "domain_call_counts": {
+        "data-api": 1,
+        "ui-design": 1
+      },
+      "both_loaded_before_product": false,
+      "project_doc_reads": [
+        "README.md",
+        "AGENTS.md",
+        "TASK.md"
+      ],
+      "markdown_changes": [
+        "odd/tasks/bookinstance-reservations.md"
+      ],
+      "bootstrap_changes": [],
+      "red_before_first_product_write_mechanical": false,
+      "final_doc_mentions": []
+    },
+    {
+      "cell": "TASK-2-ODD-r1",
+      "arm": "odd",
+      "repeat": 1,
+      "domains_loaded_by_content": [],
+      "domain_call_counts": {
+        "data-api": 0,
+        "ui-design": 0
+      },
+      "both_loaded_before_product": false,
+      "project_doc_reads": [
+        "AGENTS.md",
+        "TASK.md"
+      ],
+      "markdown_changes": [],
+      "bootstrap_changes": [],
+      "red_before_first_product_write_mechanical": true,
+      "final_doc_mentions": []
+    }
+  ],
+  "focused_checks": null,
+  "execution_errors": [
+    {
+      "arm": "odd",
+      "repeat": 1,
+      "type": "RuntimeError",
+      "message": "Integration/API/timeout failure; record preserved: TASK-2-ODD-r1"
+    },
+    {
+      "arm": "adjusted",
+      "repeat": 1,
+      "type": "RuntimeError",
+      "message": "Integration/API/timeout failure; record preserved: TASK-2-ADJUSTED-r1"
+    }
+  ]
+}

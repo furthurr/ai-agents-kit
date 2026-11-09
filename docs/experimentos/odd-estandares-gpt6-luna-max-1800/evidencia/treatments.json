@@ -1,0 +1,18 @@
+{
+  "arms": [
+    "odd",
+    "adjusted"
+  ],
+  "delta": "Historical body unchanged + ajuste.md; namespaces only",
+  "sizes": {
+    "odd": {
+      "agent_bytes": 297,
+      "primary_skill_bytes": 4747
+    },
+    "adjusted": {
+      "agent_bytes": 302,
+      "primary_skill_bytes": 6763
+    }
+  },
+  "probe_adaptation": "Previous five generic fixtures; only actor v2→adjusted and domain loader namespace changed"
+}

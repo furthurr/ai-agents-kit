@@ -1,0 +1,17 @@
+{
+  "control": "standards ODD + complete domain skills",
+  "treatment_delta": "agrupacion.md only",
+  "prior_freeze_sha256": "5dfeda5d1e68b7347d6974c46871715ba8f1ed0d28fb7d584bce07c5c4c94979",
+  "pairs": 2,
+  "order": [
+    [
+      "odd",
+      "adjusted"
+    ],
+    [
+      "adjusted",
+      "odd"
+    ]
+  ],
+  "concurrency": 2
+}

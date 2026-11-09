@@ -1,0 +1,33 @@
+{
+  "recorded_utc": "2026-11-06",
+  "purpose": "Integrity of experimental continuity and exact baseline snapshots; not a production candidate or inference authorization",
+  "hash_algorithm": "SHA256",
+  "package_files": {
+    "CONTINUAR-AQUI.md": "2a229100929b1feaa6087f51b9b185dd23479d8d736020ba2b7b0762d77ada2a",
+    "PROMPT.md": "6bf577153393932f93ec756622bc3d75aeaac9b8d20b21873aa7d7123a459a03",
+    "estado.json": "b7947d63d48b13dc36655c17a51946c8bb51244230667a0344bbb82e0bcedaa0",
+    "fuentes/SKILL-candidato2.md": "2b06d8950e791cf911d5aea455b4e9bf9d404452da48239cc290872efc744d78",
+    "fuentes/agent-candidato2.md": "67d8173d21000004496be59c5990b6d843ae5a956a4cfa06ff317562dc0de1d9"
+  },
+  "repository_sources": {
+    "docs/experimentos/developer-v2-dominios-build-gemini-2026-11-05/candidato/agent.md": "67d8173d21000004496be59c5990b6d843ae5a956a4cfa06ff317562dc0de1d9",
+    "docs/experimentos/developer-v2-dominios-build-gemini-2026-11-05/candidato/SKILL.md": "2b06d8950e791cf911d5aea455b4e9bf9d404452da48239cc290872efc744d78",
+    "docs/experimentos/developer-v2-dominios-build-gemini-2026-11-05/evidencia/freeze.json": "a2dd84347a9d3e325a9410f64fae1ec267dc2f734a6d66d3583a42f620d80833",
+    "docs/experimentos/odd-vs-sdd-2026-11-04/tratamiento-b.md": "643633e253758b644a0271086f960c5138385b81218b56d6243d9ffbcffda311",
+    "docs/experimentos/odd-batching-luna-max/laboratorio.tar.gz": "12699bddd4bfcac5260c96d8cdacc288d98b34cacef3de8f9e6b92dd4cff69ba"
+  },
+  "external_reference": {
+    "path": "/Users/pedrogomezvasquez/Desktop/PLAN-Developer-v2-como-Developer-2026-11-05.md",
+    "sha256": "fd62d8aa65605549f3d0321522751b3f35fb5b02af8435fcc2acad9edda97f5b",
+    "modified": false
+  },
+  "verification": {
+    "candidate_snapshots_byte_identical": true,
+    "json_parsed": true,
+    "relative_markdown_links_checked": true,
+    "git_diff_check_passed": true,
+    "new_model_calls": 0,
+    "candidate_derivative_created": false,
+    "canonical_index_sync_performed": false
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "S01": {
+    "baseline_returncode": 1,
+    "reference_returncode": 0
+  },
+  "S02": {
+    "baseline_returncode": 1,
+    "reference_returncode": 0
+  },
+  "S03": {
+    "baseline_returncode": 1,
+    "reference_returncode": 0
+  },
+  "S04": {
+    "baseline_returncode": 1,
+    "reference_returncode": 0
+  },
+  "S05": {
+    "baseline_returncode": 1,
+    "reference_returncode": 0
+  },
+  "S06": {
+    "baseline_returncode": 1,
+    "reference_returncode": 0
+  },
+  "S07": {
+    "baseline_returncode": 1,
+    "reference_returncode": 0
+  },
+  "S08": {
+    "baseline_returncode": 1,
+    "reference_returncode": 0
+  },
+  "S09": {
+    "baseline_returncode": 0,
+    "reference_returncode": 0
+  },
+  "S10": {
+    "baseline_returncode": 0,
+    "reference_returncode": 0
+  }
+}

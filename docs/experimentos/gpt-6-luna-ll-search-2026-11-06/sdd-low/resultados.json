@@ -1,0 +1,79 @@
+{
+  "model": "github-copilot/gpt-6-luna",
+  "root": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low",
+  "rows": [
+    {
+      "arm": "sdd_trial",
+      "status": "awaiting_operator_review_not_automatically_a_gate",
+      "tokens": {
+        "input": 37777,
+        "output": 2168,
+        "reasoning": 3028,
+        "cache_read": 121101,
+        "cache_write": 0,
+        "total": 161046
+      },
+      "metrics_complete": true,
+      "seconds": 54.895,
+      "steps": 8,
+      "tool_counts": {
+        "todowrite": 2,
+        "skill": 1,
+        "read": 12,
+        "glob": 6,
+        "grep": 1
+      },
+      "skills_invoked": [
+        "sdd-spec"
+      ],
+      "skills_loaded_by_content": [
+        "sdd-spec"
+      ],
+      "files_read": [
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/profiles/sdd_trial/skills/sdd-spec/references/workspace-trust.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/runs/sdd_trial/AGENTS.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/runs/sdd_trial/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/runs/sdd_trial/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/runs/sdd_trial/catalog/templates/catalog/book_list.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/runs/sdd_trial/catalog/templates/base_generic.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/runs/sdd_trial/catalog/templates/catalog/author_list.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/runs/sdd_trial/catalog/templates/catalog/bookinstance_list.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/runs/sdd_trial/catalog/tests/test_views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/profiles/sdd_trial/skills/sdd-spec/references/scope-depth.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/profiles/sdd_trial/skills/sdd-spec/references/feature-level.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/gpt-6-luna-ll-search-20261106-v1/sdd-low/profiles/sdd_trial/skills/sdd-spec/references/testing.md"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 56,
+      "joint_pass": false,
+      "changed": [],
+      "final_text": "## Alcance definido\n\n**Objetivo:** permitir que el público busque libros desde el listado existente `/catalog/books/`, sin alterar los demás listados ni la información de cada libro.\n\n**Comportamientos y criterios de aceptación:**\n\n1. Cuando se proporciona `q` con texto, el sistema buscará una subcadena sin distinguir mayúsculas y minúsculas en el título o en el nombre o apellido del autor. Recortará los espacios exteriores y no dividirá la consulta en palabras.\n2. Cuando `q` no está presente, está vacío o contiene solo espacios, el sistema mostrará todos los libros con el orden global actual y paginación de diez. Los libros sin autor seguirán visibles y podrán encontrarse por título.\n3. El listado mostrará un formulario GET con etiqueta asociada al campo `q`, botón de búsqueda y enlace para limpiar que vuelve a `/catalog/books/`. El campo conservará el texto introducido con el escape normal de Django. El formulario no arrastrará `page`, para que una búsqueda nueva comience en la primera página.\n4. Los enlaces de paginación de resultados conservarán `q` y los demás parámetros GET, correctamente codificados. La paginación de otras pantallas que usan la plantilla compartida seguirá funcionando.\n5. Si una búsqueda no devuelve libros, el listado mostrará exactamente `No books match your search.`. Si no hay filtro y la biblioteca está vacía, conservará `There are no books in the library.`. Las páginas inválidas seguirán respondiendo con el 404 existente.\n6. Se mantendrán detalles, enlaces, autenticación, permisos y listados de autores y préstamos. La búsqueda será pública y de solo lectura; no añadirá endpoints JSON, migraciones, dependencias ni cambios de esquema.\n\n**Exclusiones y restricciones:** no se cambiará el orden global de los modelos ni la configuración de despliegue. No se sincronizará documentación ni se accederá a servicios externos.\n\nLa petición autoriza implementar este alcance. No encontré specs relacionadas ni steering SDD; el código actual confirma que el listado de libros usa una vista paginada y que la plantilla base comparte la paginación entre pantallas.\n\n**Esfuerzo previsto del LLM: 4 🟢**  \n**Profundidad recomendada: SDD-Tiny (`tiny`).** El cambio es una entrega cohesiva que toca consulta, plantilla y pruebas; no cumple las guardas de `direct` por cruzar esas capas. La estrategia de pruebas será verificación focalizada del filtro, casos vacíos, búsqueda por autor y libros sin autor, paginación y preservación de parámetros.\n\n**Punto de parada:** SDD-Tiny requiere crear un `spec.md` breve y obtener aprobación del Gate 3 antes de implementar. Aún no he escrito archivos. ¿Confirmas que este alcance es el definitivo y eliges SDD-Tiny? Si lo confirmas, prepararé el spec/plan para Gate 3 y esperaré su aprobación antes de modificar el código.",
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false
+    }
+  ],
+  "batch": {
+    "finished": "2026-11-07T01:40:04.423546+00:00",
+    "wall_seconds": 74.809,
+    "calls": 1,
+    "halted": false
+  },
+  "halt": null,
+  "comparison_valid": false,
+  "limits": [
+    "One repetition; no statistical or causal performance conclusion.",
+    "SDD requires manual operator; missing runs are not zero cost.",
+    "Single-session pilot does not evaluate resumption.",
+    "Researcher/preparation tokens unknown, not zero.",
+    "Tool permissions, not OS sandbox. Native provider internal retries are not independently observable."
+  ],
+  "cohort": "sdd-low",
+  "temperature": "unsupported; provider default",
+  "comparison_note": "Descriptive n=1 replication; functional acceptance is not procedural certification."
+}

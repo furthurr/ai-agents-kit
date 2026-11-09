@@ -1,0 +1,84 @@
+{
+  "model": "github-copilot/mai-code-1.1-flash",
+  "root": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low",
+  "rows": [
+    {
+      "arm": "sdd_trial",
+      "status": "finished",
+      "tokens": {
+        "input": 32426,
+        "output": 6858,
+        "reasoning": 14144,
+        "cache_read": 520704,
+        "cache_write": 0,
+        "total": 559988
+      },
+      "metrics_complete": true,
+      "seconds": 109.861,
+      "steps": 22,
+      "tool_counts": {
+        "todowrite": 1,
+        "skill": 1,
+        "glob": 3,
+        "read": 10,
+        "grep": 3,
+        "edit": 6,
+        "bash": 4,
+        "write": 1
+      },
+      "skills_invoked": [
+        "sdd-spec"
+      ],
+      "skills_loaded_by_content": [
+        "sdd-spec"
+      ],
+      "files_read": [
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low/profiles/sdd_trial/skills/sdd-spec/references/workspace-trust.md",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low/runs/sdd_trial/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low/runs/sdd_trial/catalog/templates/catalog/book_list.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low/runs/sdd_trial/catalog/tests/test_views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low/runs/sdd_trial/catalog/models.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low/runs/sdd_trial/catalog/templates/base_generic.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low/runs/sdd_trial/catalog/urls.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low/runs/sdd_trial/catalog/templates/catalog/book_list.html",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low/runs/sdd_trial/catalog/views.py",
+        "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/mai-code-flash-20261106-v1/sdd-low/runs/sdd_trial/catalog/templates/catalog/book_list.html"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 56,
+      "joint_pass": false,
+      "changed": [
+        "catalog/templates/catalog/book_list.html",
+        "catalog/tests/test_views.py",
+        "catalog/views.py"
+      ],
+      "final_text": "Voy a localizar la vista del catálogo y la plantilla exacta para ajustar la búsqueda sin tocar el comportamiento existente.\nHe localizado la vista y la plantilla del catálogo. Falta confirmar cómo gestiona la paginación la base común para conservar `q` sin afectar otras pantallas.\nYa quedó la parte visual. Necesito cerrar el ajuste del filtro para conservar el comportamiento completo y añadir la prueba.\nHecho.\n\nCambios realizados:\n- Añadido filtro de búsqueda pública en `/catalog/books/` para `q`:\n  - busca por título o nombre/apellido del autor\n  - sin distinguir mayúsculas/minúsculas\n  - recorta espacios al principio/final\n  - sin `q`, `q=` o solo espacios mantiene el listado normal\n- Conservado el orden y paginación normales de Django.\n- Añadido formulario GET con:\n  - label asociado a `name=\"q\"`\n  - campo con valor preservado escapado\n  - botón de búsqueda\n  - enlace “Clear search” que vuelve a `/catalog/books/`\n- Mensajes exactos:\n  - sin resultados: `No books match your search.`\n  - sin filtro y sin libros: `There are no books in the library.`\n- Añadidas pruebas relevantes para búsqueda, mensajes y formularios.\n\nVerificación ejecutada:\n- `python manage.py test catalog` → OK (47 tests)\n- `python manage.py check` → OK\n- `python manage.py collectstatic --noinput` → OK\n\nLímite observado:\n- He ejecutado la suite disponible del módulo `catalog`, como pediste; no he ampliado a otros apps ni a una suite global del proyecto.",
+      "new_test_methods": 4,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false
+    }
+  ],
+  "batch": {
+    "finished": "2026-11-07T01:02:36.269348+00:00",
+    "wall_seconds": 128.95,
+    "calls": 1,
+    "halted": false
+  },
+  "halt": null,
+  "comparison_valid": false,
+  "limits": [
+    "One repetition; no statistical or causal performance conclusion.",
+    "SDD requires manual operator; missing runs are not zero cost.",
+    "Single-session pilot does not evaluate resumption.",
+    "Researcher/preparation tokens unknown, not zero.",
+    "Tool permissions, not OS sandbox. Native provider internal retries are not independently observable."
+  ],
+  "cohort": "sdd-low",
+  "temperature": "unsupported; provider default",
+  "comparison_note": "Descriptive n=1 replication; functional acceptance is not procedural certification."
+}

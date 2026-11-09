@@ -23,7 +23,6 @@ Conviene conservar la arquitectura `canonical/` → adaptadores → `generated/`
 | Clave | Documento | Ámbito declarado |
 |---|---|---|
 | A | [AUDITORIA-MAS-ANTIGRAVITY.md](AUDITORIA-MAS-ANTIGRAVITY.md) | Kit canónico y distribución multi-host; recomendaciones orientadas a Antigravity. |
-| D | [AUDITORIA-MAS-DEEPSEEK.MD](AUDITORIA-MAS-DEEPSEEK.MD) | Fuentes canónicas, adaptadores, herramientas y pruebas; revisión estática. |
 | G | [AUDITORIA-MAS-GPT.md](AUDITORIA-MAS-GPT.md) | Kit, contratos, adaptadores y evidencia histórica; sin nuevas ejecuciones de agentes. |
 | M | [AUDITORIA-MAS-MIMO.MD](AUDITORIA-MAS-MIMO.MD) | Instalación local de OpenCode y skills globales; no auditó las fuentes canónicas del kit. |
 | E | [Estudio-agentes-y-skills-ai-agents-kit.md](Estudio-agentes-y-skills-ai-agents-kit.md) | Kit, herramientas, registros, CI y documentación; revisión estática. |

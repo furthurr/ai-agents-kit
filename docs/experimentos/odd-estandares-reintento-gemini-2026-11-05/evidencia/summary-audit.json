@@ -1,0 +1,518 @@
+{
+  "expected_cells": 6,
+  "observed_cells": 4,
+  "complete": false,
+  "arms": {
+    "odd": {
+      "cells": 2,
+      "expected": 3,
+      "functional_pass": 1,
+      "original_suites_pass": 1,
+      "identity_and_process_ok": false,
+      "comparable_tokens": 1756917,
+      "seconds": 332.818,
+      "tools": 65,
+      "steps": 66,
+      "user_turns": 0,
+      "tool_errors": 1,
+      "data_api_loaded": 0,
+      "ui_design_loaded": 0,
+      "both_before_product": 0,
+      "bootstrap_change_cells": 0
+    },
+    "adjusted": {
+      "cells": 2,
+      "expected": 3,
+      "functional_pass": 1,
+      "original_suites_pass": 1,
+      "identity_and_process_ok": false,
+      "comparable_tokens": 4179993,
+      "seconds": 460.085,
+      "tools": 92,
+      "steps": 91,
+      "user_turns": 0,
+      "tool_errors": 1,
+      "data_api_loaded": 2,
+      "ui_design_loaded": 2,
+      "both_before_product": 2,
+      "bootstrap_change_cells": 0
+    }
+  },
+  "comparison": null,
+  "cells": [
+    {
+      "task": "TASK-2",
+      "arm": "adjusted",
+      "repeat": 1,
+      "phases": [
+        "TASK-2-ADJUSTED-r1"
+      ],
+      "complete": true,
+      "trajectory_functional_pass": true,
+      "final_functional_pass": true,
+      "all_original_suites_pass": true,
+      "healthy": true,
+      "primary_loaded_by_content": true,
+      "flow_alerts_mechanical": [],
+      "outside_attempts": [],
+      "foreign_skill_attempts": [],
+      "forbidden_tool_attempts": [],
+      "seconds": 298.337,
+      "metrics": {
+        "input": 194215,
+        "output": 15719,
+        "cache_read": 2740944,
+        "cache_write": 0,
+        "reasoning": 0,
+        "comparable_tokens": 2950878
+      },
+      "tools": 56,
+      "steps": 56,
+      "user_turns": 0,
+      "selected_modes": [
+        null
+      ],
+      "phase_diagnostics": [
+        {
+          "phase": "TASK-2-ADJUSTED-r1",
+          "functional_pass": true,
+          "original_pass": true,
+          "oracle_count": 9,
+          "failed_external_tests": [],
+          "external_summary": [
+            "Ran 9 tests in 1.649s",
+            "OK"
+          ]
+        }
+      ],
+      "sessions": [
+        "ses_e52c1ce84ffe2s1rX0GgNKDWWd"
+      ],
+      "documentation_reads": [
+        {
+          "path": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-retry-gemini-20261105/runs/TASK-2-ADJUSTED-r1/odd/tasks/reservation.md",
+          "status": "completed"
+        }
+      ],
+      "skill_calls": [
+        {
+          "name": "ob-odd-workflow",
+          "status": "completed"
+        },
+        {
+          "name": "ob-data-api",
+          "status": "completed"
+        },
+        {
+          "name": "ob-ui-design",
+          "status": "completed"
+        }
+      ],
+      "agent_test_commands": [
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservation",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservation",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservation",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservation",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        }
+      ],
+      "tool_errors": []
+    },
+    {
+      "task": "TASK-2",
+      "arm": "adjusted",
+      "repeat": 2,
+      "phases": [
+        "TASK-2-ADJUSTED-r2"
+      ],
+      "complete": true,
+      "trajectory_functional_pass": false,
+      "final_functional_pass": false,
+      "all_original_suites_pass": false,
+      "healthy": false,
+      "primary_loaded_by_content": true,
+      "flow_alerts_mechanical": [],
+      "outside_attempts": [],
+      "foreign_skill_attempts": [],
+      "forbidden_tool_attempts": [],
+      "seconds": 161.748,
+      "metrics": {
+        "input": 162035,
+        "output": 9622,
+        "cache_read": 1057458,
+        "cache_write": 0,
+        "reasoning": 0,
+        "comparable_tokens": 1229115
+      },
+      "tools": 36,
+      "steps": 35,
+      "user_turns": 0,
+      "selected_modes": [
+        null
+      ],
+      "phase_diagnostics": [
+        {
+          "phase": "TASK-2-ADJUSTED-r2",
+          "functional_pass": false,
+          "original_pass": false,
+          "oracle_count": 9,
+          "failed_external_tests": [
+            "test_ui_reserve_page (oracles.test_oracle_task2.Task2OracleModelAndApiTest.test_ui_reserve_page)"
+          ],
+          "external_summary": [
+            "Ran 9 tests in 1.660s",
+            "FAILED (failures=1)"
+          ]
+        }
+      ],
+      "sessions": [
+        "ses_e52bcf9b4ffe70gaKx6I9Sk3Go"
+      ],
+      "documentation_reads": [],
+      "skill_calls": [
+        {
+          "name": "ob-odd-workflow",
+          "status": "completed"
+        },
+        {
+          "name": "ob-data-api",
+          "status": "completed"
+        },
+        {
+          "name": "ob-ui-design",
+          "status": "completed"
+        }
+      ],
+      "agent_test_commands": [
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations.ReservationModelTest",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservations.ReservationAPITest",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        }
+      ],
+      "tool_errors": [
+        {
+          "tool": "bash",
+          "category": "permission"
+        }
+      ]
+    },
+    {
+      "task": "TASK-2",
+      "arm": "odd",
+      "repeat": 1,
+      "phases": [
+        "TASK-2-ODD-r1"
+      ],
+      "complete": true,
+      "trajectory_functional_pass": true,
+      "final_functional_pass": true,
+      "all_original_suites_pass": true,
+      "healthy": true,
+      "primary_loaded_by_content": true,
+      "flow_alerts_mechanical": [],
+      "outside_attempts": [],
+      "foreign_skill_attempts": [],
+      "forbidden_tool_attempts": [],
+      "seconds": 164.944,
+      "metrics": {
+        "input": 139139,
+        "output": 10908,
+        "cache_read": 509543,
+        "cache_write": 0,
+        "reasoning": 0,
+        "comparable_tokens": 659590
+      },
+      "tools": 29,
+      "steps": 30,
+      "user_turns": 0,
+      "selected_modes": [
+        null
+      ],
+      "phase_diagnostics": [
+        {
+          "phase": "TASK-2-ODD-r1",
+          "functional_pass": true,
+          "original_pass": true,
+          "oracle_count": 9,
+          "failed_external_tests": [],
+          "external_summary": [
+            "Ran 9 tests in 1.543s",
+            "OK"
+          ]
+        }
+      ],
+      "sessions": [
+        "ses_e52c1ce84ffeHtcPP2Gqnjzmfo"
+      ],
+      "documentation_reads": [],
+      "skill_calls": [
+        {
+          "name": "oa-odd-workflow",
+          "status": "completed"
+        }
+      ],
+      "agent_test_commands": [
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        }
+      ],
+      "tool_errors": []
+    },
+    {
+      "task": "TASK-2",
+      "arm": "odd",
+      "repeat": 2,
+      "phases": [
+        "TASK-2-ODD-r2"
+      ],
+      "complete": true,
+      "trajectory_functional_pass": false,
+      "final_functional_pass": false,
+      "all_original_suites_pass": false,
+      "healthy": false,
+      "primary_loaded_by_content": true,
+      "flow_alerts_mechanical": [],
+      "outside_attempts": [],
+      "foreign_skill_attempts": [],
+      "forbidden_tool_attempts": [],
+      "seconds": 167.874,
+      "metrics": {
+        "input": 126067,
+        "output": 10567,
+        "cache_read": 960693,
+        "cache_write": 0,
+        "reasoning": 0,
+        "comparable_tokens": 1097327
+      },
+      "tools": 36,
+      "steps": 36,
+      "user_turns": 0,
+      "selected_modes": [
+        null
+      ],
+      "phase_diagnostics": [
+        {
+          "phase": "TASK-2-ODD-r2",
+          "functional_pass": false,
+          "original_pass": false,
+          "oracle_count": 9,
+          "failed_external_tests": [
+            "test_ui_reserve_page (oracles.test_oracle_task2.Task2OracleModelAndApiTest.test_ui_reserve_page)"
+          ],
+          "external_summary": [
+            "Ran 9 tests in 1.585s",
+            "FAILED (failures=1)"
+          ]
+        }
+      ],
+      "sessions": [
+        "ses_e52bcf9beffeW6McRCxK5f5cv9"
+      ],
+      "documentation_reads": [],
+      "skill_calls": [
+        {
+          "name": "oa-odd-workflow",
+          "status": "completed"
+        }
+      ],
+      "agent_test_commands": [
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_models",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_models",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservation_api",
+          "status": "completed",
+          "green_text": false,
+          "red_text": true
+        },
+        {
+          "command": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104/.venv/bin/python manage.py test catalog.tests.test_reservation_api",
+          "status": "completed",
+          "green_text": true,
+          "red_text": false
+        }
+      ],
+      "tool_errors": [
+        {
+          "tool": "bash",
+          "category": "permission"
+        }
+      ]
+    }
+  ],
+  "behavior": [
+    {
+      "cell": "TASK-2-ADJUSTED-r1",
+      "arm": "adjusted",
+      "repeat": 1,
+      "domains_loaded_by_content": [
+        "data-api",
+        "ui-design"
+      ],
+      "domain_call_counts": {
+        "data-api": 1,
+        "ui-design": 1
+      },
+      "both_loaded_before_product": true,
+      "project_doc_reads": [
+        "odd/tasks/reservation.md"
+      ],
+      "markdown_changes": [
+        "odd/tasks/reservation.md"
+      ],
+      "bootstrap_changes": [],
+      "red_before_first_product_write_mechanical": true,
+      "final_doc_mentions": []
+    },
+    {
+      "cell": "TASK-2-ADJUSTED-r2",
+      "arm": "adjusted",
+      "repeat": 2,
+      "domains_loaded_by_content": [
+        "data-api",
+        "ui-design"
+      ],
+      "domain_call_counts": {
+        "data-api": 1,
+        "ui-design": 1
+      },
+      "both_loaded_before_product": true,
+      "project_doc_reads": [],
+      "markdown_changes": [
+        "odd/tasks/reservation.md"
+      ],
+      "bootstrap_changes": [],
+      "red_before_first_product_write_mechanical": true,
+      "final_doc_mentions": []
+    },
+    {
+      "cell": "TASK-2-ODD-r1",
+      "arm": "odd",
+      "repeat": 1,
+      "domains_loaded_by_content": [],
+      "domain_call_counts": {
+        "data-api": 0,
+        "ui-design": 0
+      },
+      "both_loaded_before_product": false,
+      "project_doc_reads": [],
+      "markdown_changes": [],
+      "bootstrap_changes": [],
+      "red_before_first_product_write_mechanical": false,
+      "final_doc_mentions": []
+    },
+    {
+      "cell": "TASK-2-ODD-r2",
+      "arm": "odd",
+      "repeat": 2,
+      "domains_loaded_by_content": [],
+      "domain_call_counts": {
+        "data-api": 0,
+        "ui-design": 0
+      },
+      "both_loaded_before_product": false,
+      "project_doc_reads": [],
+      "markdown_changes": [
+        "odd/tasks/reservation_flow.md"
+      ],
+      "bootstrap_changes": [],
+      "red_before_first_product_write_mechanical": true,
+      "final_doc_mentions": []
+    }
+  ],
+  "focused_checks": null,
+  "execution_errors": [
+    {
+      "arm": "adjusted",
+      "repeat": 2,
+      "type": "RuntimeError",
+      "message": "Integration/API/timeout failure; record preserved: TASK-2-ADJUSTED-r2"
+    },
+    {
+      "arm": "odd",
+      "repeat": 2,
+      "type": "RuntimeError",
+      "message": "Integration/API/timeout failure; record preserved: TASK-2-ODD-r2"
+    }
+  ]
+}

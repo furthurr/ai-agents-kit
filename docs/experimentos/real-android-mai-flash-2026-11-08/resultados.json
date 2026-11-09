@@ -1,0 +1,369 @@
+{
+  "1": {
+    "metadata": {
+      "id": "[REDACTED_MOBILE_EVIDENCE]",
+      "title": "[REDACTED_MOBILE_EVIDENCE]",
+      "complexity": "[REDACTED_MOBILE_EVIDENCE]",
+      "file": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_source": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_target": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_oracle_task": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_original_task": "[REDACTED_MOBILE_EVIDENCE]"
+    },
+    "arms": {
+      "v2_reforzado": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2_reforzado",
+        "model": "github-copilot/mai-code-1.1-flash",
+        "steps": 10,
+        "tools_called": 14,
+        "tokens": {
+          "total": 186087,
+          "input": 22154,
+          "output": 3997,
+          "reasoning": 8128,
+          "cache_read": 151808,
+          "cache_write": 0
+        },
+        "duration_seconds": 82.049,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T01:43:44.680350+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "developer_actual": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "developer_actual",
+        "model": "github-copilot/mai-code-1.1-flash",
+        "steps": 8,
+        "tools_called": 13,
+        "tokens": {
+          "total": 154009,
+          "input": 23554,
+          "output": 3415,
+          "reasoning": 2752,
+          "cache_read": 124288,
+          "cache_write": 0
+        },
+        "duration_seconds": 46.351,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T01:44:45.167052+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "v2": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2",
+        "model": "github-copilot/mai-code-1.1-flash",
+        "steps": 8,
+        "tools_called": 12,
+        "tokens": {
+          "total": 156546,
+          "input": 21179,
+          "output": 3591,
+          "reasoning": 4032,
+          "cache_read": 127744,
+          "cache_write": 0
+        },
+        "duration_seconds": 51.485,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T01:45:49.747143+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "build_mas": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_mas",
+        "model": "github-copilot/mai-code-1.1-flash",
+        "steps": 13,
+        "tools_called": 19,
+        "tokens": {
+          "total": 218266,
+          "input": 18449,
+          "output": 4105,
+          "reasoning": 7808,
+          "cache_read": 187904,
+          "cache_write": 0
+        },
+        "duration_seconds": 74.978,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T01:47:17.442239+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      },
+      "build_sin_mas": {
+        "task_id": "1",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_sin_mas",
+        "model": "github-copilot/mai-code-1.1-flash",
+        "steps": 8,
+        "tools_called": 13,
+        "tokens": {
+          "total": 168617,
+          "input": 25097,
+          "output": 3424,
+          "reasoning": 4416,
+          "cache_read": 135680,
+          "cache_write": 0
+        },
+        "duration_seconds": 45.848,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T01:48:15.698639+00:00",
+        "oracle_pass": true,
+        "original_suite_pass": true,
+        "functional_acceptance": true,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ]
+      }
+    }
+  },
+  "2": {
+    "metadata": {
+      "id": "[REDACTED_MOBILE_EVIDENCE]",
+      "title": "[REDACTED_MOBILE_EVIDENCE]",
+      "complexity": "[REDACTED_MOBILE_EVIDENCE]",
+      "file": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_source": "[REDACTED_MOBILE_EVIDENCE]",
+      "oracle_target": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_oracle_task": "[REDACTED_MOBILE_EVIDENCE]",
+      "gradle_original_task": "[REDACTED_MOBILE_EVIDENCE]"
+    },
+    "arms": {
+      "v2_reforzado": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2_reforzado",
+        "model": "github-copilot/mai-code-1.1-flash",
+        "steps": 17,
+        "tools_called": 23,
+        "tokens": {
+          "total": 465422,
+          "input": 38104,
+          "output": 5558,
+          "reasoning": 11136,
+          "cache_read": 410624,
+          "cache_write": 0
+        },
+        "duration_seconds": 140.111,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T01:50:46.549665+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "developer_actual": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "developer_actual",
+        "model": "github-copilot/mai-code-1.1-flash",
+        "steps": 19,
+        "tools_called": 27,
+        "tokens": {
+          "total": 595555,
+          "input": 43486,
+          "output": 5765,
+          "reasoning": 14080,
+          "cache_read": 532224,
+          "cache_write": 0
+        },
+        "duration_seconds": 166.27,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T01:53:44.661310+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "v2": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "v2",
+        "model": "github-copilot/mai-code-1.1-flash",
+        "steps": 15,
+        "tools_called": 21,
+        "tokens": {
+          "total": 437058,
+          "input": 46839,
+          "output": 5707,
+          "reasoning": 7168,
+          "cache_read": 377344,
+          "cache_write": 0
+        },
+        "duration_seconds": 133.213,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T01:56:11.871039+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "build_mas": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_mas",
+        "model": "github-copilot/mai-code-1.1-flash",
+        "steps": 16,
+        "tools_called": 22,
+        "tokens": {
+          "total": 451028,
+          "input": 34824,
+          "output": 4748,
+          "reasoning": 6976,
+          "cache_read": 404480,
+          "cache_write": 0
+        },
+        "duration_seconds": 136.712,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T01:58:43.099230+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 1,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      },
+      "build_sin_mas": {
+        "task_id": "2",
+        "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+        "arm": "build_sin_mas",
+        "model": "github-copilot/mai-code-1.1-flash",
+        "steps": 14,
+        "tools_called": 17,
+        "tokens": {
+          "total": 969528,
+          "input": 262884,
+          "output": 67668,
+          "reasoning": 4864,
+          "cache_read": 634112,
+          "cache_write": 0
+        },
+        "duration_seconds": 268.692,
+        "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+        "error": null,
+        "exit_code": 0,
+        "completed_at": "2026-11-09T02:03:26.604895+00:00",
+        "oracle_pass": false,
+        "original_suite_pass": true,
+        "functional_acceptance": false,
+        "new_tests_found": 0,
+        "diff_summary": [
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]",
+          "[REDACTED_MOBILE_EVIDENCE]"
+        ],
+        "oracle_error": "[REDACTED_MOBILE_EVIDENCE]"
+      }
+    }
+  }
+}

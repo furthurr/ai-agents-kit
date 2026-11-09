@@ -1,0 +1,26 @@
+{
+  "model_requested": "google/antigravity-gemini-3.8-flash",
+  "completed_cells": 27,
+  "phase_records": 36,
+  "frozen_inputs_unchanged_at_close": true,
+  "real_preflights": 3,
+  "comparative_process_errors": 0,
+  "comparative_timeouts": 0,
+  "all_original_suites_pass": true,
+  "commands_observed": [
+    {"command": "gh api repos/mdn/django-locallibrary-tutorial/commits/3120b4302bf87a1b8c84d06662c2b8787f7da5f8 --jq '{sha: .sha, date: .commit.committer.date}'", "result": "SHA exists; date 2026-10-26T12:39:49Z"},
+    {"command": ".venv/bin/python -B manage.py test catalog", "working_directory": "baseline", "result": "43 tests OK"},
+    {"command": "python3 -B -m unittest test_runner -q", "working_directory": "laboratory", "result": "10 tests OK, before freeze and after comparison"},
+    {"command": "python3 -B runner.py preflight", "working_directory": "laboratory", "result": "Three resolved prompts, skill-content checks, real edits and unittest passed"},
+    {"command": "runner.evaluate_cell on four reference solutions", "result": "All four pass: original43 + external7/9/6/10"},
+    {"command": "python3 -B runner.py freeze", "working_directory": "laboratory", "result": "Exclusive freeze created before first comparative cell"},
+    {"command": "python3 -B execute_repetitions.py --background", "working_directory": "laboratory", "result": "Invoked runner.py run --repeat 1, then 2, then 3; each exit0, all27 cells; functional failures retained"},
+    {"command": "runner.check_frozen(runner.LAB_ROOT)", "result": "Frozen inputs intact after comparison"},
+    {"command": "python3 -B -m unittest discover -s tools -p 'test_real_project*.py'", "result": "7 tests OK"},
+    {"command": "python3 -B -m unittest discover -s tools -p 'test_gemini_three_way.py'", "result": "7 regression tests OK"},
+    {"command": "python3 -B tools/preserve_real_project_lab.py <laboratory> docs/experimentos/real-project-gemini-2026-11-05", "result": "9004 files archived; every member re-read and SHA256 verified"},
+    {"command": "git diff --check", "result": "Passed"}
+  ],
+  "scope": "No canonical/installed agents modified; no commits/push; prior local changes preserved.",
+  "documentation_pending": ["docs/experimentos/README.md index", "docs/experimentos/CONTINUAR-AQUI.md continuity"]
+}

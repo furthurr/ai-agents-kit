@@ -1,0 +1,22 @@
+{
+  "arms": [
+    "developer",
+    "odd",
+    "v2"
+  ],
+  "source_lab": "/private/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/real-project-gemini-20261104",
+  "sizes": {
+    "developer": {
+      "agent_bytes": 6775,
+      "primary_skill_bytes": 6624
+    },
+    "odd": {
+      "agent_bytes": 292,
+      "primary_skill_bytes": 4749
+    },
+    "v2": {
+      "agent_bytes": 342,
+      "primary_skill_bytes": 2882
+    }
+  }
+}

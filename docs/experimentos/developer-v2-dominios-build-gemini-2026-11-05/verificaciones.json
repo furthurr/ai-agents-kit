@@ -1,0 +1,25 @@
+{
+  "cohort": "v2-domains-build-v1-20261105",
+  "model_requested": "google/antigravity-gemini-3.8-flash",
+  "main_cells": 12,
+  "functional_acceptance": {"developer": "3/3", "odd": "3/3", "v2": "3/3", "build": "3/3"},
+  "reference_proof": "43 original + 9 external tests passed before freeze",
+  "real_preflights": "4/4 passed",
+  "offline_tests_at_close": {"developer_v2_suites": 19, "real_project_suites": 7, "historical_transport_regression": 7, "all_passed": true},
+  "archive_integrity": "3233 files archived and every member re-read with SHA256 verification",
+  "native_build": "native:true, no custom prompt, --agent build; no fictional primary skill",
+  "v2_domain_content_checks": "Both domains loaded once before first code write in3/3 main cells",
+  "five_focalized_checks": "5/5 mechanical checks passed; closure responses manually reviewed",
+  "manual_observations": [
+    "Visual PLAN suggested optional padding/min-height beyond requested color; not implemented",
+    "Positive closure fixture named docs/usage.md, explained stale literal and proposed documentation-orchestrator without editing docs",
+    "Negative closure fixture changed test only, preserved core/docs and did not suggest unnecessary documentation",
+    "No main-task project documentation reads or closure recommendations observed"
+  ],
+  "api_errors": 0,
+  "comparative_timeouts": 0,
+  "selective_retries": 0,
+  "frozen_inputs_unchanged": true,
+  "prior_cohorts_unchanged": true,
+  "scope": "Candidate2 isolated; installed/canonical agents and global configuration untouched; no commits/push"
+}

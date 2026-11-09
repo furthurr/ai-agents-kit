@@ -1,0 +1,22 @@
+{
+  "cohort": "odd-standards-luna-max-1800-v1",
+  "model_requested": "openai/gpt-6-luna",
+  "variant_requested": "max",
+  "budget_seconds": 1800,
+  "attempted": 6,
+  "conversations_healthy": 6,
+  "timeouts": 0,
+  "api_errors": 0,
+  "external_oracles": {"odd": "3/3", "adjusted": "3/3"},
+  "global_acceptance": {"odd": "2/3", "adjusted": "3/3"},
+  "original_r2_extra_diagnostic": {
+    "command": "python -B manage.py test --settings=oracles.eval_settings catalog.tests.test_models catalog.tests.test_forms catalog.tests.test_views",
+    "observed": "43 tests OK in 9.763s; run after cohort in evaluation copy",
+    "interpretation": "combined catalog suite still fails due to agent-authored test closing SQLite connection; original 43 alone pass"
+  },
+  "reference": "43 original + 9 external tests passed before freeze",
+  "preflight": "2/2 real preflights passed",
+  "frozen_inputs_unchanged": true,
+  "no_selective_retries": true,
+  "git": "No commits or push; installed and canonical agents not modified"
+}

@@ -1,0 +1,13 @@
+{
+  "wall_seconds": 2378.616,
+  "completed": [
+    "TASK-2-ODD-r1",
+    "TASK-2-ADJUSTED-r1",
+    "TASK-2-ADJUSTED-r2",
+    "TASK-2-ODD-r2"
+  ],
+  "errors": [],
+  "invocations_attempted": 4,
+  "stop_reasons": [],
+  "no_selective_retries": true
+}

@@ -1,0 +1,63 @@
+{
+  "protocol": "odd-batching-luna-max-v1",
+  "scope": "Focused manual source/test/observable-event review; not exhaustive visual/security/standards audit",
+  "mechanical_evidence": "evidencia/summary-final.json",
+  "global_frozen_acceptance": {"odd": "1/2", "adjusted": "1/2"},
+  "external_nine_oracles": {"odd": "2/2", "adjusted": "2/2"},
+  "separate_original43": {"odd": "2/2", "adjusted": "2/2"},
+  "full_primary_and_both_domains_before_product": "4/4",
+  "original_test_sources_unchanged": "4/4; test_models.py, test_forms.py, test_views.py byte comparison against frozen baseline",
+  "domain_technical_content_equal_normalized": true,
+  "project_context": {
+    "README_read": "4/4",
+    "lab_context_read": "3/4; adjusted R1 instead used README, code, configuration and tests",
+    "README_staleness_detected_and_orchestrator_explicit": "4/4",
+    "README_and_context_not_edited": true,
+    "no_canonical_bootstrap": true,
+    "missing_domain_documentation": "Fixture has no .data/.design. No canonical bootstrap; fallback to README and source. Explicit missing-folder declaration not systematically certified.",
+    "documentation_cycle_executed": false
+  },
+  "application_review": {
+    "persistence": "All four add public Reservation, user/instance FK, key max_length100, created_at and user-key uniqueness; migrations present; exact source and nine external oracles inspected.",
+    "API": "Routes, auth, methods, normalized keys, JSON statuses, replay and conflict handling inspected in catalog/views.py and urls.py; nine oracles pass all four. Supplemental CSRF diagnostic shows adjusted R1 anonymous request returns403 instead of401 when real CSRF checks are enabled.",
+    "concurrency": "All four use conditional UPDATE with transaction and bounded lock retries. External disk-SQLite oracle passes all four. Passing this case does not certify every contention schedule.",
+    "UI": "All four use existing book-detail template, per-copy POST/hidden idempotency key, csrf_token, authenticated web endpoint and visible messages. Tests include enforced-CSRF successful web flow. No browser visual/keyboard/contrast audit executed.",
+    "consumers": "BookDetailView contexts matched their book_detail.html consumers; shared reservation helpers matched API/web calls; renew function body preserved. No blanket Risk:none certification.",
+    "test_first": "Mechanical RED before product in all four; direct test outputs include executed failing assertions. No universal TDD or exhaustive rule-coverage claim. Adjusted R1 repeated RED while preparing SQLite-on-disk before product."
+  },
+  "cells": [
+    {
+      "cell": "TASK-2-ODD-r1", "frozen_acceptance": true,
+      "source_examples": ["catalog/models.py:143", "catalog/views.py:147", "catalog/views.py:225", "catalog/views.py:247", "catalog/views.py:255", "catalog/templates/catalog/book_detail.html:22", "catalog/tests/test_reservations.py:193", "catalog/tests/test_reservations.py:227", "catalog/tests/test_reservations.py:243"],
+      "combined_suite": "57 OK", "oracle_suite": "9 OK", "separate_originals": "43 OK"
+    },
+    {
+      "cell": "TASK-2-ADJUSTED-r1", "frozen_acceptance": true,
+      "source_examples": ["catalog/views.py:81", "catalog/views.py:134", "catalog/views.py:160", "catalog/tests/test_reservations.py:227", "catalog/tests/test_reservations.py:301", "locallibrary/settings.py:152"],
+      "combined_suite": "56 OK", "oracle_suite": "9 OK", "separate_originals": "43 OK",
+      "supplemental_contract_issue": "Anonymous API POST with enforce_csrf_checks=True returns403 HTML; frozen oracle/default test client returns401 JSON. This is application HTTP403, not provider403. Keep frozen grade separate."
+    },
+    {
+      "cell": "TASK-2-ODD-r2", "frozen_acceptance": false,
+      "source_examples": ["catalog/views.py:43", "catalog/views.py:91", "catalog/views.py:109", "catalog/views.py:122", "catalog/tests/test_reservations.py:168", "catalog/tests/test_reservations.py:179", "catalog/tests/test_reservations.py:273"],
+      "combined_suite": "59 tests; 5 errors", "oracle_suite": "9 OK", "separate_originals": "43 OK",
+      "failure": "close_old_connections() inside ReservationApiTest/TestCase replay test; evaluation with disk SQLite reports Cannot operate on a closed database, then cascades into later tests. Not a failure of the original43 alone or the nine product oracles.",
+      "additional_limit": "Agent concurrency test checks absence of ':memory:' but not URI mode=memory; that assertion alone does not prove on-disk execution. External evaluation does use a disk TEST database."
+    },
+    {
+      "cell": "TASK-2-ADJUSTED-r2", "frozen_acceptance": false,
+      "source_examples": ["catalog/views.py:181", "catalog/views.py:211", "catalog/views.py:252", "catalog/views.py:269", "catalog/tests/test_reservations.py:177", "catalog/tests/test_reservations.py:181", "catalog/tests/test_reservations.py:239", "catalog/tests/test_reservations.py:270"],
+      "combined_suite": "57 tests; 3 errors", "oracle_suite": "9 OK", "separate_originals": "43 OK",
+      "failure": "connection.close() inside ReservationApiTests/TestCase replay test; disk-SQLite evaluation reports Cannot operate on a closed database with subsequent test errors. Default agent-run suite was green; no feedback/retry supplied."
+    }
+  ],
+  "decision": {
+    "raw_aggregate_token_delta_pct": -28.77658633776059,
+    "raw_aggregate_time_delta_pct": -9.528264566315015,
+    "pair_token_deltas_pct": [23.848018005570392, -60.18757326444813],
+    "favorable_predefined_signal": false,
+    "reasons": ["Both arms only1/2 frozen acceptance; cheap adjustedR2 is not an accepted delivery", "No savings in both pairs", "Additional contract fidelity gap in adjustedR1 under enforced CSRF", "Grouping and tracking vary together; n2 per arm does not isolate all causes"],
+    "adopt_or_install": false,
+    "next_inference_authorized": false
+  }
+}

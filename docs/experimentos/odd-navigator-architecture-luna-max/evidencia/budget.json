@@ -1,0 +1,6 @@
+{
+  "timeout_per_invocation_seconds": 1800,
+  "model": "openai/gpt-6-luna",
+  "variant": "max",
+  "cohort": "odd-context-routing-luna-max-v1"
+}

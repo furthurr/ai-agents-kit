@@ -1,0 +1,21 @@
+{
+  "task_id": "2",
+  "task_name": "[REDACTED_MOBILE_EVIDENCE]",
+  "arm": "v2_reforzado",
+  "model": "openai/gpt-6.1-terra",
+  "steps": 14,
+  "tools_called": 22,
+  "tokens": {
+    "total": 405893,
+    "input": 37254,
+    "output": 3450,
+    "reasoning": 261,
+    "cache_read": 364928,
+    "cache_write": 0
+  },
+  "duration_seconds": 164.253,
+  "soft_stop_reason": "[REDACTED_MOBILE_EVIDENCE]",
+  "error": null,
+  "exit_code": 0,
+  "completed_at": "2026-11-09T02:14:04.962115+00:00"
+}

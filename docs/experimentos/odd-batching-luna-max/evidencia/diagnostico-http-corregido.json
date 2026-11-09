@@ -1,0 +1,87 @@
+{
+  "kind": "post_run_supplemental_contract_diagnostic",
+  "model_calls": 0,
+  "frozen_suite_grades_changed": false,
+  "feedback_to_agents": false,
+  "seconds": 0.642,
+  "results": [
+    {
+      "cell": "TASK-2-ADJUSTED-r1",
+      "returncode": 0,
+      "anonymous_post": {
+        "False": {
+          "status": 401,
+          "content_type": "application/json",
+          "json": {
+            "error": "unauthorized"
+          }
+        },
+        "True": {
+          "status": 403,
+          "content_type": "text/html; charset=utf-8"
+        }
+      }
+    },
+    {
+      "cell": "TASK-2-ADJUSTED-r2",
+      "returncode": 0,
+      "anonymous_post": {
+        "False": {
+          "status": 401,
+          "content_type": "application/json",
+          "json": {
+            "error": "unauthorized"
+          }
+        },
+        "True": {
+          "status": 401,
+          "content_type": "application/json",
+          "json": {
+            "error": "unauthorized"
+          }
+        }
+      }
+    },
+    {
+      "cell": "TASK-2-ODD-r1",
+      "returncode": 0,
+      "anonymous_post": {
+        "False": {
+          "status": 401,
+          "content_type": "application/json",
+          "json": {
+            "error": "unauthorized"
+          }
+        },
+        "True": {
+          "status": 401,
+          "content_type": "application/json",
+          "json": {
+            "error": "unauthorized"
+          }
+        }
+      }
+    },
+    {
+      "cell": "TASK-2-ODD-r2",
+      "returncode": 0,
+      "anonymous_post": {
+        "False": {
+          "status": 401,
+          "content_type": "application/json",
+          "json": {
+            "error": "unauthorized"
+          }
+        },
+        "True": {
+          "status": 401,
+          "content_type": "application/json",
+          "json": {
+            "error": "unauthorized"
+          }
+        }
+      }
+    }
+  ],
+  "interpretation": "Application HTTP status, not provider API status. Explicit CSRF enforcement probes coverage beyond the nine frozen oracles."
+}

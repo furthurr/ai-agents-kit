@@ -1,0 +1,11 @@
+{
+  "skills_and_references_identical": true,
+  "non_prompt_config_equivalent": true,
+  "same_public_agent_and_skill_ids": true,
+  "agent_bytes_A": 6734,
+  "agent_bytes_B": 1764,
+  "agent_words_A": 931,
+  "agent_words_B": 234,
+  "primary_skill_sha256_A": "6b48601490fc41433d4c23c2ca836bced41f2e642fa6d87b5caf7f34614de1d2",
+  "primary_skill_sha256_B": "6b48601490fc41433d4c23c2ca836bced41f2e642fa6d87b5caf7f34614de1d2"
+}

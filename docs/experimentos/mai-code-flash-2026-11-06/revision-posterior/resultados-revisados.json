@@ -1,0 +1,1107 @@
+{
+  "model": "github-copilot/mai-code-1.1-flash",
+  "rows": [
+    {
+      "arm": "build_sin_mas",
+      "status": "finished",
+      "tokens": {
+        "input": 32101,
+        "output": 6649,
+        "reasoning": 20096,
+        "cache_read": 488192,
+        "cache_write": 0,
+        "total": 526942
+      },
+      "metrics_complete": true,
+      "seconds": 137.607,
+      "steps": 29,
+      "tool_counts": {
+        "todowrite": 2,
+        "grep": 2,
+        "glob": 4,
+        "bash": 11,
+        "read": 11,
+        "edit": 5
+      },
+      "skills_invoked": [],
+      "skills_loaded_by_content": [],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 60,
+      "joint_pass": false,
+      "changed": [
+        "catalog/templates/catalog/book_list.html",
+        "catalog/tests/test_views.py",
+        "catalog/views.py"
+      ],
+      "new_test_methods": 4,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "task": "low",
+      "cohort": "low",
+      "status_initial_export": "finished",
+      "status_reviewed": "delivered_not_accepted",
+      "joint_reviewed": {
+        "passed": false,
+        "executed": 60,
+        "discovered": 60,
+        "failure_count": 1,
+        "error_count": 0,
+        "failure_names": [
+          "test_books_page_has_search_form (catalog.tests.test_views.BookListViewTest.test_books_page_has_search_form)"
+        ],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "grep": 1,
+        "glob": 1,
+        "bash": 9,
+        "read": 3
+      },
+      "wrong_shared_python_project_path_attempts": 5,
+      "no_product_delivery": false,
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 13,
+        "discovered": 13,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      }
+    },
+    {
+      "arm": "v2_reforzado",
+      "status": "finished",
+      "tokens": {
+        "input": 24187,
+        "output": 4542,
+        "reasoning": 6720,
+        "cache_read": 271360,
+        "cache_write": 0,
+        "total": 300089
+      },
+      "metrics_complete": true,
+      "seconds": 71.999,
+      "steps": 19,
+      "tool_counts": {
+        "todowrite": 1,
+        "glob": 5,
+        "skill": 1,
+        "grep": 6,
+        "bash": 2,
+        "read": 9,
+        "edit": 3
+      },
+      "skills_invoked": [
+        "developer-v2"
+      ],
+      "skills_loaded_by_content": [
+        "developer-v2"
+      ],
+      "errors": [],
+      "acceptance": true,
+      "functional_pass": true,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 60,
+      "joint_pass": true,
+      "changed": [
+        "catalog/templates/catalog/book_list.html",
+        "catalog/tests/test_views.py",
+        "catalog/views.py"
+      ],
+      "new_test_methods": 4,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "task": "low",
+      "cohort": "low",
+      "status_initial_export": "finished",
+      "status_reviewed": "accepted",
+      "joint_reviewed": {
+        "passed": true,
+        "executed": 60,
+        "discovered": 60,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "glob": 3,
+        "grep": 1,
+        "bash": 1,
+        "read": 3
+      },
+      "wrong_shared_python_project_path_attempts": 2,
+      "no_product_delivery": false,
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 13,
+        "discovered": 13,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      }
+    },
+    {
+      "arm": "developer_actual",
+      "status": "finished",
+      "tokens": {
+        "input": 30354,
+        "output": 5617,
+        "reasoning": 12032,
+        "cache_read": 411392,
+        "cache_write": 0,
+        "total": 447363
+      },
+      "metrics_complete": true,
+      "seconds": 99.51,
+      "steps": 21,
+      "tool_counts": {
+        "skill": 1,
+        "bash": 6,
+        "grep": 2,
+        "glob": 3,
+        "read": 12,
+        "edit": 5
+      },
+      "skills_invoked": [
+        "developer"
+      ],
+      "skills_loaded_by_content": [
+        "developer"
+      ],
+      "errors": [],
+      "acceptance": true,
+      "functional_pass": true,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 59,
+      "joint_pass": true,
+      "changed": [
+        "catalog/templates/catalog/book_list.html",
+        "catalog/tests/test_views.py",
+        "catalog/views.py"
+      ],
+      "new_test_methods": 3,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "task": "low",
+      "cohort": "low",
+      "status_initial_export": "finished",
+      "status_reviewed": "accepted",
+      "joint_reviewed": {
+        "passed": true,
+        "executed": 59,
+        "discovered": 59,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "bash": 3,
+        "grep": 2,
+        "glob": 2,
+        "read": 3
+      },
+      "wrong_shared_python_project_path_attempts": 5,
+      "no_product_delivery": false,
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 13,
+        "discovered": 13,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      }
+    },
+    {
+      "arm": "build_mas",
+      "status": "finished",
+      "tokens": {
+        "input": 56274,
+        "output": 9193,
+        "reasoning": 31360,
+        "cache_read": 1748224,
+        "cache_write": 0,
+        "total": 1813691
+      },
+      "metrics_complete": true,
+      "seconds": 235.936,
+      "steps": 60,
+      "tool_counts": {
+        "todowrite": 1,
+        "glob": 3,
+        "grep": 4,
+        "bash": 29,
+        "read": 31,
+        "edit": 2
+      },
+      "skills_invoked": [],
+      "skills_loaded_by_content": [],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 56,
+      "joint_pass": false,
+      "changed": [
+        "catalog/views.py"
+      ],
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "task": "low",
+      "cohort": "low",
+      "status_initial_export": "finished",
+      "status_reviewed": "step_limit_incomplete",
+      "joint_reviewed": {
+        "passed": false,
+        "executed": 56,
+        "discovered": 56,
+        "failure_count": 8,
+        "error_count": 0,
+        "failure_names": [
+          "test_author_first_name (bench_oracles.test_search.SearchOracle.test_author_first_name)",
+          "test_author_last_name (bench_oracles.test_search.SearchOracle.test_author_last_name)",
+          "test_form_accessible_escaped_and_reset (bench_oracles.test_search.SearchOracle.test_form_accessible_escaped_and_reset)",
+          "test_no_results_and_empty_library_messages (bench_oracles.test_search.SearchOracle.test_no_results_and_empty_library_messages)",
+          "test_no_summary_match (bench_oracles.test_search.SearchOracle.test_no_summary_match)",
+          "test_query_not_split_and_special_characters (bench_oracles.test_search.SearchOracle.test_query_not_split_and_special_characters)",
+          "test_title_case_insensitive_trim (bench_oracles.test_search.SearchOracle.test_title_case_insensitive_trim)",
+          "test_title_without_author (bench_oracles.test_search.SearchOracle.test_title_without_author)"
+        ],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "glob": 1,
+        "grep": 2,
+        "bash": 28,
+        "read": 25,
+        "edit": 1
+      },
+      "wrong_shared_python_project_path_attempts": 25,
+      "no_product_delivery": false,
+      "oracle_reviewed": {
+        "passed": false,
+        "executed": 13,
+        "discovered": 13,
+        "failure_count": 8,
+        "error_count": 0,
+        "failure_names": [
+          "test_author_first_name (bench_oracles.test_search.SearchOracle.test_author_first_name)",
+          "test_author_last_name (bench_oracles.test_search.SearchOracle.test_author_last_name)",
+          "test_form_accessible_escaped_and_reset (bench_oracles.test_search.SearchOracle.test_form_accessible_escaped_and_reset)",
+          "test_no_results_and_empty_library_messages (bench_oracles.test_search.SearchOracle.test_no_results_and_empty_library_messages)",
+          "test_no_summary_match (bench_oracles.test_search.SearchOracle.test_no_summary_match)",
+          "test_query_not_split_and_special_characters (bench_oracles.test_search.SearchOracle.test_query_not_split_and_special_characters)",
+          "test_title_case_insensitive_trim (bench_oracles.test_search.SearchOracle.test_title_case_insensitive_trim)",
+          "test_title_without_author (bench_oracles.test_search.SearchOracle.test_title_without_author)"
+        ],
+        "error_names": []
+      }
+    },
+    {
+      "arm": "v2",
+      "status": "finished",
+      "tokens": {
+        "input": 27708,
+        "output": 6467,
+        "reasoning": 12480,
+        "cache_read": 408320,
+        "cache_write": 0,
+        "total": 442495
+      },
+      "metrics_complete": true,
+      "seconds": 102.347,
+      "steps": 25,
+      "tool_counts": {
+        "skill": 1,
+        "todowrite": 1,
+        "glob": 3,
+        "grep": 2,
+        "bash": 5,
+        "read": 17,
+        "edit": 4
+      },
+      "skills_invoked": [
+        "developer-v2"
+      ],
+      "skills_loaded_by_content": [
+        "developer-v2"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 62,
+      "joint_pass": false,
+      "changed": [
+        "catalog/templates/catalog/book_list.html",
+        "catalog/tests/test_views.py",
+        "catalog/views.py"
+      ],
+      "new_test_methods": 6,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "task": "low",
+      "cohort": "low",
+      "status_initial_export": "finished",
+      "status_reviewed": "delivered_not_accepted",
+      "joint_reviewed": {
+        "passed": false,
+        "executed": 62,
+        "discovered": 62,
+        "failure_count": 2,
+        "error_count": 0,
+        "failure_names": [
+          "test_blank_query_keeps_unfiltered_list (catalog.tests.test_views.BookListViewTest.test_blank_query_keeps_unfiltered_list)",
+          "test_search_matches_title_or_author_case_insensitive (catalog.tests.test_views.BookListViewTest.test_search_matches_title_or_author_case_insensitive)"
+        ],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "glob": 2,
+        "grep": 1,
+        "bash": 3,
+        "read": 6
+      },
+      "wrong_shared_python_project_path_attempts": 2,
+      "no_product_delivery": false,
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 13,
+        "discovered": 13,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      }
+    },
+    {
+      "arm": "build_sin_mas",
+      "status": "finished",
+      "tokens": {
+        "input": 85630,
+        "output": 12939,
+        "reasoning": 48896,
+        "cache_read": 1779968,
+        "cache_write": 0,
+        "total": 1878537
+      },
+      "metrics_complete": true,
+      "seconds": 286.385,
+      "steps": 53,
+      "tool_counts": {
+        "todowrite": 1,
+        "glob": 4,
+        "grep": 3,
+        "bash": 16,
+        "read": 40,
+        "edit": 5,
+        "write": 2
+      },
+      "skills_invoked": [],
+      "skills_loaded_by_content": [],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": true,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 52,
+      "joint_pass": true,
+      "changed": [
+        "catalog/migrations/0030_reservation.py",
+        "catalog/models.py",
+        "catalog/templates/catalog/book_detail.html",
+        "catalog/urls.py",
+        "catalog/views.py"
+      ],
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": true,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "task": "high",
+      "cohort": "high",
+      "status_initial_export": "finished",
+      "status_reviewed": "delivered_not_accepted",
+      "joint_reviewed": {
+        "passed": true,
+        "executed": 52,
+        "discovered": 52,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "glob": 4,
+        "grep": 1,
+        "bash": 13,
+        "read": 10,
+        "edit": 1
+      },
+      "wrong_shared_python_project_path_attempts": 14,
+      "no_product_delivery": false,
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 1,
+        "error_count": 0,
+        "failure_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)"
+        ],
+        "error_names": []
+      }
+    },
+    {
+      "arm": "v2_reforzado",
+      "status": "finished",
+      "tokens": {
+        "input": 46951,
+        "output": 13858,
+        "reasoning": 68224,
+        "cache_read": 953344,
+        "cache_write": 0,
+        "total": 1014153
+      },
+      "metrics_complete": true,
+      "seconds": 347.52,
+      "steps": 34,
+      "tool_counts": {
+        "skill": 1,
+        "glob": 3,
+        "read": 16,
+        "grep": 2,
+        "todowrite": 1,
+        "edit": 11,
+        "bash": 5
+      },
+      "skills_invoked": [
+        "developer-v2"
+      ],
+      "skills_loaded_by_content": [
+        "developer-v2"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": true,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 52,
+      "joint_pass": true,
+      "changed": [
+        "catalog/migrations/0030_reservation.py",
+        "catalog/models.py",
+        "catalog/templates/base_generic.html",
+        "catalog/templates/catalog/book_detail.html",
+        "catalog/urls.py",
+        "catalog/views.py",
+        "db.sqlite3"
+      ],
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": true,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "task": "high",
+      "cohort": "high",
+      "status_initial_export": "finished",
+      "status_reviewed": "delivered_not_accepted",
+      "joint_reviewed": {
+        "passed": true,
+        "executed": 52,
+        "discovered": 52,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "bash": 1,
+        "edit": 1
+      },
+      "wrong_shared_python_project_path_attempts": 0,
+      "no_product_delivery": false,
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 1,
+        "error_count": 0,
+        "failure_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)"
+        ],
+        "error_names": []
+      }
+    },
+    {
+      "arm": "developer_actual",
+      "status": "finished",
+      "tokens": {
+        "input": 19822,
+        "output": 3660,
+        "reasoning": 21376,
+        "cache_read": 302720,
+        "cache_write": 0,
+        "total": 326202
+      },
+      "metrics_complete": true,
+      "seconds": 120.303,
+      "steps": 20,
+      "tool_counts": {
+        "skill": 1,
+        "read": 7,
+        "glob": 3,
+        "bash": 10,
+        "todowrite": 1
+      },
+      "skills_invoked": [
+        "developer"
+      ],
+      "skills_loaded_by_content": [
+        "developer"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 52,
+      "joint_pass": false,
+      "changed": [],
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": false,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "task": "high",
+      "cohort": "high",
+      "status_initial_export": "finished",
+      "status_reviewed": "awaiting_plan_approval_and_path_blockage",
+      "joint_reviewed": {
+        "passed": false,
+        "executed": 52,
+        "discovered": 52,
+        "failure_count": 9,
+        "error_count": 0,
+        "failure_names": [
+          "test_api_auth_required (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_auth_required)",
+          "test_api_key_validation (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_key_validation)",
+          "test_api_method_get_not_allowed (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_method_get_not_allowed)",
+          "test_api_not_found (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_not_found)",
+          "test_api_successful_reserve_and_replay_idempotency (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_successful_reserve_and_replay_idempotency)",
+          "test_api_unavailable_copy (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_unavailable_copy)",
+          "test_reservation_model_fields_and_uniqueness (bench_oracles.test_high.Task2OracleModelAndApiTest.test_reservation_model_fields_and_uniqueness)",
+          "test_ui_reserve_page (bench_oracles.test_high.Task2OracleModelAndApiTest.test_ui_reserve_page)",
+          "test_concurrency_barrier_three_trials (bench_oracles.test_high.Task2OracleConcurrencyRealDbTest.test_concurrency_barrier_three_trials)"
+        ],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "read": 7,
+        "glob": 3,
+        "bash": 10
+      },
+      "wrong_shared_python_project_path_attempts": 9,
+      "no_product_delivery": true,
+      "oracle_reviewed": {
+        "passed": false,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 9,
+        "error_count": 0,
+        "failure_names": [
+          "test_api_auth_required (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_auth_required)",
+          "test_api_key_validation (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_key_validation)",
+          "test_api_method_get_not_allowed (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_method_get_not_allowed)",
+          "test_api_not_found (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_not_found)",
+          "test_api_successful_reserve_and_replay_idempotency (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_successful_reserve_and_replay_idempotency)",
+          "test_api_unavailable_copy (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_unavailable_copy)",
+          "test_reservation_model_fields_and_uniqueness (bench_oracles.test_high.Task2OracleModelAndApiTest.test_reservation_model_fields_and_uniqueness)",
+          "test_ui_reserve_page (bench_oracles.test_high.Task2OracleModelAndApiTest.test_ui_reserve_page)",
+          "test_concurrency_barrier_three_trials (bench_oracles.test_high.Task2OracleConcurrencyRealDbTest.test_concurrency_barrier_three_trials)"
+        ],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 0,
+        "error_count": 5,
+        "failure_names": [],
+        "error_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)",
+          "test_anonymous_ui_cannot_reserve (bench_oracles.test_edges.ReservationEdges.test_anonymous_ui_cannot_reserve)",
+          "test_api_all_other_methods_405 (bench_oracles.test_edges.ReservationEdges.test_api_all_other_methods_405)",
+          "test_database_unique_user_key (bench_oracles.test_edges.ReservationEdges.test_database_unique_user_key)",
+          "test_ui_real_csrf_and_visible_confirmation (bench_oracles.test_edges.ReservationEdges.test_ui_real_csrf_and_visible_confirmation)"
+        ]
+      }
+    },
+    {
+      "arm": "build_mas",
+      "status": "finished",
+      "tokens": {
+        "input": 50521,
+        "output": 7752,
+        "reasoning": 29632,
+        "cache_read": 1852160,
+        "cache_write": 0,
+        "total": 1910433
+      },
+      "metrics_complete": true,
+      "seconds": 210.305,
+      "steps": 60,
+      "tool_counts": {
+        "grep": 4,
+        "read": 27,
+        "skill": 1,
+        "glob": 5,
+        "todowrite": 1,
+        "bash": 28
+      },
+      "skills_invoked": [
+        "data-api"
+      ],
+      "skills_loaded_by_content": [
+        "data-api"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 52,
+      "joint_pass": false,
+      "changed": [],
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": false,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "task": "high",
+      "cohort": "high",
+      "status_initial_export": "finished",
+      "status_reviewed": "step_limit_incomplete",
+      "joint_reviewed": {
+        "passed": false,
+        "executed": 52,
+        "discovered": 52,
+        "failure_count": 9,
+        "error_count": 0,
+        "failure_names": [
+          "test_api_auth_required (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_auth_required)",
+          "test_api_key_validation (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_key_validation)",
+          "test_api_method_get_not_allowed (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_method_get_not_allowed)",
+          "test_api_not_found (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_not_found)",
+          "test_api_successful_reserve_and_replay_idempotency (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_successful_reserve_and_replay_idempotency)",
+          "test_api_unavailable_copy (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_unavailable_copy)",
+          "test_reservation_model_fields_and_uniqueness (bench_oracles.test_high.Task2OracleModelAndApiTest.test_reservation_model_fields_and_uniqueness)",
+          "test_ui_reserve_page (bench_oracles.test_high.Task2OracleModelAndApiTest.test_ui_reserve_page)",
+          "test_concurrency_barrier_three_trials (bench_oracles.test_high.Task2OracleConcurrencyRealDbTest.test_concurrency_barrier_three_trials)"
+        ],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "grep": 4,
+        "glob": 5,
+        "bash": 28,
+        "read": 26
+      },
+      "wrong_shared_python_project_path_attempts": 32,
+      "no_product_delivery": true,
+      "oracle_reviewed": {
+        "passed": false,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 9,
+        "error_count": 0,
+        "failure_names": [
+          "test_api_auth_required (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_auth_required)",
+          "test_api_key_validation (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_key_validation)",
+          "test_api_method_get_not_allowed (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_method_get_not_allowed)",
+          "test_api_not_found (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_not_found)",
+          "test_api_successful_reserve_and_replay_idempotency (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_successful_reserve_and_replay_idempotency)",
+          "test_api_unavailable_copy (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_unavailable_copy)",
+          "test_reservation_model_fields_and_uniqueness (bench_oracles.test_high.Task2OracleModelAndApiTest.test_reservation_model_fields_and_uniqueness)",
+          "test_ui_reserve_page (bench_oracles.test_high.Task2OracleModelAndApiTest.test_ui_reserve_page)",
+          "test_concurrency_barrier_three_trials (bench_oracles.test_high.Task2OracleConcurrencyRealDbTest.test_concurrency_barrier_three_trials)"
+        ],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 0,
+        "error_count": 5,
+        "failure_names": [],
+        "error_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)",
+          "test_anonymous_ui_cannot_reserve (bench_oracles.test_edges.ReservationEdges.test_anonymous_ui_cannot_reserve)",
+          "test_api_all_other_methods_405 (bench_oracles.test_edges.ReservationEdges.test_api_all_other_methods_405)",
+          "test_database_unique_user_key (bench_oracles.test_edges.ReservationEdges.test_database_unique_user_key)",
+          "test_ui_real_csrf_and_visible_confirmation (bench_oracles.test_edges.ReservationEdges.test_ui_real_csrf_and_visible_confirmation)"
+        ]
+      }
+    },
+    {
+      "arm": "v2",
+      "status": "finished",
+      "tokens": {
+        "input": 68595,
+        "output": 20692,
+        "reasoning": 44096,
+        "cache_read": 1672320,
+        "cache_write": 0,
+        "total": 1761607
+      },
+      "metrics_complete": true,
+      "seconds": 284.626,
+      "steps": 43,
+      "tool_counts": {
+        "glob": 6,
+        "skill": 3,
+        "bash": 6,
+        "read": 24,
+        "grep": 4,
+        "todowrite": 1,
+        "edit": 9,
+        "write": 1
+      },
+      "skills_invoked": [
+        "developer-v2",
+        "data-api",
+        "ui-design"
+      ],
+      "skills_loaded_by_content": [
+        "data-api",
+        "developer-v2",
+        "ui-design"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": true,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 52,
+      "joint_pass": true,
+      "changed": [
+        "catalog/migrations/0030_reservation.py",
+        "catalog/models.py",
+        "catalog/templates/catalog/book_detail.html",
+        "catalog/urls.py",
+        "catalog/views.py",
+        "db.sqlite3"
+      ],
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": true,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "task": "high",
+      "cohort": "high",
+      "status_initial_export": "finished",
+      "status_reviewed": "delivered_not_accepted",
+      "joint_reviewed": {
+        "passed": true,
+        "executed": 52,
+        "discovered": 52,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "glob": 3,
+        "bash": 3,
+        "read": 6
+      },
+      "wrong_shared_python_project_path_attempts": 4,
+      "no_product_delivery": false,
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 1,
+        "error_count": 0,
+        "failure_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)"
+        ],
+        "error_names": []
+      }
+    },
+    {
+      "arm": "sdd_trial",
+      "status": "finished",
+      "tokens": {
+        "input": 32426,
+        "output": 6858,
+        "reasoning": 14144,
+        "cache_read": 520704,
+        "cache_write": 0,
+        "total": 559988
+      },
+      "metrics_complete": true,
+      "seconds": 109.861,
+      "steps": 22,
+      "tool_counts": {
+        "todowrite": 1,
+        "skill": 1,
+        "glob": 3,
+        "read": 10,
+        "grep": 3,
+        "edit": 6,
+        "bash": 4,
+        "write": 1
+      },
+      "skills_invoked": [
+        "sdd-spec"
+      ],
+      "skills_loaded_by_content": [
+        "sdd-spec"
+      ],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": true,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 56,
+      "joint_pass": false,
+      "changed": [
+        "catalog/templates/catalog/book_list.html",
+        "catalog/tests/test_views.py",
+        "catalog/views.py"
+      ],
+      "new_test_methods": 4,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "task": "low",
+      "cohort": "sdd-low",
+      "status_initial_export": "finished",
+      "status_reviewed": "delivered_not_accepted",
+      "joint_reviewed": {
+        "passed": false,
+        "executed": 56,
+        "discovered": 60,
+        "failure_count": 0,
+        "error_count": 1,
+        "failure_names": [],
+        "error_names": [
+          "setUpClass (catalog.tests.test_views.BookListViewTest)"
+        ]
+      },
+      "tool_error_counts": {
+        "edit": 2,
+        "bash": 1
+      },
+      "wrong_shared_python_project_path_attempts": 0,
+      "no_product_delivery": false,
+      "oracle_reviewed": {
+        "passed": true,
+        "executed": 13,
+        "discovered": 13,
+        "failure_count": 0,
+        "error_count": 0,
+        "failure_names": [],
+        "error_names": []
+      },
+      "sdd_artifacts": []
+    },
+    {
+      "arm": "sdd_trial",
+      "status": "awaiting_user_gate_or_mode_review",
+      "tokens": {
+        "input": 45828,
+        "output": 6560,
+        "reasoning": 24384,
+        "cache_read": 1075072,
+        "cache_write": 0,
+        "total": 1127460
+      },
+      "metrics_complete": true,
+      "seconds": 163.058,
+      "steps": 39,
+      "tool_counts": {
+        "read": 24,
+        "todowrite": 2,
+        "glob": 6,
+        "bash": 15,
+        "grep": 2,
+        "write": 1
+      },
+      "skills_invoked": [],
+      "skills_loaded_by_content": [],
+      "errors": [],
+      "acceptance": false,
+      "functional_pass": false,
+      "test_delivery": false,
+      "artifact_evaluation_only": false,
+      "original43_pass": true,
+      "joint_tests": 52,
+      "joint_pass": false,
+      "changed": [],
+      "new_test_methods": 0,
+      "original_methods_preserved": true,
+      "procedure_fidelity_certified": false,
+      "oracle9_pass": false,
+      "edges5_pass": false,
+      "migration_check_pass": true,
+      "task": "high",
+      "cohort": "sdd-high",
+      "status_initial_export": "awaiting_user_gate_or_mode_review",
+      "status_reviewed": "blocked_wrong_workspace_path",
+      "joint_reviewed": {
+        "passed": false,
+        "executed": 52,
+        "discovered": 52,
+        "failure_count": 9,
+        "error_count": 0,
+        "failure_names": [
+          "test_api_auth_required (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_auth_required)",
+          "test_api_key_validation (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_key_validation)",
+          "test_api_method_get_not_allowed (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_method_get_not_allowed)",
+          "test_api_not_found (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_not_found)",
+          "test_api_successful_reserve_and_replay_idempotency (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_successful_reserve_and_replay_idempotency)",
+          "test_api_unavailable_copy (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_unavailable_copy)",
+          "test_reservation_model_fields_and_uniqueness (bench_oracles.test_high.Task2OracleModelAndApiTest.test_reservation_model_fields_and_uniqueness)",
+          "test_ui_reserve_page (bench_oracles.test_high.Task2OracleModelAndApiTest.test_ui_reserve_page)",
+          "test_concurrency_barrier_three_trials (bench_oracles.test_high.Task2OracleConcurrencyRealDbTest.test_concurrency_barrier_three_trials)"
+        ],
+        "error_names": []
+      },
+      "tool_error_counts": {
+        "glob": 4,
+        "bash": 15,
+        "read": 22,
+        "grep": 2,
+        "write": 1
+      },
+      "wrong_shared_python_project_path_attempts": 22,
+      "no_product_delivery": true,
+      "oracle_reviewed": {
+        "passed": false,
+        "executed": 9,
+        "discovered": 9,
+        "failure_count": 9,
+        "error_count": 0,
+        "failure_names": [
+          "test_api_auth_required (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_auth_required)",
+          "test_api_key_validation (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_key_validation)",
+          "test_api_method_get_not_allowed (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_method_get_not_allowed)",
+          "test_api_not_found (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_not_found)",
+          "test_api_successful_reserve_and_replay_idempotency (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_successful_reserve_and_replay_idempotency)",
+          "test_api_unavailable_copy (bench_oracles.test_high.Task2OracleModelAndApiTest.test_api_unavailable_copy)",
+          "test_reservation_model_fields_and_uniqueness (bench_oracles.test_high.Task2OracleModelAndApiTest.test_reservation_model_fields_and_uniqueness)",
+          "test_ui_reserve_page (bench_oracles.test_high.Task2OracleModelAndApiTest.test_ui_reserve_page)",
+          "test_concurrency_barrier_three_trials (bench_oracles.test_high.Task2OracleConcurrencyRealDbTest.test_concurrency_barrier_three_trials)"
+        ],
+        "error_names": []
+      },
+      "edges_reviewed": {
+        "passed": false,
+        "executed": 5,
+        "discovered": 5,
+        "failure_count": 0,
+        "error_count": 5,
+        "failure_names": [],
+        "error_names": [
+          "test_anonymous_api_401_json_with_real_csrf (bench_oracles.test_edges.ReservationEdges.test_anonymous_api_401_json_with_real_csrf)",
+          "test_anonymous_ui_cannot_reserve (bench_oracles.test_edges.ReservationEdges.test_anonymous_ui_cannot_reserve)",
+          "test_api_all_other_methods_405 (bench_oracles.test_edges.ReservationEdges.test_api_all_other_methods_405)",
+          "test_database_unique_user_key (bench_oracles.test_edges.ReservationEdges.test_database_unique_user_key)",
+          "test_ui_real_csrf_and_visible_confirmation (bench_oracles.test_edges.ReservationEdges.test_ui_real_csrf_and_visible_confirmation)"
+        ]
+      },
+      "sdd_artifacts": []
+    }
+  ],
+  "totals": {
+    "tokens": 12108960,
+    "reasoning_separate": 333440,
+    "seconds": 2169.457,
+    "steps": 425,
+    "initial_invocations": 12
+  },
+  "archive_verification": {
+    "low": {
+      "members_verified_sha256": 812,
+      "archive_sha256": "737d369427edc7fc92ef8b25dd0538f74635fa9c61d74c7fd07b7875f2b5d9f0"
+    },
+    "high": {
+      "members_verified_sha256": 827,
+      "archive_sha256": "1ae23ba54309ab4c25b377f5ef725bfa7fa631de033d054bdb5f196cabab725d"
+    },
+    "sdd-low": {
+      "members_verified_sha256": 359,
+      "archive_sha256": "5bc94900c4470019be39ea41841a5f8081c426da33d75dae7e7ac2b1e14157c6"
+    },
+    "sdd-high": {
+      "members_verified_sha256": 363,
+      "archive_sha256": "c1347f07d39c77abe42ca7da563a9984866aa81ceffa4a56e27530eadbbecc20"
+    }
+  },
+  "inference_calls_during_post_audit": 0,
+  "corrections_to_initial_export": [
+    "Build con MAS in both tasks reached the native 60-step boundary despite null harness stop_reason.",
+    "SDD high did not request an SDD mode gate: it mistook the shared Python environment path for the target workspace.",
+    "Developer high requested plan approval and reported path restrictions; it is not a delivered implementation.",
+    "SDD low discovered 60 tests but executed only 56 because its class fixture failed; new tests are 4, not zero."
+  ]
+}
