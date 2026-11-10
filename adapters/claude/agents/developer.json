@@ -2,7 +2,7 @@
   "filename": "developer.md",
   "frontmatter": {
     "name": "developer",
-    "description": "Implementa características completas de producto en UI, datos/APIs y negocio; usa PLAN propio, lee contexto selectivamente y verifica cambios. No usa SDD.",
+    "description": "Desarrollo integral con ejecución proporcional, verificación real y continuidad bajo demanda. Consulta/PLAN solo lectura; skills de dominio selectivas y cierre documental independiente; no activa SDD.",
     "user-invocable": false,
     "tools": [
       "Read",

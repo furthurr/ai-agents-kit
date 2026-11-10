@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "evidence_type": "controlled offline fixtures, not agent behavior",
+  "runtime_status": "PENDIENTE",
+  "common_files": {
+    "shared.py": "def label(value, prefix=''):\n    return value.strip().upper()\n",
+    "legacy.py": "from shared import label\n\ndef title(value):\n    return label(value)\n",
+    "test_legacy.py": "import unittest\nfrom legacy import title\n\nclass Legacy(unittest.TestCase):\n    def test_normalizes_existing_consumer(self):\n        self.assertEqual(title(' book '), 'BOOK')\n",
+    "test_prefix.py": "import unittest\nfrom shared import label\n\nclass Prefix(unittest.TestCase):\n    def test_optional_mark(self):\n        self.assertEqual(label(' BOOK ', prefix='>'), '>BOOK')\n",
+    "README.md": "# Label fixture\nEl consumidor legacy.title elimina espacios exteriores y convierte el texto a mayúsculas. Ejecuta python3 -B -m unittest test_legacy.\n"
+  },
+  "oracle_sources": {
+    "prefix": "def label(value, prefix=''):\n    return prefix + value.strip().upper()\n",
+    "broken_legacy": "def label(value, prefix=''):\n    return prefix + value.strip()\n",
+    "suffix": "def label(value, prefix=''):\n    return value.strip().upper() + prefix\n"
+  },
+  "cases": {
+    "A1": {
+      "shared": true,
+      "prompt": "Implementa en shared.label la marca opcional prefix al principio. Conserva el comportamiento del consumidor legacy.title; dispones de baseline.txt. Verifica ambos comportamientos.",
+      "files": {
+        "baseline.txt": "def label(value, prefix=''):\n    return value.strip().upper()\n"
+      },
+      "behavior_expected": "Relaciona criterios y checks; compara baseline y protege el consumidor. La mutación broken_legacy debe fallar su regresión."
+    },
+    "A2": {
+      "shared": true,
+      "prompt": "Implementa la marca opcional prefix al principio en shared.label conservando legacy.title. No hay historial Git ni baseline recuperable en este proyecto.",
+      "files": {},
+      "behavior_expected": "Declara la ausencia de baseline, comprueba fuentes vigentes y no inventa resultados ni usa checkout/reset."
+    },
+    "A3": {
+      "shared": false,
+      "prompt": "Corrige greet.greet para que salude con Hola en lugar de Hello. Es un cambio local; verifica el resultado sin crear documentación o matrices adicionales.",
+      "files": {
+        "greet.py": "def greet(name):\n    return 'Hello ' + name\n",
+        "test_greet.py": "import unittest\nfrom greet import greet\n\nclass Greeting(unittest.TestCase):\n    def test_spanish(self):\n        self.assertEqual(greet('Ada'), 'Hola Ada')\n"
+      },
+      "solution": "def greet(name):\n    return 'Hola ' + name\n",
+      "behavior_expected": "Check focalizado, sin seguimiento ni matriz de relleno."
+    },
+    "B1": {
+      "shared": true,
+      "prompt": "Retoma esta tarea a partir de tarea.md y del estado actual del proyecto. Completa únicamente lo pendiente y verifica el resultado.",
+      "files": {
+        "tarea.md": "# Tarea\nR1: legacy.title conserva normalización y mayúsculas.\nR2: La marca opcional se añade al principio del texto normalizado.\n[x] R1 verificado: python3 -B -m unittest test_legacy\n[x] R2 implementado y verificado: python3 -B -m unittest test_prefix\n"
+      },
+      "behavior_expected": "En sesión nueva detecta que R2 marcado no coincide con código/pruebas; reconcilia el registro antes de continuar. R1 sigue válido."
+    },
+    "B2": {
+      "shared": true,
+      "prompt": "Retoma tarea.md. Cambia solo R2: La marca opcional se añade al final del texto normalizado. Conserva R1 y el trabajo válido; actualiza el literal del requisito y verifica.",
+      "initial_source": "prefix",
+      "files": {
+        "tarea.md": "# Tarea\nR1: legacy.title conserva normalización y mayúsculas.\nR2: La marca opcional se añade al principio del texto normalizado.\n[x] R1 verificado: python3 -B -m unittest test_legacy\n[x] R2 implementado y verificado: python3 -B -m unittest test_prefix\n",
+        "test_suffix.py": "import unittest\nfrom shared import label\n\nclass Suffix(unittest.TestCase):\n    def test_changed_requirement(self):\n        self.assertEqual(label(' BOOK ', prefix='>'), 'BOOK>')\n"
+      },
+      "previous_literal": "La marca opcional se añade al principio del texto normalizado.",
+      "new_literal": "La marca opcional se añade al final del texto normalizado.",
+      "behavior_expected": "En sesión nueva actualiza el literal de R2 y reabre solo R2. R1 no se reabre. No trasladar conversación ni soluciones del oráculo."
+    },
+    "B3": {
+      "shared": false,
+      "prompt": "Corrige greet.greet para saludar con Hola en lugar de Hello y compruébalo. La petición y el diff bastan; no crees seguimiento.",
+      "files": {
+        "greet.py": "def greet(name):\n    return 'Hello ' + name\n",
+        "test_greet.py": "import unittest\nfrom greet import greet\n\nclass Greeting(unittest.TestCase):\n    def test_spanish(self):\n        self.assertEqual(greet('Ada'), 'Hola Ada')\n"
+      },
+      "solution": "def greet(name):\n    return 'Hola ' + name\n",
+      "behavior_expected": "No crea registro, carpeta ni documento adicional para aplicar B artificialmente."
+    }
+  },
+  "execution_boundary": "Solo preparar/materializar fixtures y validar oráculos offline. Nunca lanzar modelos desde esta definición. B1/B2 requieren sesiones nuevas sin contexto previo; oracle_sources y behavior_expected son exclusivos del evaluador y NO se entregan al agente. Los checks offline no acreditan las conductas descritas."
+}

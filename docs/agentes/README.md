@@ -63,14 +63,16 @@ funcional. Solo decisiones y gates reales requieren intervención.
 - **Skill Navigator (core local):** bootstrap y updates son explícitos; conserva el
   gate técnico de disponibilidad. Las escrituras, exportaciones y sobrescrituras
   conservan su autorización efectiva.
-- **Skill Architecture (core local), Developer, Data & API y UI Design:** no recomiendan modelos;
+- **Skill Architecture (core local), Data & API y UI Design:** no recomiendan modelos;
   la primera documentación masiva conserva sus gates de estudio, propuesta y escritura.
 - **Code Review:** no recomienda modelo. Consultas y barridos autorizados conservan
   su alcance; las auditorías documentales autorizadas
   registran todas las severidades verificadas sin pedir otro filtro; consultas sin
   escrituras y remediación con aprobación antes del primer y cada siguiente paso.
-- **Developer:** usa PLAN propio para aclarar y planear cambios; no usa ni activa SDD.
-  SDD es una metodología independiente que se inicia solo seleccionando ese agente.
+- **Developer:** una petición clara de implementación avanza sin aprobación rutinaria
+  de un plan; `PLAN`/consulta son solo lectura y no implementan. Verifica con checks
+  proporcionales, protege el baseline en código compartido y crea continuidad solo si
+  petición y diff no bastan. No usa ni activa SDD.
 - **SDD:** recomienda por score de feature `direct` (1–3), SDD-Tiny (4–8) o SDD-Lite
   (9–10/10+), sin puntuar bugs, consultas o exploraciones. `standard` queda
   deprecado/legacy y solo se activa ante solicitud explícita; una elección compatible
@@ -94,7 +96,7 @@ funcional. Solo decisiones y gates reales requieren intervención.
 | Agente | Ficha | Skill(s) |
 |---|---|---|
 | Code Review Agent | [code-review.md](code-review.md) | `code-quality` y/o `security` |
-| Developer Agent | [developer.md](developer.md) | `developer`, `data-api` y `ui-design` bajo demanda |
+| Developer | [developer.md](developer.md) | `developer`, `data-api` y `ui-design` bajo demanda |
 | Documentation Orchestrator | [documentation-orchestrator.md](documentation-orchestrator.md) | `documentation-orchestrator`, skills locales y handoff opcional a `code-review` |
 | Git & Release Manager | [git-release-manager.md](git-release-manager.md) | `git-commit` + `release-management` |
 | Agente SDD | [sdd.md](sdd.md) | `sdd-spec` |

@@ -1,0 +1,105 @@
+{
+  "date": "2026-11-10",
+  "purpose": "Registro local de la sustitución de Developer; no es documentación canónica ni autorización de despliegue",
+  "baseline_commit": "b5a7dc439212b68c3488998a071ab9772839af86",
+  "initial_worktree": "clean",
+  "plan_sha256": "d74ff375bfb4f18c78d9405562dfd7f1afe26d65c06f80d93eb4a49678f0f56a",
+  "environment": {"os": "Darwin 25.1.0", "python": "3.12.4", "installer_shell": "bash"},
+  "decision": "Developer = candidato2 íntegro + Delta A + Delta B + nombres públicos. Misma selección developer; una sola autoridad en la skill.",
+  "status": {
+    "repository_replacement": "PASS",
+    "offline_validation": "PASS",
+    "temporary_installation_and_rollback": "PASS: seis plataformas, scripts Bash en macOS; no son runtimes de los seis hosts",
+    "native_selector_and_effective_host_permissions": "PENDIENTE: sondeo CLI aislado rechazado por permisos de ejecución de la sesión; no se eludió",
+    "agent_behavior_and_cross_session_continuity": "PENDIENTE: no se autorizaron ni ejecutaron nuevas inferencias",
+    "native_windows_powershell": "PENDIENTE: PowerShell no disponible",
+    "canonical_documentation": "PENDIENTE: contexto preparado para selección manual de documentation-orchestrator",
+    "real_profile_installation_and_operational_deprecation": "NO EJECUTADA: fuera del alcance autorizado"
+  },
+  "preservation": {
+    "archive": "tools/fixtures/developer_previous.json",
+    "sha256": "cd65f99ba94af3a55d272e3745f345ce16057997adbe8dcc29d557dd8b4d6fff",
+    "archived_files": 14,
+    "contents": "Agente, skill, referencia de plan, dos fragmentos compartidos, manifest, seis adapters y dos artefactos OpenCode anteriores. Bytes UTF-8 y SHA-256 por archivo; JSON histórico no invocable fuera de árboles activos.",
+    "frozen_candidate_and_originals": "PASS: hashes idénticos a la sección 10 del plan, sin editar congelaciones",
+    "rollback": "PASS en fixtures: recuperación de agente/skill desde backups de los instaladores en seis plataformas; recuperación exclusiva de los dos recursos retirados en OpenCode; colisión de destino rechazada sin overwrite",
+    "previous_implementation": "Deprecada en canonical/generated, no se retira ni desactiva el ID developer. No se acredita deprecación operativa en perfiles reales."
+  },
+  "output_sha256": {
+    "canonical/agents/developer.md": "675a0eeaaf90fe95a80ad78b27de47a3a091e585a2a6235213b31c0ee3672378",
+    "canonical/skills/developer/SKILL.md": "334cf1c4445c3119512f79c547d44dafac013d12a99605684d9f0dc5c893e13f",
+    "generated/antigravity/agents/developer.md": "92d7fca8501e0b65f2daede5a3ba73ed4ba6a2f46fcdf88c035bf682fe83f0ca",
+    "generated/claude/agents/developer.md": "ca95eab26370134dfa636521a2cda477aabaa61c27457fb898ef731c71385bc3",
+    "generated/copilot/agents/developer.agent.md": "4b1151c8f8d2cf48cc016c2ea76d19a7e6d856790693a1579797cd2a85e8ee2e",
+    "generated/kiro/agents/developer.md": "654d2a220eec6af0d506b2e43bed6328df14c96395b968c5ba5679272b4d1f9d",
+    "generated/opencode/agents/developer.md": "069653c18049711786a7dfaba4e0d589e65d4bc704180cf7373084352f6c0ed9",
+    "generated/pi/agents/developer.md": "a4f9b8b491869057b2bcd982cf7b80404592a777f93cab9b988182ad3398aa31",
+    "all_six_generated_developer_skills": "334cf1c4445c3119512f79c547d44dafac013d12a99605684d9f0dc5c893e13f"
+  },
+  "checks": [
+    {"command": "python3 -B tools/render.py", "exit_code": 0, "type": "static", "result": "PASS: renderer oficial; solo artefactos Developer cambian"},
+    {"command": "python3 -B tools/validate.py", "exit_code": 0, "type": "static", "result": "PASS: paridad/reproducibilidad, 5 agentes, 11 skills, 6 plataformas"},
+    {"command": "python3 -B tools/test_developer_contract.py", "exit_code": 0, "type": "static + executed fixtures", "result": "PASS: 20 tests; equivalencia completa, negativas, preservación, seis instalaciones/recuperaciones, limpieza segura y fixtures A1–B3"},
+    {"command": "python3 -B tools/test_integrity.py", "exit_code": 0, "type": "static + fixtures", "result": "PASS: 416/416"},
+    {"command": "python3 -B tools/test_mas_identity.py", "exit_code": 0, "type": "static", "result": "PASS: 228/228; identidad Developer en el agente, sin alterar la skill congelada"},
+    {"command": "python3 -B tools/test_context_efficiency.py", "exit_code": 0, "type": "static", "result": "PASS: 12 tests"},
+    {"command": "python3 -B tools/test_handoff_contract.py", "exit_code": 0, "type": "static + fixtures", "result": "PASS: 37 tests"},
+    {"command": "python3 -B tools/test_documentation_core.py", "exit_code": 0, "type": "static", "result": "PASS: 19 tests"},
+    {"command": "python3 -B tools/test_model_recommendations.py", "exit_code": 0, "type": "static", "result": "PASS: 5 tests"},
+    {"command": "python3 -B tools/test_permissions.py", "exit_code": 0, "type": "static", "result": "PASS: 12 tests; no acredita permisos efectivos del host"},
+    {"command": "python3 -B tools/test_secret_policy.py", "exit_code": 0, "type": "synthetic fixtures", "result": "PASS: 26 tests, sin leer credenciales reales"},
+    {"command": "python3 -B tools/test_sdd_contract.py", "exit_code": 0, "type": "static", "result": "PASS: 762/762; fuentes SDD intactas"},
+    {"command": "python3 -B tools/test_install.py", "exit_code": 0, "type": "executed installer fixtures + static PowerShell parity", "result": "PASS: 334/334; HOME temporal, seis plataformas"},
+    {"command": "python3 -B tools/test_retired_agents.py", "exit_code": 0, "type": "executed fixtures", "result": "PASS: 26 tests; catálogo de retirados intacto, developer no añadido"},
+    {"command": "python3 -B tools/test_antigravity_contract.py", "exit_code": 0, "type": "static", "result": "PASS: 5 tests"},
+    {"command": "python3 -B tools/test_antigravity_install.py", "exit_code": 0, "type": "executed Bash fixtures", "result": "PASS: 22 tests; no runtime Antigravity ni Windows"},
+    {"command": "python3 -B tools/check_links.py", "exit_code": 0, "type": "static", "result": "PASS: 224 Markdown revisados"},
+    {"command": "python3 -B tools/test_validate.py", "exit_code": 0, "type": "negative fixtures", "result": "PASS: 40/40"},
+    {"command": "python3 -B tools/test_code_review_contract.py", "exit_code": 0, "type": "static", "result": "PASS: 7 tests; rol ajeno intacto"},
+    {"command": "python3 -B tools/test_links.py", "exit_code": 0, "type": "fixtures", "result": "PASS: 4/4"},
+    {"command": "python3 -B tools/test_mobile_benchmark_common.py HarnessTests.test_ios_uses_actual_sources_not_rewritten_role", "exit_code": 0, "type": "text-only regression", "result": "PASS: un test; concatenación exacta de fuentes actuales, sin benchmark ni llamada de modelo"},
+    {"command": "python3 -B tools/test_configure_autonomy.py", "exit_code": 0, "type": "isolated fixtures", "result": "PASS: 19 tests; ninguna configuración real modificada"},
+    {"command": "python3 -B tools/test_measure_context.py", "exit_code": 0, "type": "fixtures", "result": "PASS: 5 tests; no medición nueva de tokens reales"},
+    {"command": "git diff --check", "exit_code": 0, "type": "static", "result": "PASS"}
+  ],
+  "corrected_during_execution": [
+    "Antes del reemplazo, la nueva prueba de composición falló por agente y skill antiguos, y las negativas pasaron.",
+    "La primera instalación de la nueva suite encontró un directorio references vacío ya existente; se corrigió la preparación del fixture con exist_ok=True y los 20 tests finales pasaron.",
+    "Las pruebas de identidad/contexto/documentación exigían encabezados y plantilla del procedimiento anterior; ahora comprueban la autoridad única, la composición aprobada y los mismos límites pertinentes.",
+    "Un assert de la regresión iOS offline exigía el encabezado antiguo. Ahora compara íntegramente las fuentes actuales, sin reescribir herramientas de benchmark ni evidencias históricas.",
+    "La ejecución agrupada en background y el sondeo de ayuda/versión CLI aislado fueron rechazados por permisos de shell. Las suites permitidas se ejecutaron individualmente; no se intentó eludir el bloqueo del host."
+  ],
+  "reforcements": {
+    "A": {"composition": "PASS: una vez al final de Comprobar", "fixture": "PASS: baseline, criterio nuevo y regresión sensible a mutación; ausencia de baseline y cambio pequeño preparados", "agent_behavior": "PENDIENTE"},
+    "B": {"composition": "PASS: una vez al final de Continuidad bajo demanda", "fixture": "PASS: casilla obsoleta contradicha por check; requisito nuevo falla sin romper R1; cambio simple sin registro preparado", "agent_behavior_in_new_sessions": "PENDIENTE"}
+  },
+  "platforms": {
+    "copilot": {"render": "PASS", "temporary_bash_install_upgrade_rollback": "PASS", "native_selector": "PENDIENTE", "model_behavior": "PENDIENTE"},
+    "opencode": {"render": "PASS", "temporary_bash_install_upgrade_rollback": "PASS", "known_resource_cleanup_and_exclusive_restore": "PASS: fixtures de agent/agents y plan.md, extras preservados", "native_selector_overrides_and_effective_permissions": "PENDIENTE", "model_behavior": "PENDIENTE"},
+    "kiro": {"render": "PASS", "temporary_bash_install_upgrade_rollback": "PASS", "native_selector": "PENDIENTE", "model_behavior": "PENDIENTE"},
+    "claude": {"render": "PASS", "temporary_bash_install_upgrade_rollback": "PASS", "native_selector": "PENDIENTE", "model_behavior": "PENDIENTE"},
+    "pi": {"render": "PASS", "temporary_bash_install_upgrade_rollback": "PASS", "arguments_suffix": "PASS: $ARGUMENTS conservado", "native_selector": "PENDIENTE", "model_behavior": "PENDIENTE"},
+    "antigravity": {"render": "PASS", "temporary_bash_install_upgrade_rollback": "PASS", "model_inheritance": "PASS: inherit conservado", "native_selector": "PENDIENTE", "model_behavior": "PENDIENTE"}
+  },
+  "cleanup_tool": {
+    "path": "tools/developer_migration.py",
+    "reason": "Los instaladores fusionan y conservan plan.md obsoleto; OpenCode puede escanear también agents/developer.md antiguo.",
+    "default": "Solo lectura, perfil y backup explícitos; --apply opt-in separado, nunca ejecutado en perfil real en esta tarea",
+    "allowlisted_paths": ["agents/developer.md", "skills/developer/references/plan.md"],
+    "safety": "Hashes conocidos exactos; contenido vigente verificado antes de retirar; bloqueo de personalizados/desconocidos/enlaces; respaldo único verificado fuera de árboles activos y revalidación de bytes/identidad; sin --force ni --delete",
+    "limits": "No modifica instaladores, configuraciones u overrides; no escanea proyectos ni resuelve aliases. No es despliegue transaccional ni comparación-y-retirada atómica portable. Otros hosts conservan extras por fusión y requieren revisión de rutas seleccionadas en un despliegue posterior."
+  },
+  "documentation_continuation": {
+    "owner": "documentation-orchestrator, por selección manual; no delegado ni activado automáticamente",
+    "objective": "Actualizar solo afirmaciones que quedaron desfasadas tras la sustitución bajo el mismo ID; distinguir repo, fixtures y perfiles reales.",
+    "verified_stale": {
+      "docs/agentes/developer.md": "Nombre Developer Agent y obligación de aprobar PLAN por impacto multicapa; faltan A/B y continuidad bajo demanda.",
+      "docs/catalogo.md": "Nombre Developer Agent y descripción del procedimiento anterior.",
+      "docs/uso.md": "Nombre visible de Developer; contrastar ejemplos y aclarar nueva ejecución proporcional sin plan rutinario."
+    },
+    "review_if_impacted": ["docs/desarrollo.md", "docs/migracion-agentes.md", "docs/agentes/README.md", "docs/README.md", "README.md", "AGENTS.md"],
+    "context": "5 agentes/11 skills/6 plataformas intactos. Skill exacta candidato2+A+B; preservación en JSON histórico. Pruebas y huellas en este registro. Documentar limpieza opt-in separada solo para dos rutas conocidas, sin presentarla como migración global ni instalación real. No actualizar experimentos ni índices históricos por rutina; AGENTS.md solo si su bloque queda realmente desfasado."
+  },
+  "excluded_actions": ["instalar/limpiar perfiles reales", "nuevas inferencias o benchmarks", "commits/push/tags/releases/publicaciones", "editar documentación canónica o AGENTS.md", "editar SDD u otros agentes", "modificar experimentos, resultados o congelaciones históricas", "leer/copiar secretos", "cambiar modelo o agente por defecto del host"],
+  "ci": "Suite Developer añadida al workflow; solo comandos locales verificados. No se ha publicado ni acreditado un run remoto."
+}

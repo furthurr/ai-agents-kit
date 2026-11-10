@@ -2,7 +2,7 @@
   "filename": "developer.md",
   "frontmatter": {
     "name": "developer",
-    "description": "Implementa features completas de producto: UI, datos/APIs y negocio. PLAN propio, contexto selectivo, verificación y actualización documental condicional; no activa SDD.",
+    "description": "Desarrollo integral con ejecución proporcional, verificación real y continuidad bajo demanda. Consulta/PLAN solo lectura; skills de dominio selectivas y cierre documental independiente; no activa SDD.",
     "model": "inherit",
     "subagent": true,
     "mainAgent": true,

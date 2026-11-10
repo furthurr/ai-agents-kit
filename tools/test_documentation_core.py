@@ -102,16 +102,17 @@ class DocumentationCoreContract(unittest.TestCase):
     def test_developer_plan_scope_sdd_and_documentation_close(self):
         agent = read(ROOT / "canonical/agents/developer.md")
         skill = read(SKILLS / "developer/SKILL.md")
-        plan = read(SKILLS / "developer/references/plan.md")
-        self.require(agent, "**PLAN**", "conversación de solo lectura", "espera aprobación",
-                     "no carga `sdd-spec`", "no crea ni modifica `.sdd/`", "`data-api`",
-                     "`ui-design`", "pruebas focalizadas", "⚠️ ¿Quieres actualizar la documentación",
-                     "`documentation-orchestrator`")
-        self.require(skill, "### PLAN", "### IMPLEMENTACIÓN", "no carga `sdd-spec`",
-                     "No recomiendes ni cambies a `sdd`", "no inicialices ni sincronices",
-                     "fuente canónica relevante quedó desfasada")
-        self.require(plan, "## Plan de implementación", "### Impacto e implicaciones",
-                     "### Verificación", "¿Apruebas este alcance y plan")
+        self.require(agent, "Carga y sigue `developer`", "autoridad única de tu procedimiento",
+                     "No cambies de agente automáticamente")
+        self.require(skill, "Consulta o PLAN son solo lectura", "no implementes ni crees archivos no solicitados",
+                     "sin aprobación rutinaria de un plan", "carga `data-api`", "carga `ui-design`",
+                     "checks proporcionales", "no autoriza bootstrap, sincronización ni inventarios documentales",
+                     "Si quedó documentación canónica desfasada, indica rutas y motivo",
+                     "`documentation-orchestrator`", "pregunta una vez por la actualización si no fue pedida",
+                     "Su mantenimiento y `AGENTS.md` corresponden a ese agente",
+                     "prepara contexto portable y espera selección manual, sin actualizarla",
+                     "No cargues SDD ni crees/modifiques `.sdd/`", "No delegues")
+        self.assertFalse((SKILLS / "developer/references/plan.md").exists())
         self.assertNotIn("{{sdd_agent}}", agent + skill)
         for domain_skill in ("data-api", "ui-design"):
             self.assertNotIn("{{sdd_agent}}", read(SKILLS / domain_skill / "SKILL.md"))

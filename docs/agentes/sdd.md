@@ -152,11 +152,12 @@ sus propios gates; no hace routing automático a Developer ni a agentes retirado
 Puede cargar `data-api` y `ui-design` bajo demanda como referencias técnicas sin
 cambiar el ejecutor.
 
-Developer tiene un flujo independiente, con modo PLAN conversacional y sin creación
-de specs. Para usar SDD, selecciona explícitamente el agente y acepta sus gates; para
-implementar sin esa metodología, selecciona Developer. Un cambio de agente que pida
-el usuario conserva la evidencia y decisiones, pero no transfiere autorización ni
-marca tareas como completadas.
+Developer tiene un flujo independiente, con consulta/PLAN de solo lectura y sin
+creación de specs. Una petición clara de implementación no exige aprobar un plan
+rutinario. Para usar SDD, selecciona explícitamente el agente y acepta sus gates;
+para implementar sin esa metodología, selecciona Developer. Un cambio de agente que
+pida el usuario conserva la evidencia y decisiones, pero no transfiere autorización
+ni marca tareas como completadas.
 
 Contrato: [selección de metodología](../../canonical/skills/sdd-spec/references/agent-routing.md).
 

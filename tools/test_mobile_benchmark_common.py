@@ -173,7 +173,11 @@ class HarnessTests(unittest.TestCase):
         self.assertIn(common.DELTA_A, text)
         self.assertIn('Consulta de dominio selectiva', text)
         self.assertNotIn('máxima disciplina DRY', text)
-        self.assertIn('## Modos de trabajo', ios.build_system_instructions('developer_actual', self.root))
+        # "actual" follows the current canonical implementation, not an old heading.
+        # Historical reports/frozen profiles remain unchanged by this assertion.
+        agent = (common.REPO / 'generated/opencode/agents/developer.md').read_text().split('---', 2)[2].lstrip('\n')
+        skill = (common.REPO / 'generated/opencode/skills/developer/SKILL.md').read_text()
+        self.assertEqual(ios.build_system_instructions('developer_actual', self.root), agent + '\n\n' + skill)
 
     def test_frozen_profile_changes_are_detected(self):
         profile = self.root / 'profile'

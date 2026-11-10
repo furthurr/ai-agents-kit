@@ -30,7 +30,13 @@ class ContextEfficiencyTests(unittest.TestCase):
             else:
                 self.assertIn("{{project_context}}", body, agent)
         for skill in manifest["skills"]:
-            self.assertIn("{{mas_identity}}", read(f"canonical/skills/{skill}/SKILL.md"), skill)
+            body = read(f"canonical/skills/{skill}/SKILL.md")
+            if skill == "developer":
+                # Approved frozen composition: identity is supplied once by the agent.
+                self.assertNotIn("{{mas_identity}}", body)
+                self.assertEqual(read("canonical/agents/developer.md").count("{{mas_identity}}"), 1)
+            else:
+                self.assertIn("{{mas_identity}}", body, skill)
 
     def test_developer_project_context_is_injected_once_in_every_rendered_host(self):
         manifest = json.loads(read("canonical/manifest.json"))
@@ -49,13 +55,14 @@ class ContextEfficiencyTests(unittest.TestCase):
         agent = " ".join(read("canonical/agents/developer.md").casefold().split())
         skill = " ".join(read("canonical/skills/developer/SKILL.md").casefold().split())
 
-        self.assertIn("resumen portable", agent)
-        self.assertIn("no edites documentación canónica", agent)
-        self.assertIn("no selecciona el orquestador", agent)
-        self.assertIn("cambios multicapa, responsive", skill)
-        self.assertIn("pruebas relevantes", skill)
-        self.assertIn("no preguntes por decisiones técnicas inferibles", skill)
-        self.assertIn("no edites documentación canónica", skill)
+        self.assertIn("autoridad única de tu procedimiento", agent)
+        self.assertNotIn("## modos", agent)
+        self.assertIn("sin aprobación rutinaria de un plan", skill)
+        self.assertIn("pregunta y espera únicamente ante una decisión funcional pendiente", skill)
+        self.assertIn("checks proporcionales", skill)
+        self.assertIn("contrasta los cambios con documentación pertinente aunque no hayas cargado", skill)
+        self.assertIn("prepara contexto portable y espera selección manual, sin actualizarla", skill)
+        self.assertIn("no propongas actualización por rutina", skill)
 
     def test_skills_have_specific_triggers(self):
         descriptions = {

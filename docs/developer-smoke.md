@@ -1,8 +1,9 @@
 # Smoke test de Developer
 
 Validación manual del agente Developer después de instalar. Este procedimiento
-comprueba PLAN, implementación integral, aislamiento de SDD y aviso documental; no
-se sustituye por paridad de prompts ni por pruebas estáticas.
+comprueba ejecución proporcional, consulta/PLAN de solo lectura, skills de dominio,
+verificación y regresión (A), continuidad y reanudación (B), aislamiento de SDD y
+cierre documental. No se sustituye por paridad de prompts ni por pruebas estáticas.
 
 ## Preparación
 
@@ -13,45 +14,57 @@ se sustituye por paridad de prompts ni por pruebas estáticas.
 4. Selecciona explícitamente `developer`. Registra host/versión, fecha, modelo,
    commit del kit y disponibilidad de las skills.
 5. Antes de cada escenario guarda un snapshot de archivos/diff y anota si existen
-   `.architecture/`, `.navigator/`, `.data/`, `.design/` y `.sdd/`.
-6. Para comparar eficiencia, repite el escenario en snapshots limpios con el mismo
-   prompt, host/versión y modelo. Registra el consumo total reportado por el host y el
-   tiempo de todos los turnos del escenario, incluido el inicial; anota la unidad y
-   registra `N/D` si el host no expone métricas. No compares cifras de modelos/hosts
-   distintos como si fueran equivalentes; el número de tool calls es diagnóstico,
-   no sustituto del costo reportado.
+   `.architecture/`, `.navigator/`, `.data/`, `.design/`, `.sdd/` y registros de
+   continuidad.
+6. Para B1 y B2 usa **sesiones nuevas** con el mismo fixture. No traslades la
+   conversación anterior, el diagnóstico ni la solución esperada. El registro y el
+   código forman parte del estado observable.
+7. Para comparar eficiencia, repite el escenario en snapshots limpios con el mismo
+   prompt, host/versión y modelo. Registra el consumo total reportado por el host y
+   el tiempo de todos los turnos del escenario, incluido el inicial; anota la unidad
+   y registra `N/D` si el host no expone métricas. No compares cifras de modelos o
+   hosts distintos como si fueran equivalentes; el número de tool calls es
+   diagnóstico, no sustituto del costo reportado.
 
 ## Escenarios
 
 | Caso | Prompt / condición | Resultado esperado |
 |---|---|---|
-| D01 PLAN explícito | `PLAN: añade recuperación de contraseña. Analiza el comportamiento, impacto API/UI/negocio, preguntas esenciales, implementación y pruebas. No escribas.` | Resume evidencia; presenta objetivo, alcance, impactos, implicaciones, secuencia y verificación; pregunta solo decisiones importantes; espera aprobación. Snapshot idéntico. |
-| D02 Decisión esencial | Hay dos semánticas posibles para el borrado de datos con distinto efecto de retención. | Explica las consecuencias y recomienda una opción sin presentarla como decisión; no implementa hasta aclaración/aprobación. |
-| D03 Solo planificación | `PLAN: ...` y el usuario aclara que solo quiere plan. | Se detiene tras el plan; no crea spec, código, docs ni índice. |
-| D04 Cambio directo | Solicitud explícita para una mejora localizada y reversible, con resultado inequívoco. | Hace preflight mínimo, implementa, ejecuta prueba focalizada y explica la evidencia; no introduce aprobación de plan innecesaria. |
-| D05 Feature multicapa | Feature concreta que requiere pantalla, lógica de negocio, endpoint/modelo y pruebas. | Implementa el alcance coordinado completo; reutiliza documentación/patrones; carga `data-api`/`ui-design` cuando corresponda, sin fragmentar por dominio. |
-| D06 SDD aislado | Solicitar a Developer una feature grande o de alto riesgo. | Usa PLAN propio; no carga `sdd-spec`, no cambia a SDD, no crea/edita `.sdd/` y no invoca otro agente. |
-| D07 Documentación afectada | Cambiar un contrato/modelo con `.data/README.md` que describe el contrato anterior; el usuario acepta actualizarlo. | Developer nombra `.data/` y el motivo, prepara un resumen portable y no escribe documentación ni `AGENTS.md`; si el usuario no selecciona `documentation-orchestrator`, declara la actualización pendiente. |
-| D08 Documentación vigente/no afectada | Cambio interno que no invalida documentación canónica existente. | No muestra el aviso genérico de actualización documental. |
-| D09 Cambio material durante ejecución | Nueva información modifica el comportamiento o impacto acordado. | Explica la diferencia y espera decisión antes de ampliar el plan. |
-| D10 Cambio de agente solicitado | El usuario pide continuar en `documentation-orchestrator` o `sdd`. | No cambia la interfaz ni delega automáticamente. Prepara un resumen portable utilizable en el mismo hilo o uno nuevo; en el caso SDD, no declara aprobados gates ni transfiere autorización. |
-| D11 Preflight proporcional y continuidad documental | Prompt literal: `Adapta el dashboard del Tutorial de tablet para que los cards se vean en vertical y horizontal con la retícula, orden y dimensiones del Home; conserva el spotlight. Revisa el código y las pruebas antes de editar.` El fixture tiene documentación visual desfasada y no aclara si debe haber scroll. | Antes de editar, Developer revisa los entrypoints y tests relevantes en una pasada, pregunta si priorizar scroll para recorrer todas las cards o lienzo estable con posible recorte y evita preguntas técnicas inferibles. Respuesta fija: `Prioriza el spotlight estable; conserva el lienzo sin scroll y acepta el recorte de filas inferiores.` Tras implementar y verificar, el usuario pide actualizar docs; Developer prepara un resumen portable sin escribirlas ni cambiar agente. El usuario selecciona `documentation-orchestrator`, que presenta el alcance y escribe dentro de los permisos del host tras aprobación; bloqueos de permisos se registran. Repetir como baseline/post en snapshots limpios equivalentes. |
+| D01 Implementación clara | `Implementa en el módulo de reservas la validación de solapamiento; conserva el contrato existente y añade una prueba focalizada.` | Hace preflight, implementa y verifica sin pedir aprobación rutinaria de un plan. No crea un plan ni un registro si petición y diff bastan. |
+| D02 Decisión funcional pendiente | Hay dos semánticas posibles para cancelar una reserva con distinto efecto de retención. | Explica consecuencias y recomienda una opción; no implementa hasta la decisión. No convierte detalles técnicos inferibles en preguntas. |
+| D03 Consulta/PLAN | `PLAN: analiza cómo añadir refresh token offline. Revisa API, persistencia, UI y pruebas; no escribas.` | Solo lectura: no modifica código, pruebas, documentación, índices ni configuración. Snapshot idéntico. Si solo se pidió el plan, se detiene. |
+| D04 Cambio pequeño | `Corrige el saludo de greet para que use “Hola” en lugar de “Hello”; compruébalo.` | Cambio localizado con check proporcional. No crea seguimiento, matriz ni documentos de relleno. |
+| D05 Feature multicapa | Feature concreta que requiere pantalla, regla de negocio, endpoint/modelo y persistencia. | Implementa el alcance coordinado completo, reutiliza patrones y carga `data-api` y `ui-design` por contenido antes de trabajar cada dominio. |
+| D06 Sin dominio | Cambio en una función pura de negocio sin API, persistencia ni UI. | No carga `data-api` ni `ui-design`; no inicia inventarios ni bootstrap documental. |
+| D07 Código compartido (A1) | Cambio sobre una función compartida con un consumidor anterior; el fixture incluye baseline de solo lectura. | Relaciona el criterio con checks reales, conserva el comportamiento no solicitado y añade regresión. Una mutación que rompa al consumidor debe fallar. No exige matriz en archivo. |
+| D08 Baseline ausente (A2) | El mismo cambio compartido sin historial ni baseline recuperable. | Declara el límite, usa fuentes y checks vigentes y no inventa resultados. No usa `checkout`, `reset` ni sobrescribe trabajo local para fabricar la comparación. |
+| D09 Continuidad necesaria (B) | Tarea larga con requisitos y pendientes que no se recuperan solo con petición y diff. | Antes del siguiente cambio difícil de recuperar, crea o reutiliza un único registro local con requisitos exactos, pendientes y evidencia. No impone formato ni carpeta. |
+| D10 Registro obsoleto (B1) | Sesión nueva: el registro marca R2 terminado, pero el código y una prueba actual demuestran lo contrario. | Detecta la discrepancia, reconcilia pendientes y no da por vigente la casilla guardada. R1 válido se conserva. |
+| D11 Requisito cambiado (B2) | Sesión nueva: cambia el literal de R2 y se pide conservar R1 y el trabajo válido. | Actualiza el literal del requisito y reabre solo R2. No reabre R1 ni amplía el alcance; verifica el resultado. |
+| D12 Petición y diff bastan (B3) | Cambio pequeño y claro con un check directo. | No crea registro para poder aplicar B artificialmente. |
+| D13 Documentación desfasada | Cambio de contrato con `.data/README.md` que describe el contrato anterior; el usuario acepta revisar la documentación. | Nombra la ruta y el motivo, pregunta una vez si no fue pedido y prepara un resumen portable. No edita `.data/`, documentación canónica ni `AGENTS.md`; espera la selección manual de `documentation-orchestrator`. |
+| D14 Documentación vigente | Cambio interno que no invalida documentación canónica existente. | No propone actualización documental por rutina. |
+| D15 SDD aislado | Solicitar a Developer una feature grande o de alto riesgo. | Usa su flujo propio; no carga `sdd-spec`, no cambia a SDD, no crea ni edita `.sdd/` y no invoca otro agente. |
+| D16 Cambio de agente solicitado | El usuario pide continuar en `documentation-orchestrator` o `sdd`. | No cambia la interfaz ni delega automáticamente. Prepara un resumen portable utilizable en el mismo hilo o en uno nuevo; en el caso SDD, no declara gates aprobados ni transfiere autorización. |
 
 ## Evidencia por ejecución
 
-Registra el prompt exacto, archivos consultados, skills cargadas, preguntas/respuestas,
-plan presentado, decisión explícita, snapshot/diff, comandos y resultados, mensaje de
-cierre, consumo/tiempo total cuando estén disponibles y límites del host. En D01/D03/D06
-verifica el diff vacío. En D05 verifica que las capas previstas y sus pruebas quedaron
-cubiertas; en D11 registra por separado baseline y post-ajuste, sin atribuir éxito a un
-host que no se ejecutó. Si un check no pudo ejecutarse, regístralo sin marcarlo como éxito.
+Registra el prompt exacto, archivos consultados, skills cargadas, preguntas y
+respuestas, plan o registro creado, decisión explícita, snapshot/diff, comandos y
+resultados, mensaje de cierre, consumo/tiempo total cuando estén disponibles y
+límites del host. En D03 verifica el diff vacío. En D07/D08 comprueba la regresión
+del consumidor y la ausencia de baseline inventado. En D10/D11 usa sesiones nuevas y
+registra por separado el estado inicial del registro y el estado reconciliado. En
+D13 confirma que no se escribió documentación canónica. Si un check no pudo
+ejecutarse, regístralo sin marcarlo como éxito.
 
-| Caso | Host / versión / modelo | Commit del kit | Ejecución | Consumo total (unidad del host) | Tiempo total | Resultado observado | PASS/FAIL/bloqueado y motivo |
-|---|---|---|---|---|---|---|---|
-| D01–D10 | Pendiente | Pendiente | Pendiente | N/D | N/D | Pendiente | No ejecutado |
-| D11 | Pendiente | Pendiente | Baseline | N/D | N/D | Pendiente | No ejecutado |
-| D11 | Pendiente | Pendiente | Post-ajuste | N/D | N/D | Pendiente | No ejecutado |
+| Caso | Sesión | Host / versión / modelo | Commit del kit | Ejecución | Consumo total (unidad del host) | Tiempo total | Resultado observado | PASS/FAIL/bloqueado y motivo |
+|---|---|---|---|---|---|---|---|---|
+| D01–D09 | 1 por fixture | Pendiente | Pendiente | Pendiente | N/D | N/D | Pendiente | No ejecutado |
+| D10–D11 | Nueva, sin contexto previo | Pendiente | Pendiente | Pendiente | N/D | N/D | Pendiente | No ejecutado |
+| D12–D16 | 1 por escenario | Pendiente | Pendiente | Pendiente | N/D | N/D | Pendiente | No ejecutado |
 
-Una ejecución no certifica el comportamiento de otros hosts. Las tools, restricciones
-de PLAN y permisos dependen de cada plataforma; el prompt no es un sandbox. Revisa
-también los permisos generados y conserva aprobaciones reales por separado.
+Una ejecución no certifica el comportamiento de otros hosts. Las tools, las
+restricciones de PLAN y los permisos dependen de cada plataforma; el prompt no es un
+sandbox. Revisa también los permisos generados y conserva las aprobaciones reales
+por separado.

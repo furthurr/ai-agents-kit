@@ -75,6 +75,32 @@ la ejecución. Para una instancia local OpenCode que use también `agent/`, aña
 ese directorio explícitamente a la lista: la inclusión automática del hermano
 se aplica al destino principal, no a cada destino adicional.
 
+## Recursos obsoletos de Developer en OpenCode
+
+La instalación normal copia por fusión y no elimina dos recursos de la
+implementación anterior de Developer: `agents/developer.md` y
+`skills/developer/references/plan.md`. El primero puede competir con
+`agent/developer.md`; el segundo reintroduce la plantilla de plan retirada. No
+retires el ID `developer` ni lo añadas a `tools/retired_agents.json`: eso afectaría
+también al agente vigente.
+
+Tras instalar con respaldo y revisar el perfil, puedes planificar la limpieza
+acotada de un único perfil explícito:
+
+```bash
+python3 tools/developer_migration.py \
+  --opencode-home "/RUTA/REVISADA/opencode" \
+  --backup-root "/RUTA/FUERA/DE/ARBOLES/ESCANEADOS"
+```
+
+Sin `--apply` solo lee e informa. La ejecución requiere revisar el plan y autorizar
+el mismo perfil y respaldo con `--apply`. Solo procesa esas dos rutas si sus bytes
+coinciden con los hashes conocidos; bloquea personalizados, enlaces, cambios durante
+la operación y respaldos dentro de árboles escaneados. No usa `--force`, no borra
+extras y no modifica overrides, aliases ni otros proyectos. No es una migración
+global ni acredita qué contenido resuelve el host. La recuperación se hace por
+archivo, con creación exclusiva, sin sobrescribir trabajo nuevo.
+
 ## Clasificación y aprobación específica
 
 | Candidato | Tratamiento |

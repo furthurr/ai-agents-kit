@@ -22,7 +22,8 @@ Consulta la [guía de MAS](mas.md) para la terminología completa.
 Para implementar producto, empieza con **Developer**: carga `data-api` y `ui-design`
 bajo demanda y puede coordinar la característica completa. Para trabajar con
 metodología SDD, selecciona explícitamente **SDD**; no se activa como derivación
-automática desde Developer.
+automática desde Developer. Una petición clara de implementación permite avanzar
+sin aprobación rutinaria de un plan; `PLAN` es una consulta de solo lectura.
 
 ## Elegir el agente según la tarea
 
@@ -31,7 +32,7 @@ automática desde Developer.
 | Entender capas o localizar código | `documentation-orchestrator` | `inspect`, consulta de solo lectura |
 | Actualizar el contexto ya existente | `documentation-orchestrator` | `sync-existing`, plan documental aprobado |
 | Revisar calidad o seguridad | `code-review` | Auditoría del dominio; remediación con aprobación por micro-paso |
-| Implementar una feature, API, UI, negocio o bugfix | `developer` | Plan propio proporcional; PLAN explícito espera aprobación |
+| Implementar una feature, API, UI, negocio o bugfix | `developer` | Ejecución proporcional; PLAN explícito es solo lectura y no implementa |
 | Planificar/implementar con metodología Spec-Driven Development | `sdd` | Solo se activa al seleccionar explícitamente el agente SDD |
 | Publicar cambios o versionar | `git-release-manager` | Commit/push o release con autorización explícita |
 
@@ -48,7 +49,7 @@ IDs estables del kit:
 | ID | Nombre visible típico |
 |----|------------------------|
 | `code-review` | Code Review Agent |
-| `developer` | Developer Agent |
+| `developer` | Developer |
 | `documentation-orchestrator` | Documentation Orchestrator |
 | `sdd` | Agente SDD / SDD |
 | `git-release-manager` | Git & Release Manager |
@@ -145,7 +146,8 @@ Catálogo completo: [catalogo.md](catalogo.md).
 
 ## Buenas prácticas
 
-1. **Elige según la operación** — Developer implementa características completas;
+1. **Elige según la operación** — Developer implementa características completas con
+   ejecución proporcional y verificación;
    Documentation Orchestrator mantiene contexto documental; Code Review audita
    calidad/seguridad. Las skills `data-api` y `ui-design` se conservan bajo demanda.
 2. **Primera vez en un repo** — usa Documentation Orchestrator con `inspect` para
@@ -189,9 +191,10 @@ Catálogo completo: [catalogo.md](catalogo.md).
     Si hay `.navigator/`, SDD comprueba su disponibilidad y frescura. Un índice
     desfasado solo aporta rutas candidatas; documentación y código reales confirman
     decisiones. Su ausencia no bloquea ni inicia bootstrap/update automático.
-4. **Cambio de agente manual** — Developer no deriva a SDD. Si quieres la metodología,
-   selecciona SDD; si una auditoría detecta una necesidad de especificación, revisa
-   su recomendación y elige explícitamente cómo continuar.
+4. **Cambio de agente manual** — Developer no deriva a SDD ni convierte una consulta
+   o `PLAN` en implementación. Si quieres la metodología, selecciona SDD; si una
+   auditoría detecta una necesidad de especificación, revisa su recomendación y elige
+   explícitamente cómo continuar.
 5. **Git y releases** — el agente propondrá el plan; **tú confirmas** commit, push,
    tag o changelog aplicado.
 6. **Seguridad y calidad** — la remediación va en micro-pasos con confirmación;
@@ -290,8 +293,8 @@ selección comprobada en el smoke, sin interpretar estas líneas como comandos.
 
 ```text
 1. @documentation-orchestrator → “Inicializa la documentación core”
-2. @developer → “PLAN: implementa refresh token offline; analiza API, persistencia, UI y pruebas”
-3. Usuario aclara decisiones y aprueba; Developer implementa y verifica
+2. @developer → “Implementa refresh token offline; analiza API, persistencia, UI y pruebas”
+3. Usuario resuelve solo decisiones funcionales; Developer implementa y verifica
 4. Si `.data/` o `.design/` quedó desactualizada, Developer consulta si se desea actualizar
 5. @documentation-orchestrator → “Actualiza la documentación afectada” (si se aprueba)
 6. @git-release-manager → “Prepara el commit autorizado”

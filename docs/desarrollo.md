@@ -240,6 +240,7 @@ python3 tools/test_sdd_contract.py
 python3 tools/test_handoff_contract.py
 python3 tools/test_documentation_core.py
 python3 tools/test_mas_identity.py
+python3 tools/test_developer_contract.py
 python3 tools/test_retired_agents.py
 python3 tools/test_code_review_contract.py
 python3 tools/test_validate.py
@@ -250,6 +251,9 @@ python3 tools/test_antigravity_contract.py
 
 Cubre integridad del pipeline y convenciones del repo. Ejecútalo junto a
 `validate.py` y `check_links.py` cuando toques tools o la forma de los adapters.
+`test_developer_contract.py` comprueba la composición exacta de Developer, las
+negativas de A/B, la preservación, la instalación/rollback en fixtures y la limpieza
+opt-in de OpenCode; no acredita conducta runtime ni sustituye un smoke con modelo.
 
 ## Importar mejoras hechas “en caliente”
 

@@ -20,7 +20,7 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 | `code-quality` | Audita y remedia calidad de código paso a paso | `.quality/` | SonarQube y Clean Code |
 | `data-api` | Datos, APIs, DTOs, contratos e integraciones | `.data/` | OpenAPI/JSON Schema; ER Mermaid cuando hay persistencia; catálogo de endpoints si no existe OpenAPI |
 | `documentation-orchestrator` | Comprueba, inicializa y sincroniza documentación mediante especialistas | — | Preflight y gates por modo; no crea una fuente documental propia |
-| `developer` | Planifica e implementa características completas en UI, datos/APIs y negocio | — | PLAN conversacional propio, verificación y aviso documental condicional; no usa SDD |
+| `developer` | Desarrollo integral con ejecución proporcional, verificación real y continuidad bajo demanda | — | Consulta/PLAN solo lectura; skills de dominio selectivas; cierre documental independiente; no usa SDD |
 | `security` | Auditoría y remediación de seguridad guiada | `.security/` | OWASP MASVS/MASWE/MASTG y CWE |
 | `ui-design` | Sistema visual: tokens, componentes, deuda de UI | `.design/` | Agnóstica a tecnología |
 | `sdd-spec` | Spec-Driven Development: `direct`, SDD-Tiny y SDD-Lite; `standard` legacy solo bajo solicitud explícita | `.sdd/specs/<ruta-spec>/` | Recomendación de feature por nota; Tiny usa `spec.md` único y gates 3/4; SDD-Lite conserva Quick Plan; `standard` explícito conserva Gates 1-4 |
@@ -33,7 +33,7 @@ skills](agentes/README.md), con una ficha por agente, sus límites y ejemplos de
 | ID | Nombre | Skills que usa | Rol |
 |----|--------|----------------|-----|
 | [`code-review`](agentes/code-review.md) | Code Review Agent | `code-quality` + `security` según alcance | Calidad, mantenibilidad, pruebas y seguridad; registros separados |
-| [`developer`](agentes/developer.md) | Developer Agent | `developer` + `data-api`/`ui-design` bajo demanda | Implementa producto a través de UI, datos/APIs y negocio; planifica y verifica |
+| [`developer`](agentes/developer.md) | Developer | `developer` + `data-api`/`ui-design` bajo demanda | Implementa producto a través de UI, datos/APIs y negocio; avanza sin plan rutinario, verifica y conserva continuidad solo si hace falta |
 | [`documentation-orchestrator`](agentes/documentation-orchestrator.md) | Documentation Orchestrator | `documentation-orchestrator`, core y skills `data-api`/`ui-design` locales; `code-review` solo por handoff | Consultas core (`inspect`), arquitectura, navegación y mantenimiento documental |
 | [`sdd`](agentes/sdd.md) | Agente SDD | `sdd-spec` | Presenta/valida alcance completo, califica y recomienda profundidad con elección manual; atención, entregas y continuidad; specs, gates e implementación trazable |
 | [`git-release-manager`](agentes/git-release-manager.md) | Git & Release Manager | `git-commit` + `release-management` | Commits, push, versiones, tags, CHANGELOG |
@@ -48,7 +48,7 @@ code-quality  ──┐
                 ├──────► Code Review Agent       → .quality/ y .security/
 security      ──┘                                 (según dominio solicitado)
 data-api      ──┐
-ui-design     ──┼───────► Developer Agent (implementación) / Documentation Orchestrator (documentación)
+ui-design     ──┼───────► Developer (implementación) / Documentation Orchestrator (documentación)
 developer     ──┘          → producto; skills documentales conservan .data/ y .design/
 sdd-spec      ──────────► Agente SDD              → .sdd/
 git-commit    ──┐

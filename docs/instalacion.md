@@ -214,6 +214,12 @@ tiene cinco agentes y once skills.
 Usa `inspect` para consultas sin escritura, `bootstrap-core` para proponer la
 inicialización y sync para mantenimiento autorizado. No hay aliases ejecutables.
 
+La copia por fusión no elimina recursos obsoletos que ya no están en `generated/`.
+Para los dos ficheros conocidos de la implementación anterior de Developer en
+OpenCode, revisa la [limpieza opt-in y su recuperación](migracion-agentes.md#recursos-obsoletos-de-developer-en-opencode).
+Esa limpieza no retira el ID `developer` ni sustituye la revisión de overrides,
+aliases y otros destinos.
+
 Antes de migrar una instalación anterior, revisa el
 [plan, clasificación y recuperación segura](migracion-agentes.md). Un hash
 histórico conocido permite reconocer una copia; nombres o versiones sin registro

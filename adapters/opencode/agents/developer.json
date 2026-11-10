@@ -1,7 +1,7 @@
 {
   "filename": "developer.md",
   "frontmatter": {
-    "description": "Desarrolla características completas de producto en UI, datos/APIs y negocio. Tiene modo PLAN propio, consulta documentación selectivamente, verifica cambios y propone actualizar documentación solo si queda desfasada. No usa SDD ni modifica .sdd/.",
+    "description": "Desarrollo integral con ejecución proporcional, verificación real y continuidad bajo demanda. Consulta/PLAN solo lectura; skills de dominio selectivas y cierre documental independiente; no activa SDD.",
     "mode": "all",
     "temperature": 0.2,
     "permission": {

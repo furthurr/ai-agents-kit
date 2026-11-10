@@ -63,8 +63,14 @@ def main() -> int:
         content_has_identity(ROOT / "canonical" / "agents" / f"{agent_id}.md",
                              f"canonical agent {agent_id}", canonical=True)
     for skill_id in manifest["skills"]:
-        content_has_identity(ROOT / "canonical" / "skills" / skill_id / "SKILL.md",
-                             f"canonical skill {skill_id}", canonical=True)
+        if skill_id == "developer":
+            # Exact candidate2+A+B composition has no duplicated identity fragment.
+            content = (ROOT / "canonical/skills/developer/SKILL.md").read_text(encoding="utf-8")
+            check("{{mas_identity}}" not in content,
+                  "Developer skill: identidad recibida del agente, sin alterar composición congelada")
+        else:
+            content_has_identity(ROOT / "canonical" / "skills" / skill_id / "SKILL.md",
+                                 f"canonical skill {skill_id}", canonical=True)
 
     for platform in manifest["platforms"]:
         adapter_root = ROOT / "adapters" / platform
@@ -73,10 +79,15 @@ def main() -> int:
             filename = adapter["filename"]
             content_has_identity(ROOT / "generated" / platform / "agents" / filename, f"{platform} agent {agent_id}")
         for skill_id in manifest["skills"]:
-            content_has_identity(
-                ROOT / "generated" / platform / "skills" / skill_id / "SKILL.md",
-                f"{platform} skill {skill_id}",
-            )
+            if skill_id == "developer":
+                path = ROOT / "generated" / platform / "skills/developer/SKILL.md"
+                check(path.read_bytes() == (ROOT / "canonical/skills/developer/SKILL.md").read_bytes(),
+                      f"{platform} Developer skill: composición íntegra; identidad en el agente verificado")
+            else:
+                content_has_identity(
+                    ROOT / "generated" / platform / "skills" / skill_id / "SKILL.md",
+                    f"{platform} skill {skill_id}",
+                )
 
     security = ROOT / "canonical/skills/security/SKILL.md"
     check(security.is_file() and "MASVS" in security.read_text(encoding="utf-8"),

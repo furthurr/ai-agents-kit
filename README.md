@@ -175,7 +175,7 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 | [docs/mas.md](docs/mas.md) | Identidad de MAS y convención de mensajes |
 | [docs/catalogo.md](docs/catalogo.md) | Skills, agentes y carpetas canónicas |
 | [docs/agentes/README.md](docs/agentes/README.md) | Guía interna: qué hace cada agente y cómo utilizarlo |
-| [docs/agentes/developer.md](docs/agentes/developer.md) | Developer: modo PLAN, implementación integral y documentación condicional |
+| [docs/agentes/developer.md](docs/agentes/developer.md) | Developer: ejecución proporcional, verificación, continuidad bajo demanda y cierre documental |
 | [docs/developer-smoke.md](docs/developer-smoke.md) | Escenarios manuales para validar PLAN, implementación y SDD opt-in |
 | [docs/instalacion.md](docs/instalacion.md) | Install, destinos, backup/import |
 | [docs/uso.md](docs/uso.md) | Cómo invocar y flujos recomendados |
