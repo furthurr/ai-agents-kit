@@ -1,0 +1,503 @@
+{
+  "date": "2026-11-10",
+  "status": "ready_for_authorized_commit_publication_requires_explicit_force_with_lease_approval",
+  "current_local_head": "c149aa163079a02be158bbf2a7790e6f8dc1272d",
+  "candidate_path_count": 36,
+  "candidate_paths": [
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    ".security/README.md",
+    ".security/findings/SEC-0006-exposicion-evidencias-moviles.md",
+    ".security/pii-secrets.md",
+    ".security/reviews/genera-archive-reclassification-2026-11-10.json",
+    ".security/reviews/genera-continuity-removal-2026-11-10.json",
+    ".security/reviews/genera-history-local-application-2026-11-10.json",
+    ".security/reviews/genera-history-plan-2026-11-10.md",
+    ".security/reviews/genera-history-preview-2026-11-10.json",
+    ".security/reviews/genera-local-image-ocr-2026-11-10.json",
+    ".security/reviews/genera-mobile-tree-2026-11-10.json",
+    ".security/reviews/genera-publication-readiness-2026-11-10.json",
+    ".security/security-tech-debt.md",
+    "docs/README.md",
+    "docs/experimentos/CONTINUAR-AQUI.md",
+    "docs/experimentos/PRIVACIDAD-MOVIL.md",
+    "docs/experimentos/README.md",
+    "docs/experimentos/archive/continuidad-2026-11-04/README.md",
+    "docs/experimentos/archive/continuidad-odd-2026-11-06/CONTINUAR-AQUI.md",
+    "docs/experimentos/archive/developer-compacto-gemini-2026-11-04/README.md",
+    "docs/experimentos/archive/developer-sdd-odd-gemini-2026-11-04/README.md",
+    "docs/experimentos/archive/odd-estandares-gemini-38-2026-11-08/README.md",
+    "docs/experimentos/archive/odd-vs-sdd-2026-11-04/README.md",
+    "docs/experimentos/archive/odd-vs-sdd-2026-11-04/gemini-flash.md",
+    "docs/experimentos/archive/odd-vs-sdd-2026-11-04/investigacion.md",
+    "docs/experimentos/archive/odd-vs-sdd-2026-11-04/reproduccion.md",
+    "docs/experimentos/archive/ponytail-2026-11-04/README.md",
+    "docs/experimentos/archive/real-android-gpt6-luna-2026-11-08/README.md",
+    "docs/experimentos/archive/real-android-gpt6-terra-2026-11-08/README.md",
+    "docs/experimentos/archive/real-android-mai-flash-2026-11-08/README.md",
+    "docs/experimentos/continuidad-developer-v2-refuerzos-2026-11-06/CONTINUAR-AQUI.md",
+    "docs/experimentos/proyectos-arneses-comparativa/referencia/README.md",
+    "docs/experimentos/proyectos-arneses-comparativa/referencia/repo-head.txt",
+    "tools/check_mobile_privacy.py",
+    "tools/test_mobile_privacy.py"
+  ],
+  "qa_location": "[PRIVATE_ISOLATED_QA_WORKTREE]",
+  "qa_status": "passed",
+  "checks": [
+    {
+      "command": "python tools/validate.py",
+      "exit_code": 0,
+      "unit_test_count": null
+    },
+    {
+      "command": "python tools/check_secrets.py --tracked",
+      "exit_code": 0,
+      "unit_test_count": null
+    },
+    {
+      "command": "python tools/check_mobile_privacy.py",
+      "exit_code": 0,
+      "unit_test_count": null
+    },
+    {
+      "command": "python tools/test_mobile_benchmark_common.py",
+      "exit_code": 0,
+      "unit_test_count": 38
+    },
+    {
+      "command": "python tools/test_real_android_gemini_benchmark.py",
+      "exit_code": 0,
+      "unit_test_count": 5
+    },
+    {
+      "command": "python tools/test_mobile_privacy.py",
+      "exit_code": 0,
+      "unit_test_count": 9
+    },
+    {
+      "command": "python tools/render.py",
+      "exit_code": 0,
+      "unit_test_count": null
+    },
+    {
+      "command": "python tools/test_secret_policy.py",
+      "exit_code": 0,
+      "unit_test_count": 26
+    },
+    {
+      "command": "python tools/check_links.py",
+      "exit_code": 0,
+      "unit_test_count": null
+    },
+    {
+      "command": "python tools/test_validate.py",
+      "exit_code": 0,
+      "unit_test_count": null
+    },
+    {
+      "command": "python tools/test_sdd_contract.py",
+      "exit_code": 0,
+      "unit_test_count": null
+    },
+    {
+      "command": "python tools/test_model_recommendations.py",
+      "exit_code": 0,
+      "unit_test_count": 5
+    },
+    {
+      "command": "python tools/test_code_review_contract.py",
+      "exit_code": 0,
+      "unit_test_count": 7
+    },
+    {
+      "command": "python tools/test_context_efficiency.py",
+      "exit_code": 0,
+      "unit_test_count": 12
+    },
+    {
+      "command": "python tools/test_measure_context.py",
+      "exit_code": 0,
+      "unit_test_count": 5
+    },
+    {
+      "command": "python tools/test_antigravity_contract.py",
+      "exit_code": 0,
+      "unit_test_count": 5
+    },
+    {
+      "command": "python tools/test_handoff_contract.py",
+      "exit_code": 0,
+      "unit_test_count": 37
+    },
+    {
+      "command": "python tools/test_documentation_core.py",
+      "exit_code": 0,
+      "unit_test_count": 19
+    },
+    {
+      "command": "python tools/test_retired_agents.py",
+      "exit_code": 0,
+      "unit_test_count": 26
+    },
+    {
+      "command": "python tools/test_import_installed.py",
+      "exit_code": 0,
+      "unit_test_count": 10
+    },
+    {
+      "command": "python tools/test_links.py",
+      "exit_code": 0,
+      "unit_test_count": null
+    },
+    {
+      "command": "python tools/test_integrity.py",
+      "exit_code": 0,
+      "unit_test_count": null
+    },
+    {
+      "command": "python tools/test_permissions.py",
+      "exit_code": 0,
+      "unit_test_count": 12
+    },
+    {
+      "command": "python tools/test_configure_autonomy.py",
+      "exit_code": 0,
+      "unit_test_count": 19
+    },
+    {
+      "command": "python tools/test_install.py",
+      "exit_code": 0,
+      "unit_test_count": null
+    },
+    {
+      "command": "python tools/test_antigravity_install.py",
+      "exit_code": 0,
+      "unit_test_count": 22
+    },
+    {
+      "command": "bash -n scripts/backup/antigravity.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/backup/claude.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/backup/copilot.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/backup/kiro.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/backup/opencode.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/backup/pi.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/install/antigravity.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/install/claude.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/install/copilot.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/install/kiro.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/install/opencode.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash -n scripts/install/pi.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --exit-code -- generated/",
+      "exit_code": 0
+    },
+    {
+      "command": "loaded-skill check_secrets.py --staged (private candidate index)",
+      "exit_code": 0
+    }
+  ],
+  "unit_tests_passed": 257,
+  "generated_artifacts_unchanged": true,
+  "agent_profiles_and_instructions_unchanged": true,
+  "archives_unchanged": 27,
+  "remote_read_only_verification": {
+    "date": "2026-11-10",
+    "method": "Anonymous Git HTTPS ls-remote from an isolated empty HOME, credential helper disabled, no source or credentials uploaded",
+    "remote_query_succeeded": true,
+    "live_remote_main_matches_pre_rewrite_main": true,
+    "advertised_ref_counts": {
+      "head": 3,
+      "pull": 5,
+      "tag": 25
+    },
+    "refs_confirmed_to_contain_original_rewritten_commits": [
+      "refs/heads/main"
+    ],
+    "refs_with_unverified_tip_count": 2,
+    "unverified_ref_categories": {
+      "pull": 2
+    },
+    "ref_verification": [
+      {
+        "ref": "refs/heads/dependabot/github_actions/actions/checkout-7.0.1",
+        "kind": "head",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/heads/dependabot/github_actions/actions/setup-python-7.1.0",
+        "kind": "head",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/heads/main",
+        "kind": "head",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": true
+      },
+      {
+        "ref": "refs/pull/1/head",
+        "kind": "pull",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/pull/1/merge",
+        "kind": "pull",
+        "tip_known_locally": false,
+        "contains_original_rewritten_commit": false,
+        "anonymous_parent_metadata_checked": true,
+        "ancestry_verification_incomplete": false
+      },
+      {
+        "ref": "refs/pull/2/head",
+        "kind": "pull",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/pull/3/head",
+        "kind": "pull",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/pull/3/merge",
+        "kind": "pull",
+        "tip_known_locally": false,
+        "contains_original_rewritten_commit": false,
+        "anonymous_parent_metadata_checked": true,
+        "ancestry_verification_incomplete": false
+      },
+      {
+        "ref": "refs/tags/v0.1.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v0.1.1",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v0.1.2",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v0.2.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v0.2.1",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v0.3.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v0.4.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v0.5.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v0.6.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v0.7.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v1.0.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v1.2.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v1.3.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v2.0.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.0.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.1.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.2.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.3.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.3.1",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.3.2",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.3.3",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.3.4",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.3.5",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.4.0",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      },
+      {
+        "ref": "refs/tags/v3.4.1",
+        "kind": "tag",
+        "tip_known_locally": true,
+        "contains_original_rewritten_commit": false
+      }
+    ],
+    "remote_content_changed": false,
+    "local_refs_changed": false,
+    "credential_files_used": false,
+    "source_code_sent_to_services": false,
+    "limits": [
+      "Advertised refs are not all cached views, forks, clones, Actions artifacts or hidden provider refs",
+      "Unknown remote tips are not proven clean; no authentication or remote object fetch was attempted",
+      "Original remote object IDs/lease value retained only in private session metadata, not public evidence"
+    ],
+    "anonymous_commit_parent_metadata": {
+      "requests": 2,
+      "resolved_unknown_tips": 2,
+      "errors": {},
+      "authentication_used": false,
+      "source_code_fetched_or_uploaded": false,
+      "messages_and_identities_discarded": true
+    },
+    "refs_with_unverified_ancestry_count": 0
+  },
+  "commit_message_proposal": "fix(security): completar saneamiento de evidencias móviles",
+  "original_object_maps_and_lease_ids": "kept_only_in_private_session_metadata_not_published",
+  "why_regular_push_is_not_sufficient": "The live GitHub main still includes the original commits; local origin/main was already rewritten and is not a valid implicit lease. Publish only main with an explicit freshly verified remote-tip lease, after authorization.",
+  "delete_all_commits_or_tags_required": false,
+  "branches_tags_or_PRs_to_delete_based_on_current_ref_audit": [],
+  "old_push_events_are_not_a_deletable_git_object": true,
+  "github_guidance": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository",
+  "github_cached_views_note": "A rewritten branch does not purge cached objects/views, forks or clones. Support eligibility is determined by GitHub; do not promise removal of non-sensitive data. No support ticket or remote write was performed.",
+  "preventive_controls": [
+    "exact removed continuity-note path added to .gitignore",
+    "bounded mobile privacy check and harness/privacy tests added to CI",
+    "pre-rewrite commit pointers redacted from pending public reports/reference metadata; reverse maps stay private"
+  ],
+  "staging_prepared": true,
+  "commit_created": false,
+  "push_performed": false,
+  "reflogs_expired": false,
+  "objects_pruned": false,
+  "limits": [
+    "No claim of universal absence of sensitive data",
+    "Old local objects/reflogs and private previews retain originals until separately authorized cleanup",
+    "Clones/forks/hidden refs/caches/provider artifacts are not purged or universally inspected",
+    "Live remote must be rechecked before any separately authorized publication",
+    "Linux/Windows native CI outcomes remain for the hosted runners; local checks run on macOS"
+  ]
+}

@@ -15,11 +15,11 @@ Se estudia ese commit de main, no se atribuye todo su contenido a una release.
 - [README y benchmarks publicados](https://github.com/Gentleman-Programming/gentle-ai/blob/3ea08cdfbdce671053c82377a4365915799abe57/README.md).
 
 MAS: baseline `f3b58d58e0fd690d31c99131bbe5c85bc8ea2fcd`. Fuentes locales:
-[agente SDD](../../../canonical/agents/sdd.md),
-[skill SDD](../../../canonical/skills/sdd-spec/SKILL.md),
-[profundidad](../../../canonical/skills/sdd-spec/references/scope-depth.md),
-[testing](../../../canonical/skills/sdd-spec/references/testing.md) y
-[Tiny](../../../canonical/skills/sdd-spec/references/tiny.md).
+[agente SDD](../../../../canonical/agents/sdd.md),
+[skill SDD](../../../../canonical/skills/sdd-spec/SKILL.md),
+[profundidad](../../../../canonical/skills/sdd-spec/references/scope-depth.md),
+[testing](../../../../canonical/skills/sdd-spec/references/testing.md) y
+[Tiny](../../../../canonical/skills/sdd-spec/references/tiny.md).
 La ejecución carga los derivados OpenCode reproducibles de estas fuentes.
 
 ## Hallazgos contrastados

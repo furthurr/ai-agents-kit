@@ -54,7 +54,7 @@ intento ni fidelidad acreditada a dos tratamientos distintos.
 
 ## Por qué no es una comparación válida
 
-La revisión del código actual de [gemini_benchmark.py](../../../tools/gemini_benchmark.py)
+La revisión del código actual de [gemini_benchmark.py](../../../../tools/gemini_benchmark.py)
 y del historial de ejecución de esta sesión identifica estos problemas:
 
 1. Se cambió la configuración durante los intentos: `--pure` no cargaba la

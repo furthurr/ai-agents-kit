@@ -1,0 +1,412 @@
+{
+  "date": "2026-11-10",
+  "scope": "local reclassification before any authorized archive rewrite",
+  "outcome": "no_archives_rewritten",
+  "original_nine_candidates": [
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!invocations/TASK-2-ODD-r2-1.json",
+      "broad_genera_lexical_classes": {
+        "generation_or_generic_word": 28
+      },
+      "unclassified_token_shapes_not_values": [],
+      "strict_logical_line_matches": {},
+      "known_namespace_matches": 0,
+      "known_archive_filename_matches": 0,
+      "known_original_symbol_matches": 0,
+      "logical_lines_with_both_home_and_broad_genera": 0,
+      "classification": "false_positive_prior_raw_json_correlation"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!live/TASK-2-ODD-r2-events.json",
+      "broad_genera_lexical_classes": {
+        "generation_or_generic_word": 27
+      },
+      "unclassified_token_shapes_not_values": [],
+      "strict_logical_line_matches": {},
+      "known_namespace_matches": 0,
+      "known_archive_filename_matches": 0,
+      "known_original_symbol_matches": 0,
+      "logical_lines_with_both_home_and_broad_genera": 0,
+      "classification": "false_positive_prior_raw_json_correlation"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!traces/TASK-2-ODD-r2.json",
+      "broad_genera_lexical_classes": {
+        "generation_or_generic_word": 27
+      },
+      "unclassified_token_shapes_not_values": [],
+      "strict_logical_line_matches": {},
+      "known_namespace_matches": 0,
+      "known_archive_filename_matches": 0,
+      "known_original_symbol_matches": 0,
+      "logical_lines_with_both_home_and_broad_genera": 0,
+      "classification": "false_positive_prior_raw_json_correlation"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!transport/TASK-2-ODD-r2.json",
+      "broad_genera_lexical_classes": {
+        "generation_or_generic_word": 27
+      },
+      "unclassified_token_shapes_not_values": [],
+      "strict_logical_line_matches": {},
+      "known_namespace_matches": 0,
+      "known_archive_filename_matches": 0,
+      "known_original_symbol_matches": 0,
+      "logical_lines_with_both_home_and_broad_genera": 0,
+      "classification": "false_positive_prior_raw_json_correlation"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz!invocations/TASK-2-ADJUSTED-r1-1.json",
+      "broad_genera_lexical_classes": {
+        "generation_or_generic_word": 17
+      },
+      "unclassified_token_shapes_not_values": [],
+      "strict_logical_line_matches": {},
+      "known_namespace_matches": 0,
+      "known_archive_filename_matches": 0,
+      "known_original_symbol_matches": 0,
+      "logical_lines_with_both_home_and_broad_genera": 0,
+      "classification": "false_positive_prior_raw_json_correlation"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz!records/TASK-2-ADJUSTED-r1.json",
+      "broad_genera_lexical_classes": {
+        "generation_or_generic_word": 7
+      },
+      "unclassified_token_shapes_not_values": [],
+      "strict_logical_line_matches": {},
+      "known_namespace_matches": 0,
+      "known_archive_filename_matches": 0,
+      "known_original_symbol_matches": 0,
+      "logical_lines_with_both_home_and_broad_genera": 0,
+      "classification": "false_positive_prior_raw_json_correlation"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz!traces/TASK-2-ADJUSTED-r1.json",
+      "broad_genera_lexical_classes": {
+        "generation_or_generic_word": 16
+      },
+      "unclassified_token_shapes_not_values": [],
+      "strict_logical_line_matches": {},
+      "known_namespace_matches": 0,
+      "known_archive_filename_matches": 0,
+      "known_original_symbol_matches": 0,
+      "logical_lines_with_both_home_and_broad_genera": 0,
+      "classification": "false_positive_prior_raw_json_correlation"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!build-01.json",
+      "broad_genera_lexical_classes": {
+        "generation_or_generic_word": 47,
+        "spanish_verb_context": 2
+      },
+      "unclassified_token_shapes_not_values": [],
+      "strict_logical_line_matches": {},
+      "known_namespace_matches": 0,
+      "known_archive_filename_matches": 0,
+      "known_original_symbol_matches": 0,
+      "logical_lines_with_both_home_and_broad_genera": 0,
+      "classification": "false_positive_prior_raw_json_correlation"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!build-02.json",
+      "broad_genera_lexical_classes": {
+        "generation_or_generic_word": 87
+      },
+      "unclassified_token_shapes_not_values": [],
+      "strict_logical_line_matches": {},
+      "known_namespace_matches": 0,
+      "known_archive_filename_matches": 0,
+      "known_original_symbol_matches": 0,
+      "logical_lines_with_both_home_and_broad_genera": 3,
+      "classification": "false_positive_prior_raw_json_correlation"
+    }
+  ],
+  "coverage": [
+    {
+      "archive": "docs/experimentos/archive/continuidad-2026-11-04/anexos/developer-compacto-trazas.zip",
+      "members": 90,
+      "text_members": 90,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/continuidad-2026-11-04/anexos/gemini-exploratorio-no-validado.zip",
+      "members": 13,
+      "text_members": 13,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/continuidad-2026-11-04/anexos/gemini-tres-flujos-trazas.zip",
+      "members": 90,
+      "text_members": 90,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/continuidad-2026-11-04/anexos/herramientas-actuales.zip",
+      "members": 11,
+      "text_members": 11,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/continuidad-2026-11-04/anexos/odd-sdd-gpt-trazas.zip",
+      "members": 60,
+      "text_members": 60,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/continuidad-2026-11-04/anexos/odd-sdd-suplemento-trazas.zip",
+      "members": 6,
+      "text_members": 6,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/continuidad-2026-11-04/anexos/ponytail-recuperado.zip",
+      "members": 528,
+      "text_members": 528,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/continuidad-odd-2026-11-06/herramientas-y-plan.tar.gz",
+      "members": 58,
+      "text_members": 58,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz",
+      "members": 2366,
+      "text_members": 2345,
+      "binary_not_decoded": 21,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz",
+      "members": 3233,
+      "text_members": 3204,
+      "binary_not_decoded": 29,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/low/laboratorio.tar.gz",
+      "members": 816,
+      "text_members": 809,
+      "binary_not_decoded": 7,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/sdd-low-phase2/laboratorio-fase2.tar.gz",
+      "members": 15,
+      "text_members": 15,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/sdd-low/laboratorio.tar.gz",
+      "members": 363,
+      "text_members": 360,
+      "binary_not_decoded": 3,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/high/laboratorio.tar.gz",
+      "members": 838,
+      "text_members": 831,
+      "binary_not_decoded": 7,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/sdd-high/laboratorio.tar.gz",
+      "members": 367,
+      "text_members": 364,
+      "binary_not_decoded": 3,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/mai-code-flash-2026-11-06/high/laboratorio.tar.gz",
+      "members": 827,
+      "text_members": 820,
+      "binary_not_decoded": 7,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/mai-code-flash-2026-11-06/low/laboratorio.tar.gz",
+      "members": 812,
+      "text_members": 805,
+      "binary_not_decoded": 7,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/mai-code-flash-2026-11-06/sdd-high/laboratorio.tar.gz",
+      "members": 363,
+      "text_members": 360,
+      "binary_not_decoded": 3,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/mai-code-flash-2026-11-06/sdd-low/laboratorio.tar.gz",
+      "members": 359,
+      "text_members": 356,
+      "binary_not_decoded": 3,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz",
+      "members": 1218,
+      "text_members": 1207,
+      "binary_not_decoded": 11,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/odd-domain-core-luna-max/laboratorio.tar.gz",
+      "members": 788,
+      "text_members": 781,
+      "binary_not_decoded": 7,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz",
+      "members": 1428,
+      "text_members": 1415,
+      "binary_not_decoded": 13,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz",
+      "members": 1622,
+      "text_members": 1607,
+      "binary_not_decoded": 15,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz",
+      "members": 775,
+      "text_members": 768,
+      "binary_not_decoded": 7,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz",
+      "members": 1203,
+      "text_members": 1192,
+      "binary_not_decoded": 11,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/odd-navigator-architecture-luna-max/laboratorio.tar.gz",
+      "members": 800,
+      "text_members": 793,
+      "binary_not_decoded": 7,
+      "unchanged_from_HEAD": true
+    },
+    {
+      "archive": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz",
+      "members": 9004,
+      "text_members": 8922,
+      "binary_not_decoded": 82,
+      "unchanged_from_HEAD": true
+    }
+  ],
+  "remaining_candidates": [],
+  "verified_canonical_template_examples": [
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!profiles-v2/developer/skills/hdev-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!profiles-v2/odd/skills/hodd-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!profiles-v2/v2/skills/hv2-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!profiles-v2/developer/skills/hdev-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!profiles-v2/odd/skills/hodd-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!profiles-v2/v2/skills/hv2-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!profiles/developer/skills/rp_dev-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!profiles/odd/skills/rp_odd-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!profiles/sdd/skills/rp_sdd-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!profiles-v2/developer/skills/rpdev-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!profiles-v2/odd/skills/rpodd-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!profiles-v2/sdd/skills/rpsdd-project-navigator/references/config.md",
+      "classification": "verified_canonical_illustrative_path_not_private_mobile_evidence",
+      "verification": "all matching logical lines exactly equal the canonical illustrative-path lines; this is not a claim of whole-member equality",
+      "unchanged": true
+    }
+  ],
+  "limits": {
+    "binary_not_decoded": 243
+  },
+  "archives_checked": 27,
+  "original_archive_bytes_preserved": 27,
+  "protected_values_emitted": false,
+  "reason_for_correction": "The initial scanner correlated strings in escaped JSON serialization, including generate/generated/general and Spanish imperative uses, rather than decoded logical project paths. Such co-occurrences are not confirmed Genera project evidence.",
+  "history_untouched": true,
+  "commit_or_push": false,
+  "regression_checks": {
+    "count": 9,
+    "result": "passed",
+    "cases": [
+      "generate_is_not_a_project",
+      "general_is_not_a_project",
+      "spanish_plural_is_not_a_project",
+      "spanish_gerund_is_not_a_project",
+      "spanish_instruction_is_not_a_project",
+      "ordinary_bullet_is_not_a_project",
+      "decoded_json_prevents_cross_line_false_positive",
+      "project_path_detected_without_changing_numeric_data",
+      "synthetic_internal_namespace_detected"
+    ]
+  },
+  "original_nine_false_positives": 9,
+  "verified_canonical_template_examples_count": 12,
+  "archives_modified": 0,
+  "head_and_index_unchanged": true,
+  "preexisting_change_preserved": true,
+  "agent_profiles_and_instructions_unchanged": true
+}

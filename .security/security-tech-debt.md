@@ -4,6 +4,12 @@ Alcance: hallazgos históricos del kit y revisión puntual del runner/evaluador 
 Revalidación/remediación del kit: 2026-10-14, MAS 3.2.0 más cambios locales.
 No es una auditoría completa del repositorio ni de las instalaciones del usuario.
 
+## Evidencias móviles — 2026-11-10
+
+| ID | Severidad | Hallazgo | Evidencia/seguimiento | Estado |
+|---|---|---|---|---|
+| SEC-0006 | 🟠 Alta | Información interna y rutas personales en evidencias de Genera Android/iOS | [Finding](findings/SEC-0006-exposicion-evidencias-moviles.md), CWE-200/359 | Árbol y refs locales saneados; OCR local con límites; publicación y purga física no realizadas |
+
 ## Kit MAS
 
 Los IDs SEC-0001/SEC-0002 colisionan históricamente con los de F07. Se preservan

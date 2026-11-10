@@ -34,9 +34,9 @@ afirmación final del modelo. Se conservan errores y todos los intentos.
 
 - [Protocolo](protocolo.md).
 - [Tratamientos y procedencia](tratamientos.md).
-- [Runner](../../../tools/gemini_three_way.py).
-- [Pruebas offline del runner](../../../tools/test_gemini_three_way.py).
-- [Analizador y exportador](../../../tools/gemini_three_way_report.py).
+- [Runner](../../../../tools/gemini_three_way.py).
+- [Pruebas offline del runner](../../../../tools/test_gemini_three_way.py).
+- [Analizador y exportador](../../../../tools/gemini_three_way_report.py).
 
 Los perfiles son temporales y los procesos conservan la integración de
 autenticación del host sin leer o copiar credenciales. No se editan fuentes de
@@ -115,5 +115,5 @@ Las 90 trazas sanitizadas se copiaron posteriormente con sus hashes a
 [un ZIP preservado en el repositorio](../continuidad-2026-11-04/README.md).
 Las rutas de origen en la procedencia histórica no se reescriben; ahora existe
 esa copia adicional, sin volver a ejecutar modelos ni cambiar resultados.
-Leer [CONTINUAR-AQUI.md](../CONTINUAR-AQUI.md) para las conclusiones posteriores
+Leer [índice de experimentos](../../README.md) para las conclusiones posteriores
 y la decisión aún pendiente sobre Developer/ODD.

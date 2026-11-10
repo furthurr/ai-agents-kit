@@ -100,4 +100,4 @@ Se recuperaron originales, evidencia y workspaces sintéticos aún disponibles e
 amplía la selección documental original sin cambiar la decisión ni los hashes
 históricos; su inventario y verificación figuran en el manifest de preservación.
 Para el contexto completo de la conversación, leer
-[CONTINUAR-AQUI.md](../CONTINUAR-AQUI.md).
+[índice de experimentos](../../README.md).

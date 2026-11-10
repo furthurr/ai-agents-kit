@@ -3,6 +3,23 @@
 Registro de hallazgos del kit y revisión puntual del circuito experimental F07.
 No es una certificación del repositorio completo ni del sandbox.
 
+## Evidencias de Genera Android/iOS — 2026-11-10
+
+- [SEC-0006](findings/SEC-0006-exposicion-evidencias-moviles.md): anonimización
+  parcial del árbol actual, con métricas históricas conservadas. Persisten
+  objetos/reflogs previos y copias externas; imágenes revisadas mediante OCR local
+  y blobs sin ruta mantienen límites de cobertura. Se aplicó la
+  [reescritura local autorizada](reviews/genera-history-plan-2026-11-10.md)
+  de tres commits sin push, poda ni cambios en los archivos del usuario.
+  Posteriormente se autorizó eliminar la nota local de continuidad con referencias
+  privadas; su retirada del árbol de trabajo está pendiente de commit.
+  Los nueve avisos iniciales de comprimidos se descartaron tras
+  [reclasificarlos](reviews/genera-archive-reclassification-2026-11-10.json);
+  los 27 ZIP/TAR.GZ y los perfiles se mantienen intactos.
+- Alcance exclusivo de esos proyectos. Los otros laboratorios y los
+  perfiles/instrucciones no forman parte de esta remediación.
+- Esta actualización no revalida los findings históricos del kit ni F07.
+
 ## Revalidación del kit MAS 3.2.0 — 2026-10-14
 
 - Alcance: los cinco findings históricos del kit, sobre `10373b3` y cambios locales.

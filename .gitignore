@@ -24,3 +24,6 @@ __pycache__/
 .agent-lab/
 SDDIA.png
 SDDIA_BASE.png
+
+# Notas locales de continuidad retiradas por contener referencias privadas.
+/docs/experimentos/CONTINUAR-AQUI.md

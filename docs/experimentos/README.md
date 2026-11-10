@@ -1,13 +1,14 @@
 # Experimentos del MAS — índice y continuidad
 
-**Para retomar la conversación en otra sesión, empezar por
-[CONTINUAR-AQUI.md](CONTINUAR-AQUI.md).** No hace falta volver a ejecutar las
-baterías ni depender del historial de chat para conocer resultados y pendientes.
+**Para retomar el trabajo, usar este índice y los informes de cada experimento.**
+No hace falta volver a ejecutar las baterías ni depender del historial de chat
+para conocer resultados. Para las evidencias Android/iOS, consultar primero
+[privacidad móvil y pendientes de publicación](PRIVACIDAD-MOVIL.md).
 
 ## Estructura de la carpeta
 
 - **Raíz activa (`docs/experimentos/`):**
-  - [CONTINUAR-AQUI.md](CONTINUAR-AQUI.md): Síntesis de decisiones, arquitectura de agentes y estado de avance.
+  - [PRIVACIDAD-MOVIL.md](PRIVACIDAD-MOVIL.md): Alcance del saneamiento Android/iOS, uso de fixtures y límites de publicación.
   - [continuidad-developer-v2-refuerzos-2026-11-06](continuidad-developer-v2-refuerzos-2026-11-06/CONTINUAR-AQUI.md): Base activa y especificación de **Developer v2 Reforzado** (`v2_reforzado`).
   - [real-android-gemini-2026-11-08](real-android-gemini-2026-11-08/README.md): Benchmark en producción real **Genera Android** (Kotlin, Compose, SQLCipher).
   - [real-ios-gemini-antigravity-2026-11-09](real-ios-gemini-antigravity-2026-11-09/README.md): Benchmark nativo Antigravity **Genera iOS** (Swift 6, Xcode 26.1).

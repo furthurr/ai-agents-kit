@@ -31,18 +31,18 @@ de rendimiento de ese candidato. No presentar los ensayos de ODD como si lo eval
 Leer primero este MD y [estado.json](estado.json). Para arrancar sin historial:
 
 1. Fuentes originales elegidas, no candidato1:
-   - [Agente candidato2](../developer-v2-dominios-build-gemini-2026-11-05/candidato/agent.md).
-   - [Skill candidato2](../developer-v2-dominios-build-gemini-2026-11-05/candidato/SKILL.md).
+   - [Agente candidato2](../archive/developer-v2-dominios-build-gemini-2026-11-05/candidato/agent.md).
+   - [Skill candidato2](../archive/developer-v2-dominios-build-gemini-2026-11-05/candidato/SKILL.md).
    - Copias literales de respaldo: [agente](fuentes/agent-candidato2.md) y
      [skill](fuentes/SKILL-candidato2.md). Son fuentes congeladas, NO el candidato reforzado.
-2. [ODD inicial de siete pasos](../odd-vs-sdd-2026-11-04/tratamiento-b.md), cuerpo entre
+2. [ODD inicial de siete pasos](../archive/odd-vs-sdd-2026-11-04/tratamiento-b.md), cuerpo entre
    marcadores `experimental-instructions`. No es ODD con estándares, mapas, núcleo
    o agrupación. Es una adaptación experimental inline, no el producto upstream completo.
-3. [Informe de candidato2 y build](../developer-v2-dominios-build-gemini-2026-11-05/README.md).
-4. [Último ensayo: agrupación ODD](../odd-batching-luna-max/README.md),
-   [auditoría](../odd-batching-luna-max/auditoria.json) y
-   [verificaciones](../odd-batching-luna-max/verificaciones.json).
-5. [Continuidad ODD previa](../continuidad-odd-2026-11-06/CONTINUAR-AQUI.md) solo para
+3. [Informe de candidato2 y build](../archive/developer-v2-dominios-build-gemini-2026-11-05/README.md).
+4. [Último ensayo: agrupación ODD](../archive/odd-batching-luna-max/README.md),
+   [auditoría](../archive/odd-batching-luna-max/auditoria.json) y
+   [verificaciones](../archive/odd-batching-luna-max/verificaciones.json).
+5. [Continuidad ODD previa](../archive/continuidad-odd-2026-11-06/CONTINUAR-AQUI.md) solo para
    profundizar en los ensayos anteriores, sin cargar trazas enormes por rutina.
 
 Verificar afirmaciones necesarias en JSON, scripts, código y tests. Los informes

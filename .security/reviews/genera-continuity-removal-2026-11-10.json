@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-10",
+  "action": "authorized_worktree_removal_of_private_continuity_note",
+  "location": "docs/experimentos/CONTINUAR-AQUI.md",
+  "removed_from_worktree": true,
+  "reason": "Read-only check confirmed known private mobile-archive references in the local note; it had intentionally not been modified during previous preservation steps.",
+  "authorization": "User explicitly chose removal if the note could still expose project information; the stated prior local edit is discarded for this file only.",
+  "sensitive_values_emitted": false,
+  "replacement_or_backup_of_note_created": false,
+  "preexisting_local_edit_discarded_for_this_file_only": true,
+  "navigation_updated": "docs/experimentos/README.md now uses the experiment index, reports and PRIVACIDAD-MOVIL.md",
+  "active_index_links_verified": 32,
+  "active_index_links_to_removed_target": 0,
+  "preservation_utility_unchanged": "tools/preserve_odd_continuity.py uses a different destination-relative note, not the removed root note",
+  "other_homonymous_notes_unchanged": 2,
+  "archives_unchanged": 27,
+  "agent_profiles_and_instructions_unchanged": true,
+  "git_refs_unchanged": true,
+  "HEAD": "c149aa163079",
+  "staged_changes": false,
+  "removal_pending_commit": true,
+  "HEAD_still_contains_prior_sanitized_snapshot": true,
+  "unit_tests_passed": 49,
+  "bounded_mobile_privacy_check": {
+    "files": 87,
+    "findings": 0
+  },
+  "git_diff_check": "passed",
+  "commit_or_push": false,
+  "reflog_expiry_or_object_pruning": false,
+  "limits": [
+    "Removal is not committed or published",
+    "Prior sanitized snapshots and old objects/reflogs/external copies are not physically erased by deleting a working file",
+    "No private note contents were copied into the report or a replacement document"
+  ]
+}

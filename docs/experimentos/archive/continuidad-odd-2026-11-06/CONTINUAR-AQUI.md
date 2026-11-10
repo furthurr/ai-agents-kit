@@ -32,7 +32,7 @@ Para profundizar en la integración Developer y la decisión de producto:
 - [Developer candidato2 y build](../developer-v2-dominios-build-gemini-2026-11-05/README.md).
 - [Primer Developer candidato1](../developer-v2-alta-gemini-2026-11-05/README.md).
 - [Proyecto existente y tarea muy alta](../real-project-gemini-2026-11-05/README.md).
-- [Continuidad previa](../CONTINUAR-AQUI.md): histórica, anterior a estos ensayos.
+- [Continuidad previa](../../README.md): histórica, anterior a estos ensayos.
 
 Los informes contienen sus protocolos, freezes, referencias y límites. La evidencia
 exportada está en `evidencia/`; las trazas completas saneadas están en `laboratorio.tar.gz`

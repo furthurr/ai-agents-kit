@@ -60,9 +60,9 @@ en UTC y pueden ser 2026-11-05 aunque el identificador de sesión sea 20261104.
 - [Protocolo y reglas previas](protocolo.md).
 - [Candidato y trazabilidad de responsabilidades](candidato.md).
 - [Tratamientos](tratamientos.md).
-- [Adaptador de ejecución](../../../tools/developer_compact_benchmark.py).
-- [Pruebas offline](../../../tools/test_developer_compact_benchmark.py).
-- [Analizador](../../../tools/developer_compact_report.py).
+- [Adaptador de ejecución](../../../../tools/developer_compact_benchmark.py).
+- [Pruebas offline](../../../../tools/test_developer_compact_benchmark.py).
+- [Analizador](../../../../tools/developer_compact_report.py).
 - [Resultados detallados y explicación](resultados.md).
 - [Reproducción](reproduccion.md).
 - [Ledger de 90 celdas](evidencia/records.json), [métricas](evidencia/summary.json)
@@ -91,5 +91,5 @@ Las 90 trazas sanitizadas se copiaron con sus hashes a
 [un ZIP del paquete de continuidad](../continuidad-2026-11-04/README.md), sin
 alterar los datos o retocar el candidato congelado. El paquete incluye también
 las herramientas actuales y el plan ODD, identificado como propuesta histórica.
-[CONTINUAR-AQUI.md](../CONTINUAR-AQUI.md) conserva la discusión posterior y las
+[índice de experimentos](../../README.md) conserva la discusión posterior y las
 opciones todavía no aprobadas por el usuario.

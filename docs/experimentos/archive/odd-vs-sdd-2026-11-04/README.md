@@ -97,8 +97,8 @@ incidentes. Este paquete es un registro histórico, no una instrucción activa.
 - [Auditoría y repeticiones completas](evidencia/auditoria.json).
 - [Congelación de 103 entradas](evidencia/congelacion.json).
 - [Incidente v1, excluido de v2](evidencia/incidente-v1.json).
-- [Runner, fixtures y oráculos](../../../tools/odd_vs_sdd_experiment.py).
-- [Auditor y exportador](../../../tools/odd_vs_sdd_audit.py).
+- [Runner, fixtures y oráculos](../../../../tools/odd_vs_sdd_experiment.py).
+- [Auditor y exportador](../../../../tools/odd_vs_sdd_audit.py).
 
 Las configuraciones experimentales se ejecutan en procesos y directorios
 temporales externos. La entrega documental no activa B en el MAS habitual.
@@ -124,4 +124,4 @@ con hashes contrastados, a [ZIP del paquete de continuidad](../continuidad-2026-
 No se cambian ledgers, fallos ni congelaciones. También se preservó el resumen
 Gemini exploratorio como **no validado**; no se recuperaron intentos sobrescritos.
 El contexto al día y la decisión de producto pendiente están en
-[CONTINUAR-AQUI.md](../CONTINUAR-AQUI.md).
+[índice de experimentos](../../README.md).

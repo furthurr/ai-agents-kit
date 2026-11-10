@@ -1,6 +1,6 @@
 # Paquete de conservación para otra sesión
 
-Entrada funcional: [CONTINUAR-AQUI.md](../CONTINUAR-AQUI.md). Este paquete solo
+Entrada funcional: [índice de experimentos](../../README.md). Este paquete solo
 preserva datos; no representa otra ejecución, validación del modelo o cambio de
 decisión experimental. Los originales y sus JSON/congelaciones no se reescribieron.
 

@@ -1,0 +1,1018 @@
+{
+  "date": "2026-11-10",
+  "method": "Apple Vision accurate OCR, CPU-only, on-device; image bytes via stdin, no extraction, no network or external model",
+  "selftest": "synthetic text recognition and indicator detection passed",
+  "image_locations": 244,
+  "unique_images": 2,
+  "duplicate_locations": 242,
+  "locations": [
+    {
+      "location": "MAS.png",
+      "image_id": "IMG-001"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-DEVELOPER-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-DEVELOPER-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-DEVELOPER-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-V2-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-V2-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-V2-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!evaluation/reference-proof-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!references/TASK-2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-DEVELOPER-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-DEVELOPER-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-DEVELOPER-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-V2-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-V2-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-alta-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-V2-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!consultation-runs/api-plan/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!consultation-runs/visual-plan/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-BUILD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-BUILD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-BUILD-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-DEVELOPER-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-DEVELOPER-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-DEVELOPER-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-V2-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-V2-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-V2-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!evaluation/reference-proof-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!references/TASK-2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-BUILD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-BUILD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-BUILD-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-DEVELOPER-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-DEVELOPER-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-DEVELOPER-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-V2-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-V2-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/developer-v2-dominios-build-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-V2-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/low/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/low/laboratorio.tar.gz!reference/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/low/laboratorio.tar.gz!runs/build_mas/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/low/laboratorio.tar.gz!runs/build_sin_mas/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/low/laboratorio.tar.gz!runs/developer_actual/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/low/laboratorio.tar.gz!runs/v2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/low/laboratorio.tar.gz!runs/v2_reforzado/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/sdd-low/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/sdd-low/laboratorio.tar.gz!reference/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-ll-search-2026-11-06/sdd-low/laboratorio.tar.gz!runs/sdd_trial/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/high/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/high/laboratorio.tar.gz!reference/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/high/laboratorio.tar.gz!runs/build_mas/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/high/laboratorio.tar.gz!runs/build_sin_mas/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/high/laboratorio.tar.gz!runs/developer_actual/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/high/laboratorio.tar.gz!runs/v2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/high/laboratorio.tar.gz!runs/v2_reforzado/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/sdd-high/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/sdd-high/laboratorio.tar.gz!reference/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/gpt-6-luna-task2-high-2026-11-06/sdd-high/laboratorio.tar.gz!runs/sdd_trial/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/high/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/high/laboratorio.tar.gz!reference/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/high/laboratorio.tar.gz!runs/build_mas/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/high/laboratorio.tar.gz!runs/build_sin_mas/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/high/laboratorio.tar.gz!runs/developer_actual/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/high/laboratorio.tar.gz!runs/v2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/high/laboratorio.tar.gz!runs/v2_reforzado/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/low/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/low/laboratorio.tar.gz!reference/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/low/laboratorio.tar.gz!runs/build_mas/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/low/laboratorio.tar.gz!runs/build_sin_mas/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/low/laboratorio.tar.gz!runs/developer_actual/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/low/laboratorio.tar.gz!runs/v2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/low/laboratorio.tar.gz!runs/v2_reforzado/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/sdd-high/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/sdd-high/laboratorio.tar.gz!reference/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/sdd-high/laboratorio.tar.gz!runs/sdd_trial/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/sdd-low/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/sdd-low/laboratorio.tar.gz!reference/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/mai-code-flash-2026-11-06/sdd-low/laboratorio.tar.gz!runs/sdd_trial/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!evaluation/TASK-2-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!evaluation/TASK-2-ODD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!evaluation/reference-proof-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!references/TASK-2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!runs/TASK-2-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-batching-luna-max/laboratorio.tar.gz!runs/TASK-2-ODD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-domain-core-luna-max/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-domain-core-luna-max/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-domain-core-luna-max/laboratorio.tar.gz!evaluation/TASK-2-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-domain-core-luna-max/laboratorio.tar.gz!evaluation/reference-proof-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-domain-core-luna-max/laboratorio.tar.gz!references/TASK-2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-domain-core-luna-max/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-domain-core-luna-max/laboratorio.tar.gz!runs/TASK-2-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!consultation-runs/api-plan/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!consultation-runs/visual-plan/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!evaluation/reference-proof-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!references/TASK-2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!evaluation/TASK-2-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!evaluation/TASK-2-ODD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!evaluation/TASK-2-ODD-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!evaluation/reference-proof-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!references/TASK-2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!runs/TASK-2-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!runs/TASK-2-ODD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max-1800/laboratorio.tar.gz!runs/TASK-2-ODD-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz!evaluation/TASK-2-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz!evaluation/reference-proof-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz!references/TASK-2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-gpt6-luna-max/laboratorio.tar.gz!runs/TASK-2-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!evaluation/reference-proof-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!references/TASK-2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-estandares-reintento-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-navigator-architecture-luna-max/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-navigator-architecture-luna-max/laboratorio.tar.gz!evaluation/TASK-2-ADJUSTED-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-navigator-architecture-luna-max/laboratorio.tar.gz!evaluation/TASK-2-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-navigator-architecture-luna-max/laboratorio.tar.gz!evaluation/reference-proof-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-navigator-architecture-luna-max/laboratorio.tar.gz!references/TASK-2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-navigator-architecture-luna-max/laboratorio.tar.gz!runs/TASK-2-ADJUSTED-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/odd-navigator-architecture-luna-max/laboratorio.tar.gz!runs/TASK-2-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!baseline/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-1-DEVELOPER-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-1-DEVELOPER-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-1-DEVELOPER-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-1-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-1-ODD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-1-ODD-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-1-SDD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-1-SDD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-1-SDD-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-DEVELOPER-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-DEVELOPER-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-DEVELOPER-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-ODD-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-SDD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-SDD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-2-SDD-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-DEVELOPER-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-DEVELOPER-r1-stage2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-DEVELOPER-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-DEVELOPER-r2-stage2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-DEVELOPER-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-DEVELOPER-r3-stage2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-ODD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-ODD-r1-stage2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-ODD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-ODD-r2-stage2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-ODD-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-ODD-r3-stage2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-SDD-r1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-SDD-r1-stage2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-SDD-r2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-SDD-r2-stage2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-SDD-r3-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/TASK-3-SDD-r3-stage2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/harness-proof-TASK-1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/harness-proof-TASK-2-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/harness-proof-TASK-3-final-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!evaluation/harness-proof-TASK-3-stage1-stage/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!original/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!references/TASK-1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!references/TASK-2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!references/TASK-3-final/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!references/TASK-3-stage1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-1-DEVELOPER-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-1-DEVELOPER-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-1-DEVELOPER-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-1-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-1-ODD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-1-ODD-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-1-SDD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-1-SDD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-1-SDD-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-DEVELOPER-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-DEVELOPER-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-DEVELOPER-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-ODD-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-SDD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-SDD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-2-SDD-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-DEVELOPER-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-DEVELOPER-r1-stage2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-DEVELOPER-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-DEVELOPER-r2-stage2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-DEVELOPER-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-DEVELOPER-r3-stage2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-ODD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-ODD-r1-stage2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-ODD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-ODD-r2-stage2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-ODD-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-ODD-r3-stage2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-SDD-r1/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-SDD-r1-stage2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-SDD-r2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-SDD-r2-stage2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-SDD-r3/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    },
+    {
+      "location": "docs/experimentos/archive/real-project-gemini-2026-11-05/laboratorio.tar.gz!runs/TASK-3-SDD-r3-stage2/catalog/static/images/local_library_model_uml.png",
+      "image_id": "IMG-002"
+    }
+  ],
+  "local_results": [
+    {
+      "categories": {},
+      "height": 729,
+      "id": "IMG-001",
+      "metadata_categories": [],
+      "recognized_line_count": 19,
+      "recognized_values_emitted": false,
+      "status": "local_ocr_completed",
+      "width": 1281
+    },
+    {
+      "categories": {},
+      "height": 766,
+      "id": "IMG-002",
+      "metadata_categories": [],
+      "recognized_line_count": 33,
+      "recognized_values_emitted": false,
+      "status": "local_ocr_completed",
+      "width": 1180
+    }
+  ],
+  "potential_credential_image_ids": [],
+  "recognized_text_or_secret_values_emitted": false,
+  "native_diagnostics_suppressed": false,
+  "images_modified": 0,
+  "limits": [
+    "OCR is not visual human review and can miss stylized, small, blurred or unsupported text",
+    "No assurance against steganography, hidden payloads or all metadata formats",
+    "Possible code or personal data without project markers needs owner classification; no image is sent to an external model",
+    "Other projects are outside the remediation scope; no image data is changed automatically"
+  ]
+}

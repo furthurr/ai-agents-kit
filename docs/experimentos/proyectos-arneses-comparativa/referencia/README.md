@@ -10,7 +10,7 @@ la identidad verificable de cada insumo.
 
 | Archivo | Qué fija |
 |---|---|
-| `repo-head.txt` | Commit del MAS usado (`1b52c73`). |
+| `repo-head.txt` | Commit del MAS usado (`[PRIVATE_PRE_REWRITE_COMMIT]`). |
 | `repo-status.txt` | Estado del árbol al iniciar el experimento. |
 | `repo-sha256.txt` | SHA-256 de los 1.193 archivos versionados del repositorio. |
 | `inputs-sha256.txt` | SHA-256 del ZIP de Genera Android, la tarea histórica, el oráculo histórico y las fuentes de `v2_reforzado`. |

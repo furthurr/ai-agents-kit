@@ -39,6 +39,6 @@ Se preparó una cohorte independiente y limpia para evaluar ODD Original frente 
 
 - Protocolo: [`protocolo.md`](protocolo.md)
 - Resumen estructurado: [`summary-audit.json`](summary-audit.json)
-- Runner utilizado: [`tools/odd_standards_gemini38.py`](../../../tools/odd_standards_gemini38.py)
-- Pruebas unitarias de integridad: [`tools/test_odd_standards_gemini38.py`](../../../tools/test_odd_standards_gemini38.py)
+- Runner utilizado: [`tools/odd_standards_gemini38.py`](../../../../tools/odd_standards_gemini38.py)
+- Pruebas unitarias de integridad: [`tools/test_odd_standards_gemini38.py`](../../../../tools/test_odd_standards_gemini38.py)
 - Trazas completas y registros de ejecución: `/var/folders/d7/z7388kp51w532q4c0rj7hqqh0000gn/T/opencode/odd-standards-gemini38-20261108/`

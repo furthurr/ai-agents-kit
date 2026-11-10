@@ -5,7 +5,7 @@
 **Fecha:** 2026-11-08  
 **Proyecto Base:** referencia Android anonimizada; usar un fixture sintético para nuevas ejecuciones.
 **Modelo:** `openai/gpt-6-luna` (Proveedor OpenAI OAuth)  
-**Herramienta de Orquestación:** [`tools/real_android_multimodel_benchmark.py`](../../../tools/real_android_multimodel_benchmark.py)  
+**Herramienta de Orquestación:** [`tools/real_android_multimodel_benchmark.py`](../../../../tools/real_android_multimodel_benchmark.py)
 **Datos Empíricos Completos:** [`resultados.json`](resultados.json)
 
 ---

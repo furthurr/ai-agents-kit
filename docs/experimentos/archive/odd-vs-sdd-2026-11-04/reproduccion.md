@@ -9,8 +9,8 @@ coste cero que puede reportar OpenCode.
 - Baseline MAS: `f3b58d58e0fd690d31c99131bbe5c85bc8ea2fcd`.
 - OpenCode 1.18.34 con acceso existente al modelo `openai/gpt-6.1-sol`.
 - Python 3.12 o compatible; librería estándar, sin dependencias Python adicionales.
-- [Runner, fixtures y oráculos](../../../tools/odd_vs_sdd_experiment.py).
-- [Auditor/exportador](../../../tools/odd_vs_sdd_audit.py).
+- [Runner, fixtures y oráculos](../../../../tools/odd_vs_sdd_experiment.py).
+- [Auditor/exportador](../../../../tools/odd_vs_sdd_audit.py).
 - [Tratamiento B](tratamiento-b.md) y [protocolo](protocolo.md).
 
 El runner comprueba que HEAD sea el baseline antes de preparar perfiles. Si el

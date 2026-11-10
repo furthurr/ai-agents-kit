@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-10",
+  "status": "authorized_local_history_rewrite_applied_no_publication_no_pruning",
+  "previous_head": "[PRIVATE_PRE_REWRITE_COMMIT]",
+  "new_local_head": "c149aa163079a02be158bbf2a7790e6f8dc1272d",
+  "historical_commits_rewritten": 3,
+  "reachable_commits": 101,
+  "direct_refs_updated": [
+    "refs/heads/main",
+    "refs/remotes/origin/main"
+  ],
+  "symbolic_ref_resolution_updated": "refs/remotes/origin/HEAD",
+  "symbolic_ref_target_preserved": "refs/remotes/origin/main",
+  "other_refs_unchanged": 29,
+  "worktree_files_preserved": 1223,
+  "worktree_bytes_and_modes_preserved": true,
+  "preexisting_continuity_file_preserved": true,
+  "continuity_file_excluded_from_additional_commit": true,
+  "ordinary_additional_commit_created": false,
+  "staged_changes_after_rewrite": false,
+  "candidate_graph_identity_verified": true,
+  "known_indicator_validation_inherited_from_identical_candidate_graph": {
+    "candidate_reachable_commits": 101,
+    "candidate_path_mapped_blobs": 2595,
+    "text_blobs_scanned": 2567,
+    "binary_or_archive_blobs_skipped": 28,
+    "known_indicator_residual_locations": [],
+    "commit_message_residual_count": 0,
+    "annotated_tag_message_residual_count": 0,
+    "limits": [],
+    "scope": "Known original namespace and private archive-name indicators across reachable candidate refs, decoded text only; not an all-secret detector. Archives and images have separate evidence.",
+    "original_repository_modified": false
+  },
+  "git_fsck": "passed",
+  "archives_unchanged": 27,
+  "agent_profiles_and_instructions_unchanged": true,
+  "push_or_force_push": false,
+  "remote_server_contacted": false,
+  "reflogs_expired": false,
+  "objects_pruned_or_deleted": false,
+  "last_published_commit_known_before_rewrite": "[PRIVATE_PRE_REWRITE_COMMIT]",
+  "remote_tracking_warning": "Local origin/main and origin/HEAD now resolve to the sanitized local graph; this does not update GitHub or verify the live remote.",
+  "remaining_limits": [
+    "Original objects and reflogs still retained locally; recovery maps and private preview also retain original history",
+    "Previously published commits remain on GitHub/caches/forks/clones until separately authorized coordination and publication",
+    "CONTINUAR-AQUI.md retains the user edit and private archive-name references; do not include it automatically in a commit",
+    "New privacy controls and evidence remain uncommitted; no automatic publication is authorized",
+    "On-device OCR and known-indicator scans are bounded, not a universal absence-of-sensitive-data guarantee"
+  ],
+  "post_application_checks": {
+    "all_32_ref_values_verified": true,
+    "other_29_refs_unchanged": true,
+    "staged_changes": 0,
+    "tracked_worktree_changes_remaining": [
+      ".security/README.md",
+      ".security/pii-secrets.md",
+      ".security/security-tech-debt.md",
+      "docs/experimentos/CONTINUAR-AQUI.md"
+    ],
+    "expected_untracked_safety_files": 10,
+    "preexisting_user_file_preserved": true,
+    "private_archive_name_references_still_in_user_file_do_not_commit": true,
+    "archives_unchanged": 27,
+    "current_json_files_numeric_verified": 65,
+    "current_numeric_boolean_null_values_preserved": 1338,
+    "source_reachable_text_blobs_checked": 2567,
+    "known_indicator_residuals": 0,
+    "reflog_only_commits_retained_after_rewrite": 6,
+    "unit_tests_passed": 49,
+    "bounded_privacy_check": {
+      "files": 87,
+      "findings": 0
+    }
+  },
+  "later_user_authorized_continuity_removal": {
+    "evidence": "genera-continuity-removal-2026-11-10.json",
+    "note": "Prior file-preservation checks describe the earlier phase. The user subsequently authorized deleting the still-private local note and its local edit. The note is now absent from the worktree; deletion is uncommitted.",
+    "worktree_note_present_now": false
+  }
+}

@@ -21,6 +21,17 @@ jobs:
         run: python tools/validate.py
       - name: Check supported secret signatures (read-only)
         run: python tools/check_secrets.py --tracked
+      - name: Check anonymized mobile evidence
+        run: python tools/check_mobile_privacy.py
+      - name: Install ripgrep for offline harness tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ripgrep
+      - name: Run mobile privacy and harness regression tests
+        run: |
+          python tools/test_mobile_benchmark_common.py
+          python tools/test_real_android_gemini_benchmark.py
+          python tools/test_mobile_privacy.py
       - name: Render generated artifacts
         run: python tools/render.py
       - name: Run secret-policy and negative scanner tests
