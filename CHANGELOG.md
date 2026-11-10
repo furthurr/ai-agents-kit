@@ -3,6 +3,54 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [4.0.0] - 2026-11-10
+
+### Cambios incompatibles
+
+- Rediseñar Developer bajo el mismo ID: el procedimiento pasa de plan obligatorio
+  a ejecución proporcional, verificación real y continuidad bajo demanda. `PLAN` y
+  las consultas quedan en solo lectura.
+- Retirar `canonical/skills/developer/references/plan.md` y simplificar la
+  composición del agente. La instalación por fusión conserva dos recursos obsoletos
+  que requieren limpieza opt-in en OpenCode.
+
+### Funcionalidades
+
+- Añadir el contrato de composición de Developer, las negativas A/B y las pruebas
+  de instalación, rollback y reanudación; los fixtures preservan la implementación
+  anterior de forma no invocable.
+- Incorporar `tools/developer_migration.py` para planificar y aplicar la limpieza
+  acotada de `agents/developer.md` y `skills/developer/references/plan.md` en un
+  único perfil OpenCode, con respaldo y recuperación por archivo.
+- Registrar el catálogo de experimentos y benchmarks móviles del MAS (ODD, SDD,
+  Developer v1/v2, Ponytail y proyectos Android/iOS anonimizados).
+- Incorporar la comparativa de 12 arneses SDD en Genera Android con runner aislado,
+  oráculo y evidencia agregada.
+
+### Correcciones
+
+- Corregir la evaluación móvil: aislar perfiles, pruebas y proveedores, y ajustar
+  permisos, baselines y oráculos de Android e iOS.
+- Completar el saneamiento de evidencias móviles y reubicar los experimentos
+  anteriores conservando su evidencia.
+
+### Documentación
+
+- Actualizar las fichas de Developer y SDD, el catálogo, uso, instalación, migración
+  y smoke tests.
+- Documentar la limpieza opt-in de los recursos obsoletos de Developer en OpenCode
+  y sus límites.
+- Añadir el contrato de Developer a CI y a la guía de desarrollo.
+
+### Verificación
+
+- Suite completa en verde: 416/416 comprobaciones de integridad, 334/334 de
+  instalación, 22/22 de Antigravity y 20/20 del contrato de Developer.
+- Validación, enlaces, secretos, privacidad móvil, render y paridad de `generated/`
+  correctos.
+- La aceptación conductual de Developer sigue pendiente de smokes con modelo; las
+  pruebas acreditan composición y distribución, no comportamiento runtime.
+
 ## [3.4.1] - 2026-10-28
 
 ### Correcciones
