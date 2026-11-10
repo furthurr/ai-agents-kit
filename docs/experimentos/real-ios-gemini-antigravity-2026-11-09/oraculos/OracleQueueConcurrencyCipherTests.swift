@@ -1,3 +1,4 @@
+// Contrato de pruebas anonimizado: nombres sintéticos; no acredita una nueva ejecución del proyecto original.
 //
 //  OracleQueueConcurrencyCipherTests.swift
 //  FixtureProject Tests
@@ -59,7 +60,7 @@ final class OracleQueueConcurrencyCipherTests: XCTestCase {
         XCTAssertEqual(sut.loadAll().count, 1, "La cola en disco debe contener exactamente 1 elemento")
     }
 
-    func testCifradoTransparente_payloadAlmacenadoNoEnTextoPlano() {
+    func testCifradoTransparente_payloadAlmacenadoNoEnTextoPlano() throws {
         let payloadSecreto = "CONFIDENCIAL_PII_987654321"
         let action = FixtureComponent2(action: "guardar_secreto", entityName: "seguridad", payload: payloadSecreto, status: .pending)
 
@@ -70,9 +71,9 @@ final class OracleQueueConcurrencyCipherTests: XCTestCase {
         XCTAssertEqual(cargados.first?.payload, payloadSecreto)
 
         // 2. Verificación de cifrado en reposo (UserDefaults crudo)
-        if let rawData = UserDefaults.standard.data(forKey: "benchmark.fixture.queue"),
-           let rawString = String(data: rawData, encoding: .utf8) {
-            XCTAssertFalse(rawString.contains(payloadSecreto), "El payload NO debe guardarse en texto plano en disco")
-        }
+        let rawData = try XCTUnwrap(UserDefaults.standard.data(forKey: "benchmark.fixture.queue"),
+                                   "La cola debe persistirse en la clave acordada")
+        let rawString = try XCTUnwrap(String(data: rawData, encoding: .utf8))
+        XCTAssertFalse(rawString.contains(payloadSecreto), "El payload NO debe guardarse en texto plano en disco")
     }
 }

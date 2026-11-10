@@ -1,577 +1,75 @@
 #!/usr/bin/env python3
-"""Benchmark arnés para Proyecto Real Android CRM con Gemini 3.8 Flash.
+"""Android CRM benchmark v2: frozen agents, audited requests and verified tests.
 
-Ejecuta y compara los 5 brazos metodológicos sobre las 3 tareas estratificadas:
-  1. build_sin_mas: Main agent sin documentación MAS (control)
-  2. build_mas: Main agent con documentación MAS
-  3. developer_actual: Agente Developer v1 canónico instalado
-  4. v2: Developer v2 candidato2 (modular con dominios)
-  5. v2_reforzado: Agente Developer evolucionado con los 2 refuerzos ODD
+Examples (no model calls):
+  python3 tools/real_android_gemini_benchmark.py --preflight-only
+  python3 tools/real_android_gemini_benchmark.py --prepare-only --base-zip /path/app.zip
+
+Use --baseline-only before a paid run. Results go to --root/resultados.json,
+never to the historical experiment. Profiles come only from this repository;
+installed agents are not substituted implicitly. Agent content is unchanged.
 """
-import argparse
-import datetime
-import hashlib
-import json
-import os
 from pathlib import Path
-import re
-import shutil
-import subprocess
-import time
+import os
 
-REPO = Path(__file__).resolve().parent.parent
+import mobile_benchmark_common as common
+from mobile_benchmark_common import (ARMS, DELTA_A, DELTA_B, SECRETS, agent_name,
+                                     primary_skill, reinforce, sha)
+
+REPO = common.REPO
 BASE_ZIP = Path(os.environ.get("MOBILE_BENCHMARK_ANDROID_ARCHIVE",
     str(Path.home() / ".local/share/ai-agents-kit/fixtures/mobile-android.zip")))
 PACKAGE = REPO / 'docs/experimentos/real-android-gemini-2026-11-08'
-DEFAULT_ROOT = Path('/tmp/real-android-benchmark')
-
-MODEL = 'github-copilot/gemini-3.8-flash'
-CLI = str(Path.home() / ".local/bin/opencode")
+CLI = Path.home() / '.opencode/bin/opencode'
+MODEL = common.DEFAULT_MODEL
 JAVA_HOME = '/opt/homebrew/opt/openjdk@21'
-ANDROID_HOME = os.environ.get("ANDROID_HOME", str(Path.home() / "Library/Android/sdk"))
-
-TIMEOUT = 1800
-STEP_LIMIT = 60
-TOKEN_LIMIT = 5_000_000
-
-ARMS = ('build_sin_mas', 'v2_reforzado', 'developer_actual', 'build_mas', 'v2')
-
-DELTA_A = ('Vincula los criterios afectados con pruebas o checks observables, sin casos de relleno. '
-           'Cuando modifiques código compartido, contrasta con el baseline disponible el comportamiento '
-           'existente que no se pidió cambiar y añade regresión para protegerlo.')
-DELTA_B = ('Al reanudar, contrasta el registro con el código y las verificaciones disponibles antes de '
-           'continuar; los estados guardados no sustituyen evidencia vigente. Si cambia un requisito, '
-           'actualiza su literal y reabre solo el trabajo afectado.')
-
-SECRETS = ('*.env*', '*.pem', '*.key', '*.p12', '*.pfx', '*.jks', '*.keystore', '*credential*',
-           '*.secret*', '*/.ssh/*', '*/.aws/*', '*/.config/gh/*', '*/auth.json',
-           '*/.npmrc', '*/.netrc', '*/.pypirc', '*antigravity-accounts*')
+ANDROID_HOME = str(Path.home() / 'Developer/android')
+TIMEOUT, STEP_LIMIT, TOKEN_LIMIT = 1800, 60, 5_000_000
 
 TASKS = {
     '1': {
-        'id': 'GBA-SEARCH-PROSPECTS',
-        'title': 'Media-Baja — Búsqueda, Filtrado y Normalización de Prospectos',
-        'complexity': 'media-baja',
+        'id': 'GBA-SEARCH-PROSPECTS', 'complexity': 'media-baja',
         'file': PACKAGE / 'tarea-1-media-baja.md',
         'oracle_source': PACKAGE / 'oraculos/OracleSearchProspectsTest.kt',
         'oracle_target': 'core/domain/src/test/java/com/example/mobilefixture/domain/use_case/prospect/OracleSearchProspectsTest.kt',
         'gradle_oracle_task': ':core:domain:testReleaseUnitTest --tests "com.example.mobilefixture.domain.use_case.prospect.OracleSearchProspectsTest"',
-        'gradle_original_task': ':core:domain:testReleaseUnitTest --tests "com.example.mobilefixture.domain.util.*"',
+        'gradle_original_task': ':core:domain:testReleaseUnitTest',
     },
     '2': {
-        'id': 'GBA-BUZON-RETRY-UI',
-        'title': 'Media-Alta — Remediación QLT-0017 y Gestión de Altas en Conflicto',
-        'complexity': 'media-alta',
+        'id': 'GBA-BUZON-RETRY-UI', 'complexity': 'media-alta',
         'file': PACKAGE / 'tarea-2-media-alta.md',
         'oracle_source': PACKAGE / 'oraculos/OracleBuzonRetryUiTest.kt',
         'oracle_target': 'app/src/test/java/com/example/mobilefixture/tests1/features/offline/buzon/OracleBuzonRetryUiTest.kt',
         'gradle_oracle_task': ':app:testDebugUnitTest --tests "com.example.mobilefixture.tests1.features.offline.buzon.OracleBuzonRetryUiTest"',
-        'gradle_original_task': ':app:testDebugUnitTest --tests "com.example.mobilefixture.tests1.features.offline.buzon.AccesoBuzonViewModelTest"',
+        'gradle_original_task': ':app:testDebugUnitTest',
     },
     '3': {
-        'id': 'GBA-QUEUE-CONCURRENCY-CIPHER',
-        'title': 'Alta — Deduplicación Atómica, Cifrado por Campo y Concurrencia en Cola Offline',
-        'complexity': 'alta',
+        'id': 'GBA-QUEUE-CONCURRENCY-CIPHER', 'complexity': 'alta',
         'file': PACKAGE / 'tarea-3-alta.md',
         'oracle_source': PACKAGE / 'oraculos/OracleQueueConcurrencyCipherTest.kt',
         'oracle_target': 'core/data/src/test/java/com/example/mobilefixture/data/local/offline/OracleQueueConcurrencyCipherTest.kt',
         'gradle_oracle_task': ':core:data:testReleaseUnitTest --tests "com.example.mobilefixture.data.local.offline.OracleQueueConcurrencyCipherTest"',
-        'gradle_original_task': ':core:data:testReleaseUnitTest --tests "com.example.mobilefixture.data.local.offline.OfflineQueueStoreTest"',
-    }
+        'gradle_original_task': ':core:data:testReleaseUnitTest',
+    },
 }
 
 
-def stamp():
-    return datetime.datetime.now(datetime.timezone.utc).isoformat()
-
-
-def sha(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def write_json(path, data, exclusive=False):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open('x' if exclusive else 'w', encoding='utf-8') as handle:
-        json.dump(data, handle, indent=2, ensure_ascii=False)
-        handle.write('\n')
-
-
-def read_json(path):
-    with path.open('r', encoding='utf-8') as handle:
-        return json.load(handle)
-
-
-def reinforce(text):
-    lines = text.splitlines()
-    for heading, delta in (('- **Comprobar.**', DELTA_A), ('- **Continuidad bajo demanda.**', DELTA_B)):
-        matches = [i for i, line in enumerate(lines) if line.startswith(heading)]
-        if matches:
-            lines[matches[0]] += ' ' + delta
-    return '\n'.join(lines) + '\n'
-
-
-def primary_skill(arm):
-    return 'developer' if arm == 'developer_actual' else 'developer-v2'
-
-
-def agent_name(arm):
-    return 'build' if arm.startswith('build_') else 'pilot-' + arm
-
-
-def extract_base_project(target_dir):
-    if not BASE_ZIP.exists():
-        raise FileNotFoundError(f"Project zip not found at {BASE_ZIP}")
-    if target_dir.exists():
-        shutil.rmtree(target_dir)
-    target_dir.parent.mkdir(parents=True, exist_ok=True)
-    temp_dir = target_dir.parent / f'.tmp_{target_dir.name}_{int(time.time() * 1000)}'
-    if temp_dir.exists():
-        shutil.rmtree(temp_dir)
-    temp_dir.mkdir(parents=True, exist_ok=True)
-    subprocess.run(['unzip', '-qo', str(BASE_ZIP), '-d', str(temp_dir)], check=True)
-    unzipped = temp_dir / 'app-crm-android-enterprise'
-    shutil.move(str(unzipped), str(target_dir))
-    shutil.rmtree(temp_dir)
-
-
 def prepare_local_properties(workspace):
-    local_props = workspace / 'local.properties'
-    content = ""
-    if local_props.exists():
-        content = local_props.read_text()
-    if 'sdk.dir=' in content:
-        content = re.sub(r'sdk\.dir=.*', f'sdk.dir={ANDROID_HOME}', content)
-    else:
-        content = f'sdk.dir={ANDROID_HOME}\n' + content
-    local_props.write_text(content)
+    # Do not read pre-existing local.properties: it can contain credentials.
+    (workspace / 'local.properties').write_text(f'sdk.dir={ANDROID_HOME}\n')
 
 
 def prepare_workspace(root, task_id, arm):
-    task_dir = root / f'task_{task_id}'
-    workspace = task_dir / 'runs' / arm
-    profile = task_dir / 'profiles' / arm
-    skills = profile / 'skills'
-    hosts = task_dir / 'hosts' / arm
-
-    if workspace.exists():
-        shutil.rmtree(workspace)
-    if profile.exists():
-        shutil.rmtree(profile)
-    if hosts.exists():
-        shutil.rmtree(hosts)
-
-    extract_base_project(workspace)
-    prepare_local_properties(workspace)
-
-    skills.mkdir(parents=True, exist_ok=True)
-    (hosts / 'opencode').mkdir(parents=True, exist_ok=True)
-
-    # Contexto MAS
-    mas_folders = ['.architecture', '.data', '.design', '.quality', '.security', '.navigator', '.sdd']
-    if arm == 'build_sin_mas':
-        agents_md = workspace / 'AGENTS.md'
-        if agents_md.exists():
-            agents_md.unlink()
-        for folder in mas_folders:
-            p = workspace / folder
-            if p.exists():
-                shutil.rmtree(p)
-    else:
-        # Copiar skills de dominio instaladas para los agentes que las usan
-        installed_skills = Path.home() / '.gemini/config/skills'
-        if not installed_skills.exists():
-            installed_skills = REPO / 'canonical/skills'
-        for domain in ('data-api', 'ui-design'):
-            domain_src = installed_skills / domain
-            if domain_src.exists():
-                dest = skills / domain
-                if dest.exists():
-                    shutil.rmtree(dest)
-                shutil.copytree(domain_src, dest)
-
-    candidate_dir = REPO / 'docs/experimentos/continuidad-developer-v2-refuerzos-2026-11-06/fuentes'
-
-    if arm == 'developer_actual':
-        installed_dev = Path.home() / '.gemini/config/skills/developer'
-        if not installed_dev.exists():
-            installed_dev = REPO / 'canonical/skills/developer'
-        dest = skills / 'developer'
-        if dest.exists():
-            shutil.rmtree(dest)
-        shutil.copytree(installed_dev, dest)
-
-        agent_file = Path.home() / '.gemini/antigravity/canonical/agents/developer.md'
-        if not agent_file.exists():
-            agent_file = REPO / 'canonical/agents/developer.md'
-        (profile / 'agent.md').write_text(agent_file.read_text())
-
-    elif arm in ('v2', 'v2_reforzado'):
-        raw_skill = (candidate_dir / 'SKILL-candidato2.md').read_text()
-        if arm == 'v2_reforzado':
-            raw_skill = reinforce(raw_skill)
-        skill_text = raw_skill.replace('__SKILL__', primary_skill(arm)).replace('__DATA_API__', 'data-api').replace('__UI_DESIGN__', 'ui-design')
-        skill_path = skills / primary_skill(arm)
-        skill_path.mkdir(parents=True, exist_ok=True)
-        (skill_path / 'SKILL.md').write_text(skill_text)
-
-        raw_agent = (candidate_dir / 'agent-candidato2.md').read_text()
-        agent_text = raw_agent.replace('__SKILL__', primary_skill(arm))
-        (profile / 'agent.md').write_text(agent_text)
+    return common.prepare_cell(root, task_id, arm, 'android', BASE_ZIP, TASKS[task_id], ANDROID_HOME)
 
 
 def configuration(root, task_id, arm):
-    task_dir = root / f'task_{task_id}'
-    workspace = task_dir / 'runs' / arm
-    profile = task_dir / 'profiles' / arm
-    skills = profile / 'skills'
-
-    ws_res = workspace.resolve()
-    sk_res = skills.resolve()
-    secrets_rules = {p: 'deny' for p in SECRETS}
-
-    read_rules = {'*': 'deny', **secrets_rules}
-    edit_rules = {'*': 'deny', **secrets_rules}
-    write_rules = {'*': 'deny', **secrets_rules}
-
-    # Formas absolutas de workspace
-    for ws_p in (str(ws_res), str(workspace)):
-        read_rules[ws_p] = 'allow'
-        read_rules[ws_p + '/*'] = 'allow'
-        edit_rules[ws_p] = 'allow'
-        edit_rules[ws_p + '/*'] = 'allow'
-        write_rules[ws_p] = 'allow'
-        write_rules[ws_p + '/*'] = 'allow'
-
-    # Formas de skills
-    for sk_p in (str(sk_res), str(skills)):
-        read_rules[sk_p] = 'allow'
-        read_rules[sk_p + '/*'] = 'allow'
-
-    # Formas relativas para directorios y archivos raíz del workspace (core/*, app/*, etc.)
-    if ws_res.exists():
-        for entry in ws_res.iterdir():
-            if not entry.is_symlink():
-                rel = entry.name
-                read_rules[rel] = 'allow'
-                edit_rules[rel] = 'allow'
-                write_rules[rel] = 'allow'
-                if entry.is_dir():
-                    read_rules[rel + '/*'] = 'allow'
-                    edit_rules[rel + '/*'] = 'allow'
-                    write_rules[rel + '/*'] = 'allow'
-
-    # Re-insertar explícitamente las denegaciones al final para asegurar precedencia
-    for p in SECRETS:
-        read_rules.pop(p, None)
-        read_rules[p] = 'deny'
-        edit_rules.pop(p, None)
-        edit_rules[p] = 'deny'
-        write_rules.pop(p, None)
-        write_rules[p] = 'deny'
-
-    # Proteger AGENTS.md contra edición/escritura
-    for ag in ('AGENTS.md', '*/AGENTS.md', str(ws_res / 'AGENTS.md'), str(workspace / 'AGENTS.md')):
-        edit_rules.pop(ag, None)
-        edit_rules[ag] = 'deny'
-        write_rules.pop(ag, None)
-        write_rules[ag] = 'deny'
-
-    # Bash permitido para gradlew, git status, git diff
-    bash_rules = {
-        '*': 'deny',
-        './gradlew *': 'allow',
-        './gradlew test*': 'allow',
-        './gradlew :core:domain:test*': 'allow',
-        './gradlew :app:test*': 'allow',
-        './gradlew :core:data:test*': 'allow',
-        './gradlew :core:security:test*': 'allow',
-        './gradlew check*': 'allow',
-        'gradlew *': 'allow',
-        'git status*': 'allow',
-        'git diff*': 'allow',
-        **secrets_rules
-    }
-
-    permission = {
-        '*': 'deny',
-        'read': read_rules,
-        'edit': edit_rules,
-        'write': write_rules,
-        'bash': bash_rules,
-        'glob': 'allow',
-        'grep': 'allow',
-        'list': 'allow',
-        'todowrite': 'allow',
-        'task': 'deny',
-        'question': 'deny',
-        'webfetch': 'deny',
-        'websearch': 'deny',
-        'google_search': 'deny',
-        'lsp': 'deny',
-        'external_directory': {
-            '*': 'deny',
-            str(ws_res) + '/*': 'allow',
-            str(ws_res): 'allow',
-            str(sk_res) + '/*': 'allow',
-            str(sk_res): 'allow',
-            str(workspace) + '/*': 'allow',
-            str(workspace): 'allow',
-            str(skills) + '/*': 'allow',
-            str(skills): 'allow'
-        },
-        'skill': {'*': 'deny'}
-    }
-
-    if arm != 'build_sin_mas':
-        permission['skill'].update({'data-api': 'allow', 'ui-design': 'allow'})
-        if not arm.startswith('build_'):
-            permission['skill'][primary_skill(arm)] = 'allow'
-
-    agent = {'model': MODEL, 'steps': STEP_LIMIT, 'temperature': 0.2, 'permission': permission}
-    if not arm.startswith('build_'):
-        agent.update(mode='primary', description='Frozen experimental snapshot: ' + arm,
-                     prompt=(profile / 'agent.md').read_text())
-
-    return {
-        '$schema': 'https://opencode.ai/config.json',
-        'share': 'disabled',
-        'snapshot': False,
-        'autoupdate': False,
-        'formatter': False,
-        'lsp': False,
-        'plugin': [],
-        'mcp': {},
-        'instructions': [] if arm == 'build_sin_mas' else [str(workspace / 'AGENTS.md')],
-        'skills': {'paths': [str(skills)]},
-        'agent': {agent_name(arm): agent}
-    }
+    return common.opencode_configuration(root, task_id, arm, MODEL)
 
 
-def make_environment(root, task_id, arm, cfg):
-    env = dict(os.environ)
-    for name in list(env):
-        if name.startswith('OPENCODE_CONFIG') or name == 'OPENCODE_PURE':
-            del env[name]
-    env.update(
-        OPENCODE_CONFIG_CONTENT=json.dumps(cfg),
-        OPENCODE_DISABLE_PROJECT_CONFIG='1',
-        OPENCODE_DISABLE_EXTERNAL_SKILLS='1',
-        OPENCODE_DISABLE_CLAUDE_CODE='1',
-        OPENCODE_DISABLE_CLAUDE_CODE_SKILLS='1',
-        OPENCODE_DISABLE_CLAUDE_CODE_PROMPT='1',
-        OPENCODE_DISABLE_AUTOUPDATE='1',
-        JAVA_HOME=JAVA_HOME,
-        ANDROID_HOME=ANDROID_HOME,
-        PATH=f"{JAVA_HOME}/bin:{env.get('PATH', '')}"
-    )
-    return env
-
-
-def execute_arm(root, task_id, arm):
-    task_meta = TASKS[str(task_id)]
-    prompt_text = task_meta['file'].read_text(encoding='utf-8')
-    prompt_text += (
-        "\n\nPLAN TÉCNICO APROBADO POR EL USUARIO: El usuario ha aprobado formalmente el plan y la arquitectura. "
-        "Estás en modo IMPLEMENTACIÓN directa tras aprobación. Implementa inmediatamente el código y los tests en los archivos requeridos "
-        "usando la herramienta write o edit. Ejecuta la verificación con ./gradlew y concluye sin exploraciones innecesarias de otros módulos."
-    )
-    task_dir = root / f'task_{task_id}'
-    workspace = task_dir / 'runs' / arm
-
-    cfg = configuration(root, task_id, arm)
-    write_json(task_dir / 'configs' / f'{arm}.json', cfg)
-
-    env = make_environment(root, task_id, arm, cfg)
-    args = [
-        CLI, 'run', '--format', 'json',
-        '--title', f"TASK-{task_id}-{arm}",
-        '--model', MODEL,
-        '--agent', agent_name(arm),
-        '--dir', str(workspace),
-        prompt_text
-    ]
-
-    started = time.monotonic()
-    proc = subprocess.Popen(args, cwd=str(workspace), env=env,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-
-    events = []
-    total_tokens = {'total': 0, 'input': 0, 'output': 0, 'reasoning': 0, 'cache_read': 0, 'cache_write': 0}
-    tools_called = 0
-    steps = 0
-    soft_stop_reason = None
-    conversation_error = None
-
-    try:
-        for line in proc.stdout:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                ev = json.loads(line)
-            except Exception:
-                continue
-            events.append(ev)
-            ev_type = ev.get('type')
-            if ev_type == 'tool_use':
-                tools_called += 1
-            elif ev_type == 'step_start':
-                steps += 1
-            elif ev_type == 'step_finish':
-                part = ev.get('part', {})
-                toks = part.get('tokens', {})
-                for k in ('total', 'input', 'output', 'reasoning'):
-                    total_tokens[k] += toks.get(k, 0)
-                cache = toks.get('cache', {})
-                total_tokens['cache_read'] += cache.get('read', 0)
-                total_tokens['cache_write'] += cache.get('write', 0)
-                if part.get('reason'):
-                    soft_stop_reason = part.get('reason')
-            elif ev_type == 'error':
-                conversation_error = ev.get('error')
-
-        proc.wait(timeout=TIMEOUT)
-    except subprocess.TimeoutExpired:
-        proc.kill()
-        soft_stop_reason = 'timeout'
-
-    elapsed = round(time.monotonic() - started, 3)
-
-    run_record = {
-        'task_id': task_id,
-        'task_name': task_meta['id'],
-        'arm': arm,
-        'model': MODEL,
-        'steps': steps,
-        'tools_called': tools_called,
-        'tokens': total_tokens,
-        'duration_seconds': elapsed,
-        'soft_stop_reason': soft_stop_reason,
-        'error': conversation_error,
-        'exit_code': proc.returncode,
-        'completed_at': stamp()
-    }
-
-    write_json(task_dir / 'evidence' / f'{arm}-run.json', run_record)
-    return run_record
-
-
-def evaluate_arm(root, task_id, arm):
-    task_meta = TASKS[str(task_id)]
-    task_dir = root / f'task_{task_id}'
-    workspace = task_dir / 'runs' / arm
-
-    # 1. Copiar oráculo externo en el workspace
-    target_oracle = workspace / task_meta['oracle_target']
-    target_oracle.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(task_meta['oracle_source'], target_oracle)
-
-    env = dict(os.environ)
-    env['JAVA_HOME'] = JAVA_HOME
-    env['ANDROID_HOME'] = ANDROID_HOME
-    env['PATH'] = f"{JAVA_HOME}/bin:{env.get('PATH', '')}"
-
-    try:
-        # 2. Ejecutar oráculo externo con gradlew
-        oracle_cmd = f"./gradlew {task_meta['gradle_oracle_task']} --console=plain"
-        res_oracle = subprocess.run(oracle_cmd, shell=True, cwd=str(workspace), env=env,
-                                    capture_output=True, text=True, timeout=300)
-        oracle_pass = (res_oracle.returncode == 0)
-    finally:
-        # 3. Eliminar oráculo y ejecutar suite original para comprobar no regresión
-        if target_oracle.exists():
-            target_oracle.unlink()
-
-    original_cmd = f"./gradlew {task_meta['gradle_original_task']} --console=plain"
-    res_orig = subprocess.run(original_cmd, shell=True, cwd=str(workspace), env=env,
-                              capture_output=True, text=True, timeout=300)
-    original_pass = (res_orig.returncode == 0)
-
-    # 4. Comprobar diff de git para ver si se crearon pruebas nuevas del participante
-    res_diff = subprocess.run(['git', 'status', '--porcelain'], cwd=str(workspace),
-                              capture_output=True, text=True)
-    diff_output = res_diff.stdout
-
-    test_files_added = len(re.findall(r'Test\.kt', diff_output))
-
-    eval_record = {
-        'task_id': task_id,
-        'arm': arm,
-        'oracle_pass': oracle_pass,
-        'original_suite_pass': original_pass,
-        'functional_acceptance': (oracle_pass and original_pass),
-        'new_tests_found': test_files_added,
-        'diff_summary': diff_output.splitlines()[:20]
-    }
-    if not oracle_pass:
-        eval_record['oracle_error'] = (res_oracle.stdout + '\n' + res_oracle.stderr)[-1500:]
-    if not original_pass:
-        eval_record['original_error'] = (res_orig.stdout + '\n' + res_orig.stderr)[-1500:]
-
-    write_json(task_dir / 'evidence' / f'{arm}-eval.json', eval_record)
-    return eval_record
-
-
-def build_summary(root, task_ids):
-    results = {}
-    for tid in task_ids:
-        t_meta = {k: (str(v) if isinstance(v, Path) else v) for k, v in TASKS[str(tid)].items()}
-        t_results = {}
-        for arm in ARMS:
-            run_file = root / f'task_{tid}' / 'evidence' / f'{arm}-run.json'
-            eval_file = root / f'task_{tid}' / 'evidence' / f'{arm}-eval.json'
-            if run_file.exists() and eval_file.exists():
-                r_data = read_json(run_file)
-                e_data = read_json(eval_file)
-                t_results[arm] = {**r_data, **e_data}
-        results[str(tid)] = {
-            'metadata': t_meta,
-            'arms': t_results
-        }
-    return results
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Proyecto Real Android CRM — Gemini 3.8 Benchmark Runner")
-    parser.add_argument('--task', choices=['1', '2', '3', 'all'], default='1', help="Tarea a ejecutar (1: Media-Baja, 2: Media-Alta, 3: Alta, all: Todas)")
-    parser.add_argument('--arm', choices=list(ARMS) + ['all'], default='all', help="Brazo a evaluar")
-    parser.add_argument('--root', type=Path, default=DEFAULT_ROOT, help="Directorio temporal del laboratorio")
-    parser.add_argument('--prepare-only', action='store_true', help="Solo preparar workspaces sin llamar al modelo")
-    parser.add_argument('--eval-only', action='store_true', help="Solo evaluar workspaces existentes")
-    args = parser.parse_args()
-
-    task_ids = ['1', '2', '3'] if args.task == 'all' else [args.task]
-    arms = ARMS if args.arm == 'all' else [args.arm]
-    root = args.root.resolve()
-
-    print(f"=== INICIANDO BENCHMARK REAL ANDROID CRM ===")
-    print(f"Tareas: {task_ids} | Brazos: {arms} | Root: {root}")
-
-    for tid in task_ids:
-        print(f"\n--- Procesando Tarea {tid}: {TASKS[tid]['title']} ---")
-        for arm in arms:
-            if not args.eval_only:
-                print(f"\n> [Tarea {tid}] Preparando workspace para brazo: {arm}")
-                prepare_workspace(root, tid, arm)
-
-            if args.prepare_only:
-                print(f"  Preparación completa para {arm}. Saltando inferencia.")
-                continue
-
-            if not args.eval_only:
-                print(f"  Ejecutando inferencia CLI con Gemini 3.8 ({arm})...")
-                run_res = execute_arm(root, tid, arm)
-                print(f"  Inferencia finalizada: {run_res['duration_seconds']}s, {run_res['tokens']['total']} tokens.")
-
-            print(f"  Evaluando brazo {arm} con oráculo externo...")
-            eval_res = evaluate_arm(root, tid, arm)
-            print(f"  Resultado evaluación: Oráculo={eval_res['oracle_pass']}, Original={eval_res['original_suite_pass']}, Aceptación={eval_res['functional_acceptance']}")
-
-    summary = build_summary(root, task_ids)
-    summary_path = PACKAGE / 'resultados.json'
-    write_json(summary_path, summary)
-    print(f"\nResumen consolidado guardado en: {summary_path}")
+def main(argv=None):
+    return common.main_for('android', TASKS, BASE_ZIP, CLI, argv)
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())

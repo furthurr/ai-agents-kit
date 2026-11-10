@@ -1,3 +1,4 @@
+// Contrato de pruebas anonimizado: nombres sintéticos; no acredita una nueva ejecución del proyecto original.
 package com.example.mobilefixture.data.local.offline
 
 import kotlinx.coroutines.Dispatchers
@@ -26,24 +27,24 @@ import org.mockito.kotlin.whenever
  */
 class OracleQueueConcurrencyCipherTest {
 
-    private class FakePendingActionDao : PendingActionDao {
+    private class FakePendingActionDao {
         val lock = Any()
         val entities = mutableMapOf<String, PendingActionEntity>()
 
-        override suspend fun insertar(accion: PendingActionEntity) {
+        suspend fun insertar(accion: PendingActionEntity) {
             synchronized(lock) { entities[accion.idLocal] = accion }
         }
 
-        override suspend fun listarFifo(): List<PendingActionEntity> = synchronized(lock) {
+        suspend fun listarFifo(): List<PendingActionEntity> = synchronized(lock) {
             entities.values.sortedWith(compareBy({ it.timestamp }, { it.idLocal })).toList()
         }
 
-        override suspend fun listarPorEstado(estado: String): List<PendingActionEntity> = synchronized(lock) {
+        suspend fun listarPorEstado(estado: String): List<PendingActionEntity> = synchronized(lock) {
             entities.values.filter { it.estado == estado }
                 .sortedWith(compareBy({ it.timestamp }, { it.idLocal })).toList()
         }
 
-        override suspend fun actualizarEstado(idLocal: String, estado: String, ahora: Long) {
+        suspend fun actualizarEstado(idLocal: String, estado: String, ahora: Long) {
             synchronized(lock) {
                 entities[idLocal]?.let {
                     entities[idLocal] = it.copy(estado = estado, actualizadoEn = ahora)
@@ -51,7 +52,7 @@ class OracleQueueConcurrencyCipherTest {
             }
         }
 
-        override suspend fun actualizarEstadoConMotivo(idLocal: String, estado: String, motivo: String?, ahora: Long) {
+        suspend fun actualizarEstadoConMotivo(idLocal: String, estado: String, motivo: String?, ahora: Long) {
             synchronized(lock) {
                 entities[idLocal]?.let {
                     entities[idLocal] = it.copy(estado = estado, motivoError = motivo, actualizadoEn = ahora)
@@ -59,7 +60,7 @@ class OracleQueueConcurrencyCipherTest {
             }
         }
 
-        override suspend fun reemplazarPayload(idLocal: String, payloadCifrado: String, estado: String, ahora: Long) {
+        suspend fun reemplazarPayload(idLocal: String, payloadCifrado: String, estado: String, ahora: Long) {
             synchronized(lock) {
                 entities[idLocal]?.let {
                     entities[idLocal] = it.copy(payloadCifrado = payloadCifrado, estado = estado, motivoError = null, actualizadoEn = ahora)
@@ -67,7 +68,7 @@ class OracleQueueConcurrencyCipherTest {
             }
         }
 
-        override suspend fun incrementarIntentos(idLocal: String) {
+        suspend fun incrementarIntentos(idLocal: String) {
             synchronized(lock) {
                 entities[idLocal]?.let {
                     entities[idLocal] = it.copy(intentos = it.intentos + 1)
@@ -75,15 +76,15 @@ class OracleQueueConcurrencyCipherTest {
             }
         }
 
-        override suspend fun intentosDe(idLocal: String): Int? = synchronized(lock) {
+        suspend fun intentosDe(idLocal: String): Int? = synchronized(lock) {
             entities[idLocal]?.intentos
         }
 
-        override suspend fun contarPorEstados(estados: List<String>): Int = synchronized(lock) {
+        suspend fun contarPorEstados(estados: List<String>): Int = synchronized(lock) {
             entities.values.count { it.estado in estados }
         }
 
-        override suspend fun purgarAnterioresA(estado: String, limiteMillis: Long) {
+        suspend fun purgarAnterioresA(estado: String, limiteMillis: Long) {
             synchronized(lock) {
                 entities.values.filter { it.estado == estado && it.actualizadoEn < limiteMillis }
                     .map { it.idLocal }
@@ -91,13 +92,39 @@ class OracleQueueConcurrencyCipherTest {
             }
         }
 
-        override suspend fun eliminar(idLocal: String) {
+        suspend fun eliminar(idLocal: String) {
             synchronized(lock) { entities.remove(idLocal) }
         }
 
-        override suspend fun borrarTodo() {
+        suspend fun borrarTodo() {
             synchronized(lock) { entities.clear() }
         }
+
+        suspend fun listarTodas(): List<PendingActionEntity> = listarFifo()
+
+        suspend fun recuperarCandadosHuerfanos(limiteMillis: Long, ahora: Long): Int = synchronized(lock) {
+            val stale = entities.values.filter {
+                it.estado == EstadoPendiente.ENVIANDO.name && it.actualizadoEn < limiteMillis
+            }
+            stale.forEach { entities[it.idLocal] = it.copy(
+                estado = EstadoPendiente.PENDIENTE.name, actualizadoEn = ahora) }
+            stale.size
+        }
+
+        // Structural adapter: additive interface members no longer break compilation.
+        // Unsupported operations fail explicitly; no permissive mock defaults.
+        val adapter: PendingActionDao = java.lang.reflect.Proxy.newProxyInstance(
+            PendingActionDao::class.java.classLoader, arrayOf(PendingActionDao::class.java)
+        ) { _, method, args ->
+            val implementation = javaClass.methods.singleOrNull {
+                it.name == method.name && it.parameterTypes.contentEquals(method.parameterTypes)
+            } ?: error("Unsupported oracle DAO operation: ${method.name}")
+            try {
+                implementation.invoke(this, *args.orEmpty())
+            } catch (error: java.lang.reflect.InvocationTargetException) {
+                throw error.targetException
+            }
+        } as PendingActionDao
     }
 
     private lateinit var daoFake: FakePendingActionDao
@@ -122,7 +149,7 @@ class OracleQueueConcurrencyCipherTest {
     }
 
     private fun createStore(): OfflineQueueStore {
-        return OfflineQueueStore(daoFake, cipherMock)
+        return OfflineQueueStore(daoFake.adapter, cipherMock)
     }
 
     @Test
@@ -187,6 +214,18 @@ class OracleQueueConcurrencyCipherTest {
         val idPrimero = resultados.first()
         assertTrue("Todas las llamadas concurrentes deben devolver el mismo idLocal", resultados.all { it == idPrimero })
         assertEquals("La entidad no debe haberse duplicado físicamente en el DAO", 1, daoFake.entities.size)
+    }
+
+    @Test
+    fun oraculo04_tiposDistintosNoSeDeduplican() = runBlocking {
+        val store = createStore()
+        val first = PendingAction(idLocal = "tipo-1", tipoDeAlta = TipoDeAlta("PROSPECTO"),
+            idEjecutivo = "EMP001", payload = "{}", estado = EstadoPendiente.PENDIENTE,
+            timestamp = 1000L, rfc = "EMP900101AA1")
+        assertEquals("tipo-1", store.insertarIdempotente(first))
+        assertEquals("tipo-2", store.insertarIdempotente(first.copy(
+            idLocal = "tipo-2", tipoDeAlta = TipoDeAlta("CLIENTE"))))
+        assertEquals(2, daoFake.entities.size)
     }
 
     @Test

@@ -11,7 +11,7 @@ El alcance está plenamente autorizado para implementación y verificación inme
 
 ### 1. `app/src/main/java/com/example/mobilefixture/tests1/features/offline/buzon/AccesoBuzon.kt`
 1. Modelar un estado sellado en el mismo archivo:
-> Fragmento de implementación original omitido; usar fixtures sintéticos.
+> Fragmento de implementación original omitido. Usar únicamente fixtures sintéticos.
 
 2. En `AccesoBuzonViewModel`:
    - Exponer `val estadoAcceso: StateFlow<EstadoAccesoBuzon>`
@@ -21,8 +21,13 @@ El alcance está plenamente autorizado para implementación y verificación inme
    - Ante error de lectura, debe retornar un valor no nulo (para que la nube o botón permanezca visible y accesible para el usuario).
 
 ### 2. `app/src/main/java/com/example/mobilefixture/tests1/features/offline/buzon/BuzonSalidaViewModel.kt`
+Contrato de construcción para consumidores y pruebas: aceptar un parámetro nombrado
+`almacen: AlmacenColaOffline? = null` en el constructor, preservando los parámetros
+existentes y la compatibilidad de sus llamadas actuales. El almacén inyectado es el
+que recibe la actualización de estado del reintento descrito a continuación.
+
 1. Agregar la función pública:
-> Fragmento de implementación original omitido; usar fixtures sintéticos.
+> Fragmento de implementación original omitido. Usar únicamente fixtures sintéticos.
 
 2. Comportamiento:
    - Si la acción existe y está en `EstadoPendiente.CONFLICTO`:

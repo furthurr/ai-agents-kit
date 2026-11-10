@@ -11,14 +11,14 @@ El alcance está plenamente autorizado para implementación y verificación inme
 
 ### 1. `core/data/src/main/java/com/example/mobilefixture/data/local/offline/OfflineQueueStore.kt`
 1. Agregar e implementar el método de inserción idempotente con exclusión mutua / transacción:
-> Fragmento de implementación original omitido; usar fixtures sintéticos.
+> Fragmento de implementación original omitido. Usar únicamente fixtures sintéticos.
 
    - Deduplicación lógica por `(idEjecutivo, rfc, tipoDeAlta)`.
-   - Si ya existe una acción no terminal (`PENDIENTE` o `ENVIANDO`) con el mismo `idEjecutivo` y `rfc`, no duplica ni sobreescribe: retorna el `idLocal` de la acción existente.
+   - Si ya existe una acción no terminal (`PENDIENTE` o `ENVIANDO`) con la misma clave `(idEjecutivo, rfc, tipoDeAlta)`, no duplica ni sobreescribe: retorna el `idLocal` de la acción existente. Distintos tipos de alta son acciones independientes.
    - Si no existe: cifra `idEjecutivo`, `payload` y `rfc` con `WrappedKeyCipher` e inserta la nueva entidad, retornando `accion.idLocal`.
    - Ejecución atómica y segura ante múltiples corutinas simultáneas (usando un `Mutex` o bloque transaccional).
 2. Agregar e implementar el método de recuperación de bloqueos:
-> Fragmento de implementación original omitido; usar fixtures sintéticos.
+> Fragmento de implementación original omitido. Usar únicamente fixtures sintéticos.
 
    - Busca acciones con estado exactamente `EstadoPendiente.ENVIANDO` cuyo `actualizadoEn < (ahora - timeoutMillis)`.
    - Transiciona su estado a `EstadoPendiente.PENDIENTE` y actualiza `actualizadoEn = ahora`.

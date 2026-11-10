@@ -13,14 +13,14 @@ En el módulo de Cartera de Prospectos de iOS CRM, los ejecutivos requieren busc
 ## Alcance Técnico Requerido
 
 ### 1. Modelo de Dominio
-En `FixtureProject/FixtureProject/Domain/Entities/` (o clase equivalente `Prospecto`):
+En `FixtureProject/FixtureProject/Domain/Entities/`:
 Asegurar la entidad `ProspectoItem`:
-> Fragmento de implementación original omitido; usar fixtures sintéticos.
+> Fragmento de implementación original omitido. Usar únicamente fixtures sintéticos.
 
 
 ### 2. Caso de Uso de Búsqueda y Normalización
 Crear en `FixtureProject/FixtureProject/Domain/UseCases/SearchProspectsUseCase.swift`:
-> Fragmento de implementación original omitido; usar fixtures sintéticos.
+> Fragmento de implementación original omitido. Usar únicamente fixtures sintéticos.
 
 
 **Reglas de normalización y filtrado:**
@@ -34,7 +34,7 @@ Crear en `FixtureProject/FixtureProject/Domain/UseCases/SearchProspectsUseCase.s
      * Nombre completo (`"\(nombre) \(apellidoPaterno) \(apellidoMaterno)"`)
      * O en el `rfc` (normalizado sin guiones ni espacios).
 3. **Ordenamiento:**
-   - Retornar los resultados ordenados alfabéticamente por `apellidoPaterno`, luego `apellidoMaterno`, luego `nombre`.
+    - Retornar los resultados ordenados alfabéticamente por `apellidoPaterno`, luego `apellidoMaterno`, luego `nombre`, ignorando mayúsculas y diacríticos en esas claves.
 
 ---
 

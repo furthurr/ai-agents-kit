@@ -1,7 +1,9 @@
 # Experimento: Proyecto Real Android CRM — GPT 6.1 Terra
 
+> Evidencia histórica anonimizada. Véase [privacidad y límites](../../PRIVACIDAD-MOVIL.md); el ZIP original no se distribuye.
+
 **Fecha:** 2026-11-08  
-**Proyecto Base:** `mobile-android.zip` (CRM móvil Empresa Financiera Enterprise)  
+**Proyecto Base:** referencia Android anonimizada; usar un fixture sintético para nuevas ejecuciones.
 **Modelo:** `openai/gpt-6.1-terra` (Proveedor OpenAI OAuth)  
 **Herramienta de Orquestación:** [`tools/real_android_multimodel_benchmark.py`](../../../tools/real_android_multimodel_benchmark.py)  
 **Datos Empíricos Completos:** [`resultados.json`](resultados.json)

@@ -33,7 +33,7 @@ class GeneraAndroidBenchmarkTests(unittest.TestCase):
         self.assertIn(bench.DELTA_A, reinf)
         self.assertIn(bench.DELTA_B, reinf)
 
-    def test_prepare_local_properties_sets_sdk_dir(self):
+    def test_prepare_local_properties_regenerates_only_sdk_dir(self):
         with tempfile.TemporaryDirectory() as temp:
             ws = Path(temp)
             (ws / 'local.properties').write_text("sdk.dir=/old/path\nsecret=xyz\n")
@@ -41,7 +41,7 @@ class GeneraAndroidBenchmarkTests(unittest.TestCase):
             content = (ws / 'local.properties').read_text()
             self.assertIn(f"sdk.dir={bench.ANDROID_HOME}", content)
             self.assertNotIn("/old/path", content)
-            self.assertIn("secret=xyz", content)
+            self.assertNotIn("secret=xyz", content)
 
     def test_sandbox_permissions(self):
         with tempfile.TemporaryDirectory() as temp:

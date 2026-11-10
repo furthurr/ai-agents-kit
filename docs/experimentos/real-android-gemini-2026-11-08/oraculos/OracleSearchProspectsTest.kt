@@ -1,3 +1,4 @@
+// Contrato de pruebas anonimizado: nombres sintéticos; no acredita una nueva ejecución del proyecto original.
 package com.example.mobilefixture.domain.use_case.prospect
 
 import com.example.mobilefixture.domain.model.prospect.Prospect
@@ -50,7 +51,7 @@ class OracleSearchProspectsTest {
     @Test
     fun oraculo03_busquedaPorRfc() {
         val useCase = createUseCase()
-        val res = useCase(baseList, query = "bad000")
+        val res = useCase(baseList, query = "demo000")
         assertEquals(1, res.items.size)
         assertEquals("3", res.items[0].id)
     }
@@ -96,14 +97,14 @@ class OracleSearchProspectsTest {
         val res = useCase(baseList)
         // Orden esperado de razón social:
         // 1. Abarrotes Pérez y López
-        // 2. Empresa Digital Demo
-        // 3. Comercializadora González S.A.
-        // 4. Distribuidora Ávalos (Á cuenta como A)
+        // 2. Comercializadora González S.A.
+        // 3. Distribuidora Ávalos
+        // 4. Empresa Digital Demo
         // 5. null (p4 va al final)
         assertEquals("2", res.items[0].id)
-        assertEquals("3", res.items[1].id)
-        assertEquals("1", res.items[2].id)
-        assertEquals("5", res.items[3].id)
+        assertEquals("1", res.items[1].id)
+        assertEquals("5", res.items[2].id)
+        assertEquals("3", res.items[3].id)
         assertEquals("4", res.items[4].id)
     }
 

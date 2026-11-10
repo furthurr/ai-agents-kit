@@ -1,7 +1,9 @@
 # Experimento: Proyecto Real Android CRM — MAI-Code-1.1-Flash
 
+> Evidencia histórica anonimizada. Véase [privacidad y límites](../../PRIVACIDAD-MOVIL.md); el ZIP original no se distribuye.
+
 **Fecha:** 2026-11-08  
-**Proyecto Base:** `mobile-android.zip` (CRM móvil Empresa Financiera Enterprise)  
+**Proyecto Base:** referencia Android anonimizada; usar un fixture sintético para nuevas ejecuciones.
 **Modelo:** `github-copilot/mai-code-1.1-flash` (Proveedor GitHub Copilot)  
 **Herramienta de Orquestación:** [`tools/real_android_multimodel_benchmark.py`](../../../tools/real_android_multimodel_benchmark.py)  
 **Datos Empíricos Completos:** [`resultados.json`](resultados.json)
