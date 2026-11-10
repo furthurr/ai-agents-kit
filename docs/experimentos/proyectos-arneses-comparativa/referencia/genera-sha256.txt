@@ -1,0 +1,2 @@
+[REDACTED_ORIGINAL_FINGERPRINT]  docs/experimentos/proyectos-arneses-comparativa/genera/tarea-1-media-baja-genera.md
+[REDACTED_ORIGINAL_FINGERPRINT]  docs/experimentos/proyectos-arneses-comparativa/genera/OracleSearchProspectsTest.kt

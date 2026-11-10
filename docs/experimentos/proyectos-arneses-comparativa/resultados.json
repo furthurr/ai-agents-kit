@@ -1,0 +1,329 @@
+{
+  "experiment": "proyectos-arneses-comparativa",
+  "model": "openai/gpt-6-luna",
+  "base": "Genera Android (proyecto real)",
+  "task": {
+    "id": "GBA-SEARCH-PROSPECTS",
+    "title": "Media-Baja — Búsqueda, Filtrado y Normalización de Prospectos (Genera)",
+    "complexity": "media-baja"
+  },
+  "recorded_at": "2026-11-10T05:12:56.687992+00:00",
+  "scope": {
+    "arms": 12,
+    "all_pass": true,
+    "product_files_per_arm": 3,
+    "out_of_scope_product_files": 0
+  },
+  "note": "Resumen agregado sin rutas locales, credenciales ni código del proyecto. La evidencia cruda permanece en el laboratorio local, fuera del repositorio.",
+  "arms": {
+    "v2_reforzado": {
+      "agent": "pilot-v2_reforzado",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 56.493,
+      "tokens": {
+        "total": 37557,
+        "input": 15823,
+        "output": 2022,
+        "reasoning": 0,
+        "cache_read": 19712,
+        "cache_write": 0
+      },
+      "steps": 5,
+      "tools_called": 4,
+      "product_files": 3,
+      "files_total": 3,
+      "product_lines": 141,
+      "methodology_lines": 0,
+      "methodology_artifacts": [],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "wshobson": {
+      "agent": "build",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 103.962,
+      "tokens": {
+        "total": 297061,
+        "input": 51927,
+        "output": 3149,
+        "reasoning": 65,
+        "cache_read": 241920,
+        "cache_write": 0
+      },
+      "steps": 13,
+      "tools_called": 14,
+      "product_files": 3,
+      "files_total": 3,
+      "product_lines": 157,
+      "methodology_lines": 0,
+      "methodology_artifacts": [],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "superpowers": {
+      "agent": "build",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 119.474,
+      "tokens": {
+        "total": 95146,
+        "input": 14406,
+        "output": 2733,
+        "reasoning": 55,
+        "cache_read": 77952,
+        "cache_write": 0
+      },
+      "steps": 9,
+      "tools_called": 9,
+      "product_files": 3,
+      "files_total": 3,
+      "product_lines": 156,
+      "methodology_lines": 0,
+      "methodology_artifacts": [],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "ecc": {
+      "agent": "build",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 100.986,
+      "tokens": {
+        "total": 524947,
+        "input": 48668,
+        "output": 3231,
+        "reasoning": 88,
+        "cache_read": 472960,
+        "cache_write": 0
+      },
+      "steps": 12,
+      "tools_called": 15,
+      "product_files": 3,
+      "files_total": 3,
+      "product_lines": 169,
+      "methodology_lines": 0,
+      "methodology_artifacts": [],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "gentle-ai": {
+      "agent": "gentle-orchestrator",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 90.676,
+      "tokens": {
+        "total": 274726,
+        "input": 31368,
+        "output": 2865,
+        "reasoning": 109,
+        "cache_read": 240384,
+        "cache_write": 0
+      },
+      "steps": 10,
+      "tools_called": 12,
+      "product_files": 3,
+      "files_total": 3,
+      "product_lines": 155,
+      "methodology_lines": 0,
+      "methodology_artifacts": [],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "gstack": {
+      "agent": "build",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 128.572,
+      "tokens": {
+        "total": 179466,
+        "input": 77526,
+        "output": 3889,
+        "reasoning": 259,
+        "cache_read": 97792,
+        "cache_write": 0
+      },
+      "steps": 15,
+      "tools_called": 15,
+      "product_files": 3,
+      "files_total": 3,
+      "product_lines": 163,
+      "methodology_lines": 0,
+      "methodology_artifacts": [],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "sdd": {
+      "agent": "sdd",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 169.555,
+      "tokens": {
+        "total": 556973,
+        "input": 34691,
+        "output": 5193,
+        "reasoning": 993,
+        "cache_read": 516096,
+        "cache_write": 0
+      },
+      "steps": 23,
+      "tools_called": 26,
+      "product_files": 3,
+      "files_total": 4,
+      "product_lines": 181,
+      "methodology_lines": 28,
+      "methodology_artifacts": [
+        "spec.md (28 líneas)"
+      ],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "superpowers-sdd": {
+      "agent": "pilot-superpowers-sdd",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 395.659,
+      "tokens": {
+        "total": 351253,
+        "input": 30030,
+        "output": 3475,
+        "reasoning": 436,
+        "cache_read": 317312,
+        "cache_write": 0
+      },
+      "steps": 17,
+      "tools_called": 21,
+      "product_files": 3,
+      "files_total": 4,
+      "product_lines": 186,
+      "methodology_lines": 45,
+      "methodology_artifacts": [
+        "plan.md (45 líneas)"
+      ],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "ecc-plan": {
+      "agent": "build",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 209.683,
+      "tokens": {
+        "total": 1039465,
+        "input": 59824,
+        "output": 4664,
+        "reasoning": 1025,
+        "cache_read": 973952,
+        "cache_write": 0
+      },
+      "steps": 21,
+      "tools_called": 25,
+      "product_files": 3,
+      "files_total": 3,
+      "product_lines": 157,
+      "methodology_lines": 0,
+      "methodology_artifacts": [
+        "plan devuelto por el subagente planner (sin archivo)"
+      ],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "cc-sdd": {
+      "agent": "pilot-cc-sdd",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 149.233,
+      "tokens": {
+        "total": 463013,
+        "input": 67488,
+        "output": 4544,
+        "reasoning": 453,
+        "cache_read": 390528,
+        "cache_write": 0
+      },
+      "steps": 22,
+      "tools_called": 23,
+      "product_files": 3,
+      "files_total": 7,
+      "product_lines": 102,
+      "methodology_lines": 61,
+      "methodology_artifacts": [
+        "requirements.md",
+        "design.md",
+        "tasks.md",
+        "spec.json (61 líneas)"
+      ],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "openspec": {
+      "agent": "pilot-openspec",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 203.315,
+      "tokens": {
+        "total": 493543,
+        "input": 45506,
+        "output": 5066,
+        "reasoning": 91,
+        "cache_read": 442880,
+        "cache_write": 0
+      },
+      "steps": 26,
+      "tools_called": 25,
+      "product_files": 3,
+      "files_total": 9,
+      "product_lines": 135,
+      "methodology_lines": 85,
+      "methodology_artifacts": [
+        "proposal.md",
+        "spec.md",
+        "design.md",
+        "tasks.md",
+        "metadatos (85 líneas)"
+      ],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    },
+    "spec-kit": {
+      "agent": "pilot-spec-kit",
+      "acceptance": true,
+      "oracle_pass": true,
+      "original_suite_pass": true,
+      "duration_seconds": 192.341,
+      "tokens": {
+        "total": 599483,
+        "input": 45088,
+        "output": 5512,
+        "reasoning": 403,
+        "cache_read": 548480,
+        "cache_write": 0
+      },
+      "steps": 28,
+      "tools_called": 32,
+      "product_files": 3,
+      "files_total": 6,
+      "product_lines": 156,
+      "methodology_lines": 84,
+      "methodology_artifacts": [
+        "spec.md",
+        "plan.md",
+        "tasks.md (84 líneas)"
+      ],
+      "test_files_added": 1,
+      "out_of_scope_product_files": 0
+    }
+  }
+}

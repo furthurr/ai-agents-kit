@@ -1,0 +1,5 @@
+110M  _bin
+1.8M  _probe
+1.6G  _sources
+2.2G  task_1
+4.0G  total del laboratorio

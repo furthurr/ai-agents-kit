@@ -1,0 +1,5 @@
+[REDACTED_ORIGINAL_FINGERPRINT]  ~/.local/share/ai-agents-kit/fixtures/mobile-android.zip
+38e6b05e80fabedf0e412bd7d03ebef57ddbfb7729429e50be7f53f8698d2554  docs/experimentos/real-android-gemini-2026-11-08/tarea-1-media-baja.md
+3182921157e272e45a76b977be17a8a6a55d50d18b0673f992c6805412c3f5b3  docs/experimentos/real-android-gemini-2026-11-08/oraculos/OracleSearchProspectsTest.kt
+67d8173d21000004496be59c5990b6d843ae5a956a4cfa06ff317562dc0de1d9  docs/experimentos/continuidad-developer-v2-refuerzos-2026-11-06/fuentes/agent-candidato2.md
+2b06d8950e791cf911d5aea455b4e9bf9d404452da48239cc290872efc744d78  docs/experimentos/continuidad-developer-v2-refuerzos-2026-11-06/fuentes/SKILL-candidato2.md

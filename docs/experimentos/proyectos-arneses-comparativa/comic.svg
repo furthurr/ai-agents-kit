@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="850" viewBox="0 0 1200 850" role="img" aria-labelledby="title desc">
+  <title id="title">Cómic de la comparativa de 12 brazos de agentes sobre una tarea Android</title>
+  <desc id="desc">Cuatro viñetas: el reto de filtrado en la capa de dominio, la carrera de tiempos, el veredicto 12 de 12 y la lección sobre el coste de orquestación. Solo datos agregados, sin credenciales ni código del proyecto.</desc>
+
+  <rect width="1200" height="850" fill="#f6f1e7"/>
+  <rect x="0" y="0" width="1200" height="14" fill="#14213d"/>
+
+  <text x="600" y="58" text-anchor="middle" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" fill="#14213d" letter-spacing="1">12 BRAZOS, UNA TAREA ANDROID</text>
+  <text x="600" y="92" text-anchor="middle" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="20" fill="#4a5568">Misma tarea · mismo modelo · mismas pruebas · 12/12 PASS</text>
+
+  <!-- Panel 1 -->
+  <g>
+    <rect x="40" y="120" width="540" height="300" rx="22" fill="#fffaf0" stroke="#14213d" stroke-width="4"/>
+    <text x="76" y="165" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="800" fill="#e76f51" letter-spacing="2">EL RETO</text>
+    <text x="76" y="202" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="800" fill="#14213d">Filtrar prospectos</text>
+    <text x="76" y="235" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#2a9d8f" font-weight="700">en la capa de dominio</text>
+    <text x="76" y="275" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#4a5568">3 archivos de producto</text>
+    <text x="76" y="302" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#4a5568">0 archivos fuera de alcance</text>
+
+    <!-- Tres tarjetas -->
+    <g transform="translate(390 205)">
+      <rect x="0" y="18" width="120" height="72" rx="10" fill="#e9c46a" stroke="#14213d" stroke-width="3" transform="rotate(-8)"/>
+      <rect x="14" y="10" width="120" height="72" rx="10" fill="#f4a261" stroke="#14213d" stroke-width="3" transform="rotate(4)"/>
+      <rect x="28" y="2" width="120" height="72" rx="10" fill="#2a9d8f" stroke="#14213d" stroke-width="3" transform="rotate(-2)"/>
+      <text x="88" y="45" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff">PROSPECT</text>
+      <circle cx="150" cy="80" r="38" fill="none" stroke="#14213d" stroke-width="7"/>
+      <line x1="178" y1="108" x2="212" y2="142" stroke="#14213d" stroke-width="10" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- Panel 2 -->
+  <g>
+    <rect x="620" y="120" width="540" height="300" rx="22" fill="#fffaf0" stroke="#14213d" stroke-width="4"/>
+    <text x="656" y="165" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="800" fill="#e76f51" letter-spacing="2">LA CARRERA</text>
+    <text x="656" y="202" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="800" fill="#14213d">Tiempo y tokens</text>
+    <text x="656" y="235" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#2a9d8f" font-weight="700">sin cambiar el resultado</text>
+
+    <!-- Barras -->
+    <g font-family="Inter, system-ui, sans-serif">
+      <text x="656" y="282" font-size="16" font-weight="700" fill="#14213d">v2_reforzado</text>
+      <rect x="800" y="268" width="270" height="18" rx="9" fill="#e5e0d5"/>
+      <rect x="800" y="268" width="54" height="18" rx="9" fill="#2a9d8f"/>
+      <text x="1080" y="283" font-size="16" font-weight="800" fill="#14213d">56,5 s</text>
+
+      <text x="656" y="322" font-size="16" font-weight="700" fill="#14213d">cc-sdd</text>
+      <rect x="800" y="308" width="270" height="18" rx="9" fill="#e5e0d5"/>
+      <rect x="800" y="308" width="143" height="18" rx="9" fill="#e9c46a"/>
+      <text x="1080" y="323" font-size="16" font-weight="800" fill="#14213d">149,2 s</text>
+
+      <text x="656" y="362" font-size="16" font-weight="700" fill="#14213d">SDD (MAS)</text>
+      <rect x="800" y="348" width="270" height="18" rx="9" fill="#e5e0d5"/>
+      <rect x="800" y="348" width="163" height="18" rx="9" fill="#e76f51"/>
+      <text x="1080" y="363" font-size="16" font-weight="800" fill="#14213d">169,6 s</text>
+    </g>
+    <text x="656" y="398" font-family="Inter, system-ui, sans-serif" font-size="15" fill="#4a5568">12 brazos · mismo oráculo · misma suite</text>
+  </g>
+
+  <!-- Panel 3 -->
+  <g>
+    <rect x="40" y="460" width="540" height="300" rx="22" fill="#fffaf0" stroke="#14213d" stroke-width="4"/>
+    <text x="76" y="505" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="800" fill="#e76f51" letter-spacing="2">EL VEREDICTO</text>
+    <text x="76" y="542" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="800" fill="#14213d">12 de 12</text>
+    <text x="76" y="575" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#2a9d8f" font-weight="700">PASS funcional</text>
+    <text x="76" y="615" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#4a5568">Oráculo externo + suite original</text>
+    <text x="76" y="642" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#4a5568">3 archivos de producto por brazo</text>
+    <text x="76" y="669" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#4a5568">0 archivos de producto fuera de alcance</text>
+
+    <!-- Sello -->
+    <g transform="translate(440 540)">
+      <circle cx="70" cy="70" r="62" fill="#2a9d8f" stroke="#14213d" stroke-width="5"/>
+      <text x="70" y="60" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="800" fill="#ffffff">12/12</text>
+      <text x="70" y="86" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700" fill="#ffffff">PASS</text>
+    </g>
+  </g>
+
+  <!-- Panel 4 -->
+  <g>
+    <rect x="620" y="460" width="540" height="300" rx="22" fill="#fffaf0" stroke="#14213d" stroke-width="4"/>
+    <text x="656" y="505" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="800" fill="#e76f51" letter-spacing="2">LA LECCIÓN</text>
+    <text x="656" y="542" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="800" fill="#14213d">El código converge;</text>
+    <text x="656" y="575" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="800" fill="#14213d">el coste no.</text>
+    <text x="656" y="615" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#4a5568">Mismo contrato y mismas pruebas.</text>
+    <text x="656" y="642" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#4a5568">La diferencia está en la orquestación:</text>
+    <text x="656" y="669" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#4a5568">de 37.557 a 1.039.465 tokens.</text>
+
+    <!-- Balanza -->
+    <g transform="translate(660 690)">
+      <line x1="0" y1="20" x2="160" y2="20" stroke="#14213d" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="80" cy="20" r="10" fill="#e9c46a" stroke="#14213d" stroke-width="3"/>
+      <line x1="20" y1="20" x2="20" y2="48" stroke="#14213d" stroke-width="4"/>
+      <line x1="140" y1="20" x2="140" y2="48" stroke="#14213d" stroke-width="4"/>
+      <rect x="0" y="48" width="40" height="10" rx="5" fill="#2a9d8f"/>
+      <rect x="120" y="48" width="40" height="10" rx="5" fill="#e76f51"/>
+    </g>
+  </g>
+
+  <text x="600" y="805" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="15" fill="#4a5568">Genera Android · datos agregados del experimento · sin credenciales ni código del proyecto</text>
+</svg>
