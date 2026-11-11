@@ -3,6 +3,18 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [4.0.2] - 2026-11-11
+
+### Correcciones
+
+- Kiro: excluir `README.md` y `readme.md` raíz de la denegación general de
+  escritura del orquestador documental y proteger el contrato con una regresión.
+
+### Documentación
+
+- Añadir un prompt reutilizable para actualizar MAS y configurar el modo autónomo
+  en las seis plataformas, con enlaces desde las guías existentes.
+
 ## [4.0.1] - 2026-11-10
 
 ### Correcciones
