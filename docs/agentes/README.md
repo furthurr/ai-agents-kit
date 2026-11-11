@@ -39,7 +39,7 @@ Los cinco agentes vigentes se distribuyen en las seis plataformas; se mantienen 
 | Kiro | Selecciona el agente de `~/.kiro/agents/`; para una skill también puede usarse su comando, según la UI. |
 | Claude Code | Delega al subagente o menciónalo, por ejemplo `@developer`, `@documentation-orchestrator` o `@sdd`; las skills se invocan con `/nombre`. |
 | Pi | Usa `/code-review <tarea>` como plantilla de prompt; no crea un subagente aislado. |
-| Antigravity 2.0 | Usa la selección comprobada en el smoke del host; `@<agente>` es notación semántica, no sintaxis nativa verificada. |
+| Antigravity 2.x | Usa la selección comprobada en el smoke del host; `@<agente>` es notación semántica, no sintaxis nativa verificada. |
 
 No hace falta conocer los modos internos ni elegir skills: describe en lenguaje
 natural qué quieres conseguir. Por ejemplo:

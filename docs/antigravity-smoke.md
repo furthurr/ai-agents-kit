@@ -1,4 +1,4 @@
-# Smoke de Antigravity 2.0
+# Smoke de Antigravity 2.x
 
 Procedimiento para obtener evidencia runtime de la integración. **Estado actual:
 PENDIENTE; este documento no registra un smoke ejecutado ni certifica el host.**

@@ -98,6 +98,7 @@ altera `generated/`.
   ese alcance específico no equivale a una matriz completa del kit.
 - [ ] Ejecutar parseo explícito de JSON/YAML en la matriz de CI.
 - [x] Ejecutar render reproducible, validación e integridad en CI.
+- [x] Añadir `tools/host_compat.py`, la matriz de [compatibilidad de hosts](compatibilidad-hosts.md) y avisos de versión en los instaladores de Kiro y OpenCode, con pruebas en CI.
 - [x] Comprobar sintaxis de scripts Bash.
 - [ ] Comprobar sintaxis de scripts PowerShell en un runner Windows.
 - [x] Añadir pruebas negativas: token sin resolver, adapter incompleto, filename

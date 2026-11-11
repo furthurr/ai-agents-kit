@@ -44,6 +44,6 @@ Gestionas commits, push y releases en español. Orquestas exclusivamente las ski
 4. La skill define Conventional Commits, SemVer, validaciones y orden de operaciones.
 
 
-## Particularidades de Antigravity 2.0
+## Particularidades de Antigravity 2.x
 
 `@<agente>` es notación de routing del kit, no una garantía de invocación nativa. Selecciona el agente por la interfaz del host verificada para tu versión. Las tools disponibles no amplían el alcance ni sustituyen autorizaciones, gates o permisos del host.

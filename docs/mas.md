@@ -27,7 +27,7 @@ MAS + @sdd: convierte este cambio en una spec con trazabilidad completa.
 ```
 
 Esta convención es **semántica**, no una garantía de sintaxis nativa en cada
-host. En Antigravity 2.0, `@<agente>` no está confirmado como invocación: el
+host. En Antigravity 2.x, `@<agente>` no está confirmado como invocación: el
 mecanismo real de selección de la UI debe registrarse en el
 [smoke](antigravity-smoke.md). `sdd` es el identificador nominal que reemplaza
 `{{sdd_agent}}`, no un comando. Las skills usan el slash documentado

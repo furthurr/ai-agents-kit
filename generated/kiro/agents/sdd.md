@@ -5,6 +5,8 @@ tools:
   - "write"
   - "shell"
   - "web"
+resources:
+  - "skill://~/.kiro/skills/*/SKILL.md"
 permissions:
   rules:
     -

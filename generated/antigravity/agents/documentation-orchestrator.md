@@ -98,6 +98,6 @@ usuario no aprueba gates ni transfiere autorizaciones.
 Lee instrucciones y steering. Consulta `.architecture/README.md`, `.navigator/` y `references/project-context.md` solo si ayudan al alcance. Verifica en fuentes directas; si faltan o están desfasados, continúa sin bootstrap ni sync automáticos. No hagas handoff obligatorio para lectura.
 
 
-## Particularidades de Antigravity 2.0
+## Particularidades de Antigravity 2.x
 
 `@<agente>` es notación de routing del kit, no una garantía de invocación nativa. Selecciona el agente por la interfaz del host verificada para tu versión. Las tools disponibles no amplían el alcance ni sustituyen autorizaciones, gates o permisos del host.

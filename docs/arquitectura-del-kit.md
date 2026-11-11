@@ -29,7 +29,7 @@ repositorio**.
                              │  scripts/install/*
                              ▼
       ~/.copilot  ·  ~/.config/opencode  ·  ~/.kiro  ·  ~/.claude  ·  ~/.pi/agent
-      ~/.gemini/config/{skills,agents} (Antigravity 2.0)
+      ~/.gemini/config/{skills,agents} (Antigravity 2.x)
 ```
 
 ## Capas y responsabilidades
@@ -96,7 +96,7 @@ Campos habituales:
 
 Diferencias notables entre plataformas:
 
-| Aspecto | Copilot | OpenCode | Kiro | Claude Code | Pi | Antigravity 2.0 |
+| Aspecto | Copilot | OpenCode | Kiro | Claude Code | Pi | Antigravity 2.x |
 |---------|---------|----------|------|-------------|-----|-----------------|
 | Extensión agente | `.agent.md` | `.md` | `.md` | `.md` | `.md` (prompt template) | `<id>.md` |
 | Nombre del agente | campo `name` en frontmatter | vía archivo / config | nombre de archivo (sin `name`) | `name` en minúsculas y con guiones | nombre de archivo → comando `/<id>` | `name` igual al ID |
@@ -179,6 +179,7 @@ Ejecutar siempre antes de instalar o de commitear cambios de prompts.
 | Script | Función |
 |--------|---------|
 | `tools/measure_context.py` | Inventario de texto y volumen por conjunto observado de archivos; no estima tokens del host |
+| `tools/host_compat.py` | Matriz de versiones y aviso de compatibilidad; no modifica configuración del host |
 | `tools/import_installed.py` | Apoyo a importar lo instalado hacia `imports/` |
 | `tools/check_links.py` | Enlaces Markdown internos de docs y fuentes canónicas |
 | `tools/test_integrity.py` | Tests de integridad del repo/pipeline |

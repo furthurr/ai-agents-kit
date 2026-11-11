@@ -10,7 +10,10 @@ completo en cada render.
 - **Bash** (macOS/Linux) o **PowerShell** (Windows) — scripts de install/backup
 - **Git** — versionar cambios del kit (recomendado)
 - La herramienta destino instalada (Copilot, OpenCode, Kiro, Claude Code, Pi o
-  Antigravity 2.0, según el alcance de cada distribución)
+  Antigravity 2.x, según el alcance de cada distribución)
+
+Versiones mínimas, formatos y comportamiento con hosts antiguos:
+[compatibilidad-hosts.md](compatibilidad-hosts.md).
 
 ## Flujo recomendado
 
@@ -34,7 +37,7 @@ python3 tools/measure_context.py   # opcional
 ./scripts/install/kiro.sh          # Kiro
 ./scripts/install/claude.sh        # Claude Code
 ./scripts/install/pi.sh            # Pi
-./scripts/install/antigravity.sh   # Antigravity 2.0
+./scripts/install/antigravity.sh   # Antigravity 2.x
 ```
 
 ### Windows (PowerShell)
@@ -65,6 +68,7 @@ independiente.
 | Aprobar archivo | `--approve-retired-file PATH` repetible | `-ApproveRetiredFile` lista | Ruta absoluta exacta revisada; requiere SHA paralelo |
 | Aprobar bytes | `--approve-retired-sha256 SHA` repetible | `-ApproveRetiredSha256` lista | SHA-256 real del plan, emparejado por posición con cada ruta |
 | Destinos adicionales | `--additional-agents-dest RUTA` repetible | `-AdditionalAgentsDest` lista | Directorios locales explícitos, solo para migración opt-in |
+| Host estricto (solo Kiro) | `--strict-host` | `-StrictHost` | Aborta si Kiro CLI no tiene el motor V3 activo; por defecto solo avisa. Se omite en dry-run para no crear estado del host |
 | Ayuda | `-h` / `--help` | (según script) | Uso del script |
 
 Ejemplos:
@@ -79,15 +83,31 @@ Ejemplos:
 | Plataforma | Skills | Agentes |
 |------------|--------|---------|
 | Copilot | `~/.copilot/skills/` | `~/.copilot/agents/` |
-| OpenCode | `~/.config/opencode/skills/` (o `$XDG_CONFIG_HOME/opencode/skills/`) | `~/.config/opencode/agent/` |
-| Kiro | `~/.kiro/skills/` | `~/.kiro/agents/` |
+| OpenCode | `~/.config/opencode/skills/` (o `$XDG_CONFIG_HOME/opencode/skills/`) | `~/.config/opencode/agent/` (V2 también descubre `agents/`) |
+| Kiro | `~/.kiro/skills/` | `~/.kiro/agents/` (Markdown V3; CLI 2.x en motor V2 lo ignora) |
 | Claude Code | `~/.claude/skills/` (o `$CLAUDE_CONFIG_DIR/skills/`) | `~/.claude/agents/` (o `$CLAUDE_CONFIG_DIR/agents/`) |
 | Pi | `<agent-dir>/skills/` | `<agent-dir>/prompts/` |
-| Antigravity 2.0 | `~/.gemini/config/skills/` | `~/.gemini/config/agents/` |
+| Antigravity 2.x | `~/.gemini/config/skills/` | `~/.gemini/config/agents/` |
 
-### Antigravity 2.0
+### Kiro: motor V2, V3 y CLI
 
-El alcance inicial es global: diez directorios de skills con sus recursos y seis
+El kit distribuye agentes Markdown V3, el formato de Kiro IDE 1.x y del motor
+V3. Kiro CLI 2.37+ incluye el motor V3, pero el valor predeterminado puede seguir
+siendo V2. En V2 los `.md` no se cargan y se conservan los agentes JSON previos.
+El instalador detecta la versión y avisa; no borra esos JSON.
+
+```bash
+kiro-cli settings chat.agentEngine v3   # opt-in global al motor V3
+kiro-cli --v3                           # alternativa por sesión
+./scripts/install/kiro.sh --strict-host # aborta si V3 no está activo
+```
+
+Kiro CLI anterior a 2.37 no tiene motor V3 estable: actualiza o usa el IDE. La
+CLI 3.x usa V3 por defecto. Detalle: [compatibilidad-hosts.md](compatibilidad-hosts.md#kiro-v2-v3-y-compatibilidad).
+
+### Antigravity 2.x
+
+El alcance inicial es global: once directorios de skills con sus recursos y cinco
 agentes `<id>.md`. Bash resuelve `~` desde HOME; PowerShell usa USERPROFILE, no
 un carácter `~` literal. La instalación no modifica credenciales, settings,
 `GEMINI.md`, `AGENTS.md` ni `.agents/rules/*.md`.
@@ -122,9 +142,13 @@ con fixtures en Linux, macOS y Windows: **22/22 pruebas nativas por OS**, Python
 **Runtime Antigravity: PENDIENTE** para descubrimiento 5/11, selección UI, carga
 de referencias e `invoke_subagent`. La versión de referencia de la aplicación
 será la registrada en un smoke completo exitoso, no el build de CI del kit.
-El CLI usa otra ruta global de skills (`~/.gemini/antigravity-cli/skills/`);
-este instalador no cubre esa ruta ni certifica agentes personalizados del IDE
-standalone. Recarga y selección real: [antigravity-smoke.md](antigravity-smoke.md).
+La App y el CLI leen `~/.gemini/config/`; este instalador cubre esa ruta
+compartida. El CLI añade dos rutas de mayor prioridad
+(`~/.gemini/antigravity-cli/skills/` y `~/.gemini/skills/`), que no se modifican:
+si una skill tiene el mismo nombre allí, prevalece la del CLI. Tampoco se
+certifican agentes personalizados del IDE standalone. Recarga y selección real:
+[antigravity-smoke.md](antigravity-smoke.md). Detalle:
+[compatibilidad-hosts.md](compatibilidad-hosts.md#antigravity).
 
 ### Pi
 
@@ -228,7 +252,10 @@ incompleta sin aprobación específica. Simula primero con `--dry-run` y registr
 respaldo/hash antes de retirar; reinicia el host tras actualizar si corresponde.
 
 OpenCode revisa por defecto `agent/` y su hermano `agents/` en el perfil global
-efectivo; instala contenido vigente en `agent/`. Directorios locales requieren
+efectivo; instala contenido vigente en `agent/`. El frontmatter V1 es intencional:
+OpenCode 1.x lo usa de forma nativa y 2.x lo traduce; en V2, `temperature` no se
+aplica. No migres el adaptador a `permissions` nativo sin ofrecer antes una
+variante por versión, porque rompería OpenCode 1.x. Directorios locales requieren
 `--additional-agents-dest RUTA` explícito (PowerShell: `-AdditionalAgentsDest` lista),
 sin descubrimiento recursivo. En PowerShell las aprobaciones usan listas paralelas
 `-ApproveRetiredFile` y `-ApproveRetiredSha256`, con igual longitud y orden.

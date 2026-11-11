@@ -27,11 +27,11 @@ universal de directorios sin bloquear proyectos legítimos.
 
 | Host / superficie | Control distribuido | Restricciones y operaciones preservadas | Límites |
 |---|---|---|---|
-| OpenCode 1.x | `permission`: edición, shell, delegación y acceso exterior. Última coincidencia gana; reglas del agente preceden a globales. | Orquestador: edición denegada salvo las seis raíces documentales, Markdown bajo `docs/` y patrones `AGENTS.md` y `*/AGENTS.md`, con `ask`; delegación solo a `code-review`; Git de escritura y `rm` denegados. Developer niega `.sdd/**` y delegación; los demás roles mantienen edición/shell con `ask`. Consultas Git, shell restante y mantenimiento requieren aprobación. | No cambia permisos al interpretar `inspect`. Los patrones absolutos por nombre no identifican la raíz dinámica del proyecto: pueden coincidir en carpetas anidadas o externas; exterior exige aprobación adicional. La excepción de `AGENTS.md` sigue limitada al bloque del archivo raíz resuelto. Shell autorizado puede escribir fuera de las raíces; una aprobación debe evaluar el comando completo. `--auto` y aprobaciones persistentes pueden suprimir asks; denies siguen siendo relevantes. No es sandbox. |
-| Kiro IDE 1.0 / CLI V3 | `tools` + `permissions.rules`; deny > ask > allow, sin precedencia por orden/scope. | Orquestador: `fs_write` deny con exclusiones para las seis raíces, Markdown bajo `docs/` y `AGENTS.md`; escritura/shell/delegación con `ask`. Se preservan herramientas y denies existentes. | Las excepciones se expresan con `exclude`: un allow posterior no anula un deny. La excepción de `AGENTS.md` se declara relativa a la raíz. CLI 2.x no se certifica con esta configuración V3. Normalización de rutas, enlaces y ejecución de reglas pendientes de runtime compatible. Web tiene sandbox y no aplica este modelo YAML. |
+| OpenCode 1.x | `permission`: edición, shell, delegación y acceso exterior. Última coincidencia gana; reglas del agente preceden a globales. | Orquestador: edición denegada salvo las seis raíces documentales, Markdown bajo `docs/` y patrones `AGENTS.md` y `*/AGENTS.md`, con `ask`; delegación solo a `code-review`; Git de escritura y `rm` denegados. Developer niega `.sdd/**` y delegación; los demás roles mantienen edición/shell con `ask`. Consultas Git, shell restante y mantenimiento requieren aprobación. | No cambia permisos al interpretar `inspect`. Los patrones absolutos por nombre no identifican la raíz dinámica del proyecto: pueden coincidir en carpetas anidadas o externas; exterior exige aprobación adicional. La excepción de `AGENTS.md` sigue limitada al bloque del archivo raíz resuelto. Shell autorizado puede escribir fuera de las raíces; una aprobación debe evaluar el comando completo. `--auto` y aprobaciones persistentes pueden suprimir asks; denies siguen siendo relevantes. No es sandbox. OpenCode 2.x traduce este frontmatter V1; `temperature` no se aplica en V2. |
+| Kiro IDE 1.0 / CLI V3 | `tools` + `permissions.rules`; deny > ask > allow, sin precedencia por orden/scope. | Orquestador: `fs_write` deny con exclusiones para las seis raíces, Markdown bajo `docs/` y `AGENTS.md`; escritura/shell/delegación con `ask`. Se preservan herramientas y denies existentes. | Las excepciones se expresan con `exclude`: un allow posterior no anula un deny. La excepción de `AGENTS.md` se declara relativa a la raíz. CLI 2.x en motor V2 no lee Markdown V3: el instalador avisa y conserva los JSON existentes; `--strict-host` aborta. CLI 2.37+ puede activar V3 con `chat.agentEngine v3`; CLI 3.x lo usa por defecto. Normalización de rutas, enlaces y ejecución de reglas pendientes de runtime compatible. Web tiene sandbox y no aplica este modelo YAML. |
 | Claude Code | Allowlist de herramientas; modos/settings/hooks del host y del padre | Edit/Write/Bash disponibles para auditoría documental y remediación aprobadas; no se usa `plan` universal ni se retira Bash indiscriminadamente. | La allowlist no restringe por ruta/mode. `permissionMode` puede heredarse o ignorarse según el padre y la superficie plugin; no equivale a una política por dominio. El kit no modifica settings/hooks del usuario. |
 | Copilot: IDE, CLI, cloud | Allowlist `tools` por agente | Lectura/búsqueda, edición/ejecución y especialistas según rol | Alias desconocidos se ignoran; `web` no aplica a cloud. Directorios, comandos y confirmaciones dependen de la superficie y configuración del host; lista de tools no es sandbox por carpeta. |
-| Antigravity 2.0 / CLI | Lista de tools por rol; scopes, sandbox y aprobaciones heredados del padre | Herramientas de escritura/comandos conservadas para operaciones autorizadas | El kit no configura scopes del padre. `commandExecutionPolicy` no establece por sí solo el alcance documental; no se añade un campo sin prueba del efecto. IDE standalone y smoke completo siguen pendientes. |
+| Antigravity 2.x / CLI | Lista de tools por rol; scopes, sandbox y aprobaciones heredados del padre | Herramientas de escritura/comandos conservadas para operaciones autorizadas | El kit no configura scopes del padre. `commandExecutionPolicy` no establece por sí solo el alcance documental; no se añade un campo sin prueba del efecto. IDE standalone y smoke completo siguen pendientes. |
 | Pi | Plantillas de prompt; herramientas y extensiones de la sesión | Consulta/documentación/remediación conforme al rol invocado | La plantilla no crea un subagente aislado ni permisos independientes. Se necesita una sesión/harness configurado si se requieren bloqueos técnicos. |
 
 ### Red y confianza
@@ -107,8 +107,10 @@ El probe Pi carga la plantilla real y comprueba que las herramientas por defecto
 pueden escribir en documentación, producto y fuera del workspace. Registra esas
 operaciones como limitaciones; contrasta una sesión explícita `--tools read`, que
 excluye `write`. Esa configuración de consulta no cambia el rol distribuido ni
-se impone a sesiones de auditoría/remediación. El check Kiro solo valida formato:
-CLI 2.29.1 devuelve exit 1 para el Markdown V3; no afirmar que aplicó sus reglas.
+se impone a sesiones de auditoría/remediación. El check Kiro solo valida formato con la
+CLI 2.x en motor V2: `kiro-cli agent validate` devuelve exit 1 para Markdown V3 y
+no se debe afirmar que aplicó sus reglas. El instalador detecta esa situación y
+avisa; no borra los JSON previos.
 
 ### Evidencia del fix de `AGENTS.md` — 2026-10-19
 
@@ -150,8 +152,10 @@ incluidas dos limitaciones conocidas. El probe comprueba creación, edición,
 rechazo y denegación de archivos no documentales. Su perfil no expone
 `apply_patch`: el parche combinado se comprueba solo por resolución estática de
 todas sus rutas. Pi ejecuta escritura en `docs/` y `AGENTS.md`, sin gate técnico
-por rol. Kiro CLI 2.x rechaza el formato V3 del kit; su runtime sigue pendiente,
-igual que Claude, Copilot y Antigravity. No se afirma éxito runtime universal.
+por rol. Kiro CLI 2.x en motor V2 rechaza el formato Markdown V3 del kit; el
+instalador avisa y conserva los JSON existentes, y `--strict-host` permite abortar.
+Su runtime V3 sigue pendiente, igual que Claude, Copilot y Antigravity. No se
+afirma éxito runtime universal.
 
 Actualizar solo la skill no corrige un bloqueo del perfil: hay que instalar también
 el agente generado. Desde un checkout que contenga el fix, ejecuta el instalador de

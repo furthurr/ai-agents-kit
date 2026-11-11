@@ -3,6 +3,24 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
+## [Unreleased]
+
+### Correcciones
+
+- Añadir `tools/host_compat.py` y la matriz de
+  [compatibilidad de hosts](docs/compatibilidad-hosts.md). Los instaladores de
+  Kiro y OpenCode comprueban la versión disponible y avisan sin modificar la
+  configuración del host.
+- Kiro: conservar Markdown V3, declarar `resources` para cargar skills globales y
+  avisar cuando la CLI usa el motor V2. `--strict-host` / `-StrictHost` permite
+  abortar antes de copiar; los agentes JSON existentes no se borran.
+- OpenCode: mantener el frontmatter V1 como formato común de 1.x y 2.x. OpenCode 2
+  lo traduce; se documenta que `temperature` no se aplica en V2.
+- Antigravity: corregir la documentación de la ruta compartida App/CLI y las rutas
+  del CLI con prioridad; actualizar la referencia a 2.x.
+- Añadir pruebas de avisos de compatibilidad, matriz de versiones y paridad
+  Bash/PowerShell; incluir la suite en CI.
+
 ## [4.0.0] - 2026-11-10
 
 ### Cambios incompatibles

@@ -146,8 +146,15 @@ class DeveloperContract(unittest.TestCase):
                 for field in ("description", "name"):
                     current_meta.pop(field, None)
                     old_meta.pop(field, None)
+                if platform == "kiro":
+                    # Additive resource discovery for Kiro V3; permissions/tools
+                    # remain byte-for-byte identical and are checked separately.
+                    current_meta.pop("resources", None)
                 self.assertEqual(current_meta, old_meta)
-                self.assertEqual(adapter.get("body_suffix"), old.get("body_suffix"))
+                # The version label in the Antigravity host note is documentation,
+                # not a capability change; normalize it before comparing.
+                current_suffix = adapter.get("body_suffix", "").replace("Antigravity 2.x", "Antigravity 2.0")
+                self.assertEqual(current_suffix, old.get("body_suffix", ""))
                 self.assertEqual(adapter["filename"], old["filename"])
                 if platform == "copilot":
                     self.assertEqual(adapter["frontmatter"]["name"], "Developer")

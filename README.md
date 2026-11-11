@@ -14,9 +14,9 @@ comentarios al sistema completo o a un agente concreto.
 La lógica se mantiene **una sola vez** en `canonical/` y se renderiza por
 plataforma con adaptadores declarativos. Así obtienes el mismo comportamiento
 especializado en seis distribuciones, sin duplicar prompts por plataforma.
-La integración inicial de Antigravity apunta a **2.0**. Los scripts cuentan con
-evidencia de CI en Linux, macOS y Windows: **22/22 pruebas nativas por OS**, con
-Python 3.10, en el [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
+La integración de Antigravity apunta a **2.x (2.31 o superior)**. Los scripts
+cuentan con evidencia de CI en Linux, macOS y Windows: **22/22 pruebas nativas por
+OS**, con Python 3.10, en el [run 37510771502](https://github.com/furthurr/ai-agents-kit/actions/runs/37510771502).
 El runtime de la aplicación (descubrimiento 5 agentes / 11 skills, UI, referencias e
 `invoke_subagent`) sigue **PENDIENTE**. El inventario de distribuciones y las
 pruebas con fixtures no certifican soporte completo en los seis hosts.
@@ -54,6 +54,20 @@ dependen de ese host y de la evidencia de sus smoke tests.
 
 Catálogo completo (roles, carpetas, cuándo usar cada uno):
 [docs/catalogo.md](docs/catalogo.md).
+
+### Compatibilidad de hosts
+
+| Host | Mínimo | Nota de compatibilidad |
+|---|---|---|
+| GitHub Copilot | CLI 1.x / VS Code actual | Formato `.agent.md` y skills estables. |
+| OpenCode | 1.18+ | Se distribuye frontmatter V1: nativo en 1.x y traducido por 2.x. `temperature` no se aplica en V2. |
+| Kiro | IDE 1.0+; CLI 2.37+ con V3 o CLI 3.x | Kiro CLI 2.x en motor V2 ignora los `.md`; el instalador avisa y conserva tus JSON. `--strict-host` aborta. |
+| Claude Code | 2.1+ | Subagentes y skills estándar. |
+| Pi | 0.99+ | Rutas y `$ARGUMENTS` estables en 1.x. |
+| Antigravity | 2.31+ | App y CLI leen `~/.gemini/config`; el CLI añade rutas con prioridad. |
+
+Detalle, límites y referencias oficiales:
+[docs/compatibilidad-hosts.md](docs/compatibilidad-hosts.md).
 
 ## Qué agente elegir
 
@@ -105,7 +119,7 @@ python3 tools/validate.py
 ./scripts/install/kiro.sh         # → ~/.kiro/
 ./scripts/install/claude.sh       # → ~/.claude/
 ./scripts/install/pi.sh           # → ~/.pi/agent/
-./scripts/install/antigravity.sh   # → ~/.gemini/config/{skills,agents}/ (2.0)
+./scripts/install/antigravity.sh   # → ~/.gemini/config/{skills,agents}/ (2.x)
 
 # 3. Reinicia la herramienta que uses
 ```
@@ -178,13 +192,14 @@ canonical + adapters  →  render  →  generated  →  install  →  tu herrami
 | [docs/agentes/developer.md](docs/agentes/developer.md) | Developer: ejecución proporcional, verificación, continuidad bajo demanda y cierre documental |
 | [docs/developer-smoke.md](docs/developer-smoke.md) | Escenarios manuales para validar PLAN, implementación y SDD opt-in |
 | [docs/instalacion.md](docs/instalacion.md) | Install, destinos, backup/import |
+| [docs/compatibilidad-hosts.md](docs/compatibilidad-hosts.md) | Versiones mínimas/validadas, formatos y comportamiento con hosts antiguos |
 | [docs/uso.md](docs/uso.md) | Cómo invocar y flujos recomendados |
 | [docs/navigator-smoke.md](docs/navigator-smoke.md) | Smoke test reproducible del Project Navigator |
 | [docs/documentation-orchestrator-smoke.md](docs/documentation-orchestrator-smoke.md) | Smoke test del orquestador documental y su preflight informativo no bloqueante |
 | [docs/sdd-smoke.md](docs/sdd-smoke.md) | Smoke test de alcance completo, continuidad, gates SDD y testing adaptativo |
 | [docs/sdd-effort-examples.md](docs/sdd-effort-examples.md) | Rúbrica de esfuerzo y ejemplos de profundidad SDD |
 | [docs/code-review-smoke.md](docs/code-review-smoke.md) | Smoke test de revisión de calidad y seguridad |
-| [docs/antigravity-smoke.md](docs/antigravity-smoke.md) | Procedimiento Antigravity 2.0; runtime pendiente |
+| [docs/antigravity-smoke.md](docs/antigravity-smoke.md) | Procedimiento Antigravity 2.x; runtime pendiente |
 | [docs/desarrollo.md](docs/desarrollo.md) | Contribuir y extender el kit |
 | [docs/arquitectura-del-kit.md](docs/arquitectura-del-kit.md) | Pipeline técnico |
 | [docs/mejoras.md](docs/mejoras.md) | Backlog priorizado y estado de madurez |

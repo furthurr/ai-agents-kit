@@ -20,6 +20,10 @@
 .PARAMETER DryRun
     Muestra lo que haria, sin copiar nada.
 
+.PARAMETER StrictHost
+    Aborta si Kiro CLI no tiene el motor V3 activo. Por defecto solo avisa y conserva
+    los agentes JSON existentes.
+
 .EXAMPLE
     .\install-kiro.ps1
     .\install-kiro.ps1 -Force
@@ -29,6 +33,7 @@
 param(
     [switch]$Force,
     [switch]$DryRun,
+    [switch]$StrictHost,
     [Alias("migrate-retired-agents")][switch]$MigrateRetiredAgents,
     [Alias("approve-retired-file")][string[]]$ApproveRetiredFile = @(),
     [Alias("approve-retired-sha256")][string[]]$ApproveRetiredSha256 = @(),
@@ -183,6 +188,22 @@ if ($Force)  { Write-Warn "Modo -Force: omite backup de sobrescritura vigente; r
 if (-not (Invoke-Preflight @("--check-source"))) {
     Write-Err "Instalacion abortada. Regenera los artefactos: python tools\render.py"
     exit 1
+}
+
+# Kiro CLI 2.x en motor V2 ignora los agentes Markdown V3. Solo avisamos por
+# defecto para no tocar agentes JSON existentes; -StrictHost aborta.
+# En dry-run se omite: el host puede crear estado local incluso con --version.
+if ($DryRun) {
+    Write-Info "dry-run: se omite la comprobacion de version de Kiro CLI (no escribe estado)."
+} else {
+    $HostArgs = @("--check", "kiro")
+    if ($StrictHost) { $HostArgs += "--strict" }
+    & $Python (Join-Path $RepoRoot "tools\host_compat.py") @HostArgs | Out-Host
+    if ($LASTEXITCODE -ne 0) {
+        Write-Err "Kiro CLI no puede cargar los agentes Markdown V3 en su configuracion actual."
+        Write-Err "Actualiza a 2.37+ y activa el motor V3, actualiza a 3.x, o usa Kiro IDE 1.x."
+        exit 1
+    }
 }
 
 Install-Skills

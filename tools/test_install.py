@@ -99,6 +99,7 @@ def run_installer(
     platform: str,
     *args: str,
     config_dir: Path | None = None,
+    extra_path: Path | None = None,
 ):
     """Run an installer with an isolated HOME and a deterministic XDG path."""
     env = dict(os.environ)
@@ -111,6 +112,8 @@ def run_installer(
     env.pop("PI_CODING_AGENT_DIR", None)
     if config_dir is not None:
         env["CLAUDE_CONFIG_DIR"] = str(config_dir)
+    if extra_path is not None:
+        env["PATH"] = str(extra_path) + os.pathsep + env.get("PATH", "")
     return subprocess.run(
         ["bash", str(repo / "scripts" / "install" / f"{platform}.sh"), *args],
         capture_output=True,
@@ -447,6 +450,74 @@ def test_claude_config_dir() -> None:
 
 
 # ---------------------------------------------------------------------------
+# 7b. Host compatibility warnings do not break old installations
+# ---------------------------------------------------------------------------
+def write_fake_host(directory: Path, name: str, body: str) -> None:
+    path = directory / name
+    path.write_text("#!/bin/sh\n" + body, encoding="utf-8")
+    path.chmod(0o755)
+
+
+def test_avisos_compatibilidad_host() -> None:
+    print("\n\033[1m[7b] Avisos de compatibilidad sin romper hosts antiguos\033[0m")
+    if sys.platform == "win32":
+        print("  (omitido: ejecutables POSIX falsos)")
+        return
+
+    with tempfile.TemporaryDirectory() as temporary:
+        base = Path(temporary)
+        repo = build_repo(base)
+        bin_dir = base / "fake-bin"
+        bin_dir.mkdir()
+        write_fake_host(
+            bin_dir,
+            "kiro-cli",
+            'if [ "$1" = "--version" ]; then echo "kiro-cli 2.37.1"; exit 0; fi\n'
+            'if [ "$1" = "settings" ]; then echo "No value associated with chat.agentEngine" >&2; exit 1; fi\n'
+            'exit 0\n',
+        )
+        home = base / "home"
+        home.mkdir()
+        result = run_installer(repo, home, "kiro", extra_path=bin_dir)
+        check(result.returncode == 0 and claims_success(result),
+              "kiro: la CLI 2.37 con V2 no bloquea la instalación", result.stderr)
+        check("chat.agentEngine v3" in result.stdout + result.stderr,
+              "kiro: indica cómo activar el motor V3")
+        check("no se cargarán" in result.stdout + result.stderr,
+              "kiro: advierte de que los .md no se cargan en V2")
+
+        strict_home = base / "strict-home"
+        strict_home.mkdir()
+        strict = run_installer(repo, strict_home, "kiro", "--strict-host", extra_path=bin_dir)
+        check(strict.returncode != 0,
+              "kiro: --strict-host aborta con motor V2", strict.stdout)
+        check(not claims_success(strict),
+              "kiro: --strict-host no declara instalación completa")
+        check(not entries_under(strict_home),
+              "kiro: --strict-host no escribe nada antes de abortar")
+
+    with tempfile.TemporaryDirectory() as temporary:
+        base = Path(temporary)
+        repo = build_repo(base)
+        bin_dir = base / "fake-bin"
+        bin_dir.mkdir()
+        write_fake_host(
+            bin_dir,
+            "opencode",
+            'if [ "$1" = "--version" ]; then echo "opencode 2.2.7"; exit 0; fi\nexit 0\n',
+        )
+        home = base / "home"
+        home.mkdir()
+        result = run_installer(repo, home, "opencode", extra_path=bin_dir)
+        check(result.returncode == 0 and claims_success(result),
+              "opencode: OpenCode 2.x sigue instalando el formato V1", result.stderr)
+        check("V2 lo traduce" in result.stdout + result.stderr,
+              "opencode: explica la compatibilidad V1 en V2")
+        check("temperature" in result.stdout + result.stderr,
+              "opencode: advierte de que temperature no se aplica en V2")
+
+
+# ---------------------------------------------------------------------------
 # 8. bash and PowerShell installers stay in parity (static check)
 # ---------------------------------------------------------------------------
 def test_paridad_bash_powershell() -> None:
@@ -478,6 +549,11 @@ def test_paridad_bash_powershell() -> None:
             check("-printf" not in content, f"{rel}: sin extensiones GNU de find")
             for flag in ("--migrate-retired-agents", "--approve-retired-file", "--approve-retired-sha256", "--validate-migration"):
                 check(flag in content, f"{rel}: delega {flag} en Python")
+            if platform in {"kiro", "opencode"}:
+                check("host_compat.py" in content, f"{rel}: comprueba la versión del host")
+            if platform == "kiro":
+                strict_flag = "--strict-host" if ext == "sh" else "StrictHost"
+                check(strict_flag in content, f"{rel}: permite abortar con host incompatible")
 
 
 def main() -> int:
@@ -495,6 +571,7 @@ def main() -> int:
         test_actualiza_orquestador_y_referencias_anteriores()
         test_rollback_desde_backup()
         test_claude_config_dir()
+        test_avisos_compatibilidad_host()
     test_paridad_bash_powershell()
     total = PASSED + FAILED
     print(f"\n{PASSED}/{total} pruebas correctas")

@@ -170,6 +170,16 @@ if ! preflight --check-source; then
   exit 1
 fi
 
+# El frontmatter V1 es intencional: OpenCode 1.x lo usa de forma nativa y 2.x
+# lo traduce. El aviso explica la única diferencia conocida (`temperature`).
+# En dry-run se omite: OpenCode crea estado local incluso al pedir `--version`.
+if [ "$DRY_RUN" -eq 1 ]; then
+  info "dry-run: se omite la comprobación de versión de OpenCode (no escribe estado)."
+else
+  "$PYTHON" "$REPO_ROOT/tools/host_compat.py" --check opencode || \
+    warn "No se pudo comprobar la versión de OpenCode; se instala el formato V1 compatible."
+fi
+
 install_skills
 echo
 install_agents

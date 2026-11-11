@@ -28,6 +28,36 @@ ANTIGRAVITY_TOOLS = frozenset({
     "replace_file_content", "run_command", "read_url_content", "search_web", "ask_question",
 })
 
+KIRO_TOOLS = frozenset({"read", "write", "shell", "web", "subagent"})
+KIRO_SKILL_URI = "skill://~/.kiro/skills/*/SKILL.md"
+
+
+def validate_kiro_adapter(data: dict, agent_id: str, context: str,
+                          errors: list[str]) -> None:
+    """Validate the Kiro Markdown V3 contract used by IDE 1.x and CLI V3."""
+    metadata = data["frontmatter"]
+    if data.get("filename") != f"{agent_id}.md":
+        errors.append(f"{context}: filename debe ser {agent_id}.md")
+    description = metadata.get("description")
+    if not isinstance(description, str) or not description.strip():
+        errors.append(f"{context}: description debe ser string no vacío")
+    tools = metadata.get("tools")
+    if not isinstance(tools, list) or not tools:
+        errors.append(f"{context}: tools debe ser una lista no vacía")
+    elif not all(isinstance(tool, str) and tool in KIRO_TOOLS for tool in tools):
+        errors.append(f"{context}: tools contiene categorías no soportadas")
+    elif len(tools) != len(set(tools)):
+        errors.append(f"{context}: tools contiene duplicados")
+    resources = metadata.get("resources")
+    if not isinstance(resources, list) or KIRO_SKILL_URI not in resources:
+        errors.append(
+            f"{context}: resources debe incluir {KIRO_SKILL_URI!r} para cargar las skills "
+            "globales también cuando el host no hereda recursos por defecto"
+        )
+    permissions = metadata.get("permissions")
+    if not isinstance(permissions, dict) or not isinstance(permissions.get("rules"), list):
+        errors.append(f"{context}: permissions.rules debe ser una lista")
+
 
 def validate_antigravity_adapter(data: dict, agent_id: str, context: str,
                                 errors: list[str]) -> None:
@@ -149,6 +179,8 @@ def validate_adapters(manifest: dict, errors: list[str]) -> dict[str, set[str]]:
                         f"Adaptador Pi {adapter.relative_to(ROOT)}: 'body_suffix' debe ser "
                         "string y contener '$ARGUMENTS' para recibir la tarea del usuario"
                     )
+            elif platform == "kiro":
+                validate_kiro_adapter(data, agent_id, str(adapter.relative_to(ROOT)), errors)
             elif platform == "antigravity":
                 validate_antigravity_adapter(data, agent_id, str(adapter.relative_to(ROOT)), errors)
             if not _safe_filename(filename):

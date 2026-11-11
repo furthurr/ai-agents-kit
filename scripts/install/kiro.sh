@@ -17,6 +17,7 @@
 #   --migrate-retired-agents: retirada opt-in con backup obligatorio.
 #   --approve-retired-file RUTA --approve-retired-sha256 SHA: repetibles, ruta exacta.
 #   --additional-agents-dest RUTA: destino local adicional para migración explícita.
+#   --strict-host: aborta si Kiro CLI no tiene el motor V3 activo.
 #   ./scripts/install/kiro.sh              # instala con backup de lo previo
 #   ./scripts/install/kiro.sh --force      # instala sin crear backup
 #   ./scripts/install/kiro.sh --dry-run    # muestra lo que haría, sin copiar nada
@@ -30,6 +31,7 @@ TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 FORCE=0
 DRY_RUN=0
 MIGRATE=0
+STRICT_HOST=0
 MIGRATION_ARGS=(--backup-root "$HOME/.ai-agents-kit-retired-backups")
 
 while [ "$#" -gt 0 ]; do
@@ -37,6 +39,7 @@ while [ "$#" -gt 0 ]; do
   case "$arg" in
     --force)   FORCE=1 ;;
     --dry-run) DRY_RUN=1 ;;
+    --strict-host) STRICT_HOST=1 ;;
     --migrate-retired-agents) MIGRATE=1 ;;
     --approve-retired-file|--approve-retired-sha256|--additional-agents-dest)
       [ "$#" -gt 0 ] || { echo "Falta valor para $arg" >&2; exit 2; }
@@ -169,6 +172,23 @@ preflight --validate-migration "${VALIDATION_ARGS[@]}" "${MIGRATION_ARGS[@]}"
 if ! preflight --check-source; then
   err "Instalación abortada. Regenera los artefactos: python3 tools/render.py"
   exit 1
+fi
+
+# Kiro CLI 2.x puede seguir en motor V2, que ignora los agentes Markdown V3.
+# Por defecto solo avisamos: los agentes JSON existentes no se tocan y el IDE
+# puede seguir usando el formato nuevo. --strict-host convierte el aviso en aborto.
+# En dry-run se omite: incluso `--version` crea estado local del host y el
+# contrato de dry-run exige no escribir nada, ni siquiera fuera del destino.
+if [ "$DRY_RUN" -eq 1 ]; then
+  info "dry-run: se omite la comprobación de versión de Kiro CLI (no escribe estado)."
+else
+  HOST_ARGS=(--check kiro)
+  [ "$STRICT_HOST" -eq 0 ] || HOST_ARGS+=(--strict)
+  if ! "$PYTHON" "$REPO_ROOT/tools/host_compat.py" "${HOST_ARGS[@]}"; then
+    err "Kiro CLI no puede cargar los agentes Markdown V3 en su configuración actual."
+    err "Actualiza a 2.37+ y activa el motor V3, actualiza a 3.x, o usa Kiro IDE 1.x."
+    exit 1
+  fi
 fi
 
 install_skills

@@ -131,6 +131,6 @@ hasta que seleccione explícitamente cómo continuar. No uses el contrato docume
 `## Handoff` para transferir implementación.
 
 
-## Particularidades de Antigravity 2.0
+## Particularidades de Antigravity 2.x
 
 `@<agente>` es notación de routing del kit, no una garantía de invocación nativa. Selecciona el agente por la interfaz del host verificada para tu versión. Las tools disponibles no amplían el alcance ni sustituyen autorizaciones, gates o permisos del host.

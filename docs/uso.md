@@ -90,7 +90,7 @@ IDs estables del kit:
 - Skills en el directorio `skills/` del mismo perfil: `/skill:<nombre>`.
 - Las plantillas usan la sesión activa; no crean subagentes aislados.
 
-### Antigravity 2.0
+### Antigravity 2.x
 
 - Agentes globales en `~/.gemini/config/agents/<id>.md`; selecciona el principal
   mediante el mecanismo de la UI que se observe en tu versión. **La selección
@@ -104,7 +104,7 @@ IDs estables del kit:
 - `@sdd` y `@<agente>` expresan routing del kit, **no sintaxis nativa confirmada**.
   La sustitución `{{sdd_agent}}` produce el identificador nominal `sdd`, no un
   comando. `/agents` pertenece a la documentación del **CLI**; no se atribuye a
-  Antigravity 2.0 sin prueba.
+  Antigravity 2.x sin prueba.
 - El CLI documenta otra ruta de skills, `~/.gemini/antigravity-cli/skills/`; el
   instalador 2.0 no la cubre. Agentes personalizados del IDE standalone: no
   verificados. Scripts con fixtures: **22/22 pruebas nativas por OS** en Linux,

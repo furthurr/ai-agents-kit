@@ -8,6 +8,9 @@
       "shell",
       "web"
     ],
+    "resources": [
+      "skill://~/.kiro/skills/*/SKILL.md"
+    ],
     "permissions": {
       "rules": [
         { "capability": "fs_write", "match": ["**"], "exclude": ["AGENTS.md", "docs/*.md", "docs/**/*.md", ".navigator/**", ".architecture/**", ".data/**", ".design/**", ".quality/**", ".security/**"], "effect": "deny" },

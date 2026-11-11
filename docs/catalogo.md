@@ -94,10 +94,10 @@ cuando el procedimiento lo pide. Eso reduce tokens en tareas simples.
 | `kiro` | `~/.kiro/skills/` y `~/.kiro/agents/` |
 | `claude` | `~/.claude/skills/` y `~/.claude/agents/` (o `$CLAUDE_CONFIG_DIR`) |
 | `pi` | `~/.pi/agent/skills/` y `~/.pi/agent/prompts/` (o `$PI_CODING_AGENT_DIR`) |
-| `antigravity` | `~/.gemini/config/skills/` y `~/.gemini/config/agents/` (Antigravity 2.0) |
+| `antigravity` | `~/.gemini/config/skills/` y `~/.gemini/config/agents/` (Antigravity 2.x) |
 
 Antigravity distribuye los mismos cinco agentes y once skills, con recursos
-asociados. El alcance nativo inicial es **Antigravity 2.0**, no soporte completo
+asociados. El alcance nativo inicial es **Antigravity 2.x**, no soporte completo
 del CLI ni del IDE standalone. El CLI documenta skills globales en
 `~/.gemini/antigravity-cli/skills/`, destino distinto que este instalador no usa;
 los agentes personalizados del IDE no están verificados. Los scripts se probaron
