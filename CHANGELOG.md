@@ -3,7 +3,7 @@
 Historial de cambios de MAS (Multi-Agent System). Las versiones siguen SemVer y
 los tags usan el formato `vX.Y.Z`.
 
-## [Unreleased]
+## [4.0.1] - 2026-11-10
 
 ### Correcciones
 
@@ -20,6 +20,8 @@ los tags usan el formato `vX.Y.Z`.
   del CLI con prioridad; actualizar la referencia a 2.x.
 - Añadir pruebas de avisos de compatibilidad, matriz de versiones y paridad
   Bash/PowerShell; incluir la suite en CI.
+- Corregir la codificación de los tests en Windows para que la validación nativa
+  de PowerShell y los instaladores no falle con `cp1252`.
 
 ## [4.0.0] - 2026-11-10
 
