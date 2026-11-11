@@ -32,6 +32,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
+# Windows can default stdout to cp1252; the progress markers use UTF-8.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 # Per platform: installer name, skills destination, agents destination, backup root.
 PLATFORMS = {
     "copilot": (".copilot/skills", ".copilot/agents", ".copilot-backup"),
@@ -106,6 +110,7 @@ def run_installer(
     env["HOME"] = str(home)
     env["USERPROFILE"] = str(home)
     env["PYTHONDONTWRITEBYTECODE"] = "1"
+    env["PYTHONIOENCODING"] = "utf-8"
     # opencode falls back to $HOME/.config only when XDG_CONFIG_HOME is unset.
     env.pop("XDG_CONFIG_HOME", None)
     env.pop("CLAUDE_CONFIG_DIR", None)
@@ -118,6 +123,8 @@ def run_installer(
         ["bash", str(repo / "scripts" / "install" / f"{platform}.sh"), *args],
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         env=env,
     )
 
@@ -137,6 +144,8 @@ def run_check_installed(repo: Path, platform: str, skills_dest: Path, agents_des
         ],
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
     )
 
