@@ -12,6 +12,8 @@ de entrada; aquí está el detalle por tema.
 | [agentes/developer.md](agentes/developer.md) | Usuarios | Ejecución proporcional, verificación, continuidad bajo demanda y cierre documental de Developer |
 | [developer-smoke.md](developer-smoke.md) | Usuarios y contribuidores | Escenarios manuales de consulta/PLAN, implementación, refuerzos A/B y aislamiento SDD |
 | [instalacion.md](instalacion.md) | Usuarios | Render, validación e instalación por plataforma |
+| [extra-tools/modo-autonomo.md](extra-tools/modo-autonomo.md) | Usuarios | Contrato del modo autónomo por host, límites y cómo aplicarlo |
+| [extra-tools/prompt-actualizacion-mas-autonomia.md](extra-tools/prompt-actualizacion-mas-autonomia.md) | Usuarios | Prompt listo para copiar: actualizar MAS en las seis plataformas y activar el modo autónomo |
 | [compatibilidad-hosts.md](compatibilidad-hosts.md) | Usuarios y contribuidores | Versiones mínimas/validadas, formatos y comportamiento con hosts antiguos |
 | [migracion-agentes.md](migracion-agentes.md) | Usuarios y contribuidores | Retirada opt-in, revisión por archivo, respaldo obligatorio, recuperación y smoke pendiente |
 | [uso.md](uso.md) | Usuarios | Cómo invocar especialistas y cuándo usar cada uno |

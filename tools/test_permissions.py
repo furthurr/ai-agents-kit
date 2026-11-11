@@ -123,9 +123,10 @@ class PermissionContracts(unittest.TestCase):
         boundary = boundaries[0]
         self.assertEqual(boundary["match"], ["**"])
         self.assertEqual(set(boundary["exclude"]), {
-            "AGENTS.md", "docs/*.md", "docs/**/*.md", *(f"{domain}/**" for domain in DOMAINS)})
+            "README.md", "readme.md", "AGENTS.md", "docs/*.md", "docs/**/*.md",
+            *(f"{domain}/**" for domain in DOMAINS)})
         # Static root-relative boundary contract, not an emulator of Kiro's runtime.
-        for path in ("AGENTS.md", "docs/report.md", "docs/extra-tools/README.md",
+        for path in ("README.md", "readme.md", "AGENTS.md", "docs/report.md", "docs/extra-tools/README.md",
                      *(f"{domain}/README.md" for domain in DOMAINS)):
             self.assertTrue(any(PurePosixPath(path).match(pattern) for pattern in boundary["exclude"]), path)
         for path in ("src/app.py", "tests/test_app.py", ".github/workflows/ci.yml",

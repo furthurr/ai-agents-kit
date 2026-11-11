@@ -14,6 +14,8 @@ permissions:
       match:
         - "**"
       exclude:
+        - "README.md"
+        - "readme.md"
         - "AGENTS.md"
         - "docs/*.md"
         - "docs/**/*.md"

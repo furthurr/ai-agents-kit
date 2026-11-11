@@ -9,6 +9,10 @@ conservando las decisiones de alcance, los límites de rol y la protección de
 credenciales. Este documento sustituye el prompt YOLO anterior por variantes
 autónomas optimizadas para cada host.
 
+Para instalar la última versión de MAS y aplicar este modo en todas las
+plataformas de una sola vez, usa el prompt listo para copiar de
+[prompt-actualizacion-mas-autonomia.md](prompt-actualizacion-mas-autonomia.md).
+
 ## Elegir el prompt
 
 | Host | Prompt independiente | Qué debe configurar |
@@ -108,6 +112,7 @@ Configura Pi de forma persistente para completar mis tareas sin interrupciones t
 
 ## Referencias
 
+- [Prompt de actualización de MAS y modo autónomo](prompt-actualizacion-mas-autonomia.md).
 - [Capacidades y permisos del MAS](../permisos-hosts.md).
 - [Permisos de OpenCode](https://opencode.ai/docs/permissions/).
 - [Permisos de Claude Code](https://code.claude.com/docs/en/permissions).

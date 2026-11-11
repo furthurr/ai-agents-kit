@@ -13,6 +13,8 @@ un perfil de autonomía ni concede permisos técnicos o de implementación.
   no una segunda fuente editable. Consulta [desarrollo](docs/desarrollo.md).
 - Permisos y límites: [docs/permisos-hosts.md](docs/permisos-hosts.md).
   Autonomía: [docs/extra-tools/modo-autonomo.md](docs/extra-tools/modo-autonomo.md).
+  Prompt reutilizable de actualización y autonomía:
+  [docs/extra-tools/prompt-actualizacion-mas-autonomia.md](docs/extra-tools/prompt-actualizacion-mas-autonomia.md).
   Contrasta estas guías con la implementación y su ayuda antes de aplicar cambios
   a un perfil; escribir configuración no prueba su aceptación por el host.
 
