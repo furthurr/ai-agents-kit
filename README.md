@@ -1,6 +1,6 @@
 # MAS (Multi-Agent System)
 
-![MAS (Multi-Agent System)](MAS.png)
+![MAS: más control, más enfoque, más alcance y menos ruido](assets/branding/mas-banner.png)
 
 Fuente versionada de **skills** y **agentes** para [GitHub Copilot](https://github.com/features/copilot),
 [OpenCode](https://opencode.ai), [Kiro](https://kiro.dev),
